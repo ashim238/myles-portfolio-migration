@@ -6,6 +6,7 @@
   --muted: #c4c4c4;
   --line: #343434;
   --content-max: 68rem;
+  --surface: #0a0a0a;
 
   /* Rhythm tuned for Instrument Sans (less tight default metrics than Geist) */
   --track-display: -0.026em;
@@ -37,6 +38,7 @@
   --foreground: #111111;
   --muted: #555555;
   --line: #d4d4d4;
+  --surface: #f0f0f0;
 }
 
 :root[data-theme="light"] .browser-intro-overlay {
@@ -65,8 +67,8 @@
 
 :root[data-theme="light"] .project-highlight,
 :root[data-theme="light"] .project-work-jump-card {
-  background: #f0f0f0;
-  border-color: #d4d4d4;
+  background: var(--surface);
+  border-color: var(--line);
 }
 
 :root[data-theme="light"] .project-highlight blockquote {
@@ -79,18 +81,27 @@
 }
 
 :root[data-theme="light"] .play-embed-wrap {
-  background: #f0f0f0;
-  border-color: #d4d4d4;
+  background: var(--surface);
+  border-color: var(--line);
 }
 
 :root[data-theme="light"] .skip-link {
-  background: #f0f0f0;
-  border-color: #d4d4d4;
+  background: var(--surface);
+  border-color: var(--line);
 }
 
 :root[data-theme="light"] .not-found-link:hover {
-  background: #f0f0f0;
+  background: var(--surface);
   border-color: #999;
+}
+
+:root[data-theme="light"] .resume-cta:hover {
+  background: var(--surface);
+  border-color: #999;
+}
+
+:root[data-theme="light"] .resume-detail {
+  border-color: var(--line);
 }
 
 body {
@@ -99,6 +110,28 @@ body {
   font-family: var(--font-family-sans), system-ui, sans-serif;
   line-height: var(--lead-body);
   letter-spacing: var(--track-body);
+}
+
+/* ------------------------------------------------------------------ */
+/* Surface texture — subtle grain overlay for premium feel             */
+/* ------------------------------------------------------------------ */
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  mix-blend-mode: overlay;
+}
+
+:root[data-theme="light"] body::after {
+  opacity: 0.04;
+  mix-blend-mode: multiply;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -153,7 +186,7 @@ a {
   padding: 0.55rem 0.75rem;
   border: 1px solid var(--line);
   border-radius: 0.45rem;
-  background: #111;
+  background: var(--surface);
   color: var(--foreground);
   text-decoration: none;
 }
@@ -177,7 +210,7 @@ a {
 .page-shell {
   width: min(var(--content-max), 100%);
   margin: 0 auto;
-  padding: 1.2rem 1.4rem 3.5rem;
+  padding: 1.2rem 1.4rem 4.5rem;
 }
 
 /* Browser-window zoom intro — once per session, before homepage entrance */
@@ -381,17 +414,36 @@ html.browser-intro-lock body {
 }
 
 /* ------------------------------------------------------------------ */
-/* 404 page                                                           */
+/* 404 page — asymmetric two-zone layout                              */
 /* ------------------------------------------------------------------ */
 
 .not-found {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-top: 4rem;
+  position: relative;
+  display: grid;
+  align-items: end;
+  margin-top: 3rem;
+  min-height: calc(60svh - 8rem);
   animation: fadeUp 520ms ease-out both;
 }
 
+/* Text content — left column, clear hierarchy */
+.not-found-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+}
+
+.not-found-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: var(--track-caps);
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+/* The 404 digits — decorative, positioned asymmetrically */
 .not-found-code {
   font-size: clamp(5rem, 14vw, 10rem);
   line-height: 1;
@@ -401,16 +453,16 @@ html.browser-intro-lock body {
   display: flex;
   gap: 0.02em;
   cursor: default;
+  margin-top: 3rem;
 }
 
-/* Each digit is its own inline-block so it can float independently */
+/* Each digit floats independently */
 .not-found-digit {
   display: inline-block;
   transition: color 500ms ease;
 }
 
-/* Hover the 404: the outer 4s brighten, the zero stays muted —
-   gives the number a gentle "waking up" quality */
+/* Hover: outer 4s brighten, zero stays muted */
 .not-found-code:hover .not-found-digit {
   color: var(--foreground);
 }
@@ -420,25 +472,26 @@ html.browser-intro-lock body {
 }
 
 .not-found-title {
-  margin-top: 0.6rem;
-  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  margin-top: 0;
+  font-size: clamp(1.8rem, 4vw, 3rem);
   line-height: var(--lead-title);
   letter-spacing: var(--track-title);
+  text-wrap: balance;
 }
 
 .not-found-body {
-  margin-top: 0.6rem;
+  margin-top: 0.65rem;
   color: var(--muted);
-  max-width: 38ch;
+  max-width: 34ch;
   line-height: var(--lead-copy);
+  text-wrap: pretty;
 }
 
 .not-found-link {
-  margin-top: 1.6rem;
+  margin-top: 1.8rem;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  /* Vertical padding raised to reach 44px tap target */
   padding: 0.85rem 1.15rem;
   border: 1px solid var(--line);
   border-radius: 0.45rem;
@@ -447,7 +500,6 @@ html.browser-intro-lock body {
   transition: border-color 200ms ease, background 200ms ease, gap 280ms ease;
 }
 
-/* Left-pointing arrow that slides into view on hover */
 .not-found-link::after {
   content: "\2190";
   display: inline-block;
@@ -459,7 +511,7 @@ html.browser-intro-lock body {
 
 .not-found-link:hover {
   border-color: #5a5a5a;
-  background: #111;
+  background: var(--surface);
   gap: 0.55rem;
 }
 
@@ -473,7 +525,30 @@ html.browser-intro-lock body {
   outline-offset: 3px;
 }
 
-/* Digit float animation — staggered so each drifts on its own phase */
+/* Desktop: asymmetric grid — content left, digits anchored right/bottom */
+@media (min-width: 768px) {
+  .not-found {
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: end;
+    margin-top: 4rem;
+    min-height: calc(55svh - 6rem);
+  }
+
+  .not-found-code {
+    margin-top: 0;
+    font-size: clamp(8rem, 16vw, 14rem);
+    align-self: end;
+    opacity: 0.18;
+    transition: opacity 600ms ease;
+  }
+
+  .not-found-code:hover {
+    opacity: 1;
+  }
+}
+
+/* Digit float — staggered phases */
 @media (prefers-reduced-motion: no-preference) {
   .not-found-digit {
     animation: digitFloat 4.5s ease-in-out infinite;
@@ -578,7 +653,7 @@ html.home-intro-wait .home-page #work > .work-list > .work-item {
   background: transparent;
   color: var(--muted);
   cursor: pointer;
-  transition: color 200ms ease, border-color 200ms ease;
+  transition: color 200ms ease, border-color 200ms ease, transform 120ms ease;
   /* Expand tap target to 44px without growing the visible button */
   position: relative;
 }
@@ -592,6 +667,10 @@ html.home-intro-wait .home-page #work > .work-list > .work-item {
 .theme-toggle:hover {
   color: var(--foreground);
   border-color: #5a5a5a;
+}
+
+.theme-toggle:active {
+  transform: scale(0.92);
 }
 
 .theme-toggle:focus-visible {
@@ -635,6 +714,11 @@ html.home-intro-wait .home-page #work > .work-list > .work-item {
   .site-nav-list a:focus-visible {
     opacity: 0.72;
     transform: translateX(-3px);
+  }
+
+  .site-nav-list a:active {
+    opacity: 0.52;
+    transform: translateX(-1px) scale(0.98);
   }
 }
 
@@ -693,6 +777,7 @@ a:focus-visible {
   color: var(--foreground);
   text-align: left;
   overflow-wrap: break-word;
+  text-wrap: balance;
 }
 
 .project-page .project-hero-lede {
@@ -703,6 +788,7 @@ a:focus-visible {
   line-height: var(--lead-body);
   color: var(--muted);
   text-align: left;
+  text-wrap: pretty;
 }
 
 .hero-name {
@@ -745,6 +831,7 @@ a:focus-visible {
   max-width: 44ch;
   font-size: 1.03rem;
   line-height: var(--lead-body);
+  text-wrap: pretty;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -873,6 +960,7 @@ a:focus-visible {
   line-height: var(--lead-title);
   letter-spacing: var(--track-title);
   overflow-wrap: break-word;
+  text-wrap: balance;
 }
 
 .work-item p {
@@ -880,20 +968,91 @@ a:focus-visible {
   color: var(--muted);
   font-size: 1.01rem;
   line-height: var(--lead-copy);
+  text-wrap: pretty;
 }
 
-.play-item {
+/* ------------------------------------------------------------------ */
+/* Play page — restructured entries with numbered headers             */
+/* ------------------------------------------------------------------ */
+
+.play-hero {
+  margin-bottom: 2rem;
+}
+
+.play-lede {
+  max-width: 42ch;
+}
+
+.play-section {
+  max-width: 60rem;
+  animation: fadeUp 480ms ease-out 60ms both;
+}
+
+.play-section-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: var(--track-caps);
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+.play-entries {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.play-entry {
+  padding: 2.2rem 0 2.8rem;
+  border-bottom: 1px solid var(--line);
   display: grid;
-  gap: 0.55rem;
+  gap: 0;
 }
 
-.play-hook {
+.play-entry-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.65rem;
+}
+
+.play-entry-index {
+  font-size: 0.78rem;
+  letter-spacing: var(--track-caps);
+  color: var(--muted);
+  flex-shrink: 0;
+  position: relative;
+  top: -0.08em;
+}
+
+.play-entry-title {
+  font-size: clamp(1.65rem, 3.8vw, 2.8rem);
+  line-height: var(--lead-title);
+  letter-spacing: var(--track-title);
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+.play-entry-hook {
+  margin: 0 0 0.85rem;
   color: var(--foreground);
+  font-size: 1.06rem;
+  line-height: var(--lead-body);
+  max-width: 52ch;
+  text-wrap: pretty;
 }
 
-.play-meta {
-  font-size: 0.84rem;
-  letter-spacing: 0.02em;
+.play-entry-body {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.play-entry-exploration {
+  color: var(--muted);
+  line-height: var(--lead-copy);
+  max-width: 56ch;
+  text-wrap: pretty;
 }
 
 .play-embed-wrap {
@@ -901,7 +1060,7 @@ a:focus-visible {
   border: 1px solid var(--line);
   border-radius: 0.65rem;
   overflow: hidden;
-  background: #0a0a0a;
+  background: var(--surface);
 }
 
 .play-embed {
@@ -912,29 +1071,205 @@ a:focus-visible {
 }
 
 @media (max-width: 768px) {
-  /* On mobile, 690px exceeds most viewport heights and traps the user.
-     Use a viewport-relative height so the iframe is fully visible and scrollable. */
   .play-embed {
     min-height: min(480px, 70svh);
   }
 }
 
-.play-tags {
+.play-entry-footer {
+  margin-top: 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.75rem 1.5rem;
+}
+
+.play-entry-meta {
+  font-size: 0.84rem;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+.play-entry-tags {
   list-style: none;
   display: flex;
   gap: 0.45rem;
   flex-wrap: wrap;
-  margin: 0.2rem 0 0;
+  margin: 0;
   padding: 0;
 }
 
-.play-tag {
+.play-entry-tag {
   border: 1px solid var(--line);
   border-radius: 999px;
   padding: 0.22rem 0.5rem;
   font-size: 0.78rem;
   color: var(--muted);
+  transition: border-color 200ms ease;
 }
+
+.play-entry-tag:hover {
+  border-color: #5a5a5a;
+}
+
+/* Staggered entry animation */
+@media (prefers-reduced-motion: no-preference) {
+  .play-entry {
+    opacity: 0;
+    animation: fadeUp 560ms ease-out both;
+  }
+
+  .play-entry:nth-child(1) {
+    animation-delay: 120ms;
+  }
+
+  .play-entry:nth-child(2) {
+    animation-delay: 200ms;
+  }
+
+  .play-entry:nth-child(3) {
+    animation-delay: 280ms;
+  }
+
+  .play-entry:nth-child(n + 4) {
+    animation-delay: 360ms;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Resume page — asymmetric two-column layout                         */
+/* ------------------------------------------------------------------ */
+
+.resume-layout {
+  margin-top: 2.5rem;
+  display: grid;
+  gap: 3.5rem;
+  animation: fadeUp 520ms ease-out both;
+}
+
+@media (min-width: 768px) {
+  .resume-layout {
+    grid-template-columns: 3fr 1fr;
+    gap: 4rem;
+    margin-top: 3.5rem;
+  }
+}
+
+.resume-primary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.resume-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: var(--track-caps);
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+.resume-heading {
+  margin: 0;
+  font-size: clamp(2.2rem, 5.5vw, 4rem);
+  font-weight: 400;
+  line-height: var(--lead-title);
+  letter-spacing: var(--track-display);
+  color: var(--foreground);
+  text-wrap: balance;
+}
+
+.resume-body {
+  margin-top: 1rem;
+  color: var(--muted);
+  max-width: 42ch;
+  line-height: var(--lead-copy);
+  text-wrap: pretty;
+}
+
+.resume-cta {
+  margin-top: 2rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.85rem 1.15rem;
+  border: 1px solid var(--line);
+  border-radius: 0.45rem;
+  font-size: 0.92rem;
+  text-decoration: none;
+  transition: border-color 200ms ease, background 200ms ease;
+}
+
+.resume-cta:hover {
+  border-color: #5a5a5a;
+  background: var(--surface);
+}
+
+.resume-cta:focus-visible {
+  outline: 2px solid #8ab4ff;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .resume-cta:active {
+    transform: scale(0.97);
+  }
+}
+
+.resume-aside {
+  padding-top: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .resume-aside {
+    padding-top: 2rem;
+    border-left: 1px solid var(--line);
+    padding-left: 2rem;
+  }
+}
+
+.resume-details {
+  display: grid;
+  gap: 0;
+}
+
+.resume-detail {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.resume-detail:first-child {
+  padding-top: 0;
+}
+
+.resume-detail:last-child {
+  border-bottom: none;
+}
+
+.resume-detail dt {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: var(--track-caps);
+  color: var(--muted);
+  margin-bottom: 0.2rem;
+}
+
+.resume-detail dd {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: var(--lead-copy);
+}
+
+.resume-detail dd a {
+  text-decoration: none;
+  transition: opacity 180ms ease;
+}
+
+.resume-detail dd a:hover {
+  opacity: 0.72;
+}
+
+/* ------------------------------------------------------------------ */
 
 .work-item-image {
   width: 100%;
@@ -974,15 +1309,18 @@ a:focus-visible {
 .about p {
   max-width: 60ch;
   color: var(--muted);
-  line-height: 1.6;
+  line-height: var(--lead-body);
+  text-wrap: pretty;
 }
 
 /* ------------------------------------------------------------------ */
-/* Footer — easter egg: hover warms the text to foreground color      */
+/* Footer — refined with top rule and generous breathing room          */
 /* ------------------------------------------------------------------ */
 
 .footer {
-  margin-top: 4.7rem;
+  margin-top: 5.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 0.76rem;
   letter-spacing: 0.08em;
@@ -1048,7 +1386,7 @@ a:focus-visible {
   padding: 1rem 1.1rem;
   border: 1px solid var(--line);
   border-radius: 0.6rem;
-  background: #0a0a0a;
+  background: var(--surface);
   max-width: 65ch;
 }
 
@@ -1057,6 +1395,7 @@ a:focus-visible {
   font-size: 1.08rem;
   line-height: 1.55;
   color: #ececec;
+  text-wrap: pretty;
 }
 
 .project-highlight-metric {
@@ -1068,6 +1407,7 @@ a:focus-visible {
 .project-highlight-metric span {
   color: var(--foreground);
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
 .project-content {
@@ -1075,6 +1415,10 @@ a:focus-visible {
   max-width: 65ch;
   color: #e3e3e3;
   line-height: 1.7;
+}
+
+.project-content p {
+  text-wrap: pretty;
 }
 
 .project-sections {
@@ -1149,12 +1493,17 @@ a:focus-visible {
   font-size: clamp(1.45rem, 2.25vw, 2.05rem);
   line-height: 1.22;
   letter-spacing: var(--track-title);
+  text-wrap: balance;
 }
 
 .project-section-body {
   color: #e3e3e3;
   line-height: var(--lead-long);
   max-width: 64ch;
+}
+
+.project-section-body p {
+  text-wrap: pretty;
 }
 
 .project-section-body p + p {
@@ -1190,6 +1539,7 @@ a:focus-visible {
   margin-top: 2rem;
   margin-bottom: 0.5rem;
   line-height: 1.2;
+  text-wrap: balance;
 }
 
 .project-content p + p {
@@ -1270,7 +1620,7 @@ a:focus-visible {
   padding: 1.15rem 1.2rem;
   border: 1px solid var(--line);
   border-radius: 0.65rem;
-  background: #0a0a0a;
+  background: var(--surface);
   text-decoration: none;
   color: inherit;
   transition: border-color 240ms ease, transform 320ms ease;
@@ -1300,6 +1650,7 @@ a:focus-visible {
   font-size: clamp(1.35rem, 3.5vw, 1.75rem);
   letter-spacing: var(--track-title);
   line-height: 1.12;
+  text-wrap: balance;
 }
 
 .project-work-jump-text p {
@@ -1307,6 +1658,7 @@ a:focus-visible {
   font-size: 0.92rem;
   line-height: var(--lead-copy);
   color: var(--muted);
+  text-wrap: pretty;
 }
 
 .project-work-jump-draft {
@@ -1456,6 +1808,9 @@ a:focus-visible {
   .project-cover,
   .hero-tagline,
   .not-found,
+  .resume-layout,
+  .play-section,
+  .play-entry,
   .work:not(.work-drafts) > h2,
   .work-drafts > h2,
   .work:not(.work-drafts) > .work-list > .work-item,
@@ -1479,11 +1834,17 @@ a:focus-visible {
   .work-item a,
   .project-topbar a,
   .project-work-jump-card,
-  .not-found-link::after {
+  .not-found-link::after,
+  .resume-cta,
+  .play-entry-tag {
     transition: none;
   }
 
   .project-work-jump-card:hover {
+    transform: none;
+  }
+
+  .theme-toggle:active {
     transform: none;
   }
 }

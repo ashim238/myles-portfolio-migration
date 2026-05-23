@@ -15,19 +15,44 @@ export default function ResumePage() {
         <Link href="/">← Back</Link>
       </div>
 
-      <section className="hero project-hero" aria-labelledby="resume-title">
-        <h1 id="resume-title" className="project-hero-title">
-          Resume
-        </h1>
-        <p className="project-hero-lede">
-          A PDF resume will live here. Until then, reach out by email and I will send the latest
-          version.
-        </p>
-        <p>
-          <Link href={`mailto:${siteConfig.email}?subject=Resume%20request`}>
-            Request resume via email
+      <section className="resume-layout" aria-labelledby="resume-title">
+        <div className="resume-primary">
+          <p className="resume-label">Resume</p>
+          <h1 id="resume-title" className="resume-heading">
+            Available on request
+          </h1>
+          <p className="resume-body">
+            A formatted PDF is in progress. In the meantime, send an email and
+            I will share the latest version directly.
+          </p>
+          <Link
+            href={`mailto:${siteConfig.email}?subject=Resume%20request`}
+            className="resume-cta"
+          >
+            Request via email
           </Link>
-        </p>
+        </div>
+
+        <aside className="resume-aside" aria-label="Quick details">
+          <dl className="resume-details">
+            <div className="resume-detail">
+              <dt>Focus</dt>
+              <dd>Product Design</dd>
+            </div>
+            <div className="resume-detail">
+              <dt>Location</dt>
+              <dd>Brooklyn, NY</dd>
+            </div>
+            <div className="resume-detail">
+              <dt>Contact</dt>
+              <dd>
+                <Link href={`mailto:${siteConfig.email}`}>
+                  {siteConfig.email}
+                </Link>
+              </dd>
+            </div>
+          </dl>
+        </aside>
       </section>
     </main>
   );

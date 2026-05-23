@@ -10,46 +10,64 @@ export default function PlayPage() {
         <Link href="/">← Back</Link>
       </div>
 
-      <section className="hero project-hero" aria-labelledby="play-title">
+      <section className="hero project-hero play-hero" aria-labelledby="play-title">
         <h1 id="play-title" className="project-hero-title">
           Play
         </h1>
-        <p className="project-hero-lede">
+        <p className="project-hero-lede play-lede">
           Recreational experiments, game sketches, and generative studies.
         </p>
       </section>
 
-      <section className="work play-work">
-        <h2>Experiments</h2>
-        <ul className="work-list" role="list">
-          {playEntries.map((entry) => (
-            <li key={entry.slug} className="work-item play-item">
-              <h3>{entry.title}</h3>
-              <p className="play-hook">{entry.hook}</p>
-              <p>{entry.exploration}</p>
-              {entry.embedPath ? (
-                <div className="play-embed-wrap">
-                  <iframe
-                    className="play-embed"
-                    src={entry.embedPath}
-                    title={`${entry.title} interactive preview`}
-                    loading="lazy"
-                  />
-                </div>
-              ) : null}
-              <p className="play-meta">
-                {entry.context} · {entry.year}
-              </p>
-              <ul className="play-tags" role="list" aria-label={`${entry.title} tags`}>
-                {entry.tags.map((tag) => (
-                  <li key={tag} className="play-tag">
-                    {tag}
-                  </li>
-                ))}
-              </ul>
+      <section className="play-section" aria-label="Experiments">
+        <p className="play-section-label">Experiments</p>
+
+        <ol className="play-entries" role="list">
+          {playEntries.map((entry, index) => (
+            <li key={entry.slug} className="play-entry">
+              <div className="play-entry-header">
+                <span className="play-entry-index" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h2 className="play-entry-title">{entry.title}</h2>
+              </div>
+
+              <p className="play-entry-hook">{entry.hook}</p>
+
+              <div className="play-entry-body">
+                <p className="play-entry-exploration">{entry.exploration}</p>
+
+                {entry.embedPath ? (
+                  <div className="play-embed-wrap">
+                    <iframe
+                      className="play-embed"
+                      src={entry.embedPath}
+                      title={`${entry.title} interactive preview`}
+                      loading="lazy"
+                    />
+                  </div>
+                ) : null}
+              </div>
+
+              <footer className="play-entry-footer">
+                <p className="play-entry-meta">
+                  {entry.context} &middot; {entry.year}
+                </p>
+                <ul
+                  className="play-entry-tags"
+                  role="list"
+                  aria-label={`${entry.title} tags`}
+                >
+                  {entry.tags.map((tag) => (
+                    <li key={tag} className="play-entry-tag">
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+              </footer>
             </li>
           ))}
-        </ul>
+        </ol>
       </section>
     </main>
   );
