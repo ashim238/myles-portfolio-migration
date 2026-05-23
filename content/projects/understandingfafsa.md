@@ -1,13 +1,15 @@
 ---
 slug: understandingfafsa
 title: UnderstandingFAFSA
-summary: Newsletter system that matches a fresh site rebrand—modular rails, lighter variants for ICYMI and events, and measurable lift after launch.
+summary: Redesigned a newsletter system to match a fresh site rebrand—modular templates, competitive research across 120+ examples, and a 75% lift in open rates.
 role: Product Designer
 timeframe: February 2025 - Ongoing
 status: draft
 order: 2
 coverImage: https://cdn.prod.website-files.com/69bdeaa1de70a36660134a5c/69c6e8127bdf595d15ca4ae9_understandingMockup.png
 highlightQuote: The newsletter should feel as trustworthy and modern as the newly rebranded website.
+outcomeMetricLabel: open rate after redesign (MPP excluded)
+outcomeMetricValue: ~52.6%
 tags:
   - Product Design
   - Content Design
@@ -15,60 +17,73 @@ tags:
 sections:
   - title: Context
     body: |
-      UnderstandingFAFSA helps students, parents, and counselors navigate the FAFSA to secure as much aid as possible. The newsletter is a primary touchpoint: each issue should read as a slice of the org’s guidance—not a detached inbox.
+      UnderstandingFAFSA helps students, parents, and counselors navigate the FAFSA to secure as much aid as possible. The newsletter is a primary touchpoint: each issue should read as a slice of the org's guidance—not a detached inbox.
 
-      The goal is simple alignment. When email looks like a different institution than the site, book, and social, subscribers get mixed signals—and the channel weakens.
-    images:
-      - src: https://cdn.prod.website-files.com/69bdeaa1de70a36660134a5c/69c6e8127bdf595d15ca4ae9_understandingMockup.png
-        alt: Post-redesign newsletter direction—hero layout and hierarchy on a dark canvas.
-  - title: Website vs Inbox
+      The website had already moved to a calmer, more modern visual language built around the Saans typeface and a refreshed brand palette. The newsletter still carried an older system. Subscribers were seeing two different versions of the brand depending on the channel—and that gap was weakening trust in the email.
+
+      Scope stayed email-only. The founder was the main stakeholder and the person assembling every issue, so the system had to protect the brand regardless of subject matter or who was building it.
+
+  - title: The Problem
     body: |
-      The website had already moved to a calmer, more modern visual language. The newsletter still carried an older system. Users were seeing versions of the brand on different channels.
+      The old template failed where busy readers notice first: uneven CTAs, a palette that didn't carry the rebrand, long unscannable stretches, weak section breaks, and layout that didn't prioritize phone reading. Open rates sat around **~30%**.
 
-      Scope stayed email-only. The founder was the main stakeholder; copy was tuned with the site copywriter between sends. The hardest requirement was repeatability: a non-designer assembles every issue, so the system has to protect the brand regardless of subject matter.
+      If email stayed weak, people would miss deadline-driven guidance when it matters most—FAFSA filing windows, scholarship deadlines, policy changes. The channel needed to earn the same credibility the site had built.
     images:
       - src: https://placehold.co/1400x900/121212/9a9a9a/png?text=Swap+in%3A+legacy+newsletter+full+width
-        alt: Placeholder—replace with a full-width export of the pre-redesign template (desktop).
-  - title: Editorial Rails
+        alt: Pre-redesign newsletter template showing the older visual system and layout issues.
+      - src: https://placehold.co/1400x901/121212/9a9a9a/png?text=Swap+in%3A+mobile+before%2fafter
+        alt: Mobile before/after comparison showing the old template versus the redesigned version.
+
+  - title: Competitive Audit
     body: |
-      The program runs weekly: core newsletter, ICYMI, and event promotion. ICYMI and events use a lighter variant of the same modular system—fewer blocks, faster assembly, still one family.
+      Before touching templates, we compiled over **120 newsletter examples** and evaluated them against four criteria: clarity, personalization, tone of voice, and visual appeal and branding consistency.
 
-      Template work lived in Figma and Mailchimp; the founder maps each week’s copy into the rails. Editors swap body copy and emoji-style section images. Spacing, dividers, type, and the structural skeleton stay locked so swaps don’t quietly undo the brand.
+      Five newsletters got the deepest treatment—Revenews, The 74, Next by Jeff Selingo, Medium, and Folderly—each one a different approach to the same problem: making a recurring email feel worth opening. The rest of the pool served as lighter reference for layout, color, and hierarchy patterns.
 
-      Even color variants were chosen to be in harmony with UnderstandingFAFSA’s design system.
+      What we learned from the deep-dives shaped the system directly:
+
+      - **Selective type bolding** to create visual entry points without adding imagery—a pattern Revenews used well with emoji section headers and concise intros
+      - **Custom bespoke bulletpoints** that reinforced brand identity in the smallest details, like Folderly's use of brand-colored accents
+      - **Action-focused section titles** that turned bulk information into content readers could parse in a single scroll
+      - **Tone calibration by audience**: student-facing emails could carry emojis and GIFs; counselor-facing emails needed the more earnest, formal register we saw in The 74
+      - **Personalization through structure**: Next's if/then link framing ("if you're looking for help with X, then...") gave readers agency, and author photos with brief bios made the sender feel human
+
+      From there we put our own spin on it—adapting these patterns to UnderstandingFAFSA's voice, the founder's preference for vibrancy, and the practical constraint that a non-designer would assemble every issue.
+
+  - title: Building the System
+    body: |
+      The system ships four template types on the same modular vocabulary: a **welcome email** that sets expectations on frequency and content, the **core weekly newsletter**, a lighter **ICYMI/event variant** with fewer blocks and faster assembly, and a **counselor-focused toolkit** with a more professional tone—duotone icons instead of emojis.
+
+      The welcome email follows a deliberate structure shaped by the audit: banner, gratitude, what to expect, a brief history that transitions into the current mission, a CTA, suggested reading, and social links. It's the subscriber's first impression of the redesigned brand.
+
+      Template work lived in Figma and Mailchimp. The founder maps each week's copy into the editorial rails. Editors swap body copy and emoji-style section images. Spacing, dividers, type, and the structural skeleton stay locked so swaps don't quietly undo the brand.
+
+      Color variants were chosen to stay in harmony with UnderstandingFAFSA's design system. The locked-vs-swappable distinction was the core design decision: enough flexibility for the founder to move fast, enough rigidity that no send drifts off-brand.
     images:
       - src: https://placehold.co/1400x900/121212/9a9a9a/png?text=Swap+in%3A+Figma+rails+%2b+block+map
-        alt: Placeholder—replace with Figma frame or annotated block map (locked vs swappable).
+        alt: Figma frame or annotated block map showing locked structural elements versus swappable content zones.
+
   - title: Figma to Mailchimp
     body: |
       Figma held the outline—hierarchy, spacing, modular rhythm—but the live template had to be rebuilt in Mailchimp so the founder could edit without touching HTML. Matching Figma spacing inside the builder was a dead end; every container and wrapper added weight. I reframed hierarchy so section headers and body read clearly in email, not on a static artboard.
 
-      Gmail was the loudest constraint: a 102KB HTML ceiling, and clipping showed up there first. Early weight came from custom section icons (before emoji-style swaps) and themed dividers exported from Figma. The fix stack was practical—test sends, stripping redundant wrappers and dividers, merging sections where it still scanned, and compressing PNGs through an external tool. For dark-mode-friendly dividers I removed backgrounds in Photoshop so assets stayed lighter without muddying on phone.
+      Gmail was the loudest constraint: a **102KB HTML ceiling**, and clipping showed up there first. Early weight came from custom section icons and themed dividers exported from Figma. The fix stack was practical—test sends, stripping redundant wrappers and dividers, merging sections where it still scanned, and compressing PNGs through an external tool. For dark-mode-friendly dividers I removed backgrounds in Photoshop so assets stayed lighter without muddying on phone.
 
-      Compression wasn’t one recipe. The default weekly modular kit leaned on fewer custom assets and more Mailchimp-native structure. The counselor toolkit needed a more professional tone—duotone icons instead of emojis—so it asked for more image work and tighter file discipline. What I wouldn’t trade for kilobytes: typography tuned to the closest Mailchimp sans to the site, and the full brand palette—even when balancing the founder’s appetite for vibrancy against the ceiling.
+      Compression wasn't one recipe. The weekly kit leaned on fewer custom assets and more Mailchimp-native structure. The counselor toolkit needed more image work and tighter file discipline for its duotone icons. What I wouldn't trade for kilobytes: typography tuned to the closest Mailchimp sans to the site's Saans typeface, and the full brand palette—even when balancing the founder's appetite for vibrancy against the ceiling.
 
-      We user-tested as the template evolved: I shared progress with the team, and the founder could tell async whether she could maintain it. Figma-forward or HTML-line-by-line workflows wouldn’t have stuck; Mailchimp modules did. I’d remove liberally, then check back on what was non-negotiable for her.
+      We tested as the template evolved: the founder could tell async whether she could maintain it. Figma-forward or HTML-line-by-line workflows wouldn't have stuck; Mailchimp modules did.
     images:
       - src: https://placehold.co/1400x903/121212/9a9a9a/png?text=Swap+in%3A+Figma+vs+shipped+comparison
-        alt: Placeholder—replace with your Figma vs shipped Mailchimp comparison (side by side).
-  - title: What Broke
+        alt: Side-by-side comparison of the Figma design versus the shipped Mailchimp template.
+
+  - title: Results
     body: |
-      The old template failed where busy readers notice first: uneven CTAs, palette that didn’t carry the rebrand, long unscannable stretches, weak section breaks, and layout that didn’t prioritize phone reading. If email stayed weak, people miss deadline-driven guidance when it matters.
+      Shipped: master template, modular blocks, explicit locked-vs-swappable rules, and three template variants on the same design vocabulary.
 
-      What did a fixed template look like? As vibrant as the new site, scannable on a first open, fast to scroll—closer to strong education newsletters that tease depth on the site, not in the body copy.
+      First redesigned send **November 4, 2025**. Open rates moved from **~30% to ~52.6%** (Mailchimp reporting with MPP excluded), with clicks, bounces, and unsubscribes still in a healthy band.
+
+      The counselor-focused toolkit—extending the same system for a more professional audience—is nearly complete and shipping soon.
     images:
-      - src: https://placehold.co/1400x901/121212/9a9a9a/png?text=Swap+in%3A+mobile+before%2fafter
-        alt: Placeholder—replace with mobile screenshot or before/after pair from device preview.
-  - title: Launch and Next
-    body: |
-      Shipped: master template, modular blocks, explicit locked-vs-swappable rules, and the lighter ICYMI/event variants on the same vocabulary.
-
-      First redesigned send **November 4, 2025**—the spike you see on the chart. Sustained Mailchimp reporting with **MPP excluded** (dashboard definition) sits around **~52.6%** opens for the post-launch window we measured, with clicks, bounces, and unsubscribes still in a healthy band.
-
-      Next: a counselor-focused toolkit built from the same system—extend the language without inventing a second inbox product.
-    images:
-      - src: https://cdn.prod.website-files.com/69bdeaa1de70a36660134a5c/69c6e8127bdf595d15ca4ae9_understandingMockup.png
-        alt: Shipped modular layout—section rhythm, emoji-style imagery slots, and CTA strip.
       - src: https://placehold.co/1400x902/121212/9a9a9a/png?text=Swap+in%3A+Mailchimp+opens+chart+crop
-        alt: Placeholder—replace with cropped Mailchimp performance export (opens with MPP excluded).
+        alt: Mailchimp performance chart showing the open rate spike after the November 4 redesigned send.
 ---
