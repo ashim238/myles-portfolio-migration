@@ -29,10 +29,10 @@ sections:
 
       If email stayed weak, people would miss deadline-driven guidance when it matters most—FAFSA filing windows, scholarship deadlines, policy changes. The channel needed to earn the same credibility the site had built.
     images:
-      - src: https://placehold.co/1400x900/121212/9a9a9a/png?text=Swap+in%3A+legacy+newsletter+full+width
-        alt: Pre-redesign newsletter template showing the older visual system and layout issues.
-      - src: https://placehold.co/1400x901/121212/9a9a9a/png?text=Swap+in%3A+mobile+before%2fafter
-        alt: Mobile before/after comparison showing the old template versus the redesigned version.
+      - src: /projects/understandingfafsa/mobile-before.jpg
+        alt: Old newsletter template on mobile showing the legacy blue header, inconsistent hierarchy, and layout issues.
+      - src: /projects/understandingfafsa/mobile-after.jpg
+        alt: Redesigned newsletter on mobile showing the updated brand system, cleaner hierarchy, and improved readability.
 
   - title: Competitive Audit
     body: |
@@ -60,8 +60,20 @@ sections:
 
       Color variants were chosen to stay in harmony with UnderstandingFAFSA's design system. The locked-vs-swappable distinction was the core design decision: enough flexibility for the founder to move fast, enough rigidity that no send drifts off-brand.
     images:
-      - src: https://placehold.co/1400x900/121212/9a9a9a/png?text=Swap+in%3A+Figma+rails+%2b+block+map
-        alt: Figma frame or annotated block map showing locked structural elements versus swappable content zones.
+      - src: /projects/understandingfafsa/modular-header.png
+        alt: Redesigned newsletter header block with orange brand palette and cap icon.
+      - src: /projects/understandingfafsa/modular-students.png
+        alt: Student-focused content block with audience segmentation for juniors and seniors.
+      - src: /projects/understandingfafsa/modular-best.png
+        alt: Curated reading block with trophy icon and branded link styling.
+      - src: /projects/understandingfafsa/modular-related.png
+        alt: Related reading section with news icon and orange link accents.
+      - src: /projects/understandingfafsa/modular-reading.png
+        alt: Scholarship and college cost content block with structured bullet points.
+      - src: /projects/understandingfafsa/modular-guides.png
+        alt: Guide cards section linking to downloadable resources.
+      - src: /projects/understandingfafsa/modular-closer.png
+        alt: Footer block with subscribe CTA, social links, and The New School branding.
 
   - title: Figma to Mailchimp
     body: |
@@ -73,8 +85,10 @@ sections:
 
       We tested as the template evolved: the founder could tell async whether she could maintain it. Figma-forward or HTML-line-by-line workflows wouldn't have stuck; Mailchimp modules did.
     images:
-      - src: https://placehold.co/1400x903/121212/9a9a9a/png?text=Swap+in%3A+Figma+vs+shipped+comparison
-        alt: Side-by-side comparison of the Figma design versus the shipped Mailchimp template.
+      - src: /projects/understandingfafsa/figma-design.jpg
+        alt: Figma design showing the content section layout and typography before Mailchimp translation.
+      - src: /projects/understandingfafsa/shipped-mailchimp.jpg
+        alt: Shipped Mailchimp template with emoji section headers, branded CTA, and wave dividers.
 
   - title: Results
     body: |
@@ -83,7 +97,4 @@ sections:
       First redesigned send **November 4, 2025**. Open rates moved from **~30% to ~52.6%** (Mailchimp reporting with MPP excluded), with clicks, bounces, and unsubscribes still in a healthy band.
 
       The counselor-focused toolkit—extending the same system for a more professional audience—is nearly complete and shipping soon.
-    images:
-      - src: https://placehold.co/1400x902/121212/9a9a9a/png?text=Swap+in%3A+Mailchimp+opens+chart+crop
-        alt: Mailchimp performance chart showing the open rate spike after the November 4 redesigned send.
 ---
