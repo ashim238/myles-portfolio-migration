@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Loom - Generative Weave</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.1/p5.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="panel">
+        <h1>Loom</h1>
+        <p class="lede">
+          A small generative weaving study. Each answer adds a new thread pattern.
+        </p>
+        <p class="instructions">
+          Type a response to <em>"What brings you joy?"</em>, then press Enter or select Weave.
+        </p>
+      </header>
+      <section class="controls panel" aria-label="Weave controls">
+        <label for="joy-input">What brings you joy?</label>
+        <div class="controls-row">
+          <input id="joy-input" type="text" maxlength="120" placeholder="e.g. cooking for friends" />
+          <button id="weave-button" type="button">Weave</button>
+          <button id="clear-button" type="button">Clear</button>
+        </div>
+        <p id="status" class="status" aria-live="polite">No threads yet.</p>
+      </section>
+      <section class="canvas-wrap panel">
+        <div id="loom-canvas" aria-label="Generative loom artwork" role="img"></div>
+      </section>
+    </main>
+    <script src="sketch.js"></script>
+  </body>
+</html>
