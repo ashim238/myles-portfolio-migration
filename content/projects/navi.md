@@ -83,14 +83,15 @@ sections:
         alt: Navi experience flow view three
   - title: What Navi proved and where it goes next
     body: |
-      Navi showed that community-centered travel can be both practical and desirable when recommendations are curated with context.
+      Navi showed that community-centered travel can be both practical and desirable when recommendations are curated with local context.
 
-      The concept validated that intent-rich exploration scales better than pure algorithmic browsing when the goal is meaningful neighborhood engagement.
+      The concept validated that intent-rich exploration scales better than algorithmic browsing when the goal is meaningful neighborhood engagement.
 
       Next opportunities include:
-      - deeper neighborhood pages within Learn
-      - richer collaborative planning for group travelers
-      - onboarding paths for local hosts and businesses
+
+      - Deeper neighborhood pages within Learn, surfacing history, local voices, and seasonal rhythms.
+      - Richer collaborative planning tools for group travelers coordinating across schedules and interests.
+      - Onboarding paths for local hosts and businesses to list and manage their own experiences.
     images:
       - src: https://cdn.prod.website-files.com/69bdeaa1de70a36660134a5c/69c4764ce6388292da9ae866_Navi%20Mockup.png
         alt: Final Navi mockup
