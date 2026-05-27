@@ -4,11 +4,12 @@ import { ProjectSection } from "@/lib/content";
 type ProjectSectionCardProps = {
   section: ProjectSection;
   projectTitle: string;
+  id?: string;
 };
 
-export function ProjectSectionCard({ section, projectTitle }: ProjectSectionCardProps) {
+export function ProjectSectionCard({ section, projectTitle, id }: ProjectSectionCardProps) {
   return (
-    <article className="project-section">
+    <article className="project-section" id={id}>
       <h2>{section.title}</h2>
       <div
         className="project-section-body"

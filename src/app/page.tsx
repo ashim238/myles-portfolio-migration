@@ -25,7 +25,7 @@ export default async function Home() {
       <section className="hero">
         <h1 className="hero-name">{siteConfig.name}</h1>
         <HeroInterestTyper awaitHomeEntrance />
-        <p className="hero-tagline">Product designer building useful digital experiences.</p>
+        <p className="hero-tagline">Focused on the balance between interaction design & social responsibility.</p>
       </section>
 
       <section className="work" id="work">

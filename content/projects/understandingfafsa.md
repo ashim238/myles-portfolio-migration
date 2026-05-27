@@ -6,7 +6,7 @@ role: Product Designer
 timeframe: February 2025 - Ongoing
 status: draft
 order: 2
-coverImage: https://cdn.prod.website-files.com/69bdeaa1de70a36660134a5c/69c6e8127bdf595d15ca4ae9_understandingMockup.png
+coverImage: /projects/understandingfafsa/cover.png
 highlightQuote: The newsletter should feel as trustworthy and modern as the newly rebranded website.
 outcomeMetricLabel: open rate after redesign (MPP excluded)
 outcomeMetricValue: ~52.6%
@@ -29,10 +29,10 @@ sections:
 
       If email stayed weak, people would miss deadline-driven guidance when it matters most—FAFSA filing windows, scholarship deadlines, policy changes. The channel needed to earn the same credibility the site had built.
     images:
-      - src: /projects/understandingfafsa/mobile-before.jpg
-        alt: Old newsletter template on mobile showing the legacy blue header, inconsistent hierarchy, and layout issues.
       - src: /projects/understandingfafsa/mobile-after.jpg
-        alt: Redesigned newsletter on mobile showing the updated brand system, cleaner hierarchy, and improved readability.
+        alt: Old newsletter template on mobile before the redesign.
+      - src: /projects/understandingfafsa/mobile-before.jpg
+        alt: Redesigned newsletter on mobile with updated hierarchy and brand system.
 
   - title: Competitive Audit
     body: |

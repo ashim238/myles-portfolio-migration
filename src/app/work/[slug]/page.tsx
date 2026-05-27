@@ -5,8 +5,16 @@ import { notFound } from "next/navigation";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectHighlight } from "@/components/project-highlight";
 import { ProjectSectionCard } from "@/components/project-section-card";
+import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
 import { getAllProjects, getProjectBySlug } from "@/lib/content";
+
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
 
 type Params = { slug: string };
 
@@ -96,15 +104,24 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
       />
 
       {project.sections.length > 0 ? (
-        <section className="project-sections">
-          {project.sections.map((section) => (
-            <ProjectSectionCard
-              key={section.title}
-              section={section}
-              projectTitle={project.title}
-            />
-          ))}
-        </section>
+        <>
+          <ProjectToc
+            sections={project.sections.map((s) => ({
+              title: s.title,
+              id: `section-${slugify(s.title)}`,
+            }))}
+          />
+          <section className="project-sections">
+            {project.sections.map((section) => (
+              <ProjectSectionCard
+                key={section.title}
+                section={section}
+                projectTitle={project.title}
+                id={`section-${slugify(section.title)}`}
+              />
+            ))}
+          </section>
+        </>
       ) : null}
 
       {project.bodyHtml.trim() ? (
