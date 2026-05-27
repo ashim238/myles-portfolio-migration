@@ -12,6 +12,7 @@ export type ProjectSection = {
     src: string;
     alt?: string;
   }>;
+  colors?: string[];
 };
 
 export type Project = {
@@ -86,10 +87,19 @@ function parseProjectSections(data: Record<string, unknown>): ProjectSection[] {
       }
     }
 
+    const colors: string[] = [];
+    if (Array.isArray(record.colors)) {
+      for (const c of record.colors) {
+        const hex = String(c).trim();
+        if (hex) colors.push(hex);
+      }
+    }
+
     sections.push({
       title,
       bodyHtml: marked.parse(body) as string,
       images,
+      ...(colors.length > 0 ? { colors } : {}),
     });
   }
 

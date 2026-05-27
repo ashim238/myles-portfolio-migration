@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ProjectSection } from "@/lib/content";
+import { ColorPalette } from "@/components/color-palette";
 
 type ProjectSectionCardProps = {
   section: ProjectSection;
@@ -15,6 +16,9 @@ export function ProjectSectionCard({ section, projectTitle, id }: ProjectSection
         className="project-section-body"
         dangerouslySetInnerHTML={{ __html: section.bodyHtml }}
       />
+      {section.colors && section.colors.length > 0 ? (
+        <ColorPalette colors={section.colors} />
+      ) : null}
       {section.images.length > 0 ? (
         <div className="project-section-images">
           {section.images.map((image) => (

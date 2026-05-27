@@ -1423,7 +1423,7 @@ a:focus-visible {
 
 .project-sections {
   display: grid;
-  gap: 2.7rem;
+  gap: 4.5rem;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -1513,6 +1513,87 @@ a:focus-visible {
 .project-section-body ul,
 .project-section-body ol {
   margin: 0.8rem 0 0.8rem 1.25rem;
+  list-style: disc;
+}
+
+.project-section-body ol {
+  list-style: decimal;
+}
+
+.project-section-body li + li {
+  margin-top: 0.35rem;
+}
+
+/* ── Color palette swatches ── */
+
+.color-palette {
+  margin-top: 2.4rem;
+  margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+}
+
+.color-swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.color-swatch-circle {
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background: var(--swatch-color);
+  transition: transform 260ms ease, box-shadow 260ms ease;
+  box-shadow: 0 0 0 0 transparent;
+}
+
+.color-swatch:hover .color-swatch-circle {
+  transform: scale(1.14);
+  box-shadow: 0 0 0 2.5px var(--background), 0 0 0 4px var(--swatch-color);
+}
+
+.color-swatch-label {
+  font-size: 0.7rem;
+  font-family: var(--font-mono);
+  color: var(--muted);
+  letter-spacing: 0.01em;
+  transition: color 200ms ease;
+  min-width: 5ch;
+  text-align: center;
+}
+
+.color-swatch:hover .color-swatch-label {
+  color: var(--foreground);
+}
+
+@media (max-width: 768px) {
+  .color-palette {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.9rem 0.6rem;
+  }
+
+  .color-swatch-circle {
+    width: 2.6rem;
+    height: 2.6rem;
+  }
+
+  .color-swatch-label {
+    font-size: 0.62rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .color-palette {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .project-section-images {
@@ -1739,6 +1820,15 @@ a:focus-visible {
 .project-content ul,
 .project-content ol {
   margin: 0.8rem 0 0.8rem 1.25rem;
+  list-style: disc;
+}
+
+.project-content ol {
+  list-style: decimal;
+}
+
+.project-content li + li {
+  margin-top: 0.35rem;
 }
 
 .project-content a {
