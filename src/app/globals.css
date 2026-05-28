@@ -641,6 +641,7 @@ html.home-intro-wait .home-page #work > .work-list > .work-item {
   letter-spacing: 0.02em;
 }
 
+
 .theme-toggle {
   display: inline-flex;
   align-items: center;
@@ -797,6 +798,7 @@ a:focus-visible {
   letter-spacing: var(--track-hero-name);
   white-space: nowrap;
 }
+
 
 .hero-typer {
   margin-top: var(--gap-hero-name-typer);
