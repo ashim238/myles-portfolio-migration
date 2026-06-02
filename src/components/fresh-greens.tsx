@@ -115,7 +115,7 @@ export function ArchitectureDiagram() {
   return (
     <figure className="fg-arch">
       <svg
-        viewBox="0 0 720 420"
+        viewBox="0 0 880 420"
         xmlns="http://www.w3.org/2000/svg"
         className="fg-arch-svg"
         role="img"
@@ -135,31 +135,31 @@ export function ArchitectureDiagram() {
           </marker>
         </defs>
 
-        {/* Source labels — top row */}
+        {/* Source labels — top row, wider spacing + smaller subtitle */}
         <g className="fg-arch-sources" fontFamily="var(--font-mono)" fontSize="11">
-          <text x="60" y="32">OpenStreetMap</text>
-          <text x="60" y="48" opacity="0.62">lighting · landuse · parks</text>
+          <text x="40" y="32">OpenStreetMap</text>
+          <text x="40" y="50" fontSize="10" opacity="0.62">lighting · landuse · parks</text>
 
-          <text x="220" y="32">OSRM</text>
-          <text x="220" y="48" opacity="0.62">route geometry</text>
+          <text x="240" y="32">OSRM</text>
+          <text x="240" y="50" fontSize="10" opacity="0.62">route geometry</text>
 
-          <text x="320" y="32">SunCalc</text>
-          <text x="320" y="48" opacity="0.62">solar geometry</text>
+          <text x="380" y="32">SunCalc</text>
+          <text x="380" y="50" fontSize="10" opacity="0.62">solar geometry</text>
 
-          <text x="430" y="32">Mapbox Search</text>
-          <text x="430" y="48" opacity="0.62">destinations</text>
+          <text x="520" y="32">Mapbox Search</text>
+          <text x="520" y="50" fontSize="10" opacity="0.62">destinations</text>
 
-          <text x="570" y="32">Community reports</text>
-          <text x="570" y="48" opacity="0.62">observations · weighted</text>
+          <text x="670" y="32">Community reports</text>
+          <text x="670" y="50" fontSize="10" opacity="0.62">observations · weighted</text>
         </g>
 
         {/* Arrows from sources into the adapter layer */}
         <g stroke="currentColor" strokeWidth="1" fill="none" markerEnd="url(#fg-arrow)" opacity="0.45">
-          <line x1="100" y1="62" x2="100" y2="100" />
-          <line x1="240" y1="62" x2="240" y2="100" />
-          <line x1="350" y1="62" x2="350" y2="100" />
-          <line x1="470" y1="62" x2="470" y2="100" />
-          <line x1="610" y1="62" x2="610" y2="100" />
+          <line x1="110" y1="64" x2="110" y2="100" />
+          <line x1="280" y1="64" x2="280" y2="100" />
+          <line x1="420" y1="64" x2="420" y2="100" />
+          <line x1="580" y1="64" x2="580" y2="100" />
+          <line x1="750" y1="64" x2="750" y2="100" />
         </g>
 
         {/* Adapter layer */}
@@ -167,7 +167,7 @@ export function ArchitectureDiagram() {
           <rect
             x="30"
             y="105"
-            width="660"
+            width="820"
             height="68"
             rx="6"
             fill="none"
@@ -191,7 +191,7 @@ export function ArchitectureDiagram() {
           markerEnd="url(#fg-arrow)"
           opacity="0.65"
         >
-          <line x1="360" y1="175" x2="360" y2="208" />
+          <line x1="440" y1="175" x2="440" y2="208" />
         </g>
 
         {/* Scoring layer — the highlight */}
@@ -199,7 +199,7 @@ export function ArchitectureDiagram() {
           <rect
             x="30"
             y="213"
-            width="660"
+            width="820"
             height="78"
             rx="6"
             fill="var(--fg-accent-soft)"
@@ -231,7 +231,7 @@ export function ArchitectureDiagram() {
           markerEnd="url(#fg-arrow)"
           opacity="0.65"
         >
-          <line x1="360" y1="293" x2="360" y2="326" />
+          <line x1="440" y1="293" x2="440" y2="326" />
         </g>
 
         {/* Screen layer */}
@@ -239,7 +239,7 @@ export function ArchitectureDiagram() {
           <rect
             x="30"
             y="331"
-            width="660"
+            width="820"
             height="68"
             rx="6"
             fill="none"
@@ -272,7 +272,7 @@ export function ProcessGraph() {
   return (
     <figure className="fg-arch fg-arch--process">
       <svg
-        viewBox="0 0 600 280"
+        viewBox="0 0 720 280"
         xmlns="http://www.w3.org/2000/svg"
         className="fg-arch-svg"
         role="img"
@@ -292,24 +292,24 @@ export function ProcessGraph() {
           </marker>
         </defs>
 
-        {/* Source labels — top row, three columns */}
+        {/* Source labels — top row, three columns with smaller subtitle */}
         <g
           className="fg-arch-sources"
           fontFamily="var(--font-mono)"
           fontSize="11"
         >
           <text x="40" y="30">codebase</text>
-          <text x="40" y="46" opacity="0.62">
+          <text x="40" y="48" fontSize="10" opacity="0.62">
             the running source
           </text>
 
-          <text x="225" y="30">design conversations</text>
-          <text x="225" y="46" opacity="0.62">
+          <text x="265" y="30">design conversations</text>
+          <text x="265" y="48" fontSize="10" opacity="0.62">
             every back-and-forth, indexed
           </text>
 
-          <text x="440" y="30">thesis document</text>
-          <text x="440" y="46" opacity="0.62">
+          <text x="520" y="30">thesis document</text>
+          <text x="520" y="48" fontSize="10" opacity="0.62">
             the underlying claim
           </text>
         </g>
@@ -323,17 +323,17 @@ export function ProcessGraph() {
           markerEnd="url(#fg-process-arrow)"
           opacity="0.5"
         >
-          <path d="M75 60 Q 75 110 195 140" />
-          <line x1="300" y1="60" x2="300" y2="143" />
-          <path d="M525 60 Q 525 110 405 140" />
+          <path d="M95 62 Q 95 112 235 142" />
+          <line x1="360" y1="62" x2="360" y2="145" />
+          <path d="M625 62 Q 625 112 485 142" />
         </g>
 
         {/* graphify — highlighted central node (the merged memory) */}
         <g>
           <rect
             x="30"
-            y="148"
-            width="540"
+            y="150"
+            width="660"
             height="74"
             rx="6"
             fill="var(--fg-accent-soft)"
@@ -342,17 +342,17 @@ export function ProcessGraph() {
           />
           <text
             x="48"
-            y="171"
+            y="173"
             fontSize="11"
             fontFamily="var(--font-mono)"
             fill="var(--fg-accent)"
           >
             graphify
           </text>
-          <text x="48" y="196" fontSize="14" fontWeight="500">
+          <text x="48" y="198" fontSize="14" fontWeight="500">
             One queryable memory.
           </text>
-          <text x="48" y="214" fontSize="12" opacity="0.7">
+          <text x="48" y="216" fontSize="12" opacity="0.7">
             Every decision indexed across all three sources.
           </text>
         </g>
@@ -365,13 +365,13 @@ export function ProcessGraph() {
           markerEnd="url(#fg-process-arrow)"
           opacity="0.65"
         >
-          <line x1="300" y1="224" x2="300" y2="250" />
+          <line x1="360" y1="226" x2="360" y2="252" />
         </g>
 
         {/* Outcome — quiet trailing line */}
         <text
-          x="300"
-          y="272"
+          x="360"
+          y="274"
           fontSize="12"
           textAnchor="middle"
           opacity="0.7"
