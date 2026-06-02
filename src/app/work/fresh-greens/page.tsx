@@ -8,6 +8,7 @@ import {
   FeatureCard,
   HeroRouteIllustration,
   PhoneFrame,
+  ProcessGraph,
   SignalSwatches,
 } from "@/components/fresh-greens";
 import { getAllProjects } from "@/lib/content";
@@ -474,7 +475,10 @@ export default async function FreshGreensPage() {
       </section>
 
       {/* ── Process / tooling ────────────────────────── */}
-      <section className="project-section fg-section" aria-labelledby="fg-process">
+      <section
+        className="project-section fg-section fg-section--wide"
+        aria-labelledby="fg-process"
+      >
         <h2 id="fg-process">Process built the same way the product was.</h2>
         <div className="project-section-body">
           <p>
@@ -492,6 +496,8 @@ export default async function FreshGreensPage() {
             that made it.
           </p>
         </div>
+
+        <ProcessGraph />
       </section>
 
       {/* ── Honest scope ─────────────────────────────── */}

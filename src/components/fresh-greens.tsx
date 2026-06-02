@@ -260,6 +260,130 @@ export function ArchitectureDiagram() {
 }
 
 /* ──────────────────────────────────────────
+   Process knowledge graph
+   Three knowledge sources merge into one queryable memory.
+   Deliberately echoes the architecture diagram above —
+   same wrapper, same mono labels, same accent-highlighted
+   central node — so the "medium echoes the message" claim
+   in the prose lands visually too.
+   ────────────────────────────────────────── */
+
+export function ProcessGraph() {
+  return (
+    <figure className="fg-arch fg-arch--process">
+      <svg
+        viewBox="0 0 600 280"
+        xmlns="http://www.w3.org/2000/svg"
+        className="fg-arch-svg"
+        role="img"
+        aria-label="Three knowledge sources — the codebase, the running log of design conversations, and the thesis document — merge into one queryable memory called graphify, so any decision in the build stays reconstructible."
+      >
+        <defs>
+          <marker
+            id="fg-process-arrow"
+            viewBox="0 0 10 10"
+            refX="8"
+            refY="5"
+            markerWidth="6"
+            markerHeight="6"
+            orient="auto"
+          >
+            <path d="M0,0 L10,5 L0,10 z" fill="currentColor" />
+          </marker>
+        </defs>
+
+        {/* Source labels — top row, three columns */}
+        <g
+          className="fg-arch-sources"
+          fontFamily="var(--font-mono)"
+          fontSize="11"
+        >
+          <text x="40" y="30">codebase</text>
+          <text x="40" y="46" opacity="0.62">
+            the running source
+          </text>
+
+          <text x="225" y="30">design conversations</text>
+          <text x="225" y="46" opacity="0.62">
+            every back-and-forth, indexed
+          </text>
+
+          <text x="440" y="30">thesis document</text>
+          <text x="440" y="46" opacity="0.62">
+            the underlying claim
+          </text>
+        </g>
+
+        {/* Three converging arrows — left and right curve inward,
+            center drops straight */}
+        <g
+          stroke="currentColor"
+          strokeWidth="1"
+          fill="none"
+          markerEnd="url(#fg-process-arrow)"
+          opacity="0.5"
+        >
+          <path d="M75 60 Q 75 110 195 140" />
+          <line x1="300" y1="60" x2="300" y2="143" />
+          <path d="M525 60 Q 525 110 405 140" />
+        </g>
+
+        {/* graphify — highlighted central node (the merged memory) */}
+        <g>
+          <rect
+            x="30"
+            y="148"
+            width="540"
+            height="74"
+            rx="6"
+            fill="var(--fg-accent-soft)"
+            stroke="var(--fg-accent)"
+            strokeWidth="1.4"
+          />
+          <text
+            x="48"
+            y="171"
+            fontSize="11"
+            fontFamily="var(--font-mono)"
+            fill="var(--fg-accent)"
+          >
+            graphify
+          </text>
+          <text x="48" y="196" fontSize="14" fontWeight="500">
+            One queryable memory.
+          </text>
+          <text x="48" y="214" fontSize="12" opacity="0.7">
+            Every decision indexed across all three sources.
+          </text>
+        </g>
+
+        {/* Output arrow — single line down to the outcome label */}
+        <g
+          stroke="currentColor"
+          strokeWidth="1.2"
+          fill="none"
+          markerEnd="url(#fg-process-arrow)"
+          opacity="0.65"
+        >
+          <line x1="300" y1="224" x2="300" y2="250" />
+        </g>
+
+        {/* Outcome — quiet trailing line */}
+        <text
+          x="300"
+          y="272"
+          fontSize="12"
+          textAnchor="middle"
+          opacity="0.7"
+        >
+          Any decision, reconstructible.
+        </text>
+      </svg>
+    </figure>
+  );
+}
+
+/* ──────────────────────────────────────────
    Reserved-color signaling chips
    Real swatches with their meaning, not aspirational chips.
    The whole point of the system is that these colors are committed.

@@ -2528,11 +2528,21 @@ button:focus-visible,
   overflow-x: auto;
 }
 
+/* Quieter variant for the process section — same vocabulary, smaller voice */
+.fg-arch--process {
+  margin: 1.5rem 0 0.4rem;
+  padding: 1.25rem 1.1rem;
+}
+
 .fg-arch-svg {
   width: 100%;
   min-width: 560px;
   height: auto;
   color: var(--foreground);
+}
+
+.fg-arch--process .fg-arch-svg {
+  min-width: 520px;
 }
 
 /* ── Features grid ────────────────────────────────────── */
