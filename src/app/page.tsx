@@ -81,10 +81,29 @@ export default async function Home() {
           Brooklyn-based product designer focused on strategy, interaction detail,
           and clear storytelling through digital products.
         </p>
+        <p className="about-actions">
+          <Link className="about-action" href="/resume">
+            Read the résumé
+            <span aria-hidden="true"> →</span>
+          </Link>
+          <a className="about-action" href={`mailto:${siteConfig.email}`}>
+            Get in touch
+            <span aria-hidden="true"> ↗</span>
+          </a>
+        </p>
       </section>
 
       <footer className="footer">
-        © {new Date().getFullYear()} {siteConfig.name.toUpperCase()}
+        <nav className="footer-nav" aria-label="Footer">
+          <Link href="/#work">Work</Link>
+          <Link href="/#about">About</Link>
+          <Link href="/play">Play</Link>
+          <Link href="/resume">Résumé</Link>
+          <a href={`mailto:${siteConfig.email}`}>Email</a>
+        </nav>
+        <p className="footer-meta">
+          © {new Date().getFullYear()} {siteConfig.name}
+        </p>
       </footer>
       </main>
     </>

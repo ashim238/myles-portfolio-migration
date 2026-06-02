@@ -6,13 +6,22 @@ export default function PlayPage() {
   return (
     <main className="page-shell project-page" id="main-content">
       <SiteNav />
-      <div className="project-topbar">
-        <Link href="/">← Back</Link>
-      </div>
+      <nav className="project-topbar" aria-label="Breadcrumb">
+        <Link href="/">
+          <span aria-hidden="true">← </span>
+          Home
+        </Link>
+      </nav>
 
       <section className="hero project-hero play-hero" aria-labelledby="play-title">
-        <h1 id="play-title" className="project-hero-title">
-          Play
+        <h1 id="play-title" className="project-hero-title play-title">
+          <span className="play-title-word" aria-hidden="true">
+            <span className="play-title-letter">P</span>
+            <span className="play-title-letter">l</span>
+            <span className="play-title-letter">a</span>
+            <span className="play-title-letter">y</span>
+          </span>
+          <span className="sr-only">Play</span>
         </h1>
         <p className="project-hero-lede play-lede">
           Recreational experiments, game sketches, and generative studies.

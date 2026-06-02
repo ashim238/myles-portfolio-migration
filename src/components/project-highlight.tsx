@@ -15,10 +15,15 @@ export function ProjectHighlight({
 
   return (
     <section className="project-highlight" aria-label="Project highlight">
-      {quote ? <blockquote>{quote}</blockquote> : null}
+      {quote ? (
+        <figure className="project-highlight-quote">
+          <blockquote>{quote}</blockquote>
+        </figure>
+      ) : null}
       {metricLabel && metricValue ? (
         <p className="project-highlight-metric">
-          <span>{metricValue}</span> {metricLabel}
+          <span className="project-highlight-metric-value">{metricValue}</span>
+          <span className="project-highlight-metric-label">{metricLabel}</span>
         </p>
       ) : null}
     </section>

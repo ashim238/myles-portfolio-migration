@@ -55,9 +55,12 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
   return (
     <main className="page-shell project-page" id="main-content">
       <SiteNav />
-      <div className="project-topbar">
-        <Link href="/">← Back</Link>
-      </div>
+      <nav className="project-topbar" aria-label="Breadcrumb">
+        <Link href="/#work">
+          <span aria-hidden="true">← </span>
+          Selected work
+        </Link>
+      </nav>
 
       <section className="hero project-hero" aria-labelledby="project-title">
         <h1 id="project-title" className="project-hero-title">
@@ -80,22 +83,22 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
         </div>
       ) : null}
 
-      <section className="project-meta">
-        <p>
-          <strong>Role:</strong> {project.role}
-        </p>
-        <p>
-          <strong>Timeframe:</strong> {project.timeframe}
-        </p>
-        <p>
-          <strong>Status:</strong> {project.status}
-        </p>
+      <dl className="project-meta" aria-label="Project details">
+        <div className="project-meta-field">
+          <dt>Role</dt>
+          <dd>{project.role}</dd>
+        </div>
+        <div className="project-meta-field">
+          <dt>Timeframe</dt>
+          <dd>{project.timeframe}</dd>
+        </div>
         {project.tags.length > 0 ? (
-          <p>
-            <strong>Tags:</strong> {project.tags.join(" • ")}
-          </p>
+          <div className="project-meta-field project-meta-field--tags">
+            <dt>Tags</dt>
+            <dd>{project.tags.join(" · ")}</dd>
+          </div>
         ) : null}
-      </section>
+      </dl>
 
       <ProjectHighlight
         quote={project.highlightQuote}
