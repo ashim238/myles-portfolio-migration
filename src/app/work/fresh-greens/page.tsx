@@ -420,8 +420,8 @@ export default async function FreshGreensPage() {
             </li>
             <li>
               <strong>Road conditions:</strong> flooding and chronic
-              underfunding in New Orleans, unfinished dirt roads outside
-              metros — road-condition zone.
+              underfunding in New Orleans and some areas of Texas, unfinished
+              dirt roads still common outside metros — road-condition zone.
             </li>
           </ul>
           <p className="fg-research-landing">

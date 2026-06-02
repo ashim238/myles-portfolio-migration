@@ -14,13 +14,13 @@ type HomeBrowserIntroProps = {
 };
 
 const ZOOM_START_MS = 360;
-const ZOOM_DURATION_MS = 1080;
+const ZOOM_DURATION_MS = 1600;
 const ZOOM_END_MS = ZOOM_START_MS + ZOOM_DURATION_MS;
-const CHROME_FADE_START_MS = ZOOM_START_MS + 480;
-const CHROME_FADE_MS = 280;
-const HANDOFF_MS = ZOOM_END_MS - 300;
-const OVERLAY_FADE_START_MS = ZOOM_END_MS - 280;
-const OVERLAY_FADE_MS = 340;
+const CHROME_FADE_START_MS = ZOOM_START_MS + 720;
+const CHROME_FADE_MS = 360;
+const HANDOFF_MS = ZOOM_END_MS - 320;
+const OVERLAY_FADE_START_MS = ZOOM_END_MS - 320;
+const OVERLAY_FADE_MS = 420;
 
 function getZoomScales(stage: HTMLElement) {
   const windowEl = stage.querySelector<HTMLElement>(".browser-intro-window");
@@ -63,7 +63,7 @@ function completeBrowserIntro() {
 
 export function HomeBrowserIntro({
   siteName,
-  siteUrl = "mylesashitey.com",
+  siteUrl = "mylesdesignsthings.com",
 }: HomeBrowserIntroProps) {
   const [visible, setVisible] = useState(true);
 
