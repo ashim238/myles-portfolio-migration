@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const BASE_URL = "https://mylesashitey.com";
+const BASE_URL = "https://mylesdesignsthings.com";
 
 export const metadata: Metadata = {
   title: {
