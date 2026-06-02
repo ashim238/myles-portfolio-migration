@@ -473,6 +473,27 @@ export default async function FreshGreensPage() {
         </div>
       </section>
 
+      {/* ── Process / tooling ────────────────────────── */}
+      <section className="project-section fg-section" aria-labelledby="fg-process">
+        <h2 id="fg-process">Process built the same way the product was.</h2>
+        <div className="project-section-body">
+          <p>
+            Three months, solo, design and engineering. To hold the thread, I
+            built a custom knowledge graph (graphify) that merged the codebase,
+            the design-decision conversations, and the thesis document into one
+            queryable memory. At any point in the build I could reconstruct why
+            navy is reserved for the safety shield, which shipped surface
+            answers which thesis claim, or what was tried before the chip row
+            landed. The workflow was AI-augmented; the judgment was mine. The
+            graph is infrastructure I built to manage scope, not a tool I
+            prompted. The product&apos;s ethic is that every safety decision
+            traces to public, auditable data. The process held itself to the
+            same standard. The app is auditable by design, and so was the work
+            that made it.
+          </p>
+        </div>
+      </section>
+
       {/* ── Honest scope ─────────────────────────────── */}
       <section className="project-section fg-section fg-scope" aria-labelledby="fg-scope">
         <h2 id="fg-scope">Shipped, and what v2 finishes.</h2>
