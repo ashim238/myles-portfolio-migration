@@ -325,7 +325,7 @@ export default async function FreshGreensPage() {
           Fresh Greens
         </h1>
         <p className="project-hero-lede fg-lede">
-          A wayfinding app for Black travel in America. Routes that limit
+          A wayfinding app for Black travelers in America. Routes that limit
           exposure to hazards and maximize daylight, with community safety
           observations weighted alongside public data.
         </p>
@@ -364,8 +364,8 @@ export default async function FreshGreensPage() {
           </p>
           <p>
             That lineage hasn't ended; the questions have only updated. Where is
-            the lit corridor? Which stretches are over-policed? Who got home
-            after dark last week, and what route did they take?
+            the lit corridor? Which stretches are over-policed? Which block did
+            someone mark unsafe last week that the city's data hasn't caught?
           </p>
           <p>
             Fresh Greens treats those questions as a routing problem. The thesis
@@ -375,6 +375,76 @@ export default async function FreshGreensPage() {
             </em>{" "}
             Public data and community observation flow through the same
             scoring pipeline, weighted with the same audit trail.
+          </p>
+        </div>
+      </section>
+
+      {/* ── Research / Insights ──────────────────────── */}
+      <section className="project-section fg-section" aria-labelledby="fg-research">
+        <h2 id="fg-research">Six interviews. Four markers. Four features.</h2>
+        <div className="project-section-body">
+          <p>
+            A wayfinding tool for Black drivers can&apos;t be designed without
+            that community at the table. The research that grounds Fresh
+            Greens is six semi-structured interviews with Black drivers raised
+            in — or still living across — the Southern US. All of them
+            long-time users of Google Maps, Waze, or Apple Maps.
+            Broad-to-narrow questions, with the road itself as the prompt.
+          </p>
+          <p>
+            What surfaced was expertise, not vulnerability. Participants
+            described autonomy and belonging alongside the trepidation — the
+            anticipation of a familiar turn toward family, landmarks tied to
+            memory, the gas stations that stop being a reprieve. They had a
+            working taxonomy, one that could be translated to something
+            tangible if done correctly.
+          </p>
+          <p>
+            The four things the app scores routes against are the four markers
+            that recurred across the conversations.
+          </p>
+          <ul>
+            <li>
+              <strong>Light:</strong> drivers plan around sunrise and sunset
+              and lean toward well-lit roads in unfamiliar areas — SunCalc
+              daylight gradient, low-light zone flag.
+            </li>
+            <li>
+              <strong>Police:</strong> recurring, inherited caution around
+              confrontation — police-presence zone.
+            </li>
+            <li>
+              <strong>Wildlife:</strong> deep wariness of dense tree cover and
+              deer, a habit forged by where you were raised — wildlife-crossing
+              zone (OpenStreetMap data).
+            </li>
+            <li>
+              <strong>Road conditions:</strong> flooding and chronic
+              underfunding in New Orleans, unfinished dirt roads outside
+              metros — road-condition zone.
+            </li>
+          </ul>
+          <p className="fg-research-landing">
+            The categories the app flags are the categories drivers told me
+            they already watch for.
+          </p>
+        </div>
+
+        <figure className="fg-pullquote">
+          <blockquote>
+            Moments of joy and fear have a lasting effect on how Black drivers
+            interpret the spaces they inhabit. They stick.
+          </blockquote>
+          <figcaption>From the thesis research · Fresh Greens, 2025</figcaption>
+        </figure>
+
+        <div className="project-section-body">
+          <p>
+            The reframe matters: this isn&apos;t a safety app studying a
+            vulnerable population. It&apos;s a routing system built from the
+            expertise of the people who&apos;ve been doing the routing all
+            along. Safety is the outcome. The premise is whose knowledge
+            counts when the route is drawn.
           </p>
         </div>
       </section>
@@ -394,11 +464,12 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body">
           <p>
-            The scoring layer is the load-bearing one. It's a pure function:
-            same inputs always produce the same routing decision. That means a
-            user can ask <em>why this route</em> and the answer is reconstructible
-            from the data the system already exposes. Reproducibility is the
-            ethical commitment, not a side effect.
+            The scoring layer is the load-bearing one. It's deterministic:
+            same inputs of street data, daylight calculations, and community
+            reports always produce the same routing decision.
+            That means a user can ask <em>why this route</em> and the answer
+            is reconstructible from the data the system already exposes.
+            Reproducibility is the ethical commitment, not a side effect.
           </p>
           <p>
             Community reports flow through the same pipeline as OpenStreetMap.
