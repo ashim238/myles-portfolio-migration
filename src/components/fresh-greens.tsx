@@ -391,34 +391,34 @@ export function ProcessGraph() {
 
 const SIGNALS = [
   {
+    color: "#2f6b46",
+    name: "Green",
+    role: "In-flow action",
+    note: "The brand greens carry every CTA, link, and secondary action — the only non-reserved color allowed to mean \"go.\"",
+  },
+  {
     color: "#d24a3b",
     name: "Red",
-    role: "SOS · imminent risk",
-    note: "Only on the /pulled-over surface and the explicit SOS control.",
+    role: "Alert",
+    note: "SOS, the live audio-recording indicator on /pulled-over, inline form-validation errors, and destructive actions like sign out or delete.",
   },
   {
     color: "#f08a4b",
     name: "Orange",
-    role: "Hazard chip",
-    note: "Surface-level briefing chips along a route. Never on chrome.",
+    role: "Hazard · caution",
+    note: "Speed-limit and construction zones, the Report affordance (reporting is itself a safety signal), and the route-preview hazard chips for police and low-light segments.",
   },
   {
     color: "#e2b340",
     name: "Yellow",
-    role: "Caution",
-    note: "Daylight thinning, weather degrading, conditional re-route.",
+    role: "Caution · favorite",
+    note: "General caution — and the gold star for trusted stations. A documented carve-out: the favorite-star is universal iconography (like an App Store rating), so it reads as \"saved,\" not \"warning.\"",
   },
   {
     color: "#284872",
     name: "Navy",
-    role: "Data status",
-    note: "Source freshness, sync state, system rather than safety signals.",
-  },
-  {
-    color: "#2f6b46",
-    name: "Green",
-    role: "In-flow CTA",
-    note: "The only color reserved for forward action. Calm, not loud.",
+    role: "Safety-affordance mark",
+    note: "Reserved for the safety-affordance itself — the en-route safety-menu Shield and the /emergency SOS disc. Never used for data state or sync.",
   },
 ];
 

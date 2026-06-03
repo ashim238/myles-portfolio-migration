@@ -220,6 +220,34 @@ function SettingsIllustration() {
   );
 }
 
+function PreferredStationsIllustration() {
+  return (
+    <div className="fg-screen-stub">
+      <span className="fg-screen-band fg-screen-band--header" />
+      <p className="fg-screen-section-label">Gas on your route</p>
+      <div className="fg-screen-station fg-screen-station--trusted">
+        <span className="fg-screen-star" aria-hidden="true">★</span>
+        <div className="fg-screen-station-text">
+          <span className="fg-screen-line fg-screen-line--80" />
+          <span className="fg-screen-trusted-badge">Trusted by you</span>
+        </div>
+      </div>
+      <div className="fg-screen-station">
+        <span className="fg-screen-star fg-screen-star--empty" aria-hidden="true">★</span>
+        <span className="fg-screen-line fg-screen-line--60" />
+      </div>
+      <div className="fg-screen-station">
+        <span className="fg-screen-star fg-screen-star--empty" aria-hidden="true">★</span>
+        <span className="fg-screen-line fg-screen-line--60" />
+      </div>
+      <div className="fg-screen-station">
+        <span className="fg-screen-star fg-screen-star--empty" aria-hidden="true">★</span>
+        <span className="fg-screen-line fg-screen-line--40" />
+      </div>
+    </div>
+  );
+}
+
 function CalendarIllustration() {
   return (
     <div className="fg-screen-stub">
@@ -250,7 +278,7 @@ const FEATURES = [
   {
     number: "01",
     title: "Route preview that shows its work",
-    copy: "Three public data sources score the candidate route, then the preview surfaces hazard chips alongside an all-clear chip — a briefing, not an alarm.",
+    copy: "OpenStreetMap, OSRM, SunCalc, and community reports score the candidate route, then the preview surfaces hazard chips alongside an all-clear chip — a briefing, not an alarm. The preview is also a selector: swipe the ETA or tap a gray alternate line to switch routes. The recommended route reads “Safest route”; alternates read “Alternate route · X min faster/longer,” never relabeled.",
     thesis:
       "Trust scales when the system narrates its reasoning. The chips are the audit log made legible.",
     illustration: <RoutePreviewIllustration />,
@@ -268,7 +296,7 @@ const FEATURES = [
     title: "Multi-row community browse",
     copy: "Google-Maps-style stacked discovery rows, led by 'Trusted by your community' — surfaced before any sponsored or algorithmic row.",
     thesis:
-      "The order signals the priority. Community-vetted places appear first because the thesis is they should.",
+      "The order signals the priority. Community-vetted places appear first because respondents named community knowledge as the authority worth trusting.",
     illustration: <CommunityBrowseIllustration />,
   },
   {
@@ -302,6 +330,14 @@ const FEATURES = [
     thesis:
       "Wayfinding meets the day you already planned. Less typing, less friction, the same safety pipeline.",
     illustration: <CalendarIllustration />,
+  },
+  {
+    number: "08",
+    title: "Preferred stations · trusted gas, on your route",
+    copy: "Star the gas and charging stations you trust from the on-route fuel list or a Gas search. Trusted stations sort to the top with a “Trusted by you” badge, and a management list lives in settings. On the route preview, a quiet line appears when one falls near the chosen route: “A station you trust is on this route.” Read-only — safety still picks the route; trust is reassurance layered on top.",
+    thesis:
+      "The Green Book opened with a list of safe service stations for Black travelers. This is that, personal — the digital descendant of a community-trusted-establishments list, kept by the driver themselves.",
+    illustration: <PreferredStationsIllustration />,
   },
 ];
 
@@ -488,7 +524,7 @@ export default async function FreshGreensPage() {
           What ships.
         </h2>
         <p className="fg-features-lede">
-          Seven shipped surfaces, each captioned with what it does and why it
+          Eight shipped surfaces, each captioned with what it does and why it
           serves the thesis.
         </p>
 
@@ -512,10 +548,14 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body">
           <p>
-            Red, orange, yellow, and navy are UI signals with specific safety
-            meanings here — never decoration. The discipline is what lets a red
-            dot or an orange chip mean something when it appears. Forward
-            actions stay in a calibrated green; nothing in the chrome competes.
+            The brand greens carry every in-flow action — CTAs, links,
+            secondary buttons, &quot;go.&quot; Red, orange, yellow, and navy
+            are reserved safety signals, each tied to one meaning and never
+            used as chrome or decoration. The discipline is what lets a red
+            dot, an orange chip, or a navy shield mean something when it
+            appears. Carve-outs exist (the yellow favorite-star reads as
+            &quot;saved,&quot; not &quot;warning&quot;) — they&apos;re
+            documented, not hidden.
           </p>
         </div>
 
@@ -523,12 +563,14 @@ export default async function FreshGreensPage() {
 
         <div className="fg-craft-split">
           <div className="fg-craft-half">
-            <h3 className="fg-h3">Daylight as a non-color cue</h3>
+            <h3 className="fg-h3">Daylight as a documented exception</h3>
             <p>
               The route polyline color-shifts with how much daylight remains
-              when you reach each segment. A solid → dashed → dotted pattern
-              carries the same information for users who can't read the hue —
-              WCAG 1.4.1 in the place that matters most.
+              when you reach each segment. It&apos;s an exception to the
+              reserved-color system — not a signal, but the literal color of
+              remaining daylight. A solid → dashed → dotted pattern carries
+              the same information for users who can&apos;t read the hue, so
+              the cue holds for WCAG 1.4.1 where it matters most.
             </p>
             <DaylightLegend />
           </div>
