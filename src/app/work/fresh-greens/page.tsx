@@ -310,7 +310,7 @@ const FEATURES = [
   {
     number: "05",
     title: "/pulled-over · five-phase safety surface",
-    copy: "Ambient audio recording, trusted-contact wiring, firearm-guidance copy from the ACLU. A state machine that defaults to composure.",
+    copy: "Ambient audio recording, trusted-contact wiring, ACLU firearm-guidance specific to the state you're driving in — firearm laws differ state by state, sometimes drastically. A state machine that defaults to composure.",
     thesis:
       "The most charged moment of the product gets the calmest surface in the design.",
     illustration: <PulledOverIllustration />,
@@ -318,9 +318,9 @@ const FEATURES = [
   {
     number: "06",
     title: "iOS grouped settings register",
-    copy: "Six settings pages share one register: native-feeling grouped lists, real labels, no plastic toggles. Disclosure is honest — scaffolded surfaces are named, not hidden.",
+    copy: "Six settings pages use iOS's native grouped-list register: real toggles, real labels, no custom controls dressed up to look native. Settings that aren't fully wired yet are labeled as such, not hidden.",
     thesis:
-      "Honesty of disclosure: UI state reflects real capability. Nothing pretends to do what it doesn't.",
+      "The UI state reflects real capability. Nothing pretends to do what it doesn't.",
     illustration: <SettingsIllustration />,
   },
   {
@@ -328,15 +328,15 @@ const FEATURES = [
     title: "Connect-Calendar · one-tap safe routing",
     copy: "Read-only access to upcoming located events. A pick-sheet turns any of them into a safe-routed destination without leaving the flow.",
     thesis:
-      "Wayfinding meets the day you already planned. Less typing, less friction, the same safety pipeline.",
+      "Your day's destinations are usually already on your calendar. This routes you to them safely without making you type them again.",
     illustration: <CalendarIllustration />,
   },
   {
     number: "08",
     title: "Preferred stations · trusted gas, on your route",
-    copy: "Star the gas and charging stations you trust from the on-route fuel list or a Gas search. Trusted stations sort to the top with a “Trusted by you” badge, and a management list lives in settings. On the route preview, a quiet line appears when one falls near the chosen route: “A station you trust is on this route.” Read-only — safety still picks the route; trust is reassurance layered on top.",
+    copy: "Favorite the gas and charging stations you trust from the on-route fuel list or a Gas search. Trusted stations sort to the top with a “Trusted by you” badge, and a management list lives in settings. On the route preview, a quiet line appears when one falls near the chosen route: “A station you trust is on this route.” A read-only feature that works through reassurance.",
     thesis:
-      "The Green Book opened with a list of safe service stations for Black travelers. This is that, personal — the digital descendant of a community-trusted-establishments list, kept by the driver themselves.",
+      "The Green Book opened with a list of safe service stations for Black travelers. This is that, personal: the digital descendant of a community-trusted-establishments list, kept by the driver themselves.",
     illustration: <PreferredStationsIllustration />,
   },
 ];
@@ -548,14 +548,13 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body">
           <p>
-            The brand greens carry every in-flow action — CTAs, links,
-            secondary buttons, &quot;go.&quot; Red, orange, yellow, and navy
-            are reserved safety signals, each tied to one meaning and never
-            used as chrome or decoration. The discipline is what lets a red
-            dot, an orange chip, or a navy shield mean something when it
-            appears. Carve-outs exist (the yellow favorite-star reads as
-            &quot;saved,&quot; not &quot;warning&quot;) — they&apos;re
-            documented, not hidden.
+            The brand greens carry every CTA, link, and secondary action.
+            Red, orange, yellow, and navy are reserved for safety: each tied
+            to one specific meaning, never used as chrome or decoration.
+            That&apos;s what lets a red dot or an orange chip actually mean
+            something when it shows up. Documented carve-outs exist — the
+            yellow favorite-star reads as &quot;saved,&quot; not
+            &quot;warning&quot;. Acknowledged not hidden.
           </p>
         </div>
 
@@ -565,23 +564,24 @@ export default async function FreshGreensPage() {
           <div className="fg-craft-half">
             <h3 className="fg-h3">Daylight as a documented exception</h3>
             <p>
-              The route polyline color-shifts with how much daylight remains
-              when you reach each segment. It&apos;s an exception to the
-              reserved-color system — not a signal, but the literal color of
-              remaining daylight. A solid → dashed → dotted pattern carries
-              the same information for users who can&apos;t read the hue, so
-              the cue holds for WCAG 1.4.1 where it matters most.
+              The route polyline shifts color as the remaining daylight
+              changes along your projected arrival. It&apos;s an exception to
+              the reserved-color system: not a signal, just the literal color
+              of daylight at each segment. A dash pattern carries the same
+              information — solid for day, dashed for twilight, dotted for
+              night — so the cue still reads when the hue doesn&apos;t. WCAG
+              1.4.1, in the place that matters.
             </p>
             <DaylightLegend />
           </div>
           <div className="fg-craft-half">
             <h3 className="fg-h3">The charged moment gets composure</h3>
             <p>
-              The /pulled-over surface is the design's central proof. It's the
-              moment where any safety product reflexively reaches for red and
-              urgency. Fresh Greens reaches for muted greens, generous space,
-              and copy written with the ACLU's guidance — composure as the
-              protective stance.
+              The /pulled-over surface is where the design&apos;s whole
+              approach gets tested. At the most charged moment, most safety
+              products reach for red and urgency. Fresh Greens reaches for
+              muted greens, generous space, and ACLU-sourced guidance. The
+              thinking is that composure is the protective stance — not alarm.
             </p>
           </div>
         </div>
@@ -605,8 +605,7 @@ export default async function FreshGreensPage() {
             graph is infrastructure I built to manage scope, not a tool I
             prompted. The product&apos;s ethic is that every safety decision
             traces to public, auditable data. The process held itself to the
-            same standard. The app is auditable by design, and so was the work
-            that made it.
+            same standard.
           </p>
         </div>
 
@@ -627,21 +626,22 @@ export default async function FreshGreensPage() {
           <div className="fg-scope-col">
             <p className="fg-scope-label">Shipped</p>
             <ul className="fg-scope-list" role="list">
-              <li>Zone-aware routing across OSM, OSRM, SunCalc</li>
+              <li>Zone-aware routing across OSM, OSRM, SunCalc, and community reports</li>
               <li>Daylight-graded route + WCAG dash pattern</li>
               <li>Multi-row community browse + side-button safety column</li>
               <li>/pulled-over five-phase state machine with audio capture</li>
               <li>Connect-Calendar with verified read-only event hookup</li>
               <li>iOS grouped-settings register across six pages</li>
               <li>Real-time weather, scheduled-departure & refuel reminders</li>
+              <li>Preferred Stations with favorite-star pinning + on-route trust line</li>
             </ul>
           </div>
           <div className="fg-scope-col">
             <p className="fg-scope-label">Scaffolded · v2</p>
             <ul className="fg-scope-list" role="list">
               <li>
-                Community reports are device-local with a mock user ID — schema
-                is real, the backend is the next step
+                Community reports already score routes locally — what&apos;s
+                v2 is the backend that syncs them across devices
               </li>
               <li>
                 Turn-by-turn narration is placeholder copy — OSRM returns
