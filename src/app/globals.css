@@ -3288,3 +3288,8 @@ button:focus-visible,
   border: 1px solid rgba(226, 179, 64, 0.4);
   background: rgba(226, 179, 64, 0.08);
 }
+
+/* Scroll offset for the Fresh Greens ToC — anchors live on the h2s */
+.fg-page h2[id^="fg-"] {
+  scroll-margin-top: 3.5rem;
+}

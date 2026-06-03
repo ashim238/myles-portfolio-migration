@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteNav } from "@/components/site-nav";
+import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
 import {
   ArchitectureDiagram,
@@ -387,6 +388,18 @@ export default async function FreshGreensPage() {
           <dd>~3 months · 2025</dd>
         </div>
       </dl>
+
+      <ProjectToc
+        sections={[
+          { title: "The lineage", id: "fg-problem" },
+          { title: "The research", id: "fg-research" },
+          { title: "The architecture", id: "fg-approach" },
+          { title: "What ships", id: "fg-features-heading" },
+          { title: "Reserved color", id: "fg-craft" },
+          { title: "Process", id: "fg-process" },
+          { title: "Honest scope", id: "fg-scope" },
+        ]}
+      />
 
       {/* ── The problem / why ────────────────────────── */}
       <section className="project-section fg-section" aria-labelledby="fg-problem">
