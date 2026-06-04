@@ -3334,3 +3334,131 @@ button:focus-visible,
     height: 2.1rem;
   }
 }
+
+/* ============================================================
+   /about page — primary copy + quick-details aside
+   Mirrors the /resume layout pattern for site-wide consistency.
+   ============================================================ */
+
+.about-layout {
+  margin-top: 2.5rem;
+  display: grid;
+  gap: 3.5rem;
+  animation: fadeUp 520ms ease-out both;
+}
+
+@media (min-width: 768px) {
+  .about-layout {
+    grid-template-columns: 3fr 1fr;
+    gap: 4rem;
+    margin-top: 3.5rem;
+  }
+}
+
+.about-primary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 60ch;
+}
+
+.about-kicker {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: var(--track-caps);
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+.about-heading {
+  margin: 0;
+  font-size: clamp(2.2rem, 5.5vw, 4rem);
+  font-weight: 400;
+  line-height: var(--lead-title);
+  letter-spacing: var(--track-display);
+  color: var(--foreground);
+  text-wrap: balance;
+}
+
+.about-body {
+  margin-top: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  color: var(--foreground);
+  font-size: clamp(1.02rem, 2vw, 1.12rem);
+  line-height: var(--lead-long);
+}
+
+.about-body p {
+  text-wrap: pretty;
+}
+
+.about-body em {
+  font-style: italic;
+  /* lets "oomph" stand out without going garish */
+  color: var(--foreground);
+}
+
+.about-page-actions {
+  margin-top: 2.2rem;
+}
+
+.about-aside {
+  margin-top: 0;
+}
+
+@media (min-width: 768px) {
+  .about-aside {
+    align-self: start;
+    position: sticky;
+    top: 2rem;
+  }
+}
+
+.about-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin: 0;
+}
+
+.about-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.about-detail:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.about-detail dt {
+  font-size: 0.7rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+.about-detail dd {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.45;
+  color: var(--foreground);
+  text-wrap: pretty;
+}
+
+.about-detail dd a {
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 200ms ease;
+}
+
+.about-detail dd a:hover,
+.about-detail dd a:focus-visible {
+  border-bottom-color: currentColor;
+}

@@ -78,10 +78,15 @@ export default async function Home() {
       <section className="about" id="about">
         <h2>About</h2>
         <p>
-          Brooklyn-based product designer focused on strategy, interaction detail,
-          and clear storytelling through digital products.
+          Brooklyn-based product designer. Creative-strategy at TikTok and
+          UMG before going back for an MFA in Design and Technology at
+          Parsons. I design end to end and tend to go past the prototype.
         </p>
         <p className="about-actions">
+          <Link className="about-action" href="/about">
+            More about
+            <span aria-hidden="true"> →</span>
+          </Link>
           <Link className="about-action" href="/resume">
             Read the résumé
             <span aria-hidden="true"> →</span>
@@ -96,7 +101,7 @@ export default async function Home() {
       <footer className="footer">
         <nav className="footer-nav" aria-label="Footer">
           <Link href="/#work">Work</Link>
-          <Link href="/#about">About</Link>
+          <Link href="/about">About</Link>
           <Link href="/play">Play</Link>
           <Link href="/resume">Résumé</Link>
           <a href={`mailto:${siteConfig.email}`}>Email</a>
