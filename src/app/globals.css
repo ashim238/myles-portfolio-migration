@@ -630,11 +630,21 @@ html.home-intro-wait .home-page #work > .work-list > .work-item {
   animation: fadeUp 420ms ease-out both;
 }
 
+/* Legacy left column — kept in case any other surface references it.
+   The current site-nav puts the logo as a direct child of .site-header
+   and groups nav + theme toggle in .site-header-right. */
 .site-header-left {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
   align-items: flex-start;
+}
+
+.site-header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.85rem;
 }
 
 .site-kicker {
@@ -3311,21 +3321,16 @@ button:focus-visible,
   opacity: 0.72;
 }
 
-.site-logo img {
+.site-logo svg {
   display: block;
   height: 2.4rem;
   width: auto;
-  /* SVG ships in black on white. Dark theme inverts so it reads on dark bg.
-     Light theme leaves it alone. */
-  transition: filter 240ms ease;
-}
-
-:root:not([data-theme="light"]) .site-logo img {
-  filter: invert(1);
+  color: var(--foreground);
+  transition: color 240ms ease;
 }
 
 @media (max-width: 640px) {
-  .site-logo img {
+  .site-logo svg {
     height: 2.1rem;
   }
 }
