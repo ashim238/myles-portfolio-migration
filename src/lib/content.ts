@@ -203,6 +203,10 @@ export const playEntries: PlayEntry[] = [
         src: "/play/sukunas-finger/01.jpg",
         alt: "Sukuna's finger sculpt resting in a 3D-printed tray with cotton bedding — burgundy skin with green undertones, painted wounds and lesions, layer lines visible on the tray exterior.",
       },
+      {
+        src: "/play/sukunas-finger/02.jpg",
+        alt: "Second angle of the Sukuna's finger sculpt, showing the dimensionality of the figure and the depth of the tray.",
+      },
     ],
   },
   {
