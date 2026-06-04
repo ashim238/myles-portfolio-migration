@@ -9,7 +9,7 @@ export const siteConfig = {
   description:
     "Portfolio of Myles Ashitey featuring product design case studies, process notes, and playful experiments.",
   headerKicker: "Myles — product designer",
-  email: "ashim238@newschool.edu",
+  email: "mylesashitey@gmail.com",
   resumeUrl: "/resume",
 };
 
