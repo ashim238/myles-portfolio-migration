@@ -2556,7 +2556,7 @@ button:focus-visible,
 
 .fg-arch-svg {
   width: 100%;
-  min-width: 560px;
+  min-width: 720px;
   height: auto;
   color: var(--foreground);
 }

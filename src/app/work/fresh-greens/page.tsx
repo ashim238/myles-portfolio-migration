@@ -279,7 +279,7 @@ const FEATURES = [
   {
     number: "01",
     title: "Route preview that shows its work",
-    copy: "OpenStreetMap, OSRM, SunCalc, and community reports score the candidate route, then the preview surfaces hazard chips alongside an all-clear chip — a briefing, not an alarm. The preview is also a selector: swipe the ETA or tap a gray alternate line to switch routes. The recommended route reads “Safest route”; alternates read “Alternate route · X min faster/longer,” never relabeled.",
+    copy: "OpenStreetMap, OSRM, SunCalc, and community reports score the candidate route, then the preview surfaces hazard chips alongside an all-clear chip — a briefing, not an alarm. The preview is also a selector: swipe the ETA or tap a gray alternate line to switch routes. The recommended route reads “Safest route”; alternates read “Alternate route · X min faster/longer,” never relabeled. Tapping any hazard chip pans the map to that zone and opens the matching detail surface — the chip is a navigation control, not just a label.",
     thesis:
       "Trust scales when the system narrates its reasoning. The chips are the audit log made legible.",
     illustration: <RoutePreviewIllustration />,
@@ -647,14 +647,16 @@ export default async function FreshGreensPage() {
               <li>iOS grouped-settings register across six pages</li>
               <li>Real-time weather, scheduled-departure & refuel reminders</li>
               <li>Preferred Stations with favorite-star pinning + on-route trust line</li>
+              <li>Optional Supabase cloud sync for community reports</li>
             </ul>
           </div>
           <div className="fg-scope-col">
             <p className="fg-scope-label">Scaffolded · v2</p>
             <ul className="fg-scope-list" role="list">
               <li>
-                Community reports already score routes locally — what&apos;s
-                v2 is the backend that syncs them across devices
+                Community reports score routes locally; an optional Supabase
+                cloud sync now exists — what&apos;s v2 is making it the
+                default and scaling the backend
               </li>
               <li>
                 Turn-by-turn narration is placeholder copy — OSRM returns
