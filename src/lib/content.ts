@@ -196,8 +196,8 @@ export const playEntries: PlayEntry[] = [
     hook:
       "A Jujutsu Kaisen fan sculpt, 3D sculpted, printed, and hand-painted. Made for the love of the manga and as an excuse to test how far I could push painting techniques on polylactic acid filament.",
     tags: ["3D Sculpt", "3D Print", "Hand Painted", "Fan Craft", "Jujutsu Kaisen"],
-    year: "2026",
-    context: "Personal",
+    year: "2024",
+    context: "Parsons - xFab",
     images: [
       {
         src: "/play/sukunas-finger/01.jpg",
