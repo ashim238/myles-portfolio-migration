@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectToc } from "@/components/project-toc";
@@ -7,7 +8,6 @@ import {
   ArchitectureDiagram,
   DaylightLegend,
   FeatureCard,
-  HeroRouteIllustration,
   PhoneFrame,
   ProcessGraph,
   SignalSwatches,
@@ -36,242 +36,97 @@ export const metadata: Metadata = {
 
 function RoutePreviewIllustration() {
   return (
-    <div className="fg-screen-stub">
-      <span className="fg-screen-band fg-screen-band--header" />
-      <div className="fg-screen-map">
-        <svg viewBox="0 0 200 200" aria-hidden="true">
-          <g stroke="rgba(255,255,255,0.06)" strokeWidth="1">
-            <line x1="0" y1="60" x2="200" y2="60" />
-            <line x1="0" y1="130" x2="200" y2="130" />
-            <line x1="80" y1="0" x2="80" y2="200" />
-          </g>
-          <path
-            d="M30 170 L30 130 L80 130 L80 80"
-            stroke="#f6a86b"
-            strokeWidth="3"
-            fill="none"
-            strokeLinecap="round"
-          />
-          <path
-            d="M80 80 L130 80 L130 40 L170 40"
-            stroke="#7d6ba8"
-            strokeWidth="3"
-            fill="none"
-            strokeLinecap="round"
-            strokeDasharray="2 5"
-          />
-        </svg>
-      </div>
-      <div className="fg-screen-card">
-        <span className="fg-screen-line fg-screen-line--80" />
-        <span className="fg-screen-chip-row">
-          <span className="fg-screen-chip fg-screen-chip--ok" />
-          <span className="fg-screen-chip fg-screen-chip--hazard" />
-          <span className="fg-screen-chip fg-screen-chip--info" />
-        </span>
-        <span className="fg-screen-cta" />
-      </div>
-    </div>
+    <Image
+      src="/projects/fresh-greens/feature-01-route-preview.png"
+      alt="Route preview screen — daylight-graded polyline from Manhattan to Newark Airport Express, ETA 31 min arriving at dusk, with a road conditions hazard chip and green Go button"
+      width={390}
+      height={844}
+      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+    />
   );
 }
 
 function DaylightMapIllustration() {
   return (
-    <div className="fg-screen-stub fg-screen-stub--map">
-      <span className="fg-screen-band fg-screen-band--header" />
-      <div className="fg-screen-map fg-screen-map--full">
-        <svg viewBox="0 0 200 320" aria-hidden="true">
-          <g stroke="rgba(255,255,255,0.05)" strokeWidth="1">
-            <line x1="0" y1="80" x2="200" y2="80" />
-            <line x1="0" y1="160" x2="200" y2="160" />
-            <line x1="0" y1="240" x2="200" y2="240" />
-            <line x1="60" y1="0" x2="60" y2="320" />
-            <line x1="140" y1="0" x2="140" y2="320" />
-          </g>
-          <path
-            d="M20 290 L20 240 L60 240 L60 200"
-            stroke="#f6a86b"
-            strokeWidth="3.5"
-            fill="none"
-            strokeLinecap="round"
-          />
-          <path
-            d="M60 200 L120 200 L120 160"
-            stroke="#c87a8a"
-            strokeWidth="3.5"
-            fill="none"
-            strokeLinecap="round"
-            strokeDasharray="8 5"
-          />
-          <path
-            d="M120 160 L180 160 L180 80"
-            stroke="#7d6ba8"
-            strokeWidth="3.5"
-            fill="none"
-            strokeLinecap="round"
-            strokeDasharray="2 5"
-          />
-          <path
-            d="M180 80 L180 20"
-            stroke="#4a4280"
-            strokeWidth="3.5"
-            fill="none"
-            strokeLinecap="round"
-            strokeDasharray="2 5"
-          />
-          <circle cx="20" cy="290" r="5" fill="#f4f4f4" />
-          <circle cx="180" cy="20" r="5" fill="#4a4280" stroke="#f4f4f4" strokeWidth="1.5" />
-        </svg>
-      </div>
-    </div>
+    <Image
+      src="/projects/fresh-greens/feature-02-daylight-route.png"
+      alt="Daylight-graded route preview — 131-mile NJ Turnpike route arriving after dark, polyline shifting from orange at departure through mauve to indigo at destination, with 'Safest route · arriving after dark' and an All clear chip"
+      width={390}
+      height={844}
+      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+    />
   );
 }
 
 function CommunityBrowseIllustration() {
   return (
-    <div className="fg-screen-stub">
-      <span className="fg-screen-band fg-screen-band--header" />
-      <div className="fg-screen-search" />
-      <div className="fg-screen-row">
-        <p className="fg-screen-row-label">Trusted by your community</p>
-        <div className="fg-screen-row-scroll">
-          <span className="fg-screen-tile" />
-          <span className="fg-screen-tile" />
-          <span className="fg-screen-tile" />
-        </div>
-      </div>
-      <div className="fg-screen-row">
-        <p className="fg-screen-row-label">Family-owned · grocery</p>
-        <div className="fg-screen-row-scroll">
-          <span className="fg-screen-tile" />
-          <span className="fg-screen-tile" />
-          <span className="fg-screen-tile" />
-        </div>
-      </div>
-    </div>
+    <Image
+      src="/projects/fresh-greens/feature-03-community-browse.png"
+      alt="Community browse screen — 'Trusted by your community' leads the discovery rows with a Community pick card for Sisters restaurant, filter chips for Black-Owned, Women-Owned, and LGBTQ+ Welcoming, and an Open now row below"
+      width={390}
+      height={844}
+      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+    />
   );
 }
 
 function NavigationIllustration() {
   return (
-    <div className="fg-screen-stub fg-screen-stub--nav">
-      <div className="fg-screen-nav-instr">
-        <span className="fg-screen-line fg-screen-line--60" />
-        <span className="fg-screen-line fg-screen-line--40" />
-      </div>
-      <div className="fg-screen-map fg-screen-map--full">
-        <svg viewBox="0 0 200 240" aria-hidden="true">
-          <path
-            d="M40 220 L40 160 L120 160 L120 80 L170 80"
-            stroke="#f6a86b"
-            strokeWidth="3.5"
-            fill="none"
-            strokeLinecap="round"
-          />
-          <circle cx="120" cy="160" r="7" fill="none" stroke="#f4f4f4" strokeWidth="1.5" />
-        </svg>
-      </div>
-      <span className="fg-screen-side-column" aria-hidden="true">
-        <span className="fg-screen-side-btn" />
-        <span className="fg-screen-side-btn" />
-        <span className="fg-screen-side-btn fg-screen-side-btn--sos" />
-      </span>
-    </div>
+    <Image
+      src="/projects/fresh-greens/feature-04-en-route.png"
+      alt="En-route navigation screen — dark green instruction header, 3D map with highlighted route, speedometer, and a right-side column with safety menu, shield, and hazard report buttons reachable from the driving thumb"
+      width={390}
+      height={844}
+      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+    />
   );
 }
 
 function PulledOverIllustration() {
   return (
-    <div className="fg-screen-stub fg-screen-stub--still">
-      <span className="fg-screen-band fg-screen-band--header" />
-      <div className="fg-screen-pulled">
-        <span className="fg-screen-pulled-rec">●  REC</span>
-        <p className="fg-screen-pulled-title">Stay still.</p>
-        <p className="fg-screen-pulled-sub">
-          Recording for protection. Hands visible.
-        </p>
-        <span className="fg-screen-pulled-actions">
-          <span className="fg-screen-pulled-btn" />
-          <span className="fg-screen-pulled-btn" />
-        </span>
-      </div>
-    </div>
+    <Image
+      src="/projects/fresh-greens/feature-05-pulled-over.png"
+      alt="/pulled-over screen — ACLU-sourced guidance bullets, ambient audio recording active with waveform, 'Saved to your phone — only you can access it' privacy note, and Continue button"
+      width={390}
+      height={844}
+      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+    />
   );
 }
 
 function SettingsIllustration() {
   return (
-    <div className="fg-screen-stub fg-screen-stub--ios">
-      <span className="fg-screen-band fg-screen-band--header" />
-      <div className="fg-screen-ios-group">
-        <span className="fg-screen-ios-row" />
-        <span className="fg-screen-ios-row" />
-        <span className="fg-screen-ios-row" />
-      </div>
-      <div className="fg-screen-ios-group">
-        <span className="fg-screen-ios-row" />
-        <span className="fg-screen-ios-row" />
-      </div>
-      <div className="fg-screen-ios-group">
-        <span className="fg-screen-ios-row" />
-        <span className="fg-screen-ios-row" />
-        <span className="fg-screen-ios-row" />
-      </div>
-    </div>
+    <Image
+      src="/projects/fresh-greens/feature-06-settings.png"
+      alt="Settings index screen — iOS grouped-list with Refuel reminders, Zone Preferences, Safety, and Saved places, plus Privacy & Terms and Sign out as separate groups"
+      width={390}
+      height={844}
+      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+    />
   );
 }
 
 function PreferredStationsIllustration() {
   return (
-    <div className="fg-screen-stub">
-      <span className="fg-screen-band fg-screen-band--header" />
-      <p className="fg-screen-section-label">Gas on your route</p>
-      <div className="fg-screen-station fg-screen-station--trusted">
-        <span className="fg-screen-star" aria-hidden="true">★</span>
-        <div className="fg-screen-station-text">
-          <span className="fg-screen-line fg-screen-line--80" />
-          <span className="fg-screen-trusted-badge">Trusted by you</span>
-        </div>
-      </div>
-      <div className="fg-screen-station">
-        <span className="fg-screen-star fg-screen-star--empty" aria-hidden="true">★</span>
-        <span className="fg-screen-line fg-screen-line--60" />
-      </div>
-      <div className="fg-screen-station">
-        <span className="fg-screen-star fg-screen-star--empty" aria-hidden="true">★</span>
-        <span className="fg-screen-line fg-screen-line--60" />
-      </div>
-      <div className="fg-screen-station">
-        <span className="fg-screen-star fg-screen-star--empty" aria-hidden="true">★</span>
-        <span className="fg-screen-line fg-screen-line--40" />
-      </div>
-    </div>
+    <Image
+      src="/projects/fresh-greens/feature-08-preferred-stations.png"
+      alt="Gas on your route sheet — 10 stations, 3 trusted by you, with Shell Oil, Citgo Windhorse, and Citgo Gas & Diesel sorted to the top with green Trusted by you badges and filled gold stars, unstarred stations listed below"
+      width={390}
+      height={844}
+      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+    />
   );
 }
 
 function CalendarIllustration() {
   return (
-    <div className="fg-screen-stub">
-      <span className="fg-screen-band fg-screen-band--header" />
-      <p className="fg-screen-section-label">Upcoming</p>
-      <div className="fg-screen-cal-row">
-        <span className="fg-screen-cal-dot" />
-        <span className="fg-screen-line fg-screen-line--80" />
-      </div>
-      <div className="fg-screen-cal-row">
-        <span className="fg-screen-cal-dot" />
-        <span className="fg-screen-line fg-screen-line--60" />
-      </div>
-      <div className="fg-screen-cal-row">
-        <span className="fg-screen-cal-dot" />
-        <span className="fg-screen-line fg-screen-line--40" />
-      </div>
-      <div className="fg-screen-cal-sheet">
-        <span className="fg-screen-line fg-screen-line--60" />
-        <span className="fg-screen-line fg-screen-line--40" />
-        <span className="fg-screen-cta" />
-      </div>
-    </div>
+    <Image
+      src="/projects/fresh-greens/feature-07-calendar.png"
+      alt="Search screen showing upcoming calendar events — Dentist and Optometrist with addresses and time-until already populated, plus a fuel refuel reminder, all surfaced without opening a separate view"
+      width={390}
+      height={844}
+      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+    />
   );
 }
 
@@ -295,7 +150,7 @@ const FEATURES = [
   {
     number: "03",
     title: "Multi-row community browse",
-    copy: "Google-Maps-style stacked discovery rows, led by 'Trusted by your community' — surfaced before any sponsored or algorithmic row.",
+    copy: "Discovery rows sorted by what the community trusts — 'Trusted by your community' leads, before anything algorithmic. The featured card surfaces a real community pick with the note whoever marked it left behind. Filter chips for Black-Owned, Women-Owned, LGBTQ+ Welcoming sit above the rows. The order is an editorial decision, not a default.",
     thesis:
       "The order signals the priority. Community-vetted places appear first because respondents named community knowledge as the authority worth trusting.",
     illustration: <CommunityBrowseIllustration />,
@@ -303,7 +158,7 @@ const FEATURES = [
   {
     number: "04",
     title: "En-route safety column",
-    copy: "A persistent side-button column during navigation: safety menu, fast report, SOS. Reachable from the driving thumb position.",
+    copy: "Three controls, fixed to the right edge while navigation runs — safety menu, shield, hazard report. All reachable from the driving thumb. Road condition warnings surface in the instruction header itself, the same bar that tells you where to turn.",
     thesis:
       "Safety controls earn screen space when you need them most. They don't hide in a settings tray.",
     illustration: <NavigationIllustration />,
@@ -311,7 +166,7 @@ const FEATURES = [
   {
     number: "05",
     title: "/pulled-over · five-phase safety surface",
-    copy: "Ambient audio recording, trusted-contact wiring, ACLU firearm-guidance specific to the state you're driving in — firearm laws differ state by state, sometimes drastically. A state machine that defaults to composure.",
+    copy: "The sheet opens already recording — waveform live, timer counting. ACLU guidance lays out your rights in plain language: what you're not required to say, what you don't have to consent to. A 'Read aloud' option for when your hands stay on the wheel. Audio saves to the phone only — nothing leaves the device. Trusted contact is one Continue tap forward.",
     thesis:
       "The most charged moment of the product gets the calmest surface in the design.",
     illustration: <PulledOverIllustration />,
@@ -319,7 +174,7 @@ const FEATURES = [
   {
     number: "06",
     title: "iOS grouped settings register",
-    copy: "Six settings pages use iOS's native grouped-list register: real toggles, real labels, no custom controls dressed up to look native. Settings that aren't fully wired yet are labeled as such, not hidden.",
+    copy: "The settings index — Refuel reminders, Zone Preferences, Safety, Saved places — in iOS's native grouped-list register. Real rows, real labels. Each sub-page uses the same pattern: no custom controls dressed up to look native. Settings that aren't fully wired are labeled as such, not hidden.",
     thesis:
       "The UI state reflects real capability. Nothing pretends to do what it doesn't.",
     illustration: <SettingsIllustration />,
@@ -327,7 +182,7 @@ const FEATURES = [
   {
     number: "07",
     title: "Connect-Calendar · one-tap safe routing",
-    copy: "Read-only access to upcoming located events. A pick-sheet turns any of them into a safe-routed destination without leaving the flow.",
+    copy: "Upcoming located events surface in the search screen — address and time-until already there. Tap any of them to route safely without retyping the destination. The refuel reminder lives in the same view: the next scheduled date, not buried in settings.",
     thesis:
       "Your day's destinations are usually already on your calendar. This routes you to them safely without making you type them again.",
     illustration: <CalendarIllustration />,
@@ -335,7 +190,7 @@ const FEATURES = [
   {
     number: "08",
     title: "Preferred stations · trusted gas, on your route",
-    copy: "Favorite the gas and charging stations you trust from the on-route fuel list or a Gas search. Trusted stations sort to the top with a “Trusted by you” badge, and a management list lives in settings. On the route preview, a quiet line appears when one falls near the chosen route: “A station you trust is on this route.” A read-only feature that works through reassurance.",
+    copy: "Star any station from the on-route fuel sheet and it floats to the top on every future trip — a Trusted by you badge, filled star, sorted by distance. The subtitle says it plainly: 3 trusted by you. On the route preview, a quiet note appears when one falls near your chosen route. Personal, not algorithmic.",
     thesis:
       "The Green Book opened with a list of safe service stations for Black travelers. This is that, personal: the digital descendant of a community-trusted-establishments list, kept by the driver themselves.",
     illustration: <PreferredStationsIllustration />,
@@ -368,7 +223,14 @@ export default async function FreshGreensPage() {
         </p>
         <div className="fg-hero-device">
           <PhoneFrame>
-            <HeroRouteIllustration />
+            <Image
+              src="/projects/fresh-greens/hero-onboarding.png"
+              alt="Fresh Greens onboarding screen — a Black traveler emerging from a map pin against an orange sky, green hills below, with the tagline 'A path made for you, by you'"
+              width={390}
+              height={844}
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              priority
+            />
           </PhoneFrame>
         </div>
       </section>
