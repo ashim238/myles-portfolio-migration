@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { navItems, siteConfig } from "@/lib/site-config";
@@ -6,7 +7,19 @@ export function SiteNav() {
   return (
     <header className="site-header">
       <div className="site-header-left">
-        <p className="site-kicker">{siteConfig.headerKicker}</p>
+        <Link
+          href="/"
+          className="site-logo"
+          aria-label={`${siteConfig.name} — Home`}
+        >
+          <Image
+            src="/logomark.svg"
+            alt=""
+            width={378}
+            height={235}
+            priority
+          />
+        </Link>
         <ThemeToggle />
       </div>
       <nav aria-label="Primary">
