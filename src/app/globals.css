@@ -726,12 +726,10 @@ html.home-intro-wait .home-page #work > .work-list > .work-item {
   .site-nav-list a:hover,
   .site-nav-list a:focus-visible {
     opacity: 0.72;
-    transform: translateX(-3px);
   }
 
   .site-nav-list a:active {
     opacity: 0.52;
-    transform: translateX(-1px) scale(0.98);
   }
 }
 
