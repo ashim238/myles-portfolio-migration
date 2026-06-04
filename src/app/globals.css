@@ -2308,7 +2308,7 @@ button:focus-visible,
    ============================================================ */
 
 .fg-page {
-  --fg-accent: #4f7a5b;
+  --fg-accent: #6aab7e;
   --fg-accent-soft: color-mix(in oklch, var(--fg-accent) 16%, transparent);
   --fg-accent-line: color-mix(in srgb, var(--fg-accent) 60%, transparent);
 }

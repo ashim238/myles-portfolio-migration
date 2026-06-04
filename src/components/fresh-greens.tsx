@@ -136,7 +136,7 @@ export function ArchitectureDiagram() {
         </defs>
 
         {/* Source labels — top row, 7 columns, smaller subtitle */}
-        <g className="fg-arch-sources" fontFamily="var(--font-mono)" fontSize="11">
+        <g className="fg-arch-sources" fontFamily="var(--font-mono)" fontSize="11" fill="currentColor">
           <text x="30" y="32">OpenStreetMap</text>
           <text x="30" y="50" fontSize="10" opacity="0.62">lighting · landuse · parks</text>
 
@@ -171,7 +171,7 @@ export function ArchitectureDiagram() {
         </g>
 
         {/* Adapter layer */}
-        <g>
+        <g fill="currentColor">
           <rect
             x="30"
             y="105"
@@ -203,7 +203,7 @@ export function ArchitectureDiagram() {
         </g>
 
         {/* Scoring layer — the highlight */}
-        <g>
+        <g fill="currentColor">
           <rect
             x="30"
             y="213"
@@ -243,7 +243,7 @@ export function ArchitectureDiagram() {
         </g>
 
         {/* Screen layer */}
-        <g>
+        <g fill="currentColor">
           <rect
             x="30"
             y="331"
@@ -305,6 +305,7 @@ export function ProcessGraph() {
           className="fg-arch-sources"
           fontFamily="var(--font-mono)"
           fontSize="11"
+          fill="currentColor"
         >
           <text x="40" y="30">codebase</text>
           <text x="40" y="48" fontSize="10" opacity="0.62">
@@ -337,7 +338,7 @@ export function ProcessGraph() {
         </g>
 
         {/* graphify — highlighted central node (the merged memory) */}
-        <g>
+        <g fill="currentColor">
           <rect
             x="30"
             y="150"
@@ -382,6 +383,7 @@ export function ProcessGraph() {
           y="274"
           fontSize="12"
           textAnchor="middle"
+          fill="currentColor"
           opacity="0.7"
         >
           Any decision, reconstructible.
