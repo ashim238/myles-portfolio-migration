@@ -205,7 +205,7 @@ export const playEntries: PlayEntry[] = [
       },
       {
         src: "/play/sukunas-finger/02.jpg",
-        alt: "Second angle of the Sukuna's finger sculpt, showing the dimensionality of the figure and the depth of the tray.",
+        alt: "Texture detail of the Sukuna's finger sculpt — the painted skin surface, wound finishes, and color variation across the burgundy tones.",
       },
     ],
   },
