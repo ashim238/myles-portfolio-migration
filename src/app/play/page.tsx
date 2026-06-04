@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { SiteNav } from "@/components/site-nav";
 import { playEntries } from "@/lib/content";
@@ -24,7 +25,7 @@ export default function PlayPage() {
           <span className="sr-only">Play</span>
         </h1>
         <p className="project-hero-lede play-lede">
-          Recreational experiments, game sketches, and generative studies.
+          Recreational experiments — game sketches, generative studies, and the occasional sculpt.
         </p>
       </section>
 
@@ -44,7 +45,9 @@ export default function PlayPage() {
               <p className="play-entry-hook">{entry.hook}</p>
 
               <div className="play-entry-body">
-                <p className="play-entry-exploration">{entry.exploration}</p>
+                {entry.exploration ? (
+                  <p className="play-entry-exploration">{entry.exploration}</p>
+                ) : null}
 
                 {entry.embedPath ? (
                   <div className="play-embed-wrap">
@@ -54,6 +57,24 @@ export default function PlayPage() {
                       title={`${entry.title} interactive preview`}
                       loading="lazy"
                     />
+                  </div>
+                ) : null}
+
+                {entry.images && entry.images.length > 0 ? (
+                  <div
+                    className={`play-images play-images--${entry.images.length}`}
+                  >
+                    {entry.images.map((image) => (
+                      <Image
+                        key={image.src}
+                        className="play-image"
+                        src={image.src}
+                        alt={image.alt}
+                        width={1200}
+                        height={1600}
+                        sizes="(max-width: 768px) 100vw, 600px"
+                      />
+                    ))}
                   </div>
                 ) : null}
               </div>

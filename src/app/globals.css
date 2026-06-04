@@ -3460,3 +3460,35 @@ button:focus-visible,
 .about-detail dd a:focus-visible {
   border-bottom-color: currentColor;
 }
+
+/* ── Play entry images (for physical / 3D work) ─────────────────── */
+
+.play-images {
+  margin-top: 0.45rem;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.play-images--1 {
+  /* Single image: cap width so a tall photo doesn't dominate the column */
+  max-width: 28rem;
+}
+
+.play-images--2,
+.play-images--3 {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.play-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0.65rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  transition: border-color 240ms ease;
+}
+
+.play-image:hover {
+  border-color: #4a4a4a;
+}

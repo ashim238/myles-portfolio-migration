@@ -178,14 +178,33 @@ export type PlayEntry = {
   slug: string;
   title: string;
   hook: string;
-  exploration: string;
+  /** Optional longer paragraph. Some entries only need the hook. */
+  exploration?: string;
   tags: string[];
   year: string;
   context: string;
+  /** Interactive embed (iframe). For digital / browser-runnable pieces. */
   embedPath?: string;
+  /** Image-based media. For physical / 3D / printed work. */
+  images?: Array<{ src: string; alt: string }>;
 };
 
 export const playEntries: PlayEntry[] = [
+  {
+    slug: "sukunas-finger",
+    title: "Sukuna's finger",
+    hook:
+      "A Jujutsu Kaisen fan sculpt, 3D sculpted, printed, and hand-painted. Made for the love of the manga and as an excuse to test how far I could push painting techniques on polylactic acid filament.",
+    tags: ["3D Sculpt", "3D Print", "Hand Painted", "Fan Craft", "JJK"],
+    year: "2026",
+    context: "Personal",
+    images: [
+      {
+        src: "/play/sukunas-finger/01.jpg",
+        alt: "Sukuna's finger sculpt resting in a 3D-printed tray with cotton bedding — burgundy skin with green undertones, painted wounds and lesions, layer lines visible on the tray exterior.",
+      },
+    ],
+  },
   {
     slug: "loom",
     title: "Loom",
