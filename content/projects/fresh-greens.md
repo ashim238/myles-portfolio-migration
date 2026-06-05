@@ -6,6 +6,7 @@ role: Product Designer · Solo build
 timeframe: 2025
 status: published
 order: 3
+coverImage: /projects/fresh-greens/cover.png
 tags:
   - Thesis
   - Mobile · React Native
