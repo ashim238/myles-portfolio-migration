@@ -74,7 +74,7 @@ function NavigationIllustration() {
   return (
     <Image
       src="/projects/fresh-greens/feature-04-en-route.png"
-      alt="En-route navigation screen — dark green instruction header, 3D map with highlighted route, speedometer, and a right-side column with safety menu, shield, and hazard report buttons reachable from the driving thumb"
+      alt="En-route navigation screen — dark green instruction header, 3D map with highlighted route, speedometer, and a right-side column with SOS, safety menu, and reporting buttons reachable from the driving thumb"
       width={390}
       height={844}
       style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
@@ -158,7 +158,7 @@ const FEATURES = [
   {
     number: "04",
     title: "En-route safety column",
-    copy: "Three controls, fixed to the right edge while navigation runs — safety menu, shield, hazard report. All reachable from the driving thumb. Road condition warnings surface in the instruction header itself, the same bar that tells you where to turn.",
+    copy: "Three controls, fixed to the right edge while navigation runs — SOS, safety menu, and reporting. All reachable from the driving thumb. Road condition warnings surface in the instruction header itself, the same bar that tells you where to turn.",
     thesis:
       "Safety controls earn screen space when you need them most. They don't hide in a settings tray.",
     illustration: <NavigationIllustration />,
