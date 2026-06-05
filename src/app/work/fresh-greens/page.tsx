@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
+import { ExpandableImage } from "@/components/expandable-image";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 
 function RoutePreviewIllustration() {
   return (
-    <Image
+    <ExpandableImage
       src="/projects/fresh-greens/feature-01-route-preview.png"
       alt="Route preview screen — daylight-graded polyline from Manhattan to Newark Airport Express, ETA 31 min arriving at dusk, with a road conditions hazard chip and green Go button"
       width={390}
@@ -48,7 +48,7 @@ function RoutePreviewIllustration() {
 
 function DaylightMapIllustration() {
   return (
-    <Image
+    <ExpandableImage
       src="/projects/fresh-greens/feature-02-daylight-route.png"
       alt="Daylight-graded route preview — 131-mile NJ Turnpike route arriving after dark, polyline shifting from orange at departure through mauve to indigo at destination, with 'Safest route · arriving after dark' and an All clear chip"
       width={390}
@@ -60,7 +60,7 @@ function DaylightMapIllustration() {
 
 function CommunityBrowseIllustration() {
   return (
-    <Image
+    <ExpandableImage
       src="/projects/fresh-greens/feature-03-community-browse.png"
       alt="Community browse screen — 'Trusted by your community' leads the discovery rows with a Community pick card for Sisters restaurant, filter chips for Black-Owned, Women-Owned, and LGBTQ+ Welcoming, and an Open now row below"
       width={390}
@@ -72,7 +72,7 @@ function CommunityBrowseIllustration() {
 
 function NavigationIllustration() {
   return (
-    <Image
+    <ExpandableImage
       src="/projects/fresh-greens/feature-04-en-route.png"
       alt="En-route navigation screen — dark green instruction header, 3D map with highlighted route, speedometer, and a right-side column with SOS, safety menu, and reporting buttons reachable from the driving thumb"
       width={390}
@@ -84,7 +84,7 @@ function NavigationIllustration() {
 
 function PulledOverIllustration() {
   return (
-    <Image
+    <ExpandableImage
       src="/projects/fresh-greens/feature-05-pulled-over.png"
       alt="/pulled-over screen — ACLU-sourced guidance bullets, ambient audio recording active with waveform, 'Saved to your phone — only you can access it' privacy note, and Continue button"
       width={390}
@@ -96,7 +96,7 @@ function PulledOverIllustration() {
 
 function SettingsIllustration() {
   return (
-    <Image
+    <ExpandableImage
       src="/projects/fresh-greens/feature-06-settings.png"
       alt="Settings index screen — iOS grouped-list with Refuel reminders, Zone Preferences, Safety, and Saved places, plus Privacy & Terms and Sign out as separate groups"
       width={390}
@@ -108,7 +108,7 @@ function SettingsIllustration() {
 
 function PreferredStationsIllustration() {
   return (
-    <Image
+    <ExpandableImage
       src="/projects/fresh-greens/feature-08-preferred-stations.png"
       alt="Gas on your route sheet — 10 stations, 3 trusted by you, with Shell Oil, Citgo Windhorse, and Citgo Gas & Diesel sorted to the top with green Trusted by you badges and filled gold stars, unstarred stations listed below"
       width={390}
@@ -120,7 +120,7 @@ function PreferredStationsIllustration() {
 
 function CalendarIllustration() {
   return (
-    <Image
+    <ExpandableImage
       src="/projects/fresh-greens/feature-07-calendar.png"
       alt="Search screen showing upcoming calendar events — Dentist and Optometrist with addresses and time-until already populated, plus a fuel refuel reminder, all surfaced without opening a separate view"
       width={390}
@@ -223,7 +223,7 @@ export default async function FreshGreensPage() {
         </p>
         <div className="fg-hero-device">
           <PhoneFrame>
-            <Image
+            <ExpandableImage
               src="/projects/fresh-greens/hero-onboarding.png"
               alt="Fresh Greens onboarding screen — a Black traveler emerging from a map pin against an orange sky, green hills below, with the tagline 'A path made for you, by you'"
               width={390}
