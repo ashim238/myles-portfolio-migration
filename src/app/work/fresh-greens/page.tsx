@@ -346,7 +346,7 @@ export default async function FreshGreensPage() {
             Moments of joy and fear have a lasting effect on how Black drivers
             interpret the spaces they inhabit. They stick.
           </blockquote>
-          <figcaption>From the thesis research · Fresh Greens, 2025</figcaption>
+          <figcaption>Thesis · Fresh Greens, 2026</figcaption>
         </figure>
 
         <div className="project-section-body">
