@@ -247,7 +247,7 @@ export default async function FreshGreensPage() {
         </div>
         <div className="project-meta-field">
           <dt>Timeline</dt>
-          <dd>~3 months · 2025</dd>
+          <dd>Sep 2025 – Jun 2026</dd>
         </div>
       </dl>
 
