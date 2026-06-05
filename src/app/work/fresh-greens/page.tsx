@@ -212,7 +212,7 @@ export default async function FreshGreensPage() {
 
       {/* ── Hero ─────────────────────────────────────── */}
       <section className="hero project-hero fg-hero" aria-labelledby="fg-title">
-        <p className="fg-eyebrow">Graduate thesis · 2025</p>
+        <p className="fg-eyebrow">Graduate thesis · 2026</p>
         <h1 id="fg-title" className="project-hero-title fg-title">
           Fresh Greens
         </h1>
