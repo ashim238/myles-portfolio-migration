@@ -5,7 +5,7 @@ summary: A wayfinding app for Black travel in America. Routes that maximize dayl
 role: Product Designer · Solo build
 timeframe: 2025
 status: published
-order: 3
+order: 1
 coverImage: /projects/fresh-greens/cover.png
 tags:
   - Thesis
