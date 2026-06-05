@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { SiteNav } from "@/components/site-nav";
 import { playEntries } from "@/lib/content";
+import { ExpandableImage } from "@/components/expandable-image";
 
 export default function PlayPage() {
   return (
@@ -65,14 +65,13 @@ export default function PlayPage() {
                     className={`play-images play-images--${entry.images.length}`}
                   >
                     {entry.images.map((image) => (
-                      <Image
+                      <ExpandableImage
                         key={image.src}
-                        className="play-image"
                         src={image.src}
                         alt={image.alt}
                         width={1200}
                         height={1600}
-                        sizes="(max-width: 768px) 100vw, 600px"
+                        style={{ width: "100%", height: "auto", display: "block" }}
                       />
                     ))}
                   </div>

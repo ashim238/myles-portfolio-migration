@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Geist_Mono, Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
+import { LightboxProvider } from "@/components/lightbox-provider";
 
 const sans = Instrument_Sans({
   variable: "--font-family-sans",
@@ -64,7 +65,9 @@ export default function RootLayout({
         <a className="skip-link" href="#main-content">
           Skip to main content
         </a>
-        {children}
+        <LightboxProvider>
+          {children}
+        </LightboxProvider>
       </body>
     </html>
   );

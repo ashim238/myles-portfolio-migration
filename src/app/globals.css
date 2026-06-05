@@ -3138,9 +3138,9 @@ button:focus-visible,
 }
 
 /* ============================================================
-   Expandable image lightbox
-   Used on Fresh Greens feature screenshots (and any other
-   image that opts in via <ExpandableImage>).
+   Global lightbox
+   Backdrop + frame rendered by LightboxProvider.
+   ExpandableImage triggers it; any component can via useLightbox().
    ============================================================ */
 
 .expandable-trigger {
@@ -3151,65 +3151,70 @@ button:focus-visible,
   cursor: zoom-in;
 }
 
-.expandable-overlay {
+/* Backdrop — separate element, full-screen, click closes */
+.lb-backdrop {
   position: fixed;
   inset: 0;
   z-index: 9000;
-  background: rgba(0, 0, 0, 0.82);
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: lb-fade 180ms ease both;
+  cursor: zoom-out;
+}
+
+/* Image frame — centered above backdrop */
+.lb-frame {
+  position: fixed;
+  inset: 0;
+  z-index: 9001;
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: expandable-fade-in 180ms ease both;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  pointer-events: none;
+  animation: lb-scale 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes expandable-fade-in {
+.lb-frame > * {
+  pointer-events: auto;
+}
+
+@keyframes lb-fade {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
 
-.expandable-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: expandable-scale-in 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes expandable-scale-in {
+@keyframes lb-scale {
   from { transform: scale(0.94); opacity: 0; }
   to   { transform: scale(1);    opacity: 1; }
 }
 
-.expandable-content img {
-  border-radius: 1rem;
-  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6);
-}
-
-.expandable-close {
-  position: absolute;
+.lb-close {
+  position: fixed;
   top: 1.25rem;
   right: 1.25rem;
+  z-index: 9002;
   width: 2.25rem;
   height: 2.25rem;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.12);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: background 160ms ease;
+  pointer-events: auto;
 }
 
-.expandable-close:hover {
-  background: rgba(255, 255, 255, 0.2);
+.lb-close:hover {
+  background: rgba(255, 255, 255, 0.24);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .expandable-overlay,
-  .expandable-content {
+  .lb-backdrop,
+  .lb-frame {
     animation: none;
   }
 }
