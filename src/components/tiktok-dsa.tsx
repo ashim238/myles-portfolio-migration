@@ -7,6 +7,45 @@ import Image from "next/image";
 // One file, one page — these aren't meant to be reused elsewhere.
 
 /* ──────────────────────────────────────────
+   Aesthetic data — single source of truth.
+   Internal working names; vendors who adopted
+   the templates likely saw a different label.
+   ────────────────────────────────────────── */
+
+export const AESTHETICS = [
+  {
+    key: "dopamine",
+    name: "High-saturation joy",
+    internalLabel: "#DopamineDressing",
+    palette: [
+      { hex: "#1323C2", label: "Medium Blue" },
+      { hex: "#74F0ED", label: "Electric Blue" },
+      { hex: "#FF5576", label: "Bright Pink" },
+    ],
+  },
+  {
+    key: "eboy",
+    name: "Edge and texture",
+    internalLabel: "#e-Boy / #e-Girl",
+    palette: [
+      { hex: "#141414", label: "Night" },
+      { hex: "#313539", label: "Onyx" },
+      { hex: "#6F7172", label: "Dim Gray" },
+    ],
+  },
+  {
+    key: "lightacademia",
+    name: "Quiet and considered",
+    internalLabel: "#LightAcademia",
+    palette: [
+      { hex: "#141414", label: "Night" },
+      { hex: "#EDC4AC", label: "Desert Sand" },
+      { hex: "#F7F7F7", label: "Seasalt" },
+    ],
+  },
+] as const;
+
+/* ──────────────────────────────────────────
    Animated TikTok logo
    Cyan/magenta channel separation drift.
    prefers-reduced-motion: static glyph.
@@ -83,5 +122,36 @@ export function HeroThreePhones() {
         />
       </div>
     </div>
+  );
+}
+
+/* ──────────────────────────────────────────
+   System overview band
+   9 swatches in a 3-row by 3-column preview.
+   Hex label appears on hover/focus.
+   ────────────────────────────────────────── */
+
+export function SystemOverviewBand() {
+  return (
+    <figure className="tt-overview" aria-label="Color system across three aesthetics">
+      {AESTHETICS.map((a) => (
+        <div key={a.key} className="tt-overview-row">
+          <p className="tt-overview-label">{a.internalLabel}</p>
+          <ul className="tt-overview-swatches" role="list">
+            {a.palette.map((p) => (
+              <li
+                key={p.hex}
+                className="tt-overview-swatch"
+                tabIndex={0}
+                title={`${p.label} · ${p.hex}`}
+              >
+                <span style={{ background: p.hex }} aria-hidden="true" />
+                <span className="tt-overview-hex">{p.hex}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </figure>
   );
 }

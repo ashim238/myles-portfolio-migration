@@ -3,7 +3,11 @@ import Link from "next/link";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
-import { HeroThreePhones, TikTokLogo } from "@/components/tiktok-dsa";
+import {
+  HeroThreePhones,
+  SystemOverviewBand,
+  TikTokLogo,
+} from "@/components/tiktok-dsa";
 import { getAllProjects } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -107,6 +111,8 @@ export default async function TikTokPage() {
             breaking the immutable parts.
           </p>
         </div>
+
+        <SystemOverviewBand />
       </section>
 
       <ProjectWorkJump currentSlug="tiktok" projects={allProjects} />
