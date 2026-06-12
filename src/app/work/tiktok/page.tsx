@@ -284,6 +284,31 @@ export default async function TikTokPage() {
         <LineageTimeline />
       </section>
 
+      {/* ── Section 07 — Retrospective ────────────────── */}
+      <section className="project-section tt-section" aria-labelledby="tt-retro">
+        <h2 id="tt-retro">What it actually taught me.</h2>
+        <div className="project-section-body">
+          <p>
+            The brief said &quot;design three ad templates.&quot; I treated
+            it that way at first — pick aesthetics, fill slots, ship
+            deliverables. But what I actually spent the summer doing was
+            closer to product work: researching an audience I didn&apos;t
+            belong to, narrowing scope so the system could hold, and
+            building a reusable structure around constraints I
+            couldn&apos;t change. I was 21, and I didn&apos;t have the
+            vocabulary yet to describe what I was doing as anything other
+            than &quot;visual design.&quot;
+          </p>
+          <p>
+            I see it now. The templates were the deliverable, but the
+            subculture mapping, the slot system, the constraint
+            absorption — that was the thinking. This project is the first
+            place I did product-level work, even if I didn&apos;t call it
+            that until years later.
+          </p>
+        </div>
+      </section>
+
       <ProjectWorkJump currentSlug="tiktok" projects={allProjects} />
     </main>
   );
