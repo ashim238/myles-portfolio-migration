@@ -131,6 +131,56 @@ export function HeroThreePhones() {
    Hex label appears on hover/focus.
    ────────────────────────────────────────── */
 
+/* ──────────────────────────────────────────
+   Template anatomy
+   The real grid Myles built against — preserved
+   as a photographic artifact with original
+   measurement annotations.
+   ────────────────────────────────────────── */
+
+export function TemplateAnatomy() {
+  const SLOTS = [
+    { label: "Title zone", note: "Display type, the aesthetic's signature register." },
+    { label: "Product catalog grid", note: "The hero image area. Frame treatment swaps per aesthetic." },
+    { label: "Supplementary graphics", note: "Ornament zone — high in Dopamine, restrained in Light Academia." },
+    { label: "CTA", note: "Standardized TikTok button, accented per aesthetic." },
+  ];
+
+  return (
+    <figure className="tt-anatomy">
+      <div className="tt-anatomy-grid">
+        <div className="tt-anatomy-image">
+          <Image
+            src="/projects/tiktok/anatomy-grid-light-academia.png"
+            alt="The 540×960 template grid with pink and cyan measurement annotations — the shared skeleton all three aesthetic templates were built against."
+            width={864}
+            height={1537}
+            sizes="(max-width: 768px) 100vw, 420px"
+            style={{ width: "100%", height: "auto", display: "block" }}
+          />
+        </div>
+        <ol className="tt-anatomy-slots" role="list">
+          {SLOTS.map((s, i) => (
+            <li key={s.label}>
+              <span className="tt-anatomy-slot-number">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <p className="tt-anatomy-slot-label">{s.label}</p>
+                <p className="tt-anatomy-slot-note">{s.note}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <figcaption>
+        540×960 frame. Pink markers in the original file are slot margins;
+        cyan markers are the immutable outer boundaries.
+      </figcaption>
+    </figure>
+  );
+}
+
 export function SystemOverviewBand() {
   return (
     <figure className="tt-overview" aria-label="Color system across three aesthetics">

@@ -3610,6 +3610,80 @@ button:focus-visible,
   color: var(--muted);
 }
 
+/* ── Template anatomy ───────────────────────────────── */
+
+.tt-anatomy {
+  margin: 2.4rem 0 0;
+  padding: 1.5rem 1.4rem;
+  border: 1px solid var(--line);
+  border-radius: 0.7rem;
+  background: var(--surface);
+}
+
+.tt-anatomy-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1.4fr;
+  gap: 1.8rem;
+  align-items: center;
+}
+
+.tt-anatomy-image {
+  border-radius: 0.45rem;
+  overflow: hidden;
+}
+
+.tt-anatomy-slots {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.95rem;
+}
+
+.tt-anatomy-slots li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem;
+  align-items: start;
+}
+
+.tt-anatomy-slot-number {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  padding-top: 0.18rem;
+}
+
+.tt-anatomy-slot-label {
+  margin: 0 0 0.18rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: var(--track-display);
+  color: var(--foreground);
+}
+
+.tt-anatomy-slot-note {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.tt-anatomy figcaption {
+  margin: 1.4rem 0 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+@media (max-width: 768px) {
+  .tt-anatomy-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ============================================================
    /play title — Pixar-style hop with squash & stretch
    One staggered hop per letter on page load. No idle loop.

@@ -6,6 +6,7 @@ import { ProjectWorkJump } from "@/components/project-work-jump";
 import {
   HeroThreePhones,
   SystemOverviewBand,
+  TemplateAnatomy,
   TikTokLogo,
 } from "@/components/tiktok-dsa";
 import { getAllProjects } from "@/lib/content";
@@ -157,6 +158,30 @@ export default async function TikTokPage() {
             chrome — and let three aesthetic registers fill it.
           </p>
         </div>
+      </section>
+
+      {/* ── Section 03 — The system ────────────────────── */}
+      <section className="project-section tt-section tt-section--wide" aria-labelledby="tt-system">
+        <h2 id="tt-system">One skeleton. Three fills.</h2>
+        <div className="project-section-body">
+          <p>
+            The constraint stack — TikTok&apos;s brand guidelines, the
+            540×960 in-feed dimensions, three subculture aesthetics — only
+            resolves cleanly if the variability lives in defined places. I
+            drew the template against a slot map: title zone, product
+            catalog grid, supplementary graphics, CTA. Each slot held the
+            same role across every aesthetic. What changed was the fill —
+            typography, palette, ornament, image treatment.
+          </p>
+          <p>
+            The artifact below is the original grid I built against —
+            measurements, gutters, slot boundaries — preserved as it lived
+            in my working file. The aesthetic showcases that follow show
+            how each fill resolved against this same skeleton.
+          </p>
+        </div>
+
+        <TemplateAnatomy />
       </section>
 
       <ProjectWorkJump currentSlug="tiktok" projects={allProjects} />
