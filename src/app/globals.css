@@ -3364,6 +3364,80 @@ button:focus-visible,
 }
 
 /* ============================================================
+   TikTok DSA case study
+   Page-specific styling. Inherits portfolio tokens; introduces
+   a TikTok-themed cyan/magenta animation for the eyebrow logo.
+   ============================================================ */
+
+.tt-page {
+  --tt-cyan: #25f4ee;
+  --tt-magenta: #fe2c55;
+}
+
+.tt-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.85rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.tt-logo {
+  display: inline-block;
+  width: 0.95rem;
+  height: 0.95rem;
+  position: relative;
+}
+
+.tt-logo svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.tt-logo svg g {
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.tt-logo-cyan {
+  fill: var(--tt-cyan);
+  mix-blend-mode: screen;
+}
+
+.tt-logo-magenta {
+  fill: var(--tt-magenta);
+  mix-blend-mode: screen;
+}
+
+.tt-logo-ink {
+  fill: var(--foreground);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tt-logo-cyan {
+    animation: tt-logo-drift-cyan 3.5s ease-in-out infinite;
+  }
+  .tt-logo-magenta {
+    animation: tt-logo-drift-magenta 3.5s ease-in-out infinite;
+  }
+}
+
+@keyframes tt-logo-drift-cyan {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(-1.2px, 0.6px); }
+}
+
+@keyframes tt-logo-drift-magenta {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(1.2px, -0.6px); }
+}
+
+/* ============================================================
    /play title — Pixar-style hop with squash & stretch
    One staggered hop per letter on page load. No idle loop.
    ============================================================ */

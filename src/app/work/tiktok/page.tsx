@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectWorkJump } from "@/components/project-work-jump";
+import { TikTokLogo } from "@/components/tiktok-dsa";
 import { getAllProjects } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -30,7 +31,10 @@ export default async function TikTokPage() {
       </nav>
 
       <section className="hero project-hero tt-hero" aria-labelledby="tt-title">
-        <p className="tt-eyebrow">Internship · 2021</p>
+        <p className="tt-eyebrow">
+          <TikTokLogo />
+          <span>Internship · 2021</span>
+        </p>
         <h1 id="tt-title" className="project-hero-title tt-title">
           TikTok Dynamic Showcase Ads
         </h1>
