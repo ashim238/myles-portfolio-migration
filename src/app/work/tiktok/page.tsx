@@ -7,6 +7,7 @@ import {
   AESTHETICS,
   AestheticShowcaseCard,
   HeroThreePhones,
+  LineageTimeline,
   OutcomeCard,
   SystemOverviewBand,
   TemplateAnatomy,
@@ -257,6 +258,30 @@ export default async function TikTokPage() {
       <section className="project-section tt-section" aria-labelledby="tt-shipped">
         <h2 id="tt-shipped" className="sr-only">What shipped</h2>
         <OutcomeCard />
+      </section>
+
+      {/* ── Section 06 — Honest scope ──────────────────── */}
+      <section className="project-section tt-section" aria-labelledby="tt-scope">
+        <h2 id="tt-scope">Where the work went.</h2>
+        <div className="project-section-body">
+          <p>
+            TikTok deprecated the original Dynamic Showcase Ads format on
+            April 3, 2023, folding the underlying mechanics into Video
+            Shopping Ads. That lineage continues today as Smart+ Catalog
+            Ads — the modular template-from-catalog logic still ships,
+            under a different product name and a newer optimization layer.
+          </p>
+          <p>
+            My contribution sits in the launch generation: three of the
+            30+ templates that shipped when the format went live. I
+            don&apos;t know how long the specific designs persisted in
+            rotation, and I have no visibility into performance data. What
+            I can confirm is the mechanic — catalog in, template-wrapped
+            ad out — outlived the product that introduced it.
+          </p>
+        </div>
+
+        <LineageTimeline />
       </section>
 
       <ProjectWorkJump currentSlug="tiktok" projects={allProjects} />

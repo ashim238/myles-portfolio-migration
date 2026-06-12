@@ -328,6 +328,43 @@ export function OutcomeCard() {
   );
 }
 
+/* ──────────────────────────────────────────
+   DSA lineage timeline
+   Three-node horizontal timeline SVG.
+   Matches the Geist Mono + line-only language
+   used in the Fresh Greens architecture diagram.
+   ────────────────────────────────────────── */
+
+const TIMELINE_NODES = [
+  { year: "2021", label: "DSA launches", detail: "30+ templates introduced" },
+  { year: "2023", label: "Migration", detail: "Mechanics move to Video Shopping Ads" },
+  { year: "2026", label: "Smart+ Catalog Ads", detail: "Modular-template logic continues" },
+] as const;
+
+export function LineageTimeline() {
+  return (
+    <figure className="tt-timeline" aria-label="DSA feature lineage">
+      <div className="tt-timeline-track">
+        {TIMELINE_NODES.map((n, i) => (
+          <div key={n.year} className="tt-timeline-node">
+            <span className="tt-timeline-dot" aria-hidden="true" />
+            {i < TIMELINE_NODES.length - 1 && (
+              <span className="tt-timeline-connector" aria-hidden="true" />
+            )}
+            <p className="tt-timeline-year">{n.year}</p>
+            <p className="tt-timeline-label">{n.label}</p>
+            <p className="tt-timeline-detail">{n.detail}</p>
+          </div>
+        ))}
+      </div>
+      <figcaption>
+        The template-from-catalog mechanic Myles contributed to still ships
+        under a different product name today.
+      </figcaption>
+    </figure>
+  );
+}
+
 export function SystemOverviewBand() {
   return (
     <figure className="tt-overview" aria-label="Color system across three aesthetics">
