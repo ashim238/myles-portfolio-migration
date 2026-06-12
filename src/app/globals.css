@@ -3437,6 +3437,51 @@ button:focus-visible,
   50%      { transform: translate(1.2px, -0.6px); }
 }
 
+/* ── Hero ─────────────────────────────────────────────── */
+
+.tt-title {
+  font-size: clamp(2.5rem, 7vw, 4.6rem) !important;
+}
+
+.tt-lede {
+  max-width: 44ch !important;
+  font-size: clamp(1.05rem, 2vw, 1.28rem) !important;
+}
+
+.tt-hero-device {
+  margin-top: 2.6rem;
+  display: flex;
+  justify-content: center;
+}
+
+.tt-hero-stage {
+  --tt-tilt-x: 0;
+  --tt-tilt-y: 0;
+  width: min(880px, 92vw);
+  perspective: 1400px;
+}
+
+.tt-hero-tilt {
+  transform:
+    rotateY(calc(var(--tt-tilt-x) * 6deg))
+    rotateX(calc(var(--tt-tilt-y) * -4deg))
+    translateZ(0);
+  transform-style: preserve-3d;
+  transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.tt-hero-tilt img {
+  filter: drop-shadow(0 32px 64px rgba(0, 0, 0, 0.18));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tt-hero-tilt {
+    transform: none;
+    transition: none;
+  }
+}
+
 /* ============================================================
    /play title — Pixar-style hop with squash & stretch
    One staggered hop per letter on page load. No idle loop.

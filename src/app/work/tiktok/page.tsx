@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectWorkJump } from "@/components/project-work-jump";
-import { TikTokLogo } from "@/components/tiktok-dsa";
+import { HeroThreePhones, TikTokLogo } from "@/components/tiktok-dsa";
 import { getAllProjects } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -39,8 +39,14 @@ export default async function TikTokPage() {
           TikTok Dynamic Showcase Ads
         </h1>
         <p className="project-hero-lede tt-lede">
-          Scaffolding — replace in Task 4.
+          A modular template system built for TikTok&apos;s Dynamic Showcase
+          Ads — designed around the platform&apos;s subculture density so the
+          ads could read as in-feed, not at-feed. American Eagle adopted one
+          of the three.
         </p>
+        <div className="tt-hero-device">
+          <HeroThreePhones />
+        </div>
       </section>
 
       <ProjectWorkJump currentSlug="tiktok" projects={allProjects} />

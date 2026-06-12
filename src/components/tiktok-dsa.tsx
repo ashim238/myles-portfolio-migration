@@ -1,3 +1,8 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import Image from "next/image";
+
 // Co-located components for the TikTok DSA case study.
 // One file, one page — these aren't meant to be reused elsewhere.
 
@@ -25,5 +30,58 @@ export function TikTokLogo() {
         </g>
       </svg>
     </span>
+  );
+}
+
+/* ──────────────────────────────────────────
+   Hero — photographic three-phones composite
+   Subtle cursor-following 3D tilt. The asset
+   already shows all three aesthetics at angled
+   perspective; we just give it gentle motion.
+   ────────────────────────────────────────── */
+
+export function HeroThreePhones() {
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let raf = 0;
+    function onMove(e: MouseEvent) {
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const nx = (e.clientX - cx) / rect.width;
+      const ny = (e.clientY - cy) / rect.height;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        el.style.setProperty("--tt-tilt-x", String(nx));
+        el.style.setProperty("--tt-tilt-y", String(ny));
+      });
+    }
+    window.addEventListener("mousemove", onMove);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  return (
+    <div ref={ref} className="tt-hero-stage" aria-hidden="true">
+      <div className="tt-hero-tilt">
+        <Image
+          src="/projects/tiktok/hero-three-phones.png"
+          alt="Three iPhones angled in space, each displaying one of the three template aesthetics — Dopamine Dressing, E-Boy/E-Girl, and Light Academia"
+          width={1920}
+          height={1280}
+          priority
+          sizes="(max-width: 768px) 92vw, 880px"
+          style={{ width: "100%", height: "auto", display: "block" }}
+        />
+      </div>
+    </div>
   );
 }
