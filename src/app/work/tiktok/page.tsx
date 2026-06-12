@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteNav } from "@/components/site-nav";
+import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
 import { HeroThreePhones, TikTokLogo } from "@/components/tiktok-dsa";
 import { getAllProjects } from "@/lib/content";
@@ -48,6 +49,33 @@ export default async function TikTokPage() {
           <HeroThreePhones />
         </div>
       </section>
+
+      <dl className="project-meta tt-meta" aria-label="Project details">
+        <div className="project-meta-field">
+          <dt>Role</dt>
+          <dd>Visual Designer · Brand Studio</dd>
+        </div>
+        <div className="project-meta-field">
+          <dt>Stack</dt>
+          <dd>Illustrator · Photoshop</dd>
+        </div>
+        <div className="project-meta-field">
+          <dt>Timeline</dt>
+          <dd>May – Aug 2021</dd>
+        </div>
+      </dl>
+
+      <ProjectToc
+        sections={[
+          { title: "The brief", id: "tt-brief" },
+          { title: "Reading the platform", id: "tt-research" },
+          { title: "The system", id: "tt-system" },
+          { title: "Three aesthetics", id: "tt-aesthetics" },
+          { title: "What shipped", id: "tt-shipped" },
+          { title: "Honest scope", id: "tt-scope" },
+          { title: "Retrospective", id: "tt-retro" },
+        ]}
+      />
 
       <ProjectWorkJump currentSlug="tiktok" projects={allProjects} />
     </main>
