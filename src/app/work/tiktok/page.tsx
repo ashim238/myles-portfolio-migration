@@ -201,7 +201,6 @@ export default async function TikTokPage() {
         </p>
 
         <AestheticShowcaseCard
-          number="01"
           name={AESTHETICS[0].name}
           internalLabel={AESTHETICS[0].internalLabel}
           accentHex="#FF5576"
@@ -220,7 +219,6 @@ export default async function TikTokPage() {
         />
 
         <AestheticShowcaseCard
-          number="02"
           name={AESTHETICS[1].name}
           internalLabel={AESTHETICS[1].internalLabel}
           accentHex="#313539"
@@ -235,7 +233,6 @@ export default async function TikTokPage() {
         />
 
         <AestheticShowcaseCard
-          number="03"
           name={AESTHETICS[2].name}
           internalLabel={AESTHETICS[2].internalLabel}
           accentHex="#EDC4AC"
@@ -256,7 +253,7 @@ export default async function TikTokPage() {
 
       {/* ── Section 05 — What shipped ─────────────────── */}
       <section className="project-section tt-section" aria-labelledby="tt-shipped">
-        <h2 id="tt-shipped" className="sr-only">What shipped</h2>
+        <h2 id="tt-shipped">What ended up on TikTok.</h2>
         <OutcomeCard />
       </section>
 

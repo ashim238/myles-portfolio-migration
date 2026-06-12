@@ -121,15 +121,10 @@ export function TemplateAnatomy() {
           />
         </div>
         <ol className="tt-anatomy-slots" role="list">
-          {SLOTS.map((s, i) => (
+          {SLOTS.map((s) => (
             <li key={s.label}>
-              <span className="tt-anatomy-slot-number">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <div>
-                <p className="tt-anatomy-slot-label">{s.label}</p>
-                <p className="tt-anatomy-slot-note">{s.note}</p>
-              </div>
+              <p className="tt-anatomy-slot-label">{s.label}</p>
+              <p className="tt-anatomy-slot-note">{s.note}</p>
             </li>
           ))}
         </ol>
@@ -153,7 +148,6 @@ import { ExpandableImage } from "@/components/expandable-image";
 type Swatch = { hex: string; label: string };
 
 type AestheticShowcaseProps = {
-  number: string;
   name: string;
   internalLabel: string;
   accentHex: string;
@@ -166,7 +160,7 @@ type AestheticShowcaseProps = {
 };
 
 export function AestheticShowcaseCard({
-  number, name, internalLabel, accentHex,
+  name, internalLabel, accentHex,
   palette, anchorText, feedback, process, feature, reverse,
 }: AestheticShowcaseProps) {
   const accentStyle = { "--tt-accent": accentHex } as React.CSSProperties;
@@ -210,11 +204,10 @@ export function AestheticShowcaseCard({
       </div>
 
       <div className="tt-aesthetic-context">
-        <p className="tt-aesthetic-number">{number}</p>
         <h3 className="tt-aesthetic-name">{name}</h3>
-        <p className="tt-aesthetic-internal">Internal label: {internalLabel}</p>
+        <p className="tt-aesthetic-internal">Working name: {internalLabel}</p>
 
-        <p className="tt-aesthetic-meta-label">Anchor</p>
+        <p className="tt-aesthetic-meta-label">Reference</p>
         <p className="tt-aesthetic-anchor-text">{anchorText}</p>
 
         <p className="tt-aesthetic-meta-label">Palette</p>
@@ -230,7 +223,7 @@ export function AestheticShowcaseCard({
           ))}
         </ul>
 
-        <p className="tt-aesthetic-meta-label">Feedback received</p>
+        <p className="tt-aesthetic-meta-label">Feedback I got</p>
         <blockquote className="tt-aesthetic-feedback">{feedback}</blockquote>
       </div>
     </article>
@@ -319,7 +312,7 @@ export function LineageTimeline() {
         ))}
       </div>
       <figcaption>
-        The template-from-catalog mechanic Myles contributed to still ships
+        The template-from-catalog mechanic I contributed to still ships
         under a different product name today.
       </figcaption>
     </figure>

@@ -3586,27 +3586,24 @@ button:focus-visible,
 /* ── Pullquote ──────────────────────────────────────── */
 
 .tt-pullquote {
-  margin: 2rem 0;
-  padding: 1.4rem 1.6rem;
-  border-left: 3px solid var(--foreground);
-  background: var(--surface);
-  border-radius: 0 0.5rem 0.5rem 0;
+  margin: 2.4rem auto;
+  padding: 0;
+  max-width: 56ch;
+  text-align: center;
 }
 
 .tt-pullquote blockquote {
-  margin: 0 0 0.55rem;
-  font-size: clamp(1.15rem, 2.2vw, 1.35rem);
-  line-height: 1.35;
+  margin: 0 0 0.9rem;
+  font-size: clamp(1.4rem, 2.6vw, 1.8rem);
+  line-height: 1.3;
   font-weight: 400;
+  letter-spacing: var(--track-display);
   text-wrap: balance;
 }
 
 .tt-pullquote figcaption {
   margin: 0;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 0.85rem;
   color: var(--muted);
 }
 
@@ -3641,18 +3638,8 @@ button:focus-visible,
 }
 
 .tt-anatomy-slots li {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0.75rem;
-  align-items: start;
-}
-
-.tt-anatomy-slot-number {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  color: var(--muted);
-  padding-top: 0.18rem;
+  padding-left: 0.9rem;
+  border-left: 1px solid var(--line);
 }
 
 .tt-anatomy-slot-label {
@@ -3742,38 +3729,25 @@ button:focus-visible,
   color: var(--muted);
 }
 
-.tt-aesthetic-number {
-  margin: 0 0 0.4rem;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--tt-accent);
-}
-
 .tt-aesthetic-name {
   margin: 0 0 0.35rem;
   font-size: clamp(1.5rem, 2.4vw, 1.85rem);
   font-weight: 500;
   letter-spacing: var(--track-display);
+  color: var(--tt-accent);
 }
 
 .tt-aesthetic-internal {
   margin: 0 0 1.4rem;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.72rem;
+  font-size: 0.85rem;
   color: var(--muted);
 }
 
 .tt-aesthetic-meta-label {
-  margin: 1.3rem 0 0.5rem;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  border-left: 2px solid var(--tt-accent);
-  padding-left: 0.55rem;
+  margin: 1.3rem 0 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--foreground);
 }
 
 .tt-aesthetic-anchor-text {
@@ -3820,13 +3794,21 @@ button:focus-visible,
 
 .tt-aesthetic-feedback {
   margin: 0;
-  padding: 0.85rem 1rem;
-  border-left: 3px solid var(--tt-accent);
-  background: var(--surface);
-  border-radius: 0 0.35rem 0.35rem 0;
+  padding: 0;
   font-size: 0.95rem;
   font-style: italic;
-  line-height: 1.45;
+  line-height: 1.5;
+  color: var(--foreground);
+}
+
+.tt-aesthetic-feedback::before {
+  content: "\201C";
+  font-size: 2.2rem;
+  line-height: 0;
+  vertical-align: -0.4rem;
+  margin-right: 0.15rem;
+  color: var(--tt-accent);
+  font-style: normal;
 }
 
 @media (max-width: 768px) {
@@ -3840,56 +3822,53 @@ button:focus-visible,
   }
 }
 
-/* ── Outcome card — American Eagle ────────────────── */
+/* ── Outcome — American Eagle ─────────────────────── */
 
 .tt-outcome {
   max-width: var(--content-max);
-  margin: 0 auto;
-  padding: 3.5rem 2.5rem;
-  background: #EDC4AC;
-  color: #141414;
-  border-radius: 1rem;
+  margin: 2.4rem auto 0;
+  padding: 0;
   display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 2.5rem;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  align-items: end;
+  gap: clamp(1.6rem, 4vw, 3rem);
   opacity: 0;
-  transform: scale(0.98);
-  transition: opacity 360ms ease-out, transform 360ms ease-out;
+  transform: translateY(12px);
+  transition: opacity 480ms ease-out, transform 480ms ease-out;
 }
 
 .tt-outcome--visible {
   opacity: 1;
-  transform: scale(1);
+  transform: translateY(0);
+}
+
+.tt-outcome-text {
+  padding-bottom: 0.6rem;
 }
 
 .tt-outcome-headline {
-  font-size: clamp(1.55rem, 3vw, 2.2rem);
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
+  margin: 0;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: var(--track-display);
+  text-wrap: balance;
 }
 
 .tt-outcome-sub {
-  margin-top: 0.6rem;
-  font-size: 0.95rem;
-  opacity: 0.7;
+  margin-top: 0.85rem;
+  font-size: 0.92rem;
+  color: var(--muted);
 }
 
 .tt-outcome-image {
-  width: clamp(160px, 20vw, 300px);
-  flex-shrink: 0;
+  width: 100%;
 }
 
 @media (max-width: 639px) {
   .tt-outcome {
     grid-template-columns: 1fr;
-    padding: 2.2rem 1.5rem;
-    text-align: center;
-  }
-  .tt-outcome-image {
-    width: 70%;
-    margin: 0 auto;
+    gap: 1.4rem;
   }
 }
 
