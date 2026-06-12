@@ -43,7 +43,7 @@ TOC component: reuse the existing `ProjectToc` from Fresh Greens with Intersecti
 
 Matches Fresh Greens treatment.
 
-- **Eyebrow:** Internship · 2021
+- **Eyebrow:** `[animated TikTok logo] Internship · 2021`. The logo is an inline SVG glyph rendered at eyebrow text size (~0.72rem). Animation specified in §6.
 - **Title:** TikTok Dynamic Showcase Ads
 - **Lede:** ~2 sentences; lands the B thesis without spelling it out.
 - **Meta strip:** Role / Stack / Timeline (Visual Designer · Brand Studio / Illustrator, Photoshop / May – Aug 2021)
@@ -122,6 +122,7 @@ Language: describes what happened. No causal claims about whether Myles's work d
 
 ## 6. Motion + interactivity layer
 
+- **Animated TikTok logo (eyebrow)** — inline SVG TikTok glyph. Animation: signature cyan/magenta channel separation. The cyan and magenta offset layers drift ~2px apart and back on a slow 3.5s loop. Reads as "TikTok" without being loud. Static glyph when `prefers-reduced-motion: reduce` is set — the dual-color treatment still reads; only the drift animation is suppressed.
 - **Hero parallax** — cursor-following micro-translation (~6px max) on the three layered template cards. Gated on `prefers-reduced-motion: no-preference`.
 - **Scroll stagger reveals** — section headers and body fade up on viewport enter. Reuse existing Fresh Greens entrance animation tokens.
 - **Template anatomy hover** — already specified (Section 5.2).
@@ -187,9 +188,8 @@ A landscape composition for the homepage project card. Composition TBD — a fla
 
 ## 12. Out of scope
 
-- Animated logo for TikTok in the eyebrow (not worth the build).
 - Video embeds (no DSA video assets exist in usable form).
-- A "scroll the templates in a faux feed" interaction (rejected for honesty reasons; see Section 6).
+- A "scroll the templates in a faux feed" interaction. Rejected for four reasons: (1) it implies authorship of in-feed slotting decisions Myles didn't own; (2) it requires fabricating surrounding feed content; (3) it answers the wrong question — the thesis is about the modular system, not viewing context; (4) it dilutes the deliverable inside someone else's frame. The stacked-card hero achieves the in-feed *feeling* without the fabrication.
 - Restructuring of the existing case studies for visual parity (would scope-creep this project).
 
 ---
