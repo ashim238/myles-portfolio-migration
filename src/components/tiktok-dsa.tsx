@@ -276,6 +276,58 @@ export function AestheticShowcaseCard({
   );
 }
 
+/* ──────────────────────────────────────────
+   American Eagle outcome card
+   Scroll-triggered fade + scale entrance.
+   prefers-reduced-motion: static.
+   ────────────────────────────────────────── */
+
+export function OutcomeCard() {
+  const ref = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      el.classList.add("tt-outcome--visible");
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add("tt-outcome--visible");
+          io.disconnect();
+        }
+      },
+      { threshold: 0.3 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <article ref={ref} className="tt-outcome">
+      <div className="tt-outcome-text">
+        <p className="tt-outcome-headline">
+          American Eagle adopted the Light Academia template.
+        </p>
+        <p className="tt-outcome-sub">Shipped via TikTok DSA, 2021.</p>
+      </div>
+      <div className="tt-outcome-image">
+        <Image
+          src="/projects/tiktok/shipped-light-academia-in-hand.png"
+          alt="The Light Academia template shown on a phone held in-hand — the version American Eagle adopted."
+          width={1200}
+          height={800}
+          sizes="(max-width: 768px) 80vw, 320px"
+          style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.5rem" }}
+        />
+      </div>
+    </article>
+  );
+}
+
 export function SystemOverviewBand() {
   return (
     <figure className="tt-overview" aria-label="Color system across three aesthetics">

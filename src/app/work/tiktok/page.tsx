@@ -7,6 +7,7 @@ import {
   AESTHETICS,
   AestheticShowcaseCard,
   HeroThreePhones,
+  OutcomeCard,
   SystemOverviewBand,
   TemplateAnatomy,
   TikTokLogo,
@@ -250,6 +251,12 @@ export default async function TikTokPage() {
             caption: "The aesthetic reference, in the wild.",
           }}
         />
+      </section>
+
+      {/* ── Section 05 — What shipped ─────────────────── */}
+      <section className="project-section tt-section" aria-labelledby="tt-shipped">
+        <h2 id="tt-shipped" className="sr-only">What shipped</h2>
+        <OutcomeCard />
       </section>
 
       <ProjectWorkJump currentSlug="tiktok" projects={allProjects} />
