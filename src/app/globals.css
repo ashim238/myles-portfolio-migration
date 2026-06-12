@@ -3546,8 +3546,6 @@ button:focus-visible,
   height: 2.2rem;
   border-radius: 0.35rem;
   overflow: hidden;
-  cursor: default;
-  outline: none;
 }
 
 .tt-overview-swatch > span:first-child {
@@ -3558,22 +3556,7 @@ button:focus-visible,
 }
 
 .tt-overview-hex {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.58rem;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.6);
-  opacity: 0;
-  transition: opacity 160ms ease;
-}
-
-.tt-overview-swatch:hover .tt-overview-hex,
-.tt-overview-swatch:focus-visible .tt-overview-hex {
-  opacity: 1;
+  display: none;
 }
 
 @media (max-width: 640px) {

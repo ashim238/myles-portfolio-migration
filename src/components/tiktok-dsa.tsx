@@ -182,6 +182,7 @@ export function AestheticShowcaseCard({
             display: "block",
             borderRadius: "0.45rem",
             background: "var(--surface)",
+            filter: "contrast(1.15) saturate(1.25)",
           }}
         />
         {feature ? (
@@ -330,7 +331,6 @@ export function SystemOverviewBand() {
               <li
                 key={p.hex}
                 className="tt-overview-swatch"
-                tabIndex={0}
                 title={`${p.label} · ${p.hex}`}
               >
                 <span style={{ background: p.hex }} aria-hidden="true" />
