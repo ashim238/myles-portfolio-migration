@@ -3684,6 +3684,162 @@ button:focus-visible,
   }
 }
 
+/* ── Aesthetic showcase cards ───────────────────────── */
+
+.tt-aesthetics-section {
+  margin-top: 5rem;
+}
+
+.tt-aesthetics-heading {
+  margin: 0 0 0.55rem;
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.16;
+  letter-spacing: var(--track-display);
+}
+
+.tt-aesthetics-lede {
+  margin: 0 0 2rem;
+  max-width: 62ch;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.tt-aesthetic {
+  --tt-accent: #888;
+
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 2.2rem;
+  align-items: start;
+  padding: 2.4rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.tt-aesthetic--reverse {
+  grid-template-columns: 1fr 1.4fr;
+}
+
+.tt-aesthetic--reverse .tt-aesthetic-visual {
+  order: 2;
+}
+
+.tt-aesthetic-visual {
+  display: grid;
+  gap: 1rem;
+}
+
+.tt-aesthetic-feature {
+  margin: 0;
+}
+
+.tt-aesthetic-feature figcaption {
+  margin-top: 0.45rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.tt-aesthetic-number {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tt-accent);
+}
+
+.tt-aesthetic-name {
+  margin: 0 0 0.35rem;
+  font-size: clamp(1.5rem, 2.4vw, 1.85rem);
+  font-weight: 500;
+  letter-spacing: var(--track-display);
+}
+
+.tt-aesthetic-internal {
+  margin: 0 0 1.4rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.tt-aesthetic-meta-label {
+  margin: 1.3rem 0 0.5rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-left: 2px solid var(--tt-accent);
+  padding-left: 0.55rem;
+}
+
+.tt-aesthetic-anchor-text {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--foreground);
+}
+
+.tt-aesthetic-palette {
+  display: grid;
+  gap: 0.45rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tt-aesthetic-palette li {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr;
+  gap: 0.7rem;
+  align-items: center;
+}
+
+.tt-aesthetic-palette li > span:first-child {
+  display: block;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tt-aesthetic-palette-label {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  color: var(--foreground);
+}
+
+.tt-aesthetic-palette-hex {
+  color: var(--muted);
+}
+
+.tt-aesthetic-feedback {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid var(--tt-accent);
+  background: var(--surface);
+  border-radius: 0 0.35rem 0.35rem 0;
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.45;
+}
+
+@media (max-width: 768px) {
+  .tt-aesthetic,
+  .tt-aesthetic--reverse {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+  .tt-aesthetic--reverse .tt-aesthetic-visual {
+    order: 0;
+  }
+}
+
 /* ============================================================
    /play title — Pixar-style hop with squash & stretch
    One staggered hop per letter on page load. No idle loop.

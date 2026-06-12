@@ -4,6 +4,8 @@ import { SiteNav } from "@/components/site-nav";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
 import {
+  AESTHETICS,
+  AestheticShowcaseCard,
   HeroThreePhones,
   SystemOverviewBand,
   TemplateAnatomy,
@@ -182,6 +184,72 @@ export default async function TikTokPage() {
         </div>
 
         <TemplateAnatomy />
+      </section>
+
+      {/* ── Section 04 — Three aesthetics ──────────────── */}
+      <section className="tt-aesthetics-section" aria-labelledby="tt-aesthetics">
+        <h2 id="tt-aesthetics" className="tt-aesthetics-heading">Three aesthetics.</h2>
+        <p className="tt-aesthetics-lede">
+          These were my internal working names while I built. The team
+          used them to talk about the templates day-to-day; vendors who
+          adopted the templates likely saw a different label downstream.
+          Each card has the lo-fi sketch I worked from, the anchor I
+          referenced, the palette, and the literal feedback I got in
+          review.
+        </p>
+
+        <AestheticShowcaseCard
+          number="01"
+          name={AESTHETICS[0].name}
+          internalLabel={AESTHETICS[0].internalLabel}
+          accentHex="#FF5576"
+          palette={AESTHETICS[0].palette}
+          anchorText="70s psychedelia — fluid forms, bold patterning, chromatic-aberration ornament. Color treated as content, not as decoration."
+          feedback="Continue incorporating TikTok's brand guidelines and brand copy."
+          process={{
+            src: "/projects/tiktok/lofi-dopamine.png",
+            alt: "Hand-drawn lo-fi sketch for #DopamineDressing with notes — 'play with brand colors', 'broader abstract pattern', copy candidates '#OOTD', '#Daily fit', 'Dress for dopamine', 'The Fit'.",
+          }}
+          feature={{
+            src: "/projects/tiktok/dopamine-ornament-rings.png",
+            alt: "Chromatic-aberration ring ornament — one of the supplementary graphics built for the #DopamineDressing template.",
+            caption: "One of the supplementary ornaments built into the template.",
+          }}
+        />
+
+        <AestheticShowcaseCard
+          number="02"
+          name={AESTHETICS[1].name}
+          internalLabel={AESTHETICS[1].internalLabel}
+          accentHex="#313539"
+          reverse
+          palette={AESTHETICS[1].palette}
+          anchorText="Grungy punk magazine — texture, distress, dimension. The challenge was carrying the aesthetic without abandoning TikTok's upbeat brand register."
+          feedback="Continue working on the design, but note that the aesthetic deviates from what TikTok is known for. Use dimension and texture to elevate it."
+          process={{
+            src: "/projects/tiktok/lofi-eboy.png",
+            alt: "Hand-drawn lo-fi sketch for #e-Boy/#e-Girl with notes — 'may stray too far from guidelines', 'build it out more', 'if no color find a way to make it appealing', 'wear and tear', 'magazine spine', 'title overcrowded'.",
+          }}
+        />
+
+        <AestheticShowcaseCard
+          number="03"
+          name={AESTHETICS[2].name}
+          internalLabel={AESTHETICS[2].internalLabel}
+          accentHex="#EDC4AC"
+          palette={AESTHETICS[2].palette}
+          anchorText="Acne Studios pastels — clean, restrained, anchored. The hardest brief of the three because simplicity reads as missing when it's just under-built."
+          feedback="Lean into TikTok's upbeat tone. Consider how simplicity can strengthen a design."
+          process={{
+            src: "/projects/tiktok/lofi-light-academia.png",
+            alt: "Hand-drawn lo-fi sketch for #LightAcademia with notes — 'scale down font, light academia is too subtle', 'rethink placement bug', 'gestalt, calming color palette', 'barcode generator'.",
+          }}
+          feature={{
+            src: "/projects/tiktok/feed-ref-light-academia.png",
+            alt: "TikTok in-feed reference for Light Academia — a model in cream turtleneck and beige coat, '@LightAcademia / Just Light Academia things'.",
+            caption: "The aesthetic reference, in the wild.",
+          }}
+        />
       </section>
 
       <ProjectWorkJump currentSlug="tiktok" projects={allProjects} />

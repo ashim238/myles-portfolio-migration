@@ -181,6 +181,101 @@ export function TemplateAnatomy() {
   );
 }
 
+/* ──────────────────────────────────────────
+   Aesthetic showcase card
+   One per aesthetic. Scoped accent color via
+   CSS custom property; rest of the rhythm shared.
+   ────────────────────────────────────────── */
+
+import { ExpandableImage } from "@/components/expandable-image";
+
+type Swatch = { hex: string; label: string };
+
+type AestheticShowcaseProps = {
+  number: string;
+  name: string;
+  internalLabel: string;
+  accentHex: string;
+  palette: readonly Swatch[];
+  anchorText: string;
+  feedback: string;
+  process: { src: string; alt: string };
+  feature?: { src: string; alt: string; caption?: string };
+  reverse?: boolean;
+};
+
+export function AestheticShowcaseCard({
+  number, name, internalLabel, accentHex,
+  palette, anchorText, feedback, process, feature, reverse,
+}: AestheticShowcaseProps) {
+  const accentStyle = { "--tt-accent": accentHex } as React.CSSProperties;
+
+  return (
+    <article
+      className={`tt-aesthetic ${reverse ? "tt-aesthetic--reverse" : ""}`}
+      style={accentStyle}
+    >
+      <div className="tt-aesthetic-visual">
+        <ExpandableImage
+          src={process.src}
+          alt={process.alt}
+          width={1600}
+          height={900}
+          style={{
+            width: "100%",
+            height: "auto",
+            display: "block",
+            borderRadius: "0.45rem",
+            background: "var(--surface)",
+          }}
+        />
+        {feature ? (
+          <figure className="tt-aesthetic-feature">
+            <ExpandableImage
+              src={feature.src}
+              alt={feature.alt}
+              width={1200}
+              height={1200}
+              style={{
+                width: "100%",
+                height: "auto",
+                display: "block",
+                borderRadius: "0.45rem",
+              }}
+            />
+            {feature.caption ? <figcaption>{feature.caption}</figcaption> : null}
+          </figure>
+        ) : null}
+      </div>
+
+      <div className="tt-aesthetic-context">
+        <p className="tt-aesthetic-number">{number}</p>
+        <h3 className="tt-aesthetic-name">{name}</h3>
+        <p className="tt-aesthetic-internal">Internal label: {internalLabel}</p>
+
+        <p className="tt-aesthetic-meta-label">Anchor</p>
+        <p className="tt-aesthetic-anchor-text">{anchorText}</p>
+
+        <p className="tt-aesthetic-meta-label">Palette</p>
+        <ul className="tt-aesthetic-palette" role="list">
+          {palette.map((s) => (
+            <li key={s.hex} title={`${s.label} · ${s.hex}`}>
+              <span style={{ background: s.hex }} aria-hidden="true" />
+              <span className="tt-aesthetic-palette-label">
+                <span className="tt-aesthetic-palette-name">{s.label}</span>
+                <span className="tt-aesthetic-palette-hex">{s.hex}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+
+        <p className="tt-aesthetic-meta-label">Feedback received</p>
+        <blockquote className="tt-aesthetic-feedback">{feedback}</blockquote>
+      </div>
+    </article>
+  );
+}
+
 export function SystemOverviewBand() {
   return (
     <figure className="tt-overview" aria-label="Color system across three aesthetics">
