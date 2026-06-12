@@ -3,8 +3,8 @@ import Link from "next/link";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
+import { AESTHETICS } from "@/lib/tiktok-data";
 import {
-  AESTHETICS,
   AestheticShowcaseCard,
   HeroThreePhones,
   LineageTimeline,
