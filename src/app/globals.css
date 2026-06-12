@@ -3583,6 +3583,33 @@ button:focus-visible,
   }
 }
 
+/* ── Pullquote ──────────────────────────────────────── */
+
+.tt-pullquote {
+  margin: 2rem 0;
+  padding: 1.4rem 1.6rem;
+  border-left: 3px solid var(--foreground);
+  background: var(--surface);
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.tt-pullquote blockquote {
+  margin: 0 0 0.55rem;
+  font-size: clamp(1.15rem, 2.2vw, 1.35rem);
+  line-height: 1.35;
+  font-weight: 400;
+  text-wrap: balance;
+}
+
+.tt-pullquote figcaption {
+  margin: 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
 /* ============================================================
    /play title — Pixar-style hop with squash & stretch
    One staggered hop per letter on page load. No idle loop.

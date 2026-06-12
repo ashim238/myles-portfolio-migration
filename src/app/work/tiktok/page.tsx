@@ -115,6 +115,50 @@ export default async function TikTokPage() {
         <SystemOverviewBand />
       </section>
 
+      {/* ── Section 02 — Reading the platform ──────────── */}
+      <section className="project-section tt-section" aria-labelledby="tt-research">
+        <h2 id="tt-research">Five subcultures. Three buckets. A working hypothesis.</h2>
+        <div className="project-section-body">
+          <p>
+            Without a brand to anchor the work, I started with desk
+            research — scrolling TikTok the way the platform&apos;s users
+            actually do, mapping the recurring aesthetic worlds that
+            organize how content (and shopping) finds its audience. Five
+            surfaced cleanly: Y2K, Maximalism, Dark Academia, Cottagecore,
+            and WitchTok. Each had its own visual register, its own
+            creator vocabulary, its own commerce footprint.
+          </p>
+          <p>
+            Five was too many to build templates against. Modularity
+            needed buckets broad enough that a brand could see itself in
+            one without per-brand customization. I narrowed to three
+            categorical groupings — high-saturation joy, edge and
+            texture, quiet and considered — and built internal working
+            names around them so the team could talk about the work while
+            I designed. Vendors who eventually adopted the templates
+            likely saw a different label downstream.
+          </p>
+        </div>
+
+        <figure className="tt-pullquote">
+          <blockquote>
+            An in-feed ad either feels native or it doesn&apos;t.
+            Subcultures are how TikTok&apos;s audience makes that
+            distinction.
+          </blockquote>
+          <figcaption>Working hypothesis · TikTok DSA, 2021</figcaption>
+        </figure>
+
+        <div className="project-section-body">
+          <p>
+            The bet was that designing against subculture buckets would
+            absorb the breadth without losing specificity. The system had
+            to share a skeleton — same in-feed dimensions, same TikTok
+            chrome — and let three aesthetic registers fill it.
+          </p>
+        </div>
+      </section>
+
       <ProjectWorkJump currentSlug="tiktok" projects={allProjects} />
     </main>
   );
