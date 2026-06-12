@@ -3482,6 +3482,29 @@ button:focus-visible,
   }
 }
 
+/* ── Sections ────────────────────────────────────────── */
+
+.tt-section {
+  margin-top: 4.5rem;
+}
+
+.tt-section--wide {
+  max-width: none;
+}
+
+.tt-section--wide .project-section-body {
+  max-width: 65ch;
+}
+
+.tt-section h2 {
+  margin: 0 0 1.25rem;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: var(--track-display);
+  text-wrap: balance;
+}
+
 /* ============================================================
    /play title — Pixar-style hop with squash & stretch
    One staggered hop per letter on page load. No idle loop.
