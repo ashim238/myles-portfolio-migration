@@ -1,10 +1,38 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AESTHETICS } from "@/lib/tiktok-data";
 
 export { AESTHETICS };
+
+/* ──────────────────────────────────────────
+   Copy-to-clipboard hook
+   Used on palette swatches. ~1.4s feedback window.
+   ────────────────────────────────────────── */
+
+function useCopyToClipboard(timeout = 1400) {
+  const [copied, setCopied] = useState<string | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const copy = useCallback(
+    (value: string) => {
+      if (typeof navigator === "undefined" || !navigator.clipboard) return;
+      navigator.clipboard.writeText(value).then(() => {
+        setCopied(value);
+        if (timerRef.current) clearTimeout(timerRef.current);
+        timerRef.current = setTimeout(() => setCopied(null), timeout);
+      });
+    },
+    [timeout],
+  );
+
+  useEffect(() => () => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+  }, []);
+
+  return { copied, copy };
+}
 
 /* ──────────────────────────────────────────
    Animated TikTok logo
@@ -164,6 +192,7 @@ export function AestheticShowcaseCard({
   palette, anchorText, feedback, process, feature, reverse,
 }: AestheticShowcaseProps) {
   const accentStyle = { "--tt-accent": accentHex } as React.CSSProperties;
+  const { copied, copy } = useCopyToClipboard();
 
   return (
     <article
@@ -212,14 +241,27 @@ export function AestheticShowcaseCard({
         <p className="tt-aesthetic-anchor-text">{anchorText}</p>
 
         <p className="tt-aesthetic-meta-label">Palette</p>
+        <span className="sr-only" aria-live="polite" aria-atomic="true">
+          {copied ? `Copied ${copied} to clipboard` : ""}
+        </span>
         <ul className="tt-aesthetic-palette" role="list">
           {palette.map((s) => (
-            <li key={s.hex} title={`${s.label} · ${s.hex}`}>
-              <span style={{ background: s.hex }} aria-hidden="true" />
-              <span className="tt-aesthetic-palette-label">
-                <span className="tt-aesthetic-palette-name">{s.label}</span>
-                <span className="tt-aesthetic-palette-hex">{s.hex}</span>
-              </span>
+            <li key={s.hex}>
+              <button
+                type="button"
+                className={`tt-aesthetic-palette-button${copied === s.hex ? " tt-aesthetic-palette-button--copied" : ""}`}
+                onClick={() => copy(s.hex)}
+                title={`Copy ${s.hex}`}
+                aria-label={`Copy hex ${s.hex} for ${s.label}`}
+              >
+                <span style={{ background: s.hex }} aria-hidden="true" />
+                <span className="tt-aesthetic-palette-label">
+                  <span className="tt-aesthetic-palette-name">{s.label}</span>
+                  <span className="tt-aesthetic-palette-hex">
+                    {copied === s.hex ? "Copied" : s.hex}
+                  </span>
+                </span>
+              </button>
             </li>
           ))}
         </ul>
@@ -320,21 +362,59 @@ export function LineageTimeline() {
   );
 }
 
+/* ──────────────────────────────────────────
+   Console hello
+   A quiet message for anyone reading source.
+   ────────────────────────────────────────── */
+
+export function ConsoleHello() {
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const key = "tt-hello-shown";
+    if (sessionStorage.getItem(key)) return;
+    sessionStorage.setItem(key, "1");
+    console.log(
+      "%cIf you're reading the source, that's flattering. Reach me at ashim238@newschool.edu. — Myles",
+      "color: #6aab7e; font-family: ui-monospace, monospace; font-size: 12px; padding: 4px 0;",
+    );
+  }, []);
+  return null;
+}
+
 export function SystemOverviewBand() {
+  const { copied, copy } = useCopyToClipboard();
   return (
     <figure className="tt-overview" aria-label="Color system across three aesthetics">
+      <span className="sr-only" aria-live="polite" aria-atomic="true">
+        {copied ? `Copied ${copied} to clipboard` : ""}
+      </span>
       {AESTHETICS.map((a) => (
         <div key={a.key} className="tt-overview-row">
           <p className="tt-overview-label">{a.internalLabel}</p>
           <ul className="tt-overview-swatches" role="list">
             {a.palette.map((p) => (
-              <li
-                key={p.hex}
-                className="tt-overview-swatch"
-                title={`${p.label} · ${p.hex}`}
-              >
-                <span style={{ background: p.hex }} aria-hidden="true" />
-                <span className="tt-overview-hex">{p.hex}</span>
+              <li key={p.hex} className="tt-overview-swatch-wrap">
+                <button
+                  type="button"
+                  className={`tt-overview-swatch${copied === p.hex ? " tt-overview-swatch--copied" : ""}`}
+                  onClick={() => copy(p.hex)}
+                  title={`Copy ${p.hex} (${p.label})`}
+                  aria-label={`Copy hex ${p.hex} for ${p.label}`}
+                >
+                  <span style={{ background: p.hex }} aria-hidden="true" />
+                  <span className="tt-overview-check" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" width="14" height="14">
+                      <path
+                        d="M3 8.5L6.5 12L13 4.5"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </button>
               </li>
             ))}
           </ul>

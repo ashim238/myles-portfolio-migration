@@ -3540,12 +3540,30 @@ button:focus-visible,
   margin: 0;
 }
 
+.tt-overview-swatch-wrap {
+  display: flex;
+}
+
 .tt-overview-swatch {
   position: relative;
   width: 2.2rem;
   height: 2.2rem;
   border-radius: 0.35rem;
   overflow: hidden;
+  padding: 0;
+  border: none;
+  cursor: copy;
+  background: none;
+  transition: transform 200ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.tt-overview-swatch:hover {
+  transform: translateY(-2px);
+}
+
+.tt-overview-swatch:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
 }
 
 .tt-overview-swatch > span:first-child {
@@ -3555,8 +3573,23 @@ button:focus-visible,
   border-radius: inherit;
 }
 
-.tt-overview-hex {
-  display: none;
+.tt-overview-check {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.65);
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 200ms ease, transform 200ms cubic-bezier(0.215, 0.61, 0.355, 1);
+  pointer-events: none;
+}
+
+.tt-overview-swatch--copied .tt-overview-check {
+  opacity: 1;
+  transform: scale(1);
 }
 
 @media (max-width: 640px) {
@@ -3702,6 +3735,18 @@ button:focus-visible,
 
 .tt-aesthetic-feature {
   margin: 0;
+  perspective: 1200px;
+}
+
+.tt-aesthetic-feature button {
+  display: block;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 360ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.tt-aesthetic-feature button:hover {
+  transform: rotateY(-3deg) rotateX(2deg) translateY(-3px);
 }
 
 .tt-aesthetic-feature figcaption {
@@ -3710,6 +3755,19 @@ button:focus-visible,
   font-size: 0.7rem;
   letter-spacing: 0.05em;
   color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tt-aesthetic-feature button,
+  .tt-overview-swatch,
+  .tt-aesthetic-palette-button {
+    transition: none;
+  }
+  .tt-aesthetic-feature button:hover,
+  .tt-overview-swatch:hover,
+  .tt-aesthetic-palette-button:hover {
+    transform: none;
+  }
 }
 
 .tt-aesthetic-name {
@@ -3749,18 +3807,48 @@ button:focus-visible,
 }
 
 .tt-aesthetic-palette li {
+  display: block;
+}
+
+.tt-aesthetic-palette-button {
   display: grid;
   grid-template-columns: 1.6rem 1fr;
   gap: 0.7rem;
   align-items: center;
+  width: 100%;
+  padding: 0.3rem 0.4rem;
+  margin: -0.3rem -0.4rem;
+  background: none;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: copy;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+  transition: background 180ms ease, transform 180ms cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
-.tt-aesthetic-palette li > span:first-child {
+.tt-aesthetic-palette-button:hover {
+  background: color-mix(in srgb, var(--tt-accent) 8%, transparent);
+  transform: translateX(2px);
+}
+
+.tt-aesthetic-palette-button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.tt-aesthetic-palette-button > span:first-child {
   display: block;
   width: 1.6rem;
   height: 1.6rem;
   border-radius: 0.25rem;
   border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tt-aesthetic-palette-button--copied .tt-aesthetic-palette-hex {
+  color: var(--tt-accent);
+  font-weight: 600;
 }
 
 .tt-aesthetic-palette-label {

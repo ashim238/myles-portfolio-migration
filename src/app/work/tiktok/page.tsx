@@ -6,6 +6,7 @@ import { ProjectWorkJump } from "@/components/project-work-jump";
 import { AESTHETICS } from "@/lib/tiktok-data";
 import {
   AestheticShowcaseCard,
+  ConsoleHello,
   HeroThreePhones,
   LineageTimeline,
   OutcomeCard,
@@ -32,6 +33,7 @@ export default async function TikTokPage() {
 
   return (
     <main className="page-shell project-page tt-page" id="main-content">
+      <ConsoleHello />
       <SiteNav />
       <nav className="project-topbar" aria-label="Breadcrumb">
         <Link href="/#work">
