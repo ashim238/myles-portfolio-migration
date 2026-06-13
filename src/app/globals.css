@@ -3364,6 +3364,768 @@ button:focus-visible,
 }
 
 /* ============================================================
+   TikTok DSA case study
+   Page-specific styling. Inherits portfolio tokens; introduces
+   a TikTok-themed cyan/magenta animation for the eyebrow logo.
+   ============================================================ */
+
+.tt-page {
+  --tt-cyan: #25f4ee;
+  --tt-magenta: #fe2c55;
+}
+
+.tt-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.85rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.tt-logo {
+  display: inline-block;
+  width: 0.95rem;
+  height: 0.95rem;
+  position: relative;
+}
+
+.tt-logo svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.tt-logo svg g {
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.tt-logo-cyan {
+  fill: var(--tt-cyan);
+  mix-blend-mode: screen;
+}
+
+.tt-logo-magenta {
+  fill: var(--tt-magenta);
+  mix-blend-mode: screen;
+}
+
+.tt-logo-ink {
+  fill: var(--foreground);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tt-logo-cyan {
+    animation: tt-logo-drift-cyan 3.5s ease-in-out infinite;
+  }
+  .tt-logo-magenta {
+    animation: tt-logo-drift-magenta 3.5s ease-in-out infinite;
+  }
+}
+
+@keyframes tt-logo-drift-cyan {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(-1.2px, 0.6px); }
+}
+
+@keyframes tt-logo-drift-magenta {
+  0%, 100% { transform: translate(0, 0); }
+  50%      { transform: translate(1.2px, -0.6px); }
+}
+
+/* ── Hero ─────────────────────────────────────────────── */
+
+.tt-title {
+  font-size: clamp(2.5rem, 7vw, 4.6rem) !important;
+}
+
+.tt-lede {
+  max-width: 44ch !important;
+  font-size: clamp(1.05rem, 2vw, 1.28rem) !important;
+}
+
+.tt-hero-device {
+  margin-top: 2.6rem;
+  display: flex;
+  justify-content: center;
+}
+
+.tt-hero-stage {
+  --tt-tilt-x: 0;
+  --tt-tilt-y: 0;
+  width: min(880px, 92vw);
+  perspective: 1400px;
+}
+
+.tt-hero-tilt {
+  transform:
+    rotateY(calc(var(--tt-tilt-x) * 6deg))
+    rotateX(calc(var(--tt-tilt-y) * -4deg))
+    translateZ(0);
+  transform-style: preserve-3d;
+  transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.tt-hero-tilt img {
+  filter: drop-shadow(0 32px 64px rgba(0, 0, 0, 0.18));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tt-hero-tilt {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ── Sections ────────────────────────────────────────── */
+
+.tt-section {
+  margin-top: 4.5rem;
+}
+
+.tt-section--wide {
+  max-width: none;
+}
+
+.tt-section--wide .project-section-body {
+  max-width: 65ch;
+}
+
+.tt-section h2 {
+  margin: 0 0 1.25rem;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: var(--track-display);
+  text-wrap: balance;
+}
+
+/* ── System overview band ───────────────────────────── */
+
+.tt-overview {
+  margin: 2.4rem 0 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 0.85rem;
+  background: var(--surface);
+  display: grid;
+  overflow: hidden;
+}
+
+.tt-overview-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.55fr) minmax(0, 1.45fr);
+  align-items: stretch;
+  gap: 1.4rem;
+  padding: 1.3rem 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.tt-overview-row:first-child {
+  border-top: none;
+}
+
+.tt-overview-label {
+  margin: 0;
+  align-self: center;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.95rem;
+  letter-spacing: 0;
+  color: var(--foreground);
+}
+
+.tt-overview-swatches {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tt-overview-swatch-wrap {
+  display: flex;
+}
+
+.tt-overview-swatch {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 0.4rem;
+  padding: 0;
+  border: none;
+  cursor: copy;
+  background: none;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  transition: transform 220ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.tt-overview-swatch:hover {
+  transform: translateY(-3px);
+}
+
+.tt-overview-swatch:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: 0.45rem;
+}
+
+.tt-overview-swatch > span:first-child {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 3.2rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 0.4rem;
+  overflow: hidden;
+}
+
+.tt-overview-meta {
+  display: grid;
+  gap: 0.1rem;
+  padding: 0 0.1rem;
+}
+
+.tt-overview-name {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--foreground);
+  line-height: 1.2;
+}
+
+.tt-overview-hex-label {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.01em;
+}
+
+.tt-overview-swatch--copied .tt-overview-hex-label {
+  color: var(--tt-cyan);
+  font-weight: 600;
+}
+
+.tt-overview-check {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 200ms ease, transform 200ms cubic-bezier(0.215, 0.61, 0.355, 1);
+  pointer-events: none;
+}
+
+.tt-overview-swatch--copied .tt-overview-check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (max-width: 640px) {
+  .tt-overview-row {
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
+  }
+}
+
+/* ── Pullquote ──────────────────────────────────────── */
+
+.tt-pullquote {
+  margin: 2.4rem auto;
+  padding: 0;
+  max-width: 56ch;
+  text-align: center;
+}
+
+.tt-pullquote blockquote {
+  margin: 0 0 0.9rem;
+  font-size: clamp(1.4rem, 2.6vw, 1.8rem);
+  line-height: 1.3;
+  font-weight: 400;
+  letter-spacing: var(--track-display);
+  text-wrap: balance;
+}
+
+.tt-pullquote figcaption {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* ── Template anatomy ───────────────────────────────── */
+
+.tt-anatomy {
+  margin: 2.4rem 0 0;
+  padding: 1.5rem 1.4rem;
+  border: 1px solid var(--line);
+  border-radius: 0.7rem;
+  background: var(--surface);
+}
+
+.tt-anatomy-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1.4fr;
+  gap: 1.8rem;
+  align-items: center;
+}
+
+.tt-anatomy-image {
+  border-radius: 0.45rem;
+  overflow: hidden;
+}
+
+.tt-anatomy-slots {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.95rem;
+}
+
+.tt-anatomy-slots li {
+  padding-left: 0.9rem;
+  border-left: 1px solid var(--line);
+}
+
+.tt-anatomy-slot-label {
+  margin: 0 0 0.18rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: var(--track-display);
+  color: var(--foreground);
+}
+
+.tt-anatomy-slot-note {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.tt-anatomy figcaption {
+  margin: 1.4rem 0 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+@media (max-width: 768px) {
+  .tt-anatomy-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Aesthetic showcase cards ───────────────────────── */
+
+.tt-aesthetics-section {
+  margin-top: 5rem;
+}
+
+.tt-aesthetics-heading {
+  margin: 0 0 0.55rem;
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1.16;
+  letter-spacing: var(--track-display);
+}
+
+.tt-aesthetics-lede {
+  margin: 0 0 2rem;
+  max-width: 62ch;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.tt-aesthetic {
+  --tt-accent: #888;
+
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 2.2rem;
+  align-items: start;
+  padding: 2.4rem 0;
+  border-top: 1px solid var(--line);
+}
+
+.tt-aesthetic--reverse {
+  grid-template-columns: 1fr 1.4fr;
+}
+
+.tt-aesthetic--reverse .tt-aesthetic-visual {
+  order: 2;
+}
+
+.tt-aesthetic-visual {
+  display: grid;
+  gap: 1rem;
+}
+
+.tt-aesthetic-feature {
+  margin: 0 auto;
+  max-width: 300px;
+  perspective: 1200px;
+}
+
+.tt-aesthetic-feature figcaption {
+  text-align: center;
+}
+
+.tt-aesthetic-feature button {
+  display: block;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 360ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.tt-aesthetic-feature button:hover {
+  transform: rotateY(-3deg) rotateX(2deg) translateY(-3px);
+}
+
+.tt-aesthetic-feature figcaption {
+  margin-top: 0.45rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tt-aesthetic-feature button,
+  .tt-overview-swatch,
+  .tt-aesthetic-palette-button {
+    transition: none;
+  }
+  .tt-aesthetic-feature button:hover,
+  .tt-overview-swatch:hover,
+  .tt-aesthetic-palette-button:hover {
+    transform: none;
+  }
+}
+
+.tt-aesthetic-name {
+  margin: 0 0 0.35rem;
+  font-size: clamp(1.5rem, 2.4vw, 1.85rem);
+  font-weight: 500;
+  letter-spacing: var(--track-display);
+  color: var(--tt-accent);
+}
+
+.tt-aesthetic-internal {
+  margin: 0 0 1.4rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.tt-aesthetic-meta-label {
+  margin: 1.3rem 0 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.tt-aesthetic-anchor-text {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--foreground);
+}
+
+.tt-aesthetic-palette {
+  display: grid;
+  gap: 0.45rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tt-aesthetic-palette li {
+  display: block;
+}
+
+.tt-aesthetic-palette-button {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr;
+  gap: 0.7rem;
+  align-items: center;
+  width: 100%;
+  padding: 0.3rem 0.4rem;
+  margin: -0.3rem -0.4rem;
+  background: none;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: copy;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+  transition: background 180ms ease, transform 180ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.tt-aesthetic-palette-button:hover {
+  background: color-mix(in srgb, var(--tt-accent) 8%, transparent);
+  transform: translateX(2px);
+}
+
+.tt-aesthetic-palette-button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.tt-aesthetic-palette-button > span:first-child {
+  display: block;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tt-aesthetic-palette-button--copied .tt-aesthetic-palette-hex {
+  color: var(--tt-accent);
+  font-weight: 600;
+}
+
+.tt-aesthetic-palette-label {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  color: var(--foreground);
+}
+
+.tt-aesthetic-palette-hex {
+  color: var(--muted);
+}
+
+.tt-aesthetic-feedback {
+  position: relative;
+  margin: 0;
+  padding-left: 1.4rem;
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--foreground);
+}
+
+.tt-aesthetic-feedback::before {
+  content: "\201C";
+  position: absolute;
+  left: 0;
+  top: -0.35rem;
+  font-size: 1.85rem;
+  line-height: 1;
+  color: var(--tt-accent);
+  font-style: normal;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .tt-aesthetic,
+  .tt-aesthetic--reverse {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+  .tt-aesthetic--reverse .tt-aesthetic-visual {
+    order: 0;
+  }
+}
+
+/* ── Outcome — American Eagle ─────────────────────── */
+
+.tt-outcome {
+  max-width: var(--content-max);
+  margin: 2.4rem auto 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+  align-items: end;
+  gap: clamp(1.6rem, 4vw, 3.2rem);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 480ms ease-out, transform 480ms ease-out;
+}
+
+.tt-outcome--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tt-outcome-text {
+  padding-bottom: 0.6rem;
+}
+
+.tt-outcome-headline {
+  margin: 0;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: var(--track-display);
+  text-wrap: balance;
+}
+
+.tt-outcome-sub {
+  margin-top: 0.85rem;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.tt-outcome-image {
+  width: 100%;
+}
+
+@media (max-width: 639px) {
+  .tt-outcome {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tt-outcome {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ── Lineage timeline ────────────────────────────── */
+
+.tt-timeline {
+  max-width: var(--content-max);
+  margin: 2rem auto 0;
+  padding: 0 var(--page-gutter, 1.25rem);
+}
+
+.tt-timeline-track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  position: relative;
+}
+
+.tt-timeline-node {
+  position: relative;
+  padding-top: 2rem;
+}
+
+.tt-timeline-dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--tt-cyan);
+  border: 2px solid var(--background);
+  box-shadow: 0 0 0 2px var(--tt-cyan);
+  isolation: isolate;
+}
+
+.tt-timeline-dot::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: var(--tt-cyan);
+  opacity: 0.5;
+  animation: tt-timeline-pulse 2.8s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.tt-timeline-node:nth-child(2) .tt-timeline-dot::after { animation-delay: 0.95s; }
+.tt-timeline-node:nth-child(3) .tt-timeline-dot::after { animation-delay: 1.9s; }
+
+@keyframes tt-timeline-pulse {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.55;
+  }
+  70% {
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+.tt-timeline-connector {
+  position: absolute;
+  top: 7px;
+  left: 16px;
+  right: 0;
+  height: 2px;
+  background: var(--line);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tt-timeline-dot::after {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+.tt-timeline-year {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--tt-cyan);
+  margin-bottom: 0.25rem;
+}
+
+.tt-timeline-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--foreground);
+  line-height: 1.3;
+}
+
+.tt-timeline-detail {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-top: 0.2rem;
+  line-height: 1.4;
+}
+
+.tt-timeline figcaption {
+  margin-top: 1.5rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-align: center;
+  font-style: italic;
+}
+
+@media (max-width: 639px) {
+  .tt-timeline-track {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--line);
+  }
+  .tt-timeline-dot {
+    left: -1.85rem;
+  }
+  .tt-timeline-connector {
+    display: none;
+  }
+  .tt-timeline-node {
+    padding-top: 0;
+  }
+}
+
+/* ============================================================
    /play title — Pixar-style hop with squash & stretch
    One staggered hop per letter on page load. No idle loop.
    ============================================================ */

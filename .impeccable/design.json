@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-12T22:00:00Z",
+  "title": "Design System: Myles Ashitey Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "background": {
+        "role": "neutral",
+        "displayName": "Near Black",
+        "canonical": "#050505",
+        "tonalRamp": ["#050505", "#0a0a0a", "#1a1a1a", "#343434", "#555555", "#808080", "#c4c4c4", "#f4f4f4"]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Carbon Surface",
+        "canonical": "#0a0a0a",
+        "tonalRamp": ["#050505", "#0a0a0a", "#1a1a1a", "#343434", "#555555", "#808080", "#c4c4c4", "#f4f4f4"]
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "Soft White",
+        "canonical": "#f4f4f4",
+        "tonalRamp": ["#1a1a1a", "#343434", "#555555", "#808080", "#aaaaaa", "#c4c4c4", "#dddddd", "#f4f4f4"]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Stone Muted",
+        "canonical": "#c4c4c4",
+        "tonalRamp": ["#1a1a1a", "#343434", "#555555", "#808080", "#aaaaaa", "#c4c4c4", "#dddddd", "#f0f0f0"]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Carbon Line",
+        "canonical": "#343434",
+        "tonalRamp": ["#1a1a1a", "#252525", "#343434", "#555555", "#777777", "#aaaaaa", "#d4d4d4", "#f0f0f0"]
+      },
+      "focus-ring": {
+        "role": "primary",
+        "displayName": "Sky Focus",
+        "canonical": "#8ab4ff",
+        "tonalRamp": ["#1a2a52", "#2a3f7a", "#4060b0", "#5c80d0", "#7ba0e8", "#8ab4ff", "#b0caff", "#dde6ff"]
+      },
+      "fg-accent": {
+        "role": "secondary",
+        "displayName": "Fresh Greens Sage",
+        "canonical": "#6aab7e",
+        "tonalRamp": ["#1f3326", "#2b4633", "#3d6447", "#528660", "#6aab7e", "#88c195", "#b0d6b8", "#dceadb"]
+      },
+      "tt-cyan": {
+        "role": "secondary",
+        "displayName": "TikTok Cyan",
+        "canonical": "#25f4ee",
+        "tonalRamp": ["#0a3837", "#0e5552", "#127a76", "#169f9a", "#1ec6c0", "#25f4ee", "#80f7f3", "#c5fbf9"]
+      },
+      "tt-magenta": {
+        "role": "secondary",
+        "displayName": "TikTok Magenta",
+        "canonical": "#fe2c55",
+        "tonalRamp": ["#3a0d18", "#590f1f", "#7c142a", "#a01a36", "#cf2545", "#fe2c55", "#fe7088", "#feb9c3"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero name on homepage, case-study h1 title." },
+      "headline": { "displayName": "Headline", "purpose": "Case-study section h2 headings." },
+      "title": { "displayName": "Title", "purpose": "Pullquote text, subsection h3." },
+      "body": { "displayName": "Body", "purpose": "Paragraph copy. Capped at 65-75ch." },
+      "label": { "displayName": "Label", "purpose": "Project tags, inline meta dt labels." },
+      "mono": { "displayName": "Mono Receipt", "purpose": "Figcaptions, palette hex values, project-meta dt labels." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "ease-out-cubic", "value": "cubic-bezier(0.215, 0.61, 0.355, 1)", "purpose": "Default easing for state transitions and reveals." },
+      { "name": "fade-up-entrance", "value": "opacity 480ms ease-out, transform 480ms ease-out", "purpose": "IntersectionObserver-driven section entrances (e.g. OutcomeCard)." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Site Navigation Link",
+      "kind": "nav",
+      "refersTo": "link-primary",
+      "description": "Top-of-page text-link nav. Default foreground, hover accent.",
+      "html": "<a class=\"ds-nav-link\" href=\"#work\">Work</a>",
+      "css": ".ds-nav-link { color: var(--foreground, #f4f4f4); font-family: 'Instrument Sans', system-ui, sans-serif; font-weight: 500; font-size: clamp(1.1rem, 2.2vw, 1.4rem); text-decoration: none; letter-spacing: -0.02em; transition: color 200ms cubic-bezier(0.215, 0.61, 0.355, 1); } .ds-nav-link:hover { color: var(--fg-accent, #6aab7e); } .ds-nav-link:focus-visible { outline: 2px solid #8ab4ff; outline-offset: 4px; border-radius: 2px; }"
+    },
+    {
+      "name": "Project Card",
+      "kind": "card",
+      "refersTo": "project-card",
+      "description": "Homepage Work list item: title + summary + cover image. No icon-heading-body 3-up.",
+      "html": "<a class=\"ds-project-card\" href=\"/work/example\"><div class=\"ds-project-card-text\"><h3>Project Title</h3><p>Summary line that explains what the project is in one sentence.</p></div><div class=\"ds-project-card-image\"></div></a>",
+      "css": ".ds-project-card { display: grid; grid-template-columns: 1fr; gap: 1rem; padding: 1.6rem; background: var(--surface, #0a0a0a); color: var(--foreground, #f4f4f4); border: 1px solid transparent; border-radius: 0.7rem; text-decoration: none; transition: border-color 200ms ease, color 200ms ease; } .ds-project-card:hover { border-color: var(--line, #343434); } .ds-project-card h3 { font-family: 'Instrument Sans', system-ui, sans-serif; font-weight: 500; font-size: 1.6rem; line-height: 1.16; letter-spacing: -0.02em; margin: 0 0 0.4rem; } .ds-project-card p { font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 0.95rem; line-height: 1.55; color: var(--muted, #c4c4c4); margin: 0; } .ds-project-card-image { aspect-ratio: 4 / 3; background: linear-gradient(135deg, #1a1a1a, #2a2a2a); border-radius: 0.45rem; }"
+    },
+    {
+      "name": "Pullquote",
+      "kind": "custom",
+      "refersTo": "pullquote",
+      "description": "Centered display quote with sentence-case caption. No card, no left-border.",
+      "html": "<figure class=\"ds-pullquote\"><blockquote>An in-feed ad either feels native or it doesn't.</blockquote><figcaption>Working hypothesis · 2021</figcaption></figure>",
+      "css": ".ds-pullquote { margin: 2.4rem auto; padding: 0; max-width: 56ch; text-align: center; } .ds-pullquote blockquote { margin: 0 0 0.9rem; font-family: 'Instrument Sans', system-ui, sans-serif; font-size: clamp(1.4rem, 2.6vw, 1.8rem); font-weight: 400; line-height: 1.3; letter-spacing: -0.026em; text-wrap: balance; color: var(--foreground, #f4f4f4); } .ds-pullquote figcaption { margin: 0; font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 0.85rem; color: var(--muted, #c4c4c4); }"
+    },
+    {
+      "name": "Section TOC Link",
+      "kind": "nav",
+      "refersTo": "toc-link",
+      "description": "Sticky case-study TOC link with active dot indicator.",
+      "html": "<button class=\"ds-toc-link\" aria-current=\"true\"><span class=\"ds-toc-dot\"></span><span class=\"ds-toc-num\">02.</span><span class=\"ds-toc-text\">Reading the platform</span></button>",
+      "css": ".ds-toc-link { display: inline-flex; align-items: center; gap: 0.5rem; background: none; border: none; padding: 0.6rem 1rem; color: var(--muted, #c4c4c4); font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: color 200ms ease; } .ds-toc-link[aria-current='true'] { color: var(--foreground, #f4f4f4); } .ds-toc-link:hover { color: var(--foreground, #f4f4f4); } .ds-toc-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: 0.5; } .ds-toc-link[aria-current='true'] .ds-toc-dot { opacity: 1; } .ds-toc-num { font-family: 'Geist Mono', ui-monospace, monospace; font-size: 0.78rem; opacity: 0.7; }"
+    },
+    {
+      "name": "Lineage Timeline Node",
+      "kind": "custom",
+      "refersTo": "lineage-timeline",
+      "description": "Three-node timeline showing feature lineage. Cyan accent dots, mono year labels.",
+      "html": "<div class=\"ds-timeline-node\"><span class=\"ds-timeline-dot\"></span><p class=\"ds-timeline-year\">2023</p><p class=\"ds-timeline-label\">Migration</p><p class=\"ds-timeline-detail\">Mechanics move to Video Shopping Ads</p></div>",
+      "css": ".ds-timeline-node { position: relative; padding-top: 2rem; max-width: 240px; } .ds-timeline-dot { position: absolute; top: 0; left: 0; width: 12px; height: 12px; border-radius: 50%; background: #25f4ee; border: 2px solid #050505; box-shadow: 0 0 0 2px #25f4ee; } .ds-timeline-year { font-family: 'Geist Mono', ui-monospace, monospace; font-size: 0.75rem; letter-spacing: 0.05em; color: #25f4ee; margin: 0 0 0.25rem; } .ds-timeline-label { font-family: 'Instrument Sans', system-ui, sans-serif; font-weight: 600; font-size: 0.95rem; color: #f4f4f4; line-height: 1.3; margin: 0; } .ds-timeline-detail { font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 0.82rem; color: #c4c4c4; margin: 0.2rem 0 0; line-height: 1.4; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Open Studio",
+    "overview": "The portfolio is staged like a critique session with the work pinned up: the case studies are the artifacts on the wall, the writing is the conversation around them, and the visitor walks the room at their own pace. The artifacts on display include real things — original grid annotations from a working Illustrator file, hand-drawn sketches with their pink marker notes, photographs of the shipped product in someone's hand. The chrome around the artifacts stays out of the way so the work can talk.\n\nThe system rejects every pattern that signals templated production: SaaS marketing scaffolding (tracked-uppercase eyebrows above each section, decorative 01/02/03 numbering, gradient text), generic dev-portfolio costume (neon accent on terminal aesthetic, the type-it-out hero), and the 2026 warm-minimal cream-card default. Instead, depth comes from typography hierarchy, generous spacing rhythm, line-based separators (not shadows), and case-study-scoped accent color that lets each project carry its own voice while the page chrome stays neutral.",
+    "keyCharacteristics": [
+      "Dark by default, light by toggle. Both modes are first-class — neither is a degraded fallback.",
+      "Editorial long-form: case studies are essays with images, not image galleries with captions.",
+      "Per-project scoped accent color (Fresh Greens sage, TikTok cyan/magenta). The shell stays neutral; the case study brings the color.",
+      "Line-based depth (1px borders, color-mix rules) instead of shadows or glass.",
+      "Mobile is the first impression — recruiters open links on phones, then deep-dive on laptops."
+    ],
+    "rules": [
+      { "name": "The Neutral Shell Rule", "body": "The portfolio chrome (nav, footer, layout, type) uses only neutrals. Accent color is scoped to a case-study page and never leaks into shared shell components.", "section": "colors" },
+      { "name": "The Per-Project Accent Rule", "body": "Each case study brings its own accent color via a scoped CSS custom property on the page root (.tt-page, .fg-page). New case studies declare a new accent token; they do not reach for a shared brand color.", "section": "colors" },
+      { "name": "The No-Warm-Default Rule", "body": "Neither the dark nor light theme tints toward warmth-by-default. #050505 is true near-black; #fafafa is cool-neutral. The 2026 cream/sand/paper aesthetic is forbidden.", "section": "colors" },
+      { "name": "The Sentence-Case Rule", "body": "Section labels and meta strip labels are sentence-case at body weight. Tracked-uppercase mono eyebrow labels above every section are PRODUCT.md anti-references — they read as 2023-era SaaS marketing scaffolding.", "section": "typography" },
+      { "name": "The Writing Carries the Work Rule", "body": "Body type is sized for sustained reading, not for browsing. ~65-75ch line length, line-height 1.58, letter-spacing 0.008em. If a section's voice can't survive plain body type, it's the voice that needs work — not the typography.", "section": "typography" },
+      { "name": "The No Numbered Eyebrow Rule", "body": "Decorative 01 · About / 02 · Process / 03 · Pricing numbering above sections is forbidden as system grammar. The case-study TOC carries section numbers as navigation receipts; body sections do not repeat the number above their h2.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "Surfaces are flat at rest. Hover states use color, opacity, or transform — never shadow. Cards and containers separate via background tonal shift or 1px line, never via drop shadow.", "section": "elevation" },
+      { "name": "The 1px Border Rule", "body": "Hairlines are exactly 1px. The system never uses 2px or 3px colored borders as visual emphasis. Side-stripe borders are absolutely banned — they are the most recognizable tell of AI-generated UI.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do scope accent color per case study via a CSS custom property on the page root (.tt-page, .fg-page). Shell stays neutral.",
+      "Do use 1px hairlines for separation. Tonal background shift (--background → --surface) for elevation.",
+      "Do write section headings as statements, not labels. 'One skeleton. Three fills.' not 'The System.'",
+      "Do preserve original working artifacts when the case study earns it (the TikTok grid annotations, Fresh Greens sketches). The marks of how the work was made are part of the design.",
+      "Do ship real imagery (process photos, in-hand shots, grid artifacts) — not colored CSS panels where photos should go.",
+      "Do test every animation under prefers-reduced-motion: reduce. Reduced motion is not optional.",
+      "Do verify ≥4.5:1 contrast on body text in both themes. Muted gray on muted background is the most common contrast failure."
+    ],
+    "donts": [
+      "Don't use side-stripe borders (border-left: Npx solid var(--accent) where N > 1). Absolute ban; the most recognizable tell of AI-generated UI.",
+      "Don't add tiny uppercase tracked eyebrows (ABOUT, PROCESS, WORK) above section headings. PRODUCT.md anti-reference.",
+      "Don't add numbered section markers (01 · About, 02 · Process) above section headings as decorative scaffolding.",
+      "Don't use cream/sand/beige body backgrounds. PRODUCT.md anti-reference: the 2026 AI default.",
+      "Don't ship identical card grids (icon + heading + body × 3) as a default layout pattern.",
+      "Don't use gradient text (background-clip: text with a gradient). Decorative, never meaningful.",
+      "Don't use glassmorphism (decorative backdrop-filter: blur) as a default container style.",
+      "Don't use mono font as lazy shorthand for technical/developer. If the section isn't a literal terminal or specification, mono reads as costume.",
+      "Don't redesign the shared portfolio chrome (ProjectToc, project-meta, ProjectWorkJump) inside a case study. If the system needs to change, change the system, not one page.",
+      "Don't use aphoristic / cryptic copy ('Design at the edge', 'Crafting tomorrow'). The voice reads like a person talking, not a brand manifesto.",
+      "Don't animate decorative motion that delays content reveal. Reveals must enhance an already-visible default."
+    ]
+  }
+}

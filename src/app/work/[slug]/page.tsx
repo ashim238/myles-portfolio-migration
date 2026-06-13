@@ -7,7 +7,7 @@ import { ProjectHighlight } from "@/components/project-highlight";
 import { ProjectSectionCard } from "@/components/project-section-card";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
-import { getAllProjects, getProjectBySlug } from "@/lib/content";
+import { getAllProjects, getProjectBySlug, getPublishedProjects } from "@/lib/content";
 
 function slugify(text: string): string {
   return text
@@ -46,7 +46,7 @@ export async function generateMetadata({
 
 export default async function ProjectPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
-  const [project, allProjects] = await Promise.all([getProjectBySlug(slug), getAllProjects()]);
+  const [project, allProjects] = await Promise.all([getProjectBySlug(slug), getPublishedProjects()]);
 
   if (!project) {
     notFound();
