@@ -3,7 +3,7 @@ import path from "node:path";
 import matter from "gray-matter";
 import { marked } from "marked";
 
-export type ProjectStatus = "published" | "draft";
+export type ProjectStatus = "published" | "draft" | "hidden";
 
 export type ProjectSection = {
   title: string;
@@ -107,7 +107,9 @@ function parseProjectSections(data: Record<string, unknown>): ProjectSection[] {
 }
 
 function parseProjectFrontmatter(data: Record<string, unknown>): ProjectFrontmatter {
-  const status: ProjectStatus = data.status === "draft" ? "draft" : "published";
+  const rawStatus = String(data.status ?? "").toLowerCase();
+  const status: ProjectStatus =
+    rawStatus === "hidden" ? "hidden" : rawStatus === "draft" ? "draft" : "published";
 
   const project = {
     slug: String(data.slug ?? ""),

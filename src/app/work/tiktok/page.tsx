@@ -21,14 +21,14 @@ const TIKTOK_DESCRIPTION =
 
 export async function generateMetadata(): Promise<Metadata> {
   const project = await getProjectBySlug("tiktok");
-  const isDraft = project?.status === "draft";
+  const isPublic = project?.status === "published";
 
   return {
     title: "TikTok Dynamic Showcase Ads",
     description: TIKTOK_DESCRIPTION,
-    robots: isDraft
-      ? { index: false, follow: false, googleBot: { index: false, follow: false } }
-      : undefined,
+    robots: isPublic
+      ? undefined
+      : { index: false, follow: false, googleBot: { index: false, follow: false } },
     openGraph: {
       title: "TikTok Dynamic Showcase Ads",
       description: TIKTOK_DESCRIPTION,
