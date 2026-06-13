@@ -12,7 +12,7 @@ import {
   ProcessGraph,
   SignalSwatches,
 } from "@/components/fresh-greens";
-import { getAllProjects } from "@/lib/content";
+import { getPublishedProjects } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Fresh Greens",
@@ -198,7 +198,7 @@ const FEATURES = [
 ];
 
 export default async function FreshGreensPage() {
-  const allProjects = await getAllProjects();
+  const allProjects = await getPublishedProjects();
 
   return (
     <main className="page-shell project-page fg-page" id="main-content">

@@ -1,10 +1,10 @@
 import type { MetadataRoute } from "next";
-import { getAllProjects } from "@/lib/content";
+import { getPublishedProjects } from "@/lib/content";
 
 const BASE_URL = "https://mylesashitey.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const projects = await getAllProjects();
+  const projects = await getPublishedProjects();
 
   const projectEntries: MetadataRoute.Sitemap = projects.map((project) => ({
     url: `${BASE_URL}/work/${project.slug}`,

@@ -14,22 +14,31 @@ import {
   TemplateAnatomy,
   TikTokLogo,
 } from "@/components/tiktok-dsa";
-import { getAllProjects } from "@/lib/content";
+import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "TikTok Dynamic Showcase Ads",
-  description:
-    "An internship-era template system for TikTok's Dynamic Showcase Ads, designed around the platform's subculture density and adopted by American Eagle.",
-  openGraph: {
+const TIKTOK_DESCRIPTION =
+  "An internship-era template system for TikTok's Dynamic Showcase Ads, designed around the platform's subculture density and adopted by American Eagle.";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const project = await getProjectBySlug("tiktok");
+  const isDraft = project?.status === "draft";
+
+  return {
     title: "TikTok Dynamic Showcase Ads",
-    description:
-      "An internship-era template system for TikTok's Dynamic Showcase Ads, designed around the platform's subculture density and adopted by American Eagle.",
-    type: "article",
-  },
-};
+    description: TIKTOK_DESCRIPTION,
+    robots: isDraft
+      ? { index: false, follow: false, googleBot: { index: false, follow: false } }
+      : undefined,
+    openGraph: {
+      title: "TikTok Dynamic Showcase Ads",
+      description: TIKTOK_DESCRIPTION,
+      type: "article",
+    },
+  };
+}
 
 export default async function TikTokPage() {
-  const allProjects = await getAllProjects();
+  const allProjects = await getPublishedProjects();
 
   return (
     <main className="page-shell project-page tt-page" id="main-content">
