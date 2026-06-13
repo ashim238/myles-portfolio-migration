@@ -19,11 +19,11 @@ import { getAllProjects } from "@/lib/content";
 export const metadata: Metadata = {
   title: "TikTok Dynamic Showcase Ads",
   description:
-    "An internship-era template system for TikTok's Dynamic Showcase Ads — designed around the platform's subculture density and adopted by American Eagle.",
+    "An internship-era template system for TikTok's Dynamic Showcase Ads, designed around the platform's subculture density and adopted by American Eagle.",
   openGraph: {
     title: "TikTok Dynamic Showcase Ads",
     description:
-      "An internship-era template system for TikTok's Dynamic Showcase Ads — designed around the platform's subculture density and adopted by American Eagle.",
+      "An internship-era template system for TikTok's Dynamic Showcase Ads, designed around the platform's subculture density and adopted by American Eagle.",
     type: "article",
   },
 };
@@ -52,7 +52,7 @@ export default async function TikTokPage() {
         </h1>
         <p className="project-hero-lede tt-lede">
           A modular template system built for TikTok&apos;s Dynamic Showcase
-          Ads — designed around the platform&apos;s subculture density so the
+          Ads, designed around the platform&apos;s subculture density so the
           ads could read as in-feed, not at-feed. American Eagle adopted one
           of the three.
         </p>
@@ -100,8 +100,8 @@ export default async function TikTokPage() {
           </p>
           <p>
             What sharpened the brief was the platform itself. TikTok&apos;s
-            value sits in its subcultures — Y2K, Maximalism, Dark Academia,
-            Cottagecore, WitchTok — and a single ad treatment for all of
+            value sits in its subcultures (Y2K, Maximalism, Dark Academia,
+            Cottagecore, WitchTok), and a single ad treatment for all of
             them flattens what people are there to find. The bet I went in
             with: catalog templates designed against subcultures, not
             against the platform as a whole.
@@ -116,16 +116,16 @@ export default async function TikTokPage() {
         <h2 id="tt-research">Five subcultures. Three buckets.</h2>
         <div className="project-section-body">
           <p>
-            Desk research first — scrolling the way TikTok&apos;s users
+            Desk research first. Scrolling the way TikTok&apos;s users
             actually do, mapping the aesthetic worlds that organize how
             content and shopping find their audience. Five surfaced
             cleanly: Y2K, Maximalism, Dark Academia, Cottagecore, WitchTok.
           </p>
           <p>
             Five was too many to build templates against. I narrowed to
-            three groupings — high-saturation joy, edge and texture, quiet
-            and considered — broad enough that a brand could see itself in
-            one without per-brand customization.
+            three groupings (high-saturation joy, edge and texture, quiet
+            and considered), broad enough that a brand could see itself
+            in one without per-brand customization.
           </p>
         </div>
 
@@ -147,7 +147,7 @@ export default async function TikTokPage() {
             defined places. I drew the template against a slot map: title
             zone, catalog grid, supplementary graphics, CTA. Each slot
             held the same role across every aesthetic. What changed was
-            the fill — typography, palette, ornament, image treatment.
+            the fill: typography, palette, ornament, image treatment.
           </p>
         </div>
 
@@ -168,15 +168,15 @@ export default async function TikTokPage() {
           internalLabel={AESTHETICS[0].internalLabel}
           accentHex="#FF5576"
           palette={AESTHETICS[0].palette}
-          anchorText="70s psychedelia — fluid forms, bold patterning, color treated as content."
+          anchorText="70s psychedelia: fluid forms, bold patterning, color treated as content."
           feedback="Continue incorporating TikTok's brand guidelines and brand copy."
           process={{
             src: "/projects/tiktok/lofi-dopamine.png",
-            alt: "Hand-drawn lo-fi sketch for #DopamineDressing with notes — 'play with brand colors', 'broader abstract pattern', copy candidates '#OOTD', '#Daily fit', 'Dress for dopamine', 'The Fit'.",
+            alt: "Hand-drawn lo-fi sketch for #DopamineDressing with notes: 'play with brand colors', 'broader abstract pattern', copy candidates '#OOTD', '#Daily fit', 'Dress for dopamine', 'The Fit'.",
           }}
           feature={{
             src: "/projects/tiktok/template-dopamine.png",
-            alt: "Finished #DopamineDressing template — a denim shirt on a hanger with 'FIT CHECK' title over a blue and teal psychedelic-swirl background.",
+            alt: "Finished #DopamineDressing template. A denim shirt on a hanger with 'FIT CHECK' title over a blue and teal psychedelic-swirl background.",
             caption: "Finished template.",
           }}
         />
@@ -187,15 +187,15 @@ export default async function TikTokPage() {
           accentHex="#313539"
           reverse
           palette={AESTHETICS[1].palette}
-          anchorText="Grungy punk magazine — texture, distress, dimension. The challenge was carrying it without abandoning TikTok's upbeat register."
+          anchorText="Grungy punk magazine: texture, distress, dimension. The challenge was carrying it without abandoning TikTok's upbeat register."
           feedback="Continue working on the design, but note that the aesthetic deviates from what TikTok is known for. Use dimension and texture to elevate it."
           process={{
             src: "/projects/tiktok/lofi-eboy.png",
-            alt: "Hand-drawn lo-fi sketch for #e-Boy/#e-Girl with notes — 'may stray too far from guidelines', 'build it out more', 'if no color find a way to make it appealing', 'wear and tear', 'magazine spine', 'title overcrowded'.",
+            alt: "Hand-drawn lo-fi sketch for #e-Boy/#e-Girl with notes: 'may stray too far from guidelines', 'build it out more', 'if no color find a way to make it appealing', 'wear and tear', 'magazine spine', 'title overcrowded'.",
           }}
           feature={{
             src: "/projects/tiktok/template-eboy.png",
-            alt: "Finished #e-Boy/#e-Girl template — denim shirt on a torn-paper-edge dark background with distressed magazine-spine texture.",
+            alt: "Finished #e-Boy/#e-Girl template. Denim shirt on a torn-paper-edge dark background with distressed magazine-spine texture.",
             caption: "Finished template.",
           }}
         />
@@ -205,16 +205,16 @@ export default async function TikTokPage() {
           internalLabel={AESTHETICS[2].internalLabel}
           accentHex="#EDC4AC"
           palette={AESTHETICS[2].palette}
-          anchorText="Acne Studios pastels — clean, restrained, anchored. The hardest of the three because simplicity reads as missing when it's just under-built."
+          anchorText="Acne Studios pastels: clean, restrained, anchored. The hardest of the three because simplicity reads as missing when it's just under-built."
           feedback="Lean into TikTok's upbeat tone. Consider how simplicity can strengthen a design."
           process={{
             src: "/projects/tiktok/lofi-light-academia.png",
-            alt: "Hand-drawn lo-fi sketch for #LightAcademia with notes — 'scale down font, light academia is too subtle', 'rethink placement bug', 'gestalt, calming color palette', 'barcode generator'.",
+            alt: "Hand-drawn lo-fi sketch for #LightAcademia with notes: 'scale down font, light academia is too subtle', 'rethink placement bug', 'gestalt, calming color palette', 'barcode generator'.",
           }}
           feature={{
             src: "/projects/tiktok/template-light-academia.png",
-            alt: "Finished #LightAcademia template — denim shirt centered on a peach background with 'THE STYLE ZINE' editorial title.",
-            caption: "Finished template — the one American Eagle adopted.",
+            alt: "Finished #LightAcademia template. Denim shirt centered on a peach background with 'THE STYLE ZINE' editorial title.",
+            caption: "Finished template. The one American Eagle adopted.",
           }}
         />
       </section>
@@ -232,7 +232,7 @@ export default async function TikTokPage() {
           <p>
             TikTok deprecated DSA on April 3, 2023, folding the mechanics
             into Video Shopping Ads. That lineage continues as Smart+
-            Catalog Ads — template-from-catalog still ships, under a new
+            Catalog Ads. Template-from-catalog still ships, under a new
             name and a newer optimization layer.
           </p>
           <p>
@@ -259,7 +259,7 @@ export default async function TikTokPage() {
           </p>
           <p>
             The templates were the deliverable. The subculture mapping,
-            the slot system, the constraint absorption — that was the
+            the slot system, the constraint absorption: that was the
             thinking. First place I did product-level work, even if I
             didn&apos;t call it that until years later.
           </p>

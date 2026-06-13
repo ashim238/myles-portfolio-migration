@@ -102,7 +102,7 @@ export function HeroThreePhones() {
       <div className="tt-hero-tilt">
         <Image
           src="/projects/tiktok/hero-rolling-phones.png"
-          alt="Five iPhones tumbling through space — Dopamine Dressing 'FIT CHECK' centered in the foreground, Light Academia and E-Boy/E-Girl templates rolling around it."
+          alt="Five iPhones tumbling through space. Dopamine Dressing 'FIT CHECK' centered in the foreground, Light Academia and E-Boy/E-Girl templates rolling around it."
           width={2400}
           height={1600}
           priority
@@ -131,7 +131,7 @@ export function TemplateAnatomy() {
   const SLOTS = [
     { label: "Title zone", note: "Display type, the aesthetic's signature register." },
     { label: "Product catalog grid", note: "The hero image area. Frame treatment swaps per aesthetic." },
-    { label: "Supplementary graphics", note: "Ornament zone — high in Dopamine, restrained in Light Academia." },
+    { label: "Supplementary graphics", note: "Ornament zone. Loud in Dopamine, restrained in Light Academia." },
     { label: "CTA", note: "Standardized TikTok button, accented per aesthetic." },
   ];
 
@@ -141,7 +141,7 @@ export function TemplateAnatomy() {
         <div className="tt-anatomy-image">
           <Image
             src="/projects/tiktok/anatomy-grid-light-academia.png"
-            alt="The 540×960 template grid with pink and cyan measurement annotations — the shared skeleton all three aesthetic templates were built against."
+            alt="The 540×960 template grid with pink and cyan measurement annotations. The shared skeleton all three aesthetic templates were built against."
             width={864}
             height={1537}
             sizes="(max-width: 768px) 100vw, 420px"
@@ -219,8 +219,8 @@ export function AestheticShowcaseCard({
             <ExpandableImage
               src={feature.src}
               alt={feature.alt}
-              width={1200}
-              height={1200}
+              width={375}
+              height={812}
               style={{
                 width: "100%",
                 height: "auto",
@@ -314,10 +314,11 @@ export function OutcomeCard() {
       <div className="tt-outcome-image">
         <Image
           src="/projects/tiktok/shipped-light-academia-in-hand.png"
-          alt="The Light Academia template shown on a phone held in-hand — the version American Eagle adopted."
+          alt="The Light Academia template shown on a phone held in-hand. The version American Eagle adopted."
           width={1200}
           height={800}
-          sizes="(max-width: 768px) 80vw, 320px"
+          sizes="(max-width: 768px) 92vw, 620px"
+          priority
           style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.5rem" }}
         />
       </div>
@@ -374,7 +375,7 @@ export function ConsoleHello() {
     if (sessionStorage.getItem(key)) return;
     sessionStorage.setItem(key, "1");
     console.log(
-      "%cIf you're reading the source, that's flattering. Reach me at ashim238@newschool.edu. — Myles",
+      "%cIf you're reading the source, that's flattering. Reach me at ashim238@newschool.edu. Myles",
       "color: #6aab7e; font-family: ui-monospace, monospace; font-size: 12px; padding: 4px 0;",
     );
   }, []);
@@ -401,18 +402,25 @@ export function SystemOverviewBand() {
                   title={`Copy ${p.hex} (${p.label})`}
                   aria-label={`Copy hex ${p.hex} for ${p.label}`}
                 >
-                  <span style={{ background: p.hex }} aria-hidden="true" />
-                  <span className="tt-overview-check" aria-hidden="true">
-                    <svg viewBox="0 0 16 16" width="14" height="14">
-                      <path
-                        d="M3 8.5L6.5 12L13 4.5"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                  <span style={{ background: p.hex }} aria-hidden="true">
+                    <span className="tt-overview-check" aria-hidden="true">
+                      <svg viewBox="0 0 16 16" width="16" height="16">
+                        <path
+                          d="M3 8.5L6.5 12L13 4.5"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                  <span className="tt-overview-meta">
+                    <span className="tt-overview-name">{p.label}</span>
+                    <span className="tt-overview-hex-label">
+                      {copied === p.hex ? "Copied" : p.hex}
+                    </span>
                   </span>
                 </button>
               </li>
