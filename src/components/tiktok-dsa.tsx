@@ -73,10 +73,10 @@ export function HeroThreePhones() {
     <div ref={ref} className="tt-hero-stage" aria-hidden="true">
       <div className="tt-hero-tilt">
         <Image
-          src="/projects/tiktok/hero-three-phones.png"
-          alt="Three iPhones angled in space, each displaying one of the three template aesthetics — Dopamine Dressing, E-Boy/E-Girl, and Light Academia"
-          width={1920}
-          height={1280}
+          src="/projects/tiktok/hero-rolling-phones.png"
+          alt="Five iPhones tumbling through space — Dopamine Dressing 'FIT CHECK' centered in the foreground, Light Academia and E-Boy/E-Girl templates rolling around it."
+          width={2400}
+          height={1600}
           priority
           sizes="(max-width: 768px) 92vw, 880px"
           style={{ width: "100%", height: "auto", display: "block" }}
