@@ -9,7 +9,6 @@ import {
   ArchitectureDiagram,
   DaylightLegend,
   FeatureCard,
-  PhoneFrame,
   ProcessGraph,
   SignalSwatches,
 } from "@/components/fresh-greens";
@@ -233,18 +232,6 @@ export default async function FreshGreensPage() {
         alt="Fresh Greens cover"
         priority
       />
-
-      <section className="fg-onboarding-spotlight" aria-label="Onboarding screen">
-        <PhoneFrame>
-          <ExpandableImage
-            src="/projects/fresh-greens/hero-onboarding.png"
-            alt="Fresh Greens onboarding screen — a Black traveler emerging from a map pin against an orange sky, green hills below, with the tagline 'A path made for you, by you'"
-            width={390}
-            height={844}
-            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-          />
-        </PhoneFrame>
-      </section>
 
       {/* ── Project meta ─────────────────────────────── */}
       <dl className="project-meta fg-meta" aria-label="Project details">

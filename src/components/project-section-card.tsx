@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ExpandableImage } from "@/components/expandable-image";
 import { ProjectSection } from "@/lib/content";
 import { ColorPalette } from "@/components/color-palette";
 
@@ -22,7 +22,7 @@ export function ProjectSectionCard({ section, projectTitle, id }: ProjectSection
       {section.images.length > 0 ? (
         <div className="project-section-images">
           {section.images.map((image) => (
-            <Image
+            <ExpandableImage
               key={image.src}
               className="project-section-image"
               src={image.src}

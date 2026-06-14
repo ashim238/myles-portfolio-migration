@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { ExpandableImage } from "@/components/expandable-image";
 import { AESTHETICS } from "@/lib/tiktok-data";
 
 export { AESTHETICS };
@@ -98,9 +98,9 @@ export function HeroThreePhones() {
   }, []);
 
   return (
-    <div ref={ref} className="tt-hero-stage" aria-hidden="true">
+    <div ref={ref} className="tt-hero-stage">
       <div className="tt-hero-tilt">
-        <Image
+        <ExpandableImage
           src="/projects/tiktok/hero-rolling-phones.png"
           alt="Five iPhones tumbling through space. Dopamine Dressing 'FIT CHECK' centered in the foreground, Light Academia and E-Boy/E-Girl templates rolling around it."
           width={2400}
@@ -139,7 +139,7 @@ export function TemplateAnatomy() {
     <figure className="tt-anatomy">
       <div className="tt-anatomy-grid">
         <div className="tt-anatomy-image">
-          <Image
+          <ExpandableImage
             src="/projects/tiktok/anatomy-grid-light-academia.png"
             alt="The 540×960 template grid with pink and cyan measurement annotations. The shared skeleton all three aesthetic templates were built against."
             width={864}
@@ -170,8 +170,6 @@ export function TemplateAnatomy() {
    One per aesthetic. Scoped accent color via
    CSS custom property; rest of the rhythm shared.
    ────────────────────────────────────────── */
-
-import { ExpandableImage } from "@/components/expandable-image";
 
 type Swatch = { hex: string; label: string };
 
@@ -312,7 +310,7 @@ export function OutcomeCard() {
         <p className="tt-outcome-sub">Shipped via TikTok DSA, 2021.</p>
       </div>
       <div className="tt-outcome-image">
-        <Image
+        <ExpandableImage
           src="/projects/tiktok/shipped-light-academia-in-hand.png"
           alt="The Light Academia template shown on a phone held in-hand. The version American Eagle adopted."
           width={1200}
