@@ -19,3 +19,10 @@ export function shouldHideHomeBeforeIntro(): boolean {
     return false;
   }
 }
+
+export function applyHomeIntroWaitClass(): void {
+  if (typeof document === "undefined") return;
+  if (shouldHideHomeBeforeIntro()) {
+    document.documentElement.classList.add("home-intro-wait");
+  }
+}
