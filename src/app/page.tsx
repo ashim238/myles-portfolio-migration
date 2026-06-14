@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { HomeBrowserIntro } from "@/components/home-browser-intro";
 import { HomeEntrance } from "@/components/home-entrance";
@@ -6,6 +5,7 @@ import { HomeIntroFocusGuard } from "@/components/home-intro-focus-guard";
 import { HomeIntroGuard } from "@/components/home-intro-guard";
 import { HeroInterestTyper } from "@/components/hero-interest-typer";
 import { SiteNav } from "@/components/site-nav";
+import { WorkProjectCard } from "@/components/work-project-card";
 import { getDraftProjects, getPublishedProjects } from "@/lib/content";
 import { siteConfig } from "@/lib/site-config";
 
@@ -30,29 +30,14 @@ export default async function Home() {
 
       <section className="work" id="work">
         <h2>Selected Work</h2>
-        <ul className="work-list" role="list">
+        <ul className="work-list work-showcase" role="list">
           {projects.length === 0 ? (
             <li className="work-item">
               <p>No published projects yet. Keep building.</p>
             </li>
           ) : (
-            projects.map((project) => (
-              <li key={project.slug} className="work-item">
-                <Link href={`/work/${project.slug}`}>
-                  <h3>{project.title}</h3>
-                  <p>{project.summary}</p>
-                  {project.coverImage ? (
-                    <Image
-                      className="work-item-image"
-                      src={project.coverImage}
-                      alt={`${project.title} preview`}
-                      width={1400}
-                      height={900}
-                      sizes="(max-width: 768px) 100vw, 1090px"
-                    />
-                  ) : null}
-                </Link>
-              </li>
+            projects.map((project, index) => (
+              <WorkProjectCard key={project.slug} project={project} index={index} />
             ))
           )}
         </ul>

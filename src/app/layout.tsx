@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Geist_Mono, Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
@@ -54,14 +53,16 @@ export default function RootLayout({
       className={`${sans.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">
-        <Script
+      <head>
+        <script
           id="theme-init"
-          strategy="beforeInteractive"
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`,
           }}
         />
+      </head>
+      <body className="min-h-full flex flex-col">
         <a className="skip-link" href="#main-content">
           Skip to main content
         </a>
