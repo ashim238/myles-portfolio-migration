@@ -224,6 +224,49 @@ html.browser-intro-lock body {
   overflow: hidden;
 }
 
+/* Project cover zoom — home work card into case study */
+html.project-enter-lock {
+  overflow: hidden;
+}
+
+html.project-enter-lock body {
+  overflow: hidden;
+}
+
+html.project-enter-settling .project-page {
+  opacity: 0;
+}
+
+.project-enter-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  background: var(--background);
+  pointer-events: none;
+}
+
+.project-enter-frame {
+  position: fixed;
+  overflow: hidden;
+  transform-origin: center center;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  will-change: transform, border-radius;
+}
+
+.project-enter-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-enter-overlay {
+    display: none;
+  }
+}
+
 .browser-intro-overlay {
   position: fixed;
   inset: 0;

@@ -53,7 +53,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
   }
 
   return (
-    <main className="page-shell project-page" id="main-content">
+    <main className="page-shell project-page" id="main-content" data-project-slug={slug}>
       <SiteNav />
       <nav className="project-topbar" aria-label="Breadcrumb">
         <Link href="/#work">

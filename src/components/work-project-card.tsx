@@ -3,6 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/lib/content";
+import { prefersReducedMotion } from "@/lib/home-intro";
+import { dispatchProjectEnterRequest } from "@/lib/project-enter";
 import { getProjectMetricPhrases } from "@/lib/work-showcase-metrics";
 import { WorkShowcaseMetric } from "@/components/work-showcase-metric";
 
@@ -27,6 +29,40 @@ export function WorkProjectCard({
   const featured = index === 0;
   const metricPhrases = getProjectMetricPhrases(project);
 
+  const handleProjectEnter = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey ||
+      prefersReducedMotion() ||
+      !project.coverImage
+    ) {
+      return;
+    }
+
+    const frame = event.currentTarget.querySelector<HTMLElement>(".work-showcase-media-frame");
+    if (!frame) return;
+
+    event.preventDefault();
+
+    const rect = frame.getBoundingClientRect();
+    dispatchProjectEnterRequest({
+      slug: project.slug,
+      href: `/work/${project.slug}`,
+      rect: {
+        top: rect.top,
+        left: rect.left,
+        width: rect.width,
+        height: rect.height,
+      },
+      imageSrc: project.coverImage,
+      imageAlt: `${project.title} preview`,
+      borderRadius: getComputedStyle(frame).borderRadius,
+    });
+  };
+
   return (
     <li
       id={`work-${project.slug}`}
@@ -35,7 +71,11 @@ export function WorkProjectCard({
       data-focus-distance={focusDistance > 0 ? String(focusDistance) : undefined}
       className={`work-item work-showcase-item${reverse ? " work-showcase-item--reverse" : ""}${featured ? " work-showcase-item--featured" : ""}`}
     >
-      <Link className="work-showcase-link" href={`/work/${project.slug}`}>
+      <Link
+        className="work-showcase-link"
+        href={`/work/${project.slug}`}
+        onClick={handleProjectEnter}
+      >
         <div className="work-showcase-copy">
           <span className="work-showcase-index" aria-hidden="true">
             {formatIndex(index)}
