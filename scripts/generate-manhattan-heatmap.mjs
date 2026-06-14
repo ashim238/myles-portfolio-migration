@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 /**
- * Build aligned heatmap geometry at compile time from OpenStreetMap.
+ * Build aligned heatmap geometry from manhattan-neighborhoods.geojson.
  *
- * Island coastline + neighborhood polygons share one Mercator uniform-scale
- * transform into the SVG viewBox. Output is src/lib/navi-heatmap-data.ts only.
+ * Island silhouette is derived by unioning neighborhood polygons so coastline
+ * and borders share one Mercator fit — no separate OSM fetch.
  *
  * Run: node scripts/generate-manhattan-heatmap.mjs
  */
@@ -11,6 +11,8 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import union from "@turf/union";
+import { featureCollection } from "@turf/helpers";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
@@ -18,9 +20,9 @@ const root = join(__dirname, "..");
 const VIEW_W = 100;
 const VIEW_H = 260;
 const VIEWBOX = `0 0 ${VIEW_W} ${VIEW_H}`;
-const PAD = 0.04;
+const PAD = 0.05;
 
-const HOOD_MAP = [
+const CASE_STUDY_MAP = [
   ["inwood", "Inwood", ["Inwood"]],
   ["harlem", "Harlem", ["Harlem"]],
   ["uws", "Upper West Side", ["Upper West Side"]],
@@ -35,12 +37,23 @@ const HOOD_MAP = [
   ["fidi", "Financial District", ["Financial District"]],
 ];
 
-const ISLAND_BBOX = {
-  minLon: -74.047,
-  maxLon: -73.908,
-  minLat: 40.698,
-  maxLat: 40.882,
-};
+/** Not part of the walkable Manhattan island silhouette. */
+const EXCLUDE_FROM_SILHOUETTE = new Set([
+  "Ellis Island",
+  "Liberty Island",
+  "Governors Island",
+  "Randall's Island",
+  "Roosevelt Island",
+  "Marble Hill",
+]);
+
+function slugify(name) {
+  return name
+    .toLowerCase()
+    .replace(/['']/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
 
 function lonLatToMerc(lon, lat) {
   const x = (lon * Math.PI) / 180;
@@ -94,7 +107,7 @@ function project(lon, lat, transform) {
   return [x, y];
 }
 
-function ringToPath(ring, transform, step = 4) {
+function ringToPath(ring, transform, step = 1) {
   const pts = [];
   for (let i = 0; i < ring.length; i += step) {
     pts.push(project(ring[i][0], ring[i][1], transform));
@@ -103,17 +116,21 @@ function ringToPath(ring, transform, step = 4) {
   const end = project(last[0], last[1], transform);
   const tail = pts[pts.length - 1];
   if (!tail || tail[0] !== end[0] || tail[1] !== end[1]) pts.push(end);
-  return `M ${pts.map(([x, y]) => `${x.toFixed(1)} ${y.toFixed(1)}`).join(" L ")} Z`;
+  return `M ${pts.map(([x, y]) => `${x.toFixed(2)} ${y.toFixed(2)}`).join(" L ")} Z`;
+}
+
+function geometryToPaths(geometry, transform) {
+  if (geometry.type === "Polygon") {
+    return [ringToPath(geometry.coordinates[0], transform)];
+  }
+  if (geometry.type === "MultiPolygon") {
+    return geometry.coordinates.map((poly) => ringToPath(poly[0], transform));
+  }
+  return [];
 }
 
 function geometryToPath(geometry, transform) {
-  if (geometry.type === "Polygon") {
-    return ringToPath(geometry.coordinates[0], transform);
-  }
-  if (geometry.type === "MultiPolygon") {
-    return geometry.coordinates.map((poly) => ringToPath(poly[0], transform)).join(" ");
-  }
-  return "";
+  return geometryToPaths(geometry, transform).join(" ");
 }
 
 function geometryCentroid(geometry) {
@@ -133,85 +150,51 @@ function geometryCentroid(geometry) {
   return [lon / ring.length, lat / ring.length];
 }
 
-function ringArea(ring) {
-  let a = 0;
-  for (let i = 0; i < ring.length - 1; i++) {
-    a += ring[i][0] * ring[i + 1][1] - ring[i + 1][0] * ring[i][1];
+function unionSilhouette(features) {
+  const mainland = features.filter((f) => !EXCLUDE_FROM_SILHOUETTE.has(f.properties.name));
+  if (mainland.length === 0) throw new Error("No mainland features for silhouette");
+  const result = union(featureCollection(mainland));
+  if (!result) throw new Error("Union produced empty geometry");
+  return result.geometry;
+}
+
+function silhouetteToPath(geometry, transform) {
+  if (geometry.type === "Polygon") {
+    return ringToPath(geometry.coordinates[0], transform, 2);
   }
-  return Math.abs(a);
-}
-
-function splitRing(ring, threshold = 0.01) {
-  const segments = [];
-  let current = [ring[0]];
-  for (let i = 1; i < ring.length; i++) {
-    current.push(ring[i]);
-    const d = Math.hypot(ring[i - 1][0] - ring[i][0], ring[i - 1][1] - ring[i][1]);
-    if (d > threshold) {
-      if (current.length > 1) segments.push(current);
-      current = [ring[i]];
-    }
+  if (geometry.type === "MultiPolygon") {
+    const largest = geometry.coordinates.reduce((best, poly) =>
+      poly[0].length > best[0].length ? poly : best,
+    );
+    return ringToPath(largest[0], transform, 2);
   }
-  if (current.length > 1) segments.push(current);
-  return segments;
-}
-
-function inIslandBbox(lon, lat) {
-  return (
-    lon >= ISLAND_BBOX.minLon &&
-    lon <= ISLAND_BBOX.maxLon &&
-    lat >= ISLAND_BBOX.minLat &&
-    lat <= ISLAND_BBOX.maxLat
-  );
-}
-
-async function fetchIslandRing() {
-  const url =
-    "https://nominatim.openstreetmap.org/search?format=json&polygon_geojson=1&city=Manhattan&county=New+York+County&state=NY&country=USA&limit=1";
-  const res = await fetch(url, {
-    headers: { "User-Agent": "portfolio-navi-heatmap/1.0 (github.com/ashim238/portfolio)" },
-  });
-  const data = await res.json();
-  const geo = data[0]?.geojson;
-  if (!geo) throw new Error("No Manhattan geojson from Nominatim");
-
-  const rings =
-    geo.type === "Polygon" ? [geo.coordinates[0]] : geo.coordinates.map((poly) => poly[0]);
-
-  const mainRing = rings.reduce((best, ring) => (ringArea(ring) > ringArea(best) ? ring : best));
-  const segment = splitRing(mainRing)
-    .map((seg) => seg.filter(([lon, lat]) => inIslandBbox(lon, lat)))
-    .filter((seg) => seg.length > 20)
-    .reduce((best, seg) => (seg.length > best.length ? seg : best));
-
-  return segment;
+  return "";
 }
 
 const geojson = JSON.parse(
   readFileSync(join(root, "content/data/manhattan-neighborhoods.geojson"), "utf8"),
 );
-const byName = Object.fromEntries(
-  geojson.features.map((f) => [f.properties.name, f.geometry]),
+const byName = Object.fromEntries(geojson.features.map((f) => [f.properties.name, f]));
+
+const silhouetteGeometry = unionSilhouette(geojson.features);
+const projectionGeometries = geojson.features
+  .filter((f) => !EXCLUDE_FROM_SILHOUETTE.has(f.properties.name))
+  .map((f) => f.geometry);
+
+const mercBbox = mercBboxFromGeometries(projectionGeometries);
+const transform = buildUniformTransform(mercBbox, VIEW_W, VIEW_H, PAD);
+const islandPath = silhouetteToPath(silhouetteGeometry, transform);
+
+const caseStudyNameToId = new Map(
+  CASE_STUDY_MAP.flatMap(([id, , sources]) => sources.map((name) => [name, id])),
 );
 
-const hoodGeometries = HOOD_MAP.flatMap(([, , sources]) =>
-  sources.map((name) => {
-    const geom = byName[name];
+const caseStudyNeighborhoods = CASE_STUDY_MAP.map(([id, label, sources]) => {
+  const geometries = sources.map((name) => {
+    const geom = byName[name]?.geometry;
     if (!geom) throw new Error(`Missing neighborhood geometry: ${name}`);
     return geom;
-  }),
-);
-
-const islandRing = await fetchIslandRing();
-const islandGeometry = { type: "Polygon", coordinates: [islandRing] };
-
-const mercBbox = mercBboxFromGeometries([islandGeometry, ...hoodGeometries]);
-const transform = buildUniformTransform(mercBbox, VIEW_W, VIEW_H, PAD);
-
-const islandPath = ringToPath(islandRing, transform, 3);
-
-const neighborhoods = HOOD_MAP.map(([id, label, sources]) => {
-  const geometries = sources.map((name) => byName[name]);
+  });
   const path = geometries.map((g) => geometryToPath(g, transform)).join(" ");
   const [lon, lat] = geometryCentroid(geometries[0]);
   const [labelX, labelY] = project(lon, lat, transform);
@@ -220,28 +203,45 @@ const neighborhoods = HOOD_MAP.map(([id, label, sources]) => {
     id,
     name: label,
     path,
-    labelX: +labelX.toFixed(1),
-    labelY: +labelY.toFixed(1),
+    labelX: +labelX.toFixed(2),
+    labelY: +labelY.toFixed(2),
+    selectable: true,
   };
 });
 
-const hoodLines = neighborhoods
-  .map(
-    (n) =>
-      `  {\n    id: ${JSON.stringify(n.id)},\n    name: ${JSON.stringify(n.name)},\n    path: ${JSON.stringify(n.path)},\n    labelX: ${n.labelX},\n    labelY: ${n.labelY},\n  }`,
-  )
-  .join(",\n");
+const borderRegions = geojson.features
+  .filter((f) => !EXCLUDE_FROM_SILHOUETTE.has(f.properties.name))
+  .map((f) => {
+    const caseId = caseStudyNameToId.get(f.properties.name);
+    return {
+      id: caseId ?? slugify(f.properties.name),
+      name: f.properties.name,
+      path: geometryToPath(f.geometry, transform),
+      selectable: Boolean(caseId),
+    };
+  })
+  .sort((a, b) => a.name.localeCompare(b.name));
 
-const tsOut = `export type HeatmapNeighborhood = {
+const formatRegion = (n) =>
+  `  {\n    id: ${JSON.stringify(n.id)},\n    name: ${JSON.stringify(n.name)},\n    path: ${JSON.stringify(n.path)},\n    selectable: ${n.selectable}${n.labelX != null ? `,\n    labelX: ${n.labelX},\n    labelY: ${n.labelY}` : ""}\n  }`;
+
+const tsOut = `export type HeatmapRegion = {
   id: string;
   name: string;
   path: string;
+  selectable: boolean;
+  labelX?: number;
+  labelY?: number;
+};
+
+export type HeatmapNeighborhood = HeatmapRegion & {
+  selectable: true;
   labelX: number;
   labelY: number;
 };
 
 /**
- * Island + neighborhoods — OSM data, one shared projection.
+ * Island + neighborhoods — one shared projection from geojson union.
  * Regenerate: node scripts/generate-manhattan-heatmap.mjs
  */
 export const NAVI_HEATMAP_VIEWBOX = ${JSON.stringify(VIEWBOX)};
@@ -249,12 +249,18 @@ export const NAVI_HEATMAP_VIEWBOX = ${JSON.stringify(VIEWBOX)};
 export const NAVI_HEATMAP_SILHOUETTE =
   ${JSON.stringify(islandPath)};
 
+/** All Manhattan neighborhood borders (stroke layer). */
+export const NAVI_HEATMAP_BORDER_REGIONS: HeatmapRegion[] = [
+${borderRegions.map(formatRegion).join(",\n")},
+];
+
+/** Case-study neighborhoods — selectable in list + map. */
 export const NAVI_HEATMAP_NEIGHBORHOODS: HeatmapNeighborhood[] = [
-${hoodLines},
+${caseStudyNeighborhoods.map(formatRegion).join(",\n")},
 ];
 `;
 
 writeFileSync(join(root, "src/lib/navi-heatmap-data.ts"), tsOut);
 console.log(
-  `Wrote navi-heatmap-data.ts — ${neighborhoods.length} neighborhoods (scale ${transform.scale.toFixed(1)})`,
+  `Wrote navi-heatmap-data.ts — ${borderRegions.length} borders, ${caseStudyNeighborhoods.length} selectable (scale ${transform.scale.toFixed(1)})`,
 );

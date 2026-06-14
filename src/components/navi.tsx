@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { NAVI_HEURISTIC_INSIGHTS } from "@/lib/navi-heuristic-data";
 import {
+  NAVI_HEATMAP_BORDER_REGIONS,
   NAVI_HEATMAP_NEIGHBORHOODS,
   NAVI_HEATMAP_SILHOUETTE,
   NAVI_HEATMAP_VIEWBOX,
@@ -441,7 +442,7 @@ export function CompositionStrip() {
 /* ── Heatmap explorer ────────────────────────────────── */
 
 export function HeatmapExplorer() {
-  const [activeId, setActiveId] = useState(NAVI_HEATMAP_NEIGHBORHOODS[0]?.id ?? "");
+  const [activeId, setActiveId] = useState("");
   const itemRefs = useRef<Record<string, HTMLButtonElement | null>>({});
   const sorted = [...NAVI_HEATMAP_NEIGHBORHOODS].sort((a, b) => a.name.localeCompare(b.name));
 
@@ -450,6 +451,7 @@ export function HeatmapExplorer() {
   }, []);
 
   useEffect(() => {
+    if (!activeId) return;
     const btn = itemRefs.current[activeId];
     if (!btn) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -490,24 +492,32 @@ export function HeatmapExplorer() {
           </defs>
           <path className="nv-heatmap-silhouette" d={NAVI_HEATMAP_SILHOUETTE} />
           <g clipPath="url(#nv-island-clip)">
-            {NAVI_HEATMAP_NEIGHBORHOODS.map((n) => (
-              <path
-                key={n.id}
-                d={n.path}
-                role="button"
-                tabIndex={0}
-                aria-label={n.name}
-                aria-pressed={activeId === n.id}
-                className={`nv-heatmap-region${activeId === n.id ? " nv-heatmap-region--active" : ""}`}
-                onClick={() => selectNeighborhood(n.id)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    selectNeighborhood(n.id);
+            {NAVI_HEATMAP_BORDER_REGIONS.map((r) => {
+              const isActive = r.selectable && activeId === r.id;
+              return (
+                <path
+                  key={r.id}
+                  d={r.path}
+                  role={r.selectable ? "button" : undefined}
+                  tabIndex={r.selectable ? 0 : undefined}
+                  aria-label={r.selectable ? r.name : undefined}
+                  aria-hidden={r.selectable ? undefined : true}
+                  aria-pressed={r.selectable ? isActive : undefined}
+                  className={`nv-heatmap-region${r.selectable ? "" : " nv-heatmap-region--context"}${isActive ? " nv-heatmap-region--active" : ""}`}
+                  onClick={r.selectable ? () => selectNeighborhood(r.id) : undefined}
+                  onKeyDown={
+                    r.selectable
+                      ? (e) => {
+                          if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            selectNeighborhood(r.id);
+                          }
+                        }
+                      : undefined
                   }
-                }}
-              />
-            ))}
+                />
+              );
+            })}
           </g>
         </svg>
         <p className="nv-heatmap-map-label">
