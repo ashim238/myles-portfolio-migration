@@ -5756,7 +5756,7 @@ button:focus-visible,
 
 .nv-heatmap-map {
   width: 100%;
-  max-width: 11rem;
+  max-width: 9.5rem;
   height: auto;
   margin: 0 auto;
   display: block;

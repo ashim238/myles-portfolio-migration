@@ -462,7 +462,13 @@ export function HeatmapExplorer() {
         ))}
       </ul>
       <div className="nv-heatmap-map-wrap">
-        <svg viewBox={NAVI_HEATMAP_VIEWBOX} className="nv-heatmap-map" aria-hidden="true">
+        <svg
+          viewBox={NAVI_HEATMAP_VIEWBOX}
+          className="nv-heatmap-map"
+          role="img"
+          aria-label="Illustrative Manhattan map with selectable neighborhood markers"
+        >
+          <title>Manhattan island — illustrative neighborhood explorer</title>
           <path className="nv-heatmap-silhouette" d={NAVI_HEATMAP_SILHOUETTE} />
           {NAVI_HEATMAP_NEIGHBORHOODS.map((n) => (
             <ellipse
