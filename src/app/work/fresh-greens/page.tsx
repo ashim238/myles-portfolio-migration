@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ExpandableImage } from "@/components/expandable-image";
-import { ProjectCover } from "@/components/project-cover";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
@@ -226,7 +225,7 @@ export default async function FreshGreensPage() {
           exposure to hazards and maximize daylight, with community safety
           observations weighted alongside public data.
         </p>
-        <div className="fg-hero-device">
+        <div className="fg-hero-device" data-project-enter-cover>
           <PhoneFrame>
             <ExpandableImage
               src="/projects/fresh-greens/hero-onboarding.png"
@@ -239,12 +238,6 @@ export default async function FreshGreensPage() {
           </PhoneFrame>
         </div>
       </section>
-
-      <ProjectCover
-        src="/projects/fresh-greens/cover.png"
-        alt="Fresh Greens cover"
-        priority
-      />
 
       {/* ── Project meta ─────────────────────────────── */}
       <dl className="project-meta fg-meta" aria-label="Project details">

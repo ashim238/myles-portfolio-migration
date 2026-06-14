@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ProjectCover } from "@/components/project-cover";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
@@ -70,16 +69,10 @@ export default async function TikTokPage() {
           ads could read as in-feed, not at-feed. American Eagle adopted one
           of the three.
         </p>
-        <div className="tt-hero-device">
+        <div className="tt-hero-device" data-project-enter-cover>
           <HeroThreePhones />
         </div>
       </section>
-
-      <ProjectCover
-        src="/projects/tiktok/composite-flower.png"
-        alt="TikTok Dynamic Showcase Ads cover"
-        priority
-      />
 
       <dl className="project-meta tt-meta" aria-label="Project details">
         <div className="project-meta-field">

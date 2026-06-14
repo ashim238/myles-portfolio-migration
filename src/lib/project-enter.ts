@@ -40,8 +40,14 @@ export const PROJECT_ENTER_ZOOM_IN_MS = 680;
 export const PROJECT_ENTER_SETTLE_MS = 560;
 
 export function queryProjectCover(slug: string): HTMLElement | null {
-  return document.querySelector<HTMLElement>(
-    `.project-page[data-project-slug="${slug}"] .project-cover-image`,
+  const page = document.querySelector<HTMLElement>(
+    `.project-page[data-project-slug="${slug}"]`,
+  );
+  if (!page) return null;
+
+  return (
+    page.querySelector<HTMLElement>(".project-cover-image") ??
+    page.querySelector<HTMLElement>("[data-project-enter-cover]")
   );
 }
 
