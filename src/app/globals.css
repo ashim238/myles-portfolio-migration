@@ -5747,7 +5747,7 @@ button:focus-visible,
 }
 
 .nv-heatmap-map-wrap {
-  padding: 1rem;
+  padding: 1.25rem 1rem 1rem;
   border: 1px solid var(--line);
   border-radius: 0.75rem;
   background: var(--surface);
@@ -5756,30 +5756,33 @@ button:focus-visible,
 
 .nv-heatmap-map {
   width: 100%;
-  max-width: 220px;
+  max-width: 11rem;
   height: auto;
   margin: 0 auto;
   display: block;
 }
 
 .nv-heatmap-silhouette {
-  fill: color-mix(in srgb, var(--nv-ink) 8%, transparent);
-  stroke: var(--line);
-  stroke-width: 1;
+  fill: color-mix(in srgb, var(--foreground) 4%, var(--surface));
+  stroke: var(--foreground);
+  stroke-width: 2;
+  stroke-linejoin: round;
 }
 
 .nv-heatmap-region {
-  fill: color-mix(in srgb, var(--nv-accent) 18%, transparent);
-  stroke: transparent;
+  fill: color-mix(in srgb, var(--nv-accent) 22%, transparent);
+  stroke: color-mix(in srgb, var(--nv-accent) 45%, transparent);
+  stroke-width: 1;
   transition:
     fill 280ms ease,
-    transform 280ms ease;
+    stroke 280ms ease,
+    opacity 280ms ease;
 }
 
 .nv-heatmap-region--active {
-  fill: color-mix(in srgb, var(--nv-accent) 55%, transparent);
+  fill: color-mix(in srgb, var(--nv-accent) 62%, transparent);
   stroke: var(--nv-accent);
-  stroke-width: 1.5;
+  stroke-width: 2;
 }
 
 @media (prefers-reduced-motion: no-preference) {

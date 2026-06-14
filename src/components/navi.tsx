@@ -5,6 +5,7 @@ import { NAVI_HEURISTIC_INSIGHTS } from "@/lib/navi-heuristic-data";
 import {
   NAVI_HEATMAP_NEIGHBORHOODS,
   NAVI_HEATMAP_SILHOUETTE,
+  NAVI_HEATMAP_VIEWBOX,
 } from "@/lib/navi-heatmap-data";
 import { NAVI_SURVEY_STATS } from "@/lib/navi-survey-data";
 import {
@@ -461,12 +462,15 @@ export function HeatmapExplorer() {
         ))}
       </ul>
       <div className="nv-heatmap-map-wrap">
-        <svg viewBox="0 0 160 220" className="nv-heatmap-map" aria-hidden="true">
+        <svg viewBox={NAVI_HEATMAP_VIEWBOX} className="nv-heatmap-map" aria-hidden="true">
           <path className="nv-heatmap-silhouette" d={NAVI_HEATMAP_SILHOUETTE} />
           {NAVI_HEATMAP_NEIGHBORHOODS.map((n) => (
-            <path
+            <ellipse
               key={n.id}
-              d={n.path}
+              cx={n.cx}
+              cy={n.cy}
+              rx={n.rx}
+              ry={n.ry}
               className={`nv-heatmap-region${activeId === n.id ? " nv-heatmap-region--active" : ""}`}
             />
           ))}
