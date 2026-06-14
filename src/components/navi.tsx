@@ -442,7 +442,19 @@ export function CompositionStrip() {
 
 export function HeatmapExplorer() {
   const [activeId, setActiveId] = useState(NAVI_HEATMAP_NEIGHBORHOODS[0]?.id ?? "");
+  const itemRefs = useRef<Record<string, HTMLButtonElement | null>>({});
   const sorted = [...NAVI_HEATMAP_NEIGHBORHOODS].sort((a, b) => a.name.localeCompare(b.name));
+
+  const selectNeighborhood = useCallback((id: string) => {
+    setActiveId(id);
+  }, []);
+
+  useEffect(() => {
+    const btn = itemRefs.current[activeId];
+    if (!btn) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    btn.scrollIntoView({ block: "nearest", behavior: reduced ? "auto" : "smooth" });
+  }, [activeId]);
 
   return (
     <div className="nv-heatmap">
@@ -453,8 +465,11 @@ export function HeatmapExplorer() {
               type="button"
               role="option"
               aria-selected={activeId === n.id}
+              ref={(el) => {
+                itemRefs.current[n.id] = el;
+              }}
               className={`nv-heatmap-item${activeId === n.id ? " nv-heatmap-item--active" : ""}`}
-              onClick={() => setActiveId(n.id)}
+              onClick={() => selectNeighborhood(n.id)}
             >
               {n.name}
             </button>
@@ -465,19 +480,26 @@ export function HeatmapExplorer() {
         <svg
           viewBox={NAVI_HEATMAP_VIEWBOX}
           className="nv-heatmap-map"
-          role="img"
-          aria-label="Illustrative Manhattan map with selectable neighborhood markers"
+          role="group"
+          aria-label="Manhattan neighborhood map"
         >
-          <title>Manhattan island — illustrative neighborhood explorer</title>
           <path className="nv-heatmap-silhouette" d={NAVI_HEATMAP_SILHOUETTE} />
           {NAVI_HEATMAP_NEIGHBORHOODS.map((n) => (
-            <ellipse
+            <path
               key={n.id}
-              cx={n.cx}
-              cy={n.cy}
-              rx={n.rx}
-              ry={n.ry}
+              d={n.path}
+              role="button"
+              tabIndex={0}
+              aria-label={n.name}
+              aria-pressed={activeId === n.id}
               className={`nv-heatmap-region${activeId === n.id ? " nv-heatmap-region--active" : ""}`}
+              onClick={() => selectNeighborhood(n.id)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  selectNeighborhood(n.id);
+                }
+              }}
             />
           ))}
         </svg>

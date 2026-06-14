@@ -5767,22 +5767,34 @@ button:focus-visible,
   stroke: var(--foreground);
   stroke-width: 2;
   stroke-linejoin: round;
+  pointer-events: none;
 }
 
 .nv-heatmap-region {
-  fill: color-mix(in srgb, var(--nv-accent) 22%, transparent);
-  stroke: color-mix(in srgb, var(--nv-accent) 45%, transparent);
-  stroke-width: 1;
+  fill: color-mix(in srgb, var(--nv-accent) 18%, transparent);
+  stroke: color-mix(in srgb, var(--nv-accent) 40%, transparent);
+  stroke-width: 0.75;
+  cursor: pointer;
   transition:
     fill 280ms ease,
     stroke 280ms ease,
     opacity 280ms ease;
 }
 
+.nv-heatmap-region:hover {
+  fill: color-mix(in srgb, var(--nv-accent) 35%, transparent);
+  stroke: color-mix(in srgb, var(--nv-accent) 65%, transparent);
+}
+
+.nv-heatmap-region:focus-visible {
+  outline: 2px solid #3a86ff;
+  outline-offset: 1px;
+}
+
 .nv-heatmap-region--active {
-  fill: color-mix(in srgb, var(--nv-accent) 62%, transparent);
+  fill: color-mix(in srgb, var(--nv-accent) 58%, transparent);
   stroke: var(--nv-accent);
-  stroke-width: 2;
+  stroke-width: 1.5;
 }
 
 @media (prefers-reduced-motion: no-preference) {
