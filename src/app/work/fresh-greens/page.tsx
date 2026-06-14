@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ExpandableImage } from "@/components/expandable-image";
+import { ProjectCover } from "@/components/project-cover";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
@@ -205,7 +206,6 @@ export default async function FreshGreensPage() {
       className="page-shell project-page fg-page"
       id="main-content"
       data-project-slug="fresh-greens"
-      data-project-enter-crossfade
     >
       <SiteNav />
       <nav className="project-topbar" aria-label="Breadcrumb">
@@ -226,18 +226,24 @@ export default async function FreshGreensPage() {
           exposure to hazards and maximize daylight, with community safety
           observations weighted alongside public data.
         </p>
-        <div className="fg-hero-device" data-project-enter-cover>
-          <PhoneFrame>
-            <ExpandableImage
-              src="/projects/fresh-greens/hero-onboarding.png"
-              alt="Fresh Greens onboarding screen — a Black traveler emerging from a map pin against an orange sky, green hills below, with the tagline 'A path made for you, by you'"
-              width={390}
-              height={844}
-              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-              priority
-            />
-          </PhoneFrame>
-        </div>
+      </section>
+
+      <ProjectCover
+        src="/projects/fresh-greens/cover.png"
+        alt="Fresh Greens cover"
+        priority
+      />
+
+      <section className="fg-onboarding-spotlight" aria-label="Onboarding screen">
+        <PhoneFrame>
+          <ExpandableImage
+            src="/projects/fresh-greens/hero-onboarding.png"
+            alt="Fresh Greens onboarding screen — a Black traveler emerging from a map pin against an orange sky, green hills below, with the tagline 'A path made for you, by you'"
+            width={390}
+            height={844}
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          />
+        </PhoneFrame>
       </section>
 
       {/* ── Project meta ─────────────────────────────── */}
