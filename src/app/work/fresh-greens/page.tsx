@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ExpandableImage } from "@/components/expandable-image";
+import { ProjectCover } from "@/components/project-cover";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
@@ -201,7 +202,11 @@ export default async function FreshGreensPage() {
   const allProjects = await getPublishedProjects();
 
   return (
-    <main className="page-shell project-page fg-page" id="main-content">
+    <main
+      className="page-shell project-page fg-page"
+      id="main-content"
+      data-project-slug="fresh-greens"
+    >
       <SiteNav />
       <nav className="project-topbar" aria-label="Breadcrumb">
         <Link href="/#work">
@@ -234,6 +239,12 @@ export default async function FreshGreensPage() {
           </PhoneFrame>
         </div>
       </section>
+
+      <ProjectCover
+        src="/projects/fresh-greens/cover.png"
+        alt="Fresh Greens cover"
+        priority
+      />
 
       {/* ── Project meta ─────────────────────────────── */}
       <dl className="project-meta fg-meta" aria-label="Project details">

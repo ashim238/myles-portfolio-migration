@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ProjectCover } from "@/components/project-cover";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
@@ -41,7 +42,11 @@ export default async function TikTokPage() {
   const allProjects = await getPublishedProjects();
 
   return (
-    <main className="page-shell project-page tt-page" id="main-content">
+    <main
+      className="page-shell project-page tt-page"
+      id="main-content"
+      data-project-slug="tiktok"
+    >
       <ConsoleHello />
       <SiteNav />
       <nav className="project-topbar" aria-label="Breadcrumb">
@@ -69,6 +74,12 @@ export default async function TikTokPage() {
           <HeroThreePhones />
         </div>
       </section>
+
+      <ProjectCover
+        src="/projects/tiktok/composite-flower.png"
+        alt="TikTok Dynamic Showcase Ads cover"
+        priority
+      />
 
       <dl className="project-meta tt-meta" aria-label="Project details">
         <div className="project-meta-field">

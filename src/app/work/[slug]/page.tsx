@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ProjectCover } from "@/components/project-cover";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectHighlight } from "@/components/project-highlight";
 import { ProjectSectionCard } from "@/components/project-section-card";
@@ -70,17 +70,11 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
       </section>
 
       {project.coverImage ? (
-        <div className="project-cover">
-          <Image
-            className="project-cover-image"
-            src={project.coverImage}
-            alt={`${project.title} cover`}
-            width={1400}
-            height={900}
-            priority
-            sizes="(max-width: 768px) 100vw, 1090px"
-          />
-        </div>
+        <ProjectCover
+          src={project.coverImage}
+          alt={`${project.title} cover`}
+          priority
+        />
       ) : null}
 
       <dl className="project-meta" aria-label="Project details">

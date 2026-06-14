@@ -12,6 +12,7 @@ import {
   PROJECT_ENTER_ZOOM_IN_MS,
   computeCenterOffset,
   computeCoverScale,
+  waitForProjectCover,
   type ProjectEnterRequestDetail,
   type ProjectEnterRect,
 } from "@/lib/project-enter";
@@ -27,32 +28,6 @@ type OverlayState = {
   borderRadius: string;
   startRect: ProjectEnterRect;
 };
-
-function waitForProjectCover(slug: string, attempts = 48): Promise<HTMLElement | null> {
-  return new Promise((resolve) => {
-    let remaining = attempts;
-
-    const tick = () => {
-      const cover = document.querySelector<HTMLElement>(
-        `.project-page[data-project-slug="${slug}"] .project-cover-image`,
-      );
-      if (cover) {
-        resolve(cover);
-        return;
-      }
-
-      remaining -= 1;
-      if (remaining <= 0) {
-        resolve(null);
-        return;
-      }
-
-      requestAnimationFrame(tick);
-    };
-
-    tick();
-  });
-}
 
 function lockProjectEnter() {
   document.documentElement.classList.add("project-enter-lock");
@@ -117,6 +92,7 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
       const endScale = targetRect.width / state.startRect.width;
       const endX = targetCenterX - startCenterX;
       const endY = targetCenterY - startCenterY;
+      const targetRadius = getComputedStyle(cover).borderRadius || "0.65rem";
 
       const timeline = createTimeline({ defaults: { ease: "outCubic" } });
 
@@ -134,7 +110,7 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
       timeline.add(
         frame,
         {
-          borderRadius: [state.borderRadius, "0.65rem"],
+          borderRadius: [state.borderRadius, targetRadius],
           duration: PROJECT_ENTER_SETTLE_MS,
         },
         0,
