@@ -3,15 +3,55 @@
 import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 import { ExpandableImage } from "@/components/expandable-image";
+import { UF_ASSETS } from "@/lib/understandingfafsa-assets";
 
-const BASE = "/projects/understandingfafsa";
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReduced(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  return reduced;
+}
+
+/** Prefer `primary` when it loads; otherwise use `fallback`. */
+function useResolvedAsset(primary: string, fallback: string) {
+  const [src, setSrc] = useState(primary);
+
+  useEffect(() => {
+    let cancelled = false;
+    const probe = new Image();
+    probe.onload = () => {
+      if (!cancelled) setSrc(primary);
+    };
+    probe.onerror = () => {
+      if (!cancelled) setSrc(fallback);
+    };
+    probe.src = primary;
+    return () => {
+      cancelled = true;
+    };
+  }, [primary, fallback]);
+
+  return src;
+}
 
 type EmailPhoneFrameProps = {
   children: ReactNode;
   tilt?: number;
+  scrollable?: boolean;
 };
 
-export function EmailPhoneFrame({ children, tilt = 0 }: EmailPhoneFrameProps) {
+export function EmailPhoneFrame({
+  children,
+  tilt = 0,
+  scrollable = false,
+}: EmailPhoneFrameProps) {
   return (
     <div
       className="uf-phone"
@@ -19,7 +59,9 @@ export function EmailPhoneFrame({ children, tilt = 0 }: EmailPhoneFrameProps) {
     >
       <div className="uf-phone-bezel">
         <span className="uf-phone-notch" aria-hidden="true" />
-        <div className="uf-phone-screen">{children}</div>
+        <div className={`uf-phone-screen${scrollable ? " uf-phone-screen--scroll" : ""}`}>
+          {children}
+        </div>
       </div>
     </div>
   );
@@ -27,16 +69,20 @@ export function EmailPhoneFrame({ children, tilt = 0 }: EmailPhoneFrameProps) {
 
 const BEFORE_AFTER = [
   {
-    src: `${BASE}/mobile-before.jpg`,
-    alt: "Old newsletter template on mobile before the redesign.",
-    label: "~30% open rate",
+    src: UF_ASSETS.mobileBefore,
+    alt: "Old newsletter template on mobile before the redesign — full scroll.",
+    label: "Before · ~30% open rate",
     tilt: -2,
+    width: 390,
+    height: 4200,
   },
   {
-    src: `${BASE}/mobile-after.jpg`,
-    alt: "Redesigned newsletter on mobile with updated hierarchy and brand system.",
-    label: "~52.6% open rate",
+    src: UF_ASSETS.mobileAfter,
+    alt: "Redesigned newsletter on mobile with updated hierarchy and brand system — full scroll.",
+    label: "After · ~52.6% open rate",
     tilt: 2,
+    width: 390,
+    height: 4200,
   },
 ] as const;
 
@@ -44,18 +90,24 @@ export function BeforeAfterPhones() {
   return (
     <div className="uf-before-after" aria-label="Newsletter open rate before and after redesign">
       {BEFORE_AFTER.map((item) => (
-        <figure key={item.src} className="uf-before-after-item">
-          <EmailPhoneFrame tilt={item.tilt}>
+        <figure key={item.label} className="uf-before-after-item">
+          <EmailPhoneFrame tilt={item.tilt} scrollable>
             <ExpandableImage
               src={item.src}
               alt={item.alt}
-              width={390}
-              height={844}
-              sizes="(max-width: 768px) 72vw, 220px"
-              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+              width={item.width}
+              height={item.height}
+              sizes="(max-width: 768px) 72vw, 240px"
+              style={{
+                width: "100%",
+                height: "auto",
+                objectFit: "contain",
+                display: "block",
+              }}
             />
           </EmailPhoneFrame>
           <figcaption className="uf-before-after-label">{item.label}</figcaption>
+          <p className="uf-before-after-hint">Scroll inside the frame to read the full send.</p>
         </figure>
       ))}
     </div>
@@ -64,43 +116,43 @@ export function BeforeAfterPhones() {
 
 const GALLERY_BLOCKS = [
   {
-    src: `${BASE}/modular-header.png`,
-    alt: "Redesigned newsletter header block with orange brand palette and cap icon.",
+    src: UF_ASSETS.modular.header,
+    alt: "Newsletter header block with FAFSA banner, wave divider, and brand lockup.",
     offset: "0%",
     rotate: -0.8,
   },
   {
-    src: `${BASE}/modular-students.png`,
-    alt: "Student-focused content block with audience segmentation for juniors and seniors.",
-    offset: "4%",
-    rotate: 0.6,
+    src: UF_ASSETS.modular.reading,
+    alt: "Lead story block on college costs with emoji header and structured bullets.",
+    offset: "3%",
+    rotate: 0.5,
   },
   {
-    src: `${BASE}/modular-best.png`,
-    alt: "Curated reading block with trophy icon and branded link styling.",
-    offset: "2%",
-    rotate: -0.5,
-  },
-  {
-    src: `${BASE}/modular-related.png`,
+    src: UF_ASSETS.modular.related,
     alt: "Related reading section with news icon and orange link accents.",
     offset: "5%",
     rotate: 0.9,
   },
   {
-    src: `${BASE}/modular-reading.png`,
-    alt: "Scholarship and college cost content block with structured bullet points.",
-    offset: "1%",
-    rotate: -0.4,
+    src: UF_ASSETS.modular.best,
+    alt: "Curated reading block with trophy icon and branded link styling.",
+    offset: "2%",
+    rotate: -0.5,
   },
   {
-    src: `${BASE}/modular-guides.png`,
+    src: UF_ASSETS.modular.students,
+    alt: "Student-focused content block with audience segmentation for juniors and seniors.",
+    offset: "4%",
+    rotate: 0.6,
+  },
+  {
+    src: UF_ASSETS.modular.guides,
     alt: "Guide cards section linking to downloadable resources.",
     offset: "3%",
     rotate: 0.7,
   },
   {
-    src: `${BASE}/modular-closer.png`,
+    src: UF_ASSETS.modular.closer,
     alt: "Footer block with subscribe CTA, social links, and The New School branding.",
     offset: "2%",
     rotate: -0.6,
@@ -136,7 +188,7 @@ export function ModularBlockGallery() {
   );
 }
 
-type TemplateVariant = "weekly" | "icymi" | "counselor";
+type TemplateVariant = "weekly" | "event";
 
 const TEMPLATE_VARIANTS: Record<
   TemplateVariant,
@@ -144,42 +196,25 @@ const TEMPLATE_VARIANTS: Record<
 > = {
   weekly: {
     label: "Weekly",
-    image: `${BASE}/shipped-mailchimp.jpg`,
-    alt: "Shipped Mailchimp weekly template with full modular kit and emoji section headers.",
-    descriptor: "Full modular kit — emoji headers, founder's default send.",
+    image: UF_ASSETS.templateWeekly,
+    alt: "Full weekly newsletter — modular kit with emoji section headers and color theme variants.",
+    descriptor: "Default send — full modular kit assembled each week.",
   },
-  icymi: {
-    label: "ICYMI",
-    image: `${BASE}/modular-related.png`,
-    alt: "ICYMI variant with fewer blocks for event recaps.",
-    descriptor: "Fewer blocks, faster assembly for event recaps.",
-  },
-  counselor: {
-    label: "Counselor",
-    image: `${BASE}/modular-students.png`,
-    alt: "Counselor toolkit block with duotone icons and formal register.",
-    descriptor: "Duotone icons, formal register for counselor audience.",
+  event: {
+    label: "Event",
+    image: UF_ASSETS.templateEvent,
+    alt: "Event-specific newsletter — fewer blocks, faster assembly for invites and recaps.",
+    descriptor: "Event-specific send — RSVP-focused layout on the same system.",
   },
 };
-
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduced(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
-
-  return reduced;
-}
 
 export function TemplateSwitcher() {
   const [variant, setVariant] = useState<TemplateVariant>("weekly");
   const reducedMotion = usePrefersReducedMotion();
   const active = TEMPLATE_VARIANTS[variant];
+  const fallback =
+    variant === "weekly" ? UF_ASSETS.mobileAfter : UF_ASSETS.templateWeekly;
+  const resolvedSrc = useResolvedAsset(active.image, fallback);
 
   return (
     <div className="uf-switcher" aria-label="Newsletter template variants">
@@ -201,46 +236,38 @@ export function TemplateSwitcher() {
         key={variant}
       >
         <ExpandableImage
-          src={active.image}
+          src={resolvedSrc}
           alt={active.alt}
-          width={600}
-          height={900}
+          width={390}
+          height={4200}
           sizes="(max-width: 768px) 92vw, 540px"
           style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
         />
       </div>
       <p className="uf-switcher-descriptor">{active.descriptor}</p>
+      <p className="uf-switcher-note">
+        Counselor toolkit ships on the same framework — in progress, not live yet.
+      </p>
     </div>
   );
 }
 
 type OverlayMode = "swappable" | "locked";
 
-const SWAPPABLE_ZONES = [
-  { top: "14%", left: "62%", width: "28%", height: "14%" },
-  { top: "20%", left: "7%", width: "86%", height: "10%" },
-  { top: "32%", left: "7%", width: "86%", height: "14%" },
-  { top: "48%", left: "7%", width: "86%", height: "20%" },
-  { top: "70%", left: "7%", width: "86%", height: "10%" },
-  { top: "82%", left: "7%", width: "86%", height: "12%" },
-] as const;
-
-const LOCKED_ZONES = [
-  { top: "0%", left: "0%", width: "7%", height: "100%" },
-  { top: "0%", left: "93%", width: "7%", height: "100%" },
-  { top: "0%", left: "0%", width: "100%", height: "11%" },
-  { top: "89%", left: "0%", width: "100%", height: "11%" },
-  { top: "12%", left: "7%", width: "52%", height: "6%" },
-] as const;
-
 export function LockedSwappableToggle() {
   const [mode, setMode] = useState<OverlayMode>("swappable");
   const reducedMotion = usePrefersReducedMotion();
-  const zones = mode === "swappable" ? SWAPPABLE_ZONES : LOCKED_ZONES;
+
+  const primary =
+    mode === "swappable"
+      ? UF_ASSETS.lockedSwappableSwappable
+      : UF_ASSETS.lockedSwappableLocked;
+  const displaySrc = useResolvedAsset(primary, UF_ASSETS.lockedSwappableBase);
+
   const legend =
     mode === "swappable"
-      ? "Founder edits each send — copy, emoji, links."
-      : "Structure stays fixed — rails, dividers, type scale, footer skeleton.";
+      ? "Founder edits each send — headlines, body copy, emoji icons, and article links."
+      : "Structure stays fixed — wave dividers, padding rails, section rhythm, and footer skeleton.";
 
   return (
     <div className="uf-lock-toggle" aria-label="Locked versus swappable module regions">
@@ -262,29 +289,53 @@ export function LockedSwappableToggle() {
         data-mode={mode}
       >
         <ExpandableImage
-          src={`${BASE}/modular-students.png`}
-          alt="Student-focused modular block used to illustrate locked versus swappable regions."
+          src={displaySrc}
+          alt={`Students block — ${mode} regions highlighted.`}
           width={600}
           height={955}
           sizes="(max-width: 768px) 92vw, 540px"
           style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
         />
-        <div className="uf-overlay-stack" aria-hidden="true">
-          {zones.map((zone, index) => (
-            <span
-              key={`${mode}-${index}`}
-              className="uf-overlay-zone"
-              style={{
-                top: zone.top,
-                left: zone.left,
-                width: zone.width,
-                height: zone.height,
-              }}
-            />
-          ))}
-        </div>
       </div>
       <p className="uf-lock-legend">{legend}</p>
+    </div>
+  );
+}
+
+export function FigmaMailchimpPair() {
+  const figmaSrc = useResolvedAsset(
+    UF_ASSETS.figmaSectionStudents,
+    UF_ASSETS.figmaSectionStudents,
+  );
+  const mailchimpSrc = useResolvedAsset(
+    UF_ASSETS.mailchimpSectionStudents,
+    UF_ASSETS.modular.students,
+  );
+
+  return (
+    <div className="uf-figma-pair">
+      <figure className="uf-figma-figure">
+        <ExpandableImage
+          src={figmaSrc}
+          alt="Figma — students block with layout guides, spacing rails, and type hierarchy."
+          width={600}
+          height={955}
+          sizes="(max-width: 768px) 92vw, 44vw"
+          style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
+        />
+        <figcaption>Figma — students block (design source)</figcaption>
+      </figure>
+      <figure className="uf-figma-figure">
+        <ExpandableImage
+          src={mailchimpSrc}
+          alt="Mailchimp — same students block after translation into editable modules."
+          width={600}
+          height={955}
+          sizes="(max-width: 768px) 92vw, 44vw"
+          style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
+        />
+        <figcaption>Mailchimp — students block (shipped module)</figcaption>
+      </figure>
     </div>
   );
 }

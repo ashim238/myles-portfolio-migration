@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ExpandableImage } from "@/components/expandable-image";
 import { ColorPalette } from "@/components/color-palette";
 import { ProjectCover } from "@/components/project-cover";
 import { SiteNav } from "@/components/site-nav";
@@ -9,6 +8,7 @@ import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
 import {
   BeforeAfterPhones,
+  FigmaMailchimpPair,
   LockedSwappableToggle,
   ModularBlockGallery,
   TemplateSwitcher,
@@ -199,10 +199,10 @@ export default async function UnderstandingFafsaPage() {
         <h2 id="uf-system">Building the System</h2>
         <div className="project-section-body">
           <p>
-            The system ships four template types through a shared modular framework: a welcome email
-            that sets expectations on frequency and content, the core weekly newsletter, a lighter
-            ICYMI/event variant with fewer blocks and faster assembly, and a counselor-focused
-            toolkit with a more professional tone — duotone icons instead of emojis.
+            The system ships through a shared modular framework: a welcome email that sets
+            expectations, the core weekly newsletter, and an event-specific variant with fewer
+            blocks and faster assembly for invites and recaps. A counselor-focused toolkit extends
+            the same vocabulary — duotone icons, formal register — and is in progress.
           </p>
           <p>
             The welcome email follows a deliberate structure shaped by the audit. It includes a
@@ -260,29 +260,11 @@ export default async function UnderstandingFafsaPage() {
             full brand palette — even when trying to maintain the founder&apos;s appetite for vibrancy.
           </p>
           <p>
-            We tested as the template evolved: the founder could tell async whether she could maintain
-            it. Figma-forward or HTML-line-by-line workflows wouldn&apos;t have stuck; Mailchimp modules
-            did.
+            Same students block in Figma and Mailchimp — layout guides and spacing rails in design,
+            editable modules in the builder.
           </p>
         </div>
-        <div className="uf-figma-pair">
-          <ExpandableImage
-            src="/projects/understandingfafsa/figma-design.jpg"
-            alt="Figma design showing the content section layout and typography before Mailchimp translation."
-            width={1200}
-            height={900}
-            sizes="(max-width: 768px) 92vw, 44vw"
-            style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
-          />
-          <ExpandableImage
-            src="/projects/understandingfafsa/shipped-mailchimp.jpg"
-            alt="Shipped Mailchimp template with emoji section headers, branded CTA, and wave dividers."
-            width={1200}
-            height={900}
-            sizes="(max-width: 768px) 92vw, 44vw"
-            style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
-          />
-        </div>
+        <FigmaMailchimpPair />
       </section>
 
       <section className="project-section uf-section" aria-labelledby="uf-results">

@@ -5943,6 +5943,18 @@ button:focus-visible,
   position: relative;
 }
 
+.uf-phone-screen--scroll {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.uf-phone-screen--scroll .expandable-trigger img {
+  height: auto;
+  object-fit: contain;
+}
+
 .uf-phone-screen .expandable-trigger {
   width: 100%;
   height: 100%;
@@ -5985,6 +5997,12 @@ button:focus-visible,
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.78rem;
   color: var(--uf-accent-cool);
+}
+
+.uf-before-after-hint {
+  margin: 0.35rem 0 0;
+  font-size: 0.82rem;
+  color: var(--muted);
 }
 
 /* ── Template switcher ─────────────────────────────────── */
@@ -6053,6 +6071,14 @@ button:focus-visible,
   font-size: 0.92rem;
   color: var(--muted);
   max-width: 34rem;
+}
+
+.uf-switcher-note {
+  margin: 0.45rem 0 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+  max-width: 34rem;
+  font-style: italic;
 }
 
 @keyframes uf-fade-in {
@@ -6153,6 +6179,17 @@ button:focus-visible,
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.5rem;
   }
+}
+
+.uf-figma-figure {
+  margin: 0;
+}
+
+.uf-figma-figure figcaption {
+  margin-top: 0.65rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  color: var(--uf-accent-cool);
 }
 
 /* ── Results callout ───────────────────────────────────── */
