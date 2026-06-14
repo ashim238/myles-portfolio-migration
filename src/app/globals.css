@@ -5737,9 +5737,13 @@ button:focus-visible,
   -webkit-tap-highlight-color: transparent;
 }
 
-.nv-heatmap-item:focus,
-.nv-heatmap-item:focus-visible {
+.nv-heatmap-item:focus:not(:focus-visible) {
   outline: none;
+}
+
+.nv-heatmap-item:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
 }
 
 .nv-heatmap-item:last-child {
@@ -5802,10 +5806,21 @@ button:focus-visible,
   outline: none;
 }
 
+.nv-heatmap-region[role="button"]:focus-visible {
+  stroke: var(--focus-ring);
+  stroke-width: 1.15;
+  stroke-linejoin: round;
+}
+
 .nv-heatmap-region--active {
   fill: color-mix(in srgb, var(--nv-accent) 55%, transparent);
   stroke: color-mix(in srgb, var(--nv-accent) 85%, transparent);
   stroke-width: 0.55;
+}
+
+.nv-heatmap-region--active:focus-visible {
+  stroke: var(--focus-ring);
+  stroke-width: 1.15;
 }
 
 @media (prefers-reduced-motion: no-preference) {
