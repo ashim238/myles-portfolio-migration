@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 /**
- * Build aligned heatmap geometry at compile time (no runtime OSM API).
+ * Build aligned heatmap geometry at compile time.
  *
- * Sources:
- *   - Island outline: public/projects/navi/manhattan-island.svg (not overwritten)
- *   - Neighborhoods: content/data/manhattan-neighborhoods.geojson (OSM via Click That Hood)
+ * Island + neighborhoods share one Mercator → uniform-scale transform into the
+ * SVG viewBox. This guarantees shapes sit inside the coastline — hand-traced
+ * island SVGs with a different rotation cannot be mixed with geo polygons
+ * without manual landmark calibration.
  *
- * Alignment: geo coordinates are projected into the island path's bounding box
- * inside the SVG viewBox — not the full viewBox — so shapes sit on the island.
+ * Outputs:
+ *   - public/projects/navi/manhattan-island.svg  (OSM coastline, synced)
+ *   - src/lib/navi-heatmap-data.ts
  *
  * Run: node scripts/generate-manhattan-heatmap.mjs
  */
@@ -18,6 +20,11 @@ import { dirname, join } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = join(__dirname, "..");
+
+const VIEW_W = 100;
+const VIEW_H = 260;
+const VIEWBOX = `0 0 ${VIEW_W} ${VIEW_H}`;
+const PAD = 0.04;
 
 const HOOD_MAP = [
   ["inwood", "Inwood", ["Inwood"]],
@@ -34,36 +41,17 @@ const HOOD_MAP = [
   ["fidi", "Financial District", ["Financial District"]],
 ];
 
-function parseViewBox(svg) {
-  const match = svg.match(/viewBox=["']([^"']+)["']/i);
-  if (!match) return { viewBox: "0 0 100 260" };
-  return { viewBox: match[1].trim() };
-}
+const ISLAND_BBOX = {
+  minLon: -74.047,
+  maxLon: -73.908,
+  minLat: 40.698,
+  maxLat: 40.882,
+};
 
-function parseIslandPath(svg) {
-  const byId = svg.match(/id=["']manhattan-island["'][^>]*\sd=["']([^"']+)["']/i);
-  if (byId) return byId[1];
-  const firstPath = svg.match(/<path[^>]*\sd=["']([^"']+)["']/i);
-  if (firstPath) return firstPath[1];
-  throw new Error("Could not find island path in manhattan-island.svg");
-}
-
-/** Bounding box of SVG path `d` attribute (M/L commands). */
-function pathBBox(d) {
-  const numbers = d.match(/-?\d*\.?\d+/g)?.map(Number) ?? [];
-  const xs = [];
-  const ys = [];
-  for (let i = 0; i + 1 < numbers.length; i += 2) {
-    xs.push(numbers[i]);
-    ys.push(numbers[i + 1]);
-  }
-  if (!xs.length) throw new Error("Could not parse island path coordinates");
-  return {
-    minX: Math.min(...xs),
-    maxX: Math.max(...xs),
-    minY: Math.min(...ys),
-    maxY: Math.max(...ys),
-  };
+function lonLatToMerc(lon, lat) {
+  const x = (lon * Math.PI) / 180;
+  const y = Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 360));
+  return [x, y];
 }
 
 function eachCoord(geometry, fn) {
@@ -76,22 +64,7 @@ function eachCoord(geometry, fn) {
   }
 }
 
-/**
- * Web Mercator projection in consistent radian units (no earth radius —
- * we rescale into SVG units afterwards). Latitude goes through the
- * log/tan stretch so shapes don't compress north/south.
- *
- * Longitude must also be in radians so the x and y outputs share units
- * for the uniform scale step. Mixing degrees-lon with radian-derived-lat
- * gives a ~57× unit mismatch and collapses the projection.
- */
-function lonLatToMerc(lon, lat) {
-  const x = (lon * Math.PI) / 180;
-  const y = Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 360));
-  return [x, y];
-}
-
-function geometryMercBbox(geometries) {
+function mercBboxFromGeometries(geometries) {
   let minX = Infinity;
   let maxX = -Infinity;
   let minY = Infinity;
@@ -108,32 +81,21 @@ function geometryMercBbox(geometries) {
   return { minX, maxX, minY, maxY };
 }
 
-/**
- * Build a uniform fit transform from the projected Mercator bbox into the
- * destination island bbox. Preserves aspect ratio (picks the smaller scale)
- * and centers the result inside the destination.
- */
-function buildFitTransform(mercBbox, islandBbox) {
+function buildUniformTransform(mercBbox, width, height, pad) {
   const srcW = mercBbox.maxX - mercBbox.minX || 1;
   const srcH = mercBbox.maxY - mercBbox.minY || 1;
-  const dstW = islandBbox.maxX - islandBbox.minX;
-  const dstH = islandBbox.maxY - islandBbox.minY;
-  const scale = Math.min(dstW / srcW, dstH / srcH);
-  const xPad = (dstW - srcW * scale) / 2;
-  const yPad = (dstH - srcH * scale) / 2;
-  return {
-    scale,
-    offsetX: islandBbox.minX + xPad,
-    offsetY: islandBbox.minY + yPad,
-    mercBbox,
-  };
+  const innerW = width * (1 - 2 * pad);
+  const innerH = height * (1 - 2 * pad);
+  const scale = Math.min(innerW / srcW, innerH / srcH);
+  const xPad = (width - srcW * scale) / 2;
+  const yPad = (height - srcH * scale) / 2;
+  return { scale, offsetX: xPad, offsetY: yPad, mercBbox };
 }
 
 function project(lon, lat, transform) {
   const [mx, my] = lonLatToMerc(lon, lat);
   const { scale, offsetX, offsetY, mercBbox } = transform;
   const x = offsetX + (mx - mercBbox.minX) * scale;
-  // Flip Y: max latitude (north / max merc-y) maps to top of SVG (smaller y).
   const y = offsetY + (mercBbox.maxY - my) * scale;
   return [x, y];
 }
@@ -155,9 +117,7 @@ function geometryToPath(geometry, transform) {
     return ringToPath(geometry.coordinates[0], transform);
   }
   if (geometry.type === "MultiPolygon") {
-    return geometry.coordinates
-      .map((poly) => ringToPath(poly[0], transform))
-      .join(" ");
+    return geometry.coordinates.map((poly) => ringToPath(poly[0], transform)).join(" ");
   }
   return "";
 }
@@ -179,10 +139,59 @@ function geometryCentroid(geometry) {
   return [lon / ring.length, lat / ring.length];
 }
 
-const islandSvg = readFileSync(join(root, "public/projects/navi/manhattan-island.svg"), "utf8");
-const { viewBox } = parseViewBox(islandSvg);
-const islandPath = parseIslandPath(islandSvg);
-const islandBbox = pathBBox(islandPath);
+function ringArea(ring) {
+  let a = 0;
+  for (let i = 0; i < ring.length - 1; i++) {
+    a += ring[i][0] * ring[i + 1][1] - ring[i + 1][0] * ring[i][1];
+  }
+  return Math.abs(a);
+}
+
+function splitRing(ring, threshold = 0.01) {
+  const segments = [];
+  let current = [ring[0]];
+  for (let i = 1; i < ring.length; i++) {
+    current.push(ring[i]);
+    const d = Math.hypot(ring[i - 1][0] - ring[i][0], ring[i - 1][1] - ring[i][1]);
+    if (d > threshold) {
+      if (current.length > 1) segments.push(current);
+      current = [ring[i]];
+    }
+  }
+  if (current.length > 1) segments.push(current);
+  return segments;
+}
+
+function inIslandBbox(lon, lat) {
+  return (
+    lon >= ISLAND_BBOX.minLon &&
+    lon <= ISLAND_BBOX.maxLon &&
+    lat >= ISLAND_BBOX.minLat &&
+    lat <= ISLAND_BBOX.maxLat
+  );
+}
+
+async function fetchIslandRing() {
+  const url =
+    "https://nominatim.openstreetmap.org/search?format=json&polygon_geojson=1&city=Manhattan&county=New+York+County&state=NY&country=USA&limit=1";
+  const res = await fetch(url, {
+    headers: { "User-Agent": "portfolio-navi-heatmap/1.0 (github.com/ashim238/portfolio)" },
+  });
+  const data = await res.json();
+  const geo = data[0]?.geojson;
+  if (!geo) throw new Error("No Manhattan geojson from Nominatim");
+
+  const rings =
+    geo.type === "Polygon" ? [geo.coordinates[0]] : geo.coordinates.map((poly) => poly[0]);
+
+  const mainRing = rings.reduce((best, ring) => (ringArea(ring) > ringArea(best) ? ring : best));
+  const segment = splitRing(mainRing)
+    .map((seg) => seg.filter(([lon, lat]) => inIslandBbox(lon, lat)))
+    .filter((seg) => seg.length > 20)
+    .reduce((best, seg) => (seg.length > best.length ? seg : best));
+
+  return segment;
+}
 
 const geojson = JSON.parse(
   readFileSync(join(root, "content/data/manhattan-neighborhoods.geojson"), "utf8"),
@@ -191,15 +200,21 @@ const byName = Object.fromEntries(
   geojson.features.map((f) => [f.properties.name, f.geometry]),
 );
 
-const allGeometries = HOOD_MAP.flatMap(([, , sources]) =>
+const hoodGeometries = HOOD_MAP.flatMap(([, , sources]) =>
   sources.map((name) => {
     const geom = byName[name];
     if (!geom) throw new Error(`Missing neighborhood geometry: ${name}`);
     return geom;
   }),
 );
-const mercBbox = geometryMercBbox(allGeometries);
-const transform = buildFitTransform(mercBbox, islandBbox);
+
+const islandRing = await fetchIslandRing();
+const islandGeometry = { type: "Polygon", coordinates: [islandRing] };
+
+const mercBbox = mercBboxFromGeometries([islandGeometry, ...hoodGeometries]);
+const transform = buildUniformTransform(mercBbox, VIEW_W, VIEW_H, PAD);
+
+const islandPath = ringToPath(islandRing, transform, 3);
 
 const neighborhoods = HOOD_MAP.map(([id, label, sources]) => {
   const geometries = sources.map((name) => byName[name]);
@@ -216,6 +231,11 @@ const neighborhoods = HOOD_MAP.map(([id, label, sources]) => {
   };
 });
 
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${VIEWBOX}" fill="none" role="img" aria-label="Manhattan island outline">
+  <path id="manhattan-island" d="${islandPath}" fill="currentColor" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round"/>
+</svg>
+`;
+
 const hoodLines = neighborhoods
   .map(
     (n) =>
@@ -226,19 +246,16 @@ const hoodLines = neighborhoods
 const tsOut = `export type HeatmapNeighborhood = {
   id: string;
   name: string;
-  /** SVG path(s) aligned to manhattan-island.svg */
   path: string;
   labelX: number;
   labelY: number;
 };
 
 /**
- * Heatmap geometry — generated at build time from OSM neighborhood data.
- * Island: public/projects/navi/manhattan-island.svg
- * Neighborhoods: content/data/manhattan-neighborhoods.geojson
+ * Island + neighborhoods share one Mercator uniform-scale projection.
  * Regenerate: node scripts/generate-manhattan-heatmap.mjs
  */
-export const NAVI_HEATMAP_VIEWBOX = ${JSON.stringify(viewBox)};
+export const NAVI_HEATMAP_VIEWBOX = ${JSON.stringify(VIEWBOX)};
 
 export const NAVI_HEATMAP_SILHOUETTE =
   ${JSON.stringify(islandPath)};
@@ -248,10 +265,8 @@ ${hoodLines},
 ];
 `;
 
+writeFileSync(join(root, "public/projects/navi/manhattan-island.svg"), svg);
 writeFileSync(join(root, "src/lib/navi-heatmap-data.ts"), tsOut);
 console.log(
-  `Aligned ${neighborhoods.length} neighborhoods via Mercator ` +
-    `(scale ${transform.scale.toFixed(2)}, ` +
-    `island bbox ${islandBbox.minX.toFixed(1)}–${islandBbox.maxX.toFixed(1)} x ` +
-    `${islandBbox.minY.toFixed(1)}–${islandBbox.maxY.toFixed(1)})`,
+  `Synced island + ${neighborhoods.length} neighborhoods (scale ${transform.scale.toFixed(1)})`,
 );

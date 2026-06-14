@@ -483,25 +483,32 @@ export function HeatmapExplorer() {
           role="group"
           aria-label="Manhattan neighborhood map"
         >
+          <defs>
+            <clipPath id="nv-island-clip">
+              <path d={NAVI_HEATMAP_SILHOUETTE} />
+            </clipPath>
+          </defs>
           <path className="nv-heatmap-silhouette" d={NAVI_HEATMAP_SILHOUETTE} />
-          {NAVI_HEATMAP_NEIGHBORHOODS.map((n) => (
-            <path
-              key={n.id}
-              d={n.path}
-              role="button"
-              tabIndex={0}
-              aria-label={n.name}
-              aria-pressed={activeId === n.id}
-              className={`nv-heatmap-region${activeId === n.id ? " nv-heatmap-region--active" : ""}`}
-              onClick={() => selectNeighborhood(n.id)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  selectNeighborhood(n.id);
-                }
-              }}
-            />
-          ))}
+          <g clipPath="url(#nv-island-clip)">
+            {NAVI_HEATMAP_NEIGHBORHOODS.map((n) => (
+              <path
+                key={n.id}
+                d={n.path}
+                role="button"
+                tabIndex={0}
+                aria-label={n.name}
+                aria-pressed={activeId === n.id}
+                className={`nv-heatmap-region${activeId === n.id ? " nv-heatmap-region--active" : ""}`}
+                onClick={() => selectNeighborhood(n.id)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    selectNeighborhood(n.id);
+                  }
+                }}
+              />
+            ))}
+          </g>
         </svg>
         <p className="nv-heatmap-map-label">
           {sorted.find((n) => n.id === activeId)?.name ?? "Select a neighborhood"}

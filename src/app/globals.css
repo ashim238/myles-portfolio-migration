@@ -5783,7 +5783,6 @@ button:focus-visible,
 
 .nv-heatmap-region:focus-visible {
   outline: none;
-  fill: color-mix(in srgb, var(--nv-accent) 42%, transparent);
 }
 
 .nv-heatmap-region--active {
