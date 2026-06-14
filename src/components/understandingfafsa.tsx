@@ -261,7 +261,7 @@ export function LockedSwappableToggle() {
   const primary =
     mode === "swappable"
       ? UF_ASSETS.lockedSwappableSwappable
-      : UF_ASSETS.lockedSwappableLocked;
+      : UF_ASSETS.lockedSwappableCold;
   const displaySrc = useResolvedAsset(primary, UF_ASSETS.lockedSwappableBase);
 
   const legend =

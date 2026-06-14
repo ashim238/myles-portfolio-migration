@@ -13,7 +13,7 @@ export const UF_ASSETS = {
   /** §04 — locked vs swappable annotated exports from Figma */
   lockedSwappableBase: `${UF_ASSET_BASE}/modular-students.png`,
   lockedSwappableSwappable: `${UF_ASSET_BASE}/locked-swappable-swappable.png`,
-  lockedSwappableLocked: `${UF_ASSET_BASE}/locked-swappable-locked.png`,
+  lockedSwappableCold: `${UF_ASSET_BASE}/locked-swappable-cold.png`,
 
   /** §05 — same students block, design source vs shipped module */
   figmaSectionStudents: `${UF_ASSET_BASE}/figma-section-students.jpg`,
