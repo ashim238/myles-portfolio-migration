@@ -3,6 +3,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Project } from "@/lib/content";
 import { prefersReducedMotion } from "@/lib/home-intro";
+import {
+  applyActiveParallax,
+  clearParallax,
+} from "@/lib/work-showcase-parallax";
 import { WorkProjectCard } from "@/components/work-project-card";
 import { WorkShowcaseRail } from "@/components/work-showcase-rail";
 
@@ -20,13 +24,14 @@ export function WorkShowcase({ projects }: WorkShowcaseProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [focusReady, setFocusReady] = useState(false);
 
-  const updateActiveIndex = useCallback(() => {
+  const updateFocusState = useCallback(() => {
     const list = listRef.current;
     if (!list) return;
 
     const items = list.querySelectorAll<HTMLElement>(".work-showcase-item");
     if (items.length === 0) return;
 
+    const parallaxEnabled = !prefersReducedMotion();
     const viewportCenter = window.innerHeight * 0.5;
     let nextActive = 0;
     let closestDistance = Number.POSITIVE_INFINITY;
@@ -42,6 +47,9 @@ export function WorkShowcase({ projects }: WorkShowcaseProps) {
       }
     });
 
+    clearParallax(items);
+    applyActiveParallax(items[nextActive] ?? null, parallaxEnabled);
+
     setActiveIndex((current) => (current === nextActive ? current : nextActive));
   }, []);
 
@@ -54,12 +62,12 @@ export function WorkShowcase({ projects }: WorkShowcaseProps) {
     }
 
     setFocusReady(true);
-    updateActiveIndex();
+    updateFocusState();
 
     let frame = 0;
     const onScrollOrResize = () => {
       cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(updateActiveIndex);
+      frame = requestAnimationFrame(updateFocusState);
     };
 
     window.addEventListener("scroll", onScrollOrResize, { passive: true });
@@ -69,8 +77,13 @@ export function WorkShowcase({ projects }: WorkShowcaseProps) {
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", onScrollOrResize);
       window.removeEventListener("resize", onScrollOrResize);
+
+      const list = listRef.current;
+      if (list) {
+        clearParallax(list.querySelectorAll<HTMLElement>(".work-showcase-item"));
+      }
     };
-  }, [projects.length, updateActiveIndex]);
+  }, [projects.length, updateFocusState]);
 
   const scrollToProject = useCallback((index: number) => {
     const list = listRef.current;
