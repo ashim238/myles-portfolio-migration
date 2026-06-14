@@ -2,7 +2,8 @@
 
 **Date:** 2026-06-14  
 **Branch:** TBD at implementation (`cursor/understandingfafsa-case-study-d5d3` suggested)  
-**Status:** Awaiting user review before plan generation
+**Status:** Approved — implementation in progress  
+**Figma:** [UnderstandingFAFSA Template](https://www.figma.com/design/GtA0aGSygtLpY8ES8VtkZt/UnderstandingFAFSA-Template?m=dev) (`GtA0aGSygtLpY8ES8VtkZt`)
 
 ---
 
@@ -265,3 +266,41 @@ No animated counter (out of scope).
 - Keep em-dash count low in visible copy (portfolio voice pass from TikTok applies here too)
 - Case study is email/content design — differentiate from product-app case studies (Fresh Greens, Navi) through module-stack metaphor, not phone-app chrome everywhere
 - The 120+ newsletter audit stays prose — don't apologize for lack of viz; the writing carries it (PRODUCT.md principle 1)
+
+---
+
+## 14. Figma reference appendix
+
+Source file: `GtA0aGSygtLpY8ES8VtkZt` — [UnderstandingFAFSA Template](https://www.figma.com/design/GtA0aGSygtLpY8ES8VtkZt/UnderstandingFAFSA-Template?m=dev)
+
+### Key frames
+
+| Frame | Node ID | Maps to |
+|---|---|---|
+| Modular Blocks stack | `1110:683` | Gallery block order + locked/swappable anatomy |
+| Weekly template (Charizard theme) | `463:1365` | Template switcher — Weekly variant |
+| ICYMI / related reading | `1106:1080` | Template switcher — ICYMI variant |
+| Students section | `1106:1116` | Locked/swappable toggle base + Counselor tone |
+| Educator toolkit | `903:962` | Counselor variant register |
+| Components library | `200:2` | Locked chrome: header, wave, button, section tag |
+
+### Production colors (from Figma)
+
+| Role | Hex | Spec token |
+|---|---|---|
+| Body text | `#212121` | inherited shell |
+| Links | `#4083b9` | — |
+| Header sky | `#82c5fa` | near `#82c5fb` in palette |
+| Students bg | `#e7f2fb` | — |
+| Guides bg | `#f3e0fd` | — |
+| Footer/closer | `#0788c1` | near `#2788c1` in palette |
+| Orange accent | `#f26938` | `--uf-accent-warm` ✓ |
+| Navy accent | `#164f73` | `--uf-accent-cool` ✓ |
+
+### Locked vs swappable (Figma structure)
+
+**Locked (cool overlay):** header banner shell, wave dividers, 40px padding rails, section-tag pattern, button chrome, footer/closer skeleton.
+
+**Swappable (warm overlay):** headlines, body copy, emoji/duotone icons, article links, junior/senior content blocks, PDF/guide images.
+
+Overlay rectangles in `LockedSwappableToggle` are approximate — explanatory, not pixel-traced from Figma.
