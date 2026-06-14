@@ -76,52 +76,87 @@ function eachCoord(geometry, fn) {
   }
 }
 
-function geometryGeoBbox(geometries) {
-  let minLon = Infinity;
-  let maxLon = -Infinity;
-  let minLat = Infinity;
-  let maxLat = -Infinity;
-  for (const geom of geometries) {
-    eachCoord(geom, (lon, lat) => {
-      minLon = Math.min(minLon, lon);
-      maxLon = Math.max(maxLon, lon);
-      minLat = Math.min(minLat, lat);
-      maxLat = Math.max(maxLat, lat);
-    });
-  }
-  return { minLon, maxLon, minLat, maxLat };
-}
-
-function project(lon, lat, geoBbox, islandBbox) {
-  const { minLon, maxLon, minLat, maxLat } = geoBbox;
-  const lonSpan = maxLon - minLon || 1;
-  const latSpan = maxLat - minLat || 1;
-  const x =
-    islandBbox.minX + ((lon - minLon) / lonSpan) * (islandBbox.maxX - islandBbox.minX);
-  const y =
-    islandBbox.minY + ((maxLat - lat) / latSpan) * (islandBbox.maxY - islandBbox.minY);
+/**
+ * Web Mercator projection in consistent radian units (no earth radius —
+ * we rescale into SVG units afterwards). Latitude goes through the
+ * log/tan stretch so shapes don't compress north/south.
+ *
+ * Longitude must also be in radians so the x and y outputs share units
+ * for the uniform scale step. Mixing degrees-lon with radian-derived-lat
+ * gives a ~57× unit mismatch and collapses the projection.
+ */
+function lonLatToMerc(lon, lat) {
+  const x = (lon * Math.PI) / 180;
+  const y = Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 360));
   return [x, y];
 }
 
-function ringToPath(ring, geoBbox, islandBbox, step = 4) {
+function geometryMercBbox(geometries) {
+  let minX = Infinity;
+  let maxX = -Infinity;
+  let minY = Infinity;
+  let maxY = -Infinity;
+  for (const geom of geometries) {
+    eachCoord(geom, (lon, lat) => {
+      const [mx, my] = lonLatToMerc(lon, lat);
+      if (mx < minX) minX = mx;
+      if (mx > maxX) maxX = mx;
+      if (my < minY) minY = my;
+      if (my > maxY) maxY = my;
+    });
+  }
+  return { minX, maxX, minY, maxY };
+}
+
+/**
+ * Build a uniform fit transform from the projected Mercator bbox into the
+ * destination island bbox. Preserves aspect ratio (picks the smaller scale)
+ * and centers the result inside the destination.
+ */
+function buildFitTransform(mercBbox, islandBbox) {
+  const srcW = mercBbox.maxX - mercBbox.minX || 1;
+  const srcH = mercBbox.maxY - mercBbox.minY || 1;
+  const dstW = islandBbox.maxX - islandBbox.minX;
+  const dstH = islandBbox.maxY - islandBbox.minY;
+  const scale = Math.min(dstW / srcW, dstH / srcH);
+  const xPad = (dstW - srcW * scale) / 2;
+  const yPad = (dstH - srcH * scale) / 2;
+  return {
+    scale,
+    offsetX: islandBbox.minX + xPad,
+    offsetY: islandBbox.minY + yPad,
+    mercBbox,
+  };
+}
+
+function project(lon, lat, transform) {
+  const [mx, my] = lonLatToMerc(lon, lat);
+  const { scale, offsetX, offsetY, mercBbox } = transform;
+  const x = offsetX + (mx - mercBbox.minX) * scale;
+  // Flip Y: max latitude (north / max merc-y) maps to top of SVG (smaller y).
+  const y = offsetY + (mercBbox.maxY - my) * scale;
+  return [x, y];
+}
+
+function ringToPath(ring, transform, step = 4) {
   const pts = [];
   for (let i = 0; i < ring.length; i += step) {
-    pts.push(project(ring[i][0], ring[i][1], geoBbox, islandBbox));
+    pts.push(project(ring[i][0], ring[i][1], transform));
   }
   const last = ring[ring.length - 1];
-  const end = project(last[0], last[1], geoBbox, islandBbox);
+  const end = project(last[0], last[1], transform);
   const tail = pts[pts.length - 1];
   if (!tail || tail[0] !== end[0] || tail[1] !== end[1]) pts.push(end);
   return `M ${pts.map(([x, y]) => `${x.toFixed(1)} ${y.toFixed(1)}`).join(" L ")} Z`;
 }
 
-function geometryToPath(geometry, geoBbox, islandBbox) {
+function geometryToPath(geometry, transform) {
   if (geometry.type === "Polygon") {
-    return ringToPath(geometry.coordinates[0], geoBbox, islandBbox);
+    return ringToPath(geometry.coordinates[0], transform);
   }
   if (geometry.type === "MultiPolygon") {
     return geometry.coordinates
-      .map((poly) => ringToPath(poly[0], geoBbox, islandBbox))
+      .map((poly) => ringToPath(poly[0], transform))
       .join(" ");
   }
   return "";
@@ -163,13 +198,14 @@ const allGeometries = HOOD_MAP.flatMap(([, , sources]) =>
     return geom;
   }),
 );
-const geoBbox = geometryGeoBbox(allGeometries);
+const mercBbox = geometryMercBbox(allGeometries);
+const transform = buildFitTransform(mercBbox, islandBbox);
 
 const neighborhoods = HOOD_MAP.map(([id, label, sources]) => {
   const geometries = sources.map((name) => byName[name]);
-  const path = geometries.map((g) => geometryToPath(g, geoBbox, islandBbox)).join(" ");
+  const path = geometries.map((g) => geometryToPath(g, transform)).join(" ");
   const [lon, lat] = geometryCentroid(geometries[0]);
-  const [labelX, labelY] = project(lon, lat, geoBbox, islandBbox);
+  const [labelX, labelY] = project(lon, lat, transform);
 
   return {
     id,
@@ -214,7 +250,8 @@ ${hoodLines},
 
 writeFileSync(join(root, "src/lib/navi-heatmap-data.ts"), tsOut);
 console.log(
-  `Aligned ${neighborhoods.length} neighborhoods to island bbox ` +
-    `(${islandBbox.minX.toFixed(1)}–${islandBbox.maxX.toFixed(1)}, ` +
+  `Aligned ${neighborhoods.length} neighborhoods via Mercator ` +
+    `(scale ${transform.scale.toFixed(2)}, ` +
+    `island bbox ${islandBbox.minX.toFixed(1)}–${islandBbox.maxX.toFixed(1)} x ` +
     `${islandBbox.minY.toFixed(1)}–${islandBbox.maxY.toFixed(1)})`,
 );
