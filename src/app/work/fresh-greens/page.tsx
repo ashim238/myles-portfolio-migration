@@ -205,6 +205,7 @@ export default async function FreshGreensPage() {
       className="page-shell project-page fg-page"
       id="main-content"
       data-project-slug="fresh-greens"
+      data-project-enter-crossfade
     >
       <SiteNav />
       <nav className="project-topbar" aria-label="Breadcrumb">

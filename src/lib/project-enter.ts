@@ -38,6 +38,37 @@ export function computeCenterOffset(rect: ProjectEnterRect): { x: number; y: num
 
 export const PROJECT_ENTER_ZOOM_IN_MS = 680;
 export const PROJECT_ENTER_SETTLE_MS = 560;
+export const PROJECT_ENTER_CROSSFADE_MS = 520;
+
+export function waitForProjectPage(slug: string, attempts = 48): Promise<HTMLElement | null> {
+  return new Promise((resolve) => {
+    let remaining = attempts;
+
+    const tick = () => {
+      const page = document.querySelector<HTMLElement>(
+        `.project-page[data-project-slug="${slug}"]`,
+      );
+      if (page) {
+        resolve(page);
+        return;
+      }
+
+      remaining -= 1;
+      if (remaining <= 0) {
+        resolve(null);
+        return;
+      }
+
+      requestAnimationFrame(tick);
+    };
+
+    tick();
+  });
+}
+
+export function usesCrossfadeSettle(page: HTMLElement | null): boolean {
+  return page?.hasAttribute("data-project-enter-crossfade") ?? false;
+}
 
 export function queryProjectCover(slug: string): HTMLElement | null {
   const page = document.querySelector<HTMLElement>(

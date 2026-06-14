@@ -8,10 +8,12 @@ import { prefersReducedMotion } from "@/lib/home-intro";
 import {
   PROJECT_ENTER_COMPLETE,
   PROJECT_ENTER_REQUEST,
+  PROJECT_ENTER_CROSSFADE_MS,
   PROJECT_ENTER_SETTLE_MS,
   PROJECT_ENTER_ZOOM_IN_MS,
   computeCenterOffset,
   computeCoverScale,
+  usesCrossfadeSettle,
   waitForProjectCover,
   type ProjectEnterRequestDetail,
   type ProjectEnterRect,
@@ -36,6 +38,7 @@ function lockProjectEnter() {
 function unlockProjectEnter() {
   document.documentElement.classList.remove("project-enter-lock");
   document.documentElement.classList.remove("project-enter-settling");
+  document.documentElement.classList.remove("project-enter-crossfading");
   window.dispatchEvent(new CustomEvent(PROJECT_ENTER_COMPLETE));
 }
 
@@ -63,8 +66,75 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
     setOverlay(null);
   }, []);
 
+  const runCrossfadeSettle = useCallback(
+    async (state: OverlayState) => {
+      document.documentElement.classList.add("project-enter-settling", "project-enter-crossfading");
+
+      const page = document.querySelector<HTMLElement>(
+        `.project-page[data-project-slug="${state.slug}"]`,
+      );
+      const hero = page?.querySelector<HTMLElement>("[data-project-enter-cover]");
+      const shell = shellRef.current;
+      const frame = frameRef.current;
+
+      if (!page || !shell || !frame) {
+        finishTransition();
+        return;
+      }
+
+      page.style.opacity = "0";
+      if (hero) {
+        hero.style.opacity = "0";
+      }
+
+      const timeline = createTimeline({ defaults: { ease: "outCubic" } });
+
+      timeline.add(
+        frame,
+        { opacity: [1, 0], duration: PROJECT_ENTER_CROSSFADE_MS },
+        40,
+      );
+
+      timeline.add(
+        shell,
+        { opacity: [1, 0], duration: PROJECT_ENTER_CROSSFADE_MS },
+        40,
+      );
+
+      if (hero) {
+        timeline.add(
+          hero,
+          { opacity: [0, 1], duration: PROJECT_ENTER_CROSSFADE_MS },
+          120,
+        );
+      }
+
+      timeline.add(
+        page,
+        { opacity: [0, 1], duration: PROJECT_ENTER_CROSSFADE_MS + 80 },
+        80,
+      );
+
+      await timeline.then();
+
+      page.style.opacity = "";
+      if (hero) {
+        hero.style.opacity = "";
+      }
+      finishTransition();
+    },
+    [finishTransition],
+  );
+
   const runSettle = useCallback(
     async (state: OverlayState) => {
+      const page = await waitForProjectPage(state.slug);
+
+      if (usesCrossfadeSettle(page)) {
+        await runCrossfadeSettle(state);
+        return;
+      }
+
       document.documentElement.classList.add("project-enter-settling");
 
       const cover = await waitForProjectCover(state.slug);
@@ -129,7 +199,7 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
       await timeline.then();
       finishTransition();
     },
-    [finishTransition],
+    [finishTransition, runCrossfadeSettle],
   );
 
   const startTransition = useCallback(
