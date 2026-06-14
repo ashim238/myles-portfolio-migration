@@ -1,22 +1,38 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/lib/content";
+import { getProjectMetricPhrases } from "@/lib/work-showcase-metrics";
+import { WorkShowcaseMetric } from "@/components/work-showcase-metric";
 
 type WorkProjectCardProps = {
   project: Project;
   index: number;
+  isActive?: boolean;
+  focusDistance?: number;
 };
 
 function formatIndex(index: number): string {
   return String(index + 1).padStart(2, "0");
 }
 
-export function WorkProjectCard({ project, index }: WorkProjectCardProps) {
+export function WorkProjectCard({
+  project,
+  index,
+  isActive = false,
+  focusDistance = 0,
+}: WorkProjectCardProps) {
   const reverse = index % 2 === 1;
   const featured = index === 0;
+  const metricPhrases = getProjectMetricPhrases(project);
 
   return (
     <li
+      id={`work-${project.slug}`}
+      data-project-index={index}
+      data-active={isActive ? "true" : undefined}
+      data-focus-distance={focusDistance > 0 ? String(focusDistance) : undefined}
       className={`work-item work-showcase-item${reverse ? " work-showcase-item--reverse" : ""}${featured ? " work-showcase-item--featured" : ""}`}
     >
       <Link className="work-showcase-link" href={`/work/${project.slug}`}>
@@ -26,6 +42,7 @@ export function WorkProjectCard({ project, index }: WorkProjectCardProps) {
           </span>
           <h3>{project.title}</h3>
           <p>{project.summary}</p>
+          <WorkShowcaseMetric phrases={metricPhrases} isActive={isActive} />
           <div className="work-showcase-meta">
             {project.timeframe ? (
               <span className="work-showcase-meta-item">{project.timeframe}</span>

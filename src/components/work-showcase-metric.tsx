@@ -8,15 +8,6 @@ import {
   PAUSE_AFTER_FULL_MS,
   TYPE_MS,
 } from "@/lib/motion";
-import { HOME_ENTRANCE_COMPLETE } from "@/lib/home-intro";
-
-const PHRASES = [
-  "is an avid comic reader.",
-  "loves to cook Jamaican cuisine.",
-  "is Auto Layout's biggest fan.",
-];
-
-const STATIC_INTERESTS = PHRASES.join(" · ");
 
 function subscribeReducedMotion(cb: () => void) {
   const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -32,12 +23,12 @@ function getReducedMotionServerSnapshot(): boolean {
   return false;
 }
 
-type HeroInterestTyperProps = {
-  /** On homepage, wait for entrance timeline before typing */
-  awaitHomeEntrance?: boolean;
+type WorkShowcaseMetricProps = {
+  phrases: string[];
+  isActive: boolean;
 };
 
-export function HeroInterestTyper({ awaitHomeEntrance = false }: HeroInterestTyperProps) {
+export function WorkShowcaseMetric({ phrases, isActive }: WorkShowcaseMetricProps) {
   const reducedMotion = useSyncExternalStore(
     subscribeReducedMotion,
     getReducedMotion,
@@ -45,28 +36,15 @@ export function HeroInterestTyper({ awaitHomeEntrance = false }: HeroInterestTyp
   );
   const [animated, setAnimated] = useState("");
   const [showCursor, setShowCursor] = useState(true);
-  const [entranceReady, setEntranceReady] = useState(!awaitHomeEntrance);
 
-  const display = reducedMotion ? STATIC_INTERESTS : animated;
-
-  useEffect(() => {
-    if (!awaitHomeEntrance || reducedMotion) {
-      setEntranceReady(true);
-      return;
-    }
-
-    const onReady = () => setEntranceReady(true);
-    if (document.querySelector(".home-page.home-entrance-done")) {
-      onReady();
-      return;
-    }
-
-    window.addEventListener(HOME_ENTRANCE_COMPLETE, onReady, { once: true });
-    return () => window.removeEventListener(HOME_ENTRANCE_COMPLETE, onReady);
-  }, [awaitHomeEntrance, reducedMotion]);
+  const staticText = phrases.join(" · ");
+  const display = reducedMotion ? staticText : animated;
 
   useEffect(() => {
-    if (reducedMotion || !entranceReady) return;
+    if (!isActive || reducedMotion || phrases.length === 0) {
+      setAnimated("");
+      return;
+    }
 
     let cancelled = false;
     let phraseIndex = 0;
@@ -76,7 +54,7 @@ export function HeroInterestTyper({ awaitHomeEntrance = false }: HeroInterestTyp
 
     const step = () => {
       if (cancelled) return;
-      const phrase = PHRASES[phraseIndex % PHRASES.length];
+      const phrase = phrases[phraseIndex % phrases.length];
 
       if (!deleting) {
         if (charIndex < phrase.length) {
@@ -100,29 +78,34 @@ export function HeroInterestTyper({ awaitHomeEntrance = false }: HeroInterestTyp
       }
     };
 
+    setAnimated("");
     step();
 
     return () => {
       cancelled = true;
       clearTimeout(timeoutId);
     };
-  }, [reducedMotion, entranceReady]);
+  }, [isActive, phrases, reducedMotion]);
 
   useEffect(() => {
-    if (reducedMotion || !entranceReady) return;
+    if (!isActive || reducedMotion) return;
     const id = setInterval(() => setShowCursor((c) => !c), CURSOR_BLINK_MS);
     return () => clearInterval(id);
-  }, [reducedMotion, entranceReady]);
+  }, [isActive, reducedMotion]);
+
+  if (phrases.length === 0) {
+    return null;
+  }
 
   return (
-    <p className="hero-typer" suppressHydrationWarning>
-      <span className="hero-typer-text" aria-hidden="true">
+    <p className="work-showcase-metric" aria-live="polite">
+      <span className="work-showcase-metric-text" aria-hidden={!reducedMotion}>
         {display}
       </span>
-      <span className="sr-only">{`Myles Ashitey ${STATIC_INTERESTS}`}</span>
-      {!reducedMotion ? (
+      <span className="sr-only">{staticText}</span>
+      {!reducedMotion && isActive ? (
         <span
-          className={`hero-typer-cursor${showCursor ? " hero-typer-cursor--on" : ""}`}
+          className={`work-showcase-metric-cursor${showCursor ? " work-showcase-metric-cursor--on" : ""}`}
           aria-hidden
         >
           |

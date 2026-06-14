@@ -5,7 +5,7 @@ import { HomeIntroFocusGuard } from "@/components/home-intro-focus-guard";
 import { HomeIntroGuard } from "@/components/home-intro-guard";
 import { HeroInterestTyper } from "@/components/hero-interest-typer";
 import { SiteNav } from "@/components/site-nav";
-import { WorkProjectCard } from "@/components/work-project-card";
+import { WorkShowcase } from "@/components/work-showcase";
 import { getDraftProjects, getPublishedProjects } from "@/lib/content";
 import { siteConfig } from "@/lib/site-config";
 
@@ -30,17 +30,7 @@ export default async function Home() {
 
       <section className="work" id="work">
         <h2>Selected Work</h2>
-        <ul className="work-list work-showcase" role="list">
-          {projects.length === 0 ? (
-            <li className="work-item">
-              <p>No published projects yet. Keep building.</p>
-            </li>
-          ) : (
-            projects.map((project, index) => (
-              <WorkProjectCard key={project.slug} project={project} index={index} />
-            ))
-          )}
-        </ul>
+        <WorkShowcase projects={projects} />
       </section>
 
       {draftProjects.length > 0 ? (
