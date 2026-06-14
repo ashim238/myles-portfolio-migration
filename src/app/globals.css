@@ -3003,12 +3003,6 @@ button:focus-visible,
   font-size: clamp(1.05rem, 2vw, 1.28rem) !important;
 }
 
-.fg-onboarding-spotlight {
-  margin: 0 0 2.5rem;
-  display: flex;
-  justify-content: center;
-}
-
 .fg-meta {
   margin-top: 2.5rem;
 }

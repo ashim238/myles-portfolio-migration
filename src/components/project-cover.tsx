@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ExpandableImage } from "@/components/expandable-image";
 
 type ProjectCoverProps = {
   src: string;
@@ -10,7 +10,7 @@ type ProjectCoverProps = {
 export function ProjectCover({ src, alt, priority = false }: ProjectCoverProps) {
   return (
     <div className="project-cover">
-      <Image
+      <ExpandableImage
         className="project-cover-image"
         src={src}
         alt={alt}

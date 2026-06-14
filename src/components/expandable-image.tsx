@@ -9,19 +9,40 @@ type Props = {
   width: number;
   height: number;
   style?: React.CSSProperties;
+  className?: string;
+  sizes?: string;
   priority?: boolean;
 };
 
-export function ExpandableImage({ src, alt, width, height, style, priority }: Props) {
+export function ExpandableImage({
+  src,
+  alt,
+  width,
+  height,
+  style,
+  className,
+  sizes,
+  priority,
+}: Props) {
   const { openLightbox } = useLightbox();
 
   return (
     <button
+      type="button"
       className="expandable-trigger"
       onClick={() => openLightbox(src, alt)}
       aria-label={`Expand image: ${alt}`}
     >
-      <Image src={src} alt={alt} width={width} height={height} style={style} priority={priority} />
+      <Image
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        style={style}
+        className={className}
+        sizes={sizes}
+        priority={priority}
+      />
     </button>
   );
 }
