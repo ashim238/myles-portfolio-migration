@@ -5734,6 +5734,12 @@ button:focus-visible,
   font-size: 0.92rem;
   color: var(--foreground);
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nv-heatmap-item:focus,
+.nv-heatmap-item:focus-visible {
+  outline: none;
 }
 
 .nv-heatmap-item:last-child {
@@ -5776,6 +5782,7 @@ button:focus-visible,
   stroke-width: 0.45;
   vector-effect: non-scaling-stroke;
   transition: fill 280ms ease, stroke 280ms ease, opacity 280ms ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .nv-heatmap-region--context {
@@ -5790,6 +5797,7 @@ button:focus-visible,
   stroke: color-mix(in srgb, var(--foreground) 45%, transparent);
 }
 
+.nv-heatmap-region:focus,
 .nv-heatmap-region:focus-visible {
   outline: none;
 }

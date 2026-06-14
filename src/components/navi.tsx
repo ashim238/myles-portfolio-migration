@@ -504,7 +504,14 @@ export function HeatmapExplorer() {
                   aria-hidden={r.selectable ? undefined : true}
                   aria-pressed={r.selectable ? isActive : undefined}
                   className={`nv-heatmap-region${r.selectable ? "" : " nv-heatmap-region--context"}${isActive ? " nv-heatmap-region--active" : ""}`}
-                  onClick={r.selectable ? () => selectNeighborhood(r.id) : undefined}
+                  onClick={
+                    r.selectable
+                      ? (e) => {
+                          selectNeighborhood(r.id);
+                          e.currentTarget.blur();
+                        }
+                      : undefined
+                  }
                   onKeyDown={
                     r.selectable
                       ? (e) => {
