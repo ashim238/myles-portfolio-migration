@@ -15,6 +15,7 @@ import {
   computeCoverScale,
   usesCrossfadeSettle,
   waitForProjectCover,
+  waitForProjectPage,
   type ProjectEnterRequestDetail,
   type ProjectEnterRect,
 } from "@/lib/project-enter";
