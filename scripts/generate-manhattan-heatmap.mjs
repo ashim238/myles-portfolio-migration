@@ -1,15 +1,9 @@
 #!/usr/bin/env node
 /**
- * Build aligned heatmap geometry at compile time.
+ * Build aligned heatmap geometry at compile time from OpenStreetMap.
  *
- * Island + neighborhoods share one Mercator → uniform-scale transform into the
- * SVG viewBox. This guarantees shapes sit inside the coastline — hand-traced
- * island SVGs with a different rotation cannot be mixed with geo polygons
- * without manual landmark calibration.
- *
- * Outputs:
- *   - public/projects/navi/manhattan-island.svg  (OSM coastline, synced)
- *   - src/lib/navi-heatmap-data.ts
+ * Island coastline + neighborhood polygons share one Mercator uniform-scale
+ * transform into the SVG viewBox. Output is src/lib/navi-heatmap-data.ts only.
  *
  * Run: node scripts/generate-manhattan-heatmap.mjs
  */
@@ -231,11 +225,6 @@ const neighborhoods = HOOD_MAP.map(([id, label, sources]) => {
   };
 });
 
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${VIEWBOX}" fill="none" role="img" aria-label="Manhattan island outline">
-  <path id="manhattan-island" d="${islandPath}" fill="currentColor" stroke="currentColor" stroke-width="0.8" stroke-linejoin="round"/>
-</svg>
-`;
-
 const hoodLines = neighborhoods
   .map(
     (n) =>
@@ -252,7 +241,7 @@ const tsOut = `export type HeatmapNeighborhood = {
 };
 
 /**
- * Island + neighborhoods share one Mercator uniform-scale projection.
+ * Island + neighborhoods — OSM data, one shared projection.
  * Regenerate: node scripts/generate-manhattan-heatmap.mjs
  */
 export const NAVI_HEATMAP_VIEWBOX = ${JSON.stringify(VIEWBOX)};
@@ -265,8 +254,7 @@ ${hoodLines},
 ];
 `;
 
-writeFileSync(join(root, "public/projects/navi/manhattan-island.svg"), svg);
 writeFileSync(join(root, "src/lib/navi-heatmap-data.ts"), tsOut);
 console.log(
-  `Synced island + ${neighborhoods.length} neighborhoods (scale ${transform.scale.toFixed(1)})`,
+  `Wrote navi-heatmap-data.ts — ${neighborhoods.length} neighborhoods (scale ${transform.scale.toFixed(1)})`,
 );

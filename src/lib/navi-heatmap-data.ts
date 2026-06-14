@@ -7,7 +7,7 @@ export type HeatmapNeighborhood = {
 };
 
 /**
- * Island + neighborhoods share one Mercator uniform-scale projection.
+ * Island + neighborhoods — OSM data, one shared projection.
  * Regenerate: node scripts/generate-manhattan-heatmap.mjs
  */
 export const NAVI_HEATMAP_VIEWBOX = "0 0 100 260";
