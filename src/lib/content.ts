@@ -2,18 +2,52 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
 import { marked } from "marked";
+import sharp from "sharp";
 
 export type ProjectStatus = "published" | "draft" | "hidden";
+
+export type ProjectImage = {
+  src: string;
+  alt?: string;
+  width: number;
+  height: number;
+};
 
 export type ProjectSection = {
   title: string;
   bodyHtml: string;
-  images: Array<{
-    src: string;
-    alt?: string;
-  }>;
+  images: ProjectImage[];
   colors?: string[];
 };
+
+const publicDir = path.join(process.cwd(), "public");
+const imageDimensionsCache = new Map<string, { width: number; height: number }>();
+const FALLBACK_DIMENSIONS = { width: 1400, height: 900 };
+
+async function readImageDimensions(
+  src: string,
+): Promise<{ width: number; height: number }> {
+  if (!src.startsWith("/")) return FALLBACK_DIMENSIONS;
+  const cached = imageDimensionsCache.get(src);
+  if (cached) return cached;
+
+  const filePath = path.join(publicDir, src);
+  try {
+    const meta = await sharp(filePath).metadata();
+    const width = meta.width ?? FALLBACK_DIMENSIONS.width;
+    const height = meta.height ?? FALLBACK_DIMENSIONS.height;
+    const dims = { width, height };
+    imageDimensionsCache.set(src, dims);
+    return dims;
+  } catch (err) {
+    console.warn(
+      `[content] Could not read image dimensions for ${src}; using fallback. ` +
+        `(${err instanceof Error ? err.message : "unknown error"})`,
+    );
+    imageDimensionsCache.set(src, FALLBACK_DIMENSIONS);
+    return FALLBACK_DIMENSIONS;
+  }
+}
 
 export type Project = {
   slug: string;
@@ -36,7 +70,9 @@ const projectsDirectory = path.join(process.cwd(), "content", "projects");
 
 type ProjectFrontmatter = Omit<Project, "bodyHtml">;
 
-function parseProjectSections(data: Record<string, unknown>): ProjectSection[] {
+async function parseProjectSections(
+  data: Record<string, unknown>,
+): Promise<ProjectSection[]> {
   if (!Array.isArray(data.sections)) {
     return [];
   }
@@ -56,19 +92,19 @@ function parseProjectSections(data: Record<string, unknown>): ProjectSection[] {
       continue;
     }
 
-    const images: Array<{ src: string; alt?: string }> = [];
+    const rawImages: Array<{ src: string; alt?: string }> = [];
     const sectionImages = record.images;
     if (Array.isArray(sectionImages)) {
       for (const image of sectionImages) {
         if (typeof image === "string" && image.trim()) {
-          images.push({ src: image.trim() });
+          rawImages.push({ src: image.trim() });
           continue;
         }
         if (image && typeof image === "object") {
           const imageRecord = image as Record<string, unknown>;
           const src = String(imageRecord.src ?? "").trim();
           if (src) {
-            images.push({
+            rawImages.push({
               src,
               alt: imageRecord.alt ? String(imageRecord.alt) : undefined,
             });
@@ -80,12 +116,19 @@ function parseProjectSections(data: Record<string, unknown>): ProjectSection[] {
     if (record.image && typeof record.image === "string") {
       const src = record.image.trim();
       if (src) {
-        images.push({
+        rawImages.push({
           src,
           alt: record.imageAlt ? String(record.imageAlt) : undefined,
         });
       }
     }
+
+    const images: ProjectImage[] = await Promise.all(
+      rawImages.map(async (img) => {
+        const { width, height } = await readImageDimensions(img.src);
+        return { ...img, width, height };
+      }),
+    );
 
     const colors: string[] = [];
     if (Array.isArray(record.colors)) {
@@ -106,7 +149,9 @@ function parseProjectSections(data: Record<string, unknown>): ProjectSection[] {
   return sections;
 }
 
-function parseProjectFrontmatter(data: Record<string, unknown>): ProjectFrontmatter {
+async function parseProjectFrontmatter(
+  data: Record<string, unknown>,
+): Promise<ProjectFrontmatter> {
   const rawStatus = String(data.status ?? "").toLowerCase();
   const status: ProjectStatus =
     rawStatus === "hidden" ? "hidden" : rawStatus === "draft" ? "draft" : "published";
@@ -128,7 +173,7 @@ function parseProjectFrontmatter(data: Record<string, unknown>): ProjectFrontmat
     outcomeMetricValue: data.outcomeMetricValue
       ? String(data.outcomeMetricValue)
       : undefined,
-    sections: parseProjectSections(data),
+    sections: await parseProjectSections(data),
   };
 
   if (!project.slug || !project.title || !project.summary) {
@@ -149,7 +194,7 @@ export async function getAllProjects(): Promise<Project[]> {
       const fullPath = path.join(projectsDirectory, fileName);
       const source = await fs.readFile(fullPath, "utf-8");
       const { data, content } = matter(source);
-      const frontmatter = parseProjectFrontmatter(data);
+      const frontmatter = await parseProjectFrontmatter(data);
 
       return {
         ...frontmatter,

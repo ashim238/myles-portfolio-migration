@@ -19,28 +19,6 @@ function usePrefersReducedMotion() {
   return reduced;
 }
 
-/** Prefer `primary` when it loads; otherwise use `fallback`. */
-function useResolvedAsset(primary: string, fallback: string) {
-  const [src, setSrc] = useState(primary);
-
-  useEffect(() => {
-    let cancelled = false;
-    const probe = new Image();
-    probe.onload = () => {
-      if (!cancelled) setSrc(primary);
-    };
-    probe.onerror = () => {
-      if (!cancelled) setSrc(fallback);
-    };
-    probe.src = primary;
-    return () => {
-      cancelled = true;
-    };
-  }, [primary, fallback]);
-
-  return src;
-}
-
 type EmailPhoneFrameProps = {
   children: ReactNode;
   tilt?: number;
@@ -69,20 +47,16 @@ export function EmailPhoneFrame({
 
 const BEFORE_AFTER = [
   {
-    src: UF_ASSETS.mobileBefore,
-    alt: "Old newsletter template on mobile before the redesign — full scroll.",
+    asset: UF_ASSETS.mobileBefore,
+    alt: "Old newsletter template on mobile before the redesign, full scroll.",
     label: "Before · ~30% open rate",
     tilt: -2,
-    width: 390,
-    height: 4200,
   },
   {
-    src: UF_ASSETS.mobileAfter,
-    alt: "Redesigned newsletter on mobile with updated hierarchy and brand system — full scroll.",
+    asset: UF_ASSETS.mobileAfter,
+    alt: "Redesigned newsletter on mobile with updated hierarchy and brand system, full scroll.",
     label: "After · ~52.6% open rate",
     tilt: 2,
-    width: 390,
-    height: 4200,
   },
 ] as const;
 
@@ -93,15 +67,14 @@ export function BeforeAfterPhones() {
         <figure key={item.label} className="uf-before-after-item">
           <EmailPhoneFrame tilt={item.tilt} scrollable>
             <ExpandableImage
-              src={item.src}
+              src={item.asset.src}
               alt={item.alt}
-              width={item.width}
-              height={item.height}
+              width={item.asset.width}
+              height={item.asset.height}
               sizes="(max-width: 768px) 72vw, 240px"
               style={{
                 width: "100%",
                 height: "auto",
-                objectFit: "contain",
                 display: "block",
               }}
             />
@@ -116,43 +89,43 @@ export function BeforeAfterPhones() {
 
 const GALLERY_BLOCKS = [
   {
-    src: UF_ASSETS.modular.header,
+    asset: UF_ASSETS.modular.header,
     alt: "Newsletter header block with FAFSA banner, wave divider, and brand lockup.",
     offset: "0%",
     rotate: -0.8,
   },
   {
-    src: UF_ASSETS.modular.reading,
+    asset: UF_ASSETS.modular.reading,
     alt: "Lead story block on college costs with emoji header and structured bullets.",
     offset: "3%",
     rotate: 0.5,
   },
   {
-    src: UF_ASSETS.modular.related,
+    asset: UF_ASSETS.modular.related,
     alt: "Related reading section with news icon and orange link accents.",
     offset: "5%",
     rotate: 0.9,
   },
   {
-    src: UF_ASSETS.modular.best,
+    asset: UF_ASSETS.modular.best,
     alt: "Curated reading block with trophy icon and branded link styling.",
     offset: "2%",
     rotate: -0.5,
   },
   {
-    src: UF_ASSETS.modular.students,
+    asset: UF_ASSETS.modular.students,
     alt: "Student-focused content block with audience segmentation for juniors and seniors.",
     offset: "4%",
     rotate: 0.6,
   },
   {
-    src: UF_ASSETS.modular.guides,
+    asset: UF_ASSETS.modular.guides,
     alt: "Guide cards section linking to downloadable resources.",
     offset: "3%",
     rotate: 0.7,
   },
   {
-    src: UF_ASSETS.modular.closer,
+    asset: UF_ASSETS.modular.closer,
     alt: "Footer block with subscribe CTA, social links, and The New School branding.",
     offset: "2%",
     rotate: -0.6,
@@ -164,7 +137,7 @@ export function ModularBlockGallery() {
     <div className="uf-gallery" aria-label="Modular newsletter block stack">
       {GALLERY_BLOCKS.map((block, index) => (
         <div
-          key={block.src}
+          key={block.asset.src}
           className="uf-gallery-card"
           style={
             {
@@ -175,10 +148,10 @@ export function ModularBlockGallery() {
           }
         >
           <ExpandableImage
-            src={block.src}
+            src={block.asset.src}
             alt={block.alt}
-            width={600}
-            height={400}
+            width={block.asset.width}
+            height={block.asset.height}
             sizes="(max-width: 768px) 92vw, 540px"
             style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
           />
@@ -190,21 +163,25 @@ export function ModularBlockGallery() {
 
 type TemplateVariant = "weekly" | "event";
 
-const TEMPLATE_VARIANTS: Record<
-  TemplateVariant,
-  { label: string; image: string; alt: string; descriptor: string }
-> = {
+type TemplateMeta = {
+  label: string;
+  asset: typeof UF_ASSETS.templateWeekly | typeof UF_ASSETS.templateEvent;
+  alt: string;
+  descriptor: string;
+};
+
+const TEMPLATE_VARIANTS: Record<TemplateVariant, TemplateMeta> = {
   weekly: {
     label: "Weekly",
-    image: UF_ASSETS.templateWeekly,
-    alt: "Full weekly newsletter — modular kit with emoji section headers and color theme variants.",
-    descriptor: "Default send — full modular kit assembled each week.",
+    asset: UF_ASSETS.templateWeekly,
+    alt: "Full weekly newsletter. Modular kit with emoji section headers and color theme variants.",
+    descriptor: "Default send. Full modular kit assembled each week.",
   },
   event: {
     label: "Event",
-    image: UF_ASSETS.templateEvent,
-    alt: "Event-specific newsletter — fewer blocks, faster assembly for invites and recaps.",
-    descriptor: "Event-specific send — RSVP-focused layout on the same system.",
+    asset: UF_ASSETS.templateEvent,
+    alt: "Event-specific newsletter. Fewer blocks, faster assembly for invites and recaps.",
+    descriptor: "Event-specific send. RSVP-focused layout on the same system.",
   },
 };
 
@@ -212,9 +189,7 @@ export function TemplateSwitcher() {
   const [variant, setVariant] = useState<TemplateVariant>("weekly");
   const reducedMotion = usePrefersReducedMotion();
   const active = TEMPLATE_VARIANTS[variant];
-  const fallback =
-    variant === "weekly" ? UF_ASSETS.mobileAfter : UF_ASSETS.templateWeekly;
-  const resolvedSrc = useResolvedAsset(active.image, fallback);
+  const isTall = active.asset.height / active.asset.width >= 3;
 
   return (
     <div className="uf-switcher" aria-label="Newsletter template variants">
@@ -232,21 +207,23 @@ export function TemplateSwitcher() {
         ))}
       </div>
       <div
-        className={`uf-switcher-preview${reducedMotion ? " uf-switcher-preview--static" : ""}`}
+        className={`uf-switcher-preview${reducedMotion ? " uf-switcher-preview--static" : ""}${isTall ? " uf-switcher-preview--scroll" : ""}`}
         key={variant}
       >
         <ExpandableImage
-          src={resolvedSrc}
+          src={active.asset.src}
           alt={active.alt}
-          width={390}
-          height={4200}
+          width={active.asset.width}
+          height={active.asset.height}
           sizes="(max-width: 768px) 92vw, 540px"
           style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
         />
       </div>
       <p className="uf-switcher-descriptor">{active.descriptor}</p>
       <p className="uf-switcher-note">
-        Counselor toolkit ships on the same framework — in progress, not live yet.
+        {isTall
+          ? "Scroll inside the frame to read the full send. Click to expand."
+          : "Counselor toolkit ships on the same framework. In progress, not live yet."}
       </p>
     </div>
   );
@@ -258,16 +235,13 @@ export function LockedSwappableToggle() {
   const [mode, setMode] = useState<OverlayMode>("swappable");
   const reducedMotion = usePrefersReducedMotion();
 
-  const primary =
-    mode === "swappable"
-      ? UF_ASSETS.lockedSwappableSwappable
-      : UF_ASSETS.lockedSwappableCold;
-  const displaySrc = useResolvedAsset(primary, UF_ASSETS.lockedSwappableBase);
+  const asset =
+    mode === "swappable" ? UF_ASSETS.lockedSwappableWarm : UF_ASSETS.lockedSwappableCold;
 
   const legend =
     mode === "swappable"
-      ? "Founder edits each send — headlines, body copy, emoji icons, and article links."
-      : "Structure stays fixed — wave dividers, padding rails, section rhythm, and footer skeleton.";
+      ? "Founder edits each send: headlines, body copy, emoji icons, and article links."
+      : "Structure stays fixed: wave dividers, padding rails, section rhythm, and footer skeleton.";
 
   return (
     <div className="uf-lock-toggle" aria-label="Locked versus swappable module regions">
@@ -289,10 +263,10 @@ export function LockedSwappableToggle() {
         data-mode={mode}
       >
         <ExpandableImage
-          src={displaySrc}
-          alt={`Students block — ${mode} regions highlighted.`}
-          width={600}
-          height={955}
+          src={asset.src}
+          alt={`Students block, ${mode} regions highlighted.`}
+          width={asset.width}
+          height={asset.height}
           sizes="(max-width: 768px) 92vw, 540px"
           style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
         />
@@ -303,38 +277,32 @@ export function LockedSwappableToggle() {
 }
 
 export function FigmaMailchimpPair() {
-  const figmaSrc = useResolvedAsset(
-    UF_ASSETS.figmaSectionStudents,
-    UF_ASSETS.figmaSectionStudents,
-  );
-  const mailchimpSrc = useResolvedAsset(
-    UF_ASSETS.mailchimpSectionStudents,
-    UF_ASSETS.modular.students,
-  );
+  const figma = UF_ASSETS.figmaSection;
+  const mailchimp = UF_ASSETS.mailchimpSection;
 
   return (
     <div className="uf-figma-pair">
       <figure className="uf-figma-figure">
         <ExpandableImage
-          src={figmaSrc}
-          alt="Figma — students block with layout guides, spacing rails, and type hierarchy."
-          width={600}
-          height={955}
+          src={figma.src}
+          alt="Figma: students block with layout guides, spacing rails, and type hierarchy."
+          width={figma.width}
+          height={figma.height}
           sizes="(max-width: 768px) 92vw, 44vw"
           style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
         />
-        <figcaption>Figma — students block (design source)</figcaption>
+        <figcaption>Figma: students block (design source)</figcaption>
       </figure>
       <figure className="uf-figma-figure">
         <ExpandableImage
-          src={mailchimpSrc}
-          alt="Mailchimp — same students block after translation into editable modules."
-          width={600}
-          height={955}
+          src={mailchimp.src}
+          alt="Mailchimp: same students block after translation into editable modules."
+          width={mailchimp.width}
+          height={mailchimp.height}
           sizes="(max-width: 768px) 92vw, 44vw"
           style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
         />
-        <figcaption>Mailchimp — students block (shipped module)</figcaption>
+        <figcaption>Mailchimp: students block (shipped module)</figcaption>
       </figure>
     </div>
   );

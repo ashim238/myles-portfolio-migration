@@ -2404,12 +2404,12 @@ button:focus-visible,
 .project-section-images {
   margin-top: 1.1rem;
   display: grid;
-  gap: 0.8rem;
+  gap: 1.2rem;
+  justify-items: center;
 }
 
 .project-section-image {
-  width: 100%;
-  height: auto;
+  display: block;
   border-radius: 0.7rem;
   border: 1px solid var(--line);
   transition: transform 320ms ease, border-color 240ms ease;
@@ -2418,6 +2418,96 @@ button:focus-visible,
 .project-section-image:hover {
   transform: scale(1.008);
   border-color: #4a4a4a;
+}
+
+.project-section-image--landscape {
+  width: 100%;
+  height: auto;
+}
+
+.project-section-image--portrait {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 720px;
+  border-radius: 0.6rem;
+}
+
+/* Tall-screenshot frame (mobile newsletter captures, full-length campaigns). */
+.project-section-image-frame--tall {
+  margin: 0;
+  width: 100%;
+  max-width: 460px;
+  display: grid;
+  gap: 0.45rem;
+  justify-items: center;
+}
+
+.project-section-image-scroll {
+  width: 100%;
+  max-height: 620px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 0.85rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  /* Reserve room for the inner image's expand button without clipping shadows. */
+  scroll-behavior: smooth;
+  /* Subtle bottom fade so the user reads "there's more". */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(100% - 36px),
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(100% - 36px),
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+.project-section-image-scroll:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.project-section-image-scroll .expandable-trigger {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.project-section-image--tall {
+  width: 100%;
+  height: auto;
+  border: none;
+  border-radius: 0;
+  display: block;
+}
+
+.project-section-image--tall:hover {
+  transform: none;
+  border-color: transparent;
+}
+
+.project-section-image-hint {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin: 0;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-section-image-scroll {
+    scroll-behavior: auto;
+  }
 }
 
 /* ── Project ToC ── */
@@ -5948,9 +6038,32 @@ button:focus-visible,
   overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
+  /* Fade the bottom so the user reads "there's more to scroll". */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(100% - 32px),
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(100% - 32px),
+    rgba(0, 0, 0, 0.5) 100%
+  );
+}
+
+.uf-phone-screen--scroll .expandable-trigger {
+  /* Critical: let the button grow with the image so the phone-screen
+     has content taller than itself to scroll. Without this, height: 100%
+     pins the trigger to the screen height and overflow-y: auto never fires. */
+  height: auto;
+  min-height: 100%;
+  align-items: flex-start;
 }
 
 .uf-phone-screen--scroll .expandable-trigger img {
+  width: 100%;
   height: auto;
   object-fit: contain;
 }
@@ -5961,6 +6074,8 @@ button:focus-visible,
   padding: 0;
   border: none;
   border-radius: 0;
+  display: flex;
+  cursor: zoom-in;
 }
 
 .uf-phone-screen .expandable-trigger img {
@@ -6063,6 +6178,38 @@ button:focus-visible,
 .uf-switcher-preview--static,
 .uf-lock-preview--static {
   animation: none;
+}
+
+/* For tall full-newsletter renders, contain the preview to a scrollable
+   frame so a 12,000px-tall send doesn't dominate the entire scroll. */
+.uf-switcher-preview--scroll {
+  max-height: 640px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 0.5rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(100% - 36px),
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(100% - 36px),
+    rgba(0, 0, 0, 0.5) 100%
+  );
+}
+
+.uf-switcher-preview--scroll .expandable-trigger {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  display: block;
+  cursor: zoom-in;
 }
 
 .uf-switcher-descriptor,
