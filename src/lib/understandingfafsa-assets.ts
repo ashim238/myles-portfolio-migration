@@ -33,7 +33,7 @@ export const UF_ASSETS = {
   templateEvent: {
     src: `${UF_ASSET_BASE}/template-event.jpeg`,
     width: 2188,
-    height: 3434,
+    height: 3338,
   },
 
   /** §04 — locked vs swappable annotated exports from Figma */
