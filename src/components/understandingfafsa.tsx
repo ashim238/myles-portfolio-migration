@@ -267,6 +267,14 @@ export function LockedSwappableView() {
           </button>
         ))}
       </div>
+      <p className="uf-lock-hint">Pick a layer to isolate it; the other dims back.</p>
+      <span className="sr-only" aria-live="polite">
+        {focus === "both"
+          ? "Showing both layers: swappable content and the locked frame."
+          : focus === "swappable"
+            ? "Showing swappable content regions only."
+            : "Showing the locked structural frame only."}
+      </span>
 
       <div className="uf-lock-stage">
         <ExpandableImage
