@@ -11,9 +11,10 @@ import {
 import { HOME_ENTRANCE_COMPLETE } from "@/lib/home-intro";
 
 const PHRASES = [
+  "sweats the empty states and the error copy.",
   "is an avid comic reader.",
+  "talks to people before opening Figma.",
   "loves to cook Jamaican cuisine.",
-  "is Auto Layout's biggest fan.",
 ];
 
 const STATIC_INTERESTS = PHRASES.join(" · ");
