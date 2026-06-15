@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   metadataBase: new URL(BASE_URL),
   openGraph: {
-    title: `${siteConfig.name} — ${siteConfig.title}`,
+    title: `${siteConfig.name} | ${siteConfig.title}`,
     description: siteConfig.description,
     url: BASE_URL,
     siteName: siteConfig.name,
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} — ${siteConfig.title}`,
+    title: `${siteConfig.name} | ${siteConfig.title}`,
     description: siteConfig.description,
   },
   robots: {

@@ -15,7 +15,7 @@ export default function NotFound() {
             Page not found
           </h1>
           <p className="not-found-body">
-            Nothing here &mdash; just empty pixels. The page you&rsquo;re
+            Nothing here, just empty pixels. The page you&rsquo;re
             looking for was moved, removed, or never existed.
           </p>
           <Link href="/" className="not-found-link">

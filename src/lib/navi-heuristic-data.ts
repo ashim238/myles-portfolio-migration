@@ -9,7 +9,7 @@ export const NAVI_HEURISTIC_INSIGHTS: HeuristicInsight[] = [
   {
     id: "guest-favorite",
     headline: "Guest Favorite label overuse",
-    body: "The designation appeared on nearly every listing we reviewed, with no consistent criteria visible to the evaluator — eroding trust in a signal meant to shortcut decisions.",
+    body: "The designation appeared on nearly every listing we reviewed, with no consistent criteria visible to the evaluator, eroding trust in a signal meant to shortcut decisions.",
   },
   {
     id: "family-filters",

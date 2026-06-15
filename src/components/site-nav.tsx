@@ -10,7 +10,7 @@ export function SiteNav() {
         <Link
           href="/"
           className="site-logo"
-          aria-label={`${siteConfig.name} — Home`}
+          aria-label={`${siteConfig.name}, home`}
         >
           <SiteLogo />
         </Link>
