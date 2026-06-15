@@ -3077,10 +3077,7 @@ button:focus-visible,
 
 .fg-eyebrow {
   margin: 0 0 0.85rem;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 0.85rem;
   color: var(--fg-accent);
 }
 
@@ -3886,6 +3883,12 @@ button:focus-visible,
   -webkit-backdrop-filter: blur(6px);
   animation: lb-fade 180ms ease both;
   cursor: zoom-out;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .lb-backdrop {
+    background: rgba(0, 0, 0, 0.92);
+  }
 }
 
 /* Image frame — centered above backdrop */
@@ -5083,10 +5086,7 @@ button:focus-visible,
 
 .nv-eyebrow {
   margin: 0 0 0.85rem;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 0.85rem;
   color: var(--nv-accent);
 }
 
@@ -5856,10 +5856,19 @@ button:focus-visible,
 
 .nv-heatmap-map {
   width: 100%;
-  max-width: 9.5rem;
+  /* Wider on mobile so individual neighborhood paths clear the 44px tap-target
+     floor when the list and map stack; desktop keeps the smaller compass-style
+     map alongside the list. */
+  max-width: 18rem;
   height: auto;
   margin: 0 auto;
   display: block;
+}
+
+@media (min-width: 768px) {
+  .nv-heatmap-map {
+    max-width: 9.5rem;
+  }
 }
 
 .nv-heatmap-silhouette {
@@ -5957,8 +5966,7 @@ button:focus-visible,
 
 .uf-eyebrow {
   margin: 0 0 0.85rem;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   color: var(--uf-accent-warm);
 }
 
