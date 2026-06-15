@@ -114,6 +114,7 @@ export function HeroRouteIllustration() {
 export function ArchitectureDiagram() {
   return (
     <figure className="fg-arch">
+      <div className="fg-arch-scroll">
       <svg
         viewBox="0 0 1100 420"
         xmlns="http://www.w3.org/2000/svg"
@@ -138,25 +139,25 @@ export function ArchitectureDiagram() {
         {/* Source labels — top row, 7 columns, smaller subtitle */}
         <g className="fg-arch-sources" fontFamily="var(--font-mono)" fontSize="11" fill="currentColor">
           <text x="30" y="32">OpenStreetMap</text>
-          <text x="30" y="50" fontSize="10" opacity="0.62">lighting · landuse · parks</text>
+          <text x="30" y="50" fontSize="12" opacity="0.62">lighting · landuse · parks</text>
 
           <text x="215" y="32">OSRM</text>
-          <text x="215" y="50" fontSize="10" opacity="0.62">route geometry</text>
+          <text x="215" y="50" fontSize="12" opacity="0.62">route geometry</text>
 
           <text x="325" y="32">SunCalc</text>
-          <text x="325" y="50" fontSize="10" opacity="0.62">solar geometry</text>
+          <text x="325" y="50" fontSize="12" opacity="0.62">solar geometry</text>
 
           <text x="435" y="32">Mapbox Search</text>
-          <text x="435" y="50" fontSize="10" opacity="0.62">destinations</text>
+          <text x="435" y="50" fontSize="12" opacity="0.62">destinations</text>
 
           <text x="550" y="32">DOT-511</text>
-          <text x="550" y="50" fontSize="10" opacity="0.62">state traffic feeds</text>
+          <text x="550" y="50" fontSize="12" opacity="0.62">state traffic feeds</text>
 
           <text x="690" y="32">Mapbox incidents</text>
-          <text x="690" y="50" fontSize="10" opacity="0.62">driving-traffic events</text>
+          <text x="690" y="50" fontSize="12" opacity="0.62">driving-traffic events</text>
 
           <text x="850" y="32">Community reports</text>
-          <text x="850" y="50" fontSize="10" opacity="0.62">observations · weighted</text>
+          <text x="850" y="50" fontSize="12" opacity="0.62">observations · weighted</text>
         </g>
 
         {/* Arrows from sources into the adapter layer */}
@@ -263,6 +264,12 @@ export function ArchitectureDiagram() {
           </text>
         </g>
       </svg>
+      </div>
+      <figcaption className="fg-arch-caption">
+        Seven public data sources feed an adapter, a deterministic scoring layer,
+        then the screen.
+        <span className="fg-arch-scrollhint"> Scroll the diagram to read it all.</span>
+      </figcaption>
     </figure>
   );
 }
@@ -279,6 +286,7 @@ export function ArchitectureDiagram() {
 export function ProcessGraph() {
   return (
     <figure className="fg-arch fg-arch--process">
+      <div className="fg-arch-scroll">
       <svg
         viewBox="0 0 720 280"
         xmlns="http://www.w3.org/2000/svg"
@@ -308,17 +316,17 @@ export function ProcessGraph() {
           fill="currentColor"
         >
           <text x="40" y="30">codebase</text>
-          <text x="40" y="48" fontSize="10" opacity="0.62">
+          <text x="40" y="48" fontSize="12" opacity="0.62">
             the running source
           </text>
 
           <text x="265" y="30">design conversations</text>
-          <text x="265" y="48" fontSize="10" opacity="0.62">
+          <text x="265" y="48" fontSize="12" opacity="0.62">
             every back-and-forth, indexed
           </text>
 
           <text x="520" y="30">thesis document</text>
-          <text x="520" y="48" fontSize="10" opacity="0.62">
+          <text x="520" y="48" fontSize="12" opacity="0.62">
             the underlying claim
           </text>
         </g>
@@ -389,6 +397,12 @@ export function ProcessGraph() {
           Any decision, reconstructible.
         </text>
       </svg>
+      </div>
+      <figcaption className="fg-arch-caption">
+        Codebase, design-conversation log, and thesis merge into one queryable
+        memory, so any build decision stays reconstructible.
+        <span className="fg-arch-scrollhint"> Scroll the diagram to read it all.</span>
+      </figcaption>
     </figure>
   );
 }

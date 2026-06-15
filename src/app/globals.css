@@ -3270,7 +3270,38 @@ button:focus-visible,
   border: 1px solid var(--line);
   border-radius: 0.7rem;
   background: var(--surface);
+}
+
+/* The diagram is wide; it scrolls inside this wrapper so the caption below
+   stays put. A right-edge fade cues there's more to scroll on mobile. */
+.fg-arch-scroll {
   overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+@media (max-width: 768px) {
+  .fg-arch-scroll {
+    -webkit-mask-image: linear-gradient(to right, #000 90%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 90%, transparent 100%);
+  }
+}
+
+.fg-arch-caption {
+  margin-top: 0.8rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.fg-arch-scrollhint {
+  display: none;
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+
+@media (max-width: 768px) {
+  .fg-arch-scrollhint {
+    display: inline;
+  }
 }
 
 /* Quieter variant for the process section — same vocabulary, smaller voice */
@@ -3281,13 +3312,13 @@ button:focus-visible,
 
 .fg-arch-svg {
   width: 100%;
-  min-width: 720px;
+  min-width: 900px;
   height: auto;
   color: var(--foreground);
 }
 
 .fg-arch--process .fg-arch-svg {
-  min-width: 520px;
+  min-width: 640px;
 }
 
 /* ── Features grid ────────────────────────────────────── */
