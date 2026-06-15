@@ -6,13 +6,16 @@ import { navItems, siteConfig } from "@/lib/site-config";
 export function SiteNav() {
   return (
     <header className="site-header">
-      <Link
-        href="/"
-        className="site-logo"
-        aria-label={`${siteConfig.name} — Home`}
-      >
-        <SiteLogo />
-      </Link>
+      <div className="site-header-left">
+        <Link
+          href="/"
+          className="site-logo"
+          aria-label={`${siteConfig.name} — Home`}
+        >
+          <SiteLogo />
+        </Link>
+        <ThemeToggle />
+      </div>
       <div className="site-header-right">
         <nav aria-label="Primary">
           <ul className="site-nav-list">
@@ -23,7 +26,6 @@ export function SiteNav() {
             ))}
           </ul>
         </nav>
-        <ThemeToggle />
       </div>
     </header>
   );
