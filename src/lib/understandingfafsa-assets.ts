@@ -15,20 +15,20 @@ export const UF_ASSETS = {
   /** §02 — full-scroll mobile captures (tall single-column screenshots) */
   mobileBefore: {
     src: `${UF_ASSET_BASE}/mobile-before.jpg`,
-    width: 780,
-    height: 14612,
+    width: 749,
+    height: 14492,
   },
   mobileAfter: {
     src: `${UF_ASSET_BASE}/mobile-after.jpeg`,
-    width: 780,
-    height: 15736,
+    width: 684,
+    height: 15638,
   },
 
   /** §04 — template variant switcher */
   templateWeekly: {
     src: `${UF_ASSET_BASE}/template-weekly.jpeg`,
     width: 2188,
-    height: 12894,
+    height: 12807,
   },
   templateEvent: {
     src: `${UF_ASSET_BASE}/template-event.jpeg`,
@@ -62,7 +62,7 @@ export const UF_ASSETS = {
   mailchimpSection: {
     src: `${UF_ASSET_BASE}/mailchimp-section-lead.jpeg`,
     width: 1317,
-    height: 2562,
+    height: 2549,
   },
 
   modular: {
