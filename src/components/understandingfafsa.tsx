@@ -229,49 +229,119 @@ export function TemplateSwitcher() {
   );
 }
 
-type OverlayMode = "swappable" | "locked";
+type LockSwapFocus = "both" | "swappable" | "locked";
 
-export function LockedSwappableToggle() {
-  const [mode, setMode] = useState<OverlayMode>("swappable");
+// Regions in the base-image coordinate system (viewBox 0 0 600 955 =
+// modular-students.png at 0.25 scale). Pixel-measured from the PNG: content
+// bands by ink density, the locked frame by the content/padding extent.
+const LOCK_SWAP_SWAPPABLE = [
+  { x: 39, y: 107, w: 517, h: 80 }, // "Listen up!" headline + megaphone
+  { x: 38, y: 223, w: 502, h: 116 }, // "Hi there juniors," + body
+  { x: 267, y: 366, w: 295, h: 166 }, // juniors link list
+  { x: 38, y: 559, w: 441, h: 112 }, // "Seniors," + body
+  { x: 267, y: 702, w: 295, h: 129 }, // seniors link list
+];
+const LOCK_SWAP_FRAME = { x: 6, y: 6, w: 588, h: 943 }; // wave dividers + padding rails
+
+export function LockedSwappableView() {
+  const [focus, setFocus] = useState<LockSwapFocus>("both");
   const reducedMotion = usePrefersReducedMotion();
+  const base = UF_ASSETS.lockedSwappableBase;
 
-  const asset =
-    mode === "swappable" ? UF_ASSETS.lockedSwappableWarm : UF_ASSETS.lockedSwappableCold;
-
-  const legend =
-    mode === "swappable"
-      ? "Founder edits each send: headlines, body copy, emoji icons, and article links."
-      : "Structure stays fixed: wave dividers, padding rails, section rhythm, and footer skeleton.";
+  const swapOpacity = focus === "locked" ? 0.12 : 1;
+  const lockOpacity = focus === "swappable" ? 0.12 : 1;
+  const layerTransition = reducedMotion ? undefined : "opacity 240ms ease";
 
   return (
-    <div className="uf-lock-toggle" aria-label="Locked versus swappable module regions">
-      <div className="uf-segment-row" role="group" aria-label="Overlay mode">
-        {(["swappable", "locked"] as const).map((value) => (
+    <div className="uf-lock-toggle" aria-label="Locked structure and swappable content, shown together">
+      <div className="uf-segment-row" role="group" aria-label="Annotation focus">
+        {(["both", "swappable", "locked"] as const).map((value) => (
           <button
             key={value}
             type="button"
-            className={`uf-segment${mode === value ? " uf-segment--active" : ""}`}
-            aria-pressed={mode === value}
-            onClick={() => setMode(value)}
+            className={`uf-segment${focus === value ? " uf-segment--active" : ""}`}
+            aria-pressed={focus === value}
+            onClick={() => setFocus(value)}
           >
-            {value === "swappable" ? "Swappable" : "Locked"}
+            {value === "both" ? "Both" : value === "swappable" ? "Swappable" : "Locked"}
           </button>
         ))}
       </div>
-      <div
-        className={`uf-lock-preview${reducedMotion ? " uf-lock-preview--static" : ""}`}
-        data-mode={mode}
-      >
+
+      <div className="uf-lock-stage">
         <ExpandableImage
-          src={asset.src}
-          alt={`Students block, ${mode} regions highlighted.`}
-          width={asset.width}
-          height={asset.height}
+          src={base.src}
+          alt="Students block with the locked structural frame and swappable content regions marked together."
+          width={base.width}
+          height={base.height}
           sizes="(max-width: 768px) 92vw, 540px"
-          style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
+          style={{ width: "100%", height: "auto", display: "block" }}
         />
+        <svg
+          className="uf-lock-overlay"
+          viewBox="0 0 600 955"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <g style={{ opacity: lockOpacity, transition: layerTransition }}>
+            <rect
+              x={LOCK_SWAP_FRAME.x}
+              y={LOCK_SWAP_FRAME.y}
+              width={LOCK_SWAP_FRAME.w}
+              height={LOCK_SWAP_FRAME.h}
+              rx={10}
+              fill="none"
+              stroke="#164f73"
+              strokeWidth={3}
+              strokeDasharray="10 7"
+            />
+            <g transform="translate(14 14)">
+              <rect width={84} height={26} rx={4} fill="#164f73" />
+              <text x={42} y={18} textAnchor="middle" fill="#fff" fontSize={15} fontWeight={600}>
+                Locked
+              </text>
+            </g>
+          </g>
+          <g style={{ opacity: swapOpacity, transition: layerTransition }}>
+            {LOCK_SWAP_SWAPPABLE.map((r, i) => (
+              <rect
+                key={i}
+                x={r.x}
+                y={r.y}
+                width={r.w}
+                height={r.h}
+                rx={8}
+                fill="rgba(242, 105, 56, 0.10)"
+                stroke="#f26938"
+                strokeWidth={3}
+              />
+            ))}
+            <g transform="translate(44 392)">
+              <rect width={132} height={26} rx={4} fill="#f26938" />
+              <text x={66} y={18} textAnchor="middle" fill="#fff" fontSize={15} fontWeight={600}>
+                Swappable
+              </text>
+            </g>
+          </g>
+        </svg>
       </div>
-      <p className="uf-lock-legend">{legend}</p>
+
+      <ul className="uf-lock-legend" role="list">
+        <li>
+          <span className="uf-lock-key uf-lock-key--swap" aria-hidden="true" />
+          <span>
+            <strong>Swappable</strong> — editors change each send: headlines, body copy, emoji icons,
+            article links.
+          </span>
+        </li>
+        <li>
+          <span className="uf-lock-key uf-lock-key--lock" aria-hidden="true" />
+          <span>
+            <strong>Locked</strong> — structure holds every send: wave dividers, padding rails,
+            section rhythm, footer skeleton.
+          </span>
+        </li>
+      </ul>
     </div>
   );
 }

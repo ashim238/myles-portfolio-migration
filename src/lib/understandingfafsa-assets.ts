@@ -15,42 +15,32 @@ export const UF_ASSETS = {
   /** §02 — full-scroll mobile captures (tall single-column screenshots) */
   mobileBefore: {
     src: `${UF_ASSET_BASE}/mobile-before.jpg`,
-    width: 780,
-    height: 14612,
+    width: 749,
+    height: 14492,
   },
   mobileAfter: {
     src: `${UF_ASSET_BASE}/mobile-after.jpeg`,
-    width: 780,
-    height: 15736,
+    width: 684,
+    height: 15638,
   },
 
   /** §04 — template variant switcher */
   templateWeekly: {
     src: `${UF_ASSET_BASE}/template-weekly.jpeg`,
     width: 2188,
-    height: 12894,
+    height: 12807,
   },
   templateEvent: {
     src: `${UF_ASSET_BASE}/template-event.jpeg`,
     width: 2188,
-    height: 3434,
+    height: 3338,
   },
 
-  /** §04 — locked vs swappable annotated exports from Figma */
+  /** §04 — locked vs swappable: base students block (annotated in code) */
   lockedSwappableBase: {
     src: `${UF_ASSET_BASE}/modular-students.png`,
     width: 2400,
     height: 3820,
-  },
-  lockedSwappableWarm: {
-    src: `${UF_ASSET_BASE}/locked-swappable-warm.png`,
-    width: 1200,
-    height: 1910,
-  },
-  lockedSwappableCold: {
-    src: `${UF_ASSET_BASE}/locked-swappable-cold.png`,
-    width: 1200,
-    height: 1910,
   },
 
   /** §05 — same students block, design source vs shipped module */
@@ -62,7 +52,7 @@ export const UF_ASSETS = {
   mailchimpSection: {
     src: `${UF_ASSET_BASE}/mailchimp-section-lead.jpeg`,
     width: 1317,
-    height: 2562,
+    height: 2549,
   },
 
   modular: {

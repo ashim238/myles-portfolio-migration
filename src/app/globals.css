@@ -2332,11 +2332,11 @@ button:focus-visible,
 /* ── Color palette swatches ── */
 
 .color-palette {
-  margin-top: 2.4rem;
-  margin-bottom: 2rem;
+  margin-top: 3.6rem;
+  margin-bottom: 3.2rem;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 1rem;
+  gap: 1.5rem 1rem;
 }
 
 .color-swatch {
@@ -2366,7 +2366,7 @@ button:focus-visible,
 }
 
 .color-swatch-label {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-family: var(--font-mono);
   color: var(--muted);
   letter-spacing: 0.01em;
@@ -2382,7 +2382,7 @@ button:focus-visible,
 @media (max-width: 768px) {
   .color-palette {
     grid-template-columns: repeat(4, 1fr);
-    gap: 0.9rem 0.6rem;
+    gap: 1.4rem 0.7rem;
   }
 
   .color-swatch-circle {
@@ -2391,7 +2391,7 @@ button:focus-visible,
   }
 
   .color-swatch-label {
-    font-size: 0.62rem;
+    font-size: 0.72rem;
   }
 }
 
@@ -3077,10 +3077,7 @@ button:focus-visible,
 
 .fg-eyebrow {
   margin: 0 0 0.85rem;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 0.85rem;
   color: var(--fg-accent);
 }
 
@@ -3886,6 +3883,12 @@ button:focus-visible,
   -webkit-backdrop-filter: blur(6px);
   animation: lb-fade 180ms ease both;
   cursor: zoom-out;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .lb-backdrop {
+    background: rgba(0, 0, 0, 0.92);
+  }
 }
 
 /* Image frame — centered above backdrop */
@@ -5083,10 +5086,7 @@ button:focus-visible,
 
 .nv-eyebrow {
   margin: 0 0 0.85rem;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 0.85rem;
   color: var(--nv-accent);
 }
 
@@ -5856,10 +5856,19 @@ button:focus-visible,
 
 .nv-heatmap-map {
   width: 100%;
-  max-width: 9.5rem;
+  /* Wider on mobile so individual neighborhood paths clear the 44px tap-target
+     floor when the list and map stack; desktop keeps the smaller compass-style
+     map alongside the list. */
+  max-width: 18rem;
   height: auto;
   margin: 0 auto;
   display: block;
+}
+
+@media (min-width: 768px) {
+  .nv-heatmap-map {
+    max-width: 9.5rem;
+  }
 }
 
 .nv-heatmap-silhouette {
@@ -5957,8 +5966,7 @@ button:focus-visible,
 
 .uf-eyebrow {
   margin: 0 0 0.85rem;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   color: var(--uf-accent-warm);
 }
 
@@ -6169,14 +6177,23 @@ button:focus-visible,
 }
 
 .uf-switcher-preview,
-.uf-lock-preview {
+.uf-lock-stage {
   position: relative;
   max-width: 34rem;
+  border-radius: 0.35rem;
+  overflow: hidden;
   animation: uf-fade-in 200ms ease;
 }
 
-.uf-switcher-preview--static,
-.uf-lock-preview--static {
+.uf-lock-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.uf-switcher-preview--static {
   animation: none;
 }
 
@@ -6218,6 +6235,37 @@ button:focus-visible,
   font-size: 0.92rem;
   color: var(--muted);
   max-width: 34rem;
+}
+
+.uf-lock-legend {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.uf-lock-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.uf-lock-legend strong {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.uf-lock-key {
+  flex: 0 0 32px;
+  height: 0;
+}
+
+.uf-lock-key--swap {
+  border-top: 3px solid #f26938;
+}
+
+.uf-lock-key--lock {
+  border-top: 3px dashed #164f73;
 }
 
 .uf-switcher-note {
@@ -6280,37 +6328,6 @@ button:focus-visible,
   .uf-gallery-card:first-child {
     margin-top: 0 !important;
   }
-}
-
-/* ── Locked / swappable overlay ────────────────────────── */
-
-.uf-lock-preview .expandable-trigger {
-  display: block;
-  width: 100%;
-}
-
-.uf-overlay-stack {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  border-radius: 0.35rem;
-  overflow: hidden;
-}
-
-.uf-overlay-zone {
-  position: absolute;
-  border-radius: 0.2rem;
-  transition: opacity 200ms ease;
-}
-
-.uf-lock-preview[data-mode="swappable"] .uf-overlay-zone {
-  background: color-mix(in srgb, var(--uf-accent-warm) 12%, transparent);
-  outline: 1px solid color-mix(in srgb, var(--uf-accent-warm) 35%, transparent);
-}
-
-.uf-lock-preview[data-mode="locked"] .uf-overlay-zone {
-  background: color-mix(in srgb, var(--uf-accent-cool) 12%, transparent);
-  outline: 1px solid color-mix(in srgb, var(--uf-accent-cool) 35%, transparent);
 }
 
 /* ── Figma pair ────────────────────────────────────────── */
@@ -6377,7 +6394,8 @@ button:focus-visible,
 }
 
 .uf-page .color-palette {
-  margin-top: 2rem;
+  margin-top: 3.6rem;
+  margin-bottom: 3.2rem;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -6398,13 +6416,8 @@ button:focus-visible,
     transform: rotate(var(--uf-gallery-rotate, 0deg));
   }
 
-  .uf-switcher-preview,
-  .uf-lock-preview {
+  .uf-switcher-preview {
     animation: none;
-  }
-
-  .uf-overlay-zone {
-    transition: none;
   }
 }
 
