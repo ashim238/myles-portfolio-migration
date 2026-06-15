@@ -25,7 +25,7 @@ export default function PlayPage() {
           <span className="sr-only">Play</span>
         </h1>
         <p className="project-hero-lede play-lede">
-          Recreational experiments — game sketches, generative studies, and the occasional sculpt.
+          Recreational experiments: game sketches, generative studies, and the occasional sculpt.
         </p>
       </section>
 
@@ -50,13 +50,21 @@ export default function PlayPage() {
                 ) : null}
 
                 {entry.embedPath ? (
-                  <div className="play-embed-wrap">
-                    <iframe
-                      className="play-embed"
-                      src={entry.embedPath}
-                      title={`${entry.title} interactive preview`}
-                      loading="lazy"
-                    />
+                  <div className="play-embed-group">
+                    <div className="play-embed-wrap">
+                      <iframe
+                        className="play-embed"
+                        src={entry.embedPath}
+                        title={`${entry.title} interactive preview`}
+                        loading="lazy"
+                      />
+                    </div>
+                    <p className="play-embed-fallback">
+                      <a href={entry.embedPath} target="_blank" rel="noopener noreferrer">
+                        Open {entry.title} in a new tab
+                        <span aria-hidden="true"> ↗</span>
+                      </a>
+                    </p>
                   </div>
                 ) : null}
 

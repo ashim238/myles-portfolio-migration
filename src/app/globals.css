@@ -1090,6 +1090,11 @@ button:focus-visible,
     position: sticky;
     top: 5rem;
     padding-top: 0.35rem;
+    /* Cap to the viewport so a long project list scrolls within the rail
+       instead of pushing items below the fold while it's stuck. */
+    max-height: calc(100vh - 7rem);
+    overflow-y: auto;
+    scrollbar-width: thin;
   }
 }
 
@@ -1603,6 +1608,13 @@ button:focus-visible,
   }
 }
 
+/* Instant tap feedback (opacity, not motion) so touch and reduced-motion
+   users get a press response even without the scale above. */
+.work-showcase-link:active,
+.work-item a:active {
+  opacity: 0.88;
+}
+
 .work-item:first-child {
   border-top: none;
 }
@@ -1713,6 +1725,24 @@ button:focus-visible,
   border-radius: 0.65rem;
   overflow: hidden;
   background: var(--surface);
+}
+
+.play-embed-fallback {
+  margin: 0.55rem 0 0;
+  font-size: 0.85rem;
+}
+
+.play-embed-fallback a {
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.play-embed-fallback a:hover,
+.play-embed-fallback a:focus-visible {
+  color: var(--foreground);
+  border-color: var(--line);
 }
 
 .play-embed {

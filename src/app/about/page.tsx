@@ -4,7 +4,7 @@ import { siteConfig } from "@/lib/site-config";
 
 export const metadata = {
   title: `About | ${siteConfig.name}`,
-  description: `About ${siteConfig.name} — product designer based in Brooklyn.`,
+  description: `About ${siteConfig.name}: product designer based in Brooklyn.`,
 };
 
 export default function AboutPage() {
