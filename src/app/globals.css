@@ -2398,6 +2398,26 @@ button:focus-visible,
   box-shadow: 0 0 0 2.5px var(--background), 0 0 0 4px var(--swatch-color);
 }
 
+/* Tactile confirmation on copy: ring + glow so the action registers
+   beyond the label swap. */
+.color-swatch--copied .color-swatch-circle {
+  transform: scale(1.1);
+  box-shadow:
+    0 0 0 2.5px var(--background),
+    0 0 0 4px var(--swatch-color),
+    0 0 12px var(--swatch-color);
+}
+
+.color-swatch--copied .color-swatch-label {
+  color: var(--foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .color-swatch--copied .color-swatch-circle {
+    transform: none;
+  }
+}
+
 .color-swatch-label {
   font-size: 0.8rem;
   font-family: var(--font-mono);
@@ -2583,6 +2603,31 @@ button:focus-visible,
 
 .project-toc-item {
   flex: 0 0 auto;
+}
+
+/* Keyboard-nav hint: sr-only by default (always announced via the list's
+   aria-describedby), revealed visually only when a keyboard user focuses
+   into the TOC, so mouse users never see it. */
+.project-toc-help {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.project-toc:focus-within .project-toc-help {
+  position: static;
+  width: auto;
+  height: auto;
+  margin-top: 0.5rem;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
 }
 
 .project-toc-link {

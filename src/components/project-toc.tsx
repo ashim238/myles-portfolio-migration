@@ -158,6 +158,7 @@ export function ProjectToc({ sections }: ProjectTocProps) {
           id="project-toc-list"
           className={`project-toc-list${isOpen ? " project-toc-list--open" : ""}`}
           role="list"
+          aria-describedby="project-toc-help"
         >
           {sections.map((section, i) => {
             const isActive = section.id === activeId;
@@ -180,6 +181,10 @@ export function ProjectToc({ sections }: ProjectTocProps) {
             );
           })}
         </ol>
+
+        <p id="project-toc-help" className="project-toc-help">
+          Arrow keys move between sections. Home and End jump to the ends.
+        </p>
       </nav>
     </>
   );

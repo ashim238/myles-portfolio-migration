@@ -21,7 +21,7 @@ export function ColorPalette({ colors }: ColorPaletteProps) {
       {colors.map((hex, i) => (
         <button
           key={hex}
-          className="color-swatch"
+          className={`color-swatch${copiedIndex === i ? " color-swatch--copied" : ""}`}
           style={{ "--swatch-color": hex } as React.CSSProperties}
           onClick={() => handleCopy(hex, i)}
           aria-label={`Copy color ${hex}`}
