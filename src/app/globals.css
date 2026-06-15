@@ -1090,6 +1090,11 @@ button:focus-visible,
     position: sticky;
     top: 5rem;
     padding-top: 0.35rem;
+    /* Cap to the viewport so a long project list scrolls within the rail
+       instead of pushing items below the fold while it's stuck. */
+    max-height: calc(100vh - 7rem);
+    overflow-y: auto;
+    scrollbar-width: thin;
   }
 }
 
@@ -1601,6 +1606,13 @@ button:focus-visible,
   .work-item a:active {
     transform: scale(0.992);
   }
+}
+
+/* Instant tap feedback (opacity, not motion) so touch and reduced-motion
+   users get a press response even without the scale above. */
+.work-showcase-link:active,
+.work-item a:active {
+  opacity: 0.88;
 }
 
 .work-item:first-child {
