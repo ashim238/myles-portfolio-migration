@@ -139,25 +139,25 @@ export function ArchitectureDiagram() {
         {/* Source labels — top row, 7 columns, smaller subtitle */}
         <g className="fg-arch-sources" fontFamily="var(--font-mono)" fontSize="11" fill="currentColor">
           <text x="30" y="32">OpenStreetMap</text>
-          <text x="30" y="50" fontSize="12" opacity="0.62">lighting · landuse · parks</text>
+          <text x="30" y="50" fontSize="10" opacity="0.62">lighting · landuse · parks</text>
 
           <text x="215" y="32">OSRM</text>
-          <text x="215" y="50" fontSize="12" opacity="0.62">route geometry</text>
+          <text x="215" y="50" fontSize="10" opacity="0.62">route geometry</text>
 
           <text x="325" y="32">SunCalc</text>
-          <text x="325" y="50" fontSize="12" opacity="0.62">solar geometry</text>
+          <text x="325" y="50" fontSize="10" opacity="0.62">solar geometry</text>
 
           <text x="435" y="32">Mapbox Search</text>
-          <text x="435" y="50" fontSize="12" opacity="0.62">destinations</text>
+          <text x="435" y="50" fontSize="10" opacity="0.62">destinations</text>
 
           <text x="550" y="32">DOT-511</text>
-          <text x="550" y="50" fontSize="12" opacity="0.62">state traffic feeds</text>
+          <text x="550" y="50" fontSize="10" opacity="0.62">state traffic feeds</text>
 
           <text x="690" y="32">Mapbox incidents</text>
-          <text x="690" y="50" fontSize="12" opacity="0.62">driving-traffic events</text>
+          <text x="690" y="50" fontSize="10" opacity="0.62">driving-traffic events</text>
 
           <text x="850" y="32">Community reports</text>
-          <text x="850" y="50" fontSize="12" opacity="0.62">observations · weighted</text>
+          <text x="850" y="50" fontSize="10" opacity="0.62">observations · weighted</text>
         </g>
 
         {/* Arrows from sources into the adapter layer */}
