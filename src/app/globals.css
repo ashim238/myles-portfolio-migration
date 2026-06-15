@@ -2404,12 +2404,12 @@ button:focus-visible,
 .project-section-images {
   margin-top: 1.1rem;
   display: grid;
-  gap: 0.8rem;
+  gap: 1.2rem;
+  justify-items: center;
 }
 
 .project-section-image {
-  width: 100%;
-  height: auto;
+  display: block;
   border-radius: 0.7rem;
   border: 1px solid var(--line);
   transition: transform 320ms ease, border-color 240ms ease;
@@ -2418,6 +2418,96 @@ button:focus-visible,
 .project-section-image:hover {
   transform: scale(1.008);
   border-color: #4a4a4a;
+}
+
+.project-section-image--landscape {
+  width: 100%;
+  height: auto;
+}
+
+.project-section-image--portrait {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 720px;
+  border-radius: 0.6rem;
+}
+
+/* Tall-screenshot frame (mobile newsletter captures, full-length campaigns). */
+.project-section-image-frame--tall {
+  margin: 0;
+  width: 100%;
+  max-width: 460px;
+  display: grid;
+  gap: 0.45rem;
+  justify-items: center;
+}
+
+.project-section-image-scroll {
+  width: 100%;
+  max-height: 620px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 0.85rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  /* Reserve room for the inner image's expand button without clipping shadows. */
+  scroll-behavior: smooth;
+  /* Subtle bottom fade so the user reads "there's more". */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(100% - 36px),
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(100% - 36px),
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+.project-section-image-scroll:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.project-section-image-scroll .expandable-trigger {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.project-section-image--tall {
+  width: 100%;
+  height: auto;
+  border: none;
+  border-radius: 0;
+  display: block;
+}
+
+.project-section-image--tall:hover {
+  transform: none;
+  border-color: transparent;
+}
+
+.project-section-image-hint {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin: 0;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-section-image-scroll {
+    scroll-behavior: auto;
+  }
 }
 
 /* ── Project ToC ── */
@@ -5848,3 +5938,473 @@ button:focus-visible,
 .nv-page h2[id^="nv-"] {
   font-family: var(--font-navi-display), var(--font-sans), sans-serif;
 }
+
+/* ============================================================
+   Understanding FAFSA case study
+   Scoped visual world inside portfolio shell.
+   ============================================================ */
+
+.uf-page {
+  --uf-accent-warm: #f26938;
+  --uf-accent-cool: #164f73;
+  --uf-accent-soft: color-mix(in oklch, var(--uf-accent-warm) 14%, transparent);
+  --uf-accent-line: color-mix(in srgb, var(--uf-accent-warm) 55%, transparent);
+}
+
+:root[data-theme="light"] .uf-page {
+  --uf-accent-soft: color-mix(in oklch, var(--uf-accent-warm) 10%, transparent);
+}
+
+.uf-eyebrow {
+  margin: 0 0 0.85rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.82rem;
+  color: var(--uf-accent-warm);
+}
+
+.uf-title {
+  font-size: clamp(2.5rem, 7vw, 4.6rem) !important;
+}
+
+.uf-lede {
+  max-width: 42ch !important;
+  font-size: clamp(1.05rem, 2vw, 1.28rem) !important;
+}
+
+.uf-meta {
+  margin-top: 2.5rem;
+}
+
+.uf-section {
+  margin-top: 4.5rem;
+}
+
+.uf-section--wide .project-section-body {
+  max-width: 65ch;
+}
+
+.uf-system-outro {
+  margin-top: 2rem;
+}
+
+/* ── Phone frame ─────────────────────────────────────── */
+
+.uf-phone {
+  --phone-w: 220px;
+  width: var(--phone-w);
+  margin: 0 auto;
+  filter: drop-shadow(0 20px 36px rgba(0, 0, 0, 0.28));
+  transform: rotate(var(--uf-phone-tilt, 0deg));
+  transition: transform 280ms ease;
+}
+
+.uf-before-after-item:hover .uf-phone {
+  transform: rotate(0deg) translateY(-4px);
+}
+
+.uf-phone-bezel {
+  position: relative;
+  aspect-ratio: 9 / 19.5;
+  border-radius: 34px;
+  background: #0a0a0a;
+  border: 1px solid #2a2a2a;
+  padding: 7px;
+  overflow: hidden;
+}
+
+.uf-phone-notch {
+  position: absolute;
+  top: 9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 76px;
+  height: 18px;
+  border-radius: 12px;
+  background: #050505;
+  z-index: 2;
+}
+
+.uf-phone-screen {
+  width: 100%;
+  height: 100%;
+  border-radius: 27px;
+  background: #0e0e10;
+  overflow: hidden;
+  position: relative;
+}
+
+.uf-phone-screen--scroll {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  /* Fade the bottom so the user reads "there's more to scroll". */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(100% - 32px),
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(100% - 32px),
+    rgba(0, 0, 0, 0.5) 100%
+  );
+}
+
+.uf-phone-screen--scroll .expandable-trigger {
+  /* Critical: let the button grow with the image so the phone-screen
+     has content taller than itself to scroll. Without this, height: 100%
+     pins the trigger to the screen height and overflow-y: auto never fires. */
+  height: auto;
+  min-height: 100%;
+  align-items: flex-start;
+}
+
+.uf-phone-screen--scroll .expandable-trigger img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.uf-phone-screen .expandable-trigger {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  display: flex;
+  cursor: zoom-in;
+}
+
+.uf-phone-screen .expandable-trigger img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Before / after ────────────────────────────────────── */
+
+.uf-before-after {
+  margin-top: 2.25rem;
+  display: grid;
+  gap: 2rem;
+  justify-items: center;
+}
+
+@media (min-width: 640px) {
+  .uf-before-after {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.5rem;
+    max-width: 34rem;
+    margin-inline: auto;
+  }
+}
+
+.uf-before-after-item {
+  margin: 0;
+  text-align: center;
+}
+
+.uf-before-after-label {
+  margin: 0.85rem 0 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.78rem;
+  color: var(--uf-accent-cool);
+}
+
+.uf-before-after-hint {
+  margin: 0.35rem 0 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* ── Template switcher ─────────────────────────────────── */
+
+.uf-switcher,
+.uf-lock-toggle {
+  margin-top: 2.25rem;
+}
+
+.uf-chip-row,
+.uf-segment-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.uf-chip,
+.uf-segment {
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.78rem;
+  color: var(--foreground);
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    color 180ms ease;
+}
+
+.uf-chip:hover,
+.uf-segment:hover {
+  border-color: var(--uf-accent-line);
+}
+
+.uf-chip--active {
+  border-color: var(--uf-accent-warm);
+  background: var(--uf-accent-soft);
+  color: var(--uf-accent-warm);
+}
+
+.uf-segment--active {
+  border-color: var(--uf-accent-cool);
+  background: color-mix(in oklch, var(--uf-accent-cool) 14%, transparent);
+  color: var(--uf-accent-cool);
+}
+
+.uf-switcher-preview,
+.uf-lock-preview {
+  position: relative;
+  max-width: 34rem;
+  animation: uf-fade-in 200ms ease;
+}
+
+.uf-switcher-preview--static,
+.uf-lock-preview--static {
+  animation: none;
+}
+
+/* For tall full-newsletter renders, contain the preview to a scrollable
+   frame so a 12,000px-tall send doesn't dominate the entire scroll. */
+.uf-switcher-preview--scroll {
+  max-height: 640px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 0.5rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(100% - 36px),
+    rgba(0, 0, 0, 0.5) 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(100% - 36px),
+    rgba(0, 0, 0, 0.5) 100%
+  );
+}
+
+.uf-switcher-preview--scroll .expandable-trigger {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  display: block;
+  cursor: zoom-in;
+}
+
+.uf-switcher-descriptor,
+.uf-lock-legend {
+  margin: 0.85rem 0 0;
+  font-size: 0.92rem;
+  color: var(--muted);
+  max-width: 34rem;
+}
+
+.uf-switcher-note {
+  margin: 0.45rem 0 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+  max-width: 34rem;
+  font-style: italic;
+}
+
+@keyframes uf-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ── Modular gallery ───────────────────────────────────── */
+
+.uf-gallery {
+  margin-top: 2.5rem;
+  max-width: 36rem;
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.uf-gallery-card {
+  position: relative;
+  margin-left: var(--uf-gallery-offset, 0);
+  margin-top: calc(var(--uf-gallery-index, 0) * -1.25rem + 0.5rem);
+  transform: rotate(var(--uf-gallery-rotate, 0deg));
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.14));
+  transition:
+    transform 240ms ease,
+    filter 240ms ease;
+  z-index: calc(10 - var(--uf-gallery-index, 0));
+}
+
+.uf-gallery-card:first-child {
+  margin-top: 0;
+}
+
+.uf-gallery-card:hover {
+  transform: rotate(0deg) translateY(-3px);
+  filter: drop-shadow(0 18px 32px rgba(0, 0, 0, 0.2));
+  z-index: 20;
+}
+
+@media (max-width: 639px) {
+  .uf-gallery-card {
+    margin-left: 0 !important;
+    margin-top: 1rem !important;
+    transform: none !important;
+  }
+
+  .uf-gallery-card:first-child {
+    margin-top: 0 !important;
+  }
+}
+
+/* ── Locked / swappable overlay ────────────────────────── */
+
+.uf-lock-preview .expandable-trigger {
+  display: block;
+  width: 100%;
+}
+
+.uf-overlay-stack {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 0.35rem;
+  overflow: hidden;
+}
+
+.uf-overlay-zone {
+  position: absolute;
+  border-radius: 0.2rem;
+  transition: opacity 200ms ease;
+}
+
+.uf-lock-preview[data-mode="swappable"] .uf-overlay-zone {
+  background: color-mix(in srgb, var(--uf-accent-warm) 12%, transparent);
+  outline: 1px solid color-mix(in srgb, var(--uf-accent-warm) 35%, transparent);
+}
+
+.uf-lock-preview[data-mode="locked"] .uf-overlay-zone {
+  background: color-mix(in srgb, var(--uf-accent-cool) 12%, transparent);
+  outline: 1px solid color-mix(in srgb, var(--uf-accent-cool) 35%, transparent);
+}
+
+/* ── Figma pair ────────────────────────────────────────── */
+
+.uf-figma-pair {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .uf-figma-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+.uf-figma-figure {
+  margin: 0;
+}
+
+.uf-figma-figure figcaption {
+  margin-top: 0.65rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  color: var(--uf-accent-cool);
+}
+
+/* ── Results callout ───────────────────────────────────── */
+
+.uf-outcome {
+  margin: 1.75rem 0 2rem;
+  padding: 1.35rem 1.5rem;
+  border-radius: 0.65rem;
+  border: 1px solid var(--uf-accent-line);
+  background: var(--uf-accent-soft);
+  max-width: 28rem;
+}
+
+.uf-outcome-metric {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.uf-outcome-range {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 600;
+  color: var(--uf-accent-warm);
+  letter-spacing: -0.02em;
+}
+
+.uf-outcome-label {
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.uf-outcome-date {
+  margin: 0.75rem 0 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.78rem;
+  color: var(--uf-accent-cool);
+}
+
+.uf-page .color-palette {
+  margin-top: 2rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .uf-phone {
+    transform: rotate(var(--uf-phone-tilt, 0deg));
+    transition: none;
+  }
+
+  .uf-before-after-item:hover .uf-phone {
+    transform: rotate(var(--uf-phone-tilt, 0deg));
+  }
+
+  .uf-gallery-card {
+    transition: none;
+  }
+
+  .uf-gallery-card:hover {
+    transform: rotate(var(--uf-gallery-rotate, 0deg));
+  }
+
+  .uf-switcher-preview,
+  .uf-lock-preview {
+    animation: none;
+  }
+
+  .uf-overlay-zone {
+    transition: none;
+  }
+}
+
