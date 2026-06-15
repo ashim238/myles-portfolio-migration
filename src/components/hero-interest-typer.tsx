@@ -15,6 +15,7 @@ const PHRASES = [
   "is an avid comic reader.",
   "talks to people before opening Figma.",
   "loves to cook Jamaican cuisine.",
+  "is Auto Layout's biggest fan.",
 ];
 
 const STATIC_INTERESTS = PHRASES.join(" · ");
