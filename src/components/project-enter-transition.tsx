@@ -53,8 +53,13 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
   const navigatingRef = useRef(false);
   const zoomRanRef = useRef(false);
   const settleRanRef = useRef(false);
+  const failsafeRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const finishTransition = useCallback(() => {
+    if (failsafeRef.current) {
+      clearTimeout(failsafeRef.current);
+      failsafeRef.current = null;
+    }
     pendingSlugRef.current = null;
     navigatingRef.current = false;
     zoomRanRef.current = false;
@@ -143,6 +148,12 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
       pendingSlugRef.current = detail.slug;
       lockProjectEnter();
 
+      // Failsafe: never hold the scroll lock / overlay longer than this,
+      // even if the destination route is slow to load or the cover never
+      // resolves. The navigation itself still completes in the background.
+      if (failsafeRef.current) clearTimeout(failsafeRef.current);
+      failsafeRef.current = setTimeout(() => finishTransition(), 4500);
+
       setOverlay({
         phase: "zoom-in",
         slug: detail.slug,
@@ -153,7 +164,7 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
         startRect: detail.rect,
       });
     },
-    [router],
+    [router, finishTransition],
   );
 
   useEffect(() => {
@@ -161,6 +172,17 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
       unlockProjectEnter();
     };
   }, []);
+
+  // Escape releases the overlay and scroll lock immediately; the in-app
+  // navigation it kicked off still resolves underneath.
+  useEffect(() => {
+    if (!overlay) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") finishTransition();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [overlay, finishTransition]);
 
   useEffect(() => {
     const onRequest = (event: Event) => {
