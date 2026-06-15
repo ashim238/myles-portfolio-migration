@@ -2332,11 +2332,11 @@ button:focus-visible,
 /* ── Color palette swatches ── */
 
 .color-palette {
-  margin-top: 2.4rem;
-  margin-bottom: 2rem;
+  margin-top: 3.6rem;
+  margin-bottom: 3.2rem;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 1rem;
+  gap: 1.5rem 1rem;
 }
 
 .color-swatch {
@@ -2366,7 +2366,7 @@ button:focus-visible,
 }
 
 .color-swatch-label {
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-family: var(--font-mono);
   color: var(--muted);
   letter-spacing: 0.01em;
@@ -2382,7 +2382,7 @@ button:focus-visible,
 @media (max-width: 768px) {
   .color-palette {
     grid-template-columns: repeat(4, 1fr);
-    gap: 0.9rem 0.6rem;
+    gap: 1.4rem 0.7rem;
   }
 
   .color-swatch-circle {
@@ -2391,7 +2391,7 @@ button:focus-visible,
   }
 
   .color-swatch-label {
-    font-size: 0.62rem;
+    font-size: 0.72rem;
   }
 }
 
@@ -6394,7 +6394,8 @@ button:focus-visible,
 }
 
 .uf-page .color-palette {
-  margin-top: 2rem;
+  margin-top: 3.6rem;
+  margin-bottom: 3.2rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

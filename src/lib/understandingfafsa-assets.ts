@@ -36,21 +36,11 @@ export const UF_ASSETS = {
     height: 3338,
   },
 
-  /** §04 — locked vs swappable annotated exports from Figma */
+  /** §04 — locked vs swappable: base students block (annotated in code) */
   lockedSwappableBase: {
     src: `${UF_ASSET_BASE}/modular-students.png`,
     width: 2400,
     height: 3820,
-  },
-  lockedSwappableWarm: {
-    src: `${UF_ASSET_BASE}/locked-swappable-warm.png`,
-    width: 1200,
-    height: 1910,
-  },
-  lockedSwappableCold: {
-    src: `${UF_ASSET_BASE}/locked-swappable-cold.png`,
-    width: 1200,
-    height: 1910,
   },
 
   /** §05 — same students block, design source vs shipped module */
