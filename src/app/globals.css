@@ -5922,38 +5922,15 @@ button:focus-visible,
   -webkit-tap-highlight-color: transparent;
 }
 
-.nv-heatmap-region--context {
+/* The map is a read-only canvas; regions are never interactive. */
+.nv-heatmap-region {
   pointer-events: none;
-}
-
-.nv-heatmap-region[role="button"] {
-  cursor: pointer;
-}
-
-.nv-heatmap-region[role="button"]:hover {
-  stroke: color-mix(in srgb, var(--foreground) 45%, transparent);
-}
-
-.nv-heatmap-region:focus,
-.nv-heatmap-region:focus-visible {
-  outline: none;
-}
-
-.nv-heatmap-region[role="button"]:focus-visible {
-  stroke: var(--focus-ring);
-  stroke-width: 1.15;
-  stroke-linejoin: round;
 }
 
 .nv-heatmap-region--active {
   fill: color-mix(in srgb, var(--nv-accent) 55%, transparent);
   stroke: color-mix(in srgb, var(--nv-accent) 85%, transparent);
   stroke-width: 0.55;
-}
-
-.nv-heatmap-region--active:focus-visible {
-  stroke: var(--focus-ring);
-  stroke-width: 1.15;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -5973,9 +5950,18 @@ button:focus-visible,
 }
 
 .nv-heatmap-map-label {
-  margin: 0.85rem 0 0;
+  margin: 0.85rem auto 0;
+  max-width: 34ch;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+.nv-heatmap-map-name {
   font-family: var(--font-navi-display), var(--font-sans), sans-serif;
-  font-size: 1.05rem;
+  color: var(--nv-accent);
+  font-weight: 700;
 }
 
 .nv-page h2[id^="nv-"] {

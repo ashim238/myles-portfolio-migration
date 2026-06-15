@@ -441,14 +441,36 @@ export function CompositionStrip() {
 
 /* ── Heatmap explorer ────────────────────────────────── */
 
+const NAVI_LEARN_CONTEXT =
+  "Learn would open with its inclusive history and local rhythm, not the same ten default stops.";
+
 export function HeatmapExplorer() {
   const [activeId, setActiveId] = useState("");
   const itemRefs = useRef<Record<string, HTMLButtonElement | null>>({});
   const sorted = [...NAVI_HEATMAP_NEIGHBORHOODS].sort((a, b) => a.name.localeCompare(b.name));
+  const activeName = sorted.find((n) => n.id === activeId)?.name ?? null;
 
   const selectNeighborhood = useCallback((id: string) => {
     setActiveId(id);
   }, []);
+
+  // The list is the sole control; arrow keys rove it like a real listbox.
+  const handleListKey = useCallback(
+    (e: React.KeyboardEvent<HTMLUListElement>) => {
+      const ids = sorted.map((n) => n.id);
+      const idx = ids.indexOf(activeId);
+      let next = -1;
+      if (e.key === "ArrowDown") next = idx < 0 ? 0 : Math.min(ids.length - 1, idx + 1);
+      else if (e.key === "ArrowUp") next = idx < 0 ? ids.length - 1 : Math.max(0, idx - 1);
+      else if (e.key === "Home") next = 0;
+      else if (e.key === "End") next = ids.length - 1;
+      if (next < 0) return;
+      e.preventDefault();
+      setActiveId(ids[next]);
+      itemRefs.current[ids[next]]?.focus();
+    },
+    [activeId, sorted],
+  );
 
   useEffect(() => {
     if (!activeId) return;
@@ -460,7 +482,12 @@ export function HeatmapExplorer() {
 
   return (
     <div className="nv-heatmap">
-      <ul className="nv-heatmap-list" role="listbox" aria-label="Manhattan neighborhoods">
+      <ul
+        className="nv-heatmap-list"
+        role="listbox"
+        aria-label="Manhattan neighborhoods"
+        onKeyDown={handleListKey}
+      >
         {sorted.map((n) => (
           <li key={n.id}>
             <button
@@ -479,12 +506,9 @@ export function HeatmapExplorer() {
         ))}
       </ul>
       <div className="nv-heatmap-map-wrap">
-        <svg
-          viewBox={NAVI_HEATMAP_VIEWBOX}
-          className="nv-heatmap-map"
-          role="group"
-          aria-label="Manhattan neighborhood map"
-        >
+        {/* Read-only canvas: the list drives it; the map reflects the choice.
+            aria-hidden because the list + the live caption carry the meaning. */}
+        <svg viewBox={NAVI_HEATMAP_VIEWBOX} className="nv-heatmap-map" aria-hidden="true">
           <defs>
             <clipPath id="nv-island-clip">
               <path d={NAVI_HEATMAP_SILHOUETTE} />
@@ -498,37 +522,21 @@ export function HeatmapExplorer() {
                 <path
                   key={r.id}
                   d={r.path}
-                  role={r.selectable ? "button" : undefined}
-                  tabIndex={r.selectable ? 0 : undefined}
-                  aria-label={r.selectable ? r.name : undefined}
-                  aria-hidden={r.selectable ? undefined : true}
-                  aria-pressed={r.selectable ? isActive : undefined}
                   className={`nv-heatmap-region${r.selectable ? "" : " nv-heatmap-region--context"}${isActive ? " nv-heatmap-region--active" : ""}`}
-                  onClick={
-                    r.selectable
-                      ? (e) => {
-                          selectNeighborhood(r.id);
-                          e.currentTarget.blur();
-                        }
-                      : undefined
-                  }
-                  onKeyDown={
-                    r.selectable
-                      ? (e) => {
-                          if (e.key === "Enter" || e.key === " ") {
-                            e.preventDefault();
-                            selectNeighborhood(r.id);
-                          }
-                        }
-                      : undefined
-                  }
                 />
               );
             })}
           </g>
         </svg>
-        <p className="nv-heatmap-map-label">
-          {sorted.find((n) => n.id === activeId)?.name ?? "Select a neighborhood"}
+        <p className="nv-heatmap-map-label" aria-live="polite">
+          {activeName ? (
+            <>
+              <strong className="nv-heatmap-map-name">{activeName}.</strong>{" "}
+              {NAVI_LEARN_CONTEXT}
+            </>
+          ) : (
+            "Select a neighborhood to preview how Learn would frame it."
+          )}
         </p>
       </div>
     </div>
