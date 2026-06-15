@@ -41,6 +41,9 @@
   --muted: #555555;
   --line: #d4d4d4;
   --surface: #f0f0f0;
+  /* Sky #8ab4ff is only ~2:1 on the light bg; darken so the focus ring
+     clears the 3:1 WCAG UI minimum (the dark theme keeps the sky value). */
+  --focus-ring: #2563eb;
 }
 
 :root[data-theme="light"] .browser-intro-overlay {
@@ -710,7 +713,7 @@ html.project-enter-settling .project-page {
 }
 
 .not-found-link:focus-visible {
-  outline: 2px solid #8ab4ff;
+  outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
 }
 
@@ -874,7 +877,7 @@ html.home-intro-wait .home-page #work > .work-list > .work-item {
 }
 
 .theme-toggle:focus-visible {
-  outline: 2px solid #8ab4ff;
+  outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
 }
 
@@ -1867,7 +1870,7 @@ button:focus-visible,
 }
 
 .resume-cta:focus-visible {
-  outline: 2px solid #8ab4ff;
+  outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
 }
 
@@ -1947,7 +1950,7 @@ button:focus-visible,
 }
 
 .work-item a:focus-visible .work-item-image {
-  border-color: #8ab4ff;
+  border-color: var(--focus-ring);
 }
 
 .about {
@@ -2580,7 +2583,7 @@ button:focus-visible,
 }
 
 .project-toc-link:focus-visible {
-  outline: 2px solid #8ab4ff;
+  outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
   border-radius: 0.3rem;
 }
@@ -2657,7 +2660,7 @@ button:focus-visible,
   }
 
   .project-toc-toggle:focus-visible {
-    outline: 2px solid #8ab4ff;
+    outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
     border-radius: 0.2rem;
   }
@@ -2816,9 +2819,9 @@ button:focus-visible,
 }
 
 .project-work-jump-card:focus-visible {
-  outline: 2px solid #8ab4ff;
+  outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
-  border-color: #8ab4ff;
+  border-color: var(--focus-ring);
 }
 
 .project-work-jump-text h3 {
@@ -3267,7 +3270,38 @@ button:focus-visible,
   border: 1px solid var(--line);
   border-radius: 0.7rem;
   background: var(--surface);
+}
+
+/* The diagram is wide; it scrolls inside this wrapper so the caption below
+   stays put. A right-edge fade cues there's more to scroll on mobile. */
+.fg-arch-scroll {
   overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+@media (max-width: 768px) {
+  .fg-arch-scroll {
+    -webkit-mask-image: linear-gradient(to right, #000 90%, transparent 100%);
+    mask-image: linear-gradient(to right, #000 90%, transparent 100%);
+  }
+}
+
+.fg-arch-caption {
+  margin-top: 0.8rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.fg-arch-scrollhint {
+  display: none;
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+
+@media (max-width: 768px) {
+  .fg-arch-scrollhint {
+    display: inline;
+  }
 }
 
 /* Quieter variant for the process section — same vocabulary, smaller voice */
@@ -3278,13 +3312,13 @@ button:focus-visible,
 
 .fg-arch-svg {
   width: 100%;
-  min-width: 720px;
+  min-width: 900px;
   height: auto;
   color: var(--foreground);
 }
 
 .fg-arch--process .fg-arch-svg {
-  min-width: 520px;
+  min-width: 640px;
 }
 
 /* ── Features grid ────────────────────────────────────── */
@@ -5888,38 +5922,15 @@ button:focus-visible,
   -webkit-tap-highlight-color: transparent;
 }
 
-.nv-heatmap-region--context {
+/* The map is a read-only canvas; regions are never interactive. */
+.nv-heatmap-region {
   pointer-events: none;
-}
-
-.nv-heatmap-region[role="button"] {
-  cursor: pointer;
-}
-
-.nv-heatmap-region[role="button"]:hover {
-  stroke: color-mix(in srgb, var(--foreground) 45%, transparent);
-}
-
-.nv-heatmap-region:focus,
-.nv-heatmap-region:focus-visible {
-  outline: none;
-}
-
-.nv-heatmap-region[role="button"]:focus-visible {
-  stroke: var(--focus-ring);
-  stroke-width: 1.15;
-  stroke-linejoin: round;
 }
 
 .nv-heatmap-region--active {
   fill: color-mix(in srgb, var(--nv-accent) 55%, transparent);
   stroke: color-mix(in srgb, var(--nv-accent) 85%, transparent);
   stroke-width: 0.55;
-}
-
-.nv-heatmap-region--active:focus-visible {
-  stroke: var(--focus-ring);
-  stroke-width: 1.15;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -5939,9 +5950,18 @@ button:focus-visible,
 }
 
 .nv-heatmap-map-label {
-  margin: 0.85rem 0 0;
+  margin: 0.85rem auto 0;
+  max-width: 34ch;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+.nv-heatmap-map-name {
   font-family: var(--font-navi-display), var(--font-sans), sans-serif;
-  font-size: 1.05rem;
+  color: var(--nv-accent);
+  font-weight: 700;
 }
 
 .nv-page h2[id^="nv-"] {
@@ -5956,12 +5976,17 @@ button:focus-visible,
 .uf-page {
   --uf-accent-warm: #f26938;
   --uf-accent-cool: #164f73;
+  /* Cool accent as TEXT: #164f73 is only ~2.3:1 on the dark default, so text
+     uses a lighter cool here and the deep tone only in light mode. Borders
+     and fills keep --uf-accent-cool (they sit on the light email artwork). */
+  --uf-accent-cool-text: #82c5fb;
   --uf-accent-soft: color-mix(in oklch, var(--uf-accent-warm) 14%, transparent);
   --uf-accent-line: color-mix(in srgb, var(--uf-accent-warm) 55%, transparent);
 }
 
 :root[data-theme="light"] .uf-page {
   --uf-accent-soft: color-mix(in oklch, var(--uf-accent-warm) 10%, transparent);
+  --uf-accent-cool-text: #164f73;
 }
 
 .uf-eyebrow {
@@ -6119,7 +6144,7 @@ button:focus-visible,
   margin: 0.85rem 0 0;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.78rem;
-  color: var(--uf-accent-cool);
+  color: var(--uf-accent-cool-text);
 }
 
 .uf-before-after-hint {
@@ -6171,9 +6196,16 @@ button:focus-visible,
 }
 
 .uf-segment--active {
-  border-color: var(--uf-accent-cool);
-  background: color-mix(in oklch, var(--uf-accent-cool) 14%, transparent);
-  color: var(--uf-accent-cool);
+  border-color: var(--uf-accent-cool-text);
+  background: color-mix(in oklch, var(--uf-accent-cool-text) 14%, transparent);
+  color: var(--uf-accent-cool-text);
+}
+
+.uf-lock-hint {
+  margin: 0.6rem 0 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-style: italic;
 }
 
 .uf-switcher-preview,
@@ -6353,7 +6385,7 @@ button:focus-visible,
   margin-top: 0.65rem;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.75rem;
-  color: var(--uf-accent-cool);
+  color: var(--uf-accent-cool-text);
 }
 
 /* ── Results callout ───────────────────────────────────── */
@@ -6390,7 +6422,7 @@ button:focus-visible,
   margin: 0.75rem 0 0;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.78rem;
-  color: var(--uf-accent-cool);
+  color: var(--uf-accent-cool-text);
 }
 
 .uf-page .color-palette {

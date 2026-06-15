@@ -31,7 +31,7 @@ const lato = Lato({
 });
 
 const NAVI_DESCRIPTION =
-  "Connecting visitors to New York City's local heartbeat — a regenerative travel platform concept built on resident research.";
+  "Connecting visitors to New York City's local heartbeat: a regenerative travel platform concept built on resident research.";
 
 export const metadata: Metadata = {
   title: "Navi",
@@ -74,7 +74,7 @@ export default async function NaviPage() {
 
       <ProjectCover
         src="/projects/navi/cover.png"
-        alt="Navi cover — neighborhood-led travel platform for New York City"
+        alt="Navi cover: neighborhood-led travel platform for New York City"
         priority
       />
 
@@ -161,7 +161,7 @@ export default async function NaviPage() {
             and transparent.
           </p>
           <p className="nv-survey-note">
-            Highlights from {NAVI_SURVEY_META.responseCount} survey responses —{" "}
+            Highlights from {NAVI_SURVEY_META.responseCount} survey responses:{" "}
             {NAVI_SURVEY_META.source}.
           </p>
         </div>
@@ -198,7 +198,7 @@ export default async function NaviPage() {
         <div className="nv-persona-grid">
           <ExpandableImage
             src="/projects/navi/persona-cain.png"
-            alt="Cain persona — group planner who coordinates schedules and budgets"
+            alt="Cain persona: group planner who coordinates schedules and budgets"
             width={1200}
             height={900}
             sizes="(max-width: 768px) 92vw, 32vw"
@@ -206,7 +206,7 @@ export default async function NaviPage() {
           />
           <ExpandableImage
             src="/projects/navi/persona-ororo.png"
-            alt="Ororo persona — newcomer who needs neighborhood context"
+            alt="Ororo persona: newcomer who needs neighborhood context"
             width={1200}
             height={900}
             sizes="(max-width: 768px) 92vw, 32vw"
@@ -214,7 +214,7 @@ export default async function NaviPage() {
           />
           <ExpandableImage
             src="/projects/navi/persona-selina.png"
-            alt="Selina persona — commuter who needs precision filters"
+            alt="Selina persona: commuter who needs precision filters"
             width={1200}
             height={900}
             sizes="(max-width: 768px) 92vw, 32vw"
@@ -260,7 +260,7 @@ export default async function NaviPage() {
         <div className="nv-screen-grid">
           <ExpandableImage
             src="/projects/navi/desktop-screens.png"
-            alt="Navi desktop screens — homepage and neighborhood discovery"
+            alt="Navi desktop screens: homepage and neighborhood discovery"
             width={2400}
             height={1400}
             sizes="(max-width: 768px) 92vw, 900px"
@@ -268,7 +268,7 @@ export default async function NaviPage() {
           />
           <ExpandableImage
             src="/projects/navi/interface-composition.png"
-            alt="Navi interface composition — editorial cards and trust labels"
+            alt="Navi interface composition: editorial cards and trust labels"
             width={2400}
             height={1400}
             sizes="(max-width: 768px) 92vw, 900px"
@@ -276,7 +276,7 @@ export default async function NaviPage() {
           />
           <ExpandableImage
             src="/projects/navi/flow-view-1.png"
-            alt="Navi experience flow — Learn neighborhood context"
+            alt="Navi experience flow: Learn neighborhood context"
             width={1200}
             height={900}
             sizes="(max-width: 768px) 92vw, 30vw"
@@ -284,7 +284,7 @@ export default async function NaviPage() {
           />
           <ExpandableImage
             src="/projects/navi/flow-view-2.png"
-            alt="Navi experience flow — Plan with collaborators"
+            alt="Navi experience flow: Plan with collaborators"
             width={1200}
             height={900}
             sizes="(max-width: 768px) 92vw, 30vw"
@@ -292,7 +292,7 @@ export default async function NaviPage() {
           />
           <ExpandableImage
             src="/projects/navi/flow-view-3.png"
-            alt="Navi experience flow — Go with transit-aware navigation"
+            alt="Navi experience flow: Go with transit-aware navigation"
             width={1200}
             height={900}
             sizes="(max-width: 768px) 92vw, 30vw"
@@ -305,7 +305,7 @@ export default async function NaviPage() {
         <h2 id="nv-heatmap">Rethinking concentration</h2>
         <div className="project-section-body">
           <p>
-            <strong>WELCOME TO MANHATTAN</strong> — an early concept for how neighborhood context
+            <strong>Welcome to Manhattan</strong>, an early concept for how neighborhood context
             could surface before a visitor commits to a destination. This explorer is illustrative:
             regions represent narrative emphasis, not live geo analytics.
           </p>
@@ -346,7 +346,7 @@ export default async function NaviPage() {
         </div>
         <ExpandableImage
           src="/projects/navi/final-mockup.png"
-          alt="Final Navi mockup — neighborhood-led travel homepage"
+          alt="Final Navi mockup: neighborhood-led travel homepage"
           width={2400}
           height={1600}
           sizes="(max-width: 768px) 92vw, 900px"

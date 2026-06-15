@@ -267,6 +267,14 @@ export function LockedSwappableView() {
           </button>
         ))}
       </div>
+      <p className="uf-lock-hint">Pick a layer to isolate it; the other dims back.</p>
+      <span className="sr-only" aria-live="polite">
+        {focus === "both"
+          ? "Showing both layers: swappable content and the locked frame."
+          : focus === "swappable"
+            ? "Showing swappable content regions only."
+            : "Showing the locked structural frame only."}
+      </span>
 
       <div className="uf-lock-stage">
         <ExpandableImage
@@ -330,15 +338,15 @@ export function LockedSwappableView() {
         <li>
           <span className="uf-lock-key uf-lock-key--swap" aria-hidden="true" />
           <span>
-            <strong>Swappable</strong> — editors change each send: headlines, body copy, emoji icons,
-            article links.
+            <strong>Swappable</strong>: editors change each send (headlines, body copy, emoji icons,
+            article links).
           </span>
         </li>
         <li>
           <span className="uf-lock-key uf-lock-key--lock" aria-hidden="true" />
           <span>
-            <strong>Locked</strong> — structure holds every send: wave dividers, padding rails,
-            section rhythm, footer skeleton.
+            <strong>Locked</strong>: structure holds every send (wave dividers, padding rails,
+            section rhythm, footer skeleton).
           </span>
         </li>
       </ul>
