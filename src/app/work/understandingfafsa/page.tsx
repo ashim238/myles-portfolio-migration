@@ -16,7 +16,7 @@ import {
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
 
 const UF_DESCRIPTION =
-  "Redesigned a newsletter system to match a fresh site rebrand — modular templates, competitive research across 120+ examples, and a 75% lift in open rates.";
+  "Redesigned a newsletter system to match a fresh site rebrand. Modular templates, competitive research across 120+ examples, and a 75% lift in open rates.";
 
 const UF_COLORS = [
   "#be5abf",
@@ -74,7 +74,7 @@ export default async function UnderstandingFafsaPage() {
 
       <ProjectCover
         src="/projects/understandingfafsa/cover.png"
-        alt="UnderstandingFAFSA cover — newsletter system redesign"
+        alt="UnderstandingFAFSA cover: newsletter system redesign"
         priority
       />
 
@@ -117,7 +117,7 @@ export default async function UnderstandingFafsaPage() {
             UnderstandingFAFSA helps students, parents, and counselors navigate the Free Application
             for Federal Student Aid (FAFSA). The newsletter is a primary touchpoint. The website had
             already moved to a calmer, modern visual language (Saans typeface, refreshed palette),
-            but the newsletter still carried an older system — subscribers were seeing two different
+            but the newsletter still carried an older system. Subscribers were seeing two different
             brands. The scope was email-only; the founder assembles every issue, so the system had
             to maintain the brand&apos;s identity regardless of who was building it.
           </p>
@@ -163,7 +163,7 @@ export default async function UnderstandingFafsaPage() {
           <ul>
             <li>
               All five newsletters leveraged selective type bolding to create visual entry points
-              without adding imagery — Revenews used this well with emoji section headers and concise
+              without adding imagery; Revenews used this well with emoji section headers and concise
               intros
             </li>
             <li>
@@ -185,7 +185,7 @@ export default async function UnderstandingFafsaPage() {
             </li>
           </ul>
           <p>
-            From there we put our own spin on it — adapting these patterns to UnderstandingFAFSA&apos;s
+            From there we put our own spin on it, adapting these patterns to UnderstandingFAFSA&apos;s
             voice, the founder&apos;s preference for vibrancy, and the practical constraint that a
             non-designer would assemble every issue.
           </p>
@@ -202,7 +202,7 @@ export default async function UnderstandingFafsaPage() {
             The system ships through a shared modular framework: a welcome email that sets
             expectations, the core weekly newsletter, and an event-specific variant with fewer
             blocks and faster assembly for invites and recaps. A counselor-focused toolkit extends
-            the same vocabulary — duotone icons, formal register — and is in progress.
+            the same vocabulary (duotone icons, formal register) and is in progress.
           </p>
           <p>
             The welcome email follows a deliberate structure shaped by the audit. It includes a
@@ -257,10 +257,10 @@ export default async function UnderstandingFafsaPage() {
             Mailchimp-native structure. The counselor toolkit needed more image work and tighter file
             discipline for its duotone icons. What I wouldn&apos;t trade for a few kilobytes:
             typography tuned to the closest Mailchimp sans to the site&apos;s Saans typeface, and the
-            full brand palette — even when trying to maintain the founder&apos;s appetite for vibrancy.
+            full brand palette, even when trying to maintain the founder&apos;s appetite for vibrancy.
           </p>
           <p>
-            Same students block in Figma and Mailchimp — layout guides and spacing rails in design,
+            Same students block in Figma and Mailchimp: layout guides and spacing rails in design,
             editable modules in the builder.
           </p>
         </div>
@@ -288,8 +288,8 @@ export default async function UnderstandingFafsaPage() {
             excluded), with clicks, bounces, and unsubscribes still in a healthy band.
           </p>
           <p>
-            The counselor-focused toolkit — extending the same system for a more professional
-            audience — is nearly complete and shipping soon.
+            The counselor-focused toolkit, extending the same system for a more professional
+            audience, is nearly complete and shipping soon.
           </p>
           <p>
             The Mailchimp template set the structure for what non-web asset creation could look like.

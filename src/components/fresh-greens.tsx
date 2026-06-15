@@ -284,7 +284,7 @@ export function ProcessGraph() {
         xmlns="http://www.w3.org/2000/svg"
         className="fg-arch-svg"
         role="img"
-        aria-label="Three knowledge sources — the codebase, the running log of design conversations, and the thesis document — merge into one queryable memory called graphify, so any decision in the build stays reconstructible."
+        aria-label="Three knowledge sources (the codebase, the running log of design conversations, and the thesis document) merge into one queryable memory called graphify, so any decision in the build stays reconstructible."
       >
         <defs>
           <marker
@@ -404,7 +404,7 @@ const SIGNALS = [
     color: "#2f6b46",
     name: "Green",
     role: "In-flow action",
-    note: "The brand greens carry every CTA, link, and secondary action — the only non-reserved color allowed to mean \"go.\"",
+    note: "The brand greens carry every CTA, link, and secondary action: the only non-reserved color allowed to mean \"go.\"",
   },
   {
     color: "#d24a3b",
@@ -422,13 +422,13 @@ const SIGNALS = [
     color: "#e2b340",
     name: "Yellow",
     role: "Caution · favorite",
-    note: "General caution — and the gold star for trusted stations. A documented carve-out: the favorite-star is universal iconography (like an App Store rating), so it reads as \"saved,\" not \"warning.\"",
+    note: "General caution, and the gold star for trusted stations. A documented carve-out: the favorite-star is universal iconography (like an App Store rating), so it reads as \"saved,\" not \"warning.\"",
   },
   {
     color: "#284872",
     name: "Navy",
     role: "Safety-affordance mark",
-    note: "Reserved for the safety-affordance itself — the en-route safety-menu Shield and the /emergency SOS disc. Never used for data state or sync.",
+    note: "Reserved for the safety-affordance itself: the en-route safety-menu Shield and the /emergency SOS disc. Never used for data state or sync.",
   },
 ];
 

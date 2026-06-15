@@ -38,7 +38,7 @@ function RoutePreviewIllustration() {
   return (
     <ExpandableImage
       src="/projects/fresh-greens/feature-01-route-preview.png"
-      alt="Route preview screen — daylight-graded polyline from Manhattan to Newark Airport Express, ETA 31 min arriving at dusk, with a road conditions hazard chip and green Go button"
+      alt="Route preview screen: daylight-graded polyline from Manhattan to Newark Airport Express, ETA 31 min arriving at dusk, with a road conditions hazard chip and green Go button"
       width={390}
       height={844}
       style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
@@ -50,7 +50,7 @@ function DaylightMapIllustration() {
   return (
     <ExpandableImage
       src="/projects/fresh-greens/feature-02-daylight-route.png"
-      alt="Daylight-graded route preview — 131-mile NJ Turnpike route arriving after dark, polyline shifting from orange at departure through mauve to indigo at destination, with 'Safest route · arriving after dark' and an All clear chip"
+      alt="Daylight-graded route preview: 131-mile NJ Turnpike route arriving after dark, polyline shifting from orange at departure through mauve to indigo at destination, with 'Safest route · arriving after dark' and an All clear chip"
       width={390}
       height={844}
       style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
@@ -62,7 +62,7 @@ function CommunityBrowseIllustration() {
   return (
     <ExpandableImage
       src="/projects/fresh-greens/feature-03-community-browse.png"
-      alt="Community browse screen — 'Trusted by your community' leads the discovery rows with a Community pick card for Sisters restaurant, filter chips for Black-Owned, Women-Owned, and LGBTQ+ Welcoming, and an Open now row below"
+      alt="Community browse screen: 'Trusted by your community' leads the discovery rows with a Community pick card for Sisters restaurant, filter chips for Black-Owned, Women-Owned, and LGBTQ+ Welcoming, and an Open now row below"
       width={390}
       height={844}
       style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
@@ -74,7 +74,7 @@ function NavigationIllustration() {
   return (
     <ExpandableImage
       src="/projects/fresh-greens/feature-04-en-route.png"
-      alt="En-route navigation screen — dark green instruction header, 3D map with highlighted route, speedometer, and a right-side column with SOS, safety menu, and reporting buttons reachable from the driving thumb"
+      alt="En-route navigation screen: dark green instruction header, 3D map with highlighted route, speedometer, and a right-side column with SOS, safety menu, and reporting buttons reachable from the driving thumb"
       width={390}
       height={844}
       style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
@@ -86,7 +86,7 @@ function PulledOverIllustration() {
   return (
     <ExpandableImage
       src="/projects/fresh-greens/feature-05-pulled-over.png"
-      alt="/pulled-over screen — ACLU-sourced guidance bullets, ambient audio recording active with waveform, 'Saved to your phone — only you can access it' privacy note, and Continue button"
+      alt="/pulled-over screen: ACLU-sourced guidance bullets, ambient audio recording active with waveform, 'Saved to your phone, only you can access it' privacy note, and Continue button"
       width={390}
       height={844}
       style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
@@ -98,7 +98,7 @@ function SettingsIllustration() {
   return (
     <ExpandableImage
       src="/projects/fresh-greens/feature-06-settings.png"
-      alt="Settings index screen — iOS grouped-list with Refuel reminders, Zone Preferences, Safety, and Saved places, plus Privacy & Terms and Sign out as separate groups"
+      alt="Settings index screen: iOS grouped-list with Refuel reminders, Zone Preferences, Safety, and Saved places, plus Privacy & Terms and Sign out as separate groups"
       width={390}
       height={844}
       style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
@@ -110,7 +110,7 @@ function PreferredStationsIllustration() {
   return (
     <ExpandableImage
       src="/projects/fresh-greens/feature-08-preferred-stations.png"
-      alt="Gas on your route sheet — 10 stations, 3 trusted by you, with Shell Oil, Citgo Windhorse, and Citgo Gas & Diesel sorted to the top with green Trusted by you badges and filled gold stars, unstarred stations listed below"
+      alt="Gas on your route sheet: 10 stations, 3 trusted by you, with Shell Oil, Citgo Windhorse, and Citgo Gas & Diesel sorted to the top with green Trusted by you badges and filled gold stars, unstarred stations listed below"
       width={390}
       height={844}
       style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
@@ -122,7 +122,7 @@ function CalendarIllustration() {
   return (
     <ExpandableImage
       src="/projects/fresh-greens/feature-07-calendar.png"
-      alt="Search screen showing upcoming calendar events — Dentist and Optometrist with addresses and time-until already populated, plus a fuel refuel reminder, all surfaced without opening a separate view"
+      alt="Search screen showing upcoming calendar events: Dentist and Optometrist with addresses and time-until already populated, plus a fuel refuel reminder, all surfaced without opening a separate view"
       width={390}
       height={844}
       style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
@@ -134,7 +134,7 @@ const FEATURES = [
   {
     number: "01",
     title: "Route preview that shows its work",
-    copy: "OpenStreetMap, OSRM, SunCalc, and community reports score the candidate route, then the preview surfaces hazard chips alongside an all-clear chip — a briefing, not an alarm. The preview is also a selector: swipe the ETA or tap a gray alternate line to switch routes. The recommended route reads “Safest route”; alternates read “Alternate route · X min faster/longer,” never relabeled. Tapping any hazard chip pans the map to that zone and opens the matching detail surface — the chip is a navigation control, not just a label.",
+    copy: "OpenStreetMap, OSRM, SunCalc, and community reports score the candidate route, then the preview surfaces hazard chips alongside an all-clear chip, a briefing, not an alarm. The preview is also a selector: swipe the ETA or tap a gray alternate line to switch routes. The recommended route reads “Safest route”; alternates read “Alternate route · X min faster/longer,” never relabeled. Tapping any hazard chip pans the map to that zone and opens the matching detail surface. The chip is a navigation control, not just a label.",
     thesis:
       "Trust scales when the system narrates its reasoning. The chips are the audit log made legible.",
     illustration: <RoutePreviewIllustration />,
@@ -150,7 +150,7 @@ const FEATURES = [
   {
     number: "03",
     title: "Multi-row community browse",
-    copy: "Discovery rows sorted by what the community trusts — 'Trusted by your community' leads, before anything algorithmic. The featured card surfaces a real community pick with the note whoever marked it left behind. Filter chips for Black-Owned, Women-Owned, LGBTQ+ Welcoming sit above the rows. The order is an editorial decision, not a default.",
+    copy: "Discovery rows sorted by what the community trusts. 'Trusted by your community' leads, before anything algorithmic. The featured card surfaces a real community pick with the note whoever marked it left behind. Filter chips for Black-Owned, Women-Owned, LGBTQ+ Welcoming sit above the rows. The order is an editorial decision, not a default.",
     thesis:
       "The order signals the priority. Community-vetted places appear first because respondents named community knowledge as the authority worth trusting.",
     illustration: <CommunityBrowseIllustration />,
@@ -158,7 +158,7 @@ const FEATURES = [
   {
     number: "04",
     title: "En-route safety column",
-    copy: "Three controls, fixed to the right edge while navigation runs — SOS, safety menu, and reporting. All reachable from the driving thumb. Road condition warnings surface in the instruction header itself, the same bar that tells you where to turn.",
+    copy: "Three controls, fixed to the right edge while navigation runs: SOS, safety menu, and reporting. All reachable from the driving thumb. Road condition warnings surface in the instruction header itself, the same bar that tells you where to turn.",
     thesis:
       "Safety controls earn screen space when you need them most. They don't hide in a settings tray.",
     illustration: <NavigationIllustration />,
@@ -166,7 +166,7 @@ const FEATURES = [
   {
     number: "05",
     title: "/pulled-over · five-phase safety surface",
-    copy: "The sheet opens already recording — waveform live, timer counting. ACLU guidance lays out your rights in plain language: what you're not required to say, what you don't have to consent to. A 'Read aloud' option for when your hands stay on the wheel. Audio saves to the phone only — nothing leaves the device. Trusted contact is one Continue tap forward.",
+    copy: "The sheet opens already recording, waveform live, timer counting. ACLU guidance lays out your rights in plain language: what you're not required to say, what you don't have to consent to. A 'Read aloud' option for when your hands stay on the wheel. Audio saves to the phone only. Nothing leaves the device. Trusted contact is one Continue tap forward.",
     thesis:
       "The most charged moment of the product gets the calmest surface in the design.",
     illustration: <PulledOverIllustration />,
@@ -174,7 +174,7 @@ const FEATURES = [
   {
     number: "06",
     title: "iOS grouped settings register",
-    copy: "The settings index — Refuel reminders, Zone Preferences, Safety, Saved places — in iOS's native grouped-list register. Real rows, real labels. Each sub-page uses the same pattern: no custom controls dressed up to look native. Settings that aren't fully wired are labeled as such, not hidden.",
+    copy: "The settings index (Refuel reminders, Zone Preferences, Safety, Saved places) in iOS's native grouped-list register. Real rows, real labels. Each sub-page uses the same pattern: no custom controls dressed up to look native. Settings that aren't fully wired are labeled as such, not hidden.",
     thesis:
       "The UI state reflects real capability. Nothing pretends to do what it doesn't.",
     illustration: <SettingsIllustration />,
@@ -182,7 +182,7 @@ const FEATURES = [
   {
     number: "07",
     title: "Connect-Calendar · one-tap safe routing",
-    copy: "Upcoming located events surface in the search screen — address and time-until already there. Tap any of them to route safely without retyping the destination. The refuel reminder lives in the same view: the next scheduled date, not buried in settings.",
+    copy: "Upcoming located events surface in the search screen, address and time-until already there. Tap any of them to route safely without retyping the destination. The refuel reminder lives in the same view: the next scheduled date, not buried in settings.",
     thesis:
       "Your day's destinations are usually already on your calendar. This routes you to them safely without making you type them again.",
     illustration: <CalendarIllustration />,
@@ -190,7 +190,7 @@ const FEATURES = [
   {
     number: "08",
     title: "Preferred stations · trusted gas, on your route",
-    copy: "Star any station from the on-route fuel sheet and it floats to the top on every future trip — a Trusted by you badge, filled star, sorted by distance. The subtitle says it plainly: 3 trusted by you. On the route preview, a quiet note appears when one falls near your chosen route. Personal, not algorithmic.",
+    copy: "Star any station from the on-route fuel sheet and it floats to the top on every future trip, a Trusted by you badge, filled star, sorted by distance. The subtitle says it plainly: 3 trusted by you. On the route preview, a quiet note appears when one falls near your chosen route. Personal, not algorithmic.",
     thesis:
       "The Green Book opened with a list of safe service stations for Black travelers. This is that, personal: the digital descendant of a community-trusted-establishments list, kept by the driver themselves.",
     illustration: <PreferredStationsIllustration />,
@@ -296,13 +296,13 @@ export default async function FreshGreensPage() {
             A wayfinding tool for Black drivers can&apos;t be designed without
             that community at the table. The research that grounds Fresh
             Greens is six semi-structured interviews with Black drivers raised
-            in — or still living across — the Southern US. All of them
+            in, or still living across, the Southern US. All of them
             long-time users of Google Maps, Waze, or Apple Maps.
             Broad-to-narrow questions, with the road itself as the prompt.
           </p>
           <p>
             What surfaced was expertise, not vulnerability. Participants
-            described autonomy and belonging alongside the trepidation — the
+            described autonomy and belonging alongside the trepidation: the
             anticipation of a familiar turn toward family, landmarks tied to
             memory, the gas stations that stop being a reprieve. They had a
             working taxonomy, one that could be translated to something
@@ -315,22 +315,22 @@ export default async function FreshGreensPage() {
           <ul>
             <li>
               <strong>Light:</strong> drivers plan around sunrise and sunset
-              and lean toward well-lit roads in unfamiliar areas — SunCalc
+              and lean toward well-lit roads in unfamiliar areas: SunCalc
               daylight gradient, low-light zone flag.
             </li>
             <li>
               <strong>Police:</strong> recurring, inherited caution around
-              confrontation — police-presence zone.
+              confrontation: police-presence zone.
             </li>
             <li>
               <strong>Wildlife:</strong> deep wariness of dense tree cover and
-              deer, a habit forged by where you were raised — wildlife-crossing
+              deer, a habit forged by where you were raised: wildlife-crossing
               zone (OpenStreetMap data).
             </li>
             <li>
               <strong>Road conditions:</strong> flooding and chronic
               underfunding in New Orleans and some areas of Texas, unfinished
-              dirt roads still common outside metros — road-condition zone.
+              dirt roads still common outside metros: road-condition zone.
             </li>
           </ul>
           <p className="fg-research-landing">
@@ -364,7 +364,7 @@ export default async function FreshGreensPage() {
         <div className="project-section-body">
           <p>
             Every safety decision in the app traces to a public, auditable data
-            source — never to a black-box model. The architecture exists so that
+            source, never to a black-box model. The architecture exists so that
             stance survives implementation.
           </p>
         </div>
@@ -425,7 +425,7 @@ export default async function FreshGreensPage() {
             Red, orange, yellow, and navy are reserved for safety: each tied
             to one specific meaning, never used as chrome or decoration.
             That&apos;s what lets a red dot or an orange chip actually mean
-            something when it shows up. Documented carve-outs exist — the
+            something when it shows up. Documented carve-outs exist: the
             yellow favorite-star reads as &quot;saved,&quot; not
             &quot;warning&quot;. Acknowledged not hidden.
           </p>
@@ -441,8 +441,8 @@ export default async function FreshGreensPage() {
               changes along your projected arrival. It&apos;s an exception to
               the reserved-color system: not a signal, just the literal color
               of daylight at each segment. A dash pattern carries the same
-              information — solid for day, dashed for twilight, dotted for
-              night — so the cue still reads when the hue doesn&apos;t. WCAG
+              information (solid for day, dashed for twilight, dotted for
+              night) so the cue still reads when the hue doesn&apos;t. WCAG
               1.4.1, in the place that matters.
             </p>
             <DaylightLegend />
@@ -454,7 +454,7 @@ export default async function FreshGreensPage() {
               approach gets tested. At the most charged moment, most safety
               products reach for red and urgency. Fresh Greens reaches for
               muted greens, generous space, and ACLU-sourced guidance. The
-              thinking is that composure is the protective stance — not alarm.
+              thinking is that composure is the protective stance, not alarm.
             </p>
           </div>
         </div>
@@ -515,11 +515,11 @@ export default async function FreshGreensPage() {
             <ul className="fg-scope-list" role="list">
               <li>
                 Community reports score routes locally; an optional Supabase
-                cloud sync now exists — what&apos;s v2 is making it the
+                cloud sync now exists. What&apos;s v2 is making it the
                 default and scaling the backend
               </li>
               <li>
-                Turn-by-turn narration is placeholder copy — OSRM returns
+                Turn-by-turn narration is placeholder copy. OSRM returns
                 geometry, the voice layer is next
               </li>
               <li>/report photo capture is stubbed pending the backend</li>

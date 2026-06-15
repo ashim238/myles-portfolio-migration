@@ -330,15 +330,15 @@ export function LockedSwappableView() {
         <li>
           <span className="uf-lock-key uf-lock-key--swap" aria-hidden="true" />
           <span>
-            <strong>Swappable</strong> — editors change each send: headlines, body copy, emoji icons,
-            article links.
+            <strong>Swappable</strong>: editors change each send (headlines, body copy, emoji icons,
+            article links).
           </span>
         </li>
         <li>
           <span className="uf-lock-key uf-lock-key--lock" aria-hidden="true" />
           <span>
-            <strong>Locked</strong> — structure holds every send: wave dividers, padding rails,
-            section rhythm, footer skeleton.
+            <strong>Locked</strong>: structure holds every send (wave dividers, padding rails,
+            section rhythm, footer skeleton).
           </span>
         </li>
       </ul>

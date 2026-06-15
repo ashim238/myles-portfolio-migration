@@ -384,7 +384,7 @@ export function DesignSystemShowroom() {
 const COMPOSITION_CARDS = [
   { title: "Weekend in Harlem", copy: "Jazz history, local bakeries, and a sunset walk through St. Nicholas Park." },
   { title: "Chinatown food crawl", copy: "Dim sum counters and tea shops curated by residents, not star ratings." },
-  { title: "LES art walk", copy: "Gallery openings and community murals — timed for quieter weekday mornings." },
+  { title: "LES art walk", copy: "Gallery openings and community murals, timed for quieter weekday mornings." },
 ] as const;
 
 export function CompositionStrip() {

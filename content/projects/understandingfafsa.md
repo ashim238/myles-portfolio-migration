@@ -1,7 +1,7 @@
 ---
 slug: understandingfafsa
 title: UnderstandingFAFSA
-summary: Redesigned a newsletter system to match a fresh site rebrand—modular templates, competitive research across 120+ examples, and a 75% lift in open rates.
+summary: Redesigned a newsletter system to match a fresh site rebrand. Modular templates, competitive research across 120+ examples, and a 75% lift in open rates.
 role: Product Designer
 timeframe: February 2025 - Ongoing
 status: published
