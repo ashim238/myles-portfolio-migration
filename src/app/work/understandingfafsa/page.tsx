@@ -9,7 +9,7 @@ import { ProjectWorkJump } from "@/components/project-work-jump";
 import {
   BeforeAfterPhones,
   FigmaMailchimpPair,
-  LockedSwappableToggle,
+  LockedSwappableView,
   ModularBlockGallery,
   TemplateSwitcher,
 } from "@/components/understandingfafsa";
@@ -216,7 +216,7 @@ export default async function UnderstandingFafsaPage() {
 
         <ModularBlockGallery />
 
-        <LockedSwappableToggle />
+        <LockedSwappableView />
 
         <ColorPalette colors={UF_COLORS} />
 

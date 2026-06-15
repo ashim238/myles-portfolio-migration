@@ -6177,14 +6177,23 @@ button:focus-visible,
 }
 
 .uf-switcher-preview,
-.uf-lock-preview {
+.uf-lock-stage {
   position: relative;
   max-width: 34rem;
+  border-radius: 0.35rem;
+  overflow: hidden;
   animation: uf-fade-in 200ms ease;
 }
 
-.uf-switcher-preview--static,
-.uf-lock-preview--static {
+.uf-lock-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.uf-switcher-preview--static {
   animation: none;
 }
 
@@ -6226,6 +6235,37 @@ button:focus-visible,
   font-size: 0.92rem;
   color: var(--muted);
   max-width: 34rem;
+}
+
+.uf-lock-legend {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.uf-lock-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.uf-lock-legend strong {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.uf-lock-key {
+  flex: 0 0 32px;
+  height: 0;
+}
+
+.uf-lock-key--swap {
+  border-top: 3px solid #f26938;
+}
+
+.uf-lock-key--lock {
+  border-top: 3px dashed #164f73;
 }
 
 .uf-switcher-note {
@@ -6288,37 +6328,6 @@ button:focus-visible,
   .uf-gallery-card:first-child {
     margin-top: 0 !important;
   }
-}
-
-/* ── Locked / swappable overlay ────────────────────────── */
-
-.uf-lock-preview .expandable-trigger {
-  display: block;
-  width: 100%;
-}
-
-.uf-overlay-stack {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  border-radius: 0.35rem;
-  overflow: hidden;
-}
-
-.uf-overlay-zone {
-  position: absolute;
-  border-radius: 0.2rem;
-  transition: opacity 200ms ease;
-}
-
-.uf-lock-preview[data-mode="swappable"] .uf-overlay-zone {
-  background: color-mix(in srgb, var(--uf-accent-warm) 12%, transparent);
-  outline: 1px solid color-mix(in srgb, var(--uf-accent-warm) 35%, transparent);
-}
-
-.uf-lock-preview[data-mode="locked"] .uf-overlay-zone {
-  background: color-mix(in srgb, var(--uf-accent-cool) 12%, transparent);
-  outline: 1px solid color-mix(in srgb, var(--uf-accent-cool) 35%, transparent);
 }
 
 /* ── Figma pair ────────────────────────────────────────── */
@@ -6406,13 +6415,8 @@ button:focus-visible,
     transform: rotate(var(--uf-gallery-rotate, 0deg));
   }
 
-  .uf-switcher-preview,
-  .uf-lock-preview {
+  .uf-switcher-preview {
     animation: none;
-  }
-
-  .uf-overlay-zone {
-    transition: none;
   }
 }
 
