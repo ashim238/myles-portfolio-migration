@@ -817,14 +817,14 @@ html.home-intro-wait .home-page #work > .work-list > .work-item {
   animation: fadeUp 420ms ease-out both;
 }
 
-/* Legacy left column — kept in case any other surface references it.
-   The current site-nav puts the logo as a direct child of .site-header
-   and groups nav + theme toggle in .site-header-right. */
+/* Logo + theme toggle on one baseline.
+   Pairing the toggle with the logo (both shell-level controls) keeps it
+   anchored at every width; the right column stays pure navigation. */
 .site-header-left {
   display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.85rem;
 }
 
 .site-header-right {

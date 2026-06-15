@@ -22,7 +22,7 @@ function finishEntrance(main: HTMLElement, skipAnimation: boolean) {
   }
 }
 
-function runEntranceTimeline(main: HTMLElement) {
+function runEntranceTimeline(main: HTMLElement, settle: (skipAnimation: boolean) => void) {
   main.classList.add("home-entrance-active");
 
   const kicker = main.querySelector(".site-kicker");
@@ -83,7 +83,7 @@ function runEntranceTimeline(main: HTMLElement) {
   }
 
   timeline.then(() => {
-    finishEntrance(main, false);
+    settle(false);
   });
 }
 
@@ -92,30 +92,42 @@ export function HomeEntrance() {
     const main = document.querySelector<HTMLElement>(".home-page");
     if (!main) return;
 
+    let completed = false;
+    const settle = (skipAnimation: boolean) => {
+      if (completed) return;
+      completed = true;
+      finishEntrance(main, skipAnimation);
+    };
+
     const entranceSeen = sessionStorage.getItem(HOME_ENTRANCE_KEY) === "1";
     const reduced = prefersReducedMotion();
 
     if (entranceSeen || reduced) {
-      finishEntrance(main, true);
+      settle(true);
       return;
     }
 
     const startEntrance = () => {
       document.documentElement.classList.remove("home-intro-wait");
-      runEntranceTimeline(main);
+      runEntranceTimeline(main, settle);
     };
 
     const browserSeen = sessionStorage.getItem(HOME_BROWSER_INTRO_KEY) === "1";
 
     if (browserSeen) {
       startEntrance();
-      return;
+    } else {
+      window.addEventListener(HOME_BROWSER_INTRO_COMPLETE, startEntrance, { once: true });
     }
 
-    window.addEventListener(HOME_BROWSER_INTRO_COMPLETE, startEntrance, { once: true });
+    // Failsafe: if the choreography stalls (slow bundle, anime.js failure, a
+    // dropped browser-intro event), force the final visible state so the hero
+    // is never left hidden by the entrance classes.
+    const failsafe = window.setTimeout(() => settle(true), 3500);
 
     return () => {
       window.removeEventListener(HOME_BROWSER_INTRO_COMPLETE, startEntrance);
+      window.clearTimeout(failsafe);
     };
   }, []);
 

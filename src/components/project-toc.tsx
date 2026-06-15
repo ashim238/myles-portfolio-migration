@@ -83,6 +83,37 @@ export function ProjectToc({ sections }: ProjectTocProps) {
     []
   );
 
+  // Roving keyboard navigation: arrows/Home/End move focus between links;
+  // Enter/Space still activate via the native button.
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+      const last = sections.length - 1;
+      let target: number;
+      switch (event.key) {
+        case "ArrowDown":
+        case "ArrowRight":
+          target = index >= last ? 0 : index + 1;
+          break;
+        case "ArrowUp":
+        case "ArrowLeft":
+          target = index <= 0 ? last : index - 1;
+          break;
+        case "Home":
+          target = 0;
+          break;
+        case "End":
+          target = last;
+          break;
+        default:
+          return;
+      }
+      event.preventDefault();
+      const links = listRef.current?.querySelectorAll<HTMLButtonElement>(".project-toc-link");
+      links?.[target]?.focus();
+    },
+    [sections.length]
+  );
+
   const activeIndex = sections.findIndex((s) => s.id === activeId);
   const activeTitle = activeIndex >= 0 ? sections[activeIndex].title : sections[0]?.title ?? "";
   const activeNum = String(activeIndex >= 0 ? activeIndex + 1 : 1).padStart(2, "0");
@@ -138,6 +169,7 @@ export function ProjectToc({ sections }: ProjectTocProps) {
                   ref={isActive ? activeItemRef : undefined}
                   className={`project-toc-link${isActive ? " project-toc-link--active" : ""}`}
                   onClick={() => handleClick(section.id)}
+                  onKeyDown={(event) => handleKeyDown(event, i)}
                   aria-current={isActive ? "true" : undefined}
                 >
                   <span className="project-toc-dot" aria-hidden="true" />

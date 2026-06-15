@@ -22,6 +22,7 @@ export function WorkShowcase({ projects }: WorkShowcaseProps) {
   const shellRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [focusedIndex, setFocusedIndex] = useState(-1);
   const [focusReady, setFocusReady] = useState(false);
 
   const updateFocusState = useCallback(() => {
@@ -85,6 +86,28 @@ export function WorkShowcase({ projects }: WorkShowcaseProps) {
     };
   }, [projects.length, updateFocusState]);
 
+  // Keyboard parity: focusing a card makes it the active one, so its metric
+  // and depth treatment appear for keyboard users (scroll alone won't fire).
+  const handleListFocus = useCallback((event: React.FocusEvent<HTMLUListElement>) => {
+    const item = (event.target as HTMLElement).closest<HTMLElement>(".work-showcase-item");
+    if (!item) return;
+    const index = Number(item.dataset.projectIndex);
+    if (Number.isNaN(index)) return;
+    setFocusedIndex(index);
+
+    const list = listRef.current;
+    if (list && !prefersReducedMotion()) {
+      const items = list.querySelectorAll<HTMLElement>(".work-showcase-item");
+      clearParallax(items);
+      applyActiveParallax(items[index] ?? null, true);
+    }
+  }, []);
+
+  const handleListBlur = useCallback((event: React.FocusEvent<HTMLUListElement>) => {
+    if (event.currentTarget.contains(event.relatedTarget as Node | null)) return;
+    setFocusedIndex(-1);
+  }, []);
+
   const scrollToProject = useCallback((index: number) => {
     const list = listRef.current;
     if (!list) return;
@@ -107,6 +130,9 @@ export function WorkShowcase({ projects }: WorkShowcaseProps) {
   }
 
   const depthEnabled = focusReady && !prefersReducedMotion();
+  // A focused card wins over the scroll-centered one as the single active item.
+  const isFocusDriven = focusedIndex >= 0;
+  const effectiveActive = isFocusDriven ? focusedIndex : activeIndex;
 
   return (
     <div
@@ -119,14 +145,20 @@ export function WorkShowcase({ projects }: WorkShowcaseProps) {
         activeIndex={activeIndex}
         onSelect={scrollToProject}
       />
-      <ul ref={listRef} className="work-list work-showcase" role="list">
+      <ul
+        ref={listRef}
+        className="work-list work-showcase"
+        role="list"
+        onFocus={handleListFocus}
+        onBlur={handleListBlur}
+      >
         {projects.map((project, index) => (
           <WorkProjectCard
             key={project.slug}
             project={project}
             index={index}
-            isActive={depthEnabled && index === activeIndex}
-            focusDistance={depthEnabled ? clampFocusDistance(index, activeIndex) : 0}
+            isActive={index === effectiveActive && (depthEnabled || isFocusDriven)}
+            focusDistance={depthEnabled ? clampFocusDistance(index, effectiveActive) : 0}
           />
         ))}
       </ul>
