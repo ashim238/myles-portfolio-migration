@@ -1715,6 +1715,24 @@ button:focus-visible,
   background: var(--surface);
 }
 
+.play-embed-fallback {
+  margin: 0.55rem 0 0;
+  font-size: 0.85rem;
+}
+
+.play-embed-fallback a {
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 180ms ease, border-color 180ms ease;
+}
+
+.play-embed-fallback a:hover,
+.play-embed-fallback a:focus-visible {
+  color: var(--foreground);
+  border-color: var(--line);
+}
+
 .play-embed {
   display: block;
   width: 100%;
