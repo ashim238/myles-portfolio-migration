@@ -6,6 +6,7 @@ import {
   useState,
   useEffect,
   useCallback,
+  useRef,
   type ReactNode,
 } from "react";
 import Image from "next/image";
@@ -24,8 +25,13 @@ export function useLightbox() {
 
 export function LightboxProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<LightboxState>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
 
   const openLightbox = useCallback((src: string, alt: string) => {
+    // Remember what opened the dialog so focus can return there on close.
+    triggerRef.current =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null;
     setState({ src, alt });
   }, []);
 
@@ -33,12 +39,28 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!state) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") close(); };
+    const closeBtn = frameRef.current?.querySelector<HTMLButtonElement>(".lb-close");
+    closeBtn?.focus();
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        close();
+        return;
+      }
+      // The close button is the only focusable control in the dialog; keep
+      // focus trapped on it so Tab never lands behind the modal.
+      if (e.key === "Tab") {
+        e.preventDefault();
+        closeBtn?.focus();
+      }
+    };
     window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
     return () => {
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
+      triggerRef.current?.focus();
+      triggerRef.current = null;
     };
   }, [state, close]);
 
@@ -57,6 +79,7 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
 
           {/* Content — sits above the backdrop, does NOT stop propagation */}
           <div
+            ref={frameRef}
             className="lb-frame"
             role="dialog"
             aria-modal="true"
