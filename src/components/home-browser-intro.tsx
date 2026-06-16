@@ -189,8 +189,6 @@ export function HomeBrowserIntro({
     return null;
   }
 
-  const firstName = siteName.split(" ")[0] ?? siteName;
-
   return (
     <div className="browser-intro-overlay" aria-hidden="true" data-nosnippet>
       <div className="browser-intro-desktop">
@@ -212,7 +210,8 @@ export function HomeBrowserIntro({
                 </div>
                 <p className="browser-intro-preview-name">{siteName}</p>
                 <p className="browser-intro-preview-line">
-                  {firstName} builds useful digital experiences.
+                  Focused on the balance between interaction design &amp; social
+                  responsibility.
                 </p>
                 <div className="browser-intro-preview-blocks">
                   <span />
@@ -244,7 +243,8 @@ export function HomeBrowserIntro({
                 <p className="browser-intro-mobile-url">{siteUrl}</p>
                 <p className="browser-intro-mobile-name">{siteName}</p>
                 <p className="browser-intro-mobile-line">
-                  {firstName} builds useful digital experiences.
+                  Focused on the balance between interaction design &amp; social
+                  responsibility.
                 </p>
                 <div className="browser-intro-mobile-blocks">
                   <span />
