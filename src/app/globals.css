@@ -3189,7 +3189,7 @@ button:focus-visible,
 /* ── Phone frame ──────────────────────────────────────── */
 
 .fg-phone {
-  --phone-w: 240px;
+  --phone-w: 276px;
   width: var(--phone-w);
   margin: 0 auto;
   filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.32));
@@ -3434,7 +3434,7 @@ button:focus-visible,
 
 .fg-feature {
   display: grid;
-  grid-template-columns: 240px 1fr;
+  grid-template-columns: 276px 1fr;
   gap: 1.6rem;
   align-items: start;
 }
