@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   NAVI_PRIMITIVES,
+  NAVI_RADII,
   NAVI_SEMANTIC,
   NAVI_SPACING,
   NAVI_TYPE,
@@ -33,5 +34,9 @@ describe("navi tokens", () => {
   it("type ramp names display + body families", () => {
     expect(NAVI_TYPE.display.family).toContain("Jost");
     expect(NAVI_TYPE.body.family).toContain("Lato");
+  });
+
+  it("radii are string pixel values", () => {
+    expect(NAVI_RADII.pill).toBe("999px");
   });
 });

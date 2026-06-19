@@ -6552,12 +6552,15 @@ button:focus-visible,
   --nv-r-lg: 16px;
   --nv-r-pill: 999px;
 
+  --nv-sp-3xs: 2px;
   --nv-sp-2xs: 4px;
   --nv-sp-xs: 8px;
   --nv-sp-sm: 12px;
   --nv-sp-md: 16px;
   --nv-sp-lg: 24px;
   --nv-sp-xl: 32px;
+  --nv-sp-2xl: 64px;
+  --nv-sp-3xl: 128px;
 
   font-family: var(--nv-font-body), system-ui, sans-serif;
   color: var(--nv-text);
@@ -6571,7 +6574,10 @@ button:focus-visible,
 
 .nv-ui h1,
 .nv-ui h2,
-.nv-ui h3 {
+.nv-ui h3,
+.nv-ui h4,
+.nv-ui h5,
+.nv-ui h6 {
   font-family: var(--nv-font-display), system-ui, sans-serif;
 }
 
@@ -6606,7 +6612,9 @@ button:focus-visible,
   padding: var(--nv-sp-xs) var(--nv-sp-md);
   border: 1px solid var(--nv-action);
   border-radius: var(--nv-r-pill);
-  color: var(--nv-action) !important;
+}
+.nv-nav a.nv-nav-host {
+  color: var(--nv-action);
 }
 .nv-footer {
   display: flex;

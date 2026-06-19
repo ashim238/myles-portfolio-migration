@@ -11,11 +11,11 @@ export function NaviFooter() {
       </div>
       {cols.map((c) => (
         <nav key={c.heading} className="nv-footer-col" aria-label={c.heading}>
-          <p className="nv-footer-heading">{c.heading}</p>
+          <h2 className="nv-footer-heading">{c.heading}</h2>
           <ul>
             {c.links.map((l) => (
               <li key={l}>
-                <a href="#">{l}</a>
+                <a href="/work/navi">{l}</a>
               </li>
             ))}
           </ul>
