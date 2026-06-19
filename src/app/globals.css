@@ -6721,3 +6721,17 @@ button:focus-visible,
 }
 .nv-impact-icon { display: inline-flex; color: var(--nv-impact-icon); }
 
+/* ── Rating ─────────────────────────────────────────────────────── */
+.nv-rating { display: inline-flex; align-items: center; gap: var(--nv-sp-xs); }
+.nv-rating-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--nv-r-sm);
+  background: var(--nv-action);
+  color: var(--nv-text-on-action);
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+.nv-rating-reviews { color: var(--nv-text-muted); font-size: 0.82rem; }
+
