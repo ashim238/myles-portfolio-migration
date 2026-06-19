@@ -6766,3 +6766,19 @@ button:focus-visible,
 .nv-tab:hover { color: var(--nv-action); }
 .nv-tab--selected { color: var(--nv-text); border-bottom-color: var(--nv-action); }
 
+/* ── Accordion ──────────────────────────────────────────────────── */
+.nv-accordion-row { border-bottom: 1px solid var(--nv-border); }
+.nv-accordion-trigger {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: var(--nv-sp-md) 0;
+  font-weight: 700;
+  color: var(--nv-text);
+  cursor: pointer;
+}
+.nv-accordion-panel { padding-bottom: var(--nv-sp-md); color: var(--nv-text-muted); }
+
