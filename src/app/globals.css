@@ -6862,3 +6862,12 @@ button:focus-visible,
 .nv-specimen-title { font-size: 1.25rem; margin-bottom: var(--nv-sp-2xs); }
 .nv-specimen-note { color: var(--nv-text-muted); margin-bottom: var(--nv-sp-md); max-width: 60ch; }
 .nv-specimen-stage { display: flex; flex-wrap: wrap; gap: var(--nv-sp-md); align-items: center; }
+
+/* ── Task 19: PropPlayground ───────────────────────────────────── */
+.nv-playground { display: grid; gap: var(--nv-sp-md); border: 1px solid var(--nv-border); border-radius: var(--nv-r-lg); padding: var(--nv-sp-lg); }
+.nv-playground-stage { display: flex; justify-content: center; padding: var(--nv-sp-lg); background: var(--nv-surface-muted); border-radius: var(--nv-r-md); }
+.nv-playground-controls { display: flex; flex-wrap: wrap; gap: var(--nv-sp-lg); }
+.nv-playground-control { border: none; padding: 0; display: flex; gap: var(--nv-sp-sm); align-items: center; }
+.nv-playground-control legend { font-weight: 700; margin-right: var(--nv-sp-xs); }
+.nv-playground-opt { display: inline-flex; gap: 4px; align-items: center; }
+.nv-playground-code { background: var(--nv-robinson); color: var(--nv-text-on-action); padding: var(--nv-sp-sm); border-radius: var(--nv-r-sm); font-size: 0.82rem; overflow-x: auto; }
