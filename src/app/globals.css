@@ -6871,3 +6871,8 @@ button:focus-visible,
 .nv-playground-control legend { font-weight: 700; margin-right: var(--nv-sp-xs); }
 .nv-playground-opt { display: inline-flex; gap: 4px; align-items: center; }
 .nv-playground-code { background: var(--nv-robinson); color: var(--nv-text-on-action); padding: var(--nv-sp-sm); border-radius: var(--nv-r-sm); font-size: 0.82rem; overflow-x: auto; }
+
+/* ── Task 20: System page ──────────────────────────────────────── */
+.nv-system { max-width: 60rem; margin: 0 auto; padding: var(--nv-sp-xl) var(--nv-sp-lg); }
+.nv-system-head h1 { font-size: 2rem; }
+.nv-system-head p { color: var(--nv-text-muted); max-width: 65ch; margin-top: var(--nv-sp-sm); }
