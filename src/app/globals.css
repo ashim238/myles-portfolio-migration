@@ -6869,7 +6869,7 @@ button:focus-visible,
 .nv-playground-controls { display: flex; flex-wrap: wrap; gap: var(--nv-sp-lg); }
 .nv-playground-control { border: none; padding: 0; display: flex; gap: var(--nv-sp-sm); align-items: center; }
 .nv-playground-control legend { font-weight: 700; margin-right: var(--nv-sp-xs); }
-.nv-playground-opt { display: inline-flex; gap: 4px; align-items: center; }
+.nv-playground-opt { display: inline-flex; gap: var(--nv-sp-2xs); align-items: center; }
 .nv-playground-code { background: var(--nv-robinson); color: var(--nv-text-on-action); padding: var(--nv-sp-sm); border-radius: var(--nv-r-sm); font-size: 0.82rem; overflow-x: auto; }
 
 /* ── Task 20: System page ──────────────────────────────────────── */

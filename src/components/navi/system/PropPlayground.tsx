@@ -17,7 +17,13 @@ export function PropPlayground({
   initial: Values;
   render: (values: Values) => ReactNode;
 }) {
-  const [values, setValues] = useState<Values>(initial);
+  const [values, setValues] = useState<Values>(() => {
+    const seed: Values = { ...initial };
+    for (const c of controls) {
+      if (!(c.name in seed)) seed[c.name] = c.options[0];
+    }
+    return seed;
+  });
   const code = `<${component} ${Object.entries(values)
     .map(([k, v]) => `${k}="${v}"`)
     .join(" ")} />`;
@@ -27,7 +33,7 @@ export function PropPlayground({
       <div className="nv-playground-stage">{render(values)}</div>
       <div className="nv-playground-controls">
         {controls.map((c) => (
-          <fieldset key={c.name} className="nv-playground-control" role="radiogroup" aria-label={c.name}>
+          <fieldset key={c.name} className="nv-playground-control">
             <legend>{c.name}</legend>
             {c.options.map((opt) => (
               <label key={opt} className="nv-playground-opt">

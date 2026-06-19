@@ -21,6 +21,7 @@ describe("PropPlayground", () => {
     );
     expect(screen.getByRole("button", { name: "Go" })).toHaveClass("nv-btn--primary");
     expect(screen.getByTestId("nv-playground-code")).toHaveTextContent('variant="primary"');
+    expect(screen.getByTestId("nv-playground-code")).toHaveTextContent('size="md"');
   });
 
   it("updates the live component when a control changes", async () => {
