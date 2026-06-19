@@ -6548,6 +6548,7 @@ button:focus-visible,
   --nv-info: #3a86ff;
   --nv-disabled-bg: #d7d5d8;
   --nv-disabled-text: #8b8790;
+  --nv-text-on-action: #ffffff;
   --nv-local-bg: #e6f0e8;
   --nv-local-text: #2f5d3c;
   --nv-impact-icon: #3a7d4f;
@@ -6666,7 +6667,7 @@ button:focus-visible,
 .nv-btn--md { padding: 10px 18px; font-size: 0.95rem; }
 .nv-btn--lg { padding: 14px 24px; font-size: 1.05rem; }
 .nv-btn-icon { display: inline-flex; width: 1em; height: 1em; }
-.nv-btn--primary { background: var(--nv-action); color: #fff; }
+.nv-btn--primary { background: var(--nv-action); color: var(--nv-text-on-action); }
 .nv-btn--primary:hover { background: var(--nv-action-strong); }
 .nv-btn--transparent { background: transparent; color: var(--nv-action); }
 .nv-btn--transparent:hover { background: color-mix(in srgb, var(--nv-action) 10%, transparent); }
@@ -6689,10 +6690,12 @@ button:focus-visible,
 .nv-icon-btn--sm { width: 32px; height: 32px; }
 .nv-icon-btn--md { width: 40px; height: 40px; }
 .nv-icon-btn--lg { width: 48px; height: 48px; }
+.nv-icon-btn--primary { background: var(--nv-action); color: var(--nv-text-on-action); }
+.nv-icon-btn--primary:hover { background: var(--nv-action-strong); color: var(--nv-text-on-action); border-color: transparent; }
 .nv-icon-btn--outline { border-color: var(--nv-action); color: var(--nv-action); }
 .nv-icon-btn--transparent { background: transparent; }
 .nv-icon-btn:hover { color: var(--nv-action); border-color: var(--nv-action); }
-.nv-icon-btn:disabled { color: var(--nv-disabled-text); border-color: transparent; cursor: not-allowed; }
+.nv-icon-btn:disabled { background: var(--nv-disabled-bg); color: var(--nv-disabled-text); border-color: transparent; cursor: not-allowed; }
 
 /* ── Tag ────────────────────────────────────────────────────────── */
 .nv-tag {
@@ -6705,7 +6708,7 @@ button:focus-visible,
   background: var(--nv-surface-muted);
   color: var(--nv-text);
 }
-.nv-tag--popular { background: color-mix(in srgb, var(--nv-action) 14%, white); color: var(--nv-action-strong); }
+.nv-tag--popular { background: color-mix(in srgb, var(--nv-action) 14%, var(--nv-surface)); color: var(--nv-action-strong); }
 .nv-tag--local { background: var(--nv-local-bg); color: var(--nv-local-text); }
 
 /* ── ImpactSignal ───────────────────────────────────────────────── */

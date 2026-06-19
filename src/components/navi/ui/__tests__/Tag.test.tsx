@@ -13,4 +13,9 @@ describe("Tag", () => {
     render(<Tag tone="local">Locally-owned</Tag>);
     expect(screen.getByText("Locally-owned")).toHaveClass("nv-tag--local");
   });
+
+  it("applies the popular tone", () => {
+    render(<Tag tone="popular">Popular</Tag>);
+    expect(screen.getByText("Popular")).toHaveClass("nv-tag--popular");
+  });
 });

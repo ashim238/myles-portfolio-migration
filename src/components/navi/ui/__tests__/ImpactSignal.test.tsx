@@ -10,4 +10,9 @@ describe("ImpactSignal", () => {
     // group is labelled for assistive tech so it reads as an impact note
     expect(screen.getByRole("note")).toHaveAccessibleName(/impact/i);
   });
+
+  it("renders as a div when as='div'", () => {
+    render(<ImpactSignal as="div">Test</ImpactSignal>);
+    expect(screen.getByRole("note").tagName).toBe("DIV");
+  });
 });
