@@ -6751,3 +6751,18 @@ button:focus-visible,
 .nv-avatar--md { width: 40px; height: 40px; font-size: 0.85rem; }
 .nv-avatar--lg { width: 56px; height: 56px; font-size: 1rem; }
 
+/* ── Tabs ───────────────────────────────────────────────────────── */
+.nv-tabs { display: inline-flex; gap: var(--nv-sp-lg); border-bottom: 1px solid var(--nv-border); }
+.nv-tab {
+  background: none;
+  border: none;
+  padding: var(--nv-sp-xs) 0;
+  font-weight: 700;
+  color: var(--nv-text-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+.nv-tab:hover { color: var(--nv-action); }
+.nv-tab--selected { color: var(--nv-text); border-bottom-color: var(--nv-action); }
+
