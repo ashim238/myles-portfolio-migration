@@ -23,4 +23,18 @@ describe("Tabs", () => {
     await userEvent.click(screen.getByRole("tab", { name: "Go" }));
     expect(onChange).toHaveBeenCalledWith("go");
   });
+
+  it("uses roving tabindex (only the selected tab is tabbable)", () => {
+    render(<Tabs items={items} value="learn" onChange={() => {}} />);
+    expect(screen.getByRole("tab", { name: "Learn" })).toHaveAttribute("tabindex", "0");
+    expect(screen.getByRole("tab", { name: "Plan" })).toHaveAttribute("tabindex", "-1");
+  });
+
+  it("moves selection with ArrowRight", async () => {
+    const onChange = vi.fn();
+    render(<Tabs items={items} value="learn" onChange={onChange} />);
+    screen.getByRole("tab", { name: "Learn" }).focus();
+    await userEvent.keyboard("{ArrowRight}");
+    expect(onChange).toHaveBeenCalledWith("plan");
+  });
 });

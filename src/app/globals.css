@@ -6767,6 +6767,7 @@ button:focus-visible,
 .nv-tab--selected { color: var(--nv-text); border-bottom-color: var(--nv-action); }
 
 /* ── Accordion ──────────────────────────────────────────────────── */
+.nv-accordion { display: flex; flex-direction: column; width: 100%; }
 .nv-accordion-row { border-bottom: 1px solid var(--nv-border); }
 .nv-accordion-trigger {
   width: 100%;

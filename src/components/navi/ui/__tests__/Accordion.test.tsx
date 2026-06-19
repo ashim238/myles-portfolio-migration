@@ -24,4 +24,21 @@ describe("Accordion", () => {
     expect(trigger).toHaveAttribute("aria-expanded", "true");
     expect(screen.getByText("Funds park tree care.")).toBeVisible();
   });
+
+  it("labels each region by its trigger", async () => {
+    render(<Accordion items={items} />);
+    await userEvent.click(screen.getByRole("button", { name: "Impact initiative" }));
+    const region = screen.getByRole("region");
+    const labelledby = region.getAttribute("aria-labelledby");
+    expect(labelledby).toBeTruthy();
+    expect(document.getElementById(labelledby as string)).toHaveTextContent("Impact initiative");
+  });
+
+  it("collapses the previously open row when a new row is opened", async () => {
+    render(<Accordion items={items} />);
+    await userEvent.click(screen.getByRole("button", { name: "What to bring" }));
+    await userEvent.click(screen.getByRole("button", { name: "Impact initiative" }));
+    expect(screen.getByRole("button", { name: "What to bring" })).toHaveAttribute("aria-expanded", "false");
+    expect(screen.getByRole("button", { name: "Impact initiative" })).toHaveAttribute("aria-expanded", "true");
+  });
 });

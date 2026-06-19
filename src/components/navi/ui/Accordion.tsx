@@ -14,6 +14,7 @@ export function Accordion({ items }: { items: Item[] }) {
         return (
           <div key={it.id} className="nv-accordion-row">
             <button
+              id={`nv-trigger-${it.id}`}
               type="button"
               className="nv-accordion-trigger"
               aria-expanded={isOpen}
@@ -28,6 +29,7 @@ export function Accordion({ items }: { items: Item[] }) {
             <div
               id={`nv-acc-${it.id}`}
               role="region"
+              aria-labelledby={`nv-trigger-${it.id}`}
               hidden={!isOpen}
               className="nv-accordion-panel"
             >

@@ -15,4 +15,9 @@ describe("Avatar", () => {
     expect(img).toHaveAttribute("src", "/janice.jpg");
     expect(img.closest(".nv-avatar")).toHaveClass("nv-avatar--lg");
   });
+
+  it("falls back to '?' for an empty name", () => {
+    render(<Avatar name="   " />);
+    expect(screen.getByText("?")).toBeInTheDocument();
+  });
 });
