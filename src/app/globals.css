@@ -6783,3 +6783,19 @@ button:focus-visible,
 }
 .nv-accordion-panel { padding-bottom: var(--nv-sp-md); color: var(--nv-text-muted); }
 
+/* ── Tooltip ────────────────────────────────────────────────────── */
+.nv-tooltip { position: relative; display: inline-flex; }
+.nv-tooltip-bubble {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--nv-robinson);
+  color: var(--nv-text-on-action);
+  padding: var(--nv-sp-xs) var(--nv-sp-sm);
+  border-radius: var(--nv-r-sm);
+  font-size: 0.8rem;
+  white-space: nowrap;
+  z-index: 10;
+}
+
