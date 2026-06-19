@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Specimen } from "@/components/navi/system/Specimen";
 import { PropPlayground } from "@/components/navi/system/PropPlayground";
 import {
@@ -19,6 +20,18 @@ import {
   Label,
   Card,
 } from "@/components/navi/ui";
+
+function SearchInputDemo() {
+  const [q, setQ] = useState("");
+  return (
+    <SearchInput
+      label="Search experiences"
+      value={q}
+      onChange={setQ}
+      placeholder="e.g. pottery class"
+    />
+  );
+}
 
 export default function SystemPage() {
   return (
@@ -142,7 +155,7 @@ export default function SystemPage() {
       </Specimen>
 
       <Specimen title="Search input">
-        <SearchInput label="Search experiences" value="" onChange={() => {}} placeholder="e.g. pottery class" />
+        <SearchInputDemo />
       </Specimen>
 
       <Specimen title="Carousel controls">
