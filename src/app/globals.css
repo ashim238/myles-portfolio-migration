@@ -6528,3 +6528,50 @@ button:focus-visible,
   }
 }
 
+/* ── Navi mini-site scope (.nv-ui) ───────────────────────────────
+   Distinct from the case study's .nv-page. Light Navi product chrome.
+   Values mirror src/lib/navi/tokens.ts. */
+.nv-ui {
+  --nv-darwin: #f3722c;
+  --nv-gumball: #3a86ff;
+  --nv-robinson: #4a414d;
+
+  --nv-action: #c4541a;
+  --nv-action-strong: #9e3f0b;
+  --nv-surface: #ffffff;
+  --nv-surface-muted: #f5f5f5;
+  --nv-text: #2b2b2b;
+  --nv-text-muted: #5a5560;
+  --nv-border: #e2e0e3;
+  --nv-focus: #c4541a;
+  --nv-error: #c2371f;
+  --nv-info: #3a86ff;
+
+  --nv-r-sm: 6px;
+  --nv-r-md: 10px;
+  --nv-r-lg: 16px;
+  --nv-r-pill: 999px;
+
+  --nv-sp-2xs: 4px;
+  --nv-sp-xs: 8px;
+  --nv-sp-sm: 12px;
+  --nv-sp-md: 16px;
+  --nv-sp-lg: 24px;
+  --nv-sp-xl: 32px;
+
+  font-family: var(--nv-font-body), system-ui, sans-serif;
+  color: var(--nv-text);
+  background: var(--nv-surface);
+}
+
+.nv-ui :focus-visible {
+  outline: 2px solid var(--nv-focus);
+  outline-offset: 2px;
+}
+
+.nv-ui h1,
+.nv-ui h2,
+.nv-ui h3 {
+  font-family: var(--nv-font-display), system-ui, sans-serif;
+}
+
