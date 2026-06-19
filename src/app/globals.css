@@ -6568,6 +6568,8 @@ button:focus-visible,
   --nv-sp-2xl: 64px;
   --nv-sp-3xl: 128px;
 
+  --nv-pin-location: #2f7d4f;
+
   font-family: var(--nv-font-body), system-ui, sans-serif;
   color: var(--nv-text);
   background: var(--nv-surface);
@@ -6836,4 +6838,22 @@ button:focus-visible,
   white-space: nowrap;
   z-index: 10;
 }
+
+/* ── Card ───────────────────────────────────────────────────────── */
+.nv-card { background: var(--nv-surface); border: 1px solid var(--nv-border); border-radius: var(--nv-r-md); }
+.nv-card--padded { padding: var(--nv-sp-md); }
+
+/* ── MapPin ─────────────────────────────────────────────────────── */
+.nv-pin {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 36px; height: 28px; padding: 0 8px;
+  border-radius: var(--nv-r-pill);
+  font-size: 0.78rem; font-weight: 700;
+  border: 1.5px solid var(--nv-surface); /* white halo keeps the pin legible over the map */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.nv-pin--place { background: var(--nv-action); color: var(--nv-text-on-action); }
+.nv-pin--place.nv-pin--selected { background: var(--nv-action-strong); }
+.nv-pin--location { background: var(--nv-pin-location); color: var(--nv-text-on-action); min-width: 16px; }
+.nv-pin--hollow { background: var(--nv-surface); color: var(--nv-action); }
 

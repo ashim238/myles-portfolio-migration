@@ -1,0 +1,23 @@
+type Kind = "place" | "location";
+
+export function MapPin({
+  kind = "place",
+  value,
+  selected,
+  filled = true,
+}: {
+  kind?: Kind;
+  value?: string;
+  selected?: boolean;
+  filled?: boolean;
+}) {
+  return (
+    <span
+      className={`nv-pin nv-pin--${kind}${selected ? " nv-pin--selected" : ""}${
+        filled ? "" : " nv-pin--hollow"
+      }`}
+    >
+      {value && <span className="nv-pin-value">{value}</span>}
+    </span>
+  );
+}
