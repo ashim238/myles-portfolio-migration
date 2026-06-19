@@ -37,4 +37,17 @@ describe("Tabs", () => {
     await userEvent.keyboard("{ArrowRight}");
     expect(onChange).toHaveBeenCalledWith("plan");
   });
+
+  it("wires tab to panel via aria-controls/aria-labelledby when content is provided", () => {
+    const withContent = [
+      { id: "learn", label: "Learn", content: "Learn body" },
+      { id: "plan", label: "Plan", content: "Plan body" },
+    ];
+    render(<Tabs items={withContent} value="learn" onChange={() => {}} />);
+    const tab = screen.getByRole("tab", { name: "Learn" });
+    const panel = screen.getByRole("tabpanel");
+    expect(tab).toHaveAttribute("aria-controls", panel.id);
+    expect(panel).toHaveAttribute("aria-labelledby", tab.id);
+    expect(panel).toHaveTextContent("Learn body");
+  });
 });

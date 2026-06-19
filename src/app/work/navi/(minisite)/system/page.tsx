@@ -16,6 +16,8 @@ import {
   SearchInput,
   CarouselArrow,
   PaginationDots,
+  Label,
+  Card,
 } from "@/components/navi/ui";
 
 export default function SystemPage() {
@@ -84,10 +86,24 @@ export default function SystemPage() {
       </Specimen>
 
       <Specimen
+        title="Label"
+        note="Form-field label — required (semantic --nv-error) and help (semantic --nv-info), replacing the source's off-palette red/purple."
+      >
+        <Label htmlFor="demo-email" required>Email</Label>
+        <Label htmlFor="demo-phone" optional>Phone</Label>
+        <Label htmlFor="demo-org" help="Only used to confirm your booking.">Organization</Label>
+      </Specimen>
+
+      <Specimen title="Card">
+        <Card padded>A padded surface — the base container for experience cards.</Card>
+      </Specimen>
+
+      <Specimen
         title="Map pin"
         note="One pin system: orange place pins (darken when selected, white halo for legibility over imagery) + green current-location pin."
       >
         <MapPin kind="place" value="$48" />
+        <MapPin kind="place" value="$48" filled={false} />
         <MapPin kind="place" value="$48" selected />
         <MapPin kind="location" />
       </Specimen>

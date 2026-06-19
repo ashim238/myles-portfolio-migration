@@ -6876,3 +6876,5 @@ button:focus-visible,
 .nv-system { max-width: 60rem; margin: 0 auto; padding: var(--nv-sp-xl) var(--nv-sp-lg); }
 .nv-system-head h1 { font-size: 2rem; }
 .nv-system-head p { color: var(--nv-text-muted); max-width: 65ch; margin-top: var(--nv-sp-sm); }
+
+.nv-tabpanel { padding-top: var(--nv-sp-md); }
