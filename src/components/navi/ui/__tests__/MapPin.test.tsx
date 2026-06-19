@@ -22,7 +22,22 @@ describe("MapPin", () => {
 describe("Card", () => {
   it("renders children inside a padded surface", () => {
     render(<Card padded>body</Card>);
-    const card = screen.getByText("body");
-    expect(card).toHaveClass("nv-card", "nv-card--padded");
+    const el = screen.getByText("body").closest(".nv-card");
+    expect(el).toBeInTheDocument();
+    expect(el).toHaveClass("nv-card--padded");
+  });
+
+  it("renders a non-padded card by default", () => {
+    render(<Card>plain</Card>);
+    const el = screen.getByText("plain").closest(".nv-card");
+    expect(el).toBeInTheDocument();
+    expect(el).not.toHaveClass("nv-card--padded");
+  });
+});
+
+describe("MapPin hollow", () => {
+  it("renders a hollow place pin when filled is false", () => {
+    render(<MapPin kind="place" value="$10" filled={false} />);
+    expect(screen.getByText("$10").closest(".nv-pin")).toHaveClass("nv-pin--hollow");
   });
 });

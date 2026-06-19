@@ -6549,6 +6549,7 @@ button:focus-visible,
   --nv-disabled-bg: #d7d5d8;
   --nv-disabled-text: #8b8790;
   --nv-text-on-action: #ffffff;
+  --nv-pin-location: #2f7d4f;
   --nv-local-bg: #e6f0e8;
   --nv-local-text: #2f5d3c;
   --nv-impact-icon: #3a7d4f;
@@ -6567,8 +6568,6 @@ button:focus-visible,
   --nv-sp-xl: 32px;
   --nv-sp-2xl: 64px;
   --nv-sp-3xl: 128px;
-
-  --nv-pin-location: #2f7d4f;
 
   font-family: var(--nv-font-body), system-ui, sans-serif;
   color: var(--nv-text);
@@ -6793,13 +6792,13 @@ button:focus-visible,
   overflow: hidden; clip: rect(0, 0, 0, 0);
   white-space: nowrap; border: 0;
 }
-.nv-label { display: inline-flex; align-items: baseline; gap: 2px; font-weight: 700; }
+.nv-label { display: inline-flex; align-items: baseline; gap: var(--nv-sp-3xs); font-weight: 700; }
 .nv-label-required { color: var(--nv-error); }
 .nv-label-optional { color: var(--nv-text-muted); font-weight: 400; }
 .nv-label-help {
   display: inline-flex; align-items: center; justify-content: center;
   width: 16px; height: 16px; border-radius: var(--nv-r-pill);
-  background: var(--nv-info); color: var(--nv-text-on-action); font-size: 0.7rem; margin-left: 4px;
+  background: var(--nv-info); color: var(--nv-text-on-action); font-size: 0.7rem; margin-left: var(--nv-sp-2xs);
 }
 .nv-search {
   display: inline-flex; align-items: center; gap: var(--nv-sp-xs);
@@ -6815,7 +6814,7 @@ button:focus-visible,
   color: var(--nv-text); font-size: 1.2rem; cursor: pointer;
 }
 .nv-carousel-arrow:hover { border-color: var(--nv-action); color: var(--nv-action); }
-.nv-carousel-arrow:disabled { color: #c1bec4; cursor: not-allowed; }
+.nv-carousel-arrow:disabled { color: var(--nv-disabled-text); border-color: transparent; cursor: not-allowed; }
 .nv-dots { display: inline-flex; gap: var(--nv-sp-xs); }
 .nv-dot {
   width: 10px; height: 10px; border-radius: var(--nv-r-pill);
@@ -6827,7 +6826,7 @@ button:focus-visible,
 .nv-tooltip { position: relative; display: inline-flex; }
 .nv-tooltip-bubble {
   position: absolute;
-  bottom: calc(100% + 8px);
+  bottom: calc(100% + var(--nv-sp-xs));
   left: 50%;
   transform: translateX(-50%);
   background: var(--nv-robinson);
@@ -6846,7 +6845,7 @@ button:focus-visible,
 /* ── MapPin ─────────────────────────────────────────────────────── */
 .nv-pin {
   display: inline-flex; align-items: center; justify-content: center;
-  min-width: 36px; height: 28px; padding: 0 8px;
+  min-width: 36px; height: 28px; padding: 0 var(--nv-sp-xs);
   border-radius: var(--nv-r-pill);
   font-size: 0.78rem; font-weight: 700;
   border: 1.5px solid var(--nv-surface); /* white halo keeps the pin legible over the map */

@@ -23,8 +23,9 @@ export function Label({
       )}
       {optional && <span className="nv-label-optional"> (optional)</span>}
       {help && (
-        <span className="nv-label-help" role="img" aria-label={help}>
-          ?
+        <span className="nv-label-help">
+          <span aria-hidden="true">?</span>
+          <span className="nv-sr-only">{help}</span>
         </span>
       )}
     </label>

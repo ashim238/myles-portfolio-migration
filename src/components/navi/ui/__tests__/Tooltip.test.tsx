@@ -25,4 +25,12 @@ describe("Tooltip", () => {
     await userEvent.tab();
     expect(screen.getByText("Why this pick")).toBeVisible();
   });
+
+  it("dismisses on Escape", async () => {
+    render(<Tooltip content="Why this pick"><button type="button">info</button></Tooltip>);
+    await userEvent.tab();
+    expect(screen.getByText("Why this pick")).toBeVisible();
+    await userEvent.keyboard("{Escape}");
+    expect(screen.getByText("Why this pick")).not.toBeVisible();
+  });
 });

@@ -27,4 +27,20 @@ describe("PaginationDots", () => {
     await userEvent.click(screen.getAllByRole("tab")[1]);
     expect(onSelect).toHaveBeenCalledWith(1);
   });
+
+  it("uses roving tabindex on dots", () => {
+    render(<PaginationDots count={3} active={1} onSelect={() => {}} />);
+    const dots = screen.getAllByRole("tab");
+    expect(dots[1]).toHaveAttribute("tabindex", "0");
+    expect(dots[0]).toHaveAttribute("tabindex", "-1");
+  });
+});
+
+describe("CarouselArrow disabled", () => {
+  it("does not fire onClick when disabled", async () => {
+    const onClick = vi.fn();
+    render(<CarouselArrow direction="prev" label="Previous" disabled onClick={onClick} />);
+    await userEvent.click(screen.getByRole("button", { name: "Previous" }));
+    expect(onClick).not.toHaveBeenCalled();
+  });
 });
