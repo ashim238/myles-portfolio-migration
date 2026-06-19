@@ -6806,6 +6806,21 @@ button:focus-visible,
 }
 .nv-search-input { border: none; outline: none; background: none; min-width: 16rem; font: inherit; }
 
+/* ── CarouselArrow + PaginationDots ─────────────────────────────── */
+.nv-carousel-arrow {
+  width: 40px; height: 40px; border-radius: var(--nv-r-pill);
+  border: 1px solid var(--nv-border); background: var(--nv-surface);
+  color: var(--nv-text); font-size: 1.2rem; cursor: pointer;
+}
+.nv-carousel-arrow:hover { border-color: var(--nv-action); color: var(--nv-action); }
+.nv-carousel-arrow:disabled { color: #c1bec4; cursor: not-allowed; }
+.nv-dots { display: inline-flex; gap: var(--nv-sp-xs); }
+.nv-dot {
+  width: 10px; height: 10px; border-radius: var(--nv-r-pill);
+  border: 1px solid var(--nv-border); background: transparent; cursor: pointer; padding: 0;
+}
+.nv-dot--active { background: var(--nv-action); border-color: var(--nv-action); }
+
 /* ── Tooltip ────────────────────────────────────────────────────── */
 .nv-tooltip { position: relative; display: inline-flex; }
 .nv-tooltip-bubble {
