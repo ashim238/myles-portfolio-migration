@@ -6546,6 +6546,8 @@ button:focus-visible,
   --nv-focus: #c4541a;
   --nv-error: #c2371f;
   --nv-info: #3a86ff;
+  --nv-disabled-bg: #d7d5d8;
+  --nv-disabled-text: #8b8790;
 
   --nv-r-sm: 6px;
   --nv-r-md: 10px;
@@ -6644,4 +6646,28 @@ button:focus-visible,
     padding: var(--nv-sp-sm) var(--nv-sp-md);
   }
 }
+
+/* ── Button ────────────────────────────────────────────────────── */
+.nv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--nv-sp-xs);
+  border: 1px solid transparent;
+  border-radius: var(--nv-r-md);
+  font-family: var(--nv-font-body), sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.nv-btn--sm { padding: 6px 12px; font-size: 0.85rem; }
+.nv-btn--md { padding: 10px 18px; font-size: 0.95rem; }
+.nv-btn--lg { padding: 14px 24px; font-size: 1.05rem; }
+.nv-btn-icon { display: inline-flex; width: 1em; height: 1em; }
+.nv-btn--primary { background: var(--nv-action); color: #fff; }
+.nv-btn--primary:hover { background: var(--nv-action-strong); }
+.nv-btn--transparent { background: transparent; color: var(--nv-action); }
+.nv-btn--transparent:hover { background: color-mix(in srgb, var(--nv-action) 10%, transparent); }
+.nv-btn--outline { background: transparent; color: var(--nv-action); border-color: var(--nv-action); }
+.nv-btn--outline:hover { background: color-mix(in srgb, var(--nv-action) 8%, transparent); }
+.nv-btn:disabled { background: var(--nv-disabled-bg); color: var(--nv-disabled-text); border-color: transparent; cursor: not-allowed; }
 
