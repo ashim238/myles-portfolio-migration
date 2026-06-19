@@ -6856,3 +6856,9 @@ button:focus-visible,
 .nv-pin--location { background: var(--nv-pin-location); color: var(--nv-text-on-action); min-width: 16px; }
 .nv-pin--hollow { background: var(--nv-surface); color: var(--nv-action); }
 
+
+/* ── Task 18: Specimen ─────────────────────────────────────────── */
+.nv-specimen { padding: var(--nv-sp-xl) 0; border-bottom: 1px solid var(--nv-border); }
+.nv-specimen-title { font-size: 1.25rem; margin-bottom: var(--nv-sp-2xs); }
+.nv-specimen-note { color: var(--nv-text-muted); margin-bottom: var(--nv-sp-md); max-width: 60ch; }
+.nv-specimen-stage { display: flex; flex-wrap: wrap; gap: var(--nv-sp-md); align-items: center; }
