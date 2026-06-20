@@ -13,3 +13,4 @@ export { CarouselArrow } from "./CarouselArrow";
 export { PaginationDots } from "./PaginationDots";
 export { MapPin } from "./MapPin";
 export { Card } from "./Card";
+export { TabBar } from "./TabBar";

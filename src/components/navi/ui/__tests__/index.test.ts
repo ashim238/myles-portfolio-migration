@@ -6,7 +6,7 @@ describe("ui barrel", () => {
     for (const name of [
       "Button", "IconButton", "Tag", "Label", "ImpactSignal", "Rating",
       "Avatar", "Tabs", "Accordion", "Tooltip", "SearchInput",
-      "CarouselArrow", "PaginationDots", "MapPin", "Card",
+      "CarouselArrow", "PaginationDots", "MapPin", "Card", "TabBar",
     ]) {
       expect(ui).toHaveProperty(name);
     }
