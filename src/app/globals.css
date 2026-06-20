@@ -7014,3 +7014,29 @@ button:focus-visible,
   .nv-result { grid-template-columns: 1fr; }
   .nv-result-photo { width: 100%; height: 160px; }
 }
+
+/* ── BookingCard (sticky detail booking) ───────────────────────── */
+.nv-booking {
+  display: grid;
+  gap: var(--nv-sp-md);
+  padding: var(--nv-sp-lg);
+  border: 1px solid var(--nv-border);
+  border-radius: var(--nv-r-lg);
+  background: var(--nv-surface);
+  position: sticky;
+  top: var(--nv-sp-lg);
+}
+.nv-booking-price { font-size: 1.6rem; font-weight: 700; margin: 0; }
+.nv-booking-dates { display: grid; gap: var(--nv-sp-xs); border: none; padding: 0; }
+.nv-booking-date {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--nv-sp-sm);
+  border: 1px solid var(--nv-border);
+  border-radius: var(--nv-r-md);
+  cursor: pointer;
+}
+.nv-booking-date--active { border-color: var(--nv-action); background: var(--nv-surface-muted); }
+.nv-booking-date-day { font-weight: 700; }
+.nv-booking-date-time { color: var(--nv-text-muted); }
+.nv-booking-confirm { margin: 0; padding: var(--nv-sp-sm); background: var(--nv-surface-muted); border-radius: var(--nv-r-md); color: var(--nv-text); }
