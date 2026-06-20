@@ -9,6 +9,8 @@ import { TransitOptions } from "@/components/navi/demo/TransitOptions";
 import { Map } from "@/components/navi/demo/Map";
 import { getExperienceBySlug } from "@/lib/navi/demo-data";
 
+// Client page: Next 16 keeps params synchronous for "use client" pages
+// (Promise<Params> is the server-page shape). Do not add await.
 export default function ExperiencePage({ params }: { params: { slug: string } }) {
   const e = getExperienceBySlug(params.slug);
   if (!e) notFound();

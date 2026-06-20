@@ -7098,7 +7098,7 @@ button:focus-visible,
 .nv-feed-head { display: grid; gap: var(--nv-sp-md); margin-bottom: var(--nv-sp-xl); }
 .nv-feed-head h1 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 0; }
 .nv-feed-categories { display: flex; gap: var(--nv-sp-xs); flex-wrap: wrap; margin-bottom: var(--nv-sp-xl); }
-.nv-feed-cat { padding: 8px 16px; border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill); background: var(--nv-surface); cursor: pointer; font-weight: 700; color: var(--nv-text); }
+.nv-feed-cat { padding: var(--nv-sp-xs) var(--nv-sp-md); border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill); background: var(--nv-surface); cursor: pointer; font-weight: 700; color: var(--nv-text); }
 .nv-feed-cat--active { border-color: var(--nv-action); color: var(--nv-action); background: var(--nv-surface-muted); }
 .nv-feed-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--nv-sp-lg); }
 .nv-feed-empty { color: var(--nv-text-muted); padding: var(--nv-sp-xl) 0; text-align: center; }

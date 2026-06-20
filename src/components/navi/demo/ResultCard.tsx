@@ -12,14 +12,16 @@ export function ResultCard({
 }: {
   experience: Experience;
   href: string;
-  onHover?: (slug: string) => void;
+  onHover?: (slug: string | undefined) => void;
 }) {
   return (
     <Link
       href={href}
       className="nv-result"
       onMouseEnter={() => onHover?.(e.slug)}
+      onMouseLeave={() => onHover?.(undefined)}
       onFocus={() => onHover?.(e.slug)}
+      onBlur={() => onHover?.(undefined)}
     >
       <div className="nv-result-photo">
         {/* eslint-disable-next-line @next/next/no-img-element */}
