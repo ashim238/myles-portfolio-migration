@@ -6645,12 +6645,12 @@ button:focus-visible,
   margin: 0;
 }
 .nv-footer-email {
-  color: var(--nv-action);
+  color: var(--nv-action-strong);
   text-decoration: none;
   font-weight: 700;
 }
 .nv-footer-email:hover {
-  color: var(--nv-action-strong);
+  color: var(--nv-text);
 }
 .nv-footer-cols {
   display: flex;
@@ -6752,7 +6752,7 @@ button:focus-visible,
   background: var(--nv-surface-muted);
   color: var(--nv-text);
 }
-.nv-tag--popular { background: color-mix(in srgb, var(--nv-action) 14%, var(--nv-surface)); color: var(--nv-action-strong); }
+.nv-tag--popular { background: color-mix(in srgb, var(--nv-action) 8%, var(--nv-surface)); color: var(--nv-action-strong); }
 .nv-tag--local { background: var(--nv-local-bg); color: var(--nv-local-text); }
 
 /* ── ImpactSignal ───────────────────────────────────────────────── */

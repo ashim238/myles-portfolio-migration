@@ -39,4 +39,8 @@ describe("navi tokens", () => {
   it("radii are string pixel values", () => {
     expect(NAVI_RADII.pill).toBe("999px");
   });
+
+  it("footer email (action-strong on muted surface) passes AA", () => {
+    expect(contrastRatio(NAVI_SEMANTIC.actionStrong, NAVI_SEMANTIC.surfaceMuted)).toBeGreaterThanOrEqual(4.5);
+  });
 });

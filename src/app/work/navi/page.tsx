@@ -102,12 +102,12 @@ export default async function NaviPage() {
       <ProjectToc
         sections={[
           { title: "A regenerative travel platform", id: "nv-intro" },
+          { title: "Before the research, a Manhattan heatmap", id: "nv-heatmap" },
           { title: "Three user groups, six platforms", id: "nv-research" },
           { title: "What the data did (and did not) say", id: "nv-insights" },
           { title: "From research to framework", id: "nv-framework" },
           { title: "Building a system", id: "nv-system" },
           { title: "What it looks like in product", id: "nv-screens" },
-          { title: "Rethinking concentration", id: "nv-heatmap" },
           { title: "What Navi proved", id: "nv-outcome" },
         ]}
       />
@@ -125,6 +125,22 @@ export default async function NaviPage() {
             experiences that return value to the communities they visit.
           </p>
         </div>
+      </section>
+
+      <section className="project-section nv-section" aria-labelledby="nv-heatmap">
+        <h2 id="nv-heatmap">Before the research, a Manhattan heatmap</h2>
+        <div className="project-section-body">
+          <p>
+            Before any of the user interviews, the first move was visual. Tourists overload a handful of spots, and the patterns are easy to picture: the swaths of people taking photos in front of the Brooklyn Bridge in Dumbo, the perpetual crush around Times Square. If a routing layer could see this imbalance in real time, the thinking went, it could steer visitors toward neighborhoods that get less attention.
+          </p>
+          <p>
+            Select a neighborhood to see how that early concept worked. Regions represent narrative emphasis, not live geo analytics. This is the prototype that would have shipped on day one. The research pushed back.
+          </p>
+          <p>
+            The instinct felt right, and also a little like a bandaid. Routing tourists somewhere quieter still lets them visit that place the same shallow way. So before committing to redirection as the lever, the next step was talking to the people who would actually use the thing.
+          </p>
+        </div>
+        <HeatmapExplorer />
       </section>
 
       <section className="project-section nv-section" aria-labelledby="nv-research">
@@ -301,25 +317,12 @@ export default async function NaviPage() {
         </div>
       </section>
 
-      <section className="project-section nv-section" aria-labelledby="nv-heatmap">
-        <h2 id="nv-heatmap">Rethinking concentration</h2>
-        <div className="project-section-body">
-          <p>
-            <strong>Welcome to Manhattan</strong>, an early concept for how neighborhood context
-            could surface before a visitor commits to a destination. This explorer is illustrative:
-            regions represent narrative emphasis, not live geo analytics.
-          </p>
-          <p>
-            Select a neighborhood to see how Learn might highlight inclusive history and local
-            rhythm instead of defaulting to the same ten stops.
-          </p>
-        </div>
-        <HeatmapExplorer />
-      </section>
-
       <section className="project-section nv-section" aria-labelledby="nv-outcome">
         <h2 id="nv-outcome">What Navi proved and where it goes next</h2>
         <div className="project-section-body">
+          <p>
+            What started as a heatmap turned out to be solving the wrong problem. Concentration is the symptom. Disconnection from local culture and economy is the cause, and Navi is the platform that came from chasing the cause.
+          </p>
           <p>
             Navi showed that community-centered travel can be both practical and desirable when
             recommendations are curated with local context.
