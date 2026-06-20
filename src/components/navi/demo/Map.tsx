@@ -1,3 +1,4 @@
+// Client component: next/dynamic with ssr:false requires the directive here.
 "use client";
 
 import dynamic from "next/dynamic";

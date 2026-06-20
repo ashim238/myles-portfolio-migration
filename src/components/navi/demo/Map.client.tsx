@@ -22,6 +22,7 @@ export default function MapClient({
   const mapRef = useRef<L.Map | null>(null);
   const markerLayerRef = useRef<L.LayerGroup | null>(null);
 
+  // Init once. center/zoom are intentionally not deps; we use setView below for updates.
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
     const map = L.map(containerRef.current, { zoomControl: true, attributionControl: true }).setView(
@@ -39,6 +40,12 @@ export default function MapClient({
       mapRef.current = null;
       markerLayerRef.current = null;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Sync center/zoom without rebuilding the map.
+  useEffect(() => {
+    mapRef.current?.setView(center, zoom);
   }, [center, zoom]);
 
   useEffect(() => {

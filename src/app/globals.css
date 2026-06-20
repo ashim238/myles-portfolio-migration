@@ -7086,7 +7086,7 @@ button:focus-visible,
   background: var(--nv-surface);
   border: 1px solid var(--nv-border);
   border-radius: var(--nv-r-md);
-  z-index: 5;
+  z-index: 850;
   font-size: 0.82rem;
 }
 .nv-legend-title { font-weight: 700; margin: 0 0 var(--nv-sp-2xs); }
