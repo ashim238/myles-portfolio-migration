@@ -7102,3 +7102,16 @@ button:focus-visible,
 .nv-feed-cat--active { border-color: var(--nv-action); color: var(--nv-action); background: var(--nv-surface-muted); }
 .nv-feed-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--nv-sp-lg); }
 .nv-feed-empty { color: var(--nv-text-muted); padding: var(--nv-sp-xl) 0; text-align: center; }
+
+/* ── Task 13: Search page ──────────────────────────────────────────────────── */
+.nv-search-page { display: grid; grid-template-columns: minmax(0, 1fr) 1.2fr; min-height: calc(100vh - 200px); }
+.nv-search-list { padding: var(--nv-sp-lg); overflow-y: auto; max-height: calc(100vh - 80px); }
+.nv-search-head { display: grid; gap: var(--nv-sp-md); margin-bottom: var(--nv-sp-md); }
+.nv-search-count { font-size: 1.4rem; margin: 0; }
+.nv-search-results { list-style: none; padding: 0; margin: 0; }
+.nv-search-empty { color: var(--nv-text-muted); padding: var(--nv-sp-xl) 0; }
+.nv-search-map { position: relative; }
+@media (max-width: 720px) {
+  .nv-search-page { grid-template-columns: 1fr; }
+  .nv-search-map { height: 60vh; }
+}
