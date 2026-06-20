@@ -2,6 +2,7 @@
 
 import { notFound } from "next/navigation";
 import { use, useState } from "react";
+import Link from "next/link";
 import { Tabs, Accordion, Avatar, Rating, ImpactSignal } from "@/components/navi/ui";
 import { Gallery } from "@/components/navi/demo/Gallery";
 import { BookingCard } from "@/components/navi/demo/BookingCard";
@@ -74,6 +75,9 @@ export function ExperienceView({ experience: e }: { experience: Experience }) {
 
   return (
     <article className="nv-detail">
+      <p className="nv-detail-back">
+        <Link href="/work/navi/demo/search">← Back to results</Link>
+      </p>
       <Gallery photos={e.photos} />
       <header className="nv-detail-head">
         <h1>{e.title}</h1>

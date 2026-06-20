@@ -263,58 +263,19 @@ export default async function NaviPage() {
         <CompositionStrip />
       </section>
 
-      <section
-        className="project-section nv-section project-section--wide"
-        aria-labelledby="nv-screens"
-      >
-        <h2 id="nv-screens">What it looks like in product</h2>
+      <section className="project-section nv-section" aria-labelledby="nv-screens">
+        <h2 id="nv-screens">See it in product</h2>
         <div className="project-section-body">
           <p>
-            On the activity flow, Learn-Plan-Go came together through neighborhood context,
-            collaborative planning tools, and transit-aware navigation.
+            The Navi system runs as a real, interactive product, not a static
+            screenshot. Browse the feed, search a neighborhood on the map, open
+            a host and try a booking. Everything is assembled from the components
+            catalogued on the system page, which means the system shows up in the
+            product the way it was meant to.
           </p>
-        </div>
-        <div className="nv-screen-grid">
-          <ExpandableImage
-            src="/projects/navi/desktop-screens.png"
-            alt="Navi desktop screens: homepage and neighborhood discovery"
-            width={2400}
-            height={1400}
-            sizes="(max-width: 768px) 92vw, 900px"
-            style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.5rem" }}
-          />
-          <ExpandableImage
-            src="/projects/navi/interface-composition.png"
-            alt="Navi interface composition: editorial cards and trust labels"
-            width={2400}
-            height={1400}
-            sizes="(max-width: 768px) 92vw, 900px"
-            style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.5rem" }}
-          />
-          <ExpandableImage
-            src="/projects/navi/flow-view-1.png"
-            alt="Navi experience flow: Learn neighborhood context"
-            width={1200}
-            height={900}
-            sizes="(max-width: 768px) 92vw, 30vw"
-            style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.5rem" }}
-          />
-          <ExpandableImage
-            src="/projects/navi/flow-view-2.png"
-            alt="Navi experience flow: Plan with collaborators"
-            width={1200}
-            height={900}
-            sizes="(max-width: 768px) 92vw, 30vw"
-            style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.5rem" }}
-          />
-          <ExpandableImage
-            src="/projects/navi/flow-view-3.png"
-            alt="Navi experience flow: Go with transit-aware navigation"
-            width={1200}
-            height={900}
-            sizes="(max-width: 768px) 92vw, 30vw"
-            style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.5rem" }}
-          />
+          <p>
+            <a className="nv-system-cta-link" href="/work/navi/demo">Open the playable demo</a>
+          </p>
         </div>
       </section>
 

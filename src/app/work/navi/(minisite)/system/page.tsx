@@ -10,6 +10,8 @@ import {
   NaviTypeSpecimen,
   NaviSpacingSpecimen,
 } from "@/components/navi/system/Foundations";
+import { ExperienceCard } from "@/components/navi/demo/ExperienceCard";
+import { EXPERIENCES } from "@/lib/navi/demo-data";
 import {
   Button,
   IconButton,
@@ -45,6 +47,9 @@ export default function SystemPage() {
     <div className="nv-system">
       <header className="nv-system-head">
         <h1>Navi design system</h1>
+        <p className="nv-system-context">
+          Navi is a regenerative travel platform for New York City. This is its component library.
+        </p>
         <p>
           The Navi component library, rebuilt as live React. The source system used bright orange
           (#F3722C) for emphasis; it failed WCAG AA on every button, so this build documents the
@@ -156,8 +161,16 @@ export default function SystemPage() {
           <ImpactSignal>Funds Prospect Park tree care</ImpactSignal>
         </Specimen>
 
-        <Specimen title="Card">
-          <Card padded>A padded surface, the base container for experience cards.</Card>
+        <Specimen
+          title="Card (composed)"
+          note="A real experience card, assembled from Tag, Rating, Avatar, and ImpactSignal. The system showing up in the product."
+        >
+          <div style={{ maxWidth: 320 }}>
+            <ExperienceCard
+              experience={EXPERIENCES[0]}
+              href="/work/navi/demo/experience/prospect-park-carriage"
+            />
+          </div>
         </Specimen>
       </Chapter>
 

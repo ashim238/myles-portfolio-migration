@@ -7112,8 +7112,9 @@ button:focus-visible,
 .nv-search-empty { color: var(--nv-text-muted); padding: var(--nv-sp-xl) 0; }
 .nv-search-map { position: relative; }
 @media (max-width: 720px) {
-  .nv-search-page { grid-template-columns: 1fr; }
-  .nv-search-map { height: 60vh; }
+  .nv-search-page { display: flex; flex-direction: column; }
+  .nv-search-map { order: 0; height: 60vh; }
+  .nv-search-list { order: 1; max-height: none; padding-top: var(--nv-sp-md); }
 }
 
 /* ── Task 14: Experience detail page ──────────────────────────────────────── */
@@ -7135,3 +7136,29 @@ button:focus-visible,
 .nv-system-cta { padding: var(--nv-sp-2xl) 0; text-align: center; border-top: 1px solid var(--nv-border); }
 .nv-system-cta h2 { font-size: 1.6rem; margin: 0 0 var(--nv-sp-2xs); }
 .nv-system-cta p { color: var(--nv-text-muted); margin: 0 0 var(--nv-sp-lg); }
+
+/* ── /work/navi "See it in product" CTA link ──────────── */
+.nv-system-cta-link {
+  display: inline-block;
+  margin-top: var(--nv-sp-sm);
+  padding: var(--nv-sp-sm) var(--nv-sp-lg);
+  background: var(--nv-action);
+  color: var(--nv-text-on-action);
+  text-decoration: none;
+  border-radius: var(--nv-r-pill);
+  font-weight: 700;
+}
+.nv-system-cta-link:hover { background: var(--nv-action-strong); }
+
+/* ── Detail page back-to-results ──────────────────────── */
+.nv-detail-back { margin: 0 0 var(--nv-sp-md); }
+.nv-detail-back a { color: var(--nv-text-muted); text-decoration: none; font-weight: 700; }
+.nv-detail-back a:hover { color: var(--nv-action); }
+
+/* ── /system Navi context line ────────────────────────── */
+.nv-system-context {
+  font-size: 1.05rem;
+  color: var(--nv-text);
+  margin: 0 0 var(--nv-sp-sm);
+  font-weight: 700;
+}
