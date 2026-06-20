@@ -6990,3 +6990,25 @@ button:focus-visible,
 .nv-exp-card-title { font-size: 1.05rem; margin: 0; }
 .nv-exp-card-loc { color: var(--nv-text-muted); font-size: 0.85rem; margin: 0; }
 .nv-exp-card-price { font-weight: 700; font-size: 0.95rem; margin: 0; }
+
+/* ── ResultCard (search-result row composite) ──────────────────── */
+.nv-result {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: var(--nv-sp-md);
+  padding: var(--nv-sp-md) 0;
+  border-bottom: 1px solid var(--nv-border);
+  text-decoration: none;
+  color: var(--nv-text);
+}
+.nv-result:hover { background: var(--nv-surface-muted); }
+.nv-result-photo { width: 160px; height: 120px; border-radius: var(--nv-r-md); overflow: hidden; }
+.nv-result-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.nv-result-body { display: grid; gap: var(--nv-sp-2xs); align-content: start; }
+.nv-result-title { font-size: 1rem; margin: 0; }
+.nv-result-loc { color: var(--nv-text-muted); font-size: 0.85rem; margin: 0; }
+.nv-result-price { font-weight: 700; margin: 0; }
+@media (max-width: 720px) {
+  .nv-result { grid-template-columns: 1fr; }
+  .nv-result-photo { width: 100%; height: 160px; }
+}
