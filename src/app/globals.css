@@ -7047,3 +7047,26 @@ button:focus-visible,
 .nv-transit-icon { font-size: 1.5rem; }
 .nv-transit-label { font-weight: 700; }
 .nv-transit-detail { color: var(--nv-text-muted); font-size: 0.85rem; }
+
+/* ── Gallery (hero + 4-thumb grid) ────────────────────────────── */
+.nv-gallery { display: grid; grid-template-columns: 2fr 1fr; gap: var(--nv-sp-sm); margin: 0; aspect-ratio: 2.4 / 1; }
+.nv-gallery-hero { position: relative; overflow: hidden; border-radius: var(--nv-r-md); }
+.nv-gallery-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.nv-gallery-see {
+  position: absolute;
+  bottom: var(--nv-sp-sm);
+  right: var(--nv-sp-sm);
+  padding: 6px 14px;
+  background: var(--nv-surface);
+  border: 1px solid var(--nv-border);
+  border-radius: var(--nv-r-pill);
+  font-weight: 700;
+  cursor: pointer;
+}
+.nv-gallery-thumbs { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: var(--nv-sp-sm); }
+.nv-gallery-thumb { overflow: hidden; border-radius: var(--nv-r-md); }
+.nv-gallery-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+@media (max-width: 720px) {
+  .nv-gallery { grid-template-columns: 1fr; aspect-ratio: 4 / 3; }
+  .nv-gallery-thumbs { display: none; }
+}
