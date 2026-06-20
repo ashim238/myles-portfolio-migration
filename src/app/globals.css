@@ -6920,4 +6920,21 @@ button:focus-visible,
 .nv-system-head h1 { font-size: 2rem; }
 .nv-system-head p { color: var(--nv-text-muted); max-width: 65ch; margin-top: var(--nv-sp-sm); }
 
+/* ── Chapter ───────────────────────────────────────────────────── */
+.nv-chapter { padding: var(--nv-sp-2xl) 0; border-top: 1px solid var(--nv-border); }
+.nv-chapter:first-of-type { border-top: none; }
+.nv-chapter-head { margin-bottom: var(--nv-sp-lg); }
+.nv-chapter-title { font-size: 1.6rem; margin: 0 0 var(--nv-sp-2xs); }
+.nv-chapter-intro { color: var(--nv-text-muted); margin: 0; max-width: 60ch; }
+.nv-chapter-body { display: flex; flex-direction: column; gap: var(--nv-sp-xl); }
+
+/* ── Hero ──────────────────────────────────────────────────────── */
+.nv-hero { padding: var(--nv-sp-2xl) 0; }
+.nv-hero-head { margin-bottom: var(--nv-sp-lg); }
+.nv-hero-title { font-size: 1.6rem; margin: 0 0 var(--nv-sp-2xs); }
+.nv-hero-lede { color: var(--nv-text-muted); margin: 0; max-width: 60ch; }
+.nv-hero-stage { background: var(--nv-surface-muted); border-radius: var(--nv-r-lg); padding: var(--nv-sp-xl); }
+
+.nv-tabpanel { padding-top: var(--nv-sp-md); }
+
 .nv-tabpanel { padding-top: var(--nv-sp-md); }
