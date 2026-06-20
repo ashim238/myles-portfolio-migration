@@ -36,4 +36,13 @@ describe("BookingCard", () => {
     expect(onReserve).toHaveBeenCalledWith(dates[0]);
     expect(screen.getByText(/reserved/i)).toBeInTheDocument();
   });
+
+  it("selecting a new date after Reserve resets the confirmation", async () => {
+    render(<BookingCard priceFrom={48} dates={dates} onReserve={() => {}} />);
+    await userEvent.click(screen.getByRole("button", { name: "Reserve now" }));
+    expect(screen.getByRole("status")).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("radio", { name: /Tuesday, March 24/i }));
+    expect(screen.queryByRole("status")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Reserve now" })).toBeInTheDocument();
+  });
 });

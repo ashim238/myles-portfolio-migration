@@ -22,4 +22,13 @@ describe("Gallery", () => {
     render(<Gallery photos={photos} />);
     expect(screen.getByText(/see gallery/i)).toBeInTheDocument();
   });
+
+  it("places the first photo in the hero and the rest in thumbs", () => {
+    render(<Gallery photos={photos} />);
+    const imgs = screen.getAllByRole("img");
+    expect(imgs[0].closest(".nv-gallery-hero")).toBeInTheDocument();
+    expect(imgs[1].closest(".nv-gallery-thumbs")).toBeInTheDocument();
+    // Hero is one image; up to 4 thumbs.
+    expect(document.querySelectorAll(".nv-gallery-thumb")).toHaveLength(4);
+  });
 });
