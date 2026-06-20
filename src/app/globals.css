@@ -7040,3 +7040,10 @@ button:focus-visible,
 .nv-booking-date-day { font-weight: 700; }
 .nv-booking-date-time { color: var(--nv-text-muted); }
 .nv-booking-confirm { margin: 0; padding: var(--nv-sp-sm); background: var(--nv-surface-muted); border-radius: var(--nv-r-md); color: var(--nv-text); }
+
+/* ── TransitOptions ────────────────────────────────────────────── */
+.nv-transit { display: flex; gap: var(--nv-sp-lg); list-style: none; padding: 0; margin: 0; flex-wrap: wrap; }
+.nv-transit-item { display: flex; flex-direction: column; align-items: center; gap: var(--nv-sp-2xs); text-align: center; min-width: 120px; }
+.nv-transit-icon { font-size: 1.5rem; }
+.nv-transit-label { font-weight: 700; }
+.nv-transit-detail { color: var(--nv-text-muted); font-size: 0.85rem; }
