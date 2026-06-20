@@ -1,19 +1,25 @@
 "use client";
 
 import { notFound } from "next/navigation";
-import { useState } from "react";
+import { use, useState } from "react";
 import { Tabs, Accordion, Avatar, Rating, ImpactSignal } from "@/components/navi/ui";
 import { Gallery } from "@/components/navi/demo/Gallery";
 import { BookingCard } from "@/components/navi/demo/BookingCard";
 import { TransitOptions } from "@/components/navi/demo/TransitOptions";
 import { Map } from "@/components/navi/demo/Map";
-import { getExperienceBySlug } from "@/lib/navi/demo-data";
+import { getExperienceBySlug, type Experience } from "@/lib/navi/demo-data";
 
-// Client page: Next 16 keeps params synchronous for "use client" pages
-// (Promise<Params> is the server-page shape). Do not add await.
-export default function ExperiencePage({ params }: { params: { slug: string } }) {
-  const e = getExperienceBySlug(params.slug);
+// Page bridge: Next 16 passes params as a Promise; React.use() unwraps it,
+// then we delegate to a pure inner component so the view is straightforward
+// to test without a Suspense wrapper.
+export default function ExperiencePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = use(params);
+  const e = getExperienceBySlug(slug);
   if (!e) notFound();
+  return <ExperienceView experience={e} />;
+}
+
+export function ExperienceView({ experience: e }: { experience: Experience }) {
   const [tab, setTab] = useState("learn");
 
   const tabItems = [
