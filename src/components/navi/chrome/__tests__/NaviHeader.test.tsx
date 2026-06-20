@@ -21,4 +21,12 @@ describe("NaviHeader", () => {
       "/work/navi/demo",
     );
   });
+
+  it("keeps Host an event inside the product, not on the case study", () => {
+    render(<NaviHeader />);
+    expect(screen.getByRole("link", { name: /host an event/i })).toHaveAttribute(
+      "href",
+      "/work/navi/demo/host",
+    );
+  });
 });

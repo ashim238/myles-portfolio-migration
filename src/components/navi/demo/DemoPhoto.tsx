@@ -1,0 +1,48 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
+// Demo photography is exported from Figma in stages. Until an asset lands, a
+// missing file would render the browser's broken-image glyph and make the whole
+// product read as broken. This swaps a failed load for a calm "pending" panel
+// so a missing photo reads as unfinished, not broken.
+export function DemoPhoto({
+  src,
+  alt,
+  className,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+}) {
+  const [failed, setFailed] = useState(false);
+  const ref = useRef<HTMLImageElement>(null);
+
+  // A 404 can resolve before hydration attaches onError, leaving a broken
+  // image that never fires the handler. Re-check once on mount: a finished load
+  // with zero natural width is a failure. (jsdom never loads, so complete is
+  // false there and this stays inert in tests.)
+  useEffect(() => {
+    const img = ref.current;
+    if (img && img.complete && img.naturalWidth === 0) {
+      setFailed(true);
+    }
+  }, []);
+
+  if (failed) {
+    return (
+      <div
+        className={`nv-photo-pending${className ? ` ${className}` : ""}`}
+        role="img"
+        aria-label={alt}
+      >
+        <span aria-hidden="true">Photo coming soon</span>
+      </div>
+    );
+  }
+
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img ref={ref} src={src} alt={alt} className={className} onError={() => setFailed(true)} />
+  );
+}

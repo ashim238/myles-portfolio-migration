@@ -28,7 +28,7 @@ export default function SearchPage() {
     <div className="nv-search-page">
       <aside className="nv-search-list">
         <header className="nv-search-head">
-          <h1 className="nv-search-count">View {results.length} nearby results</h1>
+          <h1 className="nv-search-count">{results.length} nearby experiences</h1>
           <SearchInput
             label="Search experiences"
             value={query}

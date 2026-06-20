@@ -9,7 +9,7 @@ export function NaviHeader() {
       <nav className="nv-nav" aria-label="Primary">
         <Link href="/work/navi/demo">Explore</Link>
         <Link href="/work/navi/system">System</Link>
-        <Link href="/work/navi" className="nv-nav-host">
+        <Link href="/work/navi/demo/host" className="nv-nav-host">
           Host an event
         </Link>
       </nav>

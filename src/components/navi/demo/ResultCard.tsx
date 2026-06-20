@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Tag, Rating, ImpactSignal } from "@/components/navi/ui";
+import { DemoPhoto } from "@/components/navi/demo/DemoPhoto";
 import { tagLabelFor } from "@/lib/navi/demo-data";
 import type { Experience } from "@/lib/navi/demo-data";
 
@@ -24,8 +25,7 @@ export function ResultCard({
       onBlur={() => onHover?.(undefined)}
     >
       <div className="nv-result-photo">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={e.photos[0].src} alt={e.photos[0].alt} />
+        <DemoPhoto src={e.photos[0].src} alt={e.photos[0].alt} />
       </div>
       <div className="nv-result-body">
         <Tag tone={e.tone}>
