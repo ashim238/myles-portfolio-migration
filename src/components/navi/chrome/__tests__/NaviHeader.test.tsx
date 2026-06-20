@@ -18,7 +18,7 @@ describe("NaviHeader", () => {
     );
     expect(screen.getByRole("link", { name: /explore/i })).toHaveAttribute(
       "href",
-      "/work/navi/system",
+      "/work/navi/demo",
     );
   });
 });

@@ -7130,3 +7130,8 @@ button:focus-visible,
 @media (max-width: 720px) {
   .nv-detail-body { grid-template-columns: 1fr; }
 }
+
+/* ── /system forward CTA ─────────────────────────────── */
+.nv-system-cta { padding: var(--nv-sp-2xl) 0; text-align: center; border-top: 1px solid var(--nv-border); }
+.nv-system-cta h2 { font-size: 1.6rem; margin: 0 0 var(--nv-sp-2xs); }
+.nv-system-cta p { color: var(--nv-text-muted); margin: 0 0 var(--nv-sp-lg); }

@@ -207,6 +207,12 @@ export default function SystemPage() {
           <PaginationDots count={4} active={1} onSelect={() => {}} />
         </Specimen>
       </Chapter>
+
+      <section className="nv-system-cta">
+        <h2>See it in the product</h2>
+        <p>The same components, assembled into a working booking flow.</p>
+        <a className="nv-btn nv-btn--primary nv-btn--md" href="/work/navi/demo">Open the demo</a>
+      </section>
     </div>
   );
 }
