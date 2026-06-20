@@ -9,7 +9,6 @@ import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
 import {
   CompositionStrip,
-  DesignSystemShowroom,
   HeatmapExplorer,
   HeuristicInsightCards,
   SurveyStatRings,
@@ -254,11 +253,12 @@ export default async function NaviPage() {
             4px spacing system, the UI remains readable and consistent across breakpoints.
           </p>
           <p>
-            The homepage emphasized editorial curation over algorithmic volume. Labels such as{" "}
-            <em>Locally owned</em> and <em>Nature first</em> gave users trust signals at a glance.
+            The full system lives as a running component library, with the brand
+            primitives, the semantic aliases, every interactive variant, and a live
+            playground for flipping props. <a href="/work/navi/system">See the Navi
+            design system</a>.
           </p>
         </div>
-        <DesignSystemShowroom />
         <CompositionStrip />
       </section>
 

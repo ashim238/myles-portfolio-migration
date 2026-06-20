@@ -4,6 +4,11 @@ import { useState } from "react";
 import { Specimen } from "@/components/navi/system/Specimen";
 import { PropPlayground } from "@/components/navi/system/PropPlayground";
 import {
+  NaviColorSpecimen,
+  NaviTypeSpecimen,
+  NaviSpacingSpecimen,
+} from "@/components/navi/system/Foundations";
+import {
   Button,
   IconButton,
   Tag,
@@ -44,6 +49,27 @@ export default function SystemPage() {
           accessible derivation (#C4541A, 4.54:1) and applies it system-wide.
         </p>
       </header>
+
+      <Specimen
+        title="Color"
+        note="Brand primitives → semantic aliases. Components reference semantic tokens, never raw hex."
+      >
+        <NaviColorSpecimen />
+      </Specimen>
+
+      <Specimen
+        title="Type"
+        note="Jost for display, Lato for body. Two families on a contrast axis (geometric + humanist)."
+      >
+        <NaviTypeSpecimen />
+      </Specimen>
+
+      <Specimen
+        title="Spacing"
+        note="A 4px base scale. Every component padding and gap is one of these tokens."
+      >
+        <NaviSpacingSpecimen />
+      </Specimen>
 
       <Specimen title="Button" note="Interactive surfaces use --nv-action (contrast-corrected).">
         <Button variant="primary">Primary</Button>
