@@ -7076,3 +7076,19 @@ button:focus-visible,
 .nv-map-canvas { width: 100%; height: 100%; }
 .nv-map-skeleton { width: 100%; height: 100%; background: var(--nv-surface-muted); }
 .nv-pin-leaflet { background: none !important; border: none !important; }
+
+/* ── Legend (map legend control) ───────────────────────────────── */
+.nv-legend {
+  position: absolute;
+  bottom: var(--nv-sp-md);
+  right: var(--nv-sp-md);
+  padding: var(--nv-sp-sm) var(--nv-sp-md);
+  background: var(--nv-surface);
+  border: 1px solid var(--nv-border);
+  border-radius: var(--nv-r-md);
+  z-index: 5;
+  font-size: 0.82rem;
+}
+.nv-legend-title { font-weight: 700; margin: 0 0 var(--nv-sp-2xs); }
+.nv-legend ul { display: grid; gap: var(--nv-sp-2xs); list-style: none; padding: 0; margin: 0; }
+.nv-legend li { display: flex; align-items: center; gap: var(--nv-sp-xs); }
