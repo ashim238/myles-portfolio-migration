@@ -7115,3 +7115,18 @@ button:focus-visible,
   .nv-search-page { grid-template-columns: 1fr; }
   .nv-search-map { height: 60vh; }
 }
+
+/* ── Task 14: Experience detail page ──────────────────────────────────────── */
+.nv-detail { max-width: 72rem; margin: 0 auto; padding: var(--nv-sp-xl) var(--nv-sp-lg); }
+.nv-detail-head h1 { font-size: clamp(1.6rem, 3vw, 2rem); margin: var(--nv-sp-lg) 0 var(--nv-sp-md); }
+.nv-detail-body { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: var(--nv-sp-xl); align-items: start; }
+.nv-detail-main { min-width: 0; }
+.nv-detail-section { display: grid; gap: var(--nv-sp-md); padding-top: var(--nv-sp-md); }
+.nv-detail-host { display: inline-flex; gap: var(--nv-sp-xs); align-items: center; color: var(--nv-text-muted); }
+.nv-detail-prose { max-width: 60ch; }
+.nv-detail-where-heading { font-weight: 700; }
+.nv-detail-where-map { height: 280px; border-radius: var(--nv-r-md); overflow: hidden; }
+.nv-detail-go-heading { font-size: 1.1rem; margin-top: var(--nv-sp-md); }
+@media (max-width: 720px) {
+  .nv-detail-body { grid-template-columns: 1fr; }
+}
