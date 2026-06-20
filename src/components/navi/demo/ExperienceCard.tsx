@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Tag, Rating, ImpactSignal } from "@/components/navi/ui";
+import { tagLabelFor } from "@/lib/navi/demo-data";
 import type { Experience } from "@/lib/navi/demo-data";
 
 export function ExperienceCard({
@@ -17,7 +18,7 @@ export function ExperienceCard({
       </div>
       <div className="nv-exp-card-body">
         <Tag tone={e.tone}>
-          {e.tone === "local" ? "Locally-owned" : e.tone === "popular" ? "Popular" : e.category}
+          {tagLabelFor(e)}
         </Tag>
         <h3 className="nv-exp-card-title">{e.title}</h3>
         <p className="nv-exp-card-loc">

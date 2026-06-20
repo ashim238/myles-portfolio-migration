@@ -459,3 +459,9 @@ export const EXPERIENCES: Experience[] = [
 export function getExperienceBySlug(slug: string): Experience | undefined {
   return EXPERIENCES.find((e) => e.slug === slug);
 }
+
+export function tagLabelFor(e: Experience): string {
+  if (e.tone === "local") return "Locally-owned";
+  if (e.tone === "popular") return "Popular";
+  return e.category;
+}

@@ -22,4 +22,11 @@ describe("ResultCard", () => {
     await userEvent.hover(screen.getByRole("link"));
     expect(onHover).toHaveBeenCalledWith(e.slug);
   });
+
+  it("fires onHover when the row receives focus", async () => {
+    const onHover = vi.fn();
+    render(<ResultCard experience={e} href="#" onHover={onHover} />);
+    await userEvent.tab();
+    expect(onHover).toHaveBeenCalledWith(e.slug);
+  });
 });

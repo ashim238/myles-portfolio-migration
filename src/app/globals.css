@@ -6957,7 +6957,7 @@ button:focus-visible,
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2px;
+  gap: var(--nv-sp-3xs);
   padding: var(--nv-sp-2xs) var(--nv-sp-sm);
   color: var(--nv-text-muted);
   text-decoration: none;
@@ -6968,8 +6968,6 @@ button:focus-visible,
 }
 .nv-tabbar-item--active { color: var(--nv-action); }
 .nv-tabbar-icon { display: inline-flex; font-size: 1.1rem; }
-
-.nv-tabpanel { padding-top: var(--nv-sp-md); }
 
 /* ── ExperienceCard (feed card composite) ──────────────────────── */
 .nv-exp-card {
@@ -6984,6 +6982,10 @@ button:focus-visible,
   transition: border-color 0.15s, transform 0.15s;
 }
 .nv-exp-card:hover { border-color: var(--nv-action); transform: translateY(-2px); }
+@media (prefers-reduced-motion: reduce) {
+  .nv-exp-card { transition: none; }
+  .nv-exp-card:hover { transform: none; }
+}
 .nv-exp-card-photo { aspect-ratio: 16 / 10; overflow: hidden; }
 .nv-exp-card-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .nv-exp-card-body { padding: var(--nv-sp-md); display: grid; gap: var(--nv-sp-xs); }
