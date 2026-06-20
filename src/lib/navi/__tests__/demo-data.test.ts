@@ -15,10 +15,19 @@ describe("demo data", () => {
     for (const e of EXPERIENCES) {
       expect(typeof e.lat).toBe("number");
       expect(typeof e.lng).toBe("number");
+      // NYC bounding box: roughly lat 40.4-40.95, lng -74.3 to -73.7
+      expect(e.lat).toBeGreaterThan(40.4);
+      expect(e.lat).toBeLessThan(40.95);
+      expect(e.lng).toBeGreaterThan(-74.3);
+      expect(e.lng).toBeLessThan(-73.7);
       expect(e.price).toBeGreaterThan(0);
       expect(e.rating).toBeGreaterThan(0);
       expect(e.rating).toBeLessThanOrEqual(5);
       expect(e.photos.length).toBeGreaterThan(0);
+      for (const p of e.photos) {
+        expect(p.src).toMatch(/^\/projects\/navi-demo\//);
+        expect(p.alt.length).toBeGreaterThan(0);
+      }
       expect(e.impactPhrase.length).toBeGreaterThan(0);
     }
   });

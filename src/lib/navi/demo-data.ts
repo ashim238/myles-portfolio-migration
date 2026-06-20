@@ -43,7 +43,7 @@ export const EXPERIENCES: Experience[] = [
   {
     slug: "prospect-park-carriage",
     title: "Discover Prospect Park by horse-drawn carriage",
-    category: "Architecture",
+    category: "Community",
     tone: "local",
     neighborhood: "Park Slope",
     borough: "Brooklyn",
@@ -76,7 +76,7 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "Take the", detail: "Q or R" },
         { mode: "citibike", label: "Grab a Citibike", detail: "0.2 miles away" },
-        { mode: "walk", label: "Walk", detail: "30 min to dock" },
+        { mode: "walk", label: "Walk", detail: "30 min from Grand Army Plaza" },
       ],
     },
     dates: [
