@@ -8,11 +8,13 @@ export function BookingCard({
   priceFrom,
   dates,
   impact,
+  spotsLeft,
   onReserve,
 }: {
   priceFrom: number;
   dates: BookingDate[];
   impact?: string;
+  spotsLeft?: number;
   onReserve: (d: BookingDate) => void;
 }) {
   const [selected, setSelected] = useState<BookingDate>(dates[0]);
@@ -20,7 +22,10 @@ export function BookingCard({
 
   return (
     <aside className="nv-booking" aria-label="Book this experience">
-      <p className="nv-booking-price">From ${priceFrom}</p>
+      <p className="nv-booking-price">{priceFrom === 0 ? "Free" : `From $${priceFrom}`}</p>
+      {!reserved && spotsLeft != null && spotsLeft <= 6 && (
+        <p className="nv-booking-spots">Only {spotsLeft} spots left at this time.</p>
+      )}
       <fieldset className="nv-booking-dates">
         <legend className="nv-sr-only">Select a date</legend>
         {dates.map((d) => {

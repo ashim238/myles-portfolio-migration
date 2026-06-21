@@ -6988,6 +6988,7 @@ button:focus-visible,
 .nv-exp-card {
   display: grid;
   grid-template-rows: auto 1fr;
+  height: 100%; /* fill the equal-height grid cell so cards in a row match */
   background: var(--nv-surface);
   border: 1px solid var(--nv-border);
   border-radius: var(--nv-r-md);
@@ -7021,10 +7022,11 @@ button:focus-visible,
   letter-spacing: 0.02em;
   text-align: center;
 }
-.nv-exp-card-body { padding: var(--nv-sp-md); display: grid; gap: var(--nv-sp-xs); }
+.nv-exp-card-body { padding: var(--nv-sp-md); display: flex; flex-direction: column; gap: var(--nv-sp-xs); }
 .nv-exp-card-title { font-size: 1.05rem; margin: 0; }
 .nv-exp-card-loc { color: var(--nv-text-muted); font-size: 0.85rem; margin: 0; }
-.nv-exp-card-price { font-weight: 700; font-size: 0.95rem; margin: 0; }
+/* margin-top:auto anchors the price to the bottom so it lines up across cards */
+.nv-exp-card-price { font-weight: 700; font-size: 0.95rem; margin: auto 0 0; padding-top: var(--nv-sp-xs); }
 
 /* ── ResultCard (search-result row composite) ──────────────────── */
 .nv-result {
@@ -7132,7 +7134,19 @@ button:focus-visible,
 .nv-feed { max-width: 72rem; margin: 0 auto; padding: var(--nv-sp-xl) var(--nv-sp-lg); }
 .nv-feed-head { display: grid; gap: var(--nv-sp-md); margin-bottom: var(--nv-sp-xl); }
 .nv-feed-head h1 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 0; }
-.nv-feed-categories { display: flex; gap: var(--nv-sp-xs); flex-wrap: wrap; margin-bottom: var(--nv-sp-xl); }
+.nv-feed-categories { display: flex; gap: var(--nv-sp-xs); flex-wrap: wrap; margin-bottom: var(--nv-sp-md); }
+/* Feed controls: count + price/sort */
+.nv-feed-controls { display: flex; align-items: center; justify-content: space-between; gap: var(--nv-sp-md); flex-wrap: wrap; margin-bottom: var(--nv-sp-lg); }
+.nv-feed-count { margin: 0; font-weight: 700; }
+.nv-feed-selects { display: flex; gap: var(--nv-sp-sm); }
+.nv-feed-select select {
+  font: inherit; min-height: 44px; padding: var(--nv-sp-xs) var(--nv-sp-md);
+  border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill);
+  background: var(--nv-surface); color: var(--nv-text); cursor: pointer;
+}
+.nv-feed-select select:hover { border-color: var(--nv-action); }
+/* Card facts line */
+.nv-exp-card-facts { color: var(--nv-text-muted); font-size: 0.8rem; margin: 0; }
 .nv-feed-cat { display: inline-flex; align-items: center; min-height: 44px; padding: var(--nv-sp-xs) var(--nv-sp-md); border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill); background: var(--nv-surface); cursor: pointer; font-weight: 700; color: var(--nv-text); }
 .nv-feed-cat--active { border-color: var(--nv-action); color: var(--nv-action-strong); background: var(--nv-surface-muted); }
 .nv-feed-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--nv-sp-lg); }
@@ -7160,6 +7174,37 @@ button:focus-visible,
 .nv-detail-section { display: grid; gap: var(--nv-sp-md); padding-top: var(--nv-sp-md); }
 .nv-detail-host { display: inline-flex; gap: var(--nv-sp-xs); align-items: center; color: var(--nv-text-muted); }
 .nv-detail-prose { max-width: 60ch; }
+
+/* Detail: at-a-glance facts strip */
+.nv-detail-facts {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--nv-sp-md);
+  list-style: none; padding: 0; margin: var(--nv-sp-xs) 0 0;
+  color: var(--nv-text-muted); font-size: 0.9rem;
+}
+.nv-detail-facts li:not(:first-child)::before { content: "·"; margin-right: var(--nv-sp-md); color: var(--nv-border); }
+
+/* Detail: what's included */
+.nv-included { margin-top: var(--nv-sp-md); }
+.nv-included-heading { font-size: 1.05rem; margin: 0 0 var(--nv-sp-xs); }
+.nv-included ul { margin: 0; padding-left: 1.2rem; list-style: disc; display: grid; gap: var(--nv-sp-2xs); }
+.nv-included li { color: var(--nv-text); }
+
+/* Booking scarcity */
+.nv-booking-spots { margin: 0; color: var(--nv-action-strong); font-weight: 700; font-size: 0.85rem; }
+
+/* Reviews */
+.nv-reviews { margin-top: var(--nv-sp-2xl); border-top: 1px solid var(--nv-border); padding-top: var(--nv-sp-xl); }
+.nv-reviews-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--nv-sp-md); flex-wrap: wrap; margin-bottom: var(--nv-sp-lg); }
+.nv-reviews-head h2 { margin: 0; }
+.nv-reviews-summary { display: flex; align-items: baseline; gap: var(--nv-sp-xs); margin: 0; }
+.nv-reviews-score { font-family: var(--nv-font-display), sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--nv-text); }
+.nv-reviews-count { color: var(--nv-text-muted); font-size: 0.9rem; }
+.nv-reviews-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--nv-sp-xl); }
+.nv-review { display: grid; gap: var(--nv-sp-sm); align-content: start; }
+.nv-review-head { display: flex; align-items: center; gap: var(--nv-sp-sm); }
+.nv-review-author { margin: 0; font-weight: 700; }
+.nv-review-date { margin: 0; color: var(--nv-text-muted); font-size: 0.8rem; }
+.nv-review-quote { margin: 0; color: var(--nv-text); line-height: 1.55; max-width: 48ch; }
 .nv-detail-where-heading { font-size: 1.1rem; font-weight: 700; margin: 0 0 var(--nv-sp-xs); }
 .nv-detail-where-map { height: 280px; border-radius: var(--nv-r-md); overflow: hidden; }
 .nv-detail-go-heading { font-size: 1.1rem; margin-top: var(--nv-sp-md); }

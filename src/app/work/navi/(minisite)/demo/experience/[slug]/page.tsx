@@ -7,6 +7,7 @@ import { Tabs, Accordion, Avatar, Rating, ImpactSignal } from "@/components/navi
 import { Gallery } from "@/components/navi/demo/Gallery";
 import { BookingCard } from "@/components/navi/demo/BookingCard";
 import { TransitOptions } from "@/components/navi/demo/TransitOptions";
+import { Reviews } from "@/components/navi/demo/Reviews";
 import { Map } from "@/components/navi/demo/Map";
 import { getExperienceBySlug, type Experience } from "@/lib/navi/demo-data";
 
@@ -35,6 +36,14 @@ export function ExperienceView({ experience: e }: { experience: Experience }) {
           <p className="nv-detail-prose">{e.learn}</p>
           <Rating value={e.rating} reviews={e.reviews} />
           <ImpactSignal as="div">{e.impactStatement}</ImpactSignal>
+          <div className="nv-included">
+            <h3 className="nv-included-heading">What&apos;s included</h3>
+            <ul>
+              {e.included.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       ),
     },
@@ -82,6 +91,11 @@ export function ExperienceView({ experience: e }: { experience: Experience }) {
       <Gallery photos={e.photos} />
       <header className="nv-detail-head">
         <h1>{e.title}</h1>
+        <ul className="nv-detail-facts" aria-label="At a glance">
+          <li>{e.duration}</li>
+          <li>{e.groupSize}</li>
+          <li>{e.language}</li>
+        </ul>
       </header>
       <div className="nv-detail-body">
         <div className="nv-detail-main">
@@ -91,11 +105,13 @@ export function ExperienceView({ experience: e }: { experience: Experience }) {
           priceFrom={e.price}
           dates={e.dates}
           impact={e.impactPhrase}
+          spotsLeft={e.spotsLeft}
           onReserve={() => {
             /* demo: state lives inside BookingCard */
           }}
         />
       </div>
+      <Reviews rating={e.rating} count={e.reviews} reviews={e.reviewsList} />
     </article>
   );
 }

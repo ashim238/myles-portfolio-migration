@@ -24,9 +24,14 @@ export function ExperienceCard({
         <p className="nv-exp-card-loc">
           {e.neighborhood}, {e.borough}
         </p>
+        <p className="nv-exp-card-facts">
+          {e.duration} · {e.groupSize}
+        </p>
         <Rating value={e.rating} reviews={e.reviews} />
         <ImpactSignal>{e.impactPhrase}</ImpactSignal>
-        <p className="nv-exp-card-price">${e.price} per person</p>
+        <p className="nv-exp-card-price">
+          {e.price === 0 ? "Free" : `$${e.price} per person`}
+        </p>
       </div>
     </Link>
   );

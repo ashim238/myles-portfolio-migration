@@ -20,7 +20,7 @@ describe("demo data", () => {
       expect(e.lat).toBeLessThan(40.95);
       expect(e.lng).toBeGreaterThan(-74.3);
       expect(e.lng).toBeLessThan(-73.7);
-      expect(e.price).toBeGreaterThan(0);
+      expect(e.price).toBeGreaterThanOrEqual(0); // some experiences are free / donation-based
       expect(e.rating).toBeGreaterThan(0);
       expect(e.rating).toBeLessThanOrEqual(5);
       expect(e.photos.length).toBeGreaterThan(0);

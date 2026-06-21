@@ -37,7 +37,9 @@ export function ResultCard({
         </p>
         <Rating value={e.rating} reviews={e.reviews} />
         <ImpactSignal>{e.impactPhrase}</ImpactSignal>
-        <p className="nv-result-price">${e.price} per person</p>
+        <p className="nv-result-price">
+          {e.price === 0 ? "Free" : `$${e.price} per person`}
+        </p>
       </div>
     </Link>
   );

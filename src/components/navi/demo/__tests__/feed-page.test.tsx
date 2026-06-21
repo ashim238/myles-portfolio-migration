@@ -19,7 +19,7 @@ describe("Feed page", () => {
     render(<FeedPage />);
     expect(screen.getByRole("region", { name: /categories/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Cooking" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Architecture" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Architecture & design" })).toBeInTheDocument();
   });
 
   it("filters cards by typed query", async () => {

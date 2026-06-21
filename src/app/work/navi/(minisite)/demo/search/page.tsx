@@ -20,7 +20,13 @@ export default function SearchPage() {
   }, [query]);
 
   const markers = useMemo(
-    () => results.map((e) => ({ id: e.slug, lat: e.lat, lng: e.lng, label: `$${e.price}` })),
+    () =>
+      results.map((e) => ({
+        id: e.slug,
+        lat: e.lat,
+        lng: e.lng,
+        label: e.price === 0 ? "Free" : `$${e.price}`,
+      })),
     [results],
   );
 
