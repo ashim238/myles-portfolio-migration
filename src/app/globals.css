@@ -6911,8 +6911,12 @@ button:focus-visible,
   box-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 .nv-pin--place { background: var(--nv-action); color: var(--nv-text-on-action); }
-.nv-pin--place.nv-pin--selected { background: var(--nv-action-strong); }
+/* The selected pin grows a touch so the list-hover -> pin link reads instantly. */
+.nv-pin--place.nv-pin--selected { background: var(--nv-action-strong); transform: scale(1.14); }
 .nv-pin--hollow { background: var(--nv-surface); color: var(--nv-action); }
+@media (prefers-reduced-motion: no-preference) {
+  .nv-pin { transition: transform 0.15s cubic-bezier(0.22, 1, 0.36, 1), background 0.15s; }
+}
 
 /* Current-location indicator: the universal "blue dot" (filled disc, white
    ring, soft halo) rather than a teardrop pin, which reads as a place marker. */
@@ -7116,6 +7120,10 @@ button:focus-visible,
 .nv-booking-date-time { color: var(--nv-text-muted); }
 .nv-booking-confirm { margin: 0; padding: var(--nv-sp-sm); background: var(--nv-surface-muted); border-radius: var(--nv-r-md); color: var(--nv-text); }
 .nv-booking-confirm-group { display: grid; gap: var(--nv-sp-xs); }
+@media (prefers-reduced-motion: no-preference) {
+  /* Gentle acknowledgement when the reservation confirms. */
+  .nv-booking-confirm-group { animation: fadeUp 0.3s cubic-bezier(0.22, 1, 0.36, 1) both; }
+}
 .nv-booking-note { margin: 0; font-size: 0.8rem; color: var(--nv-text-muted); text-align: center; }
 
 /* ── TransitOptions ────────────────────────────────────────────── */
@@ -7207,6 +7215,10 @@ button:focus-visible,
 /* auto-fill + capped max keeps cards their size when a category has only 2 items
    (auto-fit would stretch the lonely cards to fill the row). */
 .nv-feed-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 360px)); gap: var(--nv-sp-lg); justify-content: start; }
+@media (prefers-reduced-motion: no-preference) {
+  /* Signature list rhythm: a short staggered rise, capped so the tail never drags. */
+  .nv-feed-grid > li { animation: fadeUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: calc(min(var(--i, 0), 8) * 45ms); }
+}
 /* Mobile: one swipeable row so the controls and first card stay above the fold. */
 @media (max-width: 640px) {
   .nv-feed-categories {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type CSSProperties } from "react";
 import { SearchInput } from "@/components/navi/ui";
 import { ExperienceCard } from "@/components/navi/demo/ExperienceCard";
 import { EXPERIENCES, CATEGORIES } from "@/lib/navi/demo-data";
@@ -120,8 +120,8 @@ export default function FeedPage() {
         </p>
       ) : (
         <ul className="nv-feed-grid">
-          {filtered.map((e) => (
-            <li key={e.slug}>
+          {filtered.map((e, i) => (
+            <li key={e.slug} style={{ "--i": i } as CSSProperties}>
               <ExperienceCard
                 experience={e}
                 href={`/work/navi/demo/experience/${e.slug}`}
