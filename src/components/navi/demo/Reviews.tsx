@@ -37,6 +37,9 @@ export function Reviews({
                 <p className="nv-review-author">{r.author}</p>
                 <p className="nv-review-date">{r.date}</p>
               </div>
+              <span className="nv-review-rating" aria-label={`Rated ${r.rating} out of 5`}>
+                <span aria-hidden="true">★ {r.rating.toFixed(1)}</span>
+              </span>
             </div>
             <p className="nv-review-quote">{r.quote}</p>
           </li>

@@ -6532,6 +6532,11 @@ button:focus-visible,
    Distinct from the case study's .nv-page. Light Navi product chrome.
    Values mirror src/lib/navi/tokens.ts. */
 .nv-ui {
+  /* The mini-site is light-only; pin native controls (select, radio, scrollbars)
+     to the light palette so they don't render dark under a dark OS theme. */
+  color-scheme: light;
+  accent-color: #c4541a;
+
   --nv-darwin: #f3722c;
   --nv-gumball: #3a86ff;
   --nv-robinson: #4a414d;
@@ -6716,6 +6721,9 @@ button:focus-visible,
 .nv-btn--md { padding: 10px 18px; font-size: 0.95rem; }
 .nv-btn--lg { padding: 14px 24px; font-size: 1.05rem; }
 .nv-btn-icon { display: inline-flex; width: 1em; height: 1em; }
+.nv-btn-icon svg { width: 100%; height: 100%; display: block; }
+/* Icon-only buttons want a larger glyph than inline text buttons. */
+.nv-icon-btn .nv-btn-icon { width: 1.25em; height: 1.25em; }
 .nv-btn--primary { background: var(--nv-action); color: var(--nv-text-on-action); }
 .nv-btn--primary:hover { background: var(--nv-action-strong); }
 .nv-btn--transparent { background: transparent; color: var(--nv-action); }
@@ -6914,6 +6922,28 @@ button:focus-visible,
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--nv-info) 28%, transparent), 0 1px 3px rgba(0,0,0,0.3);
 }
 
+/* Map clustering: themed count bubble (replaces leaflet.markercluster defaults) */
+.nv-cluster-leaflet { background: none !important; border: none !important; }
+.nv-cluster {
+  display: flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--nv-action); color: var(--nv-text-on-action);
+  font-weight: 700; font-size: 0.85rem;
+  border: 2px solid var(--nv-surface);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Single venue location: orange disc with a white center, not a price pill. */
+.nv-venue-pin {
+  display: flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--nv-action); border: 2px solid var(--nv-surface);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+.nv-venue-pin::after {
+  content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--nv-surface);
+}
+
 
 /* ── Task 18: Specimen ─────────────────────────────────────────── */
 .nv-specimen { padding: var(--nv-sp-xl) 0; border-bottom: 1px solid var(--nv-border); }
@@ -7002,7 +7032,17 @@ button:focus-visible,
   .nv-exp-card { transition: none; }
   .nv-exp-card:hover { transform: none; }
 }
-.nv-exp-card-photo { aspect-ratio: 16 / 10; overflow: hidden; }
+.nv-exp-card-photo { position: relative; aspect-ratio: 16 / 10; overflow: hidden; }
+/* Trust badge (Popular / Locally-owned) overlaid on the photo, so the body tag
+   is free to always carry the category — one slot, one meaning each. */
+.nv-card-badge {
+  position: absolute; top: var(--nv-sp-xs); left: var(--nv-sp-xs); z-index: 1;
+  padding: 2px var(--nv-sp-xs); border-radius: var(--nv-r-pill);
+  font-size: 0.72rem; font-weight: 700; line-height: 1.5;
+  background: var(--nv-surface); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+.nv-card-badge--popular { color: var(--nv-action-strong); }
+.nv-card-badge--local { color: var(--nv-local-text); }
 .nv-exp-card-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* Fallback panel for demo photography that has not been exported yet.
@@ -7039,7 +7079,7 @@ button:focus-visible,
   color: var(--nv-text);
 }
 .nv-result:hover { background: var(--nv-surface-muted); }
-.nv-result-photo { width: 160px; height: 120px; border-radius: var(--nv-r-md); overflow: hidden; }
+.nv-result-photo { position: relative; width: 160px; height: 120px; border-radius: var(--nv-r-md); overflow: hidden; }
 .nv-result-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .nv-result-body { display: grid; gap: var(--nv-sp-2xs); align-content: start; }
 .nv-result-title { font-size: 1rem; margin: 0; }
@@ -7128,7 +7168,9 @@ button:focus-visible,
 }
 .nv-legend-title { font-weight: 700; margin: 0 0 var(--nv-sp-2xs); }
 .nv-legend ul { display: grid; gap: var(--nv-sp-2xs); list-style: none; padding: 0; margin: 0; }
-.nv-legend li { display: flex; align-items: center; gap: var(--nv-sp-xs); }
+/* Fixed icon column so the labels left-align regardless of pin vs dot width. */
+.nv-legend li { display: grid; grid-template-columns: 40px 1fr; align-items: center; gap: var(--nv-sp-xs); }
+.nv-legend li > :first-child { justify-self: center; }
 
 /* ── Task 12: Feed page ────────────────────────────────────────────────────── */
 .nv-feed { max-width: 72rem; margin: 0 auto; padding: var(--nv-sp-xl) var(--nv-sp-lg); }
@@ -7138,18 +7180,41 @@ button:focus-visible,
 /* Feed controls: count + price/sort */
 .nv-feed-controls { display: flex; align-items: center; justify-content: space-between; gap: var(--nv-sp-md); flex-wrap: wrap; margin-bottom: var(--nv-sp-lg); }
 .nv-feed-count { margin: 0; font-weight: 700; }
-.nv-feed-selects { display: flex; gap: var(--nv-sp-sm); }
+.nv-feed-selects { display: flex; flex-wrap: wrap; gap: var(--nv-sp-sm); }
+.nv-feed-select { flex: 1 1 auto; min-width: 0; }
 .nv-feed-select select {
-  font: inherit; min-height: 44px; padding: var(--nv-sp-xs) var(--nv-sp-md);
+  font: inherit; width: 100%; min-width: 0; min-height: 44px;
+  padding: var(--nv-sp-xs) 38px var(--nv-sp-xs) var(--nv-sp-md);
   border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill);
-  background: var(--nv-surface); color: var(--nv-text); cursor: pointer;
+  background-color: var(--nv-surface); color: var(--nv-text); cursor: pointer;
+  /* Custom caret so placement is consistent inside the pill (native arrow sat off-center). */
+  appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%232b2b2b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
 }
-.nv-feed-select select:hover { border-color: var(--nv-action); }
+.nv-feed-select select:hover,
+.nv-feed-select select:focus-visible { border-color: var(--nv-action); }
+.nv-feed-clear {
+  border: none; background: none; padding: var(--nv-sp-xs) var(--nv-sp-sm); min-height: 44px;
+  color: var(--nv-action-strong); font-weight: 700; cursor: pointer; text-decoration: underline;
+}
 /* Card facts line */
 .nv-exp-card-facts { color: var(--nv-text-muted); font-size: 0.8rem; margin: 0; }
 .nv-feed-cat { display: inline-flex; align-items: center; min-height: 44px; padding: var(--nv-sp-xs) var(--nv-sp-md); border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill); background: var(--nv-surface); cursor: pointer; font-weight: 700; color: var(--nv-text); }
-.nv-feed-cat--active { border-color: var(--nv-action); color: var(--nv-action-strong); background: var(--nv-surface-muted); }
-.nv-feed-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--nv-sp-lg); }
+/* Active chip is filled (a shape cue, not color alone) for colorblind + at-a-glance clarity. */
+.nv-feed-cat--active { border-color: var(--nv-action); color: var(--nv-text-on-action); background: var(--nv-action); }
+/* auto-fill + capped max keeps cards their size when a category has only 2 items
+   (auto-fit would stretch the lonely cards to fill the row). */
+.nv-feed-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 360px)); gap: var(--nv-sp-lg); justify-content: start; }
+/* Mobile: one swipeable row so the controls and first card stay above the fold. */
+@media (max-width: 640px) {
+  .nv-feed-categories {
+    flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch; padding-bottom: var(--nv-sp-2xs); margin-inline: calc(-1 * var(--nv-sp-md)); padding-inline: var(--nv-sp-md);
+  }
+  .nv-feed-cat { flex: 0 0 auto; scroll-snap-align: start; }
+}
 .nv-feed-empty { color: var(--nv-text-muted); padding: var(--nv-sp-xl) 0; text-align: center; }
 
 /* ── Task 13: Search page ──────────────────────────────────────────────────── */
@@ -7205,6 +7270,7 @@ button:focus-visible,
 .nv-review-author { margin: 0; font-weight: 700; }
 .nv-review-date { margin: 0; color: var(--nv-text-muted); font-size: 0.8rem; }
 .nv-review-quote { margin: 0; color: var(--nv-text); line-height: 1.55; max-width: 48ch; }
+.nv-review-rating { margin-left: auto; font-size: 0.8rem; font-weight: 700; color: var(--nv-action-strong); letter-spacing: 0.02em; white-space: nowrap; }
 .nv-detail-where-heading { font-size: 1.1rem; font-weight: 700; margin: 0 0 var(--nv-sp-xs); }
 .nv-detail-where-map { height: 280px; border-radius: var(--nv-r-md); overflow: hidden; }
 .nv-detail-go-heading { font-size: 1.1rem; margin-top: var(--nv-sp-md); }

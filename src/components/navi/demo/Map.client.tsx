@@ -3,6 +3,8 @@
 import { useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import "leaflet.markercluster";
+import "leaflet.markercluster/dist/MarkerCluster.css";
 import type { MapMarker } from "./Map";
 
 export default function MapClient({
@@ -26,7 +28,10 @@ export default function MapClient({
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<L.Map | null>(null);
-  const markerLayerRef = useRef<L.LayerGroup | null>(null);
+  // Place markers cluster so a dense city core stays legible; the location dot
+  // lives in its own (unclustered) layer.
+  const clusterRef = useRef<L.MarkerClusterGroup | null>(null);
+  const locLayerRef = useRef<L.LayerGroup | null>(null);
   // id -> marker, so selection toggles a class instead of rebuilding markers.
   const markerById = useRef<Map<string, L.Marker>>(new Map());
 
@@ -47,9 +52,23 @@ export default function MapClient({
         '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
     }).addTo(map);
     mapRef.current = map;
-    markerLayerRef.current = L.layerGroup().addTo(map);
 
-    // The map often mounts (via next/dynamic) before its fl/grid container has
+    const cluster = L.markerClusterGroup({
+      showCoverageOnHover: false,
+      maxClusterRadius: 46,
+      spiderfyOnMaxZoom: true,
+      iconCreateFunction: (c) =>
+        L.divIcon({
+          className: "nv-cluster-leaflet",
+          html: `<span class="nv-cluster">${c.getChildCount()}</span>`,
+          iconSize: [38, 38],
+          iconAnchor: [19, 19],
+        }),
+    }).addTo(map);
+    clusterRef.current = cluster;
+    locLayerRef.current = L.layerGroup().addTo(map);
+
+    // The map often mounts (via next/dynamic) before its flex/grid container has
     // its final width, so Leaflet loads tiles for the wrong size and leaves the
     // rest grey. Recompute on the next frame and whenever the container resizes.
     const raf = requestAnimationFrame(() => map.invalidateSize());
@@ -61,7 +80,8 @@ export default function MapClient({
       ro.disconnect();
       map.remove();
       mapRef.current = null;
-      markerLayerRef.current = null;
+      clusterRef.current = null;
+      locLayerRef.current = null;
       markerById.current.clear();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,21 +105,36 @@ export default function MapClient({
   // Build place markers (and the optional current-location dot) only when the
   // marker set changes, not on every hover.
   useEffect(() => {
-    const layer = markerLayerRef.current;
-    if (!layer) return;
-    layer.clearLayers();
+    const cluster = clusterRef.current;
+    const locLayer = locLayerRef.current;
+    if (!cluster || !locLayer) return;
+    cluster.clearLayers();
+    locLayer.clearLayers();
     markerById.current.clear();
 
     for (const m of markers) {
-      const icon = L.divIcon({
-        className: "nv-pin-leaflet",
-        html: `<span class="nv-pin nv-pin--place"><span class="nv-pin-value">${m.label}</span></span>`,
-        iconSize: [48, 28],
-        iconAnchor: [24, 28],
+      // A labelled marker is a priced result (pill); an unlabelled one is a
+      // single venue location (a dot, not a price tag).
+      const icon = m.label
+        ? L.divIcon({
+            className: "nv-pin-leaflet",
+            html: `<span class="nv-pin nv-pin--place"><span class="nv-pin-value">${m.label}</span></span>`,
+            iconSize: [48, 28],
+            iconAnchor: [24, 28],
+          })
+        : L.divIcon({
+            className: "nv-pin-leaflet",
+            html: `<span class="nv-venue-pin" role="img" aria-label="Event location"></span>`,
+            iconSize: [24, 24],
+            iconAnchor: [12, 12],
+          });
+      const marker = L.marker([m.lat, m.lng], {
+        icon,
+        keyboard: true,
+        alt: m.label ? `${m.label}, select` : "Event location",
       });
-      const marker = L.marker([m.lat, m.lng], { icon, keyboard: true, alt: `${m.label}, select` });
       if (onSelect) marker.on("click", () => onSelect(m.id));
-      marker.addTo(layer);
+      cluster.addLayer(marker);
       markerById.current.set(m.id, marker);
     }
 
@@ -110,7 +145,9 @@ export default function MapClient({
         iconSize: [22, 22],
         iconAnchor: [11, 11],
       });
-      L.marker(currentLocation, { icon: locIcon, interactive: false, keyboard: false }).addTo(layer);
+      L.marker(currentLocation, { icon: locIcon, interactive: false, keyboard: false }).addTo(
+        locLayer,
+      );
     }
 
     // Frame every result (plus the location dot) so off-screen pins aren't lost
@@ -122,7 +159,8 @@ export default function MapClient({
     }
   }, [markers, onSelect, currentLocation, fitToMarkers]);
 
-  // Selection toggles a class and raises the pin so it can't sit under a neighbor.
+  // Selection toggles a class and raises the pin. A clustered (hidden) marker
+  // has no element yet, so guard for null.
   useEffect(() => {
     for (const [id, marker] of markerById.current) {
       const selected = id === selectedId;

@@ -37,6 +37,14 @@ export default function FeedPage() {
     return sorted;
   }, [query, activeCategory, sort, priceBand]);
 
+  const hasFilters = activeCategory !== null || priceBand !== "any" || query !== "" || sort !== "recommended";
+  const clearFilters = () => {
+    setActiveCategory(null);
+    setPriceBand("any");
+    setSort("recommended");
+    setQuery("");
+  };
+
   return (
     <div className="nv-feed">
       <header className="nv-feed-head">
@@ -53,6 +61,7 @@ export default function FeedPage() {
         <button
           type="button"
           className={`nv-feed-cat${activeCategory === null ? " nv-feed-cat--active" : ""}`}
+          aria-pressed={activeCategory === null}
           onClick={() => setActiveCategory(null)}
         >
           All
@@ -62,6 +71,7 @@ export default function FeedPage() {
             key={c}
             type="button"
             className={`nv-feed-cat${activeCategory === c ? " nv-feed-cat--active" : ""}`}
+            aria-pressed={activeCategory === c}
             onClick={() => setActiveCategory(c)}
           >
             {c}
@@ -93,11 +103,21 @@ export default function FeedPage() {
               <option value="price-desc">Price: high to low</option>
             </select>
           </label>
+          {hasFilters && (
+            <button type="button" className="nv-feed-clear" onClick={clearFilters}>
+              Clear filters
+            </button>
+          )}
         </div>
       </div>
 
       {filtered.length === 0 ? (
-        <p className="nv-feed-empty">No experiences match. Try clearing the category, price, or search.</p>
+        <p className="nv-feed-empty">
+          No experiences match.{" "}
+          <button type="button" className="nv-feed-clear" onClick={clearFilters}>
+            Clear filters
+          </button>
+        </p>
       ) : (
         <ul className="nv-feed-grid">
           {filtered.map((e) => (

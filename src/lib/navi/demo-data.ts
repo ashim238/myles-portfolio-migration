@@ -162,6 +162,7 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "Take the", detail: "Q or 2" },
         { mode: "walk", label: "Walk", detail: "8 min from Beverley Rd" },
+        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
       ],
     },
     dates: [
@@ -225,6 +226,7 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "Take the", detail: "A or C" },
         { mode: "walk", label: "Walk", detail: "5 min from Utica Ave" },
+        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
       ],
     },
     dates: [
@@ -290,6 +292,7 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "Take the", detail: "A, C, or F to Jay St" },
         { mode: "walk", label: "Walk", detail: "12 min from Jay St–MetroTech" },
+        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
       ],
     },
     dates: [
@@ -359,6 +362,7 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "Take the", detail: "N or R to 53rd St" },
         { mode: "walk", label: "Walk", detail: "3 min" },
+        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
       ],
     },
     dates: [
@@ -422,6 +426,7 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "Take the", detail: "A or C to Utica Ave" },
         { mode: "walk", label: "Walk", detail: "7 min" },
+        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
       ],
     },
     dates: [
@@ -486,6 +491,7 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "Take the", detail: "G to Greenpoint Ave" },
         { mode: "walk", label: "Walk", detail: "2 min" },
+        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
       ],
     },
     dates: [
@@ -549,6 +555,7 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "Take the", detail: "2 or 3 to 116th St" },
         { mode: "walk", label: "Walk", detail: "5 min north" },
+        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
       ],
     },
     dates: [
@@ -613,6 +620,7 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "Take the", detail: "N or W to Ditmars Blvd" },
         { mode: "walk", label: "Walk", detail: "4 min" },
+        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
       ],
     },
     dates: [
@@ -677,6 +685,7 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "Take the", detail: "6 to 3rd Ave–138th St" },
         { mode: "walk", label: "Walk", detail: "6 min to bridge" },
+        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
       ],
     },
     dates: [
@@ -806,6 +815,7 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "Take the", detail: "7 to Flushing–Main St" },
         { mode: "walk", label: "Walk", detail: "6 min south" },
+        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
       ],
     },
     dates: [
@@ -871,6 +881,7 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "Take the", detail: "J, Z, N, Q, R, or 6 to Canal St" },
         { mode: "walk", label: "Walk", detail: "5 min south" },
+        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
       ],
     },
     dates: [
@@ -942,6 +953,7 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "Take the", detail: "A, B, C, or D to 145th St" },
         { mode: "walk", label: "Walk", detail: "8 min" },
+        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
       ],
     },
     dates: [
@@ -1007,6 +1019,7 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "Take the", detail: "A, B, C, or D to 125th St" },
         { mode: "walk", label: "Walk", detail: "4 min" },
+        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
       ],
     },
     dates: [
@@ -1071,6 +1084,7 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "Take the", detail: "D, F, N, or Q to Coney Island–Stillwell Av" },
         { mode: "walk", label: "Walk", detail: "5 min to the boardwalk" },
+        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
       ],
     },
     dates: [
@@ -1135,6 +1149,7 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "Take the", detail: "7 to Flushing–Main St" },
         { mode: "walk", label: "Walk", detail: "2 min" },
+        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
       ],
     },
     dates: [
@@ -1200,6 +1215,7 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "Take the", detail: "E, F, M, R, or 7 to Jackson Hts–Roosevelt Av" },
         { mode: "walk", label: "Walk", detail: "3 min" },
+        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
       ],
     },
     dates: [
@@ -1265,6 +1281,7 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "Take the", detail: "C or E to 23rd St" },
         { mode: "walk", label: "Walk", detail: "10 min west" },
+        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
       ],
     },
     dates: [
@@ -1330,6 +1347,7 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "Take the", detail: "F to Delancey St" },
         { mode: "walk", label: "Walk", detail: "4 min" },
+        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
       ],
     },
     dates: [
@@ -1395,6 +1413,7 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "Take the", detail: "6 to Hunts Point Av" },
         { mode: "walk", label: "Walk", detail: "7 min" },
+        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
       ],
     },
     dates: [
@@ -1891,6 +1910,7 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "A to Dyckman St", detail: "Walk 8 minutes west toward the river" },
         { mode: "subway", label: "1 to 215 St", detail: "Walk 10 minutes north along the park edge" },
         { mode: "walk", label: "Meet at the field house", detail: "Look for the green Navi flag by the flagpole" },
+        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
       ],
     },
     dates: [
@@ -2056,6 +2076,7 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "F to Delancey St", detail: "Walk 4 minutes south to Orchard St" },
         { mode: "subway", label: "B or D to Grand St", detail: "Walk 6 minutes east" },
         { mode: "walk", label: "Meet at the corner newsstand", detail: "Look for the guide with a film-still binder" },
+        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
       ],
     },
     dates: [

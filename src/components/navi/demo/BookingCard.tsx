@@ -75,7 +75,9 @@ export function BookingCard({
           >
             Reserve now
           </Button>
-          <p className="nv-booking-note">You won&apos;t be charged in this demo.</p>
+          {priceFrom > 0 && (
+            <p className="nv-booking-note">You won&apos;t be charged in this demo.</p>
+          )}
         </>
       )}
       <Button variant="transparent">Contact organizer</Button>
