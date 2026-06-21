@@ -59,7 +59,11 @@ export default function SearchPage() {
           markers={markers}
           selectedId={hovered}
           currentLocation={[40.68, -73.95]}
+          fitToMarkers
         />
+        {results.length === 0 && (
+          <p className="nv-map-empty">No matches. Try a broader term.</p>
+        )}
         <Legend />
       </div>
     </div>

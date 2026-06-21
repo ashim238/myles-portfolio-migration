@@ -13,6 +13,7 @@ export default function MapClient({
   onSelect,
   currentLocation,
   active = true,
+  fitToMarkers = false,
 }: {
   center: [number, number];
   zoom: number;
@@ -21,6 +22,7 @@ export default function MapClient({
   onSelect?: (id: string) => void;
   currentLocation?: [number, number];
   active?: boolean;
+  fitToMarkers?: boolean;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<L.Map | null>(null);
@@ -65,10 +67,12 @@ export default function MapClient({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Sync center/zoom without rebuilding the map.
+  // Sync center/zoom without rebuilding the map. When fitting to markers, the
+  // markers effect owns the viewport, so don't fight it here.
   useEffect(() => {
+    if (fitToMarkers) return;
     mapRef.current?.setView(center, zoom);
-  }, [center, zoom]);
+  }, [center, zoom, fitToMarkers]);
 
   // When the map lives in a tab/panel that starts hidden, it initializes at
   // zero size and loads a single tile. Recompute once it becomes visible.
@@ -108,13 +112,22 @@ export default function MapClient({
       });
       L.marker(currentLocation, { icon: locIcon, interactive: false, keyboard: false }).addTo(layer);
     }
-  }, [markers, onSelect, currentLocation]);
 
-  // Selection only toggles a class on the affected pins (no marker rebuild).
+    // Frame every result (plus the location dot) so off-screen pins aren't lost
+    // and the list count matches what's on the map.
+    if (fitToMarkers && markers.length > 0) {
+      const pts: [number, number][] = markers.map((m) => [m.lat, m.lng]);
+      if (currentLocation) pts.push(currentLocation);
+      mapRef.current?.fitBounds(L.latLngBounds(pts), { padding: [48, 48], maxZoom: 14 });
+    }
+  }, [markers, onSelect, currentLocation, fitToMarkers]);
+
+  // Selection toggles a class and raises the pin so it can't sit under a neighbor.
   useEffect(() => {
     for (const [id, marker] of markerById.current) {
-      const pin = marker.getElement()?.querySelector(".nv-pin");
-      pin?.classList.toggle("nv-pin--selected", id === selectedId);
+      const selected = id === selectedId;
+      marker.getElement()?.querySelector(".nv-pin")?.classList.toggle("nv-pin--selected", selected);
+      marker.setZIndexOffset(selected ? 1000 : 0);
     }
   }, [selectedId, markers]);
 

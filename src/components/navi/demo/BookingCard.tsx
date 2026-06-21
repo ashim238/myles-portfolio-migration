@@ -53,7 +53,7 @@ export function BookingCard({
       {reserved ? (
         <div className="nv-booking-confirm-group">
           <p className="nv-booking-confirm" role="status">
-            Reserved for {selected.date} at {selected.time}.
+            Reserved for {selected.date} at {selected.time}. Nothing was charged in this demo.
           </p>
           <Button variant="transparent" onClick={() => setReserved(false)}>
             Change reservation

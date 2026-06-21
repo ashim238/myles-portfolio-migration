@@ -63,7 +63,7 @@ export const EXPERIENCES: Experience[] = [
     impactStatement:
       "A share of every ride funds the Prospect Park Alliance's tree care program, which maintains the park's 30,000 trees year-round.",
     learn:
-      "See the beautiful, historic, and scenic Prospect Park in a two-hour-long carriage ride that takes you through every inch of park grounds. Variation and drinks provided.",
+      "See the beautiful, historic, and scenic Prospect Park in a two-hour carriage ride through the park's quieter corners. Light refreshments provided.",
     plan: {
       bring: "Comfortable shoes, a layer for shade, and a refillable water bottle.",
       commitments: "Arrive ten minutes before the start time. Reschedule with twenty-four hours notice.",

@@ -18,6 +18,7 @@ export function Map({
   onSelect,
   currentLocation,
   active,
+  fitToMarkers,
 }: {
   center: [number, number];
   zoom: number;
@@ -26,6 +27,7 @@ export function Map({
   onSelect?: (id: string) => void;
   currentLocation?: [number, number];
   active?: boolean;
+  fitToMarkers?: boolean;
 }) {
   return (
     <section className="nv-map" aria-label="Map of nearby results">
@@ -37,6 +39,7 @@ export function Map({
         onSelect={onSelect}
         currentLocation={currentLocation}
         active={active}
+        fitToMarkers={fitToMarkers}
       />
     </section>
   );
