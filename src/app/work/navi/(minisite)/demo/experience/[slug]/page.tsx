@@ -56,7 +56,7 @@ export function ExperienceView({ experience: e }: { experience: Experience }) {
       label: "Go",
       content: (
         <div className="nv-detail-section">
-          <p className="nv-detail-where-heading">Where?</p>
+          <h2 className="nv-detail-where-heading">Where?</h2>
           <p>{e.go.addressLine1}</p>
           <p>{e.go.addressLine2}</p>
           <div className="nv-detail-where-map">
@@ -64,6 +64,7 @@ export function ExperienceView({ experience: e }: { experience: Experience }) {
               center={[e.lat, e.lng]}
               zoom={15}
               markers={[{ id: e.slug, lat: e.lat, lng: e.lng, label: "" }]}
+              active={tab === "go"}
             />
           </div>
           <h2 className="nv-detail-go-heading">How to get there</h2>
@@ -89,6 +90,7 @@ export function ExperienceView({ experience: e }: { experience: Experience }) {
         <BookingCard
           priceFrom={e.price}
           dates={e.dates}
+          impact={e.impactPhrase}
           onReserve={() => {
             /* demo: state lives inside BookingCard */
           }}

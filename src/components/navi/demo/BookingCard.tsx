@@ -1,16 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/navi/ui";
+import { Button, ImpactSignal } from "@/components/navi/ui";
 import type { BookingDate } from "@/lib/navi/demo-data";
 
 export function BookingCard({
   priceFrom,
   dates,
+  impact,
   onReserve,
 }: {
   priceFrom: number;
   dates: BookingDate[];
+  impact?: string;
   onReserve: (d: BookingDate) => void;
 }) {
   const [selected, setSelected] = useState<BookingDate>(dates[0]);
@@ -45,20 +47,31 @@ export function BookingCard({
           );
         })}
       </fieldset>
+      {/* The impact is why someone books on Navi, so it sits at the decision
+          point, not a tab away. */}
+      {impact && <ImpactSignal as="div">{impact}</ImpactSignal>}
       {reserved ? (
-        <p className="nv-booking-confirm" role="status">
-          Reserved for {selected.date} at {selected.time}.
-        </p>
+        <div className="nv-booking-confirm-group">
+          <p className="nv-booking-confirm" role="status">
+            Reserved for {selected.date} at {selected.time}.
+          </p>
+          <Button variant="transparent" onClick={() => setReserved(false)}>
+            Change reservation
+          </Button>
+        </div>
       ) : (
-        <Button
-          variant="primary"
-          onClick={() => {
-            onReserve(selected);
-            setReserved(true);
-          }}
-        >
-          Reserve now
-        </Button>
+        <>
+          <Button
+            variant="primary"
+            onClick={() => {
+              onReserve(selected);
+              setReserved(true);
+            }}
+          >
+            Reserve now
+          </Button>
+          <p className="nv-booking-note">You won&apos;t be charged in this demo.</p>
+        </>
       )}
       <Button variant="transparent">Contact organizer</Button>
     </aside>

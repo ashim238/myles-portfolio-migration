@@ -7,7 +7,7 @@ export function Legend() {
       <ul>
         <li>
           <MapPin kind="place" value="$" />
-          <span>Locally-owned price</span>
+          <span>Price per person</span>
         </li>
         <li>
           <MapPin kind="location" />

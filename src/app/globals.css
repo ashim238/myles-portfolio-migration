@@ -6543,7 +6543,7 @@ button:focus-visible,
   --nv-text: #2b2b2b;
   --nv-text-muted: #5a5560;
   --nv-border: #e2e0e3;
-  --nv-focus: #c4541a;
+  --nv-focus: #9e3f0b; /* action-strong: 6.07:1 on white, stronger ring than --nv-action */
   --nv-error: #c2371f;
   --nv-info: #3a86ff;
   --nv-disabled-bg: #d7d5d8;
@@ -6619,6 +6619,7 @@ button:focus-visible,
   padding: var(--nv-sp-xs) var(--nv-sp-md);
   border: 1px solid var(--nv-action);
   border-radius: var(--nv-r-pill);
+  white-space: nowrap;
 }
 .nv-nav a.nv-nav-host {
   color: var(--nv-action);
@@ -6693,6 +6694,10 @@ button:focus-visible,
   .nv-header {
     padding: var(--nv-sp-sm) var(--nv-sp-md);
   }
+  /* The bottom tab bar already carries Explore/Search/System on mobile, so the
+     header keeps only the wordmark and the one action the tab bar lacks. */
+  .nv-nav { gap: var(--nv-sp-sm); }
+  .nv-nav a:not(.nv-nav-host) { display: none; }
 }
 
 /* ── Button ────────────────────────────────────────────────────── */
@@ -6800,6 +6805,7 @@ button:focus-visible,
 .nv-tab {
   background: none;
   border: none;
+  min-height: 44px;
   padding: var(--nv-sp-xs) 0;
   font-weight: 700;
   color: var(--nv-text-muted);
@@ -6844,11 +6850,12 @@ button:focus-visible,
   background: var(--nv-info); color: var(--nv-text-on-action); font-size: 0.7rem; margin-left: var(--nv-sp-2xs);
 }
 .nv-search {
-  display: inline-flex; align-items: center; gap: var(--nv-sp-xs);
+  display: flex; align-items: center; gap: var(--nv-sp-xs); width: 100%;
   border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill);
   padding: var(--nv-sp-xs) var(--nv-sp-md); background: var(--nv-surface);
 }
-.nv-search-input { border: none; outline: none; background: none; min-width: 16rem; font: inherit; }
+.nv-search-icon { display: inline-flex; flex: none; color: var(--nv-text-muted); }
+.nv-search-input { flex: 1; min-width: 0; border: none; outline: none; background: none; font: inherit; }
 
 /* ── CarouselArrow + PaginationDots ─────────────────────────────── */
 .nv-carousel-arrow {
@@ -6896,8 +6903,15 @@ button:focus-visible,
 }
 .nv-pin--place { background: var(--nv-action); color: var(--nv-text-on-action); }
 .nv-pin--place.nv-pin--selected { background: var(--nv-action-strong); }
-.nv-pin--location { background: var(--nv-pin-location); color: var(--nv-text-on-action); min-width: 16px; }
 .nv-pin--hollow { background: var(--nv-surface); color: var(--nv-action); }
+
+/* Current-location indicator: the universal "blue dot" (filled disc, white
+   ring, soft halo) rather than a teardrop pin, which reads as a place marker. */
+.nv-loc-dot {
+  display: inline-block; width: 14px; height: 14px; border-radius: 50%;
+  background: var(--nv-info); border: 2.5px solid var(--nv-surface);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--nv-info) 28%, transparent), 0 1px 3px rgba(0,0,0,0.3);
+}
 
 
 /* ── Task 18: Specimen ─────────────────────────────────────────── */
@@ -6994,7 +7008,7 @@ button:focus-visible,
 .nv-photo-pending {
   width: 100%;
   height: 100%;
-  min-height: 100%;
+  min-height: 8rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7058,6 +7072,8 @@ button:focus-visible,
 .nv-booking-date-day { font-weight: 700; }
 .nv-booking-date-time { color: var(--nv-text-muted); }
 .nv-booking-confirm { margin: 0; padding: var(--nv-sp-sm); background: var(--nv-surface-muted); border-radius: var(--nv-r-md); color: var(--nv-text); }
+.nv-booking-confirm-group { display: grid; gap: var(--nv-sp-xs); }
+.nv-booking-note { margin: 0; font-size: 0.8rem; color: var(--nv-text-muted); text-align: center; }
 
 /* ── TransitOptions ────────────────────────────────────────────── */
 .nv-transit { display: flex; gap: var(--nv-sp-lg); list-style: none; padding: 0; margin: 0; flex-wrap: wrap; }
@@ -7068,20 +7084,11 @@ button:focus-visible,
 
 /* ── Gallery (hero + 4-thumb grid) ────────────────────────────── */
 .nv-gallery { display: grid; grid-template-columns: 2fr 1fr; gap: var(--nv-sp-sm); margin: 0; aspect-ratio: 2.4 / 1; }
+.nv-gallery--solo { grid-template-columns: 1fr; }
 .nv-gallery-hero { position: relative; overflow: hidden; border-radius: var(--nv-r-md); }
 .nv-gallery-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.nv-gallery-see {
-  position: absolute;
-  bottom: var(--nv-sp-sm);
-  right: var(--nv-sp-sm);
-  padding: 6px 14px;
-  background: var(--nv-surface);
-  border: 1px solid var(--nv-border);
-  border-radius: var(--nv-r-pill);
-  font-weight: 700;
-  cursor: pointer;
-}
-.nv-gallery-thumbs { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: var(--nv-sp-sm); }
+/* Column/row counts are set inline by the component to match the photo count. */
+.nv-gallery-thumbs { display: grid; gap: var(--nv-sp-sm); }
 .nv-gallery-thumb { overflow: hidden; border-radius: var(--nv-r-md); }
 .nv-gallery-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 @media (max-width: 720px) {
@@ -7116,8 +7123,8 @@ button:focus-visible,
 .nv-feed-head { display: grid; gap: var(--nv-sp-md); margin-bottom: var(--nv-sp-xl); }
 .nv-feed-head h1 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 0; }
 .nv-feed-categories { display: flex; gap: var(--nv-sp-xs); flex-wrap: wrap; margin-bottom: var(--nv-sp-xl); }
-.nv-feed-cat { padding: var(--nv-sp-xs) var(--nv-sp-md); border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill); background: var(--nv-surface); cursor: pointer; font-weight: 700; color: var(--nv-text); }
-.nv-feed-cat--active { border-color: var(--nv-action); color: var(--nv-action); background: var(--nv-surface-muted); }
+.nv-feed-cat { display: inline-flex; align-items: center; min-height: 44px; padding: var(--nv-sp-xs) var(--nv-sp-md); border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill); background: var(--nv-surface); cursor: pointer; font-weight: 700; color: var(--nv-text); }
+.nv-feed-cat--active { border-color: var(--nv-action); color: var(--nv-action-strong); background: var(--nv-surface-muted); }
 .nv-feed-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--nv-sp-lg); }
 .nv-feed-empty { color: var(--nv-text-muted); padding: var(--nv-sp-xl) 0; text-align: center; }
 
@@ -7143,7 +7150,7 @@ button:focus-visible,
 .nv-detail-section { display: grid; gap: var(--nv-sp-md); padding-top: var(--nv-sp-md); }
 .nv-detail-host { display: inline-flex; gap: var(--nv-sp-xs); align-items: center; color: var(--nv-text-muted); }
 .nv-detail-prose { max-width: 60ch; }
-.nv-detail-where-heading { font-weight: 700; }
+.nv-detail-where-heading { font-size: 1.1rem; font-weight: 700; margin: 0 0 var(--nv-sp-xs); }
 .nv-detail-where-map { height: 280px; border-radius: var(--nv-r-md); overflow: hidden; }
 .nv-detail-go-heading { font-size: 1.1rem; margin-top: var(--nv-sp-md); }
 @media (max-width: 720px) {

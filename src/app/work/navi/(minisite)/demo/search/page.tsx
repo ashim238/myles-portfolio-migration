@@ -58,6 +58,7 @@ export default function SearchPage() {
           zoom={12}
           markers={markers}
           selectedId={hovered}
+          currentLocation={[40.68, -73.95]}
         />
         <Legend />
       </div>

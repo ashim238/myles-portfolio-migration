@@ -16,12 +16,16 @@ export function Map({
   markers,
   selectedId,
   onSelect,
+  currentLocation,
+  active,
 }: {
   center: [number, number];
   zoom: number;
   markers: MapMarker[];
   selectedId?: string;
   onSelect?: (id: string) => void;
+  currentLocation?: [number, number];
+  active?: boolean;
 }) {
   return (
     <section className="nv-map" aria-label="Map of nearby results">
@@ -31,6 +35,8 @@ export function Map({
         markers={markers}
         selectedId={selectedId}
         onSelect={onSelect}
+        currentLocation={currentLocation}
+        active={active}
       />
     </section>
   );

@@ -43,6 +43,14 @@ export function DemoPhoto({
 
   return (
     // eslint-disable-next-line @next/next/no-img-element
-    <img ref={ref} src={src} alt={alt} className={className} onError={() => setFailed(true)} />
+    <img
+      ref={ref}
+      src={src}
+      alt={alt}
+      className={className}
+      loading="lazy"
+      decoding="async"
+      onError={() => setFailed(true)}
+    />
   );
 }

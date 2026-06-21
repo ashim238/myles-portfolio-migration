@@ -13,9 +13,10 @@ describe("MapPin", () => {
     );
   });
 
-  it("renders a location pin without a value", () => {
+  it("renders the current-location blue dot, not a place pin", () => {
     render(<MapPin kind="location" />);
-    expect(document.querySelector(".nv-pin--location")).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /current location/i })).toHaveClass("nv-loc-dot");
+    expect(document.querySelector(".nv-pin")).not.toBeInTheDocument();
   });
 });
 

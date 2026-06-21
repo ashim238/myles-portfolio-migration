@@ -6,7 +6,7 @@ describe("Legend", () => {
   it("renders a labelled list with pin entries", () => {
     render(<Legend />);
     expect(screen.getByRole("group", { name: /legend/i })).toBeInTheDocument();
-    expect(screen.getByText(/locally-owned price/i)).toBeInTheDocument();
+    expect(screen.getByText(/price per person/i)).toBeInTheDocument();
     expect(screen.getByText(/current location/i)).toBeInTheDocument();
   });
 });
