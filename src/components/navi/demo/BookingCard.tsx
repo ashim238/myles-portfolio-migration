@@ -56,7 +56,7 @@ export function BookingCard({
           point, not a tab away. */}
       {impact && <ImpactSignal as="div">{impact}</ImpactSignal>}
       <div className={`nv-booking-state${reserved ? " is-reserved" : ""}`}>
-        <div className="nv-booking-state-reserve" aria-hidden={reserved}>
+        <div className="nv-booking-state-reserve" inert={reserved}>
           <Button
             variant="primary"
             onClick={() => {
@@ -70,23 +70,27 @@ export function BookingCard({
             <p className="nv-booking-note">You won&apos;t be charged in this demo.</p>
           )}
         </div>
-        <div className="nv-booking-state-confirmed" aria-hidden={!reserved}>
+        <div className="nv-booking-state-confirmed" inert={!reserved}>
           <p className="nv-booking-confirm" role="status">
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-            Reserved for {selected.date} at {selected.time}. Nothing was charged in this demo.
+            {reserved && (
+              <>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                Reserved for {selected.date} at {selected.time}. Nothing was charged in this demo.
+              </>
+            )}
           </p>
           <Button variant="transparent" onClick={() => setReserved(false)}>
             Change reservation
