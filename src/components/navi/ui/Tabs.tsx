@@ -34,6 +34,8 @@ export function Tabs({
     refs.current[next]?.focus();
   }
 
+  const panelIds = new Set(items.filter((it) => it.content != null).map((it) => it.id));
+
   return (
     <>
       <PillRow
@@ -50,10 +52,7 @@ export function Tabs({
           id: `${baseId}-tab-${it.id}`,
           role: "tab",
           "aria-selected": selected ? "true" : "false",
-          "aria-controls":
-            items.find((x) => x.id === it.id)?.content != null
-              ? `${baseId}-panel-${it.id}`
-              : undefined,
+          "aria-controls": panelIds.has(it.id) ? `${baseId}-panel-${it.id}` : undefined,
           tabIndex: selected ? "0" : "-1",
         })}
       />
