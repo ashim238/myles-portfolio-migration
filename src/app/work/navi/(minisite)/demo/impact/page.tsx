@@ -28,9 +28,9 @@ export function ImpactView() {
       <footer className="nv-impact-method">
         <h2>How we count this</h2>
         <p>
-          Themes are assigned by reading each host's stated commitment and
+          Themes are assigned by reading each host&apos;s stated commitment and
           matching it to the closest category. No experience appears in more than
-          one theme, and we don't invent themes to fill a section.
+          one theme, and we don&apos;t invent themes to fill a section.
         </p>
       </footer>
     </article>
