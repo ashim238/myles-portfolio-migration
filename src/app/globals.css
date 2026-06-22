@@ -6777,6 +6777,16 @@ button:focus-visible,
   color: var(--nv-local-text);
 }
 .nv-impact-icon { display: inline-flex; color: var(--nv-impact-icon); }
+.nv-impact--link {
+  text-decoration: none;
+  cursor: pointer;
+}
+.nv-impact--link:hover .nv-impact-text { text-decoration: underline; }
+.nv-impact--link:focus-visible {
+  outline: 2px solid var(--nv-focus);
+  outline-offset: 2px;
+  border-radius: var(--nv-r-sm);
+}
 
 /* ── Rating ─────────────────────────────────────────────────────── */
 .nv-rating { display: inline-flex; align-items: center; gap: var(--nv-sp-xs); }

@@ -8,12 +8,14 @@ export function BookingCard({
   priceFrom,
   dates,
   impact,
+  impactHref,
   spotsLeft,
   onReserve,
 }: {
   priceFrom: number;
   dates: BookingDate[];
   impact?: string;
+  impactHref?: string;
   spotsLeft?: number;
   onReserve: (d: BookingDate) => void;
 }) {
@@ -54,7 +56,11 @@ export function BookingCard({
       </fieldset>
       {/* The impact is why someone books on Navi, so it sits at the decision
           point, not a tab away. */}
-      {impact && <ImpactSignal as="div">{impact}</ImpactSignal>}
+      {impact && (
+        <ImpactSignal as="div" href={impactHref}>
+          {impact}
+        </ImpactSignal>
+      )}
       <div className={`nv-booking-state${reserved ? " is-reserved" : ""}`}>
         <div className="nv-booking-state-reserve" inert={reserved}>
           <Button

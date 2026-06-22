@@ -15,4 +15,12 @@ describe("ImpactSignal", () => {
     render(<ImpactSignal as="div">Test</ImpactSignal>);
     expect(screen.getByRole("note").tagName).toBe("DIV");
   });
+
+  it("renders as a link to the given href and is not a note", () => {
+    render(<ImpactSignal href="/work/navi/demo/impact#heritage">Funds tree care</ImpactSignal>);
+    const link = screen.getByRole("link", { name: /Funds tree care/ });
+    expect(link).toHaveAttribute("href", "/work/navi/demo/impact#heritage");
+    expect(link).toHaveClass("nv-impact");
+    expect(screen.queryByRole("note")).not.toBeInTheDocument();
+  });
 });

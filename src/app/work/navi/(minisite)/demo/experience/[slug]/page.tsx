@@ -91,7 +91,9 @@ export function ExperienceView({ experience: e }: { experience: Experience }) {
             </p>
             <p className="nv-detail-prose">{e.learn}</p>
             <Rating value={e.rating} reviews={e.reviews} />
-            <ImpactSignal as="div">{e.impactStatement}</ImpactSignal>
+            <ImpactSignal as="div" href={`/work/navi/demo/impact#${e.impactTheme}`}>
+              {e.impactStatement}
+            </ImpactSignal>
             <div className="nv-included">
               <h3 className="nv-included-heading">What&apos;s included</h3>
               <ul>
@@ -141,6 +143,7 @@ export function ExperienceView({ experience: e }: { experience: Experience }) {
           priceFrom={e.price}
           dates={e.dates}
           impact={e.impactPhrase}
+          impactHref={`/work/navi/demo/impact#${e.impactTheme}`}
           spotsLeft={e.spotsLeft}
           onReserve={() => {
             /* demo: state lives inside BookingCard */

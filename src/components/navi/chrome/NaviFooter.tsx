@@ -11,6 +11,7 @@ export function NaviFooter() {
     {
       heading: "About",
       links: [
+        { label: "Where bookings go", href: "/work/navi/demo/impact" },
         { label: "What's Navi?", href: "/work/navi" },
         { label: "Careers", href: "/work/navi" },
         { label: "Newsroom", href: "/work/navi" },
