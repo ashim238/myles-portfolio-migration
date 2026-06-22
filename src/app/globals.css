@@ -7405,6 +7405,17 @@ button:focus-visible,
 .nv-detail-section + .nv-detail-section { border-top: 1px solid var(--nv-border); margin-top: var(--nv-sp-lg); }
 .nv-detail-section-heading { font-size: 1.4rem; font-weight: 700; margin: 0; letter-spacing: -0.01em; }
 .nv-detail-host { display: inline-flex; gap: var(--nv-sp-xs); align-items: center; color: var(--nv-text-muted); }
+.nv-detail-host-link {
+  color: var(--nv-action);
+  text-decoration: none;
+  font-weight: 600;
+}
+.nv-detail-host-link:hover { text-decoration: underline; }
+.nv-detail-host-link:focus-visible {
+  outline: 2px solid var(--nv-focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
 .nv-detail-prose { max-width: 60ch; }
 
 /* Detail: at-a-glance facts strip */

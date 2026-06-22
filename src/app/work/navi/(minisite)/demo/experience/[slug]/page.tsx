@@ -83,7 +83,10 @@ export function ExperienceView({ experience: e }: { experience: Experience }) {
           <section id="learn" aria-labelledby="learn-heading" className="nv-detail-section">
             <h2 id="learn-heading" className="nv-detail-section-heading">Learn</h2>
             <p className="nv-detail-host">
-              <Avatar name={e.host.name} size="sm" /> Hosted by {e.host.name}
+              <Avatar name={e.host.name} size="sm" /> Hosted by{" "}
+              <Link href={`/work/navi/demo/host/${e.host.slug}`} className="nv-detail-host-link">
+                {e.host.name}
+              </Link>
             </p>
             <p className="nv-detail-prose">{e.learn}</p>
             <Rating value={e.rating} reviews={e.reviews} />

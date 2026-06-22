@@ -52,4 +52,11 @@ describe("Experience page", () => {
     render(<ExperienceView experience={e} />);
     expect(screen.getByRole("button", { name: "Learn" })).toHaveAttribute("aria-current", "true");
   });
+
+  it("links the Hosted-by name to the host page", () => {
+    render(<ExperienceView experience={e} />);
+    expect(
+      screen.getByRole("link", { name: e.host.name }),
+    ).toHaveAttribute("href", `/work/navi/demo/host/${e.host.slug}`);
+  });
 });
