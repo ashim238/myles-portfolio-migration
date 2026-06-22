@@ -118,13 +118,17 @@ No new tokens. If a value cannot be expressed with the existing scale, that is f
 
 ### System reconciliation
 
-The system page currently shows three components that the demo doesn't use: `Tabs` (orphaned by last session's anchored-sections refactor), `CarouselArrow`, and `PaginationDots` (defined and exported but never wired). The Gallery component is a static 1-hero + 4-thumb grid with no carousel state. The system page underrepresents what the demo actually does. Reconcile in this slice:
+The system page currently shows three components that the demo doesn't use: `Tabs` (orphaned by last session's anchored-sections refactor on the detail page), `CarouselArrow`, and `PaginationDots` (defined and exported but never wired). The Gallery component is a static 1-hero + 4-thumb grid with no carousel state. The system page underrepresents what the demo actually does. Reconcile in this slice:
 
 - **Build a real Gallery carousel.** Gallery becomes a swipe-and-arrow carousel on the hero photo (thumbs stay as a quick-jump strip below). Wires `CarouselArrow` and `PaginationDots` into a real demo surface. Arrow keys + swipe + dot clicks all advance the hero. Respect `prefers-reduced-motion` (no transitions, instant swap).
-- **Decide on `Tabs`.** Two options: (a) demote Tabs from the system page with a one-line note explaining the sticky-nav pattern that replaced it on detail pages; (b) rehome Tabs onto the Filters slide-over header (Price / Duration / Group size as tabs) to give it a real demo home. Recommendation: (a) — demote. Filters reads better as scrollable sections than as tabbed groups, and Tabs has been validated visually but doesn't fit any current demo flow. Document the sticky-nav pattern on the system page in its place ("Sticky section nav — for in-page navigation between stacked sections").
+- **Extract the pill-row primitive that Tabs and the sticky section nav share.** The detail page's sticky `<nav>` of pill buttons looks identical to `Tabs` but is semantically different (it's navigation, not a tablist — all sections are always visible). Rather than treat one as canonical and the other as the orphan, factor the shared styling into a single primitive (a `.nv-pill-row` CSS class plus a thin presentational `PillRow` component for layout/keyboard handling). Both `Tabs` and the new sticky-section-nav consume it. The system page documents the primitive once, then shows the two compositions built on it:
+    - **Tabs (APG tablist pattern)** — for when only one panel is visible at a time. Keeps `role="tablist"`, `role="tab"`, `role="tabpanel"`, `aria-selected`. Arrow-keys-move-focus keyboard pattern.
+    - **Sticky section nav (anchor pattern)** — for when sections are stacked and the nav scrolls you to them. Uses `role="navigation"`, `aria-current="true"` on the active pill. Plain tab-through keyboard pattern.
+  
+  Refactor `Tabs` to consume `PillRow` and verify its tests still pass. Refactor the detail-page sticky nav (already added last session) to consume the same primitive. No visual change expected — the goal is one source of truth for the pill-row styling.
 - **Document the chip rail.** The category rail with edge-fade and chevron buttons is a real composition the demo uses. Add a system-page specimen for it so it's part of the documented system.
 
-Out of scope: documenting Gallery itself on the system page (it's a demo-data composition, not a primitive). Out of scope: a TabBar pattern decision — same orphan status as Tabs but lower priority; leave as is.
+Out of scope: documenting Gallery itself on the system page (it's a demo-data composition, not a primitive). Out of scope: a TabBar pattern decision — same orphan status as Tabs's old framing but lower priority; leave as is for this slice.
 
 ## Slice 2 — Host pages
 
@@ -304,6 +308,7 @@ Out of scope: replacing existing photos, switching from local storage to hot-lin
 - `NeighborhoodHeader` — name + borough + intro + map.
 - `ImpactThemeSection` — heading + count + impact-statements list + experience grid.
 - `GalleryCarousel` — replaces the static thumb-grid `Gallery`. Hero photo carousel with `CarouselArrow` + `PaginationDots`, thumb strip jumps to index.
+- `PillRow` — thin presentational primitive holding the shared pill-button-row layout, focus styling, and active state. Used by both `Tabs` (tablist composition) and the detail-page sticky section nav (anchor composition).
 
 ## Components changed
 
@@ -313,7 +318,9 @@ Out of scope: replacing existing photos, switching from local storage to hot-lin
 - `ImpactSignal` — accepts an `href` prop and renders as `<Link>` when provided.
 - `Avatar` — accepts an optional `imgSrc` prop for host avatars.
 - `Gallery` — renamed/refactored to `GalleryCarousel` (see Components added). Existing callers swap to the new component.
-- System page — remove `Tabs` specimen and replace with a sticky-section-nav specimen; add a chip-rail specimen; verify `CarouselArrow` + `PaginationDots` specimens still match the now-real implementations.
+- `Tabs` — refactored to consume the new `PillRow` primitive; APG tablist semantics unchanged. Existing tests stay green.
+- Detail-page sticky section nav — refactored to consume `PillRow`. No visual change expected.
+- System page — keep `Tabs` specimen (now described as the tablist composition); add a sticky-section-nav specimen (the anchor composition); add a `PillRow` primitive specimen above both to show what they share; add a chip-rail specimen; verify `CarouselArrow` + `PaginationDots` specimens still match the now-real implementations.
 
 ## Testing
 
@@ -324,6 +331,8 @@ Existing tests stay green. New:
 - `impact-page.test.tsx` — renders methodology, one section per theme, experience counts match data.
 - `filters-slideover.test.tsx` — opens on Filters click, traps focus, ESC closes without applying, Apply commits filters and updates the feed count.
 - `gallery-carousel.test.tsx` — renders hero + thumbs, arrow advances hero index, dot clicks jump to that photo, thumb clicks jump to that photo, arrow keys advance when carousel is focused, `prefers-reduced-motion` disables the transition.
+- `pill-row.test.tsx` — primitive renders items, active item has the active class, focus styles apply on keyboard navigation, exposes a render-prop for ARIA attributes (so Tabs can supply `role="tab"` + `aria-selected` and the sticky nav can supply `aria-current`).
+- Existing `Tabs` tests stay green after the refactor (no behavior change).
 
 Spacing pass is CSS-only and does not need new tests.
 
