@@ -31,14 +31,16 @@ function durationMatches(band: Filters["duration"], duration: string): boolean {
   const mins = durationToMinutes(duration);
   if (mins === null) return false;
   if (band === "under2h") return mins < 120;
-  if (band === "halfDay") return mins >= 120 && mins <= 240;
+  if (band === "halfDay") return mins >= 120 && mins < 300;
   if (band === "fullDay") return mins >= 300;
   return true;
 }
 
 function groupMatches(band: Filters["group"], group: string): boolean {
   if (band === "any") return true;
-  const max = parseInt((group.match(/(\d+)/) ?? ["0"])[0], 10);
+  const m = group.match(/(\d+)/);
+  if (!m) return false;
+  const max = parseInt(m[1], 10);
   if (band === "solo") return max <= 1;
   if (band === "small") return max > 1 && max <= 8;
   if (band === "large") return max > 8;
