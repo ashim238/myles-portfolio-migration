@@ -6,6 +6,13 @@ export type TransitOption = {
 
 export type BookingDate = { date: string; time: string };
 
+export type ImpactTheme =
+  | "heritage"
+  | "education"
+  | "food-security"
+  | "environment"
+  | "arts-funding";
+
 export type Experience = {
   slug: string;
   title: string;
@@ -22,6 +29,7 @@ export type Experience = {
   photos: { src: string; alt: string }[];
   impactPhrase: string;
   impactStatement: string;
+  impactTheme: ImpactTheme;
   learn: string;
   plan: { bring: string; commitments: string; impactDetail: string };
   go: { addressLine1: string; addressLine2: string; transit: TransitOption[] };
@@ -76,6 +84,7 @@ export const EXPERIENCES: Experience[] = [
     impactPhrase: "Funds Prospect Park tree care",
     impactStatement:
       "A share of every ride funds the Prospect Park Alliance's tree care program, which maintains the park's 30,000 trees year-round.",
+    impactTheme: "environment",
     learn:
       "See the beautiful, historic, and scenic Prospect Park in a two-hour carriage ride through the park's quieter corners. Light refreshments provided.",
     plan: {
@@ -148,6 +157,7 @@ export const EXPERIENCES: Experience[] = [
     impactPhrase: "Pays Caribbean-owned venues directly",
     impactStatement:
       "Every ticket flows directly to the Caribbean-owned venues and DJs hosting the event, with no platform middlemen.",
+    impactTheme: "arts-funding",
     learn:
       "An afternoon dancehall set hosted by long-standing Brooklyn Junction operators. All ages, all neighborhoods welcome.",
     plan: {
@@ -212,6 +222,7 @@ export const EXPERIENCES: Experience[] = [
     impactPhrase: "Supports a Black-owned Bed-Stuy workshop",
     impactStatement:
       "Each booking sustains a Black-owned jewelry workshop in Bed-Stuy that trains apprentices from the neighborhood.",
+    impactTheme: "arts-funding",
     learn:
       "A two-hour metalwork session with a third-generation Bed-Stuy jeweler. You leave with a finished piece.",
     plan: {
@@ -278,6 +289,7 @@ export const EXPERIENCES: Experience[] = [
     impactPhrase: "Preserves DUMBO's industrial heritage",
     impactStatement:
       "Tour fees directly fund the DUMBO Improvement District's archival and preservation work on the neighborhood's remaining nineteenth-century warehouse structures.",
+    impactTheme: "heritage",
     learn:
       "A ninety-minute guided walk through DUMBO's cobblestone blocks led by a practicing architect. Learn how the neighborhood's cast-iron warehouses survived the waterfront's transformation into a tech hub, and what the ongoing zoning fights mean for what remains.",
     plan: {
@@ -348,6 +360,7 @@ export const EXPERIENCES: Experience[] = [
     impactPhrase: "Pays vendors full stall revenue",
     impactStatement:
       "Every ticket is a donation; all stall revenue goes directly to the participating small businesses — mostly immigrant-owned and family-run.",
+    impactTheme: "food-security",
     learn:
       "A weekly evening market in the heart of Sunset Park's Chinatown-Latin corridor. Fifty vendors, live music, and the best dollar dumplings in Brooklyn.",
     plan: {
@@ -412,6 +425,7 @@ export const EXPERIENCES: Experience[] = [
     impactPhrase: "Preserves a three-generation family recipe archive",
     impactStatement:
       "Delores has spent twenty years transcribing her grandmother's handwritten recipe cards. Every class booking contributes to digitizing and publishing that archive for the community.",
+    impactTheme: "heritage",
     learn:
       "A three-hour hands-on cooking class in Delores's Bed-Stuy home kitchen. Learn to make cornbread, collard greens, and smothered chicken from scratch. You'll eat what you cook.",
     plan: {
@@ -477,6 +491,7 @@ export const EXPERIENCES: Experience[] = [
     impactPhrase: "Pays muralists a fair commission",
     impactStatement:
       "Tour fees are split directly with the artists whose work you see. No gallery cut, no middleman.",
+    impactTheme: "arts-funding",
     learn:
       "A two-hour walking tour of Greenpoint's outdoor mural scene led by a local artist. Meet two working muralists and hear how the neighborhood's Polish heritage shows up — and disappears — in the public art.",
     plan: {
@@ -541,6 +556,7 @@ export const EXPERIENCES: Experience[] = [
     impactPhrase: "Supports the Harlem Brownstone Conservancy",
     impactStatement:
       "Tour proceeds support the Harlem Brownstone Conservancy, which provides pro bono legal and architectural assistance to homeowners facing displacement.",
+    impactTheme: "heritage",
     learn:
       "A ninety-minute walking tour of Harlem's Victorian-era brownstone blocks with architect and longtime Harlem resident James Okafor. Covers the architectural history, the redlining era, and the current preservation battles reshaping the neighborhood.",
     plan: {
@@ -606,6 +622,7 @@ export const EXPERIENCES: Experience[] = [
     impactPhrase: "Keeps an Astoria family bakery running",
     impactStatement:
       "Eleni's family has run a Greek pastry shop in Astoria for forty years. Booking a class directly funds the shop's operating costs as foot traffic declines.",
+    impactTheme: "heritage",
     learn:
       "Learn to make spanakopita, tiropita, and baklava from scratch in a three-hour class inside a working Astoria bakery. Eleni's family has been making these recipes since her grandmother brought them from Thessaloniki.",
     plan: {
@@ -671,6 +688,7 @@ export const EXPERIENCES: Experience[] = [
     impactPhrase: "Connects visitors directly to bodega owners",
     impactStatement:
       "Every tour fee is shared equally among the five participating bodega owners, none of whom charge Navi any booking commission.",
+    impactTheme: "heritage",
     learn:
       "A two-hour walking tour of five family-run bodegas in Mott Haven and Port Morris with community organizer Luis Reyes. Learn the history of the Puerto Rican and Dominican-owned corner stores that have served the South Bronx through disinvestment, gentrification, and pandemic closures.",
     plan: {
@@ -736,6 +754,7 @@ export const EXPERIENCES: Experience[] = [
     impactPhrase: "Keeps a 40-year-old garden in neighborhood hands",
     impactStatement:
       "Your afternoon's work helps a volunteer-run garden hold its plot against development pressure and keep growing free produce for the block.",
+    impactTheme: "food-security",
     learn:
       "Spend an afternoon working alongside the people who've kept this Lower East Side garden alive since the 1980s. You'll weed, plant, and harvest depending on the season. Gloria will walk you through how the garden feeds local families and how the land trust protects it.",
     plan: {
@@ -801,6 +820,7 @@ export const EXPERIENCES: Experience[] = [
     impactPhrase: "Funds free programming at a neighborhood center",
     impactStatement:
       "The small contribution covers the center's utility costs, which keeps its English classes and elder lunches free for the Flushing community.",
+    impactTheme: "education",
     learn:
       "A monthly potluck at a community center that's served Flushing's immigrant families for thirty years. Bring a dish if you can, or just come hungry. Grace will introduce you to neighbors and explain the center's work over the meal.",
     plan: {
@@ -867,6 +887,7 @@ export const EXPERIENCES: Experience[] = [
     impactPhrase: "Supports a community oral-history archive",
     impactStatement:
       "Tour fees fund a volunteer project recording the stories of Chinatown's oldest residents before they're lost.",
+    impactTheme: "heritage",
     learn:
       "A two-hour walk through the streets that shaped Chinese immigration in New York, from the Exclusion Act era to today's fights over gentrification. Henry's family has lived in Chinatown for four generations, and he tells the history through the buildings still standing.",
     plan: {
@@ -939,6 +960,7 @@ export const EXPERIENCES: Experience[] = [
     impactPhrase: "Preserves a private Harlem record collection",
     impactStatement:
       "Session fees help digitize a private archive of Harlem jazz recordings so the music stays accessible to the next generation.",
+    impactTheme: "heritage",
     learn:
       "A two-hour listening session in a Sugar Hill apartment, tracing Harlem's role in jazz from the Renaissance to the present. Clarence has collected records for fifty years and plays from his own shelves while telling the stories behind them.",
     plan: {
@@ -1005,6 +1027,7 @@ export const EXPERIENCES: Experience[] = [
     impactPhrase: "Pays working Harlem musicians directly",
     impactStatement:
       "Every ticket goes straight to the night's musicians at a club that pays a real door split instead of exposure.",
+    impactTheme: "arts-funding",
     learn:
       "A live set at a long-running Harlem jazz room, with two ensembles and a late jam session. Renata books the night and introduces each act, so you know who you're hearing and where they play next.",
     plan: {
@@ -1070,6 +1093,7 @@ export const EXPERIENCES: Experience[] = [
     impactPhrase: "Supports the Coney Island History Project",
     impactStatement:
       "A share of each ticket funds the nonprofit that documents Coney Island's past and runs free exhibits under the boardwalk.",
+    impactTheme: "heritage",
     learn:
       "An evening walk along the boardwalk as the lights come on, led by a guide whose family has worked the amusement district for three generations. You'll hear how Coney Island survived fires, decline, and rebuilding, with a stop for a Nathan's frank.",
     plan: {
@@ -1135,6 +1159,7 @@ export const EXPERIENCES: Experience[] = [
     impactPhrase: "Sends every food dollar to small Flushing kitchens",
     impactStatement:
       "Navi charges no commission on the tastings, so the full food budget goes to the family-run stalls on the route.",
+    impactTheme: "food-security",
     learn:
       "A three-hour crawl through Flushing's best dumpling counters, from soup dumplings to pan-fried to hand-pulled. Wei grew up eating at these stalls and orders the dishes the menus don't translate.",
     plan: {
@@ -1201,6 +1226,7 @@ export const EXPERIENCES: Experience[] = [
     impactPhrase: "Backs immigrant-owned restaurants on 74th Street",
     impactStatement:
       "The walk steers steady business to long-running family restaurants squeezed by rising rents along the 74th Street corridor.",
+    impactTheme: "food-security",
     learn:
       "A two-and-a-half-hour walk through the Indian, Bangladeshi, Nepali, and Tibetan kitchens of Jackson Heights. Anika grew up on these blocks and orders across all four cuisines, with stops for momos, dosa, and sweets.",
     plan: {
@@ -1267,6 +1293,7 @@ export const EXPERIENCES: Experience[] = [
     impactPhrase: "Directs attention to emerging, not blue-chip, artists",
     impactStatement:
       "The route favors galleries showing early-career artists, so your visit puts eyes and word of mouth where they're needed most.",
+    impactTheme: "arts-funding",
     learn:
       "A two-hour guided loop through six Chelsea galleries with an art writer who knows the dealers. Diana skips the obvious blue-chip rooms in favor of shows worth your time, and explains how the gallery system actually works.",
     plan: {
@@ -1333,6 +1360,7 @@ export const EXPERIENCES: Experience[] = [
     impactPhrase: "Channels support to artist-run project spaces",
     impactStatement:
       "Tour fees are shared with the artist-run spaces on the route, the kind that operate without commercial backing.",
+    impactTheme: "arts-funding",
     learn:
       "A two-hour walk through the Lower East Side's artist-run galleries and project spaces, the small rooms where artists show each other's work outside the market. Theo runs one himself and gets you in to meet the people behind them.",
     plan: {
@@ -1399,6 +1427,7 @@ export const EXPERIENCES: Experience[] = [
     impactPhrase: "Pays Bronx writers for the work you photograph",
     impactStatement:
       "Tour fees are shared with the writers whose walls you visit, treating graffiti as the commissioned work it is.",
+    impactTheme: "arts-funding",
     learn:
       "A two-hour walk through Hunts Point's open-air graffiti and street-art walls with a writer who came up in the Bronx scene. Ray explains the styles, the crews, and how the borough shaped a movement the art world took decades to credit.",
     plan: {
@@ -1464,6 +1493,7 @@ export const EXPERIENCES: Experience[] = [
     ],
     impactPhrase: "Pays for free senior classes",
     impactStatement: "A share of every booking funds free chair-yoga sessions for older neighbors at the Inwood library branch.",
+    impactTheme: "education",
     learn: "We practice in a meadow inside Inwood Hill Park, the only old-growth forest left in Manhattan. The class is slow and breath-led, built for stiff morning bodies rather than advanced poses. You'll get a short read on the park's salt marsh and the trees around us between sequences.",
     plan: {
       bring: "Your own mat or towel, water, and a layer you can take off as the sun rises.",
@@ -1520,6 +1550,7 @@ export const EXPERIENCES: Experience[] = [
     ],
     impactPhrase: "Funds free youth run clinics",
     impactStatement: "Bookings keep our Saturday running clinic free for kids at two Harlem rec centers.",
+    impactTheme: "education",
     learn: "This is a no-drop club, so the group splits into a conversational pace and a slightly faster pace and nobody gets left behind. We run a flat out-and-back on the Harlem River greenway with the Bronx across the water. New runners are the point here, not the exception.",
     plan: {
       bring: "Running shoes, water, and a phone if you want to track the route. We have a bag drop.",
@@ -1574,6 +1605,7 @@ export const EXPERIENCES: Experience[] = [
     ],
     impactPhrase: "Supports the park's marsh restoration",
     impactStatement: "Part of each fee goes to the volunteer crew restoring native plants around Van Cortlandt Lake.",
+    impactTheme: "environment",
     learn: "Van Cortlandt Park holds one of the Bronx's few freshwater marshes, and spring migration brings warblers, herons, and the odd visiting hawk. We walk slowly with frequent stops, so this works whether you've never held binoculars or you keep a life list. I'll teach you to bird by ear as much as by eye.",
     plan: {
       bring: "Binoculars if you have them, sturdy shoes, and water. I bring a few loaner pairs.",
@@ -1630,6 +1662,7 @@ export const EXPERIENCES: Experience[] = [
     ],
     impactPhrase: "Funds invasive-plant removal days",
     impactStatement: "Your fee helps pay for community days pulling invasive plants along the Bronx River banks.",
+    impactTheme: "environment",
     learn: "We walk the forested stretch of the Bronx River greenway and look at what actually grows here, from mugwort and garlic mustard to wild greens you can eat. I focus on safe, common plants and the rule of never eating what you can't name with certainty. We forage lightly and only where it's allowed.",
     plan: {
       bring: "Closed shoes, water, and a small bag if you want to take a few clippings. Skip this one if you have severe plant allergies.",
@@ -1684,6 +1717,7 @@ export const EXPERIENCES: Experience[] = [
     ],
     impactPhrase: "Keeps goods out of the landfill",
     impactStatement: "Every table here resells, repairs, or rehomes goods that would otherwise get tossed, and a cut of stall fees funds the neighborhood's free repair cafe.",
+    impactTheme: "environment",
     learn: "This flea runs out of a working loading dock that sits empty on Sundays. You'll meet sellers who deal in salvaged hardware, mended clothing, and records pulled from estate sales. Dani walks you through how the market sets fair prices so longtime locals aren't priced out.",
     plan: {
       bring: "A tote bag, small bills, and a refillable water bottle.",
@@ -1739,6 +1773,7 @@ export const EXPERIENCES: Experience[] = [
     ],
     impactPhrase: "Funds shared studio space",
     impactStatement: "Your ticket helps cover rent on a collective where eleven local potters share kilns and tools they couldn't afford alone.",
+    impactTheme: "arts-funding",
     learn: "This converted garage houses a working ceramics collective. Theo and a few members will show you how a shared kiln gets loaded, why glaze chemistry matters, and how the group splits costs so newer makers can keep at it. You can throw a small piece if you want, or just watch.",
     plan: {
       bring: "Clothes you don't mind getting clay on.",
@@ -1790,6 +1825,7 @@ export const EXPERIENCES: Experience[] = [
     ],
     impactPhrase: "Keeps the public courts in use",
     impactStatement: "Regular play here is part of why the city keeps these public courts resurfaced, and the group pitches in to keep them swept and free for everyone.",
+    impactTheme: "environment",
     learn: "Sunset Park's courts have a decades-old handball scene. Luis grew up playing here and will pair you with regulars who'll go easy at first. You'll pick up the basic rules and the unwritten ones, like how to call next game and when to rotate out.",
     plan: {
       bring: "Sneakers with grip and a pair of cheap gloves if you have them.",
@@ -1844,6 +1880,7 @@ export const EXPERIENCES: Experience[] = [
     ],
     impactPhrase: "Trains volunteer route-setters",
     impactStatement: "A share of every intro session funds the gym's program that trains local teens to set routes and earn a first paycheck.",
+    impactTheme: "education",
     learn: "Bouldering is climbing without ropes over thick mats, so it's a low-stakes way to start. Renee will teach you how to fall safely, read a route by its colored holds, and use your legs more than your arms. No experience needed and most people surprise themselves.",
     plan: {
       bring: "Comfortable workout clothes and socks. Shoes are provided.",
@@ -1897,6 +1934,7 @@ export const EXPERIENCES: Experience[] = [
     ],
     impactPhrase: "Roots that hold the hill",
     impactStatement: "A share of every booking goes to the volunteer crew that clears invasive vines from Inwood's last natural forest.",
+    impactTheme: "environment",
     learn: "Inwood Hill Park holds the only old-growth forest left in Manhattan, and the trees here predate the city grid. We walk slowly and stop often, reading short stories that tie each grove to the Lenape who lived along this shoreline. Kids learn to spot a tulip tree and listen for woodpeckers instead of looking at a screen.",
     plan: {
       bring: "Closed-toe shoes for everyone, a water bottle, and a small bag if your kids like to collect leaves.",
@@ -1954,6 +1992,7 @@ export const EXPERIENCES: Experience[] = [
     ],
     impactPhrase: "Turns fabric scraps into characters",
     impactStatement: "We build from donated fabric remnants, and leftover materials go back to a local school's art room each month.",
+    impactTheme: "education",
     learn: "Every puppet starts as a pile of offcuts that a costume shop down the street would have thrown away. Kids pick their materials, sketch a character, and learn a few simple stitches and gluing tricks that actually hold. By the end each family has a puppet and a short scene to perform on our cardboard stage.",
     plan: {
       bring: "Just yourselves. Wear something that can take a little glue. We have aprons for the messier builders.",
@@ -2007,6 +2046,7 @@ export const EXPERIENCES: Experience[] = [
     ],
     impactPhrase: "Funds the LIC waterfront cleanup",
     impactStatement: "Part of every booking supports the LIC waterfront cleanup that keeps these riverside vantage points walkable.",
+    impactTheme: "environment",
     learn: "We start on the Queens side and walk the bridge as the light drops, so you catch the trusses lit warm and the skyline going blue behind them. You'll learn to read changing light, expose for a bright sky without crushing the shadows, and find clean compositions through the cables. It works on a phone or a full kit, and I'll meet you where you are.",
     plan: {
       bring: "Whatever you shoot on, a charged battery, and a light layer since it gets breezy mid-span.",
@@ -2063,6 +2103,7 @@ export const EXPERIENCES: Experience[] = [
     ],
     impactPhrase: "Helps LES family shops stay open",
     impactStatement: "A share of each booking goes to a neighborhood fund that helps long-running LES family shops keep their storefronts.",
+    impactTheme: "heritage",
     learn: "These blocks have stood in for a century of movies, from gritty seventies dramas to films shot last year. We match real stills to the exact corners they were filmed on, and I'll explain why directors keep coming back to these streets. Along the way you'll learn to frame a location shot and find angles that hide the modern clutter.",
     plan: {
       bring: "A camera or phone and comfortable shoes, since we cover about a mile at an easy pace.",
@@ -2118,6 +2159,7 @@ export const EXPERIENCES: Experience[] = [
     ],
     impactPhrase: "Funds harbor oyster restoration",
     impactStatement: "A share of every ticket goes to the Billion Oyster Project, which rebuilds the reefs that filter New York Harbor.",
+    impactTheme: "environment",
     learn: "You'll sail a restored gaff-rigged schooner out past the Brooklyn Bridge while the crew explains how the working port shaped the city. There's room to help haul a line if you want, or just sit back and watch the skyline turn. The captain points out the old fish-market piers and the reefs being rebuilt below the surface.",
     plan: {
       bring: "A windbreaker, flat shoes, and sunglasses. The deck gets breezy once you clear the slip.",
@@ -2174,6 +2216,7 @@ export const EXPERIENCES: Experience[] = [
     ],
     impactPhrase: "Run by a volunteer boathouse",
     impactStatement: "This paddle is hosted by a volunteer boathouse that monitors water quality and pushes for cleanup of the Newtown Creek Superfund site.",
+    impactTheme: "environment",
     learn: "You'll launch from a community dock and paddle a stretch of working waterway most New Yorkers never see up close. Marcus walks first-timers through the basics on the dock, so no experience is needed. Between strokes he talks through the creek's industrial past and the slow work of bringing it back.",
     plan: {
       bring: "Clothes that can get wet, a towel, and shoes you don't mind soaking. Everything else is provided.",
@@ -2226,6 +2269,7 @@ export const EXPERIENCES: Experience[] = [
     ],
     impactPhrase: "Keeps clothing out of landfill",
     impactStatement: "The crawl steers your money toward resale and consignment shops that keep usable clothing in circulation instead of the landfill.",
+    impactTheme: "environment",
     learn: "Renata leads a slow loop through five secondhand and consignment shops she's known for years, from deep denim bins to a tiny consignment room upstairs. She shows you how to read a seam, spot a real fade, and tell decent resale from overpriced. You set your own budget and she helps you spend it well.",
     plan: {
       bring: "A tote bag, cash for the cash-only shops, and shoes for a lot of walking.",
@@ -2281,6 +2325,7 @@ export const EXPERIENCES: Experience[] = [
     ],
     impactPhrase: "Extends the life of your clothes",
     impactStatement: "You leave able to repair what you already own, which keeps clothes in use and cuts the churn of fast fashion.",
+    impactTheme: "environment",
     learn: "Bring a garment with a hole or a stain and Ji-eun teaches you to mend it so the repair becomes part of the piece. You'll practice running stitch, a simple patch, and a bit of sashiko on scrap before working on your own thing. By the end you'll have a fixed garment and the skills to do the next one at home.",
     plan: {
       bring: "One garment that needs fixing. All thread, needles, and patch fabric are provided.",
