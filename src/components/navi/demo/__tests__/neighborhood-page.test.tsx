@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { NeighborhoodView } from "@/app/work/navi/(minisite)/demo/neighborhood/[slug]/page";
 import {
@@ -40,11 +40,10 @@ describe("Neighborhood page", () => {
   it("renders a hosts-based-here row linking each host to their page", () => {
     render(<NeighborhoodView neighborhood={nb} />);
     const hosts = hostsByNeighborhood("park-slope");
+    const row = screen.getByLabelText(/Hosts based in Park Slope/);
     for (const h of hosts) {
-      expect(screen.getByRole("link", { name: new RegExp(h.name) })).toHaveAttribute(
-        "href",
-        `/work/navi/demo/host/${h.slug}`,
-      );
+      const link = within(row).getByRole("link", { name: h.name });
+      expect(link).toHaveAttribute("href", `/work/navi/demo/host/${h.slug}`);
     }
   });
 });

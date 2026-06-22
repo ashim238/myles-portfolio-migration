@@ -30,7 +30,7 @@ export function NeighborhoodView({ neighborhood: n }: { neighborhood: Neighborho
   return (
     <article className="nv-neighborhood">
       <p className="nv-neighborhood-back">
-        <Link href="/work/navi/demo/search">&larr; Back to results</Link>
+        <Link href="/work/navi/demo/search">← Back to results</Link>
       </p>
       <header className="nv-neighborhood-head">
         <h1>{n.name}</h1>
@@ -71,7 +71,9 @@ export function NeighborhoodView({ neighborhood: n }: { neighborhood: Neighborho
             {hosts.map((h) => (
               <li key={h.slug}>
                 <Link href={`/work/navi/demo/host/${h.slug}`} className="nv-neighborhood-host">
-                  <Avatar name={h.name} size="md" src={h.avatarSrc} />
+                  <span aria-hidden="true">
+                    <Avatar name={h.name} size="md" src={h.avatarSrc} />
+                  </span>
                   <span>{h.name}</span>
                 </Link>
               </li>
