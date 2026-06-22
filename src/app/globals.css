@@ -6601,6 +6601,21 @@ button:focus-visible,
   padding: var(--nv-sp-md) var(--nv-sp-xl);
   border-bottom: 1px solid var(--nv-border);
 }
+.nv-header-lead {
+  display: flex;
+  align-items: center;
+  gap: var(--nv-sp-md);
+}
+.nv-header-back {
+  color: var(--nv-text-muted);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+.nv-header-back:hover {
+  color: var(--nv-action);
+}
 .nv-wordmark {
   font-family: var(--nv-font-display), sans-serif;
   font-weight: 700;

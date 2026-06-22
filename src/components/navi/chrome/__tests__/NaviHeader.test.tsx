@@ -10,6 +10,14 @@ describe("NaviHeader", () => {
     expect(screen.getByRole("navigation", { name: /primary/i })).toBeInTheDocument();
   });
 
+  it("offers a way out of the demo back to the case study", () => {
+    render(<NaviHeader />);
+    expect(screen.getByRole("link", { name: /case study/i })).toHaveAttribute(
+      "href",
+      "/work/navi",
+    );
+  });
+
   it("links to the system and demo surfaces", () => {
     render(<NaviHeader />);
     expect(screen.getByRole("link", { name: /system/i })).toHaveAttribute(
