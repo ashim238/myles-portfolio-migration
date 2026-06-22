@@ -7487,6 +7487,58 @@ button:focus-visible,
 .nv-detail-back a { color: var(--nv-text-muted); text-decoration: none; font-weight: 700; }
 .nv-detail-back a:hover { color: var(--nv-action); }
 
+/* ── Host page ──────────────────────────────────────────────── */
+.nv-host {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: var(--nv-sp-lg);
+  display: grid;
+  gap: var(--nv-sp-lg);
+}
+.nv-host-back { margin: 0; }
+.nv-host-back a { color: var(--nv-text-muted); text-decoration: none; }
+.nv-host-back a:hover { color: var(--nv-text); text-decoration: underline; }
+.nv-host-head {
+  display: flex;
+  align-items: center;
+  gap: var(--nv-sp-md);
+}
+.nv-host-headtext h1 {
+  margin: 0 0 var(--nv-sp-xs);
+  font-size: 2rem;
+}
+.nv-host-meta { margin: 0; color: var(--nv-text-muted); }
+.nv-host-bio {
+  margin: 0;
+  max-width: 60ch;
+  line-height: 1.6;
+  color: var(--nv-text);
+}
+.nv-host-rating {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--nv-sp-xs);
+}
+.nv-host-experiences { display: grid; gap: var(--nv-sp-md); }
+.nv-host-experiences h2 { margin: 0; font-size: 1.4rem; }
+.nv-host-experiences .nv-feed-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.nv-host-footer { margin: 0; }
+.nv-host-footer a {
+  color: var(--nv-action);
+  text-decoration: none;
+  font-weight: 700;
+}
+.nv-host-footer a:hover { text-decoration: underline; }
+.nv-host-footer a:focus-visible {
+  outline: 2px solid var(--nv-focus);
+  outline-offset: 2px;
+}
+
 /* ── /system Navi context line ────────────────────────── */
 .nv-system-context {
   font-size: 1.05rem;
