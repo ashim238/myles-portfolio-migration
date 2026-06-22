@@ -44,3 +44,10 @@ next-env.d.ts
 /.agents/
 /.claude/skills/
 /skills-lock.json
+
+# Brainstorming visual companion (superpowers)
+.superpowers/
+
+# Local tooling (per project convention — not shared)
+.impeccable/
+skill-observations/

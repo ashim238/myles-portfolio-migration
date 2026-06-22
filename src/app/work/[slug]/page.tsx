@@ -20,7 +20,10 @@ type Params = { slug: string };
 
 export async function generateStaticParams(): Promise<Params[]> {
   const projects = await getAllProjects();
-  return projects.map((project) => ({ slug: project.slug }));
+  // Hidden projects are not published, so they get no prerendered route.
+  return projects
+    .filter((project) => project.status !== "hidden")
+    .map((project) => ({ slug: project.slug }));
 }
 
 export async function generateMetadata({
@@ -48,7 +51,10 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
   const { slug } = await params;
   const [project, allProjects] = await Promise.all([getProjectBySlug(slug), getPublishedProjects()]);
 
-  if (!project) {
+  // Excluding hidden projects from generateStaticParams stops them being
+  // prerendered, but dynamicParams still lets a direct request render one on
+  // demand. 404 it here so a hidden project is unreachable, not just unlisted.
+  if (!project || project.status === "hidden") {
     notFound();
   }
 
