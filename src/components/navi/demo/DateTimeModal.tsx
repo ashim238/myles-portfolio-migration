@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Calendar } from "@/components/navi/ui";
 import { formatLongDate } from "@/lib/navi/calendar";
+import { useOverlayBehavior } from "@/lib/navi/use-overlay-behavior";
+import { OverlayRoot } from "@/components/navi/demo/OverlayRoot";
 
 /**
  * Booking date + time picker. Wraps the Calendar primitive with a start-time
@@ -32,12 +35,7 @@ export function DateTimeModal({
   const headingId = useId();
   const dialogRef = useRef<HTMLDivElement | null>(null);
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
-  const onCloseRef = useRef(onClose);
   const wasOpenRef = useRef(false);
-
-  useEffect(() => {
-    onCloseRef.current = onClose;
-  }, [onClose]);
 
   // Reset the draft to the incoming values each time the dialog opens.
   useEffect(() => {
@@ -48,46 +46,20 @@ export function DateTimeModal({
     wasOpenRef.current = open;
   }, [open, initialDate, initialTime, times]);
 
-  useEffect(() => {
-    if (!open) return;
-    const trigger = document.activeElement as HTMLElement | null;
-    closeBtnRef.current?.focus();
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") {
-        e.preventDefault();
-        onCloseRef.current();
-      }
-      if (e.key === "Tab" && dialogRef.current) {
-        const focusables = dialogRef.current.querySelectorAll<HTMLElement>(
-          "button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])",
-        );
-        if (focusables.length === 0) return;
-        const first = focusables[0];
-        const last = focusables[focusables.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    }
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prevOverflow;
-      trigger?.focus?.();
-    };
-  }, [open]);
+  useOverlayBehavior({
+    open,
+    onClose,
+    containerRef: dialogRef,
+    initialFocusRef: closeBtnRef,
+  });
 
   if (!open) return null;
 
-  return (
-    <>
+  // Portal out of the sticky .nv-booking container: a position:sticky ancestor
+  // creates a stacking context that would trap the dialog below the fixed tab
+  // bar. At document.body it sits above everything and escapes .nv-ui's inert.
+  return createPortal(
+    <OverlayRoot>
       <div className="nv-dtmodal-backdrop" onClick={onClose} aria-hidden="true" />
       <div
         ref={dialogRef}
@@ -110,7 +82,10 @@ export function DateTimeModal({
         </header>
         <div className="nv-dtmodal-body">
           <Calendar value={day} onChange={setDay} minDate={minDate} labelledBy={headingId} />
-          {times.length > 0 && (
+          {/* A single time is not a choice, so the picker only appears when there
+              is more than one slot. The lone time still rides through on confirm
+              via the `time` state default. */}
+          {times.length > 1 && (
             <fieldset className="nv-dtmodal-times">
               <legend className="nv-dtmodal-times-legend">Start time</legend>
               <div className="nv-dtmodal-times-pills">
@@ -152,6 +127,7 @@ export function DateTimeModal({
           </div>
         </footer>
       </div>
-    </>
+    </OverlayRoot>,
+    document.body,
   );
 }

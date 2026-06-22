@@ -115,4 +115,39 @@ describe("DateTimeModal", () => {
       "true",
     );
   });
+
+  it("hides the start-time picker when the experience runs one time", () => {
+    // A lone time is not a choice, so showing a single pressable pill reads as
+    // a picker for a non-decision. Suppress the whole group.
+    render(
+      <DateTimeModal
+        open
+        times={["12:00 pm"]}
+        initialDate={null}
+        initialTime={null}
+        onConfirm={() => {}}
+        onClose={() => {}}
+      />,
+    );
+    expect(screen.queryByText("Start time")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "12:00 pm" })).not.toBeInTheDocument();
+  });
+
+  it("still confirms the lone time even though the picker is hidden", async () => {
+    const onConfirm = vi.fn();
+    render(
+      <DateTimeModal
+        open
+        times={["12:00 pm"]}
+        initialDate={null}
+        initialTime={null}
+        onConfirm={onConfirm}
+        onClose={() => {}}
+      />,
+    );
+    await userEvent.click(screen.getByRole("button", { name: /next month/i }));
+    await userEvent.click(screen.getByRole("button", { name: nextMonthDay(12) }));
+    await userEvent.click(screen.getByRole("button", { name: /confirm date/i }));
+    expect(onConfirm).toHaveBeenCalledWith(expect.objectContaining({ time: "12:00 pm" }));
+  });
 });

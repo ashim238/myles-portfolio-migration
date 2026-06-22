@@ -152,6 +152,9 @@ export function ExperienceView({
           impact={e.impactPhrase}
           impactHref={`/work/navi/demo/impact#${e.impactTheme}`}
           spotsLeft={e.spotsLeft}
+          host={e.host}
+          rating={e.rating}
+          reviews={e.reviews}
           onReserve={() => {
             /* demo: state lives inside BookingCard */
           }}

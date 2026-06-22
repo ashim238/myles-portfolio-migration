@@ -66,11 +66,15 @@ describe("Experience page", () => {
     expect(screen.getByRole("button", { name: "Learn" })).toHaveAttribute("aria-current", "true");
   });
 
-  it("links the Hosted-by name to the host page", () => {
+  it("links every Hosted-by name to the host page", () => {
+    // The host is named in two places now: the Learn intro and the booking
+    // sidebar's trust footer. Both must resolve to the same host page.
     render(<ExperienceView {...viewProps(e)} />);
-    expect(
-      screen.getByRole("link", { name: e.host.name }),
-    ).toHaveAttribute("href", `/work/navi/demo/host/${e.host.slug}`);
+    const hostLinks = screen.getAllByRole("link", { name: e.host.name });
+    expect(hostLinks.length).toBeGreaterThan(0);
+    for (const link of hostLinks) {
+      expect(link).toHaveAttribute("href", `/work/navi/demo/host/${e.host.slug}`);
+    }
   });
 
   it("builds both impact cross-links from the experience's real theme", () => {

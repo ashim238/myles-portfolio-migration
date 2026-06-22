@@ -6540,7 +6540,13 @@ button:focus-visible,
 /* ── Navi mini-site scope (.nv-ui) ───────────────────────────────
    Distinct from the case study's .nv-page. Light Navi product chrome.
    Values mirror src/lib/navi/tokens.ts. */
-.nv-ui {
+.nv-ui,
+.nv-overlay-root {
+  /* .nv-overlay-root is the token scope for body-portaled overlays (date modal,
+     booking sheet). They render outside .nv-ui, so without re-declaring the full
+     token block here their surface/text/radii resolve to nothing. Paired with
+     the font-variable classNames the OverlayRoot component adds, this restores
+     the complete minisite environment in the portal. */
   /* The mini-site is light-only; pin native controls (select, radio, scrollbars)
      to the light palette so they don't render dark under a dark OS theme. */
   color-scheme: light;
@@ -6550,6 +6556,10 @@ button:focus-visible,
   --nv-gumball: #3a86ff;
   --nv-robinson: #4a414d;
 
+  /* #c4541a is 4.54:1 on white — passes WCAG AA for normal text, but only just.
+     Do not lighten it: any step toward orange drops below 4.5:1 and breaks AA
+     for the booking price, links, and impact text that ride on it. Need a
+     lighter accent? Add a new token; keep this one as the text-safe anchor. */
   --nv-action: #c4541a;
   --nv-action-strong: #9e3f0b;
   --nv-surface: #ffffff;
@@ -6583,12 +6593,22 @@ button:focus-visible,
   --nv-sp-2xl: 64px;
   --nv-sp-3xl: 128px;
 
+  /* Overlay stacking scale (low → high). In-flow content and the sticky section
+     nav sit below these at z 1–2. The date picker rides one tier above the
+     booking sheet so it can open from inside the sheet with its own backdrop. */
+  --nv-z-bar: 40;          /* fixed bottom bars: tab bar, mobile booking bar */
+  --nv-z-backdrop: 60;     /* bottom-sheet backdrop */
+  --nv-z-overlay: 70;      /* bottom-sheet panel */
+  --nv-z-backdrop-top: 80; /* date-picker backdrop, dims the sheet beneath it */
+  --nv-z-overlay-top: 90;  /* date-picker dialog */
+
   font-family: var(--nv-font-body), system-ui, sans-serif;
   color: var(--nv-text);
   background: var(--nv-surface);
 }
 
-.nv-ui :focus-visible {
+.nv-ui :focus-visible,
+.nv-overlay-root :focus-visible {
   outline: 2px solid var(--nv-focus);
   outline-offset: 2px;
 }
@@ -6855,7 +6875,7 @@ button:focus-visible,
   flex-wrap: wrap;
 }
 .nv-pill-row-item {
-  min-height: 36px;
+  min-height: 44px;
   padding: 0 var(--nv-sp-md);
   border: 1px solid transparent;
   border-radius: var(--nv-r-pill);
@@ -6944,7 +6964,7 @@ button:focus-visible,
 
 /* ── CarouselArrow + PaginationDots ─────────────────────────────── */
 .nv-carousel-arrow {
-  width: 40px; height: 40px; border-radius: var(--nv-r-pill);
+  width: 44px; height: 44px; border-radius: var(--nv-r-pill);
   border: 1px solid var(--nv-border); background: var(--nv-surface);
   color: var(--nv-text); cursor: pointer; padding: 0;
   display: inline-flex; align-items: center; justify-content: center;
@@ -7073,11 +7093,13 @@ button:focus-visible,
   background: var(--nv-surface);
   border-top: 1px solid var(--nv-border);
   padding: var(--nv-sp-xs) var(--nv-sp-sm);
-  z-index: 50;
+  z-index: var(--nv-z-bar);
 }
 @media (max-width: 720px) {
   .nv-tabbar { display: flex; justify-content: space-around; }
-  body { padding-bottom: 64px; }
+  /* Clear the fixed bottom bar (tab bar or booking bar) plus the home-indicator
+     inset so the last of the content is never trapped under it. */
+  body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
 }
 .nv-tabbar-item {
   display: flex;
@@ -7182,8 +7204,76 @@ button:focus-visible,
   position: sticky;
   top: var(--nv-sp-lg);
 }
+
+/* Host trust footer (desktop sidebar only). A full-width divider sets it apart
+   from the booking actions above so the column closes on who you're booking
+   with rather than trailing into empty space. */
+.nv-booking-reassure {
+  display: grid;
+  gap: var(--nv-sp-sm);
+  padding-top: var(--nv-sp-md);
+  border-top: 1px solid var(--nv-border);
+}
+.nv-booking-reassure-host {
+  display: flex;
+  align-items: center;
+  gap: var(--nv-sp-sm);
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--nv-text);
+}
+.nv-booking-reassure-link {
+  font-weight: 600;
+  color: var(--nv-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.nv-booking-reassure-link:hover { color: var(--nv-action-strong); }
+
+/* ── Mobile booking bar + bottom sheet ─────────────────────────────
+   On a phone the sticky sidebar would sit far below the fold, so the
+   booking action moves to a fixed bar in the thumb zone that opens the
+   full form as a bottom sheet. Desktop keeps the sidebar and hides both;
+   mobile hides the sidebar so there is only ever one booking surface. */
+.nv-mobilebar { display: none; }
+@media (max-width: 720px) {
+  .nv-booking { display: none; }
+  .nv-mobilebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--nv-z-bar);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--nv-sp-md);
+    padding: var(--nv-sp-sm) var(--nv-sp-md);
+    padding-bottom: calc(var(--nv-sp-sm) + env(safe-area-inset-bottom));
+    background: var(--nv-surface);
+    border-top: 1px solid var(--nv-border);
+    box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.1);
+  }
+  /* The booking bar owns the thumb zone on the detail page, so the global
+     tab bar steps aside rather than stacking two bars at the bottom. */
+  .nv-ui:has(.nv-detail) .nv-tabbar { display: none; }
+}
+.nv-mobilebar-info { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; }
+.nv-mobilebar-price { font-size: 1.15rem; font-weight: 700; color: var(--nv-text); }
+.nv-mobilebar-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--nv-sp-2xs);
+  font-weight: 700;
+  color: var(--nv-action-strong);
+}
+.nv-mobilebar .nv-btn { flex: none; }
+
 .nv-booking-price { font-size: 1.6rem; font-weight: 700; margin: 0; }
 .nv-booking-dates { display: grid; gap: var(--nv-sp-xs); border: none; padding: 0; }
+/* Group label for the preset slots. Ink-on-surface (not muted) so a first-timer
+   reads it as a real label naming the dates as bookable, not decorative. */
+.nv-booking-dates-legend { padding: 0; font-size: 0.85rem; font-weight: 700; color: var(--nv-text); }
 .nv-booking-date {
   display: flex;
   justify-content: space-between;
@@ -7246,8 +7336,8 @@ button:focus-visible,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--nv-r-pill);
   border: 1px solid var(--nv-border);
   background: var(--nv-surface);
@@ -7267,7 +7357,7 @@ button:focus-visible,
   align-items: center;
   justify-content: center;
   aspect-ratio: 1 / 1;
-  min-height: 36px;
+  min-height: 44px;
   border: none;
   background: transparent;
   border-radius: var(--nv-r-sm);
@@ -7282,10 +7372,10 @@ button:focus-visible,
 .nv-cal-cell--empty { background: transparent; cursor: default; }
 
 /* ── Date + time modal (demo) ───────────────────────────────────── */
-.nv-dtmodal-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); z-index: 60; }
+.nv-dtmodal-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); z-index: var(--nv-z-backdrop-top); }
 .nv-dtmodal {
   position: fixed;
-  z-index: 61;
+  z-index: var(--nv-z-overlay-top);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -7311,13 +7401,16 @@ button:focus-visible,
 }
 .nv-dtmodal-head h2 { margin: 0; font-size: 1.05rem; font-family: var(--nv-font-display), sans-serif; }
 .nv-dtmodal-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   background: transparent;
   font-size: 1rem;
   cursor: pointer;
   color: var(--nv-text-muted);
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--nv-r-pill);
 }
 .nv-dtmodal-close:hover { background: var(--nv-surface-muted); color: var(--nv-text); }
@@ -7327,7 +7420,11 @@ button:focus-visible,
 .nv-dtmodal-times-legend { padding: 0; font-size: 0.85rem; font-weight: 700; color: var(--nv-text); }
 .nv-dtmodal-times-pills { display: flex; flex-wrap: wrap; gap: var(--nv-sp-xs); }
 .nv-dtmodal-time {
-  padding: var(--nv-sp-2xs) var(--nv-sp-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--nv-sp-2xs) var(--nv-sp-md);
   border: 1px solid var(--nv-border);
   border-radius: var(--nv-r-pill);
   background: var(--nv-surface);
@@ -7356,6 +7453,74 @@ button:focus-visible,
 .nv-dtmodal-confirm:hover:not(:disabled) { background: var(--nv-action-strong); border-color: var(--nv-action-strong); }
 .nv-dtmodal-confirm:disabled { opacity: 0.5; cursor: not-allowed; }
 .nv-dtmodal-cancel:focus-visible, .nv-dtmodal-confirm:focus-visible { outline: 2px solid var(--nv-focus); outline-offset: 2px; }
+
+/* ── Booking bottom sheet (mobile) ─────────────────────────────── */
+.nv-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: var(--nv-z-backdrop);
+}
+.nv-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--nv-z-overlay);
+  max-height: 92vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  background: var(--nv-surface);
+  border-radius: var(--nv-r-lg) var(--nv-r-lg) 0 0;
+  box-shadow: 0 -12px 48px rgba(0, 0, 0, 0.3);
+}
+.nv-sheet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nv-sp-sm);
+  padding: var(--nv-sp-md) var(--nv-sp-md) 0;
+}
+.nv-sheet-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-family: var(--nv-font-display), sans-serif;
+}
+.nv-sheet-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: transparent;
+  border-radius: var(--nv-r-pill);
+  color: var(--nv-text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+}
+.nv-sheet-close:hover { background: var(--nv-surface-muted); color: var(--nv-text); }
+.nv-sheet-close:focus-visible { outline: 2px solid var(--nv-focus); outline-offset: 2px; }
+/* The body holds a BookingPanel, the same fragment the desktop sidebar renders,
+   so it needs the sidebar's column gap and centered buttons. The extra bottom
+   inset clears the home indicator on a notched phone. */
+.nv-sheet-body {
+  display: grid;
+  gap: var(--nv-sp-sm);
+  padding: var(--nv-sp-md);
+  padding-bottom: calc(var(--nv-sp-md) + env(safe-area-inset-bottom));
+}
+.nv-sheet-body .nv-btn { justify-content: center; }
+@media (prefers-reduced-motion: no-preference) {
+  .nv-sheet-backdrop { animation: nvFadeIn 0.2s ease both; }
+  .nv-sheet { animation: nvSlideUp 0.28s cubic-bezier(0.22, 1, 0.36, 1) both; }
+}
+@keyframes nvSlideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
 .nv-booking-confirm { margin: 0; padding: var(--nv-sp-sm); background: var(--nv-surface-muted); border-radius: var(--nv-r-md); color: var(--nv-text); }
 .nv-booking-confirm-group { display: grid; gap: var(--nv-sp-xs); }
 @media (prefers-reduced-motion: no-preference) {
@@ -7389,9 +7554,19 @@ button:focus-visible,
 }
 .nv-gallery-carousel-hero {
   position: relative;
+  aspect-ratio: 16 / 10;
   border-radius: var(--nv-r-md);
   overflow: hidden;
   outline: none;
+}
+/* Fill the fixed-ratio box so photos of differing native sizes never resize the
+   hero (no layout shift on next/prev) and the pending fallback matches it. */
+.nv-gallery-carousel-hero img,
+.nv-gallery-carousel-hero .nv-photo-pending {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .nv-gallery-carousel-hero:focus-visible {
   outline: 3px solid var(--nv-focus);
@@ -7426,12 +7601,23 @@ button:focus-visible,
 .nv-gallery-carousel-thumb {
   display: block;
   width: 100%;
+  /* Reserve the slot's shape before the lazy image loads. Without it the
+     off-screen thumb collapses to a few pixels and the strip reflows (CLS)
+     as each image arrives. Matches the hero's 16/10 crop. */
+  aspect-ratio: 16 / 10;
   padding: 0;
   border: 2px solid transparent;
   border-radius: var(--nv-r-sm);
   background: none;
   cursor: pointer;
   overflow: hidden;
+}
+.nv-gallery-carousel-thumb img,
+.nv-gallery-carousel-thumb .nv-photo-pending {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .nv-gallery-carousel-thumb.is-active { border-color: var(--nv-action); }
 .nv-gallery-carousel-thumb:focus-visible {
