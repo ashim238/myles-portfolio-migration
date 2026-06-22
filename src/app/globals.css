@@ -155,6 +155,15 @@ body::after {
     transform: translateY(0);
   }
 }
+/* Opacity-only fade: safe for the centered modal whose transform must not move. */
+@keyframes nvFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
 
 /* Scroll-linked project sections (Chromium + Safari 17.4+); others use staggered fadeUp */
 @keyframes sectionScrollIn {
@@ -6605,7 +6614,9 @@ button:focus-visible,
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 2px;
+  /* The wordmark sits on line-height:1, so its glyphs hug the box top. An xs gap
+     read as cramped against the back-link; md gives the eyebrow real breathing room. */
+  gap: var(--nv-sp-md);
 }
 .nv-header-back {
   color: var(--nv-text-muted);
@@ -6788,12 +6799,14 @@ button:focus-visible,
 /* ── ImpactSignal ───────────────────────────────────────────────── */
 .nv-impact {
   display: inline-flex;
-  align-items: center;
-  gap: var(--nv-sp-2xs);
+  align-items: flex-start;
+  gap: var(--nv-sp-xs);
   font-size: 0.82rem;
+  line-height: 1.4;
   color: var(--nv-local-text);
 }
-.nv-impact-icon { display: inline-flex; color: var(--nv-impact-icon); }
+/* Top-align the leaf with the first line, nudged to sit on the cap height. */
+.nv-impact-icon { display: inline-flex; color: var(--nv-impact-icon); margin-top: 0.15em; }
 .nv-impact--link {
   text-decoration: none;
   cursor: pointer;
@@ -7182,6 +7195,167 @@ button:focus-visible,
 .nv-booking-date--active { border-color: var(--nv-action); background: var(--nv-surface-muted); }
 .nv-booking-date-day { font-weight: 700; }
 .nv-booking-date-time { color: var(--nv-text-muted); }
+/* "Or pick another date" trigger — the Figma field (node 553-6399): a bordered
+   value box with an orange calendar-icon button flush to the right edge. Opens
+   the calendar + time modal. */
+.nv-booking-pick { display: grid; gap: var(--nv-sp-2xs); }
+.nv-booking-pick-label { font-size: 0.85rem; color: var(--nv-text-muted); }
+.nv-booking-pick-trigger {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 0;
+  padding: 0;
+  border: 1px solid var(--nv-border);
+  border-radius: var(--nv-r-md);
+  background: var(--nv-surface);
+  color: var(--nv-text-muted);
+  cursor: pointer;
+  overflow: hidden;
+  font: inherit;
+}
+.nv-booking-pick-trigger.is-set { color: var(--nv-text); }
+.nv-booking-pick-trigger:hover { border-color: var(--nv-action); }
+.nv-booking-pick-trigger:focus-visible { outline: 2px solid var(--nv-focus); outline-offset: 2px; }
+.nv-booking-pick-value { padding: var(--nv-sp-sm); text-align: left; align-self: center; }
+.nv-booking-pick-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--nv-sp-sm);
+  background: var(--nv-action);
+  color: var(--nv-text-on-action);
+}
+.nv-booking-pick-trigger:hover .nv-booking-pick-icon { background: var(--nv-action-strong); }
+.nv-booking-pick-icon svg { width: 20px; height: 20px; }
+
+/* ── Calendar (ui) ──────────────────────────────────────────────── */
+/* Matches Figma node 553-6053, mapped onto Navi tokens (the system uses the
+   contrast-corrected --nv-action, not the source #F3722C). */
+.nv-cal { display: flex; flex-direction: column; gap: var(--nv-sp-md); background: var(--nv-surface); }
+.nv-cal-head { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: var(--nv-sp-xs); }
+.nv-cal-title {
+  margin: 0;
+  text-align: center;
+  font-family: var(--nv-font-display), sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--nv-text);
+}
+.nv-cal-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--nv-r-pill);
+  border: 1px solid var(--nv-border);
+  background: var(--nv-surface);
+  color: var(--nv-text);
+  cursor: pointer;
+}
+.nv-cal-nav:hover:not(:disabled) { background: var(--nv-surface-muted); }
+.nv-cal-nav:disabled { opacity: 0.4; cursor: not-allowed; }
+.nv-cal-nav:focus-visible { outline: 2px solid var(--nv-focus); outline-offset: 2px; }
+.nv-cal-nav svg { width: 20px; height: 20px; }
+.nv-cal-divider { height: 1px; background: var(--nv-border); }
+.nv-cal-weekdays, .nv-cal-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--nv-sp-2xs); }
+.nv-cal-weekday { text-align: center; font-size: 0.8rem; font-weight: 600; color: var(--nv-text-muted); }
+.nv-cal-grid { display: flex; flex-direction: column; gap: var(--nv-sp-2xs); }
+.nv-cal-cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  min-height: 36px;
+  border: none;
+  background: transparent;
+  border-radius: var(--nv-r-sm);
+  font: inherit;
+  color: var(--nv-text);
+  cursor: pointer;
+}
+.nv-cal-cell:hover:not(:disabled):not(.nv-cal-cell--selected) { background: var(--nv-surface-muted); }
+.nv-cal-cell:focus-visible { outline: 2px solid var(--nv-focus); outline-offset: 2px; }
+.nv-cal-cell--selected { background: var(--nv-action); color: var(--nv-text-on-action); font-weight: 700; }
+.nv-cal-cell:disabled { color: var(--nv-text-muted); opacity: 0.35; cursor: not-allowed; }
+.nv-cal-cell--empty { background: transparent; cursor: default; }
+
+/* ── Date + time modal (demo) ───────────────────────────────────── */
+.nv-dtmodal-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); z-index: 60; }
+.nv-dtmodal {
+  position: fixed;
+  z-index: 61;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(92vw, 380px);
+  max-height: 90vh;
+  overflow: auto;
+  background: var(--nv-surface);
+  border-radius: var(--nv-r-lg);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .nv-dtmodal-backdrop { animation: nvFadeIn 0.18s ease both; }
+  .nv-dtmodal { animation: nvFadeIn 0.18s ease both; }
+}
+.nv-dtmodal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nv-sp-sm);
+  padding: var(--nv-sp-md) var(--nv-sp-md) 0;
+}
+.nv-dtmodal-head h2 { margin: 0; font-size: 1.05rem; font-family: var(--nv-font-display), sans-serif; }
+.nv-dtmodal-close {
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  cursor: pointer;
+  color: var(--nv-text-muted);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--nv-r-pill);
+}
+.nv-dtmodal-close:hover { background: var(--nv-surface-muted); color: var(--nv-text); }
+.nv-dtmodal-close:focus-visible { outline: 2px solid var(--nv-focus); outline-offset: 2px; }
+.nv-dtmodal-body { padding: var(--nv-sp-md); display: flex; flex-direction: column; gap: var(--nv-sp-md); }
+.nv-dtmodal-times { border: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--nv-sp-xs); min-inline-size: 0; }
+.nv-dtmodal-times-legend { padding: 0; font-size: 0.85rem; font-weight: 700; color: var(--nv-text); }
+.nv-dtmodal-times-pills { display: flex; flex-wrap: wrap; gap: var(--nv-sp-xs); }
+.nv-dtmodal-time {
+  padding: var(--nv-sp-2xs) var(--nv-sp-sm);
+  border: 1px solid var(--nv-border);
+  border-radius: var(--nv-r-pill);
+  background: var(--nv-surface);
+  color: var(--nv-text);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.nv-dtmodal-time:hover { border-color: var(--nv-action); }
+.nv-dtmodal-time.is-active { background: var(--nv-action); border-color: var(--nv-action); color: var(--nv-text-on-action); font-weight: 700; }
+.nv-dtmodal-time:focus-visible { outline: 2px solid var(--nv-focus); outline-offset: 2px; }
+.nv-dtmodal-foot { padding: 0 var(--nv-sp-md) var(--nv-sp-md); display: flex; flex-direction: column; gap: var(--nv-sp-sm); }
+.nv-dtmodal-summary { margin: 0; font-size: 0.9rem; color: var(--nv-text-muted); }
+.nv-dtmodal-actions { display: flex; gap: var(--nv-sp-sm); }
+.nv-dtmodal-cancel, .nv-dtmodal-confirm {
+  flex: 1;
+  padding: var(--nv-sp-sm);
+  border-radius: var(--nv-r-md);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.nv-dtmodal-cancel { border: 1px solid var(--nv-border); background: var(--nv-surface); color: var(--nv-text); }
+.nv-dtmodal-cancel:hover { background: var(--nv-surface-muted); }
+.nv-dtmodal-confirm { border: 1px solid var(--nv-action); background: var(--nv-action); color: var(--nv-text-on-action); }
+.nv-dtmodal-confirm:hover:not(:disabled) { background: var(--nv-action-strong); border-color: var(--nv-action-strong); }
+.nv-dtmodal-confirm:disabled { opacity: 0.5; cursor: not-allowed; }
+.nv-dtmodal-cancel:focus-visible, .nv-dtmodal-confirm:focus-visible { outline: 2px solid var(--nv-focus); outline-offset: 2px; }
 .nv-booking-confirm { margin: 0; padding: var(--nv-sp-sm); background: var(--nv-surface-muted); border-radius: var(--nv-r-md); color: var(--nv-text); }
 .nv-booking-confirm-group { display: grid; gap: var(--nv-sp-xs); }
 @media (prefers-reduced-motion: no-preference) {
@@ -7189,10 +7363,20 @@ button:focus-visible,
   .nv-booking-confirm-group { animation: fadeUp 0.3s cubic-bezier(0.22, 1, 0.36, 1) both; }
 }
 .nv-booking-note { margin: 0; font-size: 0.8rem; color: var(--nv-text-muted); text-align: center; }
+/* The booking actions stretch to the card width (grid items), so the label
+   needs centering or it reads as left-justified inside a full-width button. */
+.nv-booking .nv-btn { justify-content: center; }
 
 /* ── TransitOptions ────────────────────────────────────────────── */
-.nv-transit { display: flex; gap: var(--nv-sp-lg); list-style: none; padding: 0; margin: 0; flex-wrap: wrap; }
-.nv-transit-item { display: flex; flex-direction: column; align-items: center; gap: var(--nv-sp-2xs); text-align: center; min-width: 120px; }
+/* Explicit equal columns spread the options evenly across the full width of
+   the map above (auto-fit left a phantom collapsed track that threw the
+   spacing off), and keep each option's icon/label/detail aligned in clean
+   rows when they drop to two columns at narrow widths. */
+.nv-transit { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--nv-sp-md); list-style: none; padding: 0; margin: 0; }
+.nv-transit-item { display: flex; flex-direction: column; align-items: center; gap: var(--nv-sp-2xs); text-align: center; }
+@media (max-width: 640px) {
+  .nv-transit { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--nv-sp-lg); }
+}
 .nv-transit-icon { display: inline-flex; align-items: center; color: var(--nv-action-strong); }
 .nv-transit-label { font-weight: 700; }
 .nv-transit-detail { color: var(--nv-text-muted); font-size: 0.85rem; }

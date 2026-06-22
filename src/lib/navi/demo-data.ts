@@ -1,5 +1,7 @@
+import type { SessionSlot } from "@/lib/navi/calendar";
+
 export type TransitOption = {
-  mode: "subway" | "citibike" | "walk";
+  mode: "subway" | "citibike" | "walk" | "bus" | "ferry" | "lirr";
   label: string;
   detail: string;
 };
@@ -33,13 +35,17 @@ export type Experience = {
   learn: string;
   plan: { bring: string; commitments: string; impactDetail: string };
   go: { addressLine1: string; addressLine2: string; transit: TransitOption[] };
-  dates: BookingDate[];
+  /** Recurring weekly slots; upcoming dates are computed from today at render. */
+  sessions: SessionSlot[];
+  /** How many upcoming dates to surface as booking presets. */
+  upcomingCount: number;
   duration: string;
   groupSize: string;
   language: string;
   spotsLeft?: number;
   included: string[];
-  reviewsList: { author: string; date: string; rating: number; quote: string }[];
+  /** monthsAgo is resolved to a relative month label at render (0 = this month). */
+  reviewsList: { author: string; monthsAgo: number; rating: number; quote: string }[];
 };
 
 export const CATEGORIES = [
@@ -101,13 +107,15 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "Q or R" },
         { mode: "citibike", label: "Grab a Citibike", detail: "0.2 miles away" },
         { mode: "walk", label: "Walk", detail: "30 min from Grand Army Plaza" },
+        { mode: "bus", label: "Take the", detail: "B67 or B69 on 7th Avenue" },
       ],
     },
-    dates: [
-      { date: "Monday, March 23", time: "12:00 pm" },
-      { date: "Tuesday, March 24", time: "12:00 pm" },
-      { date: "Thursday, March 26", time: "12:00 pm" },
+    sessions: [
+      { weekday: 1, time: "12:00 pm" },
+      { weekday: 2, time: "12:00 pm" },
+      { weekday: 4, time: "12:00 pm" },
     ],
+    upcomingCount: 3,
     duration: "2 hours",
     groupSize: "Up to 4 people",
     language: "English",
@@ -120,19 +128,19 @@ export const EXPERIENCES: Experience[] = [
     reviewsList: [
       {
         author: "Nadia R.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 5,
         quote: "Paul knows every quiet corner of the park. We saw parts I'd never found on my own.",
       },
       {
         author: "Tom H.",
-        date: "February 2026",
+        monthsAgo: 4,
         rating: 5,
         quote: "Slower than a walk, which is the point. Good for a grandparent who can't manage the hills.",
       },
       {
         author: "Priya M.",
-        date: "February 2026",
+        monthsAgo: 4,
         rating: 4,
         quote: "Lovely ride. It ran a few minutes late, but the driver made up for it with extra time at the pond.",
       },
@@ -176,12 +184,13 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "Q or 2" },
         { mode: "walk", label: "Walk", detail: "8 min from Beverley Rd" },
         { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
+        { mode: "bus", label: "Take the", detail: "B41 on Flatbush Avenue" },
       ],
     },
-    dates: [
-      { date: "Saturday, March 28", time: "3:00 pm" },
-      { date: "Saturday, April 4", time: "3:00 pm" },
+    sessions: [
+      { weekday: 6, time: "3:00 pm" },
     ],
+    upcomingCount: 2,
     duration: "4 hours",
     groupSize: "Up to 60 people",
     language: "English",
@@ -193,13 +202,13 @@ export const EXPERIENCES: Experience[] = [
     reviewsList: [
       {
         author: "Devon C.",
-        date: "April 2026",
+        monthsAgo: 2,
         rating: 5,
         quote: "Real dancehall, not a tourist version of it. The DJs were the people who actually built this scene.",
       },
       {
         author: "Marisol G.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 4,
         quote: "Great crowd and the food was good. Bring cash, the line for the ATM was long.",
       },
@@ -243,12 +252,14 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "A or C" },
         { mode: "walk", label: "Walk", detail: "5 min from Utica Ave" },
         { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
+        { mode: "bus", label: "Take the", detail: "B26 along Halsey Street" },
       ],
     },
-    dates: [
-      { date: "Wednesday, April 1", time: "6:30 pm" },
-      { date: "Saturday, April 4", time: "11:00 am" },
+    sessions: [
+      { weekday: 3, time: "6:30 pm" },
+      { weekday: 6, time: "11:00 am" },
     ],
+    upcomingCount: 2,
     duration: "2 hours",
     groupSize: "Up to 6 people",
     language: "English",
@@ -262,13 +273,13 @@ export const EXPERIENCES: Experience[] = [
     reviewsList: [
       {
         author: "Aaliyah W.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 5,
         quote: "Iman is patient and the studio is the real thing. I wear the bracelet every day now.",
       },
       {
         author: "Greg L.",
-        date: "February 2026",
+        monthsAgo: 4,
         rating: 5,
         quote: "Small group, so you actually get hands-on time at the bench. Worth every dollar.",
       },
@@ -311,12 +322,13 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "A, C, or F to Jay St" },
         { mode: "walk", label: "Walk", detail: "12 min from Jay St–MetroTech" },
         { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
+        { mode: "ferry", label: "Take the", detail: "East River ferry to DUMBO" },
       ],
     },
-    dates: [
-      { date: "Sunday, March 29", time: "10:00 am" },
-      { date: "Sunday, April 5", time: "10:00 am" },
+    sessions: [
+      { weekday: 0, time: "10:00 am" },
     ],
+    upcomingCount: 2,
     duration: "90 minutes",
     groupSize: "Up to 12 people",
     language: "English",
@@ -328,19 +340,19 @@ export const EXPERIENCES: Experience[] = [
     reviewsList: [
       {
         author: "Helen S.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 5,
         quote: "Carlos points out details you'd walk past a hundred times. The zoning history was eye-opening.",
       },
       {
         author: "Marcus B.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 5,
         quote: "Good pace and genuinely informative. The cobblestones are no joke, wear real shoes.",
       },
       {
         author: "Jin P.",
-        date: "January 2026",
+        monthsAgo: 5,
         rating: 4,
         quote: "Solid tour. It's short, so I wished it covered a couple more blocks toward the water.",
       },
@@ -384,12 +396,13 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "N or R to 53rd St" },
         { mode: "walk", label: "Walk", detail: "3 min" },
         { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
+        { mode: "bus", label: "Take the", detail: "B11 across 49th Street" },
       ],
     },
-    dates: [
-      { date: "Friday, March 27", time: "6:00 pm" },
-      { date: "Friday, April 3", time: "6:00 pm" },
+    sessions: [
+      { weekday: 5, time: "6:00 pm" },
     ],
+    upcomingCount: 2,
     duration: "3 hours",
     groupSize: "Drop in anytime",
     language: "English, Spanish, and Mandarin",
@@ -401,13 +414,13 @@ export const EXPERIENCES: Experience[] = [
     reviewsList: [
       {
         author: "Carla D.",
-        date: "April 2026",
+        monthsAgo: 2,
         rating: 5,
         quote: "Came hungry, left happy. The dumplings really are a dollar and they're better than most sit-down spots.",
       },
       {
         author: "Owen T.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 4,
         quote: "Packed by 7pm, so go early if you want a table. The food made the crowd worth it.",
       },
@@ -450,12 +463,13 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "A or C to Utica Ave" },
         { mode: "walk", label: "Walk", detail: "7 min" },
         { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
+        { mode: "bus", label: "Take the", detail: "B46 Select Bus on Utica Avenue" },
       ],
     },
-    dates: [
-      { date: "Saturday, March 28", time: "11:00 am" },
-      { date: "Saturday, April 4", time: "11:00 am" },
+    sessions: [
+      { weekday: 6, time: "11:00 am" },
     ],
+    upcomingCount: 2,
     duration: "3 hours",
     groupSize: "Up to 6 people",
     language: "English",
@@ -468,13 +482,13 @@ export const EXPERIENCES: Experience[] = [
     reviewsList: [
       {
         author: "Renee J.",
-        date: "April 2026",
+        monthsAgo: 2,
         rating: 5,
         quote: "Delores cooks like she's feeding family. I've made the collards twice since.",
       },
       {
         author: "Sam K.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 5,
         quote: "Six people in a home kitchen feels intimate in the best way. The cornbread alone was worth it.",
       },
@@ -518,12 +532,14 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "G to Greenpoint Ave" },
         { mode: "walk", label: "Walk", detail: "2 min" },
         { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
+        { mode: "ferry", label: "Take the", detail: "East River ferry to India Street" },
       ],
     },
-    dates: [
-      { date: "Sunday, March 29", time: "1:00 pm" },
-      { date: "Saturday, April 4", time: "1:00 pm" },
+    sessions: [
+      { weekday: 0, time: "1:00 pm" },
+      { weekday: 6, time: "1:00 pm" },
     ],
+    upcomingCount: 2,
     duration: "2 hours",
     groupSize: "Up to 10 people",
     language: "English and Polish",
@@ -535,13 +551,13 @@ export const EXPERIENCES: Experience[] = [
     reviewsList: [
       {
         author: "Bea N.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 5,
         quote: "Marta actually knows the artists, so the stories felt firsthand instead of secondhand.",
       },
       {
         author: "Chris V.",
-        date: "February 2026",
+        monthsAgo: 4,
         rating: 4,
         quote: "Good walk and good art. A few of the murals had already been painted over, which Marta was honest about.",
       },
@@ -585,12 +601,13 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "2 or 3 to 116th St" },
         { mode: "walk", label: "Walk", detail: "5 min north" },
         { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
+        { mode: "bus", label: "Take the", detail: "M102 up Malcolm X Boulevard" },
       ],
     },
-    dates: [
-      { date: "Saturday, March 28", time: "10:00 am" },
-      { date: "Saturday, April 4", time: "10:00 am" },
+    sessions: [
+      { weekday: 6, time: "10:00 am" },
     ],
+    upcomingCount: 2,
     duration: "90 minutes",
     groupSize: "Up to 12 people",
     language: "English",
@@ -603,13 +620,13 @@ export const EXPERIENCES: Experience[] = [
     reviewsList: [
       {
         author: "Dana F.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 5,
         quote: "James grew up here, and it shows. He balances the architecture with the harder history honestly.",
       },
       {
         author: "Leon A.",
-        date: "February 2026",
+        monthsAgo: 4,
         rating: 5,
         quote: "I've lived in Harlem for years and still learned things. Bring binoculars for the cornices.",
       },
@@ -652,12 +669,13 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "N or W to Ditmars Blvd" },
         { mode: "walk", label: "Walk", detail: "4 min" },
         { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
+        { mode: "bus", label: "Take the", detail: "Q19 along Ditmars Boulevard" },
       ],
     },
-    dates: [
-      { date: "Sunday, March 29", time: "11:00 am" },
-      { date: "Sunday, April 5", time: "11:00 am" },
+    sessions: [
+      { weekday: 0, time: "11:00 am" },
     ],
+    upcomingCount: 2,
     duration: "3 hours",
     groupSize: "Up to 8 people",
     language: "English and Greek",
@@ -670,13 +688,13 @@ export const EXPERIENCES: Experience[] = [
     reviewsList: [
       {
         author: "Tessa O.",
-        date: "April 2026",
+        monthsAgo: 2,
         rating: 5,
         quote: "Eleni's phyllo technique is generations deep. My baklava actually held together at home.",
       },
       {
         author: "Nikos D.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 5,
         quote: "Felt like baking in my yiayia's kitchen. The bakery itself is a piece of Astoria history.",
       },
@@ -719,12 +737,13 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "6 to 3rd Ave–138th St" },
         { mode: "walk", label: "Walk", detail: "6 min to bridge" },
         { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
+        { mode: "bus", label: "Take the", detail: "Bx15 over the Third Avenue Bridge" },
       ],
     },
-    dates: [
-      { date: "Saturday, March 28", time: "2:00 pm" },
-      { date: "Saturday, April 4", time: "2:00 pm" },
+    sessions: [
+      { weekday: 6, time: "2:00 pm" },
     ],
+    upcomingCount: 2,
     duration: "2 hours",
     groupSize: "Up to 10 people",
     language: "English and Spanish",
@@ -736,13 +755,13 @@ export const EXPERIENCES: Experience[] = [
     reviewsList: [
       {
         author: "Yara M.",
-        date: "April 2026",
+        monthsAgo: 2,
         rating: 5,
         quote: "Luis treats the owners like the experts they are. You leave understanding the neighborhood, not just snacking through it.",
       },
       {
         author: "Pete R.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 4,
         quote: "Really grounded tour. Bring cash, you'll want to buy something at every stop.",
       },
@@ -785,12 +804,14 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "F to 2nd Ave" },
         { mode: "citibike", label: "Grab a Citibike", detail: "0.1 miles away" },
         { mode: "walk", label: "Walk", detail: "10 min from 2nd Ave" },
+        { mode: "bus", label: "Take the", detail: "M14A Select Bus to Avenue C" },
       ],
     },
-    dates: [
-      { date: "Saturday, April 11", time: "1:00 pm" },
-      { date: "Sunday, April 19", time: "1:00 pm" },
+    sessions: [
+      { weekday: 6, time: "1:00 pm" },
+      { weekday: 0, time: "1:00 pm" },
     ],
+    upcomingCount: 2,
     duration: "3 hours",
     groupSize: "Up to 15 people",
     language: "English and Spanish",
@@ -802,13 +823,13 @@ export const EXPERIENCES: Experience[] = [
     reviewsList: [
       {
         author: "Hana T.",
-        date: "April 2026",
+        monthsAgo: 2,
         rating: 5,
         quote: "Honest work and good people. I came alone and left knowing half the block.",
       },
       {
         author: "Will S.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 5,
         quote: "Gloria explains the politics of the land trust without lecturing. You leave understanding why the garden matters.",
       },
@@ -851,12 +872,13 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "7 to Flushing–Main St" },
         { mode: "walk", label: "Walk", detail: "6 min south" },
         { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
+        { mode: "lirr", label: "Take the", detail: "LIRR to Flushing–Main St" },
       ],
     },
-    dates: [
-      { date: "Sunday, April 12", time: "5:00 pm" },
-      { date: "Sunday, May 10", time: "5:00 pm" },
+    sessions: [
+      { weekday: 0, time: "5:00 pm" },
     ],
+    upcomingCount: 2,
     duration: "2 hours",
     groupSize: "Up to 40 people",
     language: "English, Mandarin, and Korean",
@@ -869,13 +891,13 @@ export const EXPERIENCES: Experience[] = [
     reviewsList: [
       {
         author: "Min J.",
-        date: "April 2026",
+        monthsAgo: 2,
         rating: 5,
         quote: "I've lived nearby for years and never knew this place existed. Now I volunteer here twice a month.",
       },
       {
         author: "Ruth D.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 4,
         quote: "Warm and welcoming. It's loud and busy, which is exactly what a potluck should be.",
       },
@@ -918,12 +940,14 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "J, Z, N, Q, R, or 6 to Canal St" },
         { mode: "walk", label: "Walk", detail: "5 min south" },
         { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
+        { mode: "bus", label: "Take the", detail: "M103 down the Bowery" },
       ],
     },
-    dates: [
-      { date: "Saturday, April 11", time: "11:00 am" },
-      { date: "Sunday, April 19", time: "11:00 am" },
+    sessions: [
+      { weekday: 6, time: "11:00 am" },
+      { weekday: 0, time: "11:00 am" },
     ],
+    upcomingCount: 2,
     duration: "2 hours",
     groupSize: "Up to 12 people",
     language: "English and Cantonese",
@@ -936,19 +960,19 @@ export const EXPERIENCES: Experience[] = [
     reviewsList: [
       {
         author: "Eli R.",
-        date: "April 2026",
+        monthsAgo: 2,
         rating: 5,
         quote: "Henry connects the buildings to the laws that shaped them. It reframed how I see the whole neighborhood.",
       },
       {
         author: "Sophie L.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 5,
         quote: "Dense with history but never dry. The tea stop at the end was a nice touch.",
       },
       {
         author: "Andre P.",
-        date: "February 2026",
+        monthsAgo: 4,
         rating: 4,
         quote: "Excellent guide. It's a lot of standing and listening, so dress for the weather.",
       },
@@ -991,12 +1015,13 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "A, B, C, or D to 145th St" },
         { mode: "walk", label: "Walk", detail: "8 min" },
         { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
+        { mode: "bus", label: "Take the", detail: "M3 up St. Nicholas Avenue" },
       ],
     },
-    dates: [
-      { date: "Friday, April 10", time: "7:00 pm" },
-      { date: "Friday, April 24", time: "7:00 pm" },
+    sessions: [
+      { weekday: 5, time: "7:00 pm" },
     ],
+    upcomingCount: 2,
     duration: "2 hours",
     groupSize: "Up to 8 people",
     language: "English",
@@ -1009,13 +1034,13 @@ export const EXPERIENCES: Experience[] = [
     reviewsList: [
       {
         author: "Diane M.",
-        date: "April 2026",
+        monthsAgo: 2,
         rating: 5,
         quote: "Clarence plays a record, then tells you exactly why it mattered. I could have listened all night.",
       },
       {
         author: "Theo W.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 5,
         quote: "Intimate and unhurried. You're sitting in someone's living room with the music that defined a neighborhood.",
       },
@@ -1058,12 +1083,14 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "A, B, C, or D to 125th St" },
         { mode: "walk", label: "Walk", detail: "4 min" },
         { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
+        { mode: "bus", label: "Take the", detail: "M10 along Frederick Douglass Boulevard" },
       ],
     },
-    dates: [
-      { date: "Friday, April 10", time: "8:30 pm" },
-      { date: "Saturday, April 11", time: "8:30 pm" },
+    sessions: [
+      { weekday: 5, time: "8:30 pm" },
+      { weekday: 6, time: "8:30 pm" },
     ],
+    upcomingCount: 2,
     duration: "3 hours",
     groupSize: "Up to 30 people",
     language: "English",
@@ -1075,13 +1102,13 @@ export const EXPERIENCES: Experience[] = [
     reviewsList: [
       {
         author: "Gus E.",
-        date: "April 2026",
+        monthsAgo: 2,
         rating: 5,
         quote: "The real Harlem jazz tradition, still alive. Renata clearly cares about the musicians getting paid.",
       },
       {
         author: "Lena K.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 4,
         quote: "Great music and a tight room. It gets warm once it fills up, so dress light.",
       },
@@ -1124,12 +1151,14 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "D, F, N, or Q to Coney Island–Stillwell Av" },
         { mode: "walk", label: "Walk", detail: "5 min to the boardwalk" },
         { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
+        { mode: "bus", label: "Take the", detail: "B36 along Surf Avenue" },
       ],
     },
-    dates: [
-      { date: "Friday, April 17", time: "6:30 pm" },
-      { date: "Saturday, April 18", time: "6:30 pm" },
+    sessions: [
+      { weekday: 5, time: "6:30 pm" },
+      { weekday: 6, time: "6:30 pm" },
     ],
+    upcomingCount: 2,
     duration: "2 hours",
     groupSize: "Up to 15 people",
     language: "English and Italian",
@@ -1141,13 +1170,13 @@ export const EXPERIENCES: Experience[] = [
     reviewsList: [
       {
         author: "Frankie D.",
-        date: "April 2026",
+        monthsAgo: 2,
         rating: 5,
         quote: "Sal grew up here and it shows. The sunset over the Wonder Wheel alone was worth it.",
       },
       {
         author: "Asha N.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 4,
         quote: "Fun and a little nostalgic. The wind off the water was no joke, glad I brought a coat.",
       },
@@ -1190,12 +1219,14 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "7 to Flushing–Main St" },
         { mode: "walk", label: "Walk", detail: "2 min" },
         { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
+        { mode: "lirr", label: "Take the", detail: "LIRR to Flushing–Main St" },
       ],
     },
-    dates: [
-      { date: "Saturday, April 11", time: "12:00 pm" },
-      { date: "Sunday, April 12", time: "12:00 pm" },
+    sessions: [
+      { weekday: 6, time: "12:00 pm" },
+      { weekday: 0, time: "12:00 pm" },
     ],
+    upcomingCount: 2,
     duration: "3 hours",
     groupSize: "Up to 10 people",
     language: "English and Mandarin",
@@ -1208,13 +1239,13 @@ export const EXPERIENCES: Experience[] = [
     reviewsList: [
       {
         author: "Maya C.",
-        date: "April 2026",
+        monthsAgo: 2,
         rating: 5,
         quote: "Wei took us places I'd have walked right past. The hand-pulled spot was the best dumpling I've had in the city.",
       },
       {
         author: "Ben H.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 5,
         quote: "Come hungry, genuinely. Five stops is a lot of food and all of it was excellent.",
       },
@@ -1257,12 +1288,14 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "E, F, M, R, or 7 to Jackson Hts–Roosevelt Av" },
         { mode: "walk", label: "Walk", detail: "3 min" },
         { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
+        { mode: "bus", label: "Take the", detail: "Q49 along 74th Street" },
       ],
     },
-    dates: [
-      { date: "Saturday, April 18", time: "1:00 pm" },
-      { date: "Sunday, April 26", time: "1:00 pm" },
+    sessions: [
+      { weekday: 6, time: "1:00 pm" },
+      { weekday: 0, time: "1:00 pm" },
     ],
+    upcomingCount: 2,
     duration: "2.5 hours",
     groupSize: "Up to 10 people",
     language: "English, Hindi, and Bengali",
@@ -1275,13 +1308,13 @@ export const EXPERIENCES: Experience[] = [
     reviewsList: [
       {
         author: "Reuben F.",
-        date: "April 2026",
+        monthsAgo: 2,
         rating: 5,
         quote: "Anika knows the owners by name. The momos and the dosa were both standouts.",
       },
       {
         author: "Claire B.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 4,
         quote: "Generous portions and a thoughtful route. Wear stretchy pants, you will not stay hungry.",
       },
@@ -1324,12 +1357,14 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "C or E to 23rd St" },
         { mode: "walk", label: "Walk", detail: "10 min west" },
         { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
+        { mode: "bus", label: "Take the", detail: "M11 up Tenth Avenue" },
       ],
     },
-    dates: [
-      { date: "Thursday, April 16", time: "3:00 pm" },
-      { date: "Saturday, April 18", time: "11:00 am" },
+    sessions: [
+      { weekday: 4, time: "3:00 pm" },
+      { weekday: 6, time: "11:00 am" },
     ],
+    upcomingCount: 2,
     duration: "2 hours",
     groupSize: "Up to 10 people",
     language: "English",
@@ -1342,13 +1377,13 @@ export const EXPERIENCES: Experience[] = [
     reviewsList: [
       {
         author: "Paula R.",
-        date: "April 2026",
+        monthsAgo: 2,
         rating: 5,
         quote: "Diana cuts through the intimidation factor. I finally felt like I belonged in those rooms.",
       },
       {
         author: "Vikram S.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 4,
         quote: "Smart picks and good context. Six galleries in two hours is brisk, but it kept the energy up.",
       },
@@ -1391,12 +1426,14 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "F to Delancey St" },
         { mode: "walk", label: "Walk", detail: "4 min" },
         { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
+        { mode: "bus", label: "Take the", detail: "M15 Select Bus on Allen Street" },
       ],
     },
-    dates: [
-      { date: "Friday, April 17", time: "4:00 pm" },
-      { date: "Saturday, April 25", time: "2:00 pm" },
+    sessions: [
+      { weekday: 5, time: "4:00 pm" },
+      { weekday: 6, time: "2:00 pm" },
     ],
+    upcomingCount: 2,
     duration: "2 hours",
     groupSize: "Up to 8 people",
     language: "English",
@@ -1409,13 +1446,13 @@ export const EXPERIENCES: Experience[] = [
     reviewsList: [
       {
         author: "Noa G.",
-        date: "April 2026",
+        monthsAgo: 2,
         rating: 5,
         quote: "These are rooms you'd never walk into on your own. Theo knows everyone and the conversations were the best part.",
       },
       {
         author: "Marcus T.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 5,
         quote: "A real look at how artists support each other. Small, honest, and far from the gallery machine.",
       },
@@ -1458,12 +1495,14 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "6 to Hunts Point Av" },
         { mode: "walk", label: "Walk", detail: "7 min" },
         { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
+        { mode: "bus", label: "Take the", detail: "Bx6 Select Bus on Hunts Point Avenue" },
       ],
     },
-    dates: [
-      { date: "Saturday, April 18", time: "12:00 pm" },
-      { date: "Sunday, April 26", time: "12:00 pm" },
+    sessions: [
+      { weekday: 6, time: "12:00 pm" },
+      { weekday: 0, time: "12:00 pm" },
     ],
+    upcomingCount: 2,
     duration: "2 hours",
     groupSize: "Up to 12 people",
     language: "English and Spanish",
@@ -1476,13 +1515,13 @@ export const EXPERIENCES: Experience[] = [
     reviewsList: [
       {
         author: "Talia R.",
-        date: "April 2026",
+        monthsAgo: 2,
         rating: 5,
         quote: "Ray treats graffiti as the art form it is. Hearing the crew histories firsthand changed how I see every wall.",
       },
       {
         author: "Devin O.",
-        date: "March 2026",
+        monthsAgo: 3,
         rating: 4,
         quote: "Genuinely informative and the murals are huge. It's a real walk, so come ready to move.",
       },
@@ -1522,13 +1561,15 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "1 train to 215 St", detail: "Walk west about eight minutes toward the river." },
         { mode: "citibike", label: "Indian Rd & W 218 St dock", detail: "Two-minute walk to the overlook from the dock." },
         { mode: "walk", label: "From Dyckman St", detail: "Fifteen minutes north along the waterfront path." },
+        { mode: "bus", label: "Bx7 bus up Broadway", detail: "Stops three blocks from the park entrance." },
       ],
     },
-    dates: [
-      { date: "Saturday, April 11", time: "6:15 am" },
-      { date: "Sunday, April 12", time: "6:15 am" },
-      { date: "Saturday, April 18", time: "6:00 am" },
+    sessions: [
+      { weekday: 6, time: "6:15 am" },
+      { weekday: 0, time: "6:15 am" },
+      { weekday: 6, time: "6:00 am" },
     ],
+    upcomingCount: 3,
     duration: "75 minutes",
     groupSize: "Up to 14 people",
     language: "English",
@@ -1540,9 +1581,9 @@ export const EXPERIENCES: Experience[] = [
       "Short walk to the salt marsh",
     ],
     reviewsList: [
-      { author: "Dana K.", date: "March 2026", rating: 5, quote: "The light through the trees did half the work. Renata kept it gentle and I never felt behind." },
-      { author: "Marcus T.", date: "March 2026", rating: 4, quote: "Lovely spot. Bring bug spray in warmer weeks, the marsh is right there." },
-      { author: "Priya S.", date: "February 2026", rating: 5, quote: "I'm not flexible and this still felt good. Tea after was a nice touch." },
+      { author: "Dana K.", monthsAgo: 3, rating: 5, quote: "The light through the trees did half the work. Renata kept it gentle and I never felt behind." },
+      { author: "Marcus T.", monthsAgo: 3, rating: 4, quote: "Lovely spot. Bring bug spray in warmer weeks, the marsh is right there." },
+      { author: "Priya S.", monthsAgo: 4, rating: 5, quote: "I'm not flexible and this still felt good. Tea after was a nice touch." },
     ],
   },
   {
@@ -1579,12 +1620,14 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "1 train to 145 St", detail: "Walk west ten minutes downhill to the river." },
         { mode: "citibike", label: "Riverside Dr & W 145 St dock", detail: "Right at the meeting gate." },
         { mode: "walk", label: "From City College", detail: "Twelve minutes west through Hamilton Heights." },
+        { mode: "bus", label: "Bx19 bus to 145 St", detail: "Crosstown to Riverside, then a short walk." },
       ],
     },
-    dates: [
-      { date: "Wednesday, April 8", time: "6:30 pm" },
-      { date: "Saturday, April 11", time: "8:30 am" },
+    sessions: [
+      { weekday: 3, time: "6:30 pm" },
+      { weekday: 6, time: "8:30 am" },
     ],
+    upcomingCount: 2,
     duration: "60 minutes",
     groupSize: "Up to 20 people",
     language: "English",
@@ -1595,9 +1638,9 @@ export const EXPERIENCES: Experience[] = [
       "Route map sent ahead by text",
     ],
     reviewsList: [
-      { author: "Aisha R.", date: "March 2026", rating: 5, quote: "First run club where I didn't feel like the slow one. Devon actually waits for everyone." },
-      { author: "Tom B.", date: "March 2026", rating: 4, quote: "Good crew and a flat route. Wish it ran more than twice a week." },
-      { author: "Lena M.", date: "February 2026", rating: 5, quote: "The river at dusk is the best part. Came back three weeks running." },
+      { author: "Aisha R.", monthsAgo: 3, rating: 5, quote: "First run club where I didn't feel like the slow one. Devon actually waits for everyone." },
+      { author: "Tom B.", monthsAgo: 3, rating: 4, quote: "Good crew and a flat route. Wish it ran more than twice a week." },
+      { author: "Lena M.", monthsAgo: 4, rating: 5, quote: "The river at dusk is the best part. Came back three weeks running." },
     ],
   },
   {
@@ -1634,13 +1677,15 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "1 train to 242 St", detail: "Five-minute walk north to the Nature Center." },
         { mode: "citibike", label: "Broadway & W 246 St dock", detail: "Two minutes to the meeting point." },
         { mode: "walk", label: "From Riverdale", detail: "Ten minutes east along Broadway." },
+        { mode: "bus", label: "Bx9 bus up Broadway", detail: "Stops near the 242 St park gate." },
       ],
     },
-    dates: [
-      { date: "Saturday, April 11", time: "7:30 am" },
-      { date: "Sunday, April 12", time: "7:30 am" },
-      { date: "Saturday, April 25", time: "7:15 am" },
+    sessions: [
+      { weekday: 6, time: "7:30 am" },
+      { weekday: 0, time: "7:30 am" },
+      { weekday: 6, time: "7:15 am" },
     ],
+    upcomingCount: 3,
     duration: "2 hours",
     groupSize: "Up to 10 people",
     language: "English",
@@ -1652,9 +1697,9 @@ export const EXPERIENCES: Experience[] = [
       "Tips on birding apps and by-ear ID",
     ],
     reviewsList: [
-      { author: "Henry L.", date: "April 2026", rating: 5, quote: "Saw my first wood duck. Gloria knows every call in that marsh and is patient with beginners." },
-      { author: "Sofia D.", date: "March 2026", rating: 5, quote: "Didn't expect this much wild space in the Bronx. Quiet and unhurried." },
-      { author: "Ray P.", date: "March 2026", rating: 4, quote: "Great walk, just wear real boots. The marsh edge was muddier than I planned for." },
+      { author: "Henry L.", monthsAgo: 2, rating: 5, quote: "Saw my first wood duck. Gloria knows every call in that marsh and is patient with beginners." },
+      { author: "Sofia D.", monthsAgo: 3, rating: 5, quote: "Didn't expect this much wild space in the Bronx. Quiet and unhurried." },
+      { author: "Ray P.", monthsAgo: 3, rating: 4, quote: "Great walk, just wear real boots. The marsh edge was muddier than I planned for." },
     ],
   },
   {
@@ -1691,12 +1736,14 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "2 or 5 train to E 180 St", detail: "Seven-minute walk to the trailhead." },
         { mode: "citibike", label: "Boston Rd & E 180 St dock", detail: "Five minutes to the meeting point." },
         { mode: "walk", label: "From the Bronx Zoo gate", detail: "Ten minutes north along the river." },
+        { mode: "bus", label: "Bx36 bus on E 180 St", detail: "Stops two blocks from the trailhead." },
       ],
     },
-    dates: [
-      { date: "Sunday, April 12", time: "10:00 am" },
-      { date: "Saturday, April 18", time: "10:00 am" },
+    sessions: [
+      { weekday: 0, time: "10:00 am" },
+      { weekday: 6, time: "10:00 am" },
     ],
+    upcomingCount: 2,
     duration: "2 hours",
     groupSize: "Up to 8 people",
     language: "English",
@@ -1707,9 +1754,9 @@ export const EXPERIENCES: Experience[] = [
       "A short recipe card to take home",
     ],
     reviewsList: [
-      { author: "Camille F.", date: "April 2026", rating: 5, quote: "Marcus is careful and honest about what's safe. I'll never look at a weedy lot the same way." },
-      { author: "Owen R.", date: "March 2026", rating: 4, quote: "Really informative. Small group meant everyone got to ask questions." },
-      { author: "Nadia H.", date: "March 2026", rating: 5, quote: "Loved learning the plants right by the river. Felt grounded and specific, not gimmicky." },
+      { author: "Camille F.", monthsAgo: 2, rating: 5, quote: "Marcus is careful and honest about what's safe. I'll never look at a weedy lot the same way." },
+      { author: "Owen R.", monthsAgo: 3, rating: 4, quote: "Really informative. Small group meant everyone got to ask questions." },
+      { author: "Nadia H.", monthsAgo: 3, rating: 5, quote: "Loved learning the plants right by the river. Felt grounded and specific, not gimmicky." },
     ],
   },
   {
@@ -1746,13 +1793,13 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "G to Greenpoint Av", detail: "Walk about 8 minutes toward the waterfront." },
         { mode: "citibike", label: "Manhattan Av & Calyer St", detail: "Dock is roughly 5 minutes downhill." },
         { mode: "walk", label: "From McCarren Park", detail: "A flat 12-minute walk north." },
+        { mode: "ferry", label: "East River ferry to India St", detail: "A six-minute walk to the market." },
       ],
     },
-    dates: [
-      { date: "Sunday, June 28", time: "10:00 am" },
-      { date: "Sunday, July 5", time: "10:00 am" },
-      { date: "Sunday, July 12", time: "10:00 am" },
+    sessions: [
+      { weekday: 0, time: "10:00 am" },
     ],
+    upcomingCount: 3,
     duration: "2 hours",
     groupSize: "Up to 8 people",
     language: "English",
@@ -1763,9 +1810,9 @@ export const EXPERIENCES: Experience[] = [
       "Coffee from the corner cart",
     ],
     reviewsList: [
-      { author: "Priya R.", date: "June 2026", rating: 5, quote: "Found a working film camera for nine dollars. Dani knows everyone." },
-      { author: "Marcus T.", date: "May 2026", rating: 4, quote: "Smaller than I expected but the sellers were genuinely friendly." },
-      { author: "Elena S.", date: "May 2026", rating: 4, quote: "I liked that it's not a curated 'cool' market. Just real stuff." },
+      { author: "Priya R.", monthsAgo: 0, rating: 5, quote: "Found a working film camera for nine dollars. Dani knows everyone." },
+      { author: "Marcus T.", monthsAgo: 1, rating: 4, quote: "Smaller than I expected but the sellers were genuinely friendly." },
+      { author: "Elena S.", monthsAgo: 1, rating: 4, quote: "I liked that it's not a curated 'cool' market. Just real stuff." },
     ],
   },
   {
@@ -1801,12 +1848,14 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "M to Seneca Av", detail: "A flat 4-minute walk from the station." },
         { mode: "citibike", label: "Onderdonk Av & Madison St", detail: "Dock sits about 3 minutes away." },
+        { mode: "walk", label: "From Myrtle-Wyckoff", detail: "About twelve minutes up Wyckoff Avenue." },
+        { mode: "bus", label: "Q58 bus on Fresh Pond Rd", detail: "Stops a few blocks from the studio." },
       ],
     },
-    dates: [
-      { date: "Saturday, June 27", time: "1:00 pm" },
-      { date: "Saturday, July 11", time: "1:00 pm" },
+    sessions: [
+      { weekday: 6, time: "1:00 pm" },
     ],
+    upcomingCount: 2,
     duration: "90 minutes",
     groupSize: "Up to 6 people",
     language: "English and Korean",
@@ -1816,8 +1865,8 @@ export const EXPERIENCES: Experience[] = [
       "Tea and the chance to ask anything",
     ],
     reviewsList: [
-      { author: "Jordan L.", date: "June 2026", rating: 5, quote: "Theo explained glazing in a way that finally made sense to me." },
-      { author: "Aisha M.", date: "June 2026", rating: 4, quote: "Warm and unhurried. Wish the wheel time had been a bit longer." },
+      { author: "Jordan L.", monthsAgo: 0, rating: 5, quote: "Theo explained glazing in a way that finally made sense to me." },
+      { author: "Aisha M.", monthsAgo: 0, rating: 4, quote: "Warm and unhurried. Wish the wheel time had been a bit longer." },
     ],
   },
   {
@@ -1854,13 +1903,14 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "D, N, R to 36 St", detail: "About a 10-minute walk uphill to the park." },
         { mode: "citibike", label: "5 Av & 43 St", detail: "Roughly 6 minutes from the courts." },
         { mode: "walk", label: "From Sunset Park pool", detail: "Courts are just past the playground, 4 minutes." },
+        { mode: "bus", label: "B63 bus on Fifth Ave", detail: "Two blocks downhill from the courts." },
       ],
     },
-    dates: [
-      { date: "Saturday, June 27", time: "9:00 am" },
-      { date: "Sunday, June 28", time: "9:00 am" },
-      { date: "Saturday, July 4", time: "9:00 am" },
+    sessions: [
+      { weekday: 6, time: "9:00 am" },
+      { weekday: 0, time: "9:00 am" },
     ],
+    upcomingCount: 3,
     duration: "2 hours",
     groupSize: "Up to 6 people",
     language: "English and Spanish",
@@ -1871,8 +1921,8 @@ export const EXPERIENCES: Experience[] = [
       "Water and orange slices between games",
     ],
     reviewsList: [
-      { author: "Devon K.", date: "June 2026", rating: 5, quote: "Showed up never having played. Left sore and grinning." },
-      { author: "Sofia G.", date: "May 2026", rating: 4, quote: "The regulars are competitive but kind once you commit to playing." },
+      { author: "Devon K.", monthsAgo: 0, rating: 5, quote: "Showed up never having played. Left sore and grinning." },
+      { author: "Sofia G.", monthsAgo: 1, rating: 4, quote: "The regulars are competitive but kind once you commit to playing." },
     ],
   },
   {
@@ -1908,12 +1958,15 @@ export const EXPERIENCES: Experience[] = [
       transit: [
         { mode: "subway", label: "7, E, M to Court Sq", detail: "A 5-minute walk south from the station." },
         { mode: "citibike", label: "Jackson Av & 46 Rd", detail: "Dock is right outside the entrance." },
+        { mode: "walk", label: "From Court Square", detail: "Six minutes south along Jackson Avenue." },
+        { mode: "bus", label: "Q67 bus on Jackson Av", detail: "Stops a block from the gym door." },
       ],
     },
-    dates: [
-      { date: "Friday, June 26", time: "6:30 pm" },
-      { date: "Saturday, June 27", time: "11:00 am" },
+    sessions: [
+      { weekday: 5, time: "6:30 pm" },
+      { weekday: 6, time: "11:00 am" },
     ],
+    upcomingCount: 2,
     duration: "2 hours",
     groupSize: "Up to 8 people",
     language: "English and Italian",
@@ -1924,9 +1977,9 @@ export const EXPERIENCES: Experience[] = [
       "A guided run through three beginner routes",
     ],
     reviewsList: [
-      { author: "Hana W.", date: "June 2026", rating: 5, quote: "Renee made the scary part feel manageable. I booked again for next week." },
-      { author: "Tomas R.", date: "June 2026", rating: 4, quote: "Great intro. The gym gets busy at peak hours so the morning slot is calmer." },
-      { author: "Bianca D.", date: "May 2026", rating: 4, quote: "Solid coaching though I'd have liked a smaller group." },
+      { author: "Hana W.", monthsAgo: 0, rating: 5, quote: "Renee made the scary part feel manageable. I booked again for next week." },
+      { author: "Tomas R.", monthsAgo: 0, rating: 4, quote: "Great intro. The gym gets busy at peak hours so the morning slot is calmer." },
+      { author: "Bianca D.", monthsAgo: 1, rating: 4, quote: "Solid coaching though I'd have liked a smaller group." },
     ],
   },
   {
@@ -1963,14 +2016,15 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "A to Dyckman St", detail: "Walk 8 minutes west toward the river" },
         { mode: "subway", label: "1 to 215 St", detail: "Walk 10 minutes north along the park edge" },
         { mode: "walk", label: "Meet at the field house", detail: "Look for the green Navi flag by the flagpole" },
-        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
+        { mode: "bus", label: "Bx7 bus up Broadway", detail: "Stops near the Payson Avenue entrance" },
       ],
     },
-    dates: [
-      { date: "Saturday, June 28", time: "10:00 am" },
-      { date: "Sunday, July 6", time: "10:00 am" },
-      { date: "Saturday, July 12", time: "9:30 am" },
+    sessions: [
+      { weekday: 6, time: "10:00 am" },
+      { weekday: 0, time: "10:00 am" },
+      { weekday: 6, time: "9:30 am" },
     ],
+    upcomingCount: 3,
     duration: "1.5 hours",
     groupSize: "Up to 12, kids and grownups",
     language: "English and some Spanish",
@@ -1982,9 +2036,9 @@ export const EXPERIENCES: Experience[] = [
       "A short snack break by the marsh",
     ],
     reviewsList: [
-      { author: "Daniela P.", date: "June 2026", rating: 5, quote: "My six-year-old still talks about the woodpecker we heard. Renata kept the pace right for little legs." },
-      { author: "Marcus T.", date: "May 2026", rating: 4, quote: "Lovely walk and good stories. The upper steps were a lot for our toddler, so we hung back on the lower loop." },
-      { author: "Aiko S.", date: "May 2026", rating: 5, quote: "Calm and unhurried. It felt like a real piece of old New York hiding in plain sight." },
+      { author: "Daniela P.", monthsAgo: 0, rating: 5, quote: "My six-year-old still talks about the woodpecker we heard. Renata kept the pace right for little legs." },
+      { author: "Marcus T.", monthsAgo: 1, rating: 4, quote: "Lovely walk and good stories. The upper steps were a lot for our toddler, so we hung back on the lower loop." },
+      { author: "Aiko S.", monthsAgo: 1, rating: 5, quote: "Calm and unhurried. It felt like a real piece of old New York hiding in plain sight." },
     ],
   },
   {
@@ -2021,12 +2075,14 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "N or W to 36 Av", detail: "Walk 4 minutes northeast" },
         { mode: "citibike", label: "Dock at 37 Av & 31 St", detail: "One block from the studio door" },
         { mode: "walk", label: "Buzzer for Studio B", detail: "Ring twice, the stairs are on your left" },
+        { mode: "bus", label: "Q18 bus on 37th Ave", detail: "Stops two blocks from the studio" },
       ],
     },
-    dates: [
-      { date: "Sunday, June 29", time: "2:00 pm" },
-      { date: "Saturday, July 5", time: "2:00 pm" },
+    sessions: [
+      { weekday: 0, time: "2:00 pm" },
+      { weekday: 6, time: "2:00 pm" },
     ],
+    upcomingCount: 2,
     duration: "2 hours",
     groupSize: "Up to 10 across families",
     language: "English and Greek",
@@ -2037,8 +2093,8 @@ export const EXPERIENCES: Experience[] = [
       "A short puppet show at the end",
     ],
     reviewsList: [
-      { author: "Priya R.", date: "June 2026", rating: 5, quote: "Theo is patient and funny, and my kids were proud of what they made. Worth the afternoon." },
-      { author: "Greg L.", date: "May 2026", rating: 4, quote: "Fun and well run. It got a bit crowded at the glue station when all the kids needed it at once." },
+      { author: "Priya R.", monthsAgo: 0, rating: 5, quote: "Theo is patient and funny, and my kids were proud of what they made. Worth the afternoon." },
+      { author: "Greg L.", monthsAgo: 1, rating: 4, quote: "Fun and well run. It got a bit crowded at the glue station when all the kids needed it at once." },
     ],
   },
   {
@@ -2075,13 +2131,15 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "F to 21 St-Queensbridge", detail: "Walk 7 minutes to the bridge ramp" },
         { mode: "subway", label: "E, M, or R to Queens Plaza", detail: "Walk 5 minutes south to the entrance" },
         { mode: "citibike", label: "Dock at Queens Plaza North", detail: "Two minutes from the meeting point" },
+        { mode: "bus", label: "Q101 bus at Queens Plaza", detail: "A short walk from the bridge ramp" },
       ],
     },
-    dates: [
-      { date: "Friday, June 27", time: "7:00 pm" },
-      { date: "Saturday, June 28", time: "7:00 pm" },
-      { date: "Wednesday, July 2", time: "6:45 pm" },
+    sessions: [
+      { weekday: 5, time: "7:00 pm" },
+      { weekday: 6, time: "7:00 pm" },
+      { weekday: 3, time: "6:45 pm" },
     ],
+    upcomingCount: 3,
     duration: "2 hours",
     groupSize: "Up to 8 people",
     language: "English",
@@ -2093,9 +2151,9 @@ export const EXPERIENCES: Experience[] = [
       "A short edit walkthrough after the shoot",
     ],
     reviewsList: [
-      { author: "Sam W.", date: "June 2026", rating: 5, quote: "Nadia knew exactly where to stand as the light changed. I came home with three frames I actually love." },
-      { author: "Leila H.", date: "June 2026", rating: 5, quote: "Great for a phone shooter like me. No jargon, just clear help." },
-      { author: "Tom K.", date: "May 2026", rating: 4, quote: "Solid walk and good company. It got crowded on the path near the end, which made a few setups tricky." },
+      { author: "Sam W.", monthsAgo: 0, rating: 5, quote: "Nadia knew exactly where to stand as the light changed. I came home with three frames I actually love." },
+      { author: "Leila H.", monthsAgo: 0, rating: 5, quote: "Great for a phone shooter like me. No jargon, just clear help." },
+      { author: "Tom K.", monthsAgo: 1, rating: 4, quote: "Solid walk and good company. It got crowded on the path near the end, which made a few setups tricky." },
     ],
   },
   {
@@ -2132,13 +2190,14 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "F to Delancey St", detail: "Walk 4 minutes south to Orchard St" },
         { mode: "subway", label: "B or D to Grand St", detail: "Walk 6 minutes east" },
         { mode: "walk", label: "Meet at the corner newsstand", detail: "Look for the guide with a film-still binder" },
-        { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
+        { mode: "bus", label: "M15 Select Bus on Allen St", detail: "Stops three blocks from the corner" },
       ],
     },
-    dates: [
-      { date: "Saturday, June 28", time: "3:30 pm" },
-      { date: "Sunday, July 6", time: "3:30 pm" },
+    sessions: [
+      { weekday: 6, time: "3:30 pm" },
+      { weekday: 0, time: "3:30 pm" },
     ],
+    upcomingCount: 2,
     duration: "2.5 hours",
     groupSize: "Up to 10 people",
     language: "English",
@@ -2150,8 +2209,8 @@ export const EXPERIENCES: Experience[] = [
       "A list of nearby cafes to end the walk",
     ],
     reviewsList: [
-      { author: "Hannah B.", date: "June 2026", rating: 5, quote: "Avi knows these streets cold. Lining up the old stills with the real corners was the best part." },
-      { author: "Diego M.", date: "May 2026", rating: 4, quote: "Really interesting and well paced. A couple of stops were under scaffolding, which is just the city for you." },
+      { author: "Hannah B.", monthsAgo: 0, rating: 5, quote: "Avi knows these streets cold. Lining up the old stills with the real corners was the best part." },
+      { author: "Diego M.", monthsAgo: 1, rating: 4, quote: "Really interesting and well paced. A couple of stops were under scaffolding, which is just the city for you." },
     ],
   },
   {
@@ -2188,13 +2247,15 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "2 or 3 to Fulton Street" },
         { mode: "citibike", label: "Grab a Citibike", detail: "0.3 miles at Pearl Street" },
         { mode: "walk", label: "Walk", detail: "12 min from the Oculus" },
+        { mode: "ferry", label: "Take the", detail: "NYC Ferry to Pier 11, 6 min walk" },
       ],
     },
-    dates: [
-      { date: "Friday, July 10", time: "5:30 pm" },
-      { date: "Saturday, July 11", time: "1:00 pm" },
-      { date: "Sunday, July 12", time: "5:30 pm" },
+    sessions: [
+      { weekday: 5, time: "5:30 pm" },
+      { weekday: 6, time: "1:00 pm" },
+      { weekday: 0, time: "5:30 pm" },
     ],
+    upcomingCount: 3,
     duration: "2 hours",
     groupSize: "Up to 12 people",
     language: "English",
@@ -2206,9 +2267,9 @@ export const EXPERIENCES: Experience[] = [
       "Hands-on sailing if you'd like to try",
     ],
     reviewsList: [
-      { author: "Priya M.", date: "June 2026", rating: 5, quote: "Diane's crew let my kid steer for a bit. The harbor looks completely different from the water." },
-      { author: "Greg L.", date: "May 2026", rating: 4, quote: "Lovely sail, though it was colder than I expected. Bring the jacket they tell you to bring." },
-      { author: "Sofia D.", date: "May 2026", rating: 5, quote: "Quiet, no engine noise once the sails were up. The oyster reef talk stuck with me." },
+      { author: "Priya M.", monthsAgo: 0, rating: 5, quote: "Diane's crew let my kid steer for a bit. The harbor looks completely different from the water." },
+      { author: "Greg L.", monthsAgo: 1, rating: 4, quote: "Lovely sail, though it was colder than I expected. Bring the jacket they tell you to bring." },
+      { author: "Sofia D.", monthsAgo: 1, rating: 5, quote: "Quiet, no engine noise once the sails were up. The oyster reef talk stuck with me." },
     ],
   },
   {
@@ -2245,12 +2306,14 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "G to Greenpoint Avenue" },
         { mode: "citibike", label: "Grab a Citibike", detail: "0.4 miles at Manhattan Avenue" },
         { mode: "walk", label: "Walk", detail: "15 min from the ferry landing" },
+        { mode: "bus", label: "Take the", detail: "B43 on Manhattan Avenue" },
       ],
     },
-    dates: [
-      { date: "Wednesday, July 15", time: "6:45 pm" },
-      { date: "Wednesday, July 22", time: "6:30 pm" },
+    sessions: [
+      { weekday: 3, time: "6:45 pm" },
+      { weekday: 3, time: "6:30 pm" },
     ],
+    upcomingCount: 2,
     duration: "1.5 hours",
     groupSize: "Up to 8 people",
     language: "English",
@@ -2260,8 +2323,8 @@ export const EXPERIENCES: Experience[] = [
       "A dry bag for your phone",
     ],
     reviewsList: [
-      { author: "Tariq B.", date: "June 2026", rating: 5, quote: "Didn't think I'd want to kayak an industrial creek. It was calm and the light was something else." },
-      { author: "Hannah W.", date: "June 2026", rating: 4, quote: "Great volunteers. The launch dock is a little tricky if you've never kayaked, but they help you." },
+      { author: "Tariq B.", monthsAgo: 0, rating: 5, quote: "Didn't think I'd want to kayak an industrial creek. It was calm and the light was something else." },
+      { author: "Hannah W.", monthsAgo: 0, rating: 4, quote: "Great volunteers. The launch dock is a little tricky if you've never kayaked, but they help you." },
     ],
   },
   {
@@ -2298,13 +2361,14 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "6 to Astor Place" },
         { mode: "citibike", label: "Grab a Citibike", detail: "0.2 miles at Cooper Square" },
         { mode: "walk", label: "Walk", detail: "10 min from Union Square" },
+        { mode: "bus", label: "Take the", detail: "M15 Select Bus on First Avenue" },
       ],
     },
-    dates: [
-      { date: "Saturday, July 11", time: "11:00 am" },
-      { date: "Saturday, July 18", time: "11:00 am" },
-      { date: "Sunday, July 19", time: "12:00 pm" },
+    sessions: [
+      { weekday: 6, time: "11:00 am" },
+      { weekday: 0, time: "12:00 pm" },
     ],
+    upcomingCount: 3,
     duration: "2.5 hours",
     groupSize: "Up to 6 people",
     language: "English and Spanish",
@@ -2315,9 +2379,9 @@ export const EXPERIENCES: Experience[] = [
       "A printed map of her wider list",
     ],
     reviewsList: [
-      { author: "Mei C.", date: "June 2026", rating: 5, quote: "Renata talked me out of a jacket that was overpriced and into a better one two doors down. Honest guide." },
-      { author: "Devon P.", date: "May 2026", rating: 4, quote: "Fun afternoon. A couple shops were crowded on a Saturday, so maybe book the Sunday slot." },
-      { author: "Aisha N.", date: "May 2026", rating: 5, quote: "I learned more about denim in two hours than in years of thrifting on my own." },
+      { author: "Mei C.", monthsAgo: 0, rating: 5, quote: "Renata talked me out of a jacket that was overpriced and into a better one two doors down. Honest guide." },
+      { author: "Devon P.", monthsAgo: 1, rating: 4, quote: "Fun afternoon. A couple shops were crowded on a Saturday, so maybe book the Sunday slot." },
+      { author: "Aisha N.", monthsAgo: 1, rating: 5, quote: "I learned more about denim in two hours than in years of thrifting on my own." },
     ],
   },
   {
@@ -2354,12 +2418,14 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "F to Delancey Street" },
         { mode: "citibike", label: "Grab a Citibike", detail: "0.2 miles at Rivington Street" },
         { mode: "walk", label: "Walk", detail: "8 min from Essex Market" },
+        { mode: "bus", label: "Take the", detail: "M15 Select Bus on Allen Street" },
       ],
     },
-    dates: [
-      { date: "Thursday, July 16", time: "6:00 pm" },
-      { date: "Saturday, July 18", time: "2:00 pm" },
+    sessions: [
+      { weekday: 4, time: "6:00 pm" },
+      { weekday: 6, time: "2:00 pm" },
     ],
+    upcomingCount: 2,
     duration: "2 hours",
     groupSize: "Up to 8 people",
     language: "English and Korean",
@@ -2371,8 +2437,8 @@ export const EXPERIENCES: Experience[] = [
       "A take-home stitch reference card",
     ],
     reviewsList: [
-      { author: "Laura K.", date: "June 2026", rating: 5, quote: "Ji-eun is patient and exact. My ripped jeans look better than before the tear." },
-      { author: "Owen T.", date: "June 2026", rating: 5, quote: "Calm, well-run, and I actually use the stitches at home now. Worth it." },
+      { author: "Laura K.", monthsAgo: 0, rating: 5, quote: "Ji-eun is patient and exact. My ripped jeans look better than before the tear." },
+      { author: "Owen T.", monthsAgo: 0, rating: 5, quote: "Calm, well-run, and I actually use the stitches at home now. Worth it." },
     ],
   },
 ];

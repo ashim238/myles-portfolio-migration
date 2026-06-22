@@ -12,6 +12,7 @@ import {
 } from "@/components/navi/system/Foundations";
 import { ExperienceCard } from "@/components/navi/demo/ExperienceCard";
 import { CategoryIcon } from "@/components/navi/demo/CategoryIcon";
+import { DateTimeModal } from "@/components/navi/demo/DateTimeModal";
 import { EXPERIENCES, CATEGORIES } from "@/lib/navi/demo-data";
 import {
   Button,
@@ -30,6 +31,7 @@ import {
   Label,
   Card,
   PillRow,
+  Calendar,
 } from "@/components/navi/ui";
 
 function SearchInputDemo() {
@@ -106,6 +108,56 @@ function CategoryRailDemo() {
           </button>
         ))}
       </section>
+    </div>
+  );
+}
+
+function CalendarDemo() {
+  const [day, setDay] = useState<Date | null>(null);
+  return (
+    <div style={{ maxWidth: 340 }}>
+      <Calendar value={day} onChange={setDay} />
+    </div>
+  );
+}
+
+function DateTimePickerDemo() {
+  const [open, setOpen] = useState(false);
+  const [picked, setPicked] = useState<{ date: Date; time: string } | null>(null);
+  return (
+    <div className="nv-booking-pick" style={{ maxWidth: 280 }}>
+      <span className="nv-booking-pick-label" aria-hidden="true">
+        Date and time
+      </span>
+      <button
+        type="button"
+        className={`nv-booking-pick-trigger${picked ? " is-set" : ""}`}
+        aria-haspopup="dialog"
+        aria-label="Pick a date and time (demo)"
+        onClick={() => setOpen(true)}
+      >
+        <span className="nv-booking-pick-value">
+          {picked
+            ? `${picked.date.toLocaleDateString("en-US", { month: "long", day: "numeric" })} at ${picked.time}`
+            : "Choose a date and time"}
+        </span>
+        <span className="nv-booking-pick-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg>
+        </span>
+      </button>
+      <DateTimeModal
+        open={open}
+        times={["10:00 AM", "1:00 PM", "4:30 PM"]}
+        initialDate={picked?.date ?? null}
+        initialTime={picked?.time ?? null}
+        onConfirm={(sel) => setPicked(sel)}
+        onClose={() => setOpen(false)}
+      />
     </div>
   );
 }
@@ -203,6 +255,20 @@ export default function SystemPage() {
 
         <Specimen title="Search input">
           <SearchInputDemo />
+        </Specimen>
+
+        <Specimen
+          title="Calendar"
+          note="Month picker from the source Figma (node 553-6053). The selected day uses the contrast-corrected --nv-action, not the source's #F3722C; past days are disabled when a min date is set."
+        >
+          <CalendarDemo />
+        </Specimen>
+
+        <Specimen
+          title="Date + time picker"
+          note="The Calendar plus a start-time selector in a modal (Figma node 553-6399). It's the booking flow's 'pick another date' control: focus-trapped, scroll-locked, returns focus to the trigger on close."
+        >
+          <DateTimePickerDemo />
         </Specimen>
       </Chapter>
 

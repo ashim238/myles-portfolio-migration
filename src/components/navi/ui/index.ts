@@ -15,3 +15,4 @@ export { PaginationDots } from "./PaginationDots";
 export { MapPin } from "./MapPin";
 export { Card } from "./Card";
 export { TabBar } from "./TabBar";
+export { Calendar } from "./Calendar";

@@ -56,6 +56,39 @@ describe("BookingCard", () => {
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });
 
+  it("lets you pick a specific date and time via the modal and reserves it", async () => {
+    const onReserve = vi.fn();
+    render(<BookingCard priceFrom={48} dates={dates} onReserve={onReserve} />);
+
+    // Open the date + time modal from the "pick another date" trigger.
+    await userEvent.click(screen.getByRole("button", { name: /pick another date/i }));
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+
+    // Jump to next month so every day is selectable (no past-day disabling),
+    // then pick the 15th — a day that always exists in every month.
+    await userEvent.click(screen.getByRole("button", { name: /next month/i }));
+    const today = new Date();
+    const target = new Date(today.getFullYear(), today.getMonth() + 1, 15);
+    const longDate = target.toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+    });
+    await userEvent.click(screen.getByRole("button", { name: longDate }));
+    // The default time is the experience's first real slot.
+    await userEvent.click(screen.getByRole("button", { name: /confirm date/i }));
+
+    // The modal closed and the custom pick deselected the preset slots.
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(screen.queryByRole("radio", { checked: true })).not.toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("button", { name: "Reserve now" }));
+    expect(onReserve).toHaveBeenCalledWith({ date: longDate, time: "12:00 pm" });
+    expect(screen.getByRole("status")).toHaveTextContent(
+      new RegExp(`Reserved for ${longDate} at 12:00 pm\\.`),
+    );
+  });
+
   it("selecting a new date after Reserve resets the confirmation", async () => {
     render(<BookingCard priceFrom={48} dates={dates} onReserve={() => {}} />);
     await userEvent.click(screen.getByRole("button", { name: "Reserve now" }));
