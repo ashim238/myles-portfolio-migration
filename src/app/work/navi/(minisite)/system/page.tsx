@@ -120,7 +120,7 @@ export default function SystemPage() {
         </p>
         <p>
           The Navi component library, rebuilt as live React. The source system used bright orange
-          (#F3722C) for emphasis; it failed WCAG AA on every button, so this build documents the
+          (#F3722C) for emphasis, but it failed WCAG AA on every button, so this build documents the
           accessible derivation (#C4541A, 4.54:1) and applies it system-wide.
         </p>
       </header>

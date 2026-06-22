@@ -231,8 +231,8 @@ export const EXPERIENCES: Experience[] = [
     learn:
       "A two-hour metalwork session with a third-generation Bed-Stuy jeweler. You leave with a finished piece.",
     plan: {
-      bring: "Closed-toe shoes and a layer you do not mind getting a little sooty.",
-      commitments: "Apprentices may be on-shift; respect their workflow.",
+      bring: "Closed-toe shoes and a layer you don't mind getting a little sooty.",
+      commitments: "Apprentices may be on-shift, so respect their workflow.",
       impactDetail:
         "Booking revenue funds a six-month neighborhood apprenticeship program and tool maintenance for the studio.",
     },
@@ -299,8 +299,8 @@ export const EXPERIENCES: Experience[] = [
     learn:
       "A ninety-minute guided walk through DUMBO's cobblestone blocks led by a practicing architect. Learn how the neighborhood's cast-iron warehouses survived the waterfront's transformation into a tech hub, and what the ongoing zoning fights mean for what remains.",
     plan: {
-      bring: "Comfortable walking shoes — the cobblestones are uneven. A camera is encouraged.",
-      commitments: "Tours run rain or shine. Minimum group of four; cap of twelve.",
+      bring: "Comfortable walking shoes (the cobblestones are uneven). A camera is encouraged.",
+      commitments: "Tours run rain or shine. Minimum group of four, cap of twelve.",
       impactDetail:
         "Revenue funds the archival photography and oral history project documenting DUMBO's remaining industrial-era structures.",
     },
@@ -367,13 +367,13 @@ export const EXPERIENCES: Experience[] = [
     ],
     impactPhrase: "Pays vendors full stall revenue",
     impactStatement:
-      "Every ticket is a donation; all stall revenue goes directly to the participating small businesses — mostly immigrant-owned and family-run.",
+      "Every ticket is a donation. All stall revenue goes directly to the participating small businesses, mostly immigrant-owned and family-run.",
     impactTheme: "food-security",
     learn:
       "A weekly evening market in the heart of Sunset Park's Chinatown-Latin corridor. Fifty vendors, live music, and the best dollar dumplings in Brooklyn.",
     plan: {
       bring: "Cash preferred by most vendors. Reusable bag for takeaway.",
-      commitments: "Entry ticket is a suggested donation — no one turned away for lack of funds.",
+      commitments: "Entry ticket is a suggested donation, and no one is turned away for lack of funds.",
       impactDetail:
         "The market is organized as a cooperative. All stall revenue stays with the vendors. Organizing costs are funded separately by a neighborhood foundation.",
     },
@@ -504,10 +504,10 @@ export const EXPERIENCES: Experience[] = [
       "Tour fees are split directly with the artists whose work you see. No gallery cut, no middleman.",
     impactTheme: "arts-funding",
     learn:
-      "A two-hour walking tour of Greenpoint's outdoor mural scene led by a local artist. Meet two working muralists and hear how the neighborhood's Polish heritage shows up — and disappears — in the public art.",
+      "A two-hour walking tour of Greenpoint's outdoor mural scene led by a local artist. Meet two working muralists and hear how the neighborhood's Polish heritage shows up (and disappears) in the public art.",
     plan: {
       bring: "Comfortable shoes. The walk covers about two miles on flat sidewalks.",
-      commitments: "Group size capped at ten. Photos of the murals are encouraged; photos of private property are not.",
+      commitments: "Group size capped at ten. Photos of the murals are encouraged, but photos of private property are not.",
       impactDetail:
         "Fifty percent of ticket revenue goes directly to the featured artists. The other fifty funds the organizing collective's next commission.",
     },
@@ -640,8 +640,8 @@ export const EXPERIENCES: Experience[] = [
     learn:
       "Learn to make spanakopita, tiropita, and baklava from scratch in a three-hour class inside a working Astoria bakery. Eleni's family has been making these recipes since her grandmother brought them from Thessaloniki.",
     plan: {
-      bring: "An apron. Everything else — ingredients, equipment, and coffee — is provided.",
-      commitments: "Classes capped at eight. Advance booking only; no walk-ins.",
+      bring: "An apron. Everything else (ingredients, equipment, and coffee) is provided.",
+      commitments: "Classes capped at eight. Advance booking only, no walk-ins.",
       impactDetail:
         "Class fees cover operating costs for the family bakery and fund Eleni's recipe-translation project, converting forty years of handwritten Greek recipes into a bilingual cookbook.",
     },
@@ -707,10 +707,10 @@ export const EXPERIENCES: Experience[] = [
     learn:
       "A two-hour walking tour of five family-run bodegas in Mott Haven and Port Morris with community organizer Luis Reyes. Learn the history of the Puerto Rican and Dominican-owned corner stores that have served the South Bronx through disinvestment, gentrification, and pandemic closures.",
     plan: {
-      bring: "Cash to support the bodegas directly — you'll have time to shop at each stop.",
-      commitments: "The tour moves at a relaxed pace. No mobility barriers — all stops are street-level.",
+      bring: "Cash to support the bodegas directly. You'll have time to shop at each stop.",
+      commitments: "The tour moves at a relaxed pace. No mobility barriers, since all stops are street-level.",
       impactDetail:
-        "Tour fees are split equally among the five participating bodega owners. Luis organizes the tours as a volunteer; his compensation comes from the owners' association he helped found.",
+        "Tour fees are split equally among the five participating bodega owners. Luis organizes the tours as a volunteer, and his compensation comes from the owners' association he helped found.",
     },
     go: {
       addressLine1: "Meeting point: Third Avenue Bridge, Mott Haven side,",
@@ -1179,7 +1179,7 @@ export const EXPERIENCES: Experience[] = [
       "A three-hour crawl through Flushing's best dumpling counters, from soup dumplings to pan-fried to hand-pulled. Wei grew up eating at these stalls and orders the dishes the menus don't translate.",
     plan: {
       bring: "An appetite and cash. Most stalls don't take cards.",
-      commitments: "Tell Wei about dietary restrictions ahead of time; some stops are hard to adapt.",
+      commitments: "Tell Wei about dietary restrictions ahead of time, since some stops are hard to adapt.",
       impactDetail:
         "The food portion of your fee is paid directly to the stalls at full menu price. Navi takes no cut of the tastings, only a flat guide fee.",
     },
@@ -1246,7 +1246,7 @@ export const EXPERIENCES: Experience[] = [
       "A two-and-a-half-hour walk through the Indian, Bangladeshi, Nepali, and Tibetan kitchens of Jackson Heights. Anika grew up on these blocks and orders across all four cuisines, with stops for momos, dosa, and sweets.",
     plan: {
       bring: "An appetite and cash for extra purchases. Tastings are covered.",
-      commitments: "Vegetarian and halal options are easy; flag other restrictions in advance.",
+      commitments: "Vegetarian and halal options are easy, so flag other restrictions in advance.",
       impactDetail:
         "Tastings are bought at full price from each restaurant. Anika prioritizes the oldest family-run spots, the ones most at risk from rising commercial rents.",
     },
@@ -1313,7 +1313,7 @@ export const EXPERIENCES: Experience[] = [
       "A two-hour guided loop through six Chelsea galleries with an art writer who knows the dealers. Diana skips the obvious blue-chip rooms in favor of shows worth your time, and explains how the gallery system actually works.",
     plan: {
       bring: "Comfortable shoes for standing and walking. Galleries are free to enter.",
-      commitments: "Follow each gallery's photo and quiet policies; some shows don't allow photos.",
+      commitments: "Follow each gallery's photo and quiet policies, since some shows don't allow photos.",
       impactDetail:
         "Diana weights the route toward galleries representing emerging artists and artist-run projects, and shares each artist's name and where to follow their work.",
     },
