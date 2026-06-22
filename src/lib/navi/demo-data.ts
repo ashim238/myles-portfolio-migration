@@ -80,6 +80,7 @@ export const EXPERIENCES: Experience[] = [
       { src: "/projects/navi-demo/prospect-trees.jpg", alt: "Autumn trees along the park drive" },
       { src: "/projects/navi-demo/prospect-carriage.jpg", alt: "Horse-drawn carriage with passengers" },
       { src: "/projects/navi-demo/prospect-pond.jpg", alt: "Pond at the edge of Prospect Park" },
+      { src: "/projects/navi-demo/prospect-meadow.jpg", alt: "Open meadow in Prospect Park" },
     ],
     impactPhrase: "Funds Prospect Park tree care",
     impactStatement:
@@ -153,6 +154,8 @@ export const EXPERIENCES: Experience[] = [
     photos: [
       { src: "/projects/navi-demo/dancehall-1.jpg", alt: "Dancers at a Brooklyn day party" },
       { src: "/projects/navi-demo/dancehall-2.jpg", alt: "DJ setup at sunset" },
+      { src: "/projects/navi-demo/dancehall-3.jpg", alt: "Dancers in a circle at a block party" },
+      { src: "/projects/navi-demo/dancehall-4.jpg", alt: "Glowing DJ decks at night" },
     ],
     impactPhrase: "Pays Caribbean-owned venues directly",
     impactStatement:
@@ -218,6 +221,8 @@ export const EXPERIENCES: Experience[] = [
     photos: [
       { src: "/projects/navi-demo/bracelet-1.jpg", alt: "Hands shaping a metal bracelet" },
       { src: "/projects/navi-demo/bracelet-2.jpg", alt: "Workshop tools laid out" },
+      { src: "/projects/navi-demo/bracelet-3.jpg", alt: "Finished beaded bracelets on a display stand" },
+      { src: "/projects/navi-demo/bracelet-4.jpg", alt: "Threading beads onto a bracelet with pliers" },
     ],
     impactPhrase: "Supports a Black-owned Bed-Stuy workshop",
     impactStatement:
@@ -285,6 +290,7 @@ export const EXPERIENCES: Experience[] = [
     photos: [
       { src: "/projects/navi-demo/dumbo-bridge.jpg", alt: "Manhattan Bridge framed by cobblestone streets" },
       { src: "/projects/navi-demo/dumbo-warehouse.jpg", alt: "Cast-iron warehouse facade in DUMBO" },
+      { src: "/projects/navi-demo/dumbo-facade.jpg", alt: "Old industrial block with a brick smokestack" },
     ],
     impactPhrase: "Preserves DUMBO's industrial heritage",
     impactStatement:
@@ -356,6 +362,8 @@ export const EXPERIENCES: Experience[] = [
     photos: [
       { src: "/projects/navi-demo/sunsetpark-market-1.jpg", alt: "Street food stalls lit up at night in Sunset Park" },
       { src: "/projects/navi-demo/sunsetpark-market-2.jpg", alt: "Vendors serving hot food to a crowd" },
+      { src: "/projects/navi-demo/sunsetpark-market-3.jpg", alt: "Lantern-lit food stall at the night market" },
+      { src: "/projects/navi-demo/sunsetpark-market-4.jpg", alt: "Customers at a halal street cart after dark" },
     ],
     impactPhrase: "Pays vendors full stall revenue",
     impactStatement:
@@ -421,6 +429,7 @@ export const EXPERIENCES: Experience[] = [
     photos: [
       { src: "/projects/navi-demo/soulfood-kitchen.jpg", alt: "Cast iron pans on a home stove" },
       { src: "/projects/navi-demo/soulfood-spread.jpg", alt: "Finished dishes laid out on a table" },
+      { src: "/projects/navi-demo/soulfood-plate.jpg", alt: "Fried chicken and waffles on a plate" },
     ],
     impactPhrase: "Preserves a three-generation family recipe archive",
     impactStatement:
@@ -487,6 +496,8 @@ export const EXPERIENCES: Experience[] = [
     photos: [
       { src: "/projects/navi-demo/greenpoint-mural-1.jpg", alt: "Large-scale mural on a warehouse wall in Greenpoint" },
       { src: "/projects/navi-demo/greenpoint-mural-2.jpg", alt: "Muralist talking to a tour group" },
+      { src: "/projects/navi-demo/greenpoint-mural-3.jpg", alt: "Cartoon character painted across a wall" },
+      { src: "/projects/navi-demo/greenpoint-mural-4.jpg", alt: "Graffiti rooftop with the skyline behind" },
     ],
     impactPhrase: "Pays muralists a fair commission",
     impactStatement:
@@ -552,6 +563,8 @@ export const EXPERIENCES: Experience[] = [
     photos: [
       { src: "/projects/navi-demo/harlem-brownstone-1.jpg", alt: "Row of brownstone stoops in Harlem" },
       { src: "/projects/navi-demo/harlem-brownstone-2.jpg", alt: "Detail of carved brownstone facade" },
+      { src: "/projects/navi-demo/harlem-brownstone-3.jpg", alt: "Brownstone stoops under a cast-iron gas lamp" },
+      { src: "/projects/navi-demo/harlem-brownstone-4.jpg", alt: "Carved facades along a brownstone block" },
     ],
     impactPhrase: "Supports the Harlem Brownstone Conservancy",
     impactStatement:
@@ -618,6 +631,7 @@ export const EXPERIENCES: Experience[] = [
     photos: [
       { src: "/projects/navi-demo/greek-baking-1.jpg", alt: "Hands rolling phyllo dough" },
       { src: "/projects/navi-demo/greek-baking-2.jpg", alt: "Tray of freshly baked baklava" },
+      { src: "/projects/navi-demo/greek-baking-3.jpg", alt: "Hands kneading dough on a floured board" },
     ],
     impactPhrase: "Keeps an Astoria family bakery running",
     impactStatement:
@@ -684,6 +698,7 @@ export const EXPERIENCES: Experience[] = [
     photos: [
       { src: "/projects/navi-demo/bodega-1.jpg", alt: "Colorful bodega storefront in Mott Haven" },
       { src: "/projects/navi-demo/bodega-2.jpg", alt: "Owner behind the counter of a family bodega" },
+      { src: "/projects/navi-demo/bodega-3.jpg", alt: "Shelves of snacks inside a corner store" },
     ],
     impactPhrase: "Connects visitors directly to bodega owners",
     impactStatement:

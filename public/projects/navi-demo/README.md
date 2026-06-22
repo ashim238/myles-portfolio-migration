@@ -120,3 +120,26 @@ Unsplash (Unsplash License, credit appreciated, not required). Photographers:
 - `van-cortlandt-birding-walk-2.jpg` — Joshua J. Cotten
 - `van-cortlandt-birding-walk-3.jpg` — Michaela Murphy
 - `inwood-hill-sunrise-yoga-*.jpg` — Unsplash (yoga, outdoor)
+
+## Gallery expansion (Unsplash)
+
+The substance pass gave every original listing a fuller gallery (a floor of
+three photos, with the busiest feed listings carried higher). These additions
+are also from Unsplash (Unsplash License, credit appreciated, not required).
+Photographers:
+
+- `prospect-meadow.jpg` — Ashe Walker
+- `dancehall-3.jpg` — Breakreate
+- `dancehall-4.jpg` — Aleksandr Popov
+- `bracelet-3.jpg` — Semiha Weber
+- `bracelet-4.jpg` — eleonora
+- `dumbo-facade.jpg` — Robert Katzki
+- `sunsetpark-market-3.jpg` — Weiwei
+- `sunsetpark-market-4.jpg` — Roman Arkhipov
+- `soulfood-plate.jpg` — Brett Wharton
+- `greenpoint-mural-3.jpg` — JAM
+- `greenpoint-mural-4.jpg` — Fredy Martinez
+- `harlem-brownstone-3.jpg` — Josh Wilburne
+- `harlem-brownstone-4.jpg` — Chandler Hilken
+- `greek-baking-3.jpg` — Theme Photos
+- `bodega-3.jpg` — Rodrigo Araya
