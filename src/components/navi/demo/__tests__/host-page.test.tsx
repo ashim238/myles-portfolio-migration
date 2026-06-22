@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { HostView } from "@/app/work/navi/(minisite)/demo/host/[slug]/page";
-import { getHostBySlug } from "@/lib/navi/hosts";
+import { getHostBySlug, experiencesByHost } from "@/lib/navi/hosts";
 
 describe("Host page", () => {
   const host = getHostBySlug("paul-stein");
@@ -30,11 +30,12 @@ describe("Host page", () => {
 
   it("renders ExperienceCards linking to each experience detail page", () => {
     const { container } = render(<HostView host={host} />);
+    const expected = experiencesByHost("paul-stein");
     const cards = container.querySelectorAll("a.nv-exp-card");
-    expect(cards.length).toBeGreaterThan(0);
-    cards.forEach((c) =>
-      expect(c.getAttribute("href")).toMatch(/^\/work\/navi\/demo\/experience\/[a-z0-9-]+$/),
-    );
+    expect(cards.length).toBe(expected.length);
+    cards.forEach((c) => {
+      expect(c.getAttribute("href")).toMatch(/^\/work\/navi\/demo\/experience\/[a-z0-9-]+$/);
+    });
   });
 
   it("links the neighborhood label to the neighborhood page", () => {

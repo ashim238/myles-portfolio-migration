@@ -38,8 +38,11 @@ export function HostView({ host }: { host: Host }) {
         <div className="nv-host-headtext">
           <h1>{host.name}</h1>
           <p className="nv-host-meta">
-            {host.neighborhood} &nbsp;·&nbsp; Hosting for {host.yearsHosting} years &nbsp;·&nbsp;{" "}
-            {host.responseRate}% reply rate
+            <span>{host.neighborhood}</span>
+            <span aria-hidden="true"> · </span>
+            <span>Hosting for {host.yearsHosting} years</span>
+            <span aria-hidden="true"> · </span>
+            <span>{host.responseRate}% reply rate</span>
           </p>
         </div>
       </header>
