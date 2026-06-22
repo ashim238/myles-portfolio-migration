@@ -255,9 +255,9 @@ export default async function NaviPage() {
           <p>
             The full system lives as a running component library, with the brand
             primitives, the semantic aliases, every interactive variant, and a live
-            playground for flipping props. <a href="/work/navi/system">See the Navi
-            design system</a>. The components are also assembled into a working
-            booking flow. <a href="/work/navi/demo">Open the demo</a>.
+            playground for flipping props. <Link href="/work/navi/system">See the Navi
+            design system</Link>. The components are also assembled into a working
+            booking flow. <Link href="/work/navi/demo">Open the demo</Link>.
           </p>
         </div>
         <CompositionStrip />
@@ -274,7 +274,7 @@ export default async function NaviPage() {
             product the way it was meant to.
           </p>
           <p>
-            <a className="nv-system-cta-link" href="/work/navi/demo">Open the playable demo</a>
+            <Link className="nv-system-cta-link" href="/work/navi/demo">Open the playable demo</Link>
           </p>
         </div>
       </section>

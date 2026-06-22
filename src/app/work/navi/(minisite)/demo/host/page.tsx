@@ -14,7 +14,7 @@ export default function HostPage() {
         long-time residents will be able to list an experience, set its impact
         initiative, and manage bookings from here.
       </p>
-      <p>While that's being built, take a look at what guests see.</p>
+      <p>While that&apos;s being built, take a look at what guests see.</p>
       <Link className="nv-btn nv-btn--primary nv-btn--md" href="/work/navi/demo">
         Explore experiences
       </Link>
