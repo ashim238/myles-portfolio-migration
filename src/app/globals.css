@@ -7051,6 +7051,14 @@ button:focus-visible,
 .nv-specimen-title { font-size: 1.25rem; margin-bottom: var(--nv-sp-2xs); }
 .nv-specimen-note { color: var(--nv-text-muted); margin-bottom: var(--nv-sp-md); max-width: 60ch; }
 .nv-specimen-stage { display: flex; flex-wrap: wrap; gap: var(--nv-sp-md); align-items: center; }
+/* The category rail clips + scrolls on the feed because .nv-feed-row drops it to
+   a block child on mobile and the page gutter absorbs its edge-bleed. The specimen
+   stage is flex at every width and has no gutter, so the rail would otherwise
+   expand to full content width and scroll the whole page sideways on mobile. Pin
+   it to the stage width with min-width:0, drop the bleed, and let the inner
+   overflow-x:auto do the scrolling. */
+.nv-specimen-stage .nv-feed-catwrap { flex: 1 1 100%; min-width: 0; max-width: 100%; }
+.nv-specimen-stage .nv-feed-categories { margin-inline: 0; padding-inline: 0; scroll-padding-inline: 0; }
 
 /* ── Task 19: PropPlayground ───────────────────────────────────── */
 .nv-playground { display: grid; gap: var(--nv-sp-md); border: 1px solid var(--nv-border); border-radius: var(--nv-r-lg); padding: var(--nv-sp-lg); }
