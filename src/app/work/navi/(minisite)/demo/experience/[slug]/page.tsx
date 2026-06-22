@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { use, useEffect, useState } from "react";
 import Link from "next/link";
 import { Accordion, Avatar, Rating, ImpactSignal, PillRow } from "@/components/navi/ui";
-import { Gallery } from "@/components/navi/demo/Gallery";
+import { GalleryCarousel } from "@/components/navi/demo/GalleryCarousel";
 import { BookingCard } from "@/components/navi/demo/BookingCard";
 import { TransitOptions } from "@/components/navi/demo/TransitOptions";
 import { Reviews } from "@/components/navi/demo/Reviews";
@@ -57,7 +57,7 @@ export function ExperienceView({ experience: e }: { experience: Experience }) {
       <p className="nv-detail-back">
         <Link href="/work/navi/demo/search">← Back to results</Link>
       </p>
-      <Gallery photos={e.photos} />
+      <GalleryCarousel photos={e.photos} />
       <header className="nv-detail-head">
         <h1>{e.title}</h1>
         <ul className="nv-detail-facts" aria-label="At a glance">

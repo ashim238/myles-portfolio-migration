@@ -7170,18 +7170,65 @@ button:focus-visible,
 .nv-transit-label { font-weight: 700; }
 .nv-transit-detail { color: var(--nv-text-muted); font-size: 0.85rem; }
 
-/* ── Gallery (hero + 4-thumb grid) ────────────────────────────── */
-.nv-gallery { display: grid; grid-template-columns: 2fr 1fr; gap: var(--nv-sp-sm); margin: 0; aspect-ratio: 2.4 / 1; }
-.nv-gallery--solo { grid-template-columns: 1fr; }
-.nv-gallery-hero { position: relative; overflow: hidden; border-radius: var(--nv-r-md); }
-.nv-gallery-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
-/* Column/row counts are set inline by the component to match the photo count. */
-.nv-gallery-thumbs { display: grid; gap: var(--nv-sp-sm); }
-.nv-gallery-thumb { overflow: hidden; border-radius: var(--nv-r-md); }
-.nv-gallery-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-@media (max-width: 720px) {
-  .nv-gallery { grid-template-columns: 1fr; aspect-ratio: 4 / 3; }
-  .nv-gallery-thumbs { display: none; }
+/* ── GalleryCarousel ────────────────────────────────────────────── */
+.nv-gallery-carousel {
+  display: grid;
+  gap: var(--nv-sp-sm);
+  margin: 0;
+}
+.nv-gallery-carousel-hero {
+  position: relative;
+  border-radius: var(--nv-r-md);
+  overflow: hidden;
+  outline: none;
+}
+.nv-gallery-carousel-hero:focus-visible {
+  outline: 3px solid var(--nv-focus);
+  outline-offset: 2px;
+}
+.nv-gallery-carousel-arrows {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--nv-sp-sm);
+  pointer-events: none;
+}
+.nv-gallery-carousel-arrows .nv-carousel-arrow {
+  pointer-events: auto;
+}
+.nv-gallery-carousel-dots {
+  position: absolute;
+  left: 50%;
+  bottom: var(--nv-sp-sm);
+  transform: translateX(-50%);
+}
+.nv-gallery-carousel-thumbs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: var(--nv-sp-xs);
+}
+.nv-gallery-carousel-thumb {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: var(--nv-r-sm);
+  background: none;
+  cursor: pointer;
+  overflow: hidden;
+}
+.nv-gallery-carousel-thumb.is-active { border-color: var(--nv-action); }
+.nv-gallery-carousel-thumb:focus-visible {
+  outline: 2px solid var(--nv-focus);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .nv-gallery-carousel-hero img { transition: opacity 0.18s ease; }
 }
 
 /* ── Map (Leaflet + OSM, client-only) ──────────────────────────── */

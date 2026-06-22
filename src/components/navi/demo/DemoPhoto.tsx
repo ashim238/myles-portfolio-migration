@@ -10,10 +10,12 @@ export function DemoPhoto({
   src,
   alt,
   className,
+  dataTestId,
 }: {
   src: string;
   alt: string;
   className?: string;
+  dataTestId?: string;
 }) {
   const [failed, setFailed] = useState(false);
   const ref = useRef<HTMLImageElement>(null);
@@ -35,6 +37,7 @@ export function DemoPhoto({
         className={`nv-photo-pending${className ? ` ${className}` : ""}`}
         role="img"
         aria-label={alt}
+        data-testid={dataTestId}
       >
         <span aria-hidden="true">Photo coming soon</span>
       </div>
@@ -48,6 +51,7 @@ export function DemoPhoto({
       src={src}
       alt={alt}
       className={className}
+      data-testid={dataTestId}
       loading="lazy"
       decoding="async"
       onError={() => setFailed(true)}
