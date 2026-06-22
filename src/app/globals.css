@@ -7402,7 +7402,10 @@ button:focus-visible,
 /* Mobile: let the rail run to the screen edges so the first chip isn't
    visually orphaned and there's room to actually swipe. */
 @media (max-width: 640px) {
-  .nv-feed-categories { margin-inline: calc(-1 * var(--nv-sp-md)); padding-inline: var(--nv-sp-md); padding-bottom: var(--nv-sp-2xs); }
+  /* scroll-padding matches the bleed padding so scroll-snap rests the first
+     chip at scrollLeft 0 instead of snapping its edge flush to the container
+     (which left ~16px scrolled and tripped the left scroll-fade over "All"). */
+  .nv-feed-categories { margin-inline: calc(-1 * var(--nv-sp-md)); padding-inline: var(--nv-sp-md); scroll-padding-inline: var(--nv-sp-md); padding-bottom: var(--nv-sp-2xs); }
 }
 .nv-feed-empty { color: var(--nv-text-muted); padding: var(--nv-sp-xl) 0; text-align: center; }
 
