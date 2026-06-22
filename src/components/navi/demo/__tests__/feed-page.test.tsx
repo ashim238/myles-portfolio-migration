@@ -38,4 +38,14 @@ describe("Feed page", () => {
     const after = screen.getAllByRole("link").length;
     expect(after).toBeLessThanOrEqual(before);
   });
+
+  it("filters by price via the slide-over", async () => {
+    render(<FeedPage />);
+    const before = screen.getAllByRole("link").length;
+    await userEvent.click(screen.getByRole("button", { name: /^Filters$/ }));
+    await userEvent.click(screen.getByRole("button", { name: "Under $30" }));
+    await userEvent.click(screen.getByRole("button", { name: /Show .* experiences?/ }));
+    const after = screen.getAllByRole("link").length;
+    expect(after).toBeLessThanOrEqual(before);
+  });
 });

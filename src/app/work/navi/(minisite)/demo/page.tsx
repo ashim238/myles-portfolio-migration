@@ -4,47 +4,110 @@ import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties }
 import { SearchInput } from "@/components/navi/ui";
 import { ExperienceCard } from "@/components/navi/demo/ExperienceCard";
 import { CategoryIcon } from "@/components/navi/demo/CategoryIcon";
+import { FiltersSlideOver } from "@/components/navi/demo/FiltersSlideOver";
+import { DEFAULT_FILTERS, activeCount, type Filters } from "@/components/navi/demo/filters";
 import { EXPERIENCES, CATEGORIES } from "@/lib/navi/demo-data";
 
 type SortKey = "recommended" | "rating" | "price-asc" | "price-desc";
-type PriceBand = "any" | "under30" | "30to60" | "over60";
 
-const PRICE_BANDS: Record<PriceBand, (p: number) => boolean> = {
+const PRICE_TEST: Record<Filters["price"], (p: number) => boolean> = {
   any: () => true,
   under30: (p) => p < 30,
   "30to60": (p) => p >= 30 && p <= 60,
   over60: (p) => p > 60,
 };
 
+function durationToMinutes(s: string): number | null {
+  const lower = s.toLowerCase();
+  const num = parseFloat(lower);
+  if (Number.isNaN(num)) return null;
+  if (lower.includes("min")) return Math.round(num);
+  if (lower.includes("hour")) return Math.round(num * 60);
+  return null;
+}
+
+function durationMatches(band: Filters["duration"], duration: string): boolean {
+  if (band === "any") return true;
+  const mins = durationToMinutes(duration);
+  if (mins === null) return false;
+  if (band === "under2h") return mins < 120;
+  if (band === "halfDay") return mins >= 120 && mins <= 240;
+  if (band === "fullDay") return mins >= 300;
+  return true;
+}
+
+function groupMatches(band: Filters["group"], group: string): boolean {
+  if (band === "any") return true;
+  const max = parseInt((group.match(/(\d+)/) ?? ["0"])[0], 10);
+  if (band === "solo") return max <= 1;
+  if (band === "small") return max > 1 && max <= 8;
+  if (band === "large") return max > 8;
+  return true;
+}
+
 export default function FeedPage() {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [sort, setSort] = useState<SortKey>("recommended");
-  const [priceBand, setPriceBand] = useState<PriceBand>("any");
+  const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
+  const [slideOverOpen, setSlideOverOpen] = useState(false);
+
+  const allLanguages = useMemo(
+    () => Array.from(new Set(EXPERIENCES.map((e) => e.language))).sort(),
+    [],
+  );
+  const allNeighborhoods = useMemo(
+    () =>
+      Array.from(new Set(EXPERIENCES.map((e) => e.neighborhood))).filter(Boolean).sort(),
+    [],
+  );
+
+  const applyFilters = useCallback(
+    (list: typeof EXPERIENCES, f: Filters) => {
+      const q = query.toLowerCase();
+      const inPrice = PRICE_TEST[f.price];
+      return list.filter((e) => {
+        if (activeCategory && e.category !== activeCategory) return false;
+        if (!inPrice(e.price)) return false;
+        if (!durationMatches(f.duration, e.duration)) return false;
+        if (!groupMatches(f.group, e.groupSize)) return false;
+        if (f.languages.length > 0 && !f.languages.includes(e.language)) return false;
+        if (f.neighborhoods.length > 0 && !f.neighborhoods.includes(e.neighborhood)) {
+          return false;
+        }
+        const haystack = `${e.title} ${e.neighborhood}`;
+        if (q && !haystack.toLowerCase().includes(q)) return false;
+        return true;
+      });
+    },
+    [query, activeCategory],
+  );
 
   const filtered = useMemo(() => {
-    const q = query.toLowerCase();
-    const inBand = PRICE_BANDS[priceBand];
-    const list = EXPERIENCES.filter((e) => {
-      if (activeCategory && e.category !== activeCategory) return false;
-      if (!inBand(e.price)) return false;
-      if (q && !`${e.title} ${e.neighborhood}`.toLowerCase().includes(q)) return false;
-      return true;
-    });
-    const sorted = [...list];
-    if (sort === "rating") sorted.sort((a, b) => b.rating - a.rating);
-    else if (sort === "price-asc") sorted.sort((a, b) => a.price - b.price);
-    else if (sort === "price-desc") sorted.sort((a, b) => b.price - a.price);
-    return sorted;
-  }, [query, activeCategory, sort, priceBand]);
+    const list = applyFilters([...EXPERIENCES], filters);
+    if (sort === "rating") list.sort((a, b) => b.rating - a.rating);
+    else if (sort === "price-asc") list.sort((a, b) => a.price - b.price);
+    else if (sort === "price-desc") list.sort((a, b) => b.price - a.price);
+    return list;
+  }, [applyFilters, sort, filters]);
 
-  const hasFilters = activeCategory !== null || priceBand !== "any" || query !== "" || sort !== "recommended";
+  const hasFilters =
+    activeCategory !== null ||
+    activeCount(filters) > 0 ||
+    query !== "" ||
+    sort !== "recommended";
+
   const clearFilters = () => {
     setActiveCategory(null);
-    setPriceBand("any");
+    setFilters(DEFAULT_FILTERS);
     setSort("recommended");
     setQuery("");
   };
+
+  const matchCountFor = useCallback(
+    (draft: Filters) => applyFilters([...EXPERIENCES], draft).length,
+    [applyFilters],
+  );
 
   // Horizontal chip rail. Chevrons appear only when there's actually overflow
   // to scroll to, so they don't bait clicks at narrow widths or after the
@@ -88,71 +151,58 @@ export default function FeedPage() {
         />
       </header>
 
-      <div className={`nv-feed-catwrap${canPrev ? " is-prev" : ""}${canNext ? " is-next" : ""}`}>
-        {canPrev && (
-          <button
-            type="button"
-            className="nv-cat-nav nv-cat-nav--prev"
-            aria-label="Scroll categories left"
-            onClick={() => scrollRail(-1)}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-          </button>
-        )}
-        <section className="nv-feed-categories" aria-label="Categories" ref={railRef}>
-          <button
-            type="button"
-            className={`nv-feed-cat${activeCategory === null ? " nv-feed-cat--active" : ""}`}
-            aria-pressed={activeCategory === null}
-            onClick={() => setActiveCategory(null)}
-          >
-            <CategoryIcon name="All" />
-            <span>All</span>
-          </button>
-          {CATEGORIES.map((c) => (
+      <div className="nv-feed-row">
+        <div className={`nv-feed-catwrap${canPrev ? " is-prev" : ""}${canNext ? " is-next" : ""}`}>
+          {canPrev && (
             <button
-              key={c}
               type="button"
-              className={`nv-feed-cat${activeCategory === c ? " nv-feed-cat--active" : ""}`}
-              aria-pressed={activeCategory === c}
-              onClick={() => setActiveCategory(c)}
+              className="nv-cat-nav nv-cat-nav--prev"
+              aria-label="Scroll categories left"
+              onClick={() => scrollRail(-1)}
             >
-              <CategoryIcon name={c} />
-              <span>{c}</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+                <polyline points="15 18 9 12 15 6" />
+              </svg>
             </button>
-          ))}
-        </section>
-        {canNext && (
-          <button
-            type="button"
-            className="nv-cat-nav nv-cat-nav--next"
-            aria-label="Scroll categories right"
-            onClick={() => scrollRail(1)}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-          </button>
-        )}
-      </div>
-
-      <div className="nv-feed-controls">
-        <p className="nv-feed-count" role="status">
-          {filtered.length} {filtered.length === 1 ? "experience" : "experiences"}
-          {activeCategory ? ` in ${activeCategory}` : ""}
-        </p>
-        <div className="nv-feed-selects">
-          <label className="nv-feed-select">
-            <span className="nv-sr-only">Filter by price</span>
-            <select value={priceBand} onChange={(e) => setPriceBand(e.target.value as PriceBand)}>
-              <option value="any">Any price</option>
-              <option value="under30">Under $30</option>
-              <option value="30to60">$30 to $60</option>
-              <option value="over60">Over $60</option>
-            </select>
-          </label>
+          )}
+          <section className="nv-feed-categories" aria-label="Categories" ref={railRef}>
+            <button
+              type="button"
+              className={`nv-feed-cat${activeCategory === null ? " nv-feed-cat--active" : ""}`}
+              aria-pressed={activeCategory === null}
+              onClick={() => setActiveCategory(null)}
+            >
+              <CategoryIcon name="All" />
+              <span>All</span>
+            </button>
+            {CATEGORIES.map((c) => (
+              <button
+                key={c}
+                type="button"
+                className={`nv-feed-cat${activeCategory === c ? " nv-feed-cat--active" : ""}`}
+                aria-pressed={activeCategory === c}
+                onClick={() => setActiveCategory(c)}
+              >
+                <CategoryIcon name={c} />
+                <span>{c}</span>
+              </button>
+            ))}
+          </section>
+          {canNext && (
+            <button
+              type="button"
+              className="nv-cat-nav nv-cat-nav--next"
+              aria-label="Scroll categories right"
+              onClick={() => scrollRail(1)}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+            </button>
+          )}
+        </div>
+        <div className="nv-feed-divider" aria-hidden="true" />
+        <div className="nv-feed-actions">
           <label className="nv-feed-select">
             <span className="nv-sr-only">Sort experiences</span>
             <select value={sort} onChange={(e) => setSort(e.target.value as SortKey)}>
@@ -162,6 +212,28 @@ export default function FeedPage() {
               <option value="price-desc">Price: high to low</option>
             </select>
           </label>
+          <button
+            type="button"
+            className="nv-feed-filters"
+            onClick={() => setSlideOverOpen(true)}
+            aria-haspopup="dialog"
+            aria-expanded={slideOverOpen}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+              <line x1="4" y1="6" x2="20" y2="6" />
+              <circle cx="9" cy="6" r="2" fill="currentColor" />
+              <line x1="4" y1="12" x2="20" y2="12" />
+              <circle cx="15" cy="12" r="2" fill="currentColor" />
+              <line x1="4" y1="18" x2="20" y2="18" />
+              <circle cx="11" cy="18" r="2" fill="currentColor" />
+            </svg>
+            <span>Filters</span>
+            {activeCount(filters) > 0 && (
+              <span className="nv-feed-filters-badge" aria-label={`${activeCount(filters)} active`}>
+                {activeCount(filters)}
+              </span>
+            )}
+          </button>
           {hasFilters && (
             <button type="button" className="nv-feed-clear" onClick={clearFilters}>
               Clear filters
@@ -169,6 +241,11 @@ export default function FeedPage() {
           )}
         </div>
       </div>
+
+      <p className="nv-feed-count" role="status">
+        {filtered.length} {filtered.length === 1 ? "experience" : "experiences"}
+        {activeCategory ? ` in ${activeCategory}` : ""}
+      </p>
 
       {filtered.length === 0 ? (
         <p className="nv-feed-empty">
@@ -189,6 +266,16 @@ export default function FeedPage() {
           ))}
         </ul>
       )}
+
+      <FiltersSlideOver
+        open={slideOverOpen}
+        initial={filters}
+        languageOptions={allLanguages}
+        neighborhoodOptions={allNeighborhoods}
+        matchCountFor={matchCountFor}
+        onApply={setFilters}
+        onClose={() => setSlideOverOpen(false)}
+      />
     </div>
   );
 }

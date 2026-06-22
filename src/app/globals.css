@@ -7304,13 +7304,17 @@ button:focus-visible,
 /* On touch viewports the chevrons aren't useful (people swipe), so hide them
    to reclaim space and avoid an extra tap target near the screen edge. */
 @media (max-width: 640px) { .nv-cat-nav { display: none; } }
-/* Feed controls: count + price/sort */
-.nv-feed-controls { display: flex; align-items: center; justify-content: space-between; gap: var(--nv-sp-md); flex-wrap: wrap; margin-bottom: var(--nv-sp-lg); }
-.nv-feed-count { margin: 0; font-weight: 700; }
-.nv-feed-selects { display: flex; flex-wrap: wrap; gap: var(--nv-sp-sm); }
-.nv-feed-select { flex: 1 1 auto; min-width: 0; }
+/* Feed controls: count + sort + filters */
+.nv-feed-controls {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--nv-sp-md); flex-wrap: wrap;
+  margin-bottom: var(--nv-sp-lg);
+}
+.nv-feed-count { margin: 0 0 var(--nv-sp-md); font-weight: 700; }
+.nv-feed-actions { display: flex; align-items: center; gap: var(--nv-sp-sm); flex-wrap: wrap; }
+.nv-feed-select { display: inline-flex; align-items: center; }
 .nv-feed-select select {
-  font: inherit; width: 100%; min-width: 0; min-height: 44px;
+  font: inherit; min-height: 36px;
   padding: var(--nv-sp-xs) 38px var(--nv-sp-xs) var(--nv-sp-md);
   border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill);
   background-color: var(--nv-surface); color: var(--nv-text); cursor: pointer;
@@ -7322,9 +7326,40 @@ button:focus-visible,
 }
 .nv-feed-select select:hover,
 .nv-feed-select select:focus-visible { border-color: var(--nv-action); }
+.nv-feed-filters {
+  display: inline-flex; align-items: center; gap: var(--nv-sp-xs);
+  min-height: 36px; padding: 0 var(--nv-sp-md);
+  border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill);
+  background: var(--nv-surface); color: var(--nv-text);
+  cursor: pointer; font: inherit; font-weight: 700;
+}
+.nv-feed-filters:hover { border-color: var(--nv-action); }
+.nv-feed-filters:focus-visible { outline: 2px solid var(--nv-focus); outline-offset: 2px; }
+.nv-feed-filters-badge {
+  display: inline-grid; place-items: center;
+  min-width: 20px; height: 20px; padding: 0 6px;
+  border-radius: var(--nv-r-pill); font-size: 0.75rem; font-weight: 700;
+  background: var(--nv-action); color: var(--nv-text-on-action);
+}
 .nv-feed-clear {
-  border: none; background: none; padding: var(--nv-sp-xs) var(--nv-sp-sm); min-height: 44px;
+  border: none; background: none; padding: var(--nv-sp-xs) var(--nv-sp-sm); min-height: 36px;
   color: var(--nv-action-strong); font-weight: 700; cursor: pointer; text-decoration: underline;
+}
+@media (min-width: 768px) {
+  .nv-feed-row {
+    display: flex; align-items: center; gap: var(--nv-sp-md);
+    margin-bottom: var(--nv-sp-md);
+  }
+  .nv-feed-row .nv-feed-catwrap { flex: 1; min-width: 0; margin-bottom: 0; }
+  .nv-feed-row .nv-feed-divider {
+    width: 1px; height: 36px; background: var(--nv-border);
+  }
+  .nv-feed-row .nv-feed-actions { flex: 0 0 auto; }
+}
+@media (max-width: 767px) {
+  .nv-feed-divider { display: none; }
+  .nv-feed-row { margin-bottom: var(--nv-sp-md); }
+  .nv-feed-row .nv-feed-actions { margin-top: var(--nv-sp-sm); }
 }
 /* Card facts line */
 .nv-exp-card-facts { color: var(--nv-text-muted); font-size: 0.8rem; margin: 0; }
