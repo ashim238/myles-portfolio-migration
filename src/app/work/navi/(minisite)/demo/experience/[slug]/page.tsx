@@ -36,14 +36,14 @@ export function ExperienceView({ experience: e }: { experience: Experience }) {
   useEffect(() => {
     const offset = 90; // sticky nav height plus a few pixels of breathing room
     const onScroll = () => {
-      let current = SECTIONS[0].id;
+      let current: string = SECTIONS[0].id;
       for (const s of SECTIONS) {
         const el = document.getElementById(s.id);
         if (el && el.getBoundingClientRect().top <= offset) current = s.id;
       }
       setActive(current);
     };
-    onScroll();
+    if (window.scrollY > 0) onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [e.slug]);
