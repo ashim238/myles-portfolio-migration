@@ -28,6 +28,7 @@ vi.mock("@/components/navi/demo/Map.client", () => ({
 // Suspense ceremony in jsdom. The page-level Promise.unwrap is a thin bridge.
 import { ExperienceView } from "@/app/work/navi/(minisite)/demo/experience/[slug]/page";
 import { EXPERIENCES } from "@/lib/navi/demo-data";
+import { neighborhoodSlug } from "@/lib/navi/neighborhoods";
 
 describe("Experience page", () => {
   const e = EXPERIENCES[0];
@@ -58,5 +59,16 @@ describe("Experience page", () => {
     expect(
       screen.getByRole("link", { name: e.host.name }),
     ).toHaveAttribute("href", `/work/navi/demo/host/${e.host.slug}`);
+  });
+
+  it("links to the neighborhood page from the Go section", () => {
+    render(<ExperienceView experience={e} />);
+    const link = screen.getByRole("link", {
+      name: new RegExp(`^Explore ${e.neighborhood}`),
+    });
+    expect(link).toHaveAttribute(
+      "href",
+      `/work/navi/demo/neighborhood/${neighborhoodSlug(e.neighborhood)}`,
+    );
   });
 });

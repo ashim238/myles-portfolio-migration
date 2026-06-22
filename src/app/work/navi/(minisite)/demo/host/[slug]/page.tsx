@@ -9,13 +9,7 @@ import {
   experiencesByHost,
   type Host,
 } from "@/lib/navi/hosts";
-
-function neighborhoodSlug(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
-}
+import { neighborhoodSlug } from "@/lib/navi/neighborhoods";
 
 export default function HostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);

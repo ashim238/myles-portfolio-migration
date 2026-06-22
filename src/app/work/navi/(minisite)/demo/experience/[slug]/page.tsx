@@ -10,6 +10,7 @@ import { TransitOptions } from "@/components/navi/demo/TransitOptions";
 import { Reviews } from "@/components/navi/demo/Reviews";
 import { Map } from "@/components/navi/demo/Map";
 import { getExperienceBySlug, type Experience } from "@/lib/navi/demo-data";
+import { neighborhoodSlug } from "@/lib/navi/neighborhoods";
 
 const SECTIONS = [
   { id: "learn", label: "Learn" },
@@ -117,6 +118,14 @@ export function ExperienceView({ experience: e }: { experience: Experience }) {
             <h3 className="nv-detail-where-heading">Where?</h3>
             <p>{e.go.addressLine1}</p>
             <p>{e.go.addressLine2}</p>
+            <p className="nv-detail-where-nb">
+              <Link
+                href={`/work/navi/demo/neighborhood/${neighborhoodSlug(e.neighborhood)}`}
+                className="nv-detail-nb-link"
+              >
+                Explore {e.neighborhood}, {e.borough}
+              </Link>
+            </p>
             <div className="nv-detail-where-map">
               <Map
                 center={[e.lat, e.lng]}
