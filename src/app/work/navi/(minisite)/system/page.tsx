@@ -11,7 +11,8 @@ import {
   NaviSpacingSpecimen,
 } from "@/components/navi/system/Foundations";
 import { ExperienceCard } from "@/components/navi/demo/ExperienceCard";
-import { EXPERIENCES } from "@/lib/navi/demo-data";
+import { CategoryIcon } from "@/components/navi/demo/CategoryIcon";
+import { EXPERIENCES, CATEGORIES } from "@/lib/navi/demo-data";
 import {
   Button,
   IconButton,
@@ -28,6 +29,7 @@ import {
   PaginationDots,
   Label,
   Card,
+  PillRow,
 } from "@/components/navi/ui";
 
 function SearchInputDemo() {
@@ -39,6 +41,72 @@ function SearchInputDemo() {
       onChange={setQ}
       placeholder="e.g. pottery class"
     />
+  );
+}
+
+function PillRowDemo() {
+  const [active, setActive] = useState("plan");
+  return (
+    <PillRow
+      items={[
+        { id: "learn", label: "Learn" },
+        { id: "plan", label: "Plan" },
+        { id: "go", label: "Go" },
+      ]}
+      activeId={active}
+      onSelect={setActive}
+    />
+  );
+}
+
+function StickySectionNavDemo() {
+  const [active] = useState("plan");
+  return (
+    <PillRow
+      role="navigation"
+      ariaLabel="Sections (demo)"
+      items={[
+        { id: "learn", label: "Learn" },
+        { id: "plan", label: "Plan" },
+        { id: "go", label: "Go" },
+      ]}
+      activeId={active}
+      onSelect={() => {}}
+      extraAttrs={(_, isActive) => ({
+        "aria-current": isActive ? "true" : undefined,
+      })}
+    />
+  );
+}
+
+function CategoryRailDemo() {
+  const [active, setActive] = useState<string | null>(null);
+  return (
+    <div className="nv-feed-catwrap">
+      <section className="nv-feed-categories" aria-label="Categories (demo)">
+        <button
+          type="button"
+          className={`nv-feed-cat${active === null ? " nv-feed-cat--active" : ""}`}
+          aria-pressed={active === null}
+          onClick={() => setActive(null)}
+        >
+          <CategoryIcon name="All" />
+          <span>All</span>
+        </button>
+        {CATEGORIES.slice(0, 6).map((c) => (
+          <button
+            key={c}
+            type="button"
+            className={`nv-feed-cat${active === c ? " nv-feed-cat--active" : ""}`}
+            aria-pressed={active === c}
+            onClick={() => setActive(c)}
+          >
+            <CategoryIcon name={c} />
+            <span>{c}</span>
+          </button>
+        ))}
+      </section>
+    </div>
   );
 }
 
@@ -180,10 +248,27 @@ export default function SystemPage() {
             />
           </div>
         </Specimen>
+
+        <Specimen
+          title="Category chip rail"
+          note="Horizontal scrolling rail with edge fades and chevron buttons that only appear when there's overflow to scroll to. Used at the top of the feed."
+        >
+          <CategoryRailDemo />
+        </Specimen>
       </Chapter>
 
       <Chapter title="Navigation" intro="Move between views and surface context.">
-        <Specimen title="Tabs">
+        <Specimen
+          title="PillRow"
+          note="Shared visual primitive. Tabs and the sticky section nav both consume it."
+        >
+          <PillRowDemo />
+        </Specimen>
+
+        <Specimen
+          title="Tabs"
+          note="Tablist composition: one panel visible at a time. Use for settings, billing, anywhere you want N panels under one selector. For stacked, scroll-jump sections, use the Sticky section nav specimen below instead."
+        >
           <Tabs
             items={[
               { id: "learn", label: "Learn" },
@@ -193,6 +278,13 @@ export default function SystemPage() {
             value="learn"
             onChange={() => {}}
           />
+        </Specimen>
+
+        <Specimen
+          title="Sticky section nav"
+          note="Anchor composition: all sections are visible and stacked. The nav jumps you to a section and tracks active state by scroll position. Used on the experience detail page."
+        >
+          <StickySectionNavDemo />
         </Specimen>
 
         <Specimen title="Accordion">
