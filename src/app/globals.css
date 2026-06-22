@@ -6834,6 +6834,15 @@ button:focus-visible,
   outline: 2px solid var(--nv-focus);
   outline-offset: 2px;
 }
+.nv-pill-row--sticky-section-nav {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--nv-surface);
+  padding: var(--nv-sp-sm) 0;
+  margin-bottom: var(--nv-sp-md);
+  border-bottom: 1px solid var(--nv-border);
+}
 
 /* ── Tabs ───────────────────────────────────────────────────────── */
 .nv-tabs { display: inline-flex; gap: var(--nv-sp-lg); border-bottom: 1px solid var(--nv-border); }
@@ -7309,26 +7318,6 @@ button:focus-visible,
 .nv-detail-head h1 { font-size: clamp(1.6rem, 3vw, 2rem); margin: var(--nv-sp-lg) 0 var(--nv-sp-md); }
 .nv-detail-body { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: var(--nv-sp-xl); align-items: start; }
 .nv-detail-main { min-width: 0; }
-/* Section nav: sticky pills that scroll-to-section and reflect the section
-   the reader is currently in. Stacked layout means everything's skimmable
-   and deep-linkable (#learn / #plan / #go), and the map stays warm. */
-.nv-detail-nav {
-  position: sticky; top: 0; z-index: 2;
-  display: flex; gap: var(--nv-sp-xs);
-  background: var(--nv-surface);
-  padding: var(--nv-sp-sm) 0;
-  margin-bottom: var(--nv-sp-md);
-  border-bottom: 1px solid var(--nv-border);
-}
-.nv-detail-nav-pill {
-  min-height: 36px; padding: 0 var(--nv-sp-md);
-  border: 1px solid transparent; border-radius: var(--nv-r-pill);
-  background: none; color: var(--nv-text-muted); cursor: pointer;
-  font: inherit; font-weight: 700;
-}
-.nv-detail-nav-pill:hover { color: var(--nv-text); }
-.nv-detail-nav-pill.is-active { color: var(--nv-text-on-action); background: var(--nv-action); }
-.nv-detail-nav-pill:focus-visible { outline: 2px solid var(--nv-focus); outline-offset: 2px; }
 /* scroll-margin-top keeps the heading clear of the sticky nav after click. */
 .nv-detail-section { display: grid; gap: var(--nv-sp-md); padding-top: var(--nv-sp-xl); scroll-margin-top: 72px; }
 .nv-detail-section + .nv-detail-section { border-top: 1px solid var(--nv-border); margin-top: var(--nv-sp-lg); }

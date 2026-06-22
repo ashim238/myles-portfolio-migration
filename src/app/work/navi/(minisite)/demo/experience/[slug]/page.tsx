@@ -3,7 +3,7 @@
 import { notFound } from "next/navigation";
 import { use, useEffect, useState } from "react";
 import Link from "next/link";
-import { Accordion, Avatar, Rating, ImpactSignal } from "@/components/navi/ui";
+import { Accordion, Avatar, Rating, ImpactSignal, PillRow } from "@/components/navi/ui";
 import { Gallery } from "@/components/navi/demo/Gallery";
 import { BookingCard } from "@/components/navi/demo/BookingCard";
 import { TransitOptions } from "@/components/navi/demo/TransitOptions";
@@ -68,19 +68,17 @@ export function ExperienceView({ experience: e }: { experience: Experience }) {
       </header>
       <div className="nv-detail-body">
         <div className="nv-detail-main">
-          <nav className="nv-detail-nav" aria-label="Sections">
-            {SECTIONS.map((s) => (
-              <button
-                key={s.id}
-                type="button"
-                className={`nv-detail-nav-pill${active === s.id ? " is-active" : ""}`}
-                aria-current={active === s.id ? "true" : undefined}
-                onClick={() => goTo(s.id)}
-              >
-                {s.label}
-              </button>
-            ))}
-          </nav>
+          <PillRow
+            ariaLabel="Sections"
+            role="navigation"
+            className="nv-pill-row--sticky-section-nav"
+            items={SECTIONS.map((s) => ({ id: s.id, label: s.label }))}
+            activeId={active}
+            onSelect={goTo}
+            extraAttrs={(_, isActive) => ({
+              "aria-current": isActive ? "true" : undefined,
+            })}
+          />
 
           <section id="learn" aria-labelledby="learn-heading" className="nv-detail-section">
             <h2 id="learn-heading" className="nv-detail-section-heading">Learn</h2>

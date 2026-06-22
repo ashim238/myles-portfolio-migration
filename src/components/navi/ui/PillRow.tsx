@@ -19,6 +19,7 @@ export function PillRow({
   itemRef,
   onItemKeyDown,
   role,
+  ariaLabel,
 }: {
   items: PillRowItem[];
   activeId: string;
@@ -28,11 +29,13 @@ export function PillRow({
   itemRef?: (el: HTMLButtonElement | null, index: number) => void;
   onItemKeyDown?: (e: React.KeyboardEvent<HTMLButtonElement>, index: number) => void;
   role?: string;
+  ariaLabel?: string;
 }) {
   return (
     <div
       className={`nv-pill-row${className ? " " + className : ""}`}
       role={role}
+      aria-label={ariaLabel}
     >
       {items.map((item, index) => {
         const active = item.id === activeId;
