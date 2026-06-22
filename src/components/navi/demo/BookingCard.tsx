@@ -55,17 +55,8 @@ export function BookingCard({
       {/* The impact is why someone books on Navi, so it sits at the decision
           point, not a tab away. */}
       {impact && <ImpactSignal as="div">{impact}</ImpactSignal>}
-      {reserved ? (
-        <div className="nv-booking-confirm-group">
-          <p className="nv-booking-confirm" role="status">
-            Reserved for {selected.date} at {selected.time}. Nothing was charged in this demo.
-          </p>
-          <Button variant="transparent" onClick={() => setReserved(false)}>
-            Change reservation
-          </Button>
-        </div>
-      ) : (
-        <>
+      <div className={`nv-booking-state${reserved ? " is-reserved" : ""}`}>
+        <div className="nv-booking-state-reserve" aria-hidden={reserved}>
           <Button
             variant="primary"
             onClick={() => {
@@ -78,8 +69,30 @@ export function BookingCard({
           {priceFrom > 0 && (
             <p className="nv-booking-note">You won&apos;t be charged in this demo.</p>
           )}
-        </>
-      )}
+        </div>
+        <div className="nv-booking-state-confirmed" aria-hidden={!reserved}>
+          <p className="nv-booking-confirm" role="status">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            Reserved for {selected.date} at {selected.time}. Nothing was charged in this demo.
+          </p>
+          <Button variant="transparent" onClick={() => setReserved(false)}>
+            Change reservation
+          </Button>
+        </div>
+      </div>
       <Button variant="transparent">Contact organizer</Button>
     </aside>
   );

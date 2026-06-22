@@ -7573,3 +7573,17 @@ button:focus-visible,
   }
   @keyframes nvSlideOverInBottom { from { transform: translateY(100%); } to { transform: translateY(0); } }
 }
+.nv-booking-state { display: grid; }
+.nv-booking-state > div {
+  grid-column: 1; grid-row: 1;
+  display: grid; gap: var(--nv-sp-sm);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.nv-booking-state .nv-booking-state-reserve { opacity: 1; transform: scale(1); }
+.nv-booking-state .nv-booking-state-confirmed { opacity: 0; transform: scale(0.97); pointer-events: none; }
+.nv-booking-state.is-reserved .nv-booking-state-reserve { opacity: 0; transform: scale(0.97); pointer-events: none; }
+.nv-booking-state.is-reserved .nv-booking-state-confirmed { opacity: 1; transform: scale(1); pointer-events: auto; }
+.nv-booking-confirm svg { vertical-align: -3px; margin-right: 6px; color: var(--nv-action); }
+@media (prefers-reduced-motion: reduce) {
+  .nv-booking-state > div { transition: none; }
+}
