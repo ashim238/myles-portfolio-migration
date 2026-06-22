@@ -7134,8 +7134,8 @@ button:focus-visible,
 /* ── BookingCard (sticky detail booking) ───────────────────────── */
 .nv-booking {
   display: grid;
-  gap: var(--nv-sp-md);
-  padding: var(--nv-sp-lg);
+  gap: var(--nv-sp-sm);
+  padding: var(--nv-sp-md);
   border: 1px solid var(--nv-border);
   border-radius: var(--nv-r-lg);
   background: var(--nv-surface);
@@ -7425,7 +7425,7 @@ button:focus-visible,
 .nv-booking-spots { margin: 0; color: var(--nv-action-strong); font-weight: 700; font-size: 0.85rem; }
 
 /* Reviews */
-.nv-reviews { margin-top: var(--nv-sp-2xl); border-top: 1px solid var(--nv-border); padding-top: var(--nv-sp-xl); }
+.nv-reviews { margin-top: var(--nv-sp-xl); border-top: 1px solid var(--nv-border); padding-top: var(--nv-sp-xl); }
 .nv-reviews-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--nv-sp-md); flex-wrap: wrap; margin-bottom: var(--nv-sp-lg); }
 .nv-reviews-head h2 { margin: 0; }
 .nv-reviews-summary { display: flex; align-items: baseline; gap: var(--nv-sp-xs); margin: 0; }
@@ -7439,7 +7439,7 @@ button:focus-visible,
 .nv-review-quote { margin: 0; color: var(--nv-text); line-height: 1.55; max-width: 48ch; }
 .nv-review-rating { margin-left: auto; font-size: 0.8rem; font-weight: 700; color: var(--nv-action-strong); letter-spacing: 0.02em; white-space: nowrap; }
 .nv-detail-where-heading { font-size: 1.1rem; font-weight: 700; margin: 0 0 var(--nv-sp-xs); }
-.nv-detail-where-map { height: 280px; border-radius: var(--nv-r-md); overflow: hidden; }
+.nv-detail-where-map { height: 280px; margin: var(--nv-sp-md) 0; border-radius: var(--nv-r-md); overflow: hidden; }
 .nv-detail-go-heading { font-size: 1.1rem; margin-top: var(--nv-sp-md); }
 @media (max-width: 720px) {
   .nv-detail-body { grid-template-columns: 1fr; }
