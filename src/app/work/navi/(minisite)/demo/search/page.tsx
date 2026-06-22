@@ -34,7 +34,9 @@ export default function SearchPage() {
     <div className="nv-search-page">
       <aside className="nv-search-list">
         <header className="nv-search-head">
-          <h1 className="nv-search-count">{results.length} nearby experiences</h1>
+          <h1 className="nv-search-count" aria-live="polite" aria-atomic="true">
+            {results.length} nearby experiences
+          </h1>
           <SearchInput
             label="Search experiences"
             value={query}
@@ -43,7 +45,9 @@ export default function SearchPage() {
           />
         </header>
         {results.length === 0 ? (
-          <p className="nv-search-empty">No matches. Try a broader term.</p>
+          <p className="nv-search-empty" role="status">
+            No matches. Try a broader term.
+          </p>
         ) : (
           <ul className="nv-search-results">
             {results.map((e) => (
@@ -68,7 +72,9 @@ export default function SearchPage() {
           fitToMarkers
         />
         {results.length === 0 && (
-          <p className="nv-map-empty">No matches. Try a broader term.</p>
+          <p className="nv-map-empty" aria-hidden="true">
+            No matches. Try a broader term.
+          </p>
         )}
         <Legend />
       </div>

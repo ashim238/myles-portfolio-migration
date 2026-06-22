@@ -55,4 +55,19 @@ describe("Search page", () => {
     expect(screen.getByRole("region", { name: /map/i })).toBeInTheDocument();
     expect(screen.getByRole("group", { name: /legend/i })).toBeInTheDocument();
   });
+
+  it("announces the live result count to assistive tech", () => {
+    render(<SearchPage />);
+    const heading = screen.getByRole("heading", {
+      name: new RegExp(`${EXPERIENCES.length} nearby`, "i"),
+    });
+    expect(heading).toHaveAttribute("aria-live", "polite");
+  });
+
+  it("announces the empty state when nothing matches", async () => {
+    render(<SearchPage />);
+    await userEvent.type(screen.getByRole("searchbox"), "zzzznotarealplace");
+    const status = screen.getByRole("status");
+    expect(status).toHaveTextContent(/no matches/i);
+  });
 });
