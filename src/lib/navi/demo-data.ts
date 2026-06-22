@@ -18,7 +18,7 @@ export type Experience = {
   price: number;
   rating: number;
   reviews: number;
-  host: { name: string };
+  host: { slug: string; name: string };
   photos: { src: string; alt: string }[];
   impactPhrase: string;
   impactStatement: string;
@@ -66,7 +66,7 @@ export const EXPERIENCES: Experience[] = [
     price: 48,
     rating: 4.9,
     reviews: 213,
-    host: { name: "Paul Stein" },
+    host: { slug: "paul-stein", name: "Paul Stein" },
     photos: [
       { src: "/projects/navi-demo/prospect-tunnel.jpg", alt: "Sunlit tunnel in Prospect Park" },
       { src: "/projects/navi-demo/prospect-trees.jpg", alt: "Autumn trees along the park drive" },
@@ -140,7 +140,7 @@ export const EXPERIENCES: Experience[] = [
     price: 19,
     rating: 4.7,
     reviews: 138,
-    host: { name: "Yvette Bryan" },
+    host: { slug: "yvette-bryan", name: "Yvette Bryan" },
     photos: [
       { src: "/projects/navi-demo/dancehall-1.jpg", alt: "Dancers at a Brooklyn day party" },
       { src: "/projects/navi-demo/dancehall-2.jpg", alt: "DJ setup at sunset" },
@@ -204,7 +204,7 @@ export const EXPERIENCES: Experience[] = [
     price: 65,
     rating: 4.95,
     reviews: 87,
-    host: { name: "Iman Reeves" },
+    host: { slug: "iman-reeves", name: "Iman Reeves" },
     photos: [
       { src: "/projects/navi-demo/bracelet-1.jpg", alt: "Hands shaping a metal bracelet" },
       { src: "/projects/navi-demo/bracelet-2.jpg", alt: "Workshop tools laid out" },
@@ -270,7 +270,7 @@ export const EXPERIENCES: Experience[] = [
     price: 35,
     rating: 4.8,
     reviews: 162,
-    host: { name: "Carlos Mendes" },
+    host: { slug: "carlos-mendes", name: "Carlos Mendes" },
     photos: [
       { src: "/projects/navi-demo/dumbo-bridge.jpg", alt: "Manhattan Bridge framed by cobblestone streets" },
       { src: "/projects/navi-demo/dumbo-warehouse.jpg", alt: "Cast-iron warehouse facade in DUMBO" },
@@ -340,7 +340,7 @@ export const EXPERIENCES: Experience[] = [
     price: 12,
     rating: 4.6,
     reviews: 291,
-    host: { name: "Rosa Huang" },
+    host: { slug: "rosa-huang", name: "Rosa Huang" },
     photos: [
       { src: "/projects/navi-demo/sunsetpark-market-1.jpg", alt: "Street food stalls lit up at night in Sunset Park" },
       { src: "/projects/navi-demo/sunsetpark-market-2.jpg", alt: "Vendors serving hot food to a crowd" },
@@ -404,7 +404,7 @@ export const EXPERIENCES: Experience[] = [
     price: 75,
     rating: 4.9,
     reviews: 54,
-    host: { name: "Delores Washington" },
+    host: { slug: "delores-washington", name: "Delores Washington" },
     photos: [
       { src: "/projects/navi-demo/soulfood-kitchen.jpg", alt: "Cast iron pans on a home stove" },
       { src: "/projects/navi-demo/soulfood-spread.jpg", alt: "Finished dishes laid out on a table" },
@@ -469,7 +469,7 @@ export const EXPERIENCES: Experience[] = [
     price: 22,
     rating: 4.75,
     reviews: 109,
-    host: { name: "Marta Kowalski" },
+    host: { slug: "marta-kowalski", name: "Marta Kowalski" },
     photos: [
       { src: "/projects/navi-demo/greenpoint-mural-1.jpg", alt: "Large-scale mural on a warehouse wall in Greenpoint" },
       { src: "/projects/navi-demo/greenpoint-mural-2.jpg", alt: "Muralist talking to a tour group" },
@@ -533,7 +533,7 @@ export const EXPERIENCES: Experience[] = [
     price: 40,
     rating: 4.85,
     reviews: 77,
-    host: { name: "James Okafor" },
+    host: { slug: "james-okafor", name: "James Okafor" },
     photos: [
       { src: "/projects/navi-demo/harlem-brownstone-1.jpg", alt: "Row of brownstone stoops in Harlem" },
       { src: "/projects/navi-demo/harlem-brownstone-2.jpg", alt: "Detail of carved brownstone facade" },
@@ -598,7 +598,7 @@ export const EXPERIENCES: Experience[] = [
     price: 68,
     rating: 4.88,
     reviews: 134,
-    host: { name: "Eleni Papadopoulos" },
+    host: { slug: "eleni-papadopoulos", name: "Eleni Papadopoulos" },
     photos: [
       { src: "/projects/navi-demo/greek-baking-1.jpg", alt: "Hands rolling phyllo dough" },
       { src: "/projects/navi-demo/greek-baking-2.jpg", alt: "Tray of freshly baked baklava" },
@@ -663,7 +663,7 @@ export const EXPERIENCES: Experience[] = [
     price: 25,
     rating: 4.72,
     reviews: 66,
-    host: { name: "Luis Reyes" },
+    host: { slug: "luis-reyes", name: "Luis Reyes" },
     photos: [
       { src: "/projects/navi-demo/bodega-1.jpg", alt: "Colorful bodega storefront in Mott Haven" },
       { src: "/projects/navi-demo/bodega-2.jpg", alt: "Owner behind the counter of a family bodega" },
@@ -727,7 +727,7 @@ export const EXPERIENCES: Experience[] = [
     price: 0,
     rating: 4.92,
     reviews: 48,
-    host: { name: "Gloria Espinosa" },
+    host: { slug: "gloria-espinosa", name: "Gloria Espinosa" },
     photos: [
       { src: "/projects/navi-demo/lower-east-side-community-garden-1.jpg", alt: "Raised vegetable beds in a fenced city garden" },
       { src: "/projects/navi-demo/lower-east-side-community-garden-2.jpg", alt: "Volunteers turning soil with hand tools" },
@@ -792,7 +792,7 @@ export const EXPERIENCES: Experience[] = [
     price: 8,
     rating: 4.84,
     reviews: 61,
-    host: { name: "Grace Lim" },
+    host: { slug: "grace-lim", name: "Grace Lim" },
     photos: [
       { src: "/projects/navi-demo/flushing-cultural-center-potluck-1.jpg", alt: "Long table covered with homemade dishes" },
       { src: "/projects/navi-demo/flushing-cultural-center-potluck-2.jpg", alt: "People serving food at a community center" },
@@ -858,7 +858,7 @@ export const EXPERIENCES: Experience[] = [
     price: 30,
     rating: 4.89,
     reviews: 152,
-    host: { name: "Henry Chan" },
+    host: { slug: "henry-chan", name: "Henry Chan" },
     photos: [
       { src: "/projects/navi-demo/chinatown-immigration-history-walk-1.jpg", alt: "Narrow Chinatown street lined with shop signs" },
       { src: "/projects/navi-demo/chinatown-immigration-history-walk-2.jpg", alt: "Historic tenement facade with fire escapes" },
@@ -930,7 +930,7 @@ export const EXPERIENCES: Experience[] = [
     price: 28,
     rating: 4.93,
     reviews: 71,
-    host: { name: "Clarence Boyd" },
+    host: { slug: "clarence-boyd", name: "Clarence Boyd" },
     photos: [
       { src: "/projects/navi-demo/harlem-jazz-history-session-1.jpg", alt: "Wall of framed vintage jazz record sleeves" },
       { src: "/projects/navi-demo/harlem-jazz-history-session-2.jpg", alt: "Turntable spinning a vinyl record" },
@@ -996,7 +996,7 @@ export const EXPERIENCES: Experience[] = [
     price: 35,
     rating: 4.86,
     reviews: 204,
-    host: { name: "Renata Coleman" },
+    host: { slug: "renata-coleman", name: "Renata Coleman" },
     photos: [
       { src: "/projects/navi-demo/harlem-live-jazz-night-1.jpg", alt: "Jazz quartet playing on a small stage" },
       { src: "/projects/navi-demo/harlem-live-jazz-night-2.jpg", alt: "Audience seated close to the band in a dim club" },
@@ -1061,7 +1061,7 @@ export const EXPERIENCES: Experience[] = [
     price: 18,
     rating: 4.68,
     reviews: 187,
-    host: { name: "Sal Pirrone" },
+    host: { slug: "sal-pirrone", name: "Sal Pirrone" },
     photos: [
       { src: "/projects/navi-demo/coney-island-boardwalk-evening-1.jpg", alt: "Lit amusement rides along the boardwalk at dusk" },
       { src: "/projects/navi-demo/coney-island-boardwalk-evening-2.jpg", alt: "Wooden boardwalk stretching toward the water" },
@@ -1126,7 +1126,7 @@ export const EXPERIENCES: Experience[] = [
     price: 45,
     rating: 4.91,
     reviews: 246,
-    host: { name: "Wei Tang" },
+    host: { slug: "wei-tang", name: "Wei Tang" },
     photos: [
       { src: "/projects/navi-demo/flushing-dumpling-crawl-1.jpg", alt: "Bamboo steamer full of soup dumplings" },
       { src: "/projects/navi-demo/flushing-dumpling-crawl-2.jpg", alt: "Cook pleating dumplings behind a counter" },
@@ -1192,7 +1192,7 @@ export const EXPERIENCES: Experience[] = [
     price: 42,
     rating: 4.87,
     reviews: 178,
-    host: { name: "Anika Rahman" },
+    host: { slug: "anika-rahman", name: "Anika Rahman" },
     photos: [
       { src: "/projects/navi-demo/jackson-heights-south-asian-food-walk-1.jpg", alt: "Counter of colorful South Asian sweets" },
       { src: "/projects/navi-demo/jackson-heights-south-asian-food-walk-2.jpg", alt: "Cook flipping dosa on a wide griddle" },
@@ -1258,7 +1258,7 @@ export const EXPERIENCES: Experience[] = [
     price: 32,
     rating: 4.81,
     reviews: 119,
-    host: { name: "Diana Voss" },
+    host: { slug: "diana-voss", name: "Diana Voss" },
     photos: [
       { src: "/projects/navi-demo/chelsea-gallery-hop-1.jpg", alt: "Bright white-walled gallery with large paintings" },
       { src: "/projects/navi-demo/chelsea-gallery-hop-2.jpg", alt: "Visitors viewing a sculpture installation" },
@@ -1324,7 +1324,7 @@ export const EXPERIENCES: Experience[] = [
     price: 30,
     rating: 4.9,
     reviews: 64,
-    host: { name: "Theo Marsh" },
+    host: { slug: "theo-marsh", name: "Theo Marsh" },
     photos: [
       { src: "/projects/navi-demo/lower-east-side-artist-run-spaces-1.jpg", alt: "Small storefront gallery with handmade signage" },
       { src: "/projects/navi-demo/lower-east-side-artist-run-spaces-2.jpg", alt: "Artist talking with visitors in a project space" },
@@ -1390,7 +1390,7 @@ export const EXPERIENCES: Experience[] = [
     price: 26,
     rating: 4.88,
     reviews: 93,
-    host: { name: "Ray Mercado" },
+    host: { slug: "ray-mercado", name: "Ray Mercado" },
     photos: [
       { src: "/projects/navi-demo/bronx-street-art-gallery-tour-1.jpg", alt: "Large graffiti mural covering a warehouse wall" },
       { src: "/projects/navi-demo/bronx-street-art-gallery-tour-2.jpg", alt: "Artist spray-painting a piece outdoors" },
@@ -1456,7 +1456,7 @@ export const EXPERIENCES: Experience[] = [
     price: 22,
     rating: 4.88,
     reviews: 134,
-    host: { name: "Renata Salcedo" },
+    host: { slug: "renata-salcedo", name: "Renata Salcedo" },
     photos: [
       { src: "/projects/navi-demo/inwood-hill-sunrise-yoga-1.jpg", alt: "People on mats in a clearing as low sun comes through trees" },
       { src: "/projects/navi-demo/inwood-hill-sunrise-yoga-2.jpg", alt: "Instructor guiding a standing stretch on a grass meadow" },
@@ -1512,7 +1512,7 @@ export const EXPERIENCES: Experience[] = [
     price: 12,
     rating: 4.76,
     reviews: 211,
-    host: { name: "Devon Pierce" },
+    host: { slug: "devon-pierce", name: "Devon Pierce" },
     photos: [
       { src: "/projects/navi-demo/harlem-riverside-run-club-1.jpg", alt: "Small group of runners stretching by a river path at dusk" },
       { src: "/projects/navi-demo/harlem-riverside-run-club-2.jpg", alt: "Runners moving along a paved waterfront greenway" },
@@ -1566,7 +1566,7 @@ export const EXPERIENCES: Experience[] = [
     price: 18,
     rating: 4.93,
     reviews: 87,
-    host: { name: "Gloria Okonkwo" },
+    host: { slug: "gloria-okonkwo", name: "Gloria Okonkwo" },
     photos: [
       { src: "/projects/navi-demo/van-cortlandt-birding-walk-1.jpg", alt: "Birder with binoculars at the edge of a freshwater marsh" },
       { src: "/projects/navi-demo/van-cortlandt-birding-walk-2.jpg", alt: "Boardwalk trail crossing reeds and open water" },
@@ -1622,7 +1622,7 @@ export const EXPERIENCES: Experience[] = [
     price: 26,
     rating: 4.81,
     reviews: 64,
-    host: { name: "Marcus Adeyemi" },
+    host: { slug: "marcus-adeyemi", name: "Marcus Adeyemi" },
     photos: [
       { src: "/projects/navi-demo/bronx-river-foraging-walk-1.jpg", alt: "Hand holding foraged greens beside a wooded river trail" },
       { src: "/projects/navi-demo/bronx-river-foraging-walk-2.jpg", alt: "Group examining plants along a shaded forest path" },
@@ -1676,7 +1676,7 @@ export const EXPERIENCES: Experience[] = [
     price: 0,
     rating: 4.72,
     reviews: 88,
-    host: { name: "Dani Okafor" },
+    host: { slug: "dani-okafor", name: "Dani Okafor" },
     photos: [
       { src: "/projects/navi-demo/greenpoint-makers-sunday-flea-1.jpg", alt: "Vendor tables under a loading dock awning with vintage crates" },
       { src: "/projects/navi-demo/greenpoint-makers-sunday-flea-2.jpg", alt: "Hands sorting through a bin of secondhand records" },
@@ -1731,7 +1731,7 @@ export const EXPERIENCES: Experience[] = [
     price: 18,
     rating: 4.88,
     reviews: 134,
-    host: { name: "Theo Park" },
+    host: { slug: "theo-park", name: "Theo Park" },
     photos: [
       { src: "/projects/navi-demo/ridgewood-ceramics-studio-open-house-1.jpg", alt: "Shelves of unglazed mugs drying near a window" },
       { src: "/projects/navi-demo/ridgewood-ceramics-studio-open-house-2.jpg", alt: "A potter centering clay on a spinning wheel" },
@@ -1782,7 +1782,7 @@ export const EXPERIENCES: Experience[] = [
     price: 0,
     rating: 4.66,
     reviews: 57,
-    host: { name: "Luis Mendez" },
+    host: { slug: "luis-mendez", name: "Luis Mendez" },
     photos: [
       { src: "/projects/navi-demo/sunset-park-handball-pickup-1.jpg", alt: "Players mid-rally against a blue handball wall" },
       { src: "/projects/navi-demo/sunset-park-handball-pickup-2.jpg", alt: "A worn small blue ball resting on the court line" },
@@ -1836,7 +1836,7 @@ export const EXPERIENCES: Experience[] = [
     price: 32,
     rating: 4.81,
     reviews: 212,
-    host: { name: "Renee Castellano" },
+    host: { slug: "renee-castellano", name: "Renee Castellano" },
     photos: [
       { src: "/projects/navi-demo/long-island-city-bouldering-intro-1.jpg", alt: "Climber reaching for a hold on a low overhang" },
       { src: "/projects/navi-demo/long-island-city-bouldering-intro-2.jpg", alt: "Colorful holds bolted across a tall climbing wall" },
@@ -1889,7 +1889,7 @@ export const EXPERIENCES: Experience[] = [
     price: 28,
     rating: 4.81,
     reviews: 96,
-    host: { name: "Renata Cruz" },
+    host: { slug: "renata-cruz", name: "Renata Cruz" },
     photos: [
       { src: "/projects/navi-demo/inwood-forest-story-walk-1.jpg", alt: "Kids walking a dirt trail under tall oaks in Inwood Hill Park" },
       { src: "/projects/navi-demo/inwood-forest-story-walk-2.jpg", alt: "A guide reading from a picture book to a small group of children on a log bench" },
@@ -1946,7 +1946,7 @@ export const EXPERIENCES: Experience[] = [
     price: 35,
     rating: 4.74,
     reviews: 71,
-    host: { name: "Theo Marangos" },
+    host: { slug: "theo-marangos", name: "Theo Marangos" },
     photos: [
       { src: "/projects/navi-demo/astoria-puppet-making-afternoon-1.jpg", alt: "A workshop table covered in felt, buttons, and half-finished sock puppets" },
       { src: "/projects/navi-demo/astoria-puppet-making-afternoon-2.jpg", alt: "A child gluing googly eyes onto a green puppet" },
@@ -1999,7 +1999,7 @@ export const EXPERIENCES: Experience[] = [
     price: 52,
     rating: 4.89,
     reviews: 188,
-    host: { name: "Nadia Okonkwo" },
+    host: { slug: "nadia-okonkwo", name: "Nadia Okonkwo" },
     photos: [
       { src: "/projects/navi-demo/queensboro-bridge-golden-hour-walk-1.jpg", alt: "Warm low sun raking across the steel trusses of the Queensboro Bridge" },
       { src: "/projects/navi-demo/queensboro-bridge-golden-hour-walk-2.jpg", alt: "A photographer framing the Manhattan skyline through the bridge cables" },
@@ -2055,7 +2055,7 @@ export const EXPERIENCES: Experience[] = [
     price: 44,
     rating: 4.78,
     reviews: 113,
-    host: { name: "Avi Rosen" },
+    host: { slug: "avi-rosen", name: "Avi Rosen" },
     photos: [
       { src: "/projects/navi-demo/lower-east-side-film-locations-walk-1.jpg", alt: "A narrow tenement block on the Lower East Side with fire escapes overhead" },
       { src: "/projects/navi-demo/lower-east-side-film-locations-walk-2.jpg", alt: "A guide holding a film still up against the actual storefront it was shot at" },
@@ -2110,7 +2110,7 @@ export const EXPERIENCES: Experience[] = [
     price: 78,
     rating: 4.88,
     reviews: 246,
-    host: { name: "Diane Okafor" },
+    host: { slug: "diane-okafor", name: "Diane Okafor" },
     photos: [
       { src: "/projects/navi-demo/south-street-schooner-sail-1.jpg", alt: "Wooden schooner under full sail in the harbor" },
       { src: "/projects/navi-demo/south-street-schooner-sail-2.jpg", alt: "Lower Manhattan skyline seen from the deck" },
@@ -2166,7 +2166,7 @@ export const EXPERIENCES: Experience[] = [
     price: 0,
     rating: 4.71,
     reviews: 58,
-    host: { name: "Marcus Bellweather" },
+    host: { slug: "marcus-bellweather", name: "Marcus Bellweather" },
     photos: [
       { src: "/projects/navi-demo/newtown-creek-sunset-kayak-1.jpg", alt: "Kayakers paddling a calm industrial waterway at dusk" },
       { src: "/projects/navi-demo/newtown-creek-sunset-kayak-2.jpg", alt: "Sun setting behind warehouses along the creek" },
@@ -2218,7 +2218,7 @@ export const EXPERIENCES: Experience[] = [
     price: 36,
     rating: 4.82,
     reviews: 134,
-    host: { name: "Renata Vasquez" },
+    host: { slug: "renata-vasquez", name: "Renata Vasquez" },
     photos: [
       { src: "/projects/navi-demo/east-village-vintage-crawl-1.jpg", alt: "Racks of vintage denim outside a storefront" },
       { src: "/projects/navi-demo/east-village-vintage-crawl-2.jpg", alt: "Shopper sorting through a rack of secondhand jackets" },
@@ -2273,7 +2273,7 @@ export const EXPERIENCES: Experience[] = [
     price: 54,
     rating: 4.94,
     reviews: 87,
-    host: { name: "Ji-eun Park" },
+    host: { slug: "ji-eun-park", name: "Ji-eun Park" },
     photos: [
       { src: "/projects/navi-demo/lower-east-side-mending-workshop-1.jpg", alt: "Hands stitching a patch onto worn denim" },
       { src: "/projects/navi-demo/lower-east-side-mending-workshop-2.jpg", alt: "Table laid out with thread spools and needles" },
