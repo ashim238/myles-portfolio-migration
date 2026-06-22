@@ -4,6 +4,7 @@ import {
   slugifyHostName,
   getHostBySlug,
   hostAggregate,
+  experiencesByHost,
 } from "@/lib/navi/hosts";
 import { EXPERIENCES } from "@/lib/navi/demo-data";
 
@@ -52,5 +53,16 @@ describe("hostAggregate", () => {
     expect(agg.experienceCount).toBe(0);
     expect(agg.reviewCount).toBe(0);
     expect(agg.averageRating).toBe(0);
+  });
+});
+
+describe("experiencesByHost", () => {
+  it("returns all experiences whose host matches the slug", () => {
+    const list = experiencesByHost("paul-stein");
+    expect(list.length).toBeGreaterThan(0);
+    for (const e of list) expect(e.host.slug).toBe("paul-stein");
+  });
+  it("returns an empty array for an unknown slug", () => {
+    expect(experiencesByHost("nobody")).toEqual([]);
   });
 });

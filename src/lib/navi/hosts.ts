@@ -82,3 +82,7 @@ export function hostAggregate(slug: string): HostAggregate {
     averageRating: reviewCount === 0 ? 0 : weighted / reviewCount,
   };
 }
+
+export function experiencesByHost(slug: string) {
+  return EXPERIENCES.filter((e) => e.host.slug === slug);
+}
