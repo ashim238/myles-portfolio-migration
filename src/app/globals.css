@@ -6870,7 +6870,8 @@ button:focus-visible,
 .nv-carousel-arrow {
   width: 40px; height: 40px; border-radius: var(--nv-r-pill);
   border: 1px solid var(--nv-border); background: var(--nv-surface);
-  color: var(--nv-text); font-size: 1.2rem; cursor: pointer;
+  color: var(--nv-text); cursor: pointer; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
 }
 .nv-carousel-arrow:hover { border-color: var(--nv-action); color: var(--nv-action); }
 .nv-carousel-arrow:disabled { color: var(--nv-disabled-text); border-color: transparent; cursor: not-allowed; }
@@ -7184,7 +7185,42 @@ button:focus-visible,
 .nv-feed { max-width: 72rem; margin: 0 auto; padding: var(--nv-sp-xl) var(--nv-sp-lg); }
 .nv-feed-head { display: grid; gap: var(--nv-sp-md); margin-bottom: var(--nv-sp-xl); }
 .nv-feed-head h1 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 0; }
-.nv-feed-categories { display: flex; gap: var(--nv-sp-xs); flex-wrap: wrap; margin-bottom: var(--nv-sp-md); }
+/* Category rail: one horizontal scrollable row at all viewports, with
+   chevron buttons that appear only when there's actually content to scroll
+   to. Edge fades signal "more either side" without nagging. */
+.nv-feed-catwrap { position: relative; margin-bottom: var(--nv-sp-md); }
+.nv-feed-catwrap::before,
+.nv-feed-catwrap::after {
+  content: ""; position: absolute; top: 0; bottom: 0; width: 28px;
+  pointer-events: none; opacity: 0; transition: opacity 0.15s ease;
+  z-index: 1;
+}
+.nv-feed-catwrap::before { left: 0; background: linear-gradient(90deg, var(--nv-bg) 30%, transparent); }
+.nv-feed-catwrap::after { right: 0; background: linear-gradient(-90deg, var(--nv-bg) 30%, transparent); }
+.nv-feed-catwrap.is-prev::before { opacity: 1; }
+.nv-feed-catwrap.is-next::after { opacity: 1; }
+.nv-feed-categories {
+  display: flex; gap: var(--nv-sp-xs); flex-wrap: nowrap;
+  overflow-x: auto; scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; padding-bottom: 2px;
+}
+.nv-feed-categories::-webkit-scrollbar { display: none; }
+.nv-cat-nav {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid var(--nv-border); background: var(--nv-surface);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--nv-text); cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+.nv-cat-nav:hover { border-color: var(--nv-action); color: var(--nv-action-strong); }
+.nv-cat-nav:focus-visible { outline: 2px solid var(--nv-focus); outline-offset: 2px; }
+.nv-cat-nav--prev { left: -10px; }
+.nv-cat-nav--next { right: -10px; }
+/* On touch viewports the chevrons aren't useful (people swipe), so hide them
+   to reclaim space and avoid an extra tap target near the screen edge. */
+@media (max-width: 640px) { .nv-cat-nav { display: none; } }
 /* Feed controls: count + price/sort */
 .nv-feed-controls { display: flex; align-items: center; justify-content: space-between; gap: var(--nv-sp-md); flex-wrap: wrap; margin-bottom: var(--nv-sp-lg); }
 .nv-feed-count { margin: 0; font-weight: 700; }
@@ -7209,23 +7245,21 @@ button:focus-visible,
 }
 /* Card facts line */
 .nv-exp-card-facts { color: var(--nv-text-muted); font-size: 0.8rem; margin: 0; }
-.nv-feed-cat { display: inline-flex; align-items: center; min-height: 44px; padding: var(--nv-sp-xs) var(--nv-sp-md); border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill); background: var(--nv-surface); cursor: pointer; font-weight: 700; color: var(--nv-text); }
+.nv-feed-cat { display: inline-flex; align-items: center; gap: 8px; flex: 0 0 auto; scroll-snap-align: start; min-height: 44px; padding: var(--nv-sp-xs) var(--nv-sp-md); border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill); background: var(--nv-surface); cursor: pointer; font-weight: 700; color: var(--nv-text); }
+.nv-feed-cat svg { flex: 0 0 auto; }
 /* Active chip is filled (a shape cue, not color alone) for colorblind + at-a-glance clarity. */
 .nv-feed-cat--active { border-color: var(--nv-action); color: var(--nv-text-on-action); background: var(--nv-action); }
 /* auto-fill + capped max keeps cards their size when a category has only 2 items
    (auto-fit would stretch the lonely cards to fill the row). */
-.nv-feed-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 360px)); gap: var(--nv-sp-lg); justify-content: start; }
+.nv-feed-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 340px)); gap: var(--nv-sp-lg); justify-content: start; }
 @media (prefers-reduced-motion: no-preference) {
   /* Signature list rhythm: a short staggered rise, capped so the tail never drags. */
   .nv-feed-grid > li { animation: fadeUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: calc(min(var(--i, 0), 8) * 45ms); }
 }
-/* Mobile: one swipeable row so the controls and first card stay above the fold. */
+/* Mobile: let the rail run to the screen edges so the first chip isn't
+   visually orphaned and there's room to actually swipe. */
 @media (max-width: 640px) {
-  .nv-feed-categories {
-    flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x proximity;
-    -webkit-overflow-scrolling: touch; padding-bottom: var(--nv-sp-2xs); margin-inline: calc(-1 * var(--nv-sp-md)); padding-inline: var(--nv-sp-md);
-  }
-  .nv-feed-cat { flex: 0 0 auto; scroll-snap-align: start; }
+  .nv-feed-categories { margin-inline: calc(-1 * var(--nv-sp-md)); padding-inline: var(--nv-sp-md); padding-bottom: var(--nv-sp-2xs); }
 }
 .nv-feed-empty { color: var(--nv-text-muted); padding: var(--nv-sp-xl) 0; text-align: center; }
 
@@ -7248,7 +7282,30 @@ button:focus-visible,
 .nv-detail-head h1 { font-size: clamp(1.6rem, 3vw, 2rem); margin: var(--nv-sp-lg) 0 var(--nv-sp-md); }
 .nv-detail-body { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: var(--nv-sp-xl); align-items: start; }
 .nv-detail-main { min-width: 0; }
-.nv-detail-section { display: grid; gap: var(--nv-sp-md); padding-top: var(--nv-sp-md); }
+/* Section nav: sticky pills that scroll-to-section and reflect the section
+   the reader is currently in. Stacked layout means everything's skimmable
+   and deep-linkable (#learn / #plan / #go), and the map stays warm. */
+.nv-detail-nav {
+  position: sticky; top: 0; z-index: 2;
+  display: flex; gap: var(--nv-sp-xs);
+  background: var(--nv-surface);
+  padding: var(--nv-sp-sm) 0;
+  margin-bottom: var(--nv-sp-md);
+  border-bottom: 1px solid var(--nv-border);
+}
+.nv-detail-nav-pill {
+  min-height: 36px; padding: 0 var(--nv-sp-md);
+  border: 1px solid transparent; border-radius: var(--nv-r-pill);
+  background: none; color: var(--nv-text-muted); cursor: pointer;
+  font: inherit; font-weight: 700;
+}
+.nv-detail-nav-pill:hover { color: var(--nv-text); }
+.nv-detail-nav-pill.is-active { color: var(--nv-text-on-action); background: var(--nv-action); }
+.nv-detail-nav-pill:focus-visible { outline: 2px solid var(--nv-focus); outline-offset: 2px; }
+/* scroll-margin-top keeps the heading clear of the sticky nav after click. */
+.nv-detail-section { display: grid; gap: var(--nv-sp-md); padding-top: var(--nv-sp-xl); scroll-margin-top: 72px; }
+.nv-detail-section + .nv-detail-section { border-top: 1px solid var(--nv-border); margin-top: var(--nv-sp-lg); }
+.nv-detail-section-heading { font-size: 1.4rem; font-weight: 700; margin: 0; letter-spacing: -0.01em; }
 .nv-detail-host { display: inline-flex; gap: var(--nv-sp-xs); align-items: center; color: var(--nv-text-muted); }
 .nv-detail-prose { max-width: 60ch; }
 

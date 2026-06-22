@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { SearchInput } from "@/components/navi/ui";
 import { ExperienceCard } from "@/components/navi/demo/ExperienceCard";
+import { CategoryIcon } from "@/components/navi/demo/CategoryIcon";
 import { EXPERIENCES, CATEGORIES } from "@/lib/navi/demo-data";
 
 type SortKey = "recommended" | "rating" | "price-asc" | "price-desc";
@@ -45,6 +46,36 @@ export default function FeedPage() {
     setQuery("");
   };
 
+  // Horizontal chip rail. Chevrons appear only when there's actually overflow
+  // to scroll to, so they don't bait clicks at narrow widths or after the
+  // user has scrolled to either end.
+  const railRef = useRef<HTMLDivElement | null>(null);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(false);
+  const updateRail = useCallback(() => {
+    const el = railRef.current;
+    if (!el) return;
+    setCanPrev(el.scrollLeft > 4);
+    setCanNext(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  }, []);
+  useEffect(() => {
+    updateRail();
+    const el = railRef.current;
+    if (!el) return;
+    el.addEventListener("scroll", updateRail, { passive: true });
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(updateRail) : null;
+    ro?.observe(el);
+    return () => {
+      el.removeEventListener("scroll", updateRail);
+      ro?.disconnect();
+    };
+  }, [updateRail]);
+  const scrollRail = (dir: -1 | 1) => {
+    const el = railRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * Math.max(240, el.clientWidth * 0.7), behavior: "smooth" });
+  };
+
   return (
     <div className="nv-feed">
       <header className="nv-feed-head">
@@ -57,27 +88,55 @@ export default function FeedPage() {
         />
       </header>
 
-      <section className="nv-feed-categories" aria-label="Categories">
-        <button
-          type="button"
-          className={`nv-feed-cat${activeCategory === null ? " nv-feed-cat--active" : ""}`}
-          aria-pressed={activeCategory === null}
-          onClick={() => setActiveCategory(null)}
-        >
-          All
-        </button>
-        {CATEGORIES.map((c) => (
+      <div className={`nv-feed-catwrap${canPrev ? " is-prev" : ""}${canNext ? " is-next" : ""}`}>
+        {canPrev && (
           <button
-            key={c}
             type="button"
-            className={`nv-feed-cat${activeCategory === c ? " nv-feed-cat--active" : ""}`}
-            aria-pressed={activeCategory === c}
-            onClick={() => setActiveCategory(c)}
+            className="nv-cat-nav nv-cat-nav--prev"
+            aria-label="Scroll categories left"
+            onClick={() => scrollRail(-1)}
           >
-            {c}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
           </button>
-        ))}
-      </section>
+        )}
+        <section className="nv-feed-categories" aria-label="Categories" ref={railRef}>
+          <button
+            type="button"
+            className={`nv-feed-cat${activeCategory === null ? " nv-feed-cat--active" : ""}`}
+            aria-pressed={activeCategory === null}
+            onClick={() => setActiveCategory(null)}
+          >
+            <CategoryIcon name="All" />
+            <span>All</span>
+          </button>
+          {CATEGORIES.map((c) => (
+            <button
+              key={c}
+              type="button"
+              className={`nv-feed-cat${activeCategory === c ? " nv-feed-cat--active" : ""}`}
+              aria-pressed={activeCategory === c}
+              onClick={() => setActiveCategory(c)}
+            >
+              <CategoryIcon name={c} />
+              <span>{c}</span>
+            </button>
+          ))}
+        </section>
+        {canNext && (
+          <button
+            type="button"
+            className="nv-cat-nav nv-cat-nav--next"
+            aria-label="Scroll categories right"
+            onClick={() => scrollRail(1)}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
+        )}
+      </div>
 
       <div className="nv-feed-controls">
         <p className="nv-feed-count" role="status">

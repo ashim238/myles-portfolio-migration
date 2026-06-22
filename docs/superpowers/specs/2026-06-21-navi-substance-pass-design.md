@@ -116,6 +116,16 @@ Targeted offenders (from session audit):
 
 No new tokens. If a value cannot be expressed with the existing scale, that is feedback to revisit the scale, not a license to hard-code.
 
+### System reconciliation
+
+The system page currently shows three components that the demo doesn't use: `Tabs` (orphaned by last session's anchored-sections refactor), `CarouselArrow`, and `PaginationDots` (defined and exported but never wired). The Gallery component is a static 1-hero + 4-thumb grid with no carousel state. The system page underrepresents what the demo actually does. Reconcile in this slice:
+
+- **Build a real Gallery carousel.** Gallery becomes a swipe-and-arrow carousel on the hero photo (thumbs stay as a quick-jump strip below). Wires `CarouselArrow` and `PaginationDots` into a real demo surface. Arrow keys + swipe + dot clicks all advance the hero. Respect `prefers-reduced-motion` (no transitions, instant swap).
+- **Decide on `Tabs`.** Two options: (a) demote Tabs from the system page with a one-line note explaining the sticky-nav pattern that replaced it on detail pages; (b) rehome Tabs onto the Filters slide-over header (Price / Duration / Group size as tabs) to give it a real demo home. Recommendation: (a) — demote. Filters reads better as scrollable sections than as tabbed groups, and Tabs has been validated visually but doesn't fit any current demo flow. Document the sticky-nav pattern on the system page in its place ("Sticky section nav — for in-page navigation between stacked sections").
+- **Document the chip rail.** The category rail with edge-fade and chevron buttons is a real composition the demo uses. Add a system-page specimen for it so it's part of the documented system.
+
+Out of scope: documenting Gallery itself on the system page (it's a demo-data composition, not a primitive). Out of scope: a TabBar pattern decision — same orphan status as Tabs but lower priority; leave as is.
+
 ## Slice 2 — Host pages
 
 ### Route
@@ -293,6 +303,7 @@ Out of scope: replacing existing photos, switching from local storage to hot-lin
 - `HostHeader` — avatar + name + neighborhood + stats block.
 - `NeighborhoodHeader` — name + borough + intro + map.
 - `ImpactThemeSection` — heading + count + impact-statements list + experience grid.
+- `GalleryCarousel` — replaces the static thumb-grid `Gallery`. Hero photo carousel with `CarouselArrow` + `PaginationDots`, thumb strip jumps to index.
 
 ## Components changed
 
@@ -301,6 +312,8 @@ Out of scope: replacing existing photos, switching from local storage to hot-lin
 - `ExperienceView` (detail page) — host line and neighborhood line become links.
 - `ImpactSignal` — accepts an `href` prop and renders as `<Link>` when provided.
 - `Avatar` — accepts an optional `imgSrc` prop for host avatars.
+- `Gallery` — renamed/refactored to `GalleryCarousel` (see Components added). Existing callers swap to the new component.
+- System page — remove `Tabs` specimen and replace with a sticky-section-nav specimen; add a chip-rail specimen; verify `CarouselArrow` + `PaginationDots` specimens still match the now-real implementations.
 
 ## Testing
 
@@ -310,6 +323,7 @@ Existing tests stay green. New:
 - `neighborhood-page.test.tsx` — renders name, intro, map mock, experiences grid, hosts row.
 - `impact-page.test.tsx` — renders methodology, one section per theme, experience counts match data.
 - `filters-slideover.test.tsx` — opens on Filters click, traps focus, ESC closes without applying, Apply commits filters and updates the feed count.
+- `gallery-carousel.test.tsx` — renders hero + thumbs, arrow advances hero index, dot clicks jump to that photo, thumb clicks jump to that photo, arrow keys advance when carousel is focused, `prefers-reduced-motion` disables the transition.
 
 Spacing pass is CSS-only and does not need new tests.
 

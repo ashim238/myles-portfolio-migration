@@ -1,15 +1,21 @@
 "use client";
 
 import { notFound } from "next/navigation";
-import { use, useState } from "react";
+import { use, useEffect, useState } from "react";
 import Link from "next/link";
-import { Tabs, Accordion, Avatar, Rating, ImpactSignal } from "@/components/navi/ui";
+import { Accordion, Avatar, Rating, ImpactSignal } from "@/components/navi/ui";
 import { Gallery } from "@/components/navi/demo/Gallery";
 import { BookingCard } from "@/components/navi/demo/BookingCard";
 import { TransitOptions } from "@/components/navi/demo/TransitOptions";
 import { Reviews } from "@/components/navi/demo/Reviews";
 import { Map } from "@/components/navi/demo/Map";
 import { getExperienceBySlug, type Experience } from "@/lib/navi/demo-data";
+
+const SECTIONS = [
+  { id: "learn", label: "Learn" },
+  { id: "plan", label: "Plan" },
+  { id: "go", label: "Go" },
+] as const;
 
 // Page bridge: Next 16 passes params as a Promise; React.use() unwraps it,
 // then we delegate to a pure inner component so the view is straightforward
@@ -22,66 +28,29 @@ export default function ExperiencePage({ params }: { params: Promise<{ slug: str
 }
 
 export function ExperienceView({ experience: e }: { experience: Experience }) {
-  const [tab, setTab] = useState("learn");
+  // Highlighted section is the last one whose top has scrolled past the
+  // sticky nav. A scroll handler beats IntersectionObserver here because the
+  // sections are short enough that an "activation band" can sit between two
+  // headings and never fire a callback.
+  const [active, setActive] = useState<string>("learn");
+  useEffect(() => {
+    const offset = 90; // sticky nav height plus a few pixels of breathing room
+    const onScroll = () => {
+      let current = SECTIONS[0].id;
+      for (const s of SECTIONS) {
+        const el = document.getElementById(s.id);
+        if (el && el.getBoundingClientRect().top <= offset) current = s.id;
+      }
+      setActive(current);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [e.slug]);
 
-  const tabItems = [
-    {
-      id: "learn",
-      label: "Learn",
-      content: (
-        <div className="nv-detail-section">
-          <p className="nv-detail-host">
-            <Avatar name={e.host.name} size="sm" /> Hosted by {e.host.name}
-          </p>
-          <p className="nv-detail-prose">{e.learn}</p>
-          <Rating value={e.rating} reviews={e.reviews} />
-          <ImpactSignal as="div">{e.impactStatement}</ImpactSignal>
-          <div className="nv-included">
-            <h3 className="nv-included-heading">What&apos;s included</h3>
-            <ul>
-              {e.included.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      ),
-    },
-    {
-      id: "plan",
-      label: "Plan",
-      content: (
-        <Accordion
-          items={[
-            { id: "bring", title: "What to bring", content: e.plan.bring },
-            { id: "commitments", title: "Pre-arrival commitments", content: e.plan.commitments },
-            { id: "impact", title: "Impact initiative", content: e.plan.impactDetail },
-          ]}
-        />
-      ),
-    },
-    {
-      id: "go",
-      label: "Go",
-      content: (
-        <div className="nv-detail-section">
-          <h2 className="nv-detail-where-heading">Where?</h2>
-          <p>{e.go.addressLine1}</p>
-          <p>{e.go.addressLine2}</p>
-          <div className="nv-detail-where-map">
-            <Map
-              center={[e.lat, e.lng]}
-              zoom={15}
-              markers={[{ id: e.slug, lat: e.lat, lng: e.lng, label: "" }]}
-              active={tab === "go"}
-            />
-          </div>
-          <h2 className="nv-detail-go-heading">How to get there</h2>
-          <TransitOptions options={e.go.transit} />
-        </div>
-      ),
-    },
-  ];
+  const goTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
     <article className="nv-detail">
@@ -99,7 +68,64 @@ export function ExperienceView({ experience: e }: { experience: Experience }) {
       </header>
       <div className="nv-detail-body">
         <div className="nv-detail-main">
-          <Tabs items={tabItems} value={tab} onChange={setTab} />
+          <nav className="nv-detail-nav" aria-label="Sections">
+            {SECTIONS.map((s) => (
+              <button
+                key={s.id}
+                type="button"
+                className={`nv-detail-nav-pill${active === s.id ? " is-active" : ""}`}
+                aria-current={active === s.id ? "true" : undefined}
+                onClick={() => goTo(s.id)}
+              >
+                {s.label}
+              </button>
+            ))}
+          </nav>
+
+          <section id="learn" aria-labelledby="learn-heading" className="nv-detail-section">
+            <h2 id="learn-heading" className="nv-detail-section-heading">Learn</h2>
+            <p className="nv-detail-host">
+              <Avatar name={e.host.name} size="sm" /> Hosted by {e.host.name}
+            </p>
+            <p className="nv-detail-prose">{e.learn}</p>
+            <Rating value={e.rating} reviews={e.reviews} />
+            <ImpactSignal as="div">{e.impactStatement}</ImpactSignal>
+            <div className="nv-included">
+              <h3 className="nv-included-heading">What&apos;s included</h3>
+              <ul>
+                {e.included.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </section>
+
+          <section id="plan" aria-labelledby="plan-heading" className="nv-detail-section">
+            <h2 id="plan-heading" className="nv-detail-section-heading">Plan</h2>
+            <Accordion
+              items={[
+                { id: "bring", title: "What to bring", content: e.plan.bring },
+                { id: "commitments", title: "Pre-arrival commitments", content: e.plan.commitments },
+                { id: "impact", title: "Impact initiative", content: e.plan.impactDetail },
+              ]}
+            />
+          </section>
+
+          <section id="go" aria-labelledby="go-heading" className="nv-detail-section">
+            <h2 id="go-heading" className="nv-detail-section-heading">Go</h2>
+            <h3 className="nv-detail-where-heading">Where?</h3>
+            <p>{e.go.addressLine1}</p>
+            <p>{e.go.addressLine2}</p>
+            <div className="nv-detail-where-map">
+              <Map
+                center={[e.lat, e.lng]}
+                zoom={15}
+                markers={[{ id: e.slug, lat: e.lat, lng: e.lng, label: "" }]}
+              />
+            </div>
+            <h3 className="nv-detail-go-heading">How to get there</h3>
+            <TransitOptions options={e.go.transit} />
+          </section>
         </div>
         <BookingCard
           priceFrom={e.price}

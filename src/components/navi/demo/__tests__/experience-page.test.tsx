@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
 import type { ComponentType } from "react";
 
@@ -33,25 +32,24 @@ import { EXPERIENCES } from "@/lib/navi/demo-data";
 describe("Experience page", () => {
   const e = EXPERIENCES[0];
 
-  it("renders title, gallery, Learn/Plan/Go tabs, and booking card", () => {
+  it("renders title, gallery, Learn/Plan/Go sections, and booking card", () => {
     render(<ExperienceView experience={e} />);
     expect(screen.getByRole("heading", { level: 1, name: e.title })).toBeInTheDocument();
-    expect(screen.getByRole("tablist")).toBeInTheDocument();
-    expect(screen.getByRole("tab", { name: "Learn" })).toBeInTheDocument();
-    expect(screen.getByRole("tab", { name: "Plan" })).toBeInTheDocument();
-    expect(screen.getByRole("tab", { name: "Go" })).toBeInTheDocument();
+    expect(screen.getByRole("navigation", { name: "Sections" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: "Learn" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: "Plan" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: "Go" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Reserve now" })).toBeInTheDocument();
   });
 
-  it("opens with Learn tab and shows the impact statement up front", () => {
+  it("renders the impact statement and transit options on the same page", () => {
     render(<ExperienceView experience={e} />);
-    expect(screen.getByRole("tab", { name: "Learn" })).toHaveAttribute("aria-selected", "true");
     expect(screen.getByText(e.impactStatement)).toBeVisible();
+    expect(screen.getByText(/q or r/i)).toBeVisible();
   });
 
-  it("switching to Go reveals the transit options", async () => {
+  it("marks Learn as the initial active section", () => {
     render(<ExperienceView experience={e} />);
-    await userEvent.click(screen.getByRole("tab", { name: "Go" }));
-    expect(screen.getByText(/q or r/i)).toBeVisible();
+    expect(screen.getByRole("button", { name: "Learn" })).toHaveAttribute("aria-current", "true");
   });
 });
