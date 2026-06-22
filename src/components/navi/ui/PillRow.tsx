@@ -18,6 +18,7 @@ export function PillRow({
   className,
   itemRef,
   onItemKeyDown,
+  role,
 }: {
   items: PillRowItem[];
   activeId: string;
@@ -26,9 +27,13 @@ export function PillRow({
   className?: string;
   itemRef?: (el: HTMLButtonElement | null, index: number) => void;
   onItemKeyDown?: (e: React.KeyboardEvent<HTMLButtonElement>, index: number) => void;
+  role?: string;
 }) {
   return (
-    <div className={`nv-pill-row${className ? " " + className : ""}`}>
+    <div
+      className={`nv-pill-row${className ? " " + className : ""}`}
+      role={role}
+    >
       {items.map((item, index) => {
         const active = item.id === activeId;
         const extras = extraAttrs ? extraAttrs(item, active, index) : {};

@@ -2,6 +2,7 @@
 
 import { useId, useRef } from "react";
 import type { ReactNode } from "react";
+import { PillRow } from "./PillRow";
 
 type Item = { id: string; label: string; content?: ReactNode };
 
@@ -18,7 +19,10 @@ export function Tabs({
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
   const hasPanels = items.some((it) => it.content != null);
 
-  function handleKeyDown(e: React.KeyboardEvent, idx: number) {
+  function handleKeyDown(
+    e: React.KeyboardEvent<HTMLButtonElement>,
+    idx: number,
+  ) {
     let next = idx;
     if (e.key === "ArrowRight") next = (idx + 1) % items.length;
     else if (e.key === "ArrowLeft") next = (idx - 1 + items.length) % items.length;
@@ -32,30 +36,27 @@ export function Tabs({
 
   return (
     <>
-      <div className="nv-tabs" role="tablist">
-        {items.map((it, idx) => {
-          const selected = it.id === value;
-          return (
-            <button
-              key={it.id}
-              ref={(el) => {
-                refs.current[idx] = el;
-              }}
-              id={`${baseId}-tab-${it.id}`}
-              role="tab"
-              type="button"
-              aria-selected={selected}
-              aria-controls={it.content != null ? `${baseId}-panel-${it.id}` : undefined}
-              tabIndex={selected ? 0 : -1}
-              className={`nv-tab${selected ? " nv-tab--selected" : ""}`}
-              onClick={() => onChange(it.id)}
-              onKeyDown={(e) => handleKeyDown(e, idx)}
-            >
-              {it.label}
-            </button>
-          );
+      <PillRow
+        role="tablist"
+        className="nv-pill-row--tablist"
+        items={items.map((it) => ({ id: it.id, label: it.label }))}
+        activeId={value}
+        onSelect={onChange}
+        itemRef={(el, idx) => {
+          refs.current[idx] = el;
+        }}
+        onItemKeyDown={handleKeyDown}
+        extraAttrs={(it, selected) => ({
+          id: `${baseId}-tab-${it.id}`,
+          role: "tab",
+          "aria-selected": selected ? "true" : "false",
+          "aria-controls":
+            items.find((x) => x.id === it.id)?.content != null
+              ? `${baseId}-panel-${it.id}`
+              : undefined,
+          tabIndex: selected ? "0" : "-1",
         })}
-      </div>
+      />
       {hasPanels &&
         items
           .filter((it) => it.content != null)
