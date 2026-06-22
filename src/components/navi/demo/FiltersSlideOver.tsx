@@ -120,9 +120,16 @@ export function FiltersSlideOver({
   const headingId = useId();
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
   const dialogRef = useRef<HTMLDivElement | null>(null);
+  const wasOpenRef = useRef(false);
+  const onCloseRef = useRef(onClose);
 
   useEffect(() => {
-    if (open) setDraft(initial);
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
+  useEffect(() => {
+    if (open && !wasOpenRef.current) setDraft(initial);
+    wasOpenRef.current = open;
   }, [open, initial]);
 
   useEffect(() => {
@@ -132,11 +139,11 @@ export function FiltersSlideOver({
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") {
         e.preventDefault();
-        onClose();
+        onCloseRef.current();
       }
       if (e.key === "Tab" && dialogRef.current) {
         const focusables = dialogRef.current.querySelectorAll<HTMLElement>(
-          "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])",
+          "button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])",
         );
         if (focusables.length === 0) return;
         const first = focusables[0];
@@ -152,7 +159,7 @@ export function FiltersSlideOver({
     }
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
+  }, [open]);
 
   if (!open) return null;
 
