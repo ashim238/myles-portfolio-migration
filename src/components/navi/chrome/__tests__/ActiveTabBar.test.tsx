@@ -26,4 +26,10 @@ describe("ActiveTabBar", () => {
     render(<ActiveTabBar />);
     expect(screen.getByRole("link", { name: /system/i })).toHaveAttribute("aria-current", "page");
   });
+
+  it("marks Impact active on the impact route", () => {
+    mockPath = "/work/navi/demo/impact";
+    render(<ActiveTabBar />);
+    expect(screen.getByRole("link", { name: /impact/i })).toHaveAttribute("aria-current", "page");
+  });
 });

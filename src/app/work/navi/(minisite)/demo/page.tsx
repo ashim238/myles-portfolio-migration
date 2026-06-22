@@ -39,10 +39,11 @@ function durationMatches(band: Filters["duration"], duration: string): boolean {
 function groupMatches(band: Filters["group"], group: string): boolean {
   if (band === "any") return true;
   const m = group.match(/(\d+)/);
-  if (!m) return false;
+  // Open-capacity listings ("Drop in anytime") carry no number. They take any
+  // size group, so they belong in the large band rather than vanishing.
+  if (!m) return band === "large";
   const max = parseInt(m[1], 10);
-  if (band === "solo") return max <= 1;
-  if (band === "small") return max > 1 && max <= 8;
+  if (band === "small") return max <= 8;
   if (band === "large") return max > 8;
   return true;
 }

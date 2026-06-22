@@ -23,10 +23,10 @@ describe("impactTheme migration", () => {
       return acc;
     }, {});
     expect(counts).toEqual({
-      heritage: 9,
+      heritage: 10,
       education: 5,
       "food-security": 4,
-      environment: 11,
+      environment: 10,
       "arts-funding": 8,
     });
   });

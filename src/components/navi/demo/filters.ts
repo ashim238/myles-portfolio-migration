@@ -1,6 +1,6 @@
 export type PriceBand = "any" | "under30" | "30to60" | "over60";
 export type DurationBand = "any" | "under2h" | "halfDay" | "fullDay";
-export type GroupBand = "any" | "solo" | "small" | "large";
+export type GroupBand = "any" | "small" | "large";
 
 export type Filters = {
   price: PriceBand;

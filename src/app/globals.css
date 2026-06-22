@@ -7664,6 +7664,10 @@ button:focus-visible,
 }
 .nv-impact-method h2 { margin: 0; font-size: 1.25rem; }
 .nv-impact-method p { margin: 0; line-height: 1.6; color: var(--nv-text-muted); }
+.nv-impact-back { margin: 0; }
+.nv-impact-back a { color: var(--nv-text-muted); text-decoration: none; font-weight: 700; }
+.nv-impact-back a:hover { color: var(--nv-action); }
+.nv-impact-cta { display: flex; flex-wrap: wrap; gap: var(--nv-sp-sm); }
 
 /* ── /system Navi context line ────────────────────────── */
 .nv-system-context {

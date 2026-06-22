@@ -169,7 +169,8 @@ export default function MapClient({
     }
   }, [selectedId, markers]);
 
-  // No role="application": the map is a visual aid; the result list is the
-  // accessible, keyboard-operable control surface (it syncs pins on hover/focus).
-  return <div ref={containerRef} className="nv-map-canvas" aria-label="Interactive map" />;
+  // The Leaflet canvas is a mouse-only visual aid, so it's hidden from assistive
+  // tech rather than mislabelled as "interactive". The accessible equivalents
+  // live in text: the result list on search, the address block on a detail page.
+  return <div ref={containerRef} className="nv-map-canvas" aria-hidden="true" />;
 }

@@ -22,6 +22,14 @@ describe("NaviHeader", () => {
     );
   });
 
+  it("links to the impact ledger from primary nav", () => {
+    render(<NaviHeader />);
+    expect(screen.getByRole("link", { name: /impact/i })).toHaveAttribute(
+      "href",
+      "/work/navi/demo/impact",
+    );
+  });
+
   it("keeps Host an event inside the product, not on the case study", () => {
     render(<NaviHeader />);
     expect(screen.getByRole("link", { name: /host an event/i })).toHaveAttribute(

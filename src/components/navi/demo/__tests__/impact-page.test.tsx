@@ -38,4 +38,21 @@ describe("Impact ledger page", () => {
     const cards = container.querySelectorAll("a.nv-exp-card");
     expect(cards.length).toBe(EXPERIENCES.length);
   });
+
+  it("offers a way back to the feed and forward to booking, not a dead end", () => {
+    render(<ImpactView />);
+    expect(screen.getByRole("link", { name: /back to exploring/i })).toHaveAttribute(
+      "href",
+      "/work/navi/demo",
+    );
+    const cta = screen.getByRole("navigation", { name: /keep exploring/i });
+    expect(within(cta).getByRole("link", { name: /browse experiences/i })).toHaveAttribute(
+      "href",
+      "/work/navi/demo",
+    );
+    expect(within(cta).getByRole("link", { name: /host an event/i })).toHaveAttribute(
+      "href",
+      "/work/navi/demo/host",
+    );
+  });
 });

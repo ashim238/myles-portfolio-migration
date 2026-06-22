@@ -1838,9 +1838,9 @@ export const EXPERIENCES: Experience[] = [
       { src: "/projects/navi-demo/sunset-park-handball-pickup-2.jpg", alt: "A worn small blue ball resting on the court line" },
       { src: "/projects/navi-demo/sunset-park-handball-pickup-3.jpg", alt: "Group laughing courtside between games" },
     ],
-    impactPhrase: "Keeps the public courts in use",
-    impactStatement: "Regular play here is part of why the city keeps these public courts resurfaced, and the group pitches in to keep them swept and free for everyone.",
-    impactTheme: "environment",
+    impactPhrase: "Keeps a neighborhood tradition alive",
+    impactStatement: "The regulars keep these public courts swept, free, and in steady use, so the neighborhood's decades-old handball scene stays alive.",
+    impactTheme: "heritage",
     learn: "Sunset Park's courts have a decades-old handball scene. Luis grew up playing here and will pair you with regulars who'll go easy at first. You'll pick up the basic rules and the unwritten ones, like how to call next game and when to rotate out.",
     plan: {
       bring: "Sneakers with grip and a pair of cheap gloves if you have them.",

@@ -61,6 +61,25 @@ describe("Experience page", () => {
     ).toHaveAttribute("href", `/work/navi/demo/host/${e.host.slug}`);
   });
 
+  it("builds both impact cross-links from the experience's real theme", () => {
+    const { container } = render(<ExperienceView experience={e} />);
+    const href = `/work/navi/demo/impact#${e.impactTheme}`;
+    // one in the Learn section (ImpactSignal), one in the booking card.
+    const links = container.querySelectorAll(`a[href="${href}"]`);
+    expect(links.length).toBe(2);
+  });
+
+  it("uses each experience's own theme in the impact link, not a fixed value", () => {
+    // A second experience with a different theme must produce a different href,
+    // proving the link is derived from data rather than hardcoded.
+    const other = EXPERIENCES.find((x) => x.impactTheme !== e.impactTheme);
+    if (!other) throw new Error("fixture: need two distinct impact themes");
+    const { container } = render(<ExperienceView experience={other} />);
+    expect(
+      container.querySelector(`a[href="/work/navi/demo/impact#${other.impactTheme}"]`),
+    ).toBeInTheDocument();
+  });
+
   it("links to the neighborhood page from the Go section", () => {
     render(<ExperienceView experience={e} />);
     const link = screen.getByRole("link", {

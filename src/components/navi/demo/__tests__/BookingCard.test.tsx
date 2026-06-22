@@ -37,6 +37,25 @@ describe("BookingCard", () => {
     expect(screen.getByText(/reserved/i)).toBeInTheDocument();
   });
 
+  it("renders the impact phrase as a link to the given impact href", () => {
+    render(
+      <BookingCard
+        priceFrom={48}
+        dates={dates}
+        impact="Keeps a neighborhood tradition alive"
+        impactHref="/work/navi/demo/impact#heritage"
+        onReserve={() => {}}
+      />,
+    );
+    const link = screen.getByRole("link", { name: /neighborhood tradition/i });
+    expect(link).toHaveAttribute("href", "/work/navi/demo/impact#heritage");
+  });
+
+  it("omits the impact note when no impact prop is given", () => {
+    render(<BookingCard priceFrom={48} dates={dates} onReserve={() => {}} />);
+    expect(screen.queryByRole("link")).not.toBeInTheDocument();
+  });
+
   it("selecting a new date after Reserve resets the confirmation", async () => {
     render(<BookingCard priceFrom={48} dates={dates} onReserve={() => {}} />);
     await userEvent.click(screen.getByRole("button", { name: "Reserve now" }));

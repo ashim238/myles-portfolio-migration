@@ -34,10 +34,16 @@ const LayersIcon = () => (
     <polyline points="3 16 12 21 21 16" />
   </svg>
 );
+const ImpactIcon = () => (
+  <svg {...svgProps}>
+    <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0 0-7.8z" />
+  </svg>
+);
 
 const ITEMS = [
   { id: "explore", label: "Explore", icon: <CompassIcon />, href: "/work/navi/demo" },
   { id: "search", label: "Search", icon: <SearchIcon />, href: "/work/navi/demo/search" },
+  { id: "impact", label: "Impact", icon: <ImpactIcon />, href: "/work/navi/demo/impact" },
   { id: "system", label: "System", icon: <LayersIcon />, href: "/work/navi/system" },
 ];
 

@@ -39,6 +39,26 @@ describe("Feed page", () => {
     expect(after).toBeLessThanOrEqual(before);
   });
 
+  it("offers no dead Solo group band", async () => {
+    render(<FeedPage />);
+    await userEvent.click(screen.getByRole("button", { name: /^Filters$/ }));
+    expect(screen.queryByRole("button", { name: "Solo" })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^Small/ })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /^Large/ })).toBeInTheDocument();
+  });
+
+  it("keeps open-capacity listings in the Large group band", async () => {
+    render(<FeedPage />);
+    await userEvent.click(screen.getByRole("button", { name: /^Filters$/ }));
+    await userEvent.click(screen.getByRole("button", { name: /^Large/ }));
+    await userEvent.click(screen.getByRole("button", { name: /Show .* experiences?/ }));
+    // "Sunset Park Night Market" has groupSize "Drop in anytime" (no number),
+    // so it must land in Large rather than disappearing from every band.
+    expect(
+      screen.getByRole("link", { name: /Sunset Park Night Market/i }),
+    ).toBeInTheDocument();
+  });
+
   it("filters by price via the slide-over", async () => {
     render(<FeedPage />);
     const before = screen.getAllByRole("link").length;

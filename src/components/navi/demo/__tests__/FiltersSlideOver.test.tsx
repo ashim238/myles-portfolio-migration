@@ -47,6 +47,33 @@ describe("FiltersSlideOver", () => {
     expect(onApply).not.toHaveBeenCalled();
   });
 
+  it("locks body scroll while open and restores it on close", () => {
+    const { rerender } = render(
+      <FiltersSlideOver {...baseProps} open={false} onApply={() => {}} onClose={() => {}} />,
+    );
+    expect(document.body.style.overflow).toBe("");
+    rerender(<FiltersSlideOver {...baseProps} open onApply={() => {}} onClose={() => {}} />);
+    expect(document.body.style.overflow).toBe("hidden");
+    rerender(<FiltersSlideOver {...baseProps} open={false} onApply={() => {}} onClose={() => {}} />);
+    expect(document.body.style.overflow).toBe("");
+  });
+
+  it("returns focus to the trigger when it closes", () => {
+    const trigger = document.createElement("button");
+    document.body.appendChild(trigger);
+    trigger.focus();
+    expect(document.activeElement).toBe(trigger);
+
+    const { rerender } = render(
+      <FiltersSlideOver {...baseProps} open={false} onApply={() => {}} onClose={() => {}} />,
+    );
+    rerender(<FiltersSlideOver {...baseProps} open onApply={() => {}} onClose={() => {}} />);
+    expect(document.activeElement).toHaveAccessibleName(/close filters/i);
+    rerender(<FiltersSlideOver {...baseProps} open={false} onApply={() => {}} onClose={() => {}} />);
+    expect(document.activeElement).toBe(trigger);
+    trigger.remove();
+  });
+
   it("resets draft to defaults when Clear all is clicked", async () => {
     render(
       <FiltersSlideOver

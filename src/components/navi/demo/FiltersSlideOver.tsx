@@ -26,9 +26,8 @@ const DURATION_OPTIONS: { id: DurationBand; label: string }[] = [
 
 const GROUP_OPTIONS: { id: GroupBand; label: string }[] = [
   { id: "any", label: "Any" },
-  { id: "solo", label: "Solo" },
-  { id: "small", label: "Small" },
-  { id: "large", label: "Large" },
+  { id: "small", label: "Small (up to 8)" },
+  { id: "large", label: "Large (9+)" },
 ];
 
 function PillToggleGroup<T extends string>({
@@ -134,7 +133,12 @@ export function FiltersSlideOver({
 
   useEffect(() => {
     if (!open) return;
+    // Remember what opened the panel so focus can return there on close, and
+    // lock body scroll so the page behind the modal stays put.
+    const trigger = document.activeElement as HTMLElement | null;
     closeBtnRef.current?.focus();
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
 
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") {
@@ -158,7 +162,11 @@ export function FiltersSlideOver({
       }
     }
     document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+      trigger?.focus?.();
+    };
   }, [open]);
 
   if (!open) return null;
