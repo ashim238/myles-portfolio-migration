@@ -7635,7 +7635,7 @@ button:focus-visible,
   margin: 0;
   font-size: 1.5rem;
   padding-bottom: var(--nv-sp-sm);
-  border-bottom: 1px solid var(--nv-border, rgba(0, 0, 0, 0.1));
+  border-bottom: 1px solid var(--nv-border);
 }
 .nv-impact-count { margin: 0; color: var(--nv-text-muted); font-weight: 600; }
 .nv-impact-statements {
@@ -7645,18 +7645,12 @@ button:focus-visible,
   display: grid;
   gap: var(--nv-sp-xs);
 }
-.nv-impact-statements .nv-feed-grid,
-.nv-impact-theme .nv-feed-grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
 .nv-impact-method {
   display: grid;
   gap: var(--nv-sp-sm);
   max-width: 70ch;
   padding-top: var(--nv-sp-lg);
-  border-top: 1px solid var(--nv-border, rgba(0, 0, 0, 0.1));
+  border-top: 1px solid var(--nv-border);
 }
 .nv-impact-method h2 { margin: 0; font-size: 1.25rem; }
 .nv-impact-method p { margin: 0; line-height: 1.6; color: var(--nv-text-muted); }

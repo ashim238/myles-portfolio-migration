@@ -1,6 +1,8 @@
 import { ImpactThemeSection } from "@/components/navi/demo/ImpactThemeSection";
 import { getImpactSummary } from "@/lib/navi/impact";
 
+// Default export is the route. ImpactView is exported separately so tests can
+// render the view directly without the route wrapper.
 export default function ImpactPage() {
   return <ImpactView />;
 }
