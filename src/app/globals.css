@@ -6603,14 +6603,15 @@ button:focus-visible,
 }
 .nv-header-lead {
   display: flex;
-  align-items: center;
-  gap: var(--nv-sp-md);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
 }
 .nv-header-back {
   color: var(--nv-text-muted);
   text-decoration: none;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   white-space: nowrap;
 }
 .nv-header-back:hover {
@@ -6619,7 +6620,8 @@ button:focus-visible,
 .nv-wordmark {
   font-family: var(--nv-font-display), sans-serif;
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 1.65rem;
+  line-height: 1;
   color: var(--nv-action);
   text-decoration: none;
 }
