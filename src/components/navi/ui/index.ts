@@ -6,6 +6,7 @@ export { ImpactSignal } from "./ImpactSignal";
 export { Rating } from "./Rating";
 export { Avatar } from "./Avatar";
 export { Tabs } from "./Tabs";
+export { PillRow } from "./PillRow";
 export { Accordion } from "./Accordion";
 export { Tooltip } from "./Tooltip";
 export { SearchInput } from "./SearchInput";
