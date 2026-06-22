@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { describe, it, expect } from "vitest";
 import {
   NAVI_PRIMITIVES,
@@ -25,6 +27,16 @@ describe("navi tokens", () => {
 
   it("focus ring meets the 3:1 non-text minimum on white", () => {
     expect(contrastRatio(NAVI_SEMANTIC.focus, "#FFFFFF")).toBeGreaterThanOrEqual(3);
+  });
+
+  it("documents the focus token as the color the product's focus ring actually renders", () => {
+    // The system page renders NAVI_SEMANTIC as live swatches and claims a single
+    // source of truth, so the documented focus token must equal the --nv-focus
+    // value the product paints on every focus-visible ring.
+    const css = readFileSync(resolve(process.cwd(), "src/app/globals.css"), "utf8");
+    const match = css.match(/--nv-focus:\s*(#[0-9a-fA-F]{6})/);
+    expect(match, "--nv-focus must be defined in globals.css").not.toBeNull();
+    expect(NAVI_SEMANTIC.focus.toLowerCase()).toBe(match![1].toLowerCase());
   });
 
   it("spacing scale is 4px-based", () => {

@@ -22,7 +22,7 @@ export const NAVI_SEMANTIC = {
   textDefault: "#2B2B2B",
   textMuted: "#5A5560",
   border: "#E2E0E3",
-  focus: "#C4541A", // >= 3:1 on white
+  focus: "#9E3F0B", // = action-strong; the 6.07:1 ring the product paints (--nv-focus)
   error: "#C2371F", // replaces off-palette red asterisk
   info: "#3A86FF", // replaces off-palette purple help icon (use brand blue)
 } as const;
