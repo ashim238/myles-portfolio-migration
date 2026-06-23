@@ -286,12 +286,18 @@ export default async function NaviPage() {
             What started as a heatmap turned out to be solving the wrong problem. Concentration is the symptom. Disconnection from local culture and economy is the cause, and Navi is the platform that came from chasing the cause.
           </p>
           <p>
-            Navi showed that community-centered travel can be both practical and desirable when
-            recommendations are curated with local context.
+            Navi showed that{" "}
+            <strong>
+              community-centered travel can be both practical and desirable when
+              recommendations are curated with local context.
+            </strong>
           </p>
           <p>
-            The concept validated that intent-rich exploration scales better than algorithmic
-            browsing when the goal is meaningful neighborhood engagement.
+            The concept validated that{" "}
+            <strong>
+              intent-rich exploration scales better than algorithmic browsing when the goal
+              is meaningful neighborhood engagement.
+            </strong>
           </p>
           <p>Next opportunities include:</p>
           <ul>
