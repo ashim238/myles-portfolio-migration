@@ -1,6 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { use } from "react";
+import { use, useCallback, useRef, useState } from "react";
 import { Avatar } from "@/components/navi/ui";
 import { ExperienceCard } from "@/components/navi/demo/ExperienceCard";
 import { Map } from "@/components/navi/demo/Map";
@@ -27,6 +29,23 @@ export function NeighborhoodView({ neighborhood: n }: { neighborhood: Neighborho
   const experiences = experiencesByNeighborhood(n.slug);
   const hosts = hostsByNeighborhood(n.slug);
   const centroid = neighborhoodCentroid(n.slug);
+  // Sticky selection from a pin click. Persists so users still see which card
+  // the pin maps to after the scroll lands.
+  const [picked, setPicked] = useState<string | undefined>(undefined);
+  const pulseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const onPinSelect = useCallback((id: string) => {
+    setPicked(id);
+    const el = document.getElementById(`nb-experience-${id}`);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "center" });
+    el.dataset.pulse = "true";
+    if (pulseTimer.current) clearTimeout(pulseTimer.current);
+    pulseTimer.current = setTimeout(() => {
+      delete el.dataset.pulse;
+    }, 1400);
+  }, []);
+
   return (
     <article className="nv-neighborhood">
       <p className="nv-neighborhood-back">
@@ -48,6 +67,8 @@ export function NeighborhoodView({ neighborhood: n }: { neighborhood: Neighborho
               lng: e.lng,
               label: e.title,
             }))}
+            selectedId={picked}
+            onSelect={onPinSelect}
           />
         </div>
       )}
@@ -55,7 +76,7 @@ export function NeighborhoodView({ neighborhood: n }: { neighborhood: Neighborho
         <h2 id="nb-experiences-heading">Experiences in {n.name}</h2>
         <ul className="nv-feed-grid" aria-label={`Experiences in ${n.name}`}>
           {experiences.map((e) => (
-            <li key={e.slug}>
+            <li key={e.slug} id={`nb-experience-${e.slug}`}>
               <ExperienceCard
                 experience={e}
                 href={`/work/navi/demo/experience/${e.slug}`}

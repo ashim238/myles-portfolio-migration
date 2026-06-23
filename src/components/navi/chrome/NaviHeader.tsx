@@ -10,7 +10,7 @@ export function NaviHeader() {
       </div>
       <nav className="nv-nav" aria-label="Primary">
         <Link href="/work/navi" className="nv-nav-back">
-          <span aria-hidden="true">← </span>Case study
+          Return to case study
         </Link>
         <Link href="/work/navi/demo">Explore</Link>
         <Link href="/work/navi/demo/impact">Impact</Link>

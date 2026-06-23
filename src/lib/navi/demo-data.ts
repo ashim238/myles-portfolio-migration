@@ -872,7 +872,7 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "7 to Flushing–Main St" },
         { mode: "walk", label: "Walk", detail: "6 min south" },
         { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
-        { mode: "lirr", label: "Take the", detail: "LIRR to Flushing–Main St" },
+        { mode: "lirr", label: "Take the", detail: "To Flushing–Main St" },
       ],
     },
     sessions: [
@@ -1219,7 +1219,7 @@ export const EXPERIENCES: Experience[] = [
         { mode: "subway", label: "Take the", detail: "7 to Flushing–Main St" },
         { mode: "walk", label: "Walk", detail: "2 min" },
         { mode: "citibike", label: "Grab a Citibike", detail: "Docks within a few blocks" },
-        { mode: "lirr", label: "Take the", detail: "LIRR to Flushing–Main St" },
+        { mode: "lirr", label: "Take the", detail: "To Flushing–Main St" },
       ],
     },
     sessions: [

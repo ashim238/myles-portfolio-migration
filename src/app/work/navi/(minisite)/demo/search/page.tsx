@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { SearchInput } from "@/components/navi/ui";
 import { ResultCard } from "@/components/navi/demo/ResultCard";
 import { Map } from "@/components/navi/demo/Map";
@@ -10,6 +10,11 @@ import { EXPERIENCES } from "@/lib/navi/demo-data";
 export default function SearchPage() {
   const [query, setQuery] = useState("");
   const [hovered, setHovered] = useState<string | undefined>(undefined);
+  // `picked` is the sticky selection from a pin click. It persists until the
+  // next click (or hover) so the user still sees which card the pin maps to
+  // after the scroll lands. Hover wins while pointing, otherwise picked stays.
+  const [picked, setPicked] = useState<string | undefined>(undefined);
+  const pulseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const results = useMemo(() => {
     const q = query.toLowerCase();
@@ -29,6 +34,18 @@ export default function SearchPage() {
       })),
     [results],
   );
+
+  const onPinSelect = useCallback((id: string) => {
+    setPicked(id);
+    const el = document.getElementById(`search-result-${id}`);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "center" });
+    el.dataset.pulse = "true";
+    if (pulseTimer.current) clearTimeout(pulseTimer.current);
+    pulseTimer.current = setTimeout(() => {
+      delete el.dataset.pulse;
+    }, 1400);
+  }, []);
 
   return (
     <div className="nv-search-page">
@@ -51,7 +68,7 @@ export default function SearchPage() {
         ) : (
           <ul className="nv-search-results">
             {results.map((e) => (
-              <li key={e.slug}>
+              <li key={e.slug} id={`search-result-${e.slug}`} className="nv-search-result">
                 <ResultCard
                   experience={e}
                   href={`/work/navi/demo/experience/${e.slug}`}
@@ -67,7 +84,8 @@ export default function SearchPage() {
           center={[40.68, -73.95]}
           zoom={12}
           markers={markers}
-          selectedId={hovered}
+          selectedId={hovered ?? picked}
+          onSelect={onPinSelect}
           currentLocation={[40.68, -73.95]}
           fitToMarkers
         />

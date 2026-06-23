@@ -14,6 +14,19 @@ const svgProps = {
   focusable: false,
 };
 
+// Mode-derived labels used when the data carries the generic "Take the"
+// verb. Without this, an experience with both subway and LIRR (or subway and
+// bus) renders two adjacent "Take the" rows, which reads as a duplicate
+// header. Per-item custom labels in the data still win.
+const MODE_LABEL: Record<TransitOption["mode"], string> = {
+  subway: "Subway",
+  citibike: "Citibike",
+  walk: "Walk",
+  bus: "Bus",
+  ferry: "Ferry",
+  lirr: "LIRR",
+};
+
 const ICONS: Record<TransitOption["mode"], ReactNode> = {
   subway: (
     <svg {...svgProps}>
@@ -69,7 +82,9 @@ export function TransitOptions({ options }: { options: TransitOption[] }) {
           <span className="nv-transit-icon" aria-hidden="true">
             {ICONS[o.mode]}
           </span>
-          <span className="nv-transit-label">{o.label}</span>
+          <span className="nv-transit-label">
+            {o.label === "Take the" ? MODE_LABEL[o.mode] : o.label}
+          </span>
           <span className="nv-transit-detail">{o.detail}</span>
         </li>
       ))}

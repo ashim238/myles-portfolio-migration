@@ -6645,6 +6645,8 @@ button:focus-visible,
 }
 .nv-nav a.nv-nav-back:hover {
   color: var(--nv-action);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 .nv-wordmark {
   font-family: var(--nv-font-display), sans-serif;
@@ -7637,7 +7639,12 @@ button:focus-visible,
 }
 
 /* ── Map (Leaflet + OSM, client-only) ──────────────────────────── */
-.nv-map { position: relative; height: 100%; min-height: 480px; border-radius: var(--nv-r-md); overflow: hidden; }
+/* isolation: isolate makes .nv-map its own stacking context, so Leaflet's
+   internal z-indexes (panes up to ~700, controls/attribution 800-1000, plus our
+   own .nv-legend at 850) stay trapped inside the map. Without it those values
+   leak to the page root and can paint over fixed overlays like the date-time
+   modal (z 90), which surfaces as the map covering the calendar. */
+.nv-map { position: relative; isolation: isolate; height: 100%; min-height: 480px; border-radius: var(--nv-r-md); overflow: hidden; }
 .nv-map-canvas { width: 100%; height: 100%; }
 .nv-map-skeleton { width: 100%; height: 100%; background: var(--nv-surface-muted); }
 /* Empty-search feedback shown over the map so it stays above the fold on the
@@ -7777,6 +7784,27 @@ button:focus-visible,
 /* auto-fill + capped max keeps cards their size when a category has only 2 items
    (auto-fit would stretch the lonely cards to fill the row). */
 .nv-feed-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 340px)); gap: var(--nv-sp-lg); justify-content: start; }
+/* Map-pin → card link feedback. When a user clicks a pin, the matching card
+   scrolls into view and gets [data-pulse="true"] for ~1.4s. The pulse confirms
+   which card the pin maps to so the scroll doesn't feel ambient. */
+.nv-search-result[data-pulse="true"],
+.nv-feed-grid > li[data-pulse="true"] {
+  animation: nvPickedPulse 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  border-radius: var(--nv-r-md);
+}
+@keyframes nvPickedPulse {
+  0%   { box-shadow: 0 0 0 0 color-mix(in oklch, var(--nv-action) 55%, transparent); }
+  35%  { box-shadow: 0 0 0 6px color-mix(in oklch, var(--nv-action) 28%, transparent); }
+  100% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--nv-action) 0%, transparent); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nv-search-result[data-pulse="true"],
+  .nv-feed-grid > li[data-pulse="true"] {
+    animation: none;
+    outline: 2px solid var(--nv-action);
+    outline-offset: 2px;
+  }
+}
 @media (prefers-reduced-motion: no-preference) {
   /* Signature list rhythm: a short staggered rise, capped so the tail never drags. */
   .nv-feed-grid > li { animation: fadeUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: calc(min(var(--i, 0), 8) * 45ms); }
