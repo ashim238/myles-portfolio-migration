@@ -6637,16 +6637,38 @@ button:focus-visible,
 /* "Case study" leaves the product for the case-study writeup, so it reads as a
    muted up-link fenced off from the in-product section links by a hairline. */
 .nv-nav a.nv-nav-back {
+  position: relative;
   color: var(--nv-text-muted);
   font-weight: 600;
   white-space: nowrap;
   padding-right: var(--nv-sp-md);
   border-right: 1px solid var(--nv-border);
 }
-.nv-nav a.nv-nav-back:hover {
+/* Animated underline that draws in from the left on hover/focus. Uses a
+   scaleX pseudo-element rather than text-decoration so the line is GPU
+   accelerated and the right edge stops at the text, not at the hairline. */
+.nv-nav a.nv-nav-back::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: var(--nv-sp-md);
+  bottom: 0;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nv-nav a.nv-nav-back:hover,
+.nv-nav a.nv-nav-back:focus-visible {
   color: var(--nv-action);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+}
+.nv-nav a.nv-nav-back:hover::after,
+.nv-nav a.nv-nav-back:focus-visible::after {
+  transform: scaleX(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .nv-nav a.nv-nav-back::after { transition: none; }
 }
 .nv-wordmark {
   font-family: var(--nv-font-display), sans-serif;
