@@ -211,8 +211,8 @@ export default function FeedPage() {
             <select value={sort} onChange={(e) => setSort(e.target.value as SortKey)}>
               <option value="recommended">Recommended</option>
               <option value="rating">Top rated</option>
-              <option value="price-asc">Price: low to high</option>
-              <option value="price-desc">Price: high to low</option>
+              <option value="price-asc">Lowest price</option>
+              <option value="price-desc">Highest price</option>
             </select>
           </label>
           <button

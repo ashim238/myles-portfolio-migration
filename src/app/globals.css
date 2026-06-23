@@ -6632,20 +6632,18 @@ button:focus-visible,
 }
 .nv-header-lead {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  /* The wordmark sits on line-height:1, so its glyphs hug the box top. An xs gap
-     read as cramped against the back-link; md gives the eyebrow real breathing room. */
-  gap: var(--nv-sp-md);
+  align-items: center;
 }
-.nv-header-back {
+/* "Case study" leaves the product for the case-study writeup, so it reads as a
+   muted up-link fenced off from the in-product section links by a hairline. */
+.nv-nav a.nv-nav-back {
   color: var(--nv-text-muted);
-  text-decoration: none;
   font-weight: 600;
-  font-size: 0.8rem;
   white-space: nowrap;
+  padding-right: var(--nv-sp-md);
+  border-right: 1px solid var(--nv-border);
 }
-.nv-header-back:hover {
+.nv-nav a.nv-nav-back:hover {
   color: var(--nv-action);
 }
 .nv-wordmark {
@@ -6747,10 +6745,12 @@ button:focus-visible,
   .nv-header {
     padding: var(--nv-sp-sm) var(--nv-sp-md);
   }
-  /* The bottom tab bar already carries Explore/Search/System on mobile, so the
-     header keeps only the wordmark and the one action the tab bar lacks. */
+  /* The bottom tab bar carries Explore/Impact/System on mobile, so the header
+     keeps the wordmark, the "Host an event" action the tab bar lacks, and the
+     "Case study" up-link (the tab bar has no route back out of the demo). */
   .nv-nav { gap: var(--nv-sp-sm); }
-  .nv-nav a:not(.nv-nav-host) { display: none; }
+  .nv-nav a:not(.nv-nav-host):not(.nv-nav-back) { display: none; }
+  .nv-nav a.nv-nav-back { padding-right: 0; border-right: none; }
 }
 
 /* ── Button ────────────────────────────────────────────────────── */
@@ -7720,14 +7720,16 @@ button:focus-visible,
 .nv-feed-select { display: inline-flex; align-items: center; }
 .nv-feed-select select {
   font: inherit; min-height: 36px;
-  padding: var(--nv-sp-xs) 38px var(--nv-sp-xs) var(--nv-sp-md);
+  /* Tight padding + short option labels keep this a quiet pill so the category
+     rail, not the sort control, reads as the row's primary surface. */
+  padding: var(--nv-sp-xs) 30px var(--nv-sp-xs) var(--nv-sp-sm);
   border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill);
   background-color: var(--nv-surface); color: var(--nv-text); cursor: pointer;
   /* Custom caret so placement is consistent inside the pill (native arrow sat off-center). */
   appearance: none; -webkit-appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%232b2b2b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 14px center;
+  background-position: right 11px center;
 }
 .nv-feed-select select:hover,
 .nv-feed-select select:focus-visible { border-color: var(--nv-action); }
