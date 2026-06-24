@@ -116,11 +116,11 @@ export function ArchitectureDiagram() {
     <figure className="fg-arch">
       <div className="fg-arch-scroll">
       <svg
-        viewBox="0 0 1100 420"
+        viewBox="0 0 1250 420"
         xmlns="http://www.w3.org/2000/svg"
         className="fg-arch-svg"
         role="img"
-        aria-label="Three-layer architecture: seven public data sources feed an adapter layer, which feeds a deterministic scoring layer, which feeds the screen layer."
+        aria-label="Three-layer architecture: eight public data sources feed an adapter layer, which feeds a deterministic scoring layer, which feeds the screen layer."
       >
         <defs>
           <marker
@@ -156,8 +156,11 @@ export function ArchitectureDiagram() {
           <text x="690" y="32">Mapbox incidents</text>
           <text x="690" y="50" fontSize="10" opacity="0.62">driving-traffic events</text>
 
-          <text x="850" y="32">Community reports</text>
-          <text x="850" y="50" fontSize="10" opacity="0.62">observations · weighted</text>
+          <text x="850" y="32">Open-Meteo</text>
+          <text x="850" y="50" fontSize="10" opacity="0.62">weather + visibility</text>
+
+          <text x="1000" y="32">Community reports</text>
+          <text x="1000" y="50" fontSize="10" opacity="0.62">observations · weighted</text>
         </g>
 
         {/* Arrows from sources into the adapter layer */}
@@ -168,7 +171,8 @@ export function ArchitectureDiagram() {
           <line x1="475" y1="64" x2="475" y2="100" />
           <line x1="600" y1="64" x2="600" y2="100" />
           <line x1="750" y1="64" x2="750" y2="100" />
-          <line x1="910" y1="64" x2="910" y2="100" />
+          <line x1="900" y1="64" x2="900" y2="100" />
+          <line x1="1060" y1="64" x2="1060" y2="100" />
         </g>
 
         {/* Adapter layer */}
@@ -176,7 +180,7 @@ export function ArchitectureDiagram() {
           <rect
             x="30"
             y="105"
-            width="1040"
+            width="1190"
             height="68"
             rx="6"
             fill="none"
@@ -200,7 +204,7 @@ export function ArchitectureDiagram() {
           markerEnd="url(#fg-arrow)"
           opacity="0.65"
         >
-          <line x1="550" y1="175" x2="550" y2="208" />
+          <line x1="625" y1="175" x2="625" y2="208" />
         </g>
 
         {/* Scoring layer — the highlight */}
@@ -208,7 +212,7 @@ export function ArchitectureDiagram() {
           <rect
             x="30"
             y="213"
-            width="1040"
+            width="1190"
             height="78"
             rx="6"
             fill="var(--fg-accent-soft)"
@@ -240,7 +244,7 @@ export function ArchitectureDiagram() {
           markerEnd="url(#fg-arrow)"
           opacity="0.65"
         >
-          <line x1="550" y1="293" x2="550" y2="326" />
+          <line x1="625" y1="293" x2="625" y2="326" />
         </g>
 
         {/* Screen layer */}
@@ -248,7 +252,7 @@ export function ArchitectureDiagram() {
           <rect
             x="30"
             y="331"
-            width="1040"
+            width="1190"
             height="68"
             rx="6"
             fill="none"
@@ -266,7 +270,7 @@ export function ArchitectureDiagram() {
       </svg>
       </div>
       <figcaption className="fg-arch-caption">
-        Seven public data sources feed an adapter, a deterministic scoring layer,
+        Eight public data sources feed an adapter, a deterministic scoring layer,
         then the screen.
         <span className="fg-arch-scrollhint"> Scroll the diagram to read it all.</span>
       </figcaption>

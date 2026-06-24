@@ -255,6 +255,7 @@ export default async function FreshGreensPage() {
           { title: "The research", id: "fg-research" },
           { title: "The architecture", id: "fg-approach" },
           { title: "What ships", id: "fg-features-heading" },
+          { title: "Safety flows", id: "fg-safety" },
           { title: "Reserved color", id: "fg-craft" },
           { title: "Process", id: "fg-process" },
           { title: "Honest scope", id: "fg-scope" },
@@ -415,6 +416,76 @@ export default async function FreshGreensPage() {
         </div>
       </section>
 
+      {/* ── En-route safety flows ────────────────────── */}
+      <section
+        className="project-section fg-section fg-safety"
+        aria-labelledby="fg-safety"
+      >
+        <h2 id="fg-safety">Four flows behind the safety column.</h2>
+        <div className="project-section-body">
+          <p>
+            The three controls on the en-route side column open four full
+            flows. Each one assumes a different real-world state (emergency,
+            breakdown, unfamiliar destination, proactive check-in) and
+            resolves to action with the shortest tap chain the flow allows.
+            None of them depend on a live network connection. Every flow
+            degrades cleanly to an SMS draft the trusted contact can act on.
+          </p>
+        </div>
+
+        <div className="fg-safety-grid">
+          <article className="fg-safety-card">
+            <p className="fg-safety-route">/emergency</p>
+            <h3 className="fg-h3">Emergency</h3>
+            <p>
+              Activated by holding the SOS button on the safety column. An
+              800ms hold-to-confirm gate with an animated red ring opens onto
+              a countdown disc with a haptic ramp. Dispatches to 911 or the
+              trusted contact. VoiceOver users get a single-tap bypass per
+              the safety-critical interaction convention.
+            </p>
+          </article>
+          <article className="fg-safety-card">
+            <p className="fg-safety-route">/roadside · /roadside-setup</p>
+            <h3 className="fg-h3">Roadside assistance</h3>
+            <p>
+              Four-step state machine. Problem picker (flat tire, dead
+              battery, out of fuel, locked out, other), then location
+              confirmation with a wrong-spot correction, then a live status
+              card (&quot;what they know&quot;: problem type, GPS location,
+              trusted contact name), then a call or text to the trusted
+              contact. The setup screen stores insurance number and vehicle
+              description. The flow works without a network connection.
+              Everything the contact needs is already in the SMS draft.
+            </p>
+          </article>
+          <article className="fg-safety-card">
+            <p className="fg-safety-route">/unfamiliar</p>
+            <h3 className="fg-h3">Unfamiliar area</h3>
+            <p>
+              Safety destination flow for driving somewhere new. The user
+              picks a destination type (home, hotel, friend&apos;s, other).
+              The app starts a location-share session and opens a Messages
+              draft to the trusted contact. A lifeline modal names the model
+              honestly: the contact already has a text draft in Messages, a
+              real SMS rather than a live push.
+            </p>
+          </article>
+          <article className="fg-safety-card">
+            <p className="fg-safety-route">/share-location</p>
+            <h3 className="fg-h3">Share my location</h3>
+            <p>
+              Proactive sharing with a reason picker (heading somewhere new,
+              driving late, I feel uneasy, just in case). Choosing a reason
+              starts the session and opens Messages with a pre-filled
+              check-in draft. An active session shows the &quot;Already
+              sharing&quot; state with an End button and a re-send
+              affordance for when the contact missed the first message.
+            </p>
+          </article>
+        </div>
+      </section>
+
       {/* ── Craft / design system ────────────────────── */}
       <section className="project-section fg-section fg-craft" aria-labelledby="fg-craft">
         <h2 id="fg-craft">Reserved color. Calm, not alarm.</h2>
@@ -503,6 +574,15 @@ export default async function FreshGreensPage() {
               <li>Daylight-graded route + WCAG dash pattern</li>
               <li>Multi-row community browse + side-button safety column</li>
               <li>/pulled-over five-phase state machine with audio capture</li>
+              <li>
+                Mapbox Directions turn-by-turn narration (real
+                banner_instructions with live GPS distance), OSRM fallback for
+                offline or no-key routes
+              </li>
+              <li>
+                /report photo capture via expo-image-picker, cached out of the
+                picker so attachments survive iOS storage purges
+              </li>
               <li>Connect-Calendar with verified read-only event hookup</li>
               <li>iOS grouped-settings register across six pages</li>
               <li>Real-time weather, scheduled-departure & refuel reminders</li>
@@ -518,11 +598,6 @@ export default async function FreshGreensPage() {
                 cloud sync now exists. What&apos;s v2 is making it the
                 default and scaling the backend
               </li>
-              <li>
-                Turn-by-turn narration is placeholder copy. OSRM returns
-                geometry, the voice layer is next
-              </li>
-              <li>/report photo capture is stubbed pending the backend</li>
               <li>
                 Broader on-device test matrix is light; the iPhone path is the
                 shipped path
