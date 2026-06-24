@@ -95,6 +95,7 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
               alt={state.alt}
               width={1200}
               height={2600}
+              unoptimized={state.src.startsWith("/")}
               style={{
                 width: "auto",
                 height: "auto",

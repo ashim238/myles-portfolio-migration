@@ -14,14 +14,14 @@ import type { ReactNode } from "react";
 
 type PhoneFrameProps = {
   children: ReactNode;
-  variant?: "default" | "dark";
+  variant?: "default" | "dark" | "screenshot";
 };
 
 export function PhoneFrame({ children, variant = "default" }: PhoneFrameProps) {
   return (
     <div className={`fg-phone fg-phone--${variant}`} aria-hidden="true">
       <div className="fg-phone-bezel">
-        <span className="fg-phone-notch" />
+        {variant !== "screenshot" ? <span className="fg-phone-notch" /> : null}
         <div className="fg-phone-screen">{children}</div>
       </div>
     </div>
@@ -539,7 +539,7 @@ type FeatureCardProps = {
 export function FeatureCard({ number, title, copy, thesis, illustration }: FeatureCardProps) {
   return (
     <article className="fg-feature">
-      <PhoneFrame>{illustration}</PhoneFrame>
+      <PhoneFrame variant="screenshot">{illustration}</PhoneFrame>
       <div className="fg-feature-text">
         <p className="fg-feature-number">{number}</p>
         <h3 className="fg-feature-title">{title}</h3>

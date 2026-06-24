@@ -3240,6 +3240,31 @@ button:focus-visible,
   position: relative;
 }
 
+/* Real device screenshots: match capture aspect, no fake notch, no crop */
+.fg-phone--screenshot .fg-phone-bezel {
+  aspect-ratio: auto;
+  height: fit-content;
+}
+
+.fg-phone--screenshot .fg-phone-screen {
+  aspect-ratio: 1290 / 2796;
+  height: auto;
+}
+
+.fg-phone--screenshot .fg-phone-screen .expandable-trigger,
+.fg-phone--screenshot .fg-phone-screen .expandable-trigger img,
+.fg-phone--screenshot .fg-feature-shot {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.fg-phone--screenshot .fg-phone-screen .expandable-trigger img,
+.fg-phone--screenshot .fg-feature-shot {
+  object-fit: cover;
+  object-position: center center;
+}
+
 /* ── Hero route screen (the device illustration) ──────── */
 
 .fg-route-screen {
@@ -3969,9 +3994,23 @@ button:focus-visible,
   color: var(--muted);
 }
 
-/* ── Safety flows: text-only 2x2 grid of route descriptions ────── */
+/* ── Safety flows: menu screenshot + 2x2 route grid ───────────── */
+.fg-safety-visual {
+  margin: 2.2rem auto 0;
+  max-width: 276px;
+}
+
+.fg-safety-visual-caption {
+  margin: 0.85rem 0 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
 .fg-safety-grid {
-  margin-top: 1.8rem;
+  margin-top: 2.4rem;
   display: grid;
   gap: 1.8rem;
   border-top: 1px solid var(--line);

@@ -9,6 +9,7 @@ import {
   ArchitectureDiagram,
   DaylightLegend,
   FeatureCard,
+  PhoneFrame,
   ProcessGraph,
   SignalSwatches,
 } from "@/components/fresh-greens";
@@ -38,10 +39,10 @@ function RoutePreviewIllustration() {
   return (
     <ExpandableImage
       src="/projects/fresh-greens/feature-01-route-preview.png"
-      alt="Route preview screen: daylight-graded polyline from Manhattan to Newark Airport Express, ETA 31 min arriving at dusk, with a road conditions hazard chip and green Go button"
-      width={390}
-      height={844}
-      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+      alt="Route preview screen: Newark Liberty International Airport, 49 min arriving 7:34 PM, 16.7 mi via Pulaski Skyway, with an orange-to-purple daylight-graded polyline, 3 road conditions chip, and route pagination showing 1 of 2"
+      width={1290}
+      height={2796}
+      className="fg-feature-shot"
     />
   );
 }
@@ -50,10 +51,10 @@ function DaylightMapIllustration() {
   return (
     <ExpandableImage
       src="/projects/fresh-greens/feature-02-daylight-route.png"
-      alt="Daylight-graded route preview: 131-mile NJ Turnpike route arriving after dark, polyline shifting from orange at departure through mauve to indigo at destination, with 'Safest route · arriving after dark' and an All clear chip"
-      width={390}
-      height={844}
-      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+      alt="Daylight-graded route preview: 129-mile Vineland Flea Market trip via New Jersey Turnpike arriving 9:22 PM, dotted purple polyline with sun-to-moon slider near dusk and an All clear chip"
+      width={1290}
+      height={2796}
+      className="fg-feature-shot"
     />
   );
 }
@@ -62,10 +63,10 @@ function CommunityBrowseIllustration() {
   return (
     <ExpandableImage
       src="/projects/fresh-greens/feature-03-community-browse.png"
-      alt="Community browse screen: 'Trusted by your community' leads the discovery rows with a Community pick card for Sisters restaurant, filter chips for Black-Owned, Women-Owned, and LGBTQ+ Welcoming, and an Open now row below"
-      width={390}
-      height={844}
-      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+      alt="Community browse screen: Trusted by your community leads with a Sisters Community pick card, community note, filter chips for Black-Owned, Women-Owned, and LGBTQ+ Welcoming, and Kings County local recs header"
+      width={1290}
+      height={2796}
+      className="fg-feature-shot"
     />
   );
 }
@@ -74,10 +75,10 @@ function NavigationIllustration() {
   return (
     <ExpandableImage
       src="/projects/fresh-greens/feature-04-en-route.png"
-      alt="En-route navigation screen: dark green instruction header, 3D map with highlighted route, speedometer, and a right-side column with SOS, safety menu, and reporting buttons reachable from the driving thumb"
-      width={390}
-      height={844}
-      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+      alt="En-route navigation screen: Head out on Spencer Street instruction header, 3D map with highlighted route, and a right-side column with SOS, safety menu, and reporting buttons reachable from the driving thumb"
+      width={1290}
+      height={2796}
+      className="fg-feature-shot"
     />
   );
 }
@@ -86,10 +87,10 @@ function PulledOverIllustration() {
   return (
     <ExpandableImage
       src="/projects/fresh-greens/feature-05-pulled-over.png"
-      alt="/pulled-over screen: ACLU-sourced guidance bullets, ambient audio recording active with waveform, 'Saved to your phone, only you can access it' privacy note, and Continue button"
-      width={390}
-      height={844}
-      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+      alt="/pulled-over screen: ACLU-sourced guidance bullets, ambient audio recording active with waveform and timer, Read aloud affordance, Saved to your phone privacy note, and Continue button"
+      width={1290}
+      height={2796}
+      className="fg-feature-shot"
     />
   );
 }
@@ -98,10 +99,10 @@ function SettingsIllustration() {
   return (
     <ExpandableImage
       src="/projects/fresh-greens/feature-06-settings.png"
-      alt="Settings index screen: iOS grouped-list with Refuel reminders, Zone Preferences, Safety, and Saved places, plus Privacy & Terms and Sign out as separate groups"
-      width={390}
-      height={844}
-      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+      alt="Settings index screen: iOS grouped-list with Refuel reminders, Zone Preferences, Safety, Saved places, and Map guide, plus a Connect your calendar CTA and Privacy & Terms"
+      width={1290}
+      height={2796}
+      className="fg-feature-shot"
     />
   );
 }
@@ -110,10 +111,10 @@ function PreferredStationsIllustration() {
   return (
     <ExpandableImage
       src="/projects/fresh-greens/feature-08-preferred-stations.png"
-      alt="Gas on your route sheet: 10 stations, 3 trusted by you, with Shell Oil, Citgo Windhorse, and Citgo Gas & Diesel sorted to the top with green Trusted by you badges and filled gold stars, unstarred stations listed below"
-      width={390}
-      height={844}
-      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+      alt="Gas on your route sheet: 10 stations within about 1 mi, 1 trusted by you, with Shell Oil at the top showing a green Trusted by you badge and filled gold star"
+      width={1290}
+      height={2796}
+      className="fg-feature-shot"
     />
   );
 }
@@ -122,10 +123,22 @@ function CalendarIllustration() {
   return (
     <ExpandableImage
       src="/projects/fresh-greens/feature-07-calendar.png"
-      alt="Search screen showing upcoming calendar events: Dentist and Optometrist with addresses and time-until already populated, plus a fuel refuel reminder, all surfaced without opening a separate view"
-      width={390}
-      height={844}
-      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+      alt="Search screen showing an upcoming calendar reservation for HAAM Caribbean Plant Cuisine with address and time-until, plus a fuel refuel reminder and recent destinations, all without opening a separate view"
+      width={1290}
+      height={2796}
+      className="fg-feature-shot"
+    />
+  );
+}
+
+function SafetyMenuIllustration() {
+  return (
+    <ExpandableImage
+      src="/projects/fresh-greens/feature-09-safety-menu.png"
+      alt="Safety menu sheet opened from the en-route column: Pulled-over, Roadside assistance, Unfamiliar area, and Share location tiles, plus an Emergency row for trusted contact or 911"
+      width={1290}
+      height={2796}
+      className="fg-feature-shot"
     />
   );
 }
@@ -190,7 +203,7 @@ const FEATURES = [
   {
     number: "08",
     title: "Preferred stations · trusted gas, on your route",
-    copy: "Star any station from the on-route fuel sheet and it floats to the top on every future trip, a Trusted by you badge, filled star, sorted by distance. The subtitle says it plainly: 3 trusted by you. On the route preview, a quiet note appears when one falls near your chosen route. Personal, not algorithmic.",
+    copy: "Star any station from the on-route fuel sheet and it floats to the top on every future trip, a Trusted by you badge, filled star, sorted by distance. The subtitle says it plainly: 1 trusted by you. On the route preview, a quiet note appears when one falls near your chosen route. Personal, not algorithmic.",
     thesis:
       "The Green Book opened with a list of safe service stations for Black travelers. This is that, personal: the digital descendant of a community-trusted-establishments list, kept by the driver themselves.",
     illustration: <PreferredStationsIllustration />,
@@ -432,6 +445,16 @@ export default async function FreshGreensPage() {
             degrades cleanly to an SMS draft the trusted contact can act on.
           </p>
         </div>
+
+        <figure className="fg-safety-visual">
+          <PhoneFrame variant="screenshot">
+            <SafetyMenuIllustration />
+          </PhoneFrame>
+          <figcaption className="fg-safety-visual-caption">
+            The safety menu opened from the en-route column — four flows plus
+            emergency, one tap away.
+          </figcaption>
+        </figure>
 
         <div className="fg-safety-grid">
           <article className="fg-safety-card">

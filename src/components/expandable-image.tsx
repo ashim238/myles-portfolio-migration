@@ -25,6 +25,7 @@ export function ExpandableImage({
   priority,
 }: Props) {
   const { openLightbox } = useLightbox();
+  const isLocalAsset = src.startsWith("/");
 
   return (
     <button
@@ -42,6 +43,7 @@ export function ExpandableImage({
         className={className}
         sizes={sizes}
         priority={priority}
+        unoptimized={isLocalAsset}
       />
     </button>
   );
