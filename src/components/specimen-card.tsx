@@ -1,0 +1,83 @@
+"use client";
+
+import Image from "next/image";
+import { useLightbox } from "@/components/lightbox-provider";
+
+type SpecimenImage = {
+  src: string;
+  alt: string;
+  label?: string;
+};
+
+type SpecimenCardProps = {
+  designation: string;
+  classification: string;
+  material: string;
+  status: string;
+  images: SpecimenImage[];
+};
+
+export function SpecimenCard({
+  designation,
+  classification,
+  material,
+  status,
+  images,
+}: SpecimenCardProps) {
+  const { openLightbox } = useLightbox();
+
+  return (
+    <div className="specimen-card">
+      <div className="specimen-header">
+        <span className="specimen-label">SPECIMEN CATALOG</span>
+        <span className="specimen-id">NO. 001</span>
+      </div>
+
+      <div className="specimen-gallery">
+        {images.map((img, i) => (
+          <button
+            key={img.src}
+            type="button"
+            className="specimen-image-btn"
+            onClick={() => openLightbox(img.src, img.alt)}
+            aria-label={`Expand image: ${img.alt}`}
+          >
+            <Image
+              src={img.src}
+              alt={img.alt}
+              width={1200}
+              height={1600}
+              className="specimen-image"
+              unoptimized
+            />
+            {img.label ? (
+              <span className="specimen-image-label">{img.label}</span>
+            ) : null}
+            <span className="specimen-fig">
+              Fig. {String.fromCharCode(65 + i)}
+            </span>
+          </button>
+        ))}
+      </div>
+
+      <div className="specimen-meta">
+        <div className="specimen-row">
+          <span className="specimen-key">Designation</span>
+          <span className="specimen-val">{designation}</span>
+        </div>
+        <div className="specimen-row">
+          <span className="specimen-key">Class</span>
+          <span className="specimen-val">{classification}</span>
+        </div>
+        <div className="specimen-row">
+          <span className="specimen-key">Material</span>
+          <span className="specimen-val">{material}</span>
+        </div>
+        <div className="specimen-row specimen-row--status">
+          <span className="specimen-key">Status</span>
+          <span className="specimen-status">{status}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
