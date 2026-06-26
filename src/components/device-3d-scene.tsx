@@ -63,10 +63,10 @@ export default function Device3DScene({ screen }: Device3DSceneProps) {
       gl={{ antialias: true, alpha: true }}
       style={{ background: "transparent" }}
     >
-      <ambientLight intensity={0.55} />
-      <directionalLight position={[4, 6, 5]} intensity={1.5} castShadow />
-      <directionalLight position={[-5, 2, -3]} intensity={0.5} color="#6aab7e" />
-      <pointLight position={[0, 0, 4]} intensity={0.6} />
+      <ambientLight intensity={0.6} />
+      <directionalLight position={[4, 6, 5]} intensity={1.4} castShadow />
+      <directionalLight position={[-5, 2, -3]} intensity={0.35} color="#eef2f0" />
+      <pointLight position={[0, 0, 4]} intensity={0.5} />
 
       <Suspense fallback={null}>
         <Phone screen={screen} />

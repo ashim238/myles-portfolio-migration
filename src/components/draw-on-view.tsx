@@ -47,10 +47,17 @@ export function DrawOnView({
       return len;
     });
 
-    let played = false;
+    const park = (i: number) => {
+      const el = strokes[i];
+      el.style.transition = "none";
+      el.style.strokeDashoffset = `${lengths[i]}`;
+    };
+    strokes.forEach((_, i) => park(i));
+
+    let drawn = false;
     const draw = () => {
-      if (played) return;
-      played = true;
+      if (drawn) return;
+      drawn = true;
       strokes.forEach((el, i) => {
         el.style.transition = `stroke-dashoffset ${durationMs}ms cubic-bezier(0.22, 0.61, 0.36, 1) ${i * staggerMs}ms`;
         // Next frame so the parked state is committed before transitioning.
@@ -59,17 +66,23 @@ export function DrawOnView({
         });
       });
     };
+    const reset = () => {
+      if (!drawn) return;
+      drawn = false;
+      strokes.forEach((_, i) => park(i));
+    };
 
+    // Re-arm on every entry: a fast scroller who flew past it still sees the
+    // draw when they scroll back. Reset only once it has fully left the
+    // viewport, so partial-scroll jitter doesn't restart it mid-draw.
     const io = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (entry.isIntersecting) {
-            draw();
-            io.disconnect();
-          }
+          if (entry.intersectionRatio >= 0.5) draw();
+          else if (entry.intersectionRatio === 0) reset();
         }
       },
-      { threshold: 0.45 },
+      { threshold: [0, 0.5] },
     );
     io.observe(svg);
 
