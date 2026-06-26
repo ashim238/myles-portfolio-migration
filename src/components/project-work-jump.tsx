@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 import type { Project } from "@/lib/content";
+import { TransitionLink } from "@/components/transition-link";
 
 type ProjectWorkJumpProps = {
   currentSlug: string;
@@ -20,7 +20,7 @@ export function ProjectWorkJump({ currentSlug, projects }: ProjectWorkJumpProps)
       <ul className="project-work-jump-list" role="list">
         {others.map((project) => (
           <li key={project.slug}>
-            <Link className="project-work-jump-card" href={`/work/${project.slug}`}>
+            <TransitionLink className="project-work-jump-card" href={`/work/${project.slug}`}>
               <div className="project-work-jump-text">
                 <h3>{project.title}</h3>
                 <p>{project.summary}</p>
@@ -38,7 +38,7 @@ export function ProjectWorkJump({ currentSlug, projects }: ProjectWorkJumpProps)
                   sizes="(max-width: 639px) 100vw, 200px"
                 />
               ) : null}
-            </Link>
+            </TransitionLink>
           </li>
         ))}
       </ul>

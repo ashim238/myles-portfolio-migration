@@ -8318,3 +8318,112 @@ button:focus-visible,
 @media (prefers-reduced-motion: reduce) {
   .nv-booking-state > div { transition: none; }
 }
+
+/* ───────────────────────────────────────────────────────────────
+   Motion-play: scroll-driven section reveals (native, progressive)
+   Case-study sections rise + fade as they scroll into view. Pure CSS
+   scroll-driven animation — no JS, no library. Double-gated so content
+   is always visible by default: only animates where the browser
+   supports view() timelines AND the user allows motion. Because view()
+   is scroll-position-based (not time-based), sections already on screen
+   render at their correct progress immediately — no above-the-fold flash.
+   ─────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .project-page .project-section {
+      animation: sectionReveal linear both;
+      animation-timeline: view();
+      animation-range: entry 2% cover 16%;
+    }
+  }
+}
+
+@keyframes sectionReveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────
+   Motion-play: native View Transitions between case studies
+   Only runs when TransitionLink calls document.startViewTransition
+   (the "More work" cards). The homepage→case-study FLIP and ordinary
+   nav links never trigger these pseudos, so there is no conflict.
+   Reduced motion is handled in JS (TransitionLink falls back to a
+   plain push), and guarded again here.
+   ─────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: vtLeave 240ms cubic-bezier(0.4, 0, 1, 1) both;
+  }
+  ::view-transition-new(root) {
+    animation: vtEnter 420ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  }
+}
+
+@keyframes vtLeave {
+  to {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+}
+
+@keyframes vtEnter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────
+   Motion-play: 3D device block (Fresh Greens)
+   ─────────────────────────────────────────────────────────────── */
+.device-3d {
+  margin-top: 1.6rem;
+}
+
+.device-3d-stage {
+  position: relative;
+  width: 100%;
+  height: clamp(440px, 62vh, 660px);
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.device-3d-stage:active {
+  cursor: grabbing;
+}
+
+.device-3d-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 0.4rem;
+  transform: translateX(-50%);
+  margin: 0;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.device-3d-flat {
+  display: flex;
+  justify-content: center;
+}
+
+.device-3d-flat-img {
+  width: auto;
+  max-height: clamp(440px, 62vh, 660px);
+  border-radius: var(--rounded-lg, 1rem);
+}

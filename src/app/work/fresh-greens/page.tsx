@@ -13,6 +13,7 @@ import {
   ProcessGraph,
   SignalSwatches,
 } from "@/components/fresh-greens";
+import { Device3D } from "@/components/device-3d";
 import { getPublishedProjects } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -268,6 +269,7 @@ export default async function FreshGreensPage() {
           { title: "The research", id: "fg-research" },
           { title: "The architecture", id: "fg-approach" },
           { title: "What ships", id: "fg-features-heading" },
+          { title: "In your hand", id: "fg-device" },
           { title: "Safety flows", id: "fg-safety" },
           { title: "Reserved color", id: "fg-craft" },
           { title: "Process", id: "fg-process" },
@@ -427,6 +429,25 @@ export default async function FreshGreensPage() {
             />
           ))}
         </div>
+      </section>
+
+      {/* ── In your hand · 3D device ─────────────────── */}
+      <section
+        className="project-section fg-section fg-device-section"
+        aria-labelledby="fg-device"
+      >
+        <h2 id="fg-device">In your hand.</h2>
+        <div className="project-section-body">
+          <p>
+            The route preview is the load-bearing surface — it&apos;s where the
+            scoring layer shows its work. Here it is on the device it was
+            designed for. Drag to turn it.
+          </p>
+        </div>
+        <Device3D
+          screen="/projects/fresh-greens/feature-01-route-preview.png"
+          alt="Fresh Greens route preview running on an iPhone: a daylight-graded polyline with hazard chips and route pagination."
+        />
       </section>
 
       {/* ── En-route safety flows ────────────────────── */}

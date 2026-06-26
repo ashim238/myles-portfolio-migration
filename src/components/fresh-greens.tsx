@@ -4,6 +4,7 @@
 // don't have.
 
 import type { ReactNode } from "react";
+import { DrawOnView } from "@/components/draw-on-view";
 
 /* ──────────────────────────────────────────
    Phone frame
@@ -115,6 +116,7 @@ export function ArchitectureDiagram() {
   return (
     <figure className="fg-arch">
       <div className="fg-arch-scroll">
+      <DrawOnView>
       <svg
         viewBox="0 0 1250 420"
         xmlns="http://www.w3.org/2000/svg"
@@ -164,7 +166,7 @@ export function ArchitectureDiagram() {
         </g>
 
         {/* Arrows from sources into the adapter layer */}
-        <g stroke="currentColor" strokeWidth="1" fill="none" markerEnd="url(#fg-arrow)" opacity="0.45">
+        <g data-draw stroke="currentColor" strokeWidth="1" fill="none" markerEnd="url(#fg-arrow)" opacity="0.45">
           <line x1="100" y1="64" x2="100" y2="100" />
           <line x1="250" y1="64" x2="250" y2="100" />
           <line x1="360" y1="64" x2="360" y2="100" />
@@ -198,6 +200,7 @@ export function ArchitectureDiagram() {
 
         {/* Arrow adapter → scoring */}
         <g
+          data-draw
           stroke="currentColor"
           strokeWidth="1.2"
           fill="none"
@@ -238,6 +241,7 @@ export function ArchitectureDiagram() {
 
         {/* Arrow scoring → screen */}
         <g
+          data-draw
           stroke="currentColor"
           strokeWidth="1.2"
           fill="none"
@@ -268,6 +272,7 @@ export function ArchitectureDiagram() {
           </text>
         </g>
       </svg>
+      </DrawOnView>
       </div>
       <figcaption className="fg-arch-caption">
         Eight public data sources feed an adapter, a deterministic scoring layer,
@@ -291,6 +296,7 @@ export function ProcessGraph() {
   return (
     <figure className="fg-arch fg-arch--process">
       <div className="fg-arch-scroll">
+      <DrawOnView>
       <svg
         viewBox="0 0 720 280"
         xmlns="http://www.w3.org/2000/svg"
@@ -338,6 +344,7 @@ export function ProcessGraph() {
         {/* Three converging arrows — left and right curve inward,
             center drops straight */}
         <g
+          data-draw
           stroke="currentColor"
           strokeWidth="1"
           fill="none"
@@ -380,6 +387,7 @@ export function ProcessGraph() {
 
         {/* Output arrow — single line down to the outcome label */}
         <g
+          data-draw
           stroke="currentColor"
           strokeWidth="1.2"
           fill="none"
@@ -401,6 +409,7 @@ export function ProcessGraph() {
           Any decision, reconstructible.
         </text>
       </svg>
+      </DrawOnView>
       </div>
       <figcaption className="fg-arch-caption">
         Codebase, design-conversation log, and thesis merge into one queryable

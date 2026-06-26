@@ -1,3 +1,5 @@
+import { CountUp } from "@/components/count-up";
+
 type ProjectHighlightProps = {
   quote?: string;
   metricLabel?: string;
@@ -22,7 +24,9 @@ export function ProjectHighlight({
       ) : null}
       {metricLabel && metricValue ? (
         <p className="project-highlight-metric">
-          <span className="project-highlight-metric-value">{metricValue}</span>
+          <span className="project-highlight-metric-value">
+            <CountUp value={metricValue} />
+          </span>
           <span className="project-highlight-metric-label">{metricLabel}</span>
         </p>
       ) : null}
