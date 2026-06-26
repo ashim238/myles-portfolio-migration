@@ -25,7 +25,7 @@ export default async function Home() {
       <section className="hero">
         <h1 className="hero-name">{siteConfig.name}</h1>
         <HeroInterestTyper awaitHomeEntrance />
-        <p className="hero-tagline">Product designer working where interaction craft meets social responsibility. I tend to carry the work past the prototype, into the build.</p>
+        <p className="hero-tagline">Product designer working where interaction craft meets social responsibility — and I build past the prototype.</p>
       </section>
 
       <section className="work" id="work">
