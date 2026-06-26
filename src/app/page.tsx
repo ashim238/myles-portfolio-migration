@@ -25,11 +25,16 @@ export default async function Home() {
       <section className="hero">
         <h1 className="hero-name">{siteConfig.name}</h1>
         <HeroInterestTyper awaitHomeEntrance />
-        <p className="hero-tagline">Focused on the balance between interaction design & social responsibility.</p>
+        <p className="hero-tagline">Product designer working where interaction craft meets social responsibility. I tend to carry the work past the prototype, into the build.</p>
       </section>
 
       <section className="work" id="work">
         <h2>Selected Work</h2>
+        <p className="work-lede">
+          Each of these starts from the same question — who does the product
+          leave out? Black travelers on the road, students decoding financial
+          aid, visitors who want a neighborhood instead of a checklist.
+        </p>
         <WorkShowcase projects={projects} />
       </section>
 

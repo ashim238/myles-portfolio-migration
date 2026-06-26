@@ -783,6 +783,7 @@ html.home-intro-wait .home-page .hero-name,
 html.home-intro-wait .home-page .hero-typer,
 html.home-intro-wait .home-page .hero-tagline,
 html.home-intro-wait .home-page #work > h2,
+html.home-intro-wait .home-page #work > .work-lede,
 html.home-intro-wait .home-page #work > .work-list > .work-item {
   opacity: 0;
 }
@@ -791,6 +792,7 @@ html.home-intro-wait .home-page #work > .work-list > .work-item {
 .home-page.home-entrance-active .hero,
 .home-page.home-entrance-active .hero-tagline,
 .home-page.home-entrance-active .work:not(.work-drafts) > h2,
+.home-page.home-entrance-active .work:not(.work-drafts) > .work-lede,
 .home-page.home-entrance-active .work:not(.work-drafts) > .work-list > .work-item {
   animation: none !important;
 }
@@ -801,6 +803,7 @@ html.home-intro-wait .home-page #work > .work-list > .work-item {
 .home-page.home-entrance-active:not(.home-entrance-done) .hero-typer,
 .home-page.home-entrance-active:not(.home-entrance-done) .hero-tagline,
 .home-page.home-entrance-active:not(.home-entrance-done) #work > h2,
+.home-page.home-entrance-active:not(.home-entrance-done) #work > .work-lede,
 .home-page.home-entrance-active:not(.home-entrance-done) #work > .work-list > .work-item {
   opacity: 0;
 }
@@ -814,6 +817,7 @@ html.home-intro-wait .home-page #work > .work-list > .work-item {
 .home-page.home-entrance-done:not(.home-entrance-skipped) .hero-typer,
 .home-page.home-entrance-done:not(.home-entrance-skipped) .hero-tagline,
 .home-page.home-entrance-done:not(.home-entrance-skipped) #work > h2,
+.home-page.home-entrance-done:not(.home-entrance-skipped) #work > .work-lede,
 .home-page.home-entrance-done:not(.home-entrance-skipped) #work > .work-list > .work-item {
   animation: none !important;
   opacity: 1;
@@ -1070,6 +1074,15 @@ button:focus-visible,
   letter-spacing: var(--track-caps);
   color: var(--muted);
   margin-bottom: 0.75rem;
+}
+
+.work-lede {
+  max-width: 54ch;
+  margin: 0 0 2.4rem;
+  color: var(--muted);
+  font-size: 1.03rem;
+  line-height: var(--lead-body);
+  text-wrap: pretty;
 }
 
 .work-list {

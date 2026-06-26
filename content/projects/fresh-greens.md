@@ -7,6 +7,7 @@ timeframe: 2025
 status: published
 order: 1
 coverImage: /projects/fresh-greens/cover.png
+highlightQuote: A shipped wayfinding app that weights community safety knowledge alongside public data — every route traceable to an auditable source.
 tags:
   - Thesis
   - Mobile · React Native
