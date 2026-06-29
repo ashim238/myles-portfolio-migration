@@ -8842,6 +8842,25 @@ button:focus-visible,
   ::view-transition-new(root) {
     animation: vtEnter 420ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
   }
+
+  /* Shared elements: the hero cover and title are lifted out of the root
+     crossfade and given their own view-transition group, so between two case
+     studies they morph (position + size interpolate, contents crossfade)
+     instead of blinking. Each case study has exactly one of each, so the names
+     stay unique. Navigating somewhere without them (e.g. back home) just fades
+     the old one out — no special-casing needed. */
+  .project-cover-image {
+    view-transition-name: project-cover;
+  }
+  .project-hero-title {
+    view-transition-name: project-title;
+  }
+
+  ::view-transition-group(project-cover),
+  ::view-transition-group(project-title) {
+    animation-duration: 460ms;
+    animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
 }
 
 @keyframes vtLeave {

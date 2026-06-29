@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ExpandableImage } from "@/components/expandable-image";
 import { ProjectCover } from "@/components/project-cover";
+import { TransitionLink } from "@/components/transition-link";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
@@ -231,10 +231,10 @@ export default async function FreshGreensPage() {
     >
       <SiteNav />
       <nav className="project-topbar" aria-label="Breadcrumb">
-        <Link href="/#work">
+        <TransitionLink href="/#work">
           <span aria-hidden="true">← </span>
           Selected work
-        </Link>
+        </TransitionLink>
       </nav>
 
       {/* ── Hero ─────────────────────────────────────── */}
