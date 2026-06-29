@@ -43,6 +43,7 @@ function RoutePreviewIllustration() {
       alt="Route preview screen: Newark Liberty International Airport, 49 min arriving 7:34 PM, 16.7 mi via Pulaski Skyway, with an orange-to-purple daylight-graded polyline, 3 road conditions chip, and route pagination showing 1 of 2"
       width={1290}
       height={2796}
+      sizes="(max-width: 768px) 70vw, 280px"
       className="fg-feature-shot"
     />
   );
@@ -55,6 +56,7 @@ function DaylightMapIllustration() {
       alt="Daylight-graded route preview: 129-mile Vineland Flea Market trip via New Jersey Turnpike arriving 9:22 PM, dotted purple polyline with sun-to-moon slider near dusk and an All clear chip"
       width={1290}
       height={2796}
+      sizes="(max-width: 768px) 70vw, 280px"
       className="fg-feature-shot"
     />
   );
@@ -67,6 +69,7 @@ function CommunityBrowseIllustration() {
       alt="Community browse screen: Trusted by your community leads with a Sisters Community pick card, community note, filter chips for Black-Owned, Women-Owned, and LGBTQ+ Welcoming, and Kings County local recs header"
       width={1290}
       height={2796}
+      sizes="(max-width: 768px) 70vw, 280px"
       className="fg-feature-shot"
     />
   );
@@ -79,6 +82,7 @@ function NavigationIllustration() {
       alt="En-route navigation screen: Head out on Spencer Street instruction header, 3D map with highlighted route, and a right-side column with SOS, safety menu, and reporting buttons reachable from the driving thumb"
       width={1290}
       height={2796}
+      sizes="(max-width: 768px) 70vw, 280px"
       className="fg-feature-shot"
     />
   );
@@ -91,6 +95,7 @@ function PulledOverIllustration() {
       alt="/pulled-over screen: ACLU-sourced guidance bullets, ambient audio recording active with waveform and timer, Read aloud affordance, Saved to your phone privacy note, and Continue button"
       width={1290}
       height={2796}
+      sizes="(max-width: 768px) 70vw, 280px"
       className="fg-feature-shot"
     />
   );
@@ -103,6 +108,7 @@ function SettingsIllustration() {
       alt="Settings index screen: iOS grouped-list with Refuel reminders, Zone Preferences, Safety, Saved places, and Map guide, plus a Connect your calendar CTA and Privacy & Terms"
       width={1290}
       height={2796}
+      sizes="(max-width: 768px) 70vw, 280px"
       className="fg-feature-shot"
     />
   );
@@ -115,6 +121,7 @@ function PreferredStationsIllustration() {
       alt="Gas on your route sheet: 10 stations within about 1 mi, 1 trusted by you, with Shell Oil at the top showing a green Trusted by you badge and filled gold star"
       width={1290}
       height={2796}
+      sizes="(max-width: 768px) 70vw, 280px"
       className="fg-feature-shot"
     />
   );
@@ -127,6 +134,7 @@ function CalendarIllustration() {
       alt="Search screen showing an upcoming calendar reservation for HAAM Caribbean Plant Cuisine with address and time-until, plus a fuel refuel reminder and recent destinations, all without opening a separate view"
       width={1290}
       height={2796}
+      sizes="(max-width: 768px) 70vw, 280px"
       className="fg-feature-shot"
     />
   );
@@ -139,6 +147,7 @@ function SafetyMenuIllustration() {
       alt="Safety menu sheet opened from the en-route column: Pulled-over, Roadside assistance, Unfamiliar area, and Share location tiles, plus an Emergency row for trusted contact or 911"
       width={1290}
       height={2796}
+      sizes="(max-width: 768px) 70vw, 280px"
       className="fg-feature-shot"
     />
   );

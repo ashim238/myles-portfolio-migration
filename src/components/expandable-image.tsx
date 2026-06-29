@@ -12,6 +12,8 @@ type Props = {
   className?: string;
   sizes?: string;
   priority?: boolean;
+  /** Opt out of Next's image optimizer (e.g. animated GIFs). */
+  unoptimized?: boolean;
 };
 
 export function ExpandableImage({
@@ -23,9 +25,9 @@ export function ExpandableImage({
   className,
   sizes,
   priority,
+  unoptimized,
 }: Props) {
   const { openLightbox } = useLightbox();
-  const isLocalAsset = src.startsWith("/");
 
   return (
     <button
@@ -41,9 +43,11 @@ export function ExpandableImage({
         height={height}
         style={style}
         className={className}
+        // Per-call sizes lets the optimizer ship a right-sized variant; without
+        // it the optimizer still converts PNG → AVIF/WebP at full resolution.
         sizes={sizes}
         priority={priority}
-        unoptimized={isLocalAsset}
+        unoptimized={unoptimized}
       />
     </button>
   );

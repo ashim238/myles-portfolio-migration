@@ -70,6 +70,7 @@ export function Device3D({ screen, alt }: Device3DProps) {
             alt={alt}
             width={1290}
             height={2796}
+            sizes="(max-width: 768px) 70vw, 320px"
             className="device-3d-flat-img"
           />
         </div>
