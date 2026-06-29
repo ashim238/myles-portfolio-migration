@@ -2636,6 +2636,29 @@ button:focus-visible,
   display: none;
 }
 
+/* On narrow desktop / tablet the horizontal pill strip can't fit all sections,
+   so it scrolls. Fade both edges so the overflow reads as "scroll for more"
+   instead of an abrupt cut. Dropped while a pill is keyboard-focused so focus
+   rings near the edges are never clipped by the mask. */
+@media (min-width: 769px) and (max-width: 1279px) {
+  .project-toc-list:not(:focus-within) {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 22px,
+      #000 calc(100% - 30px),
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 22px,
+      #000 calc(100% - 30px),
+      transparent
+    );
+  }
+}
+
 .project-toc-item {
   flex: 0 0 auto;
 }
