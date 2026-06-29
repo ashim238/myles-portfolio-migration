@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ExpandableImage } from "@/components/expandable-image";
 import { ProjectCover } from "@/components/project-cover";
+import { TransitionLink } from "@/components/transition-link";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
@@ -13,6 +13,7 @@ import {
   ProcessGraph,
   SignalSwatches,
 } from "@/components/fresh-greens";
+import { Device3D } from "@/components/device-3d";
 import { getPublishedProjects } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -42,6 +43,7 @@ function RoutePreviewIllustration() {
       alt="Route preview screen: Newark Liberty International Airport, 49 min arriving 7:34 PM, 16.7 mi via Pulaski Skyway, with an orange-to-purple daylight-graded polyline, 3 road conditions chip, and route pagination showing 1 of 2"
       width={1290}
       height={2796}
+      sizes="(max-width: 768px) 70vw, 280px"
       className="fg-feature-shot"
     />
   );
@@ -54,6 +56,7 @@ function DaylightMapIllustration() {
       alt="Daylight-graded route preview: 129-mile Vineland Flea Market trip via New Jersey Turnpike arriving 9:22 PM, dotted purple polyline with sun-to-moon slider near dusk and an All clear chip"
       width={1290}
       height={2796}
+      sizes="(max-width: 768px) 70vw, 280px"
       className="fg-feature-shot"
     />
   );
@@ -66,6 +69,7 @@ function CommunityBrowseIllustration() {
       alt="Community browse screen: Trusted by your community leads with a Sisters Community pick card, community note, filter chips for Black-Owned, Women-Owned, and LGBTQ+ Welcoming, and Kings County local recs header"
       width={1290}
       height={2796}
+      sizes="(max-width: 768px) 70vw, 280px"
       className="fg-feature-shot"
     />
   );
@@ -78,6 +82,7 @@ function NavigationIllustration() {
       alt="En-route navigation screen: Head out on Spencer Street instruction header, 3D map with highlighted route, and a right-side column with SOS, safety menu, and reporting buttons reachable from the driving thumb"
       width={1290}
       height={2796}
+      sizes="(max-width: 768px) 70vw, 280px"
       className="fg-feature-shot"
     />
   );
@@ -90,6 +95,7 @@ function PulledOverIllustration() {
       alt="/pulled-over screen: ACLU-sourced guidance bullets, ambient audio recording active with waveform and timer, Read aloud affordance, Saved to your phone privacy note, and Continue button"
       width={1290}
       height={2796}
+      sizes="(max-width: 768px) 70vw, 280px"
       className="fg-feature-shot"
     />
   );
@@ -102,6 +108,7 @@ function SettingsIllustration() {
       alt="Settings index screen: iOS grouped-list with Refuel reminders, Zone Preferences, Safety, Saved places, and Map guide, plus a Connect your calendar CTA and Privacy & Terms"
       width={1290}
       height={2796}
+      sizes="(max-width: 768px) 70vw, 280px"
       className="fg-feature-shot"
     />
   );
@@ -114,6 +121,7 @@ function PreferredStationsIllustration() {
       alt="Gas on your route sheet: 10 stations within about 1 mi, 1 trusted by you, with Shell Oil at the top showing a green Trusted by you badge and filled gold star"
       width={1290}
       height={2796}
+      sizes="(max-width: 768px) 70vw, 280px"
       className="fg-feature-shot"
     />
   );
@@ -126,6 +134,7 @@ function CalendarIllustration() {
       alt="Search screen showing an upcoming calendar reservation for HAAM Caribbean Plant Cuisine with address and time-until, plus a fuel refuel reminder and recent destinations, all without opening a separate view"
       width={1290}
       height={2796}
+      sizes="(max-width: 768px) 70vw, 280px"
       className="fg-feature-shot"
     />
   );
@@ -138,6 +147,7 @@ function SafetyMenuIllustration() {
       alt="Safety menu sheet opened from the en-route column: Pulled-over, Roadside assistance, Unfamiliar area, and Share location tiles, plus an Emergency row for trusted contact or 911"
       width={1290}
       height={2796}
+      sizes="(max-width: 768px) 70vw, 280px"
       className="fg-feature-shot"
     />
   );
@@ -221,10 +231,10 @@ export default async function FreshGreensPage() {
     >
       <SiteNav />
       <nav className="project-topbar" aria-label="Breadcrumb">
-        <Link href="/#work">
+        <TransitionLink href="/#work">
           <span aria-hidden="true">← </span>
           Selected work
-        </Link>
+        </TransitionLink>
       </nav>
 
       {/* ── Hero ─────────────────────────────────────── */}
@@ -268,6 +278,7 @@ export default async function FreshGreensPage() {
           { title: "The research", id: "fg-research" },
           { title: "The architecture", id: "fg-approach" },
           { title: "What ships", id: "fg-features-heading" },
+          { title: "In your hand", id: "fg-device" },
           { title: "Safety flows", id: "fg-safety" },
           { title: "Reserved color", id: "fg-craft" },
           { title: "Process", id: "fg-process" },
@@ -427,6 +438,25 @@ export default async function FreshGreensPage() {
             />
           ))}
         </div>
+      </section>
+
+      {/* ── In your hand · 3D device ─────────────────── */}
+      <section
+        className="project-section fg-section fg-device-section"
+        aria-labelledby="fg-device"
+      >
+        <h2 id="fg-device">In your hand.</h2>
+        <div className="project-section-body">
+          <p>
+            The route preview is the load-bearing surface — it&apos;s where the
+            scoring layer shows its work. Here it is on the device it was
+            designed for. Drag to turn it.
+          </p>
+        </div>
+        <Device3D
+          screen="/projects/fresh-greens/feature-01-route-preview.png"
+          alt="Fresh Greens route preview running on an iPhone: a daylight-graded polyline with hazard chips and route pagination."
+        />
       </section>
 
       {/* ── En-route safety flows ────────────────────── */}

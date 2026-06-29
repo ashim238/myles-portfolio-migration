@@ -31,6 +31,7 @@ function runEntranceTimeline(main: HTMLElement, settle: (skipAnimation: boolean)
   const heroTyper = main.querySelector(".hero-typer");
   const heroTagline = main.querySelector(".hero-tagline");
   const workHeading = main.querySelector("#work > h2");
+  const workLede = main.querySelector("#work > .work-lede");
   const workItems = main.querySelectorAll("#work > .work-list > .work-item");
 
   const fadeIn = {
@@ -72,6 +73,10 @@ function runEntranceTimeline(main: HTMLElement, settle: (skipAnimation: boolean)
 
   if (workHeading) {
     timeline.add(workHeading, { ...fadeIn, y: [8, 0], duration: 320 }, 720);
+  }
+
+  if (workLede) {
+    timeline.add(workLede, { ...fadeIn, y: [6, 0], duration: 320 }, 760);
   }
 
   if (workItems.length) {

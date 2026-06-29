@@ -783,6 +783,7 @@ html.home-intro-wait .home-page .hero-name,
 html.home-intro-wait .home-page .hero-typer,
 html.home-intro-wait .home-page .hero-tagline,
 html.home-intro-wait .home-page #work > h2,
+html.home-intro-wait .home-page #work > .work-lede,
 html.home-intro-wait .home-page #work > .work-list > .work-item {
   opacity: 0;
 }
@@ -791,6 +792,7 @@ html.home-intro-wait .home-page #work > .work-list > .work-item {
 .home-page.home-entrance-active .hero,
 .home-page.home-entrance-active .hero-tagline,
 .home-page.home-entrance-active .work:not(.work-drafts) > h2,
+.home-page.home-entrance-active .work:not(.work-drafts) > .work-lede,
 .home-page.home-entrance-active .work:not(.work-drafts) > .work-list > .work-item {
   animation: none !important;
 }
@@ -801,6 +803,7 @@ html.home-intro-wait .home-page #work > .work-list > .work-item {
 .home-page.home-entrance-active:not(.home-entrance-done) .hero-typer,
 .home-page.home-entrance-active:not(.home-entrance-done) .hero-tagline,
 .home-page.home-entrance-active:not(.home-entrance-done) #work > h2,
+.home-page.home-entrance-active:not(.home-entrance-done) #work > .work-lede,
 .home-page.home-entrance-active:not(.home-entrance-done) #work > .work-list > .work-item {
   opacity: 0;
 }
@@ -814,6 +817,7 @@ html.home-intro-wait .home-page #work > .work-list > .work-item {
 .home-page.home-entrance-done:not(.home-entrance-skipped) .hero-typer,
 .home-page.home-entrance-done:not(.home-entrance-skipped) .hero-tagline,
 .home-page.home-entrance-done:not(.home-entrance-skipped) #work > h2,
+.home-page.home-entrance-done:not(.home-entrance-skipped) #work > .work-lede,
 .home-page.home-entrance-done:not(.home-entrance-skipped) #work > .work-list > .work-item {
   animation: none !important;
   opacity: 1;
@@ -1070,6 +1074,15 @@ button:focus-visible,
   letter-spacing: var(--track-caps);
   color: var(--muted);
   margin-bottom: 0.75rem;
+}
+
+.work-lede {
+  max-width: 54ch;
+  margin: 0 0 2.4rem;
+  color: var(--muted);
+  font-size: 1.03rem;
+  line-height: var(--lead-body);
+  text-wrap: pretty;
 }
 
 .work-list {
@@ -2580,6 +2593,10 @@ button:focus-visible,
 }
 
 .project-toc {
+  /* The instrument's fill colour. Neutral by default so the shared shell stays
+     neutral; each case study opts into its own accent via --toc-accent. */
+  --toc-fill: var(--toc-accent, var(--foreground));
+  --toc-progress: 0;
   position: sticky;
   top: 0;
   z-index: 40;
@@ -2594,11 +2611,20 @@ button:focus-visible,
   border-bottom-color: var(--line);
 }
 
+/* Desktop: the list and the reading-time readout share one row. */
+.project-toc-track {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
 /* Desktop: horizontal scrollable list */
 .project-toc-list {
   list-style: none;
   padding: 0;
   margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
   display: flex;
   gap: 0.15rem;
   overflow-x: auto;
@@ -2608,6 +2634,29 @@ button:focus-visible,
 
 .project-toc-list::-webkit-scrollbar {
   display: none;
+}
+
+/* On narrow desktop / tablet the horizontal pill strip can't fit all sections,
+   so it scrolls. Fade both edges so the overflow reads as "scroll for more"
+   instead of an abrupt cut. Dropped while a pill is keyboard-focused so focus
+   rings near the edges are never clipped by the mask. */
+@media (min-width: 769px) and (max-width: 1279px) {
+  .project-toc-list:not(:focus-within) {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 22px,
+      #000 calc(100% - 30px),
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 22px,
+      #000 calc(100% - 30px),
+      transparent
+    );
+  }
 }
 
 .project-toc-item {
@@ -2641,9 +2690,10 @@ button:focus-visible,
 
 .project-toc-link {
   display: flex;
+  position: relative;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.45rem 0.65rem;
+  padding: 0.45rem 0.65rem 0.5rem;
   border: none;
   border-radius: 0.3rem;
   background: transparent;
@@ -2674,6 +2724,9 @@ button:focus-visible,
 
 .project-toc-link--active {
   color: var(--foreground);
+  /* The section you're reading becomes a quiet accent moment: a faint wash that
+     ties to its filling rail and the accent dot. */
+  background: color-mix(in srgb, var(--toc-fill) 10%, transparent);
 }
 
 .project-toc-dot {
@@ -2687,8 +2740,14 @@ button:focus-visible,
 }
 
 .project-toc-link--active .project-toc-dot {
-  background: var(--foreground);
-  transform: scale(1.35);
+  background: var(--toc-fill);
+  transform: scale(1.5);
+}
+
+/* A section you've read past keeps a filled dot, so the whole spine reads as
+   read / reading / unread at a glance. */
+.project-toc-item--read .project-toc-dot {
+  background: color-mix(in srgb, var(--foreground) 55%, transparent);
 }
 
 .project-toc-num {
@@ -2698,13 +2757,76 @@ button:focus-visible,
   transition: opacity 200ms ease;
 }
 
-.project-toc-link--active .project-toc-num {
+.project-toc-link--active .project-toc-num,
+.project-toc-item--read .project-toc-num {
   opacity: 1;
 }
 
 .project-toc-text {
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* ── The reading rail ──
+   Each section label carries a hairline beneath it that fills left-to-right as
+   you read through that section — the segmented scrubber of the spine. The
+   fill width is driven from JS via --seg-fill on the parent list item. */
+.project-toc-rail {
+  position: absolute;
+  left: 0.65rem;
+  right: 0.65rem;
+  bottom: 1px;
+  height: 2px;
+  background: color-mix(in srgb, var(--line) 55%, transparent);
+  overflow: hidden;
+}
+
+.project-toc-rail::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--toc-fill);
+  transform: scaleX(var(--seg-fill, 0));
+  transform-origin: left center;
+  transition: transform 120ms linear;
+}
+
+/* Reading-time readout — decorative reading aid (aria-hidden); the section
+   list already conveys position to assistive tech. */
+.project-toc-readout {
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 280ms ease;
+}
+
+/* Fades in to full opacity (not 0.8) so muted text keeps its >=4.5:1 contrast
+   in light theme — at 0.8 over #fafafa it dropped to ~4.1:1. */
+.project-toc--sticky .project-toc-readout {
+  opacity: 1;
+}
+
+/* Overall progress hairline — used on the mobile collapsed bar (hidden on
+   desktop, where the segmented rails carry progress). */
+.project-toc-progress {
+  display: none;
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 2px;
+  width: 100%;
+  transform: scaleX(var(--toc-progress, 0));
+  transform-origin: left center;
+  background: var(--toc-fill);
+}
+
+.project-toc-readout-mobile {
+  display: none;
 }
 
 /* Mobile toggle (hidden on desktop) */
@@ -2753,10 +2875,46 @@ button:focus-visible,
     display: flex;
     gap: 0.35rem;
     align-items: center;
+    min-width: 0;
+  }
+
+  .project-toc-toggle-label,
+  .project-toc-toggle-end {
+    flex: 0 1 auto;
   }
 
   .project-toc-toggle .project-toc-num {
     opacity: 0.5;
+  }
+
+  /* Mobile: collapsed bar carries the overall progress + a compact readout. */
+  .project-toc-toggle-end {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  .project-toc-readout-mobile {
+    display: inline;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.04em;
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .project-toc--sticky .project-toc-progress {
+    display: block;
+  }
+
+  /* Desktop readout and per-pill rails are hidden in the collapsed list. */
+  .project-toc-readout {
+    display: none;
+  }
+
+  .project-toc-rail {
+    display: none;
   }
 
   .project-toc-list {
@@ -2779,6 +2937,208 @@ button:focus-visible,
 
   .project-toc-link--active {
     background: transparent;
+  }
+}
+
+/* Each case study lends the reading instrument its own accent. The shared
+   shell stays neutral by default (--toc-fill falls back to --foreground);
+   these opt-ins let the spine carry the project's voice. */
+.fg-page { --toc-accent: var(--fg-accent); }
+.tt-page { --toc-accent: var(--tt-accent); }
+.uf-page { --toc-accent: var(--uf-accent-warm); }
+.nv-page { --toc-accent: var(--nv-accent); }
+
+/* The rail fill tracks scroll position directly; with reduced motion we drop
+   the catch-up easing so it never animates on its own. The progress readout
+   stays — it's information, not decoration. */
+@media (prefers-reduced-motion: reduce) {
+  .project-toc-rail::after {
+    transition: none;
+  }
+  .project-toc-readout {
+    transition: none;
+  }
+}
+
+/* ── Vertical reading spine (wide screens) ──
+   Above 1280px there's room in the left gutter for the table of contents to
+   stand up into a true vertical spine: section dots strung on a continuous
+   rail that fills downward as you read each section. Same DOM, same keyboard
+   nav and active tracking — only the orientation changes. Labels stay out of
+   the way (numbers + dots) and fly out on hover/focus so they never collide
+   with the text column. */
+@media (min-width: 1280px) {
+  .project-toc {
+    position: fixed;
+    /* Anchored just left of the centered text column, clamped on-screen. */
+    left: max(1.5rem, calc(50% - 37rem));
+    top: 50%;
+    transform: translateY(-50%);
+    /* Only as wide as the dot + number column, so the fixed box never sits over
+       the text. Flyout labels overflow it on hover (pointer-events: none). */
+    width: 3.6rem;
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border-bottom: none;
+  }
+
+  .project-toc--sticky {
+    border-bottom: none;
+  }
+
+  .project-toc-track {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.6rem;
+  }
+
+  .project-toc-list {
+    flex-direction: column;
+    gap: 0;
+    overflow: visible;
+  }
+
+  .project-toc-item {
+    position: relative;
+  }
+
+  .project-toc-link {
+    min-height: 2.3rem;
+    padding: 0 0.5rem 0 0.9rem;
+    gap: 0.6rem;
+    border-radius: var(--rounded-sm);
+  }
+
+  /* Side mode reads via dot + label, not the row wash. */
+  .project-toc-link--active {
+    background: transparent;
+  }
+
+  /* The connector rail rotates: a vertical segment from each dot down to the
+     next, filling with --seg-fill as that section is read. */
+  .project-toc-rail {
+    left: calc(0.9rem + 1.5px);
+    top: 50%;
+    right: auto;
+    bottom: auto;
+    width: 2px;
+    height: 2.3rem;
+  }
+
+  .project-toc-item:last-child .project-toc-rail {
+    display: none;
+  }
+
+  .project-toc-rail::after {
+    transform: scaleY(var(--seg-fill, 0));
+    transform-origin: top center;
+  }
+
+  .project-toc-link--active .project-toc-num {
+    color: var(--toc-fill);
+    opacity: 1;
+  }
+
+  /* Labels are absolute so revealing them never shifts the dot column or
+     collides with body text until intentionally summoned. */
+  .project-toc-text {
+    position: absolute;
+    left: 2.5rem;
+    top: 50%;
+    transform: translateY(-50%) translateX(-4px);
+    max-width: 14rem;
+    padding: 0.18rem 0.5rem;
+    border-radius: var(--rounded-sm);
+    background: var(--surface);
+    color: var(--foreground);
+    border: 1px solid var(--line);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease, transform 200ms ease;
+  }
+
+  .project-toc-link:hover .project-toc-text,
+  .project-toc-link:focus-visible .project-toc-text {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  /* The vertical fill already shows progress here, so the numeric readout
+     would only crowd the narrow gutter — drop it in spine mode. */
+  .project-toc-readout {
+    display: none;
+  }
+}
+
+@media (min-width: 1280px) and (prefers-reduced-motion: reduce) {
+  .project-toc-text {
+    transition: opacity 200ms ease;
+  }
+}
+
+/* Polite live region for the active section — visually hidden, announced to
+   assistive tech so reading progress isn't visual-only. */
+.project-toc-live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Back to top ──
+   Quiet return for long case studies. Hidden until the reader is well past the
+   fold; flat (1px line, no shadow) per the elevation rule. */
+.reading-top {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--line);
+  border-radius: var(--rounded-md);
+  background: var(--surface);
+  color: var(--foreground);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 240ms ease, transform 240ms ease, border-color 200ms ease;
+}
+
+.reading-top--show {
+  opacity: 0.9;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.reading-top:hover {
+  opacity: 1;
+  border-color: var(--toc-accent, var(--foreground));
+}
+
+.reading-top:focus-visible {
+  opacity: 1;
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reading-top {
+    transition: opacity 240ms ease;
+    transform: none;
+  }
+  .reading-top--show {
+    transform: none;
   }
 }
 
@@ -5267,6 +5627,160 @@ button:focus-visible,
 
 .play-image:hover {
   border-color: #4a4a4a;
+}
+
+/* Specimen dossier card */
+
+.specimen-card {
+  --spec-border: color-mix(in srgb, var(--foreground) 18%, transparent);
+  --spec-surface: color-mix(in srgb, var(--foreground) 4%, transparent);
+  --spec-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  border: 1px solid var(--spec-border);
+  border-radius: 0.55rem;
+  overflow: hidden;
+  margin-top: 0.45rem;
+}
+
+.specimen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0.85rem;
+  border-bottom: 1px solid var(--spec-border);
+  background: var(--spec-surface);
+}
+
+.specimen-label {
+  font-family: var(--spec-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.specimen-id {
+  font-family: var(--spec-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.specimen-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--spec-border);
+}
+
+.specimen-image-btn {
+  position: relative;
+  background: var(--background);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  display: block;
+}
+
+.specimen-image-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 70%,
+    color-mix(in srgb, var(--background) 60%, transparent) 100%
+  );
+  pointer-events: none;
+}
+
+.specimen-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 400ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.specimen-image-btn:hover .specimen-image,
+.specimen-image-btn:focus-visible .specimen-image {
+  transform: scale(1.03);
+}
+
+.specimen-image-label {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.6rem;
+  font-family: var(--spec-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: color-mix(in srgb, var(--background) 75%, transparent);
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.2rem;
+  z-index: 1;
+}
+
+.specimen-fig {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.6rem;
+  font-family: var(--spec-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  color: color-mix(in srgb, var(--foreground) 50%, transparent);
+  z-index: 1;
+  font-style: italic;
+}
+
+.specimen-meta {
+  border-top: 1px solid var(--spec-border);
+}
+
+.specimen-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.45rem 0.85rem;
+  border-bottom: 1px solid var(--spec-border);
+}
+
+.specimen-row:last-child {
+  border-bottom: none;
+}
+
+.specimen-key {
+  font-family: var(--spec-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.specimen-val {
+  font-family: var(--spec-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--foreground);
+}
+
+.specimen-status {
+  font-family: var(--spec-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #b44040;
+  padding: 0.12rem 0.45rem;
+  border: 1px solid color-mix(in srgb, #b44040 35%, transparent);
+  border-radius: 0.2rem;
+  background: color-mix(in srgb, #b44040 8%, transparent);
+}
+
+@media (max-width: 480px) {
+  .specimen-gallery {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ============================================================
@@ -8305,3 +8819,132 @@ button:focus-visible,
 @media (prefers-reduced-motion: reduce) {
   .nv-booking-state > div { transition: none; }
 }
+
+/* ───────────────────────────────────────────────────────────────
+   Motion-play: scroll-driven section reveals (native, progressive)
+   Case-study sections rise + fade as they scroll into view. Pure CSS
+   scroll-driven animation — no JS, no library. Double-gated so content
+   is always visible by default: only animates where the browser
+   supports view() timelines AND the user allows motion. Because view()
+   is scroll-position-based (not time-based), sections already on screen
+   render at their correct progress immediately — no above-the-fold flash.
+   ─────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .project-page .project-section {
+      animation: sectionReveal linear both;
+      animation-timeline: view();
+      animation-range: entry 2% cover 16%;
+    }
+  }
+}
+
+@keyframes sectionReveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────
+   Motion-play: native View Transitions between case studies
+   Only runs when TransitionLink calls document.startViewTransition
+   (the "More work" cards). The homepage→case-study FLIP and ordinary
+   nav links never trigger these pseudos, so there is no conflict.
+   Reduced motion is handled in JS (TransitionLink falls back to a
+   plain push), and guarded again here.
+   ─────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: vtLeave 240ms cubic-bezier(0.4, 0, 1, 1) both;
+  }
+  ::view-transition-new(root) {
+    animation: vtEnter 420ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  }
+
+  /* Shared elements: the hero cover and title are lifted out of the root
+     crossfade and given their own view-transition group, so between two case
+     studies they morph (position + size interpolate, contents crossfade)
+     instead of blinking. Each case study has exactly one of each, so the names
+     stay unique. Navigating somewhere without them (e.g. back home) just fades
+     the old one out — no special-casing needed. */
+  .project-cover-image {
+    view-transition-name: project-cover;
+  }
+  .project-hero-title {
+    view-transition-name: project-title;
+  }
+
+  ::view-transition-group(project-cover),
+  ::view-transition-group(project-title) {
+    animation-duration: 460ms;
+    animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+}
+
+@keyframes vtLeave {
+  to {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+}
+
+@keyframes vtEnter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────
+   Motion-play: 3D device block (Fresh Greens)
+   ─────────────────────────────────────────────────────────────── */
+.device-3d {
+  margin-top: 1.6rem;
+}
+
+.device-3d-stage {
+  position: relative;
+  width: 100%;
+  height: clamp(440px, 62vh, 660px);
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.device-3d-stage:active {
+  cursor: grabbing;
+}
+
+.device-3d-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 0.4rem;
+  transform: translateX(-50%);
+  margin: 0;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.device-3d-flat {
+  display: flex;
+  justify-content: center;
+}
+
+.device-3d-flat-img {
+  width: auto;
+  max-height: clamp(440px, 62vh, 660px);
+  border-radius: var(--rounded-lg, 1rem);
+}
+

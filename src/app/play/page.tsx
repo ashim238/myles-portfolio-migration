@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SiteNav } from "@/components/site-nav";
 import { playEntries } from "@/lib/content";
 import { ExpandableImage } from "@/components/expandable-image";
+import { SpecimenCard } from "@/components/specimen-card";
 
 export default function PlayPage() {
   return (
@@ -68,7 +69,15 @@ export default function PlayPage() {
                   </div>
                 ) : null}
 
-                {entry.images && entry.images.length > 0 ? (
+                {entry.specimen && entry.images ? (
+                  <SpecimenCard
+                    designation={entry.specimen.designation}
+                    classification={entry.specimen.classification}
+                    material={entry.specimen.material}
+                    status={entry.specimen.status}
+                    images={entry.images}
+                  />
+                ) : entry.images && entry.images.length > 0 ? (
                   <div
                     className={`play-images play-images--${entry.images.length}`}
                   >

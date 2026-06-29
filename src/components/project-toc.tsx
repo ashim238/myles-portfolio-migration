@@ -6,6 +6,16 @@ type ProjectTocProps = {
   sections: { title: string; id: string }[];
 };
 
+const WORDS_PER_MIN = 225;
+
+function formatReadout(progress: number, totalMin: number): string {
+  const pct = Math.round(progress * 100);
+  if (pct <= 0) return `${Math.max(1, totalMin)} min read`;
+  const left = Math.max(0, Math.ceil(totalMin * (1 - progress)));
+  if (pct >= 100 || left === 0) return "Finished";
+  return `${pct}% · ${left} min left`;
+}
+
 export function ProjectToc({ sections }: ProjectTocProps) {
   const [activeId, setActiveId] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
@@ -14,8 +24,10 @@ export function ProjectToc({ sections }: ProjectTocProps) {
   const sentinelRef = useRef<HTMLDivElement>(null);
   const activeItemRef = useRef<HTMLButtonElement>(null);
   const listRef = useRef<HTMLOListElement>(null);
+  const backTopRef = useRef<HTMLButtonElement>(null);
+  const reducedRef = useRef(false);
 
-  // Track which section is in view
+  // Track which section is in view (drives the active highlight only)
   useEffect(() => {
     const sectionEls = sections
       .map((s) => document.getElementById(s.id))
@@ -60,11 +72,138 @@ export function ProjectToc({ sections }: ProjectTocProps) {
     return () => observer.disconnect();
   }, []);
 
+  // ── The reading instrument ──────────────────────────────────────────────
+  // A scroll-driven loop fills each section's rail as you read through it,
+  // marks passed sections "read", drives the overall progress var, and
+  // updates the reading-time readout. All writes are direct DOM mutations
+  // (CSS custom properties + textContent) so high-frequency scroll updates
+  // never trigger a React re-render. activeId stays React state because it
+  // changes at most once per section.
+  useEffect(() => {
+    const nav = tocRef.current;
+    const list = listRef.current;
+    if (!nav || !list) return;
+
+    reducedRef.current = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    const article = nav.closest<HTMLElement>(".project-page") ?? document.body;
+
+    // Reading time, measured once from the rendered article copy.
+    const words = (article.innerText || "").trim().split(/\s+/).length;
+    const totalMin = Math.max(1, Math.round(words / WORDS_PER_MIN));
+
+    // Section anchors, in document order. Bounds are remeasured whenever the
+    // layout changes (image loads, font swaps, viewport resize).
+    let starts: number[] = [];
+    let regionStart = 0;
+    let regionEnd = 1;
+
+    const measure = () => {
+      const anchors = sections
+        .map((s) => document.getElementById(s.id))
+        .filter(Boolean) as HTMLElement[];
+      if (anchors.length === 0) return;
+
+      const pageY = window.scrollY;
+      starts = anchors.map((el) => el.getBoundingClientRect().top + pageY);
+
+      // The reading region runs from the first section to the bottom of the
+      // last one (where the "More work" jump begins).
+      const lastSection =
+        anchors[anchors.length - 1].closest<HTMLElement>(".project-section") ??
+        anchors[anchors.length - 1].closest<HTMLElement>("section") ??
+        anchors[anchors.length - 1];
+      const lastRect = lastSection.getBoundingClientRect();
+      regionStart = starts[0];
+      regionEnd = lastRect.bottom + pageY;
+    };
+
+    const items = Array.from(
+      list.querySelectorAll<HTMLLIElement>(".project-toc-item")
+    );
+    const readouts = Array.from(
+      nav.querySelectorAll<HTMLElement>(".js-toc-readout")
+    );
+    const backTop = backTopRef.current;
+
+    let frame = 0;
+    let lastReadout = "";
+    let lastBackTop = false;
+
+    const render = () => {
+      frame = 0;
+      if (starts.length === 0) return;
+
+      // The reading "playhead": a line just below the sticky bar, so a section
+      // counts as read once its text has cleared the chrome.
+      const navH = nav.getBoundingClientRect().height || 48;
+      const playhead = window.scrollY + navH + 8;
+
+      const span = Math.max(1, regionEnd - regionStart);
+      const overall = Math.min(1, Math.max(0, (playhead - regionStart) / span));
+      nav.style.setProperty("--toc-progress", overall.toFixed(4));
+
+      for (let i = 0; i < items.length; i++) {
+        const a = starts[i];
+        const b = i + 1 < starts.length ? starts[i + 1] : regionEnd;
+        const segSpan = Math.max(1, b - a);
+        const fill = Math.min(1, Math.max(0, (playhead - a) / segSpan));
+        const item = items[i];
+        item.style.setProperty("--seg-fill", fill.toFixed(4));
+        item.classList.toggle("project-toc-item--read", fill >= 0.999);
+      }
+
+      const next = formatReadout(overall, totalMin);
+      if (next !== lastReadout) {
+        readouts.forEach((el) => {
+          el.textContent = next;
+        });
+        lastReadout = next;
+      }
+
+      // Reveal "back to top" once the reader is well past the fold.
+      if (backTop) {
+        const show = window.scrollY > window.innerHeight * 1.2;
+        if (show !== lastBackTop) {
+          backTop.classList.toggle("reading-top--show", show);
+          backTop.setAttribute("aria-hidden", show ? "false" : "true");
+          backTop.tabIndex = show ? 0 : -1;
+          lastBackTop = show;
+        }
+      }
+    };
+
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(render);
+    };
+
+    measure();
+    render();
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    // Remeasure when the article's height changes (images, fonts, expands).
+    const ro = new ResizeObserver(() => {
+      measure();
+      render();
+    });
+    ro.observe(article);
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      ro.disconnect();
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, [sections]);
+
   // Auto-scroll active item into view on desktop
   useEffect(() => {
     if (activeItemRef.current && listRef.current) {
       activeItemRef.current.scrollIntoView({
-        behavior: "smooth",
+        behavior: reducedRef.current ? "auto" : "smooth",
         block: "nearest",
         inline: "center",
       });
@@ -75,13 +214,23 @@ export function ProjectToc({ sections }: ProjectTocProps) {
     (id: string) => {
       const el = document.getElementById(id);
       if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        el.scrollIntoView({
+          behavior: reducedRef.current ? "auto" : "smooth",
+          block: "start",
+        });
         setActiveId(id);
         setIsOpen(false);
       }
     },
     []
   );
+
+  const scrollToTop = useCallback(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: reducedRef.current ? "auto" : "smooth",
+    });
+  }, []);
 
   // Roving keyboard navigation: arrows/Home/End move focus between links;
   // Enter/Space still activate via the native button.
@@ -129,7 +278,8 @@ export function ProjectToc({ sections }: ProjectTocProps) {
         className={`project-toc${isSticky ? " project-toc--sticky" : ""}`}
         aria-label="Case study sections"
       >
-        {/* Mobile: collapsed current-section bar */}
+        {/* Mobile: collapsed current-section bar. The overall progress fills
+            the hairline beneath it. */}
         <button
           className="project-toc-toggle"
           onClick={() => setIsOpen(!isOpen)}
@@ -140,52 +290,89 @@ export function ProjectToc({ sections }: ProjectTocProps) {
             <span className="project-toc-num">{activeNum}.</span>
             {activeTitle}
           </span>
-          <svg
-            className={`project-toc-chevron${isOpen ? " project-toc-chevron--open" : ""}`}
-            width="12"
-            height="12"
-            viewBox="0 0 12 12"
-            fill="none"
-            aria-hidden="true"
-          >
-            <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <span className="project-toc-toggle-end">
+            <span className="project-toc-readout-mobile js-toc-readout" aria-hidden="true" />
+            <svg
+              className={`project-toc-chevron${isOpen ? " project-toc-chevron--open" : ""}`}
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
         </button>
 
-        {/* Section list — always visible on desktop, toggled on mobile */}
-        <ol
-          ref={listRef}
-          id="project-toc-list"
-          className={`project-toc-list${isOpen ? " project-toc-list--open" : ""}`}
-          role="list"
-          aria-describedby="project-toc-help"
-        >
-          {sections.map((section, i) => {
-            const isActive = section.id === activeId;
-            const num = String(i + 1).padStart(2, "0");
+        <div className="project-toc-track">
+          {/* Section list — always visible on desktop, toggled on mobile */}
+          <ol
+            ref={listRef}
+            id="project-toc-list"
+            className={`project-toc-list${isOpen ? " project-toc-list--open" : ""}`}
+            role="list"
+            aria-describedby="project-toc-help"
+          >
+            {sections.map((section, i) => {
+              const isActive = section.id === activeId;
+              const num = String(i + 1).padStart(2, "0");
 
-            return (
-              <li key={section.id} className="project-toc-item">
-                <button
-                  ref={isActive ? activeItemRef : undefined}
-                  className={`project-toc-link${isActive ? " project-toc-link--active" : ""}`}
-                  onClick={() => handleClick(section.id)}
-                  onKeyDown={(event) => handleKeyDown(event, i)}
-                  aria-current={isActive ? "true" : undefined}
-                >
-                  <span className="project-toc-dot" aria-hidden="true" />
-                  <span className="project-toc-num">{num}.</span>
-                  <span className="project-toc-text">{section.title}</span>
-                </button>
-              </li>
-            );
-          })}
-        </ol>
+              return (
+                <li key={section.id} className="project-toc-item">
+                  <button
+                    ref={isActive ? activeItemRef : undefined}
+                    className={`project-toc-link${isActive ? " project-toc-link--active" : ""}`}
+                    onClick={() => handleClick(section.id)}
+                    onKeyDown={(event) => handleKeyDown(event, i)}
+                    aria-current={isActive ? "true" : undefined}
+                  >
+                    <span className="project-toc-dot" aria-hidden="true" />
+                    <span className="project-toc-num">{num}.</span>
+                    <span className="project-toc-text">{section.title}</span>
+                    <span className="project-toc-rail" aria-hidden="true" />
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
+
+          {/* Reading-position readout (desktop). Decorative — the section list
+              already conveys position to assistive tech. */}
+          <span
+            className="project-toc-readout js-toc-readout"
+            aria-hidden="true"
+          />
+        </div>
+
+        {/* Overall progress hairline along the bottom edge of the sticky bar. */}
+        <span className="project-toc-progress" aria-hidden="true" />
 
         <p id="project-toc-help" className="project-toc-help">
           Arrow keys move between sections. Home and End jump to the ends.
         </p>
       </nav>
+
+      {/* Polite live region: announces the section you've scrolled into so the
+          progress the spine shows visually is also perceivable non-visually. */}
+      <div className="project-toc-live" role="status" aria-live="polite">
+        {activeId ? `Now reading: ${activeTitle}` : ""}
+      </div>
+
+      {/* Quiet return for long reads. Hidden (and untabbable) until scrolled. */}
+      <button
+        ref={backTopRef}
+        type="button"
+        className="reading-top"
+        onClick={scrollToTop}
+        aria-label="Back to top"
+        aria-hidden="true"
+        tabIndex={-1}
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M8 13V3.5M8 3.5L3.5 8M8 3.5L12.5 8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
     </>
   );
 }

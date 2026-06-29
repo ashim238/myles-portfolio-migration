@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ColorPalette } from "@/components/color-palette";
+import { CountUp } from "@/components/count-up";
 import { ProjectCover } from "@/components/project-cover";
+import { TransitionLink } from "@/components/transition-link";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectHighlight } from "@/components/project-highlight";
 import { ProjectToc } from "@/components/project-toc";
@@ -56,10 +57,10 @@ export default async function UnderstandingFafsaPage() {
     >
       <SiteNav />
       <nav className="project-topbar" aria-label="Breadcrumb">
-        <Link href="/#work">
+        <TransitionLink href="/#work">
           <span aria-hidden="true">← </span>
           Selected work
-        </Link>
+        </TransitionLink>
       </nav>
 
       <section className="hero project-hero uf-hero" aria-labelledby="uf-title">
@@ -277,7 +278,9 @@ export default async function UnderstandingFafsaPage() {
         </div>
         <aside className="uf-outcome" aria-label="Open rate outcome">
           <p className="uf-outcome-metric">
-            <span className="uf-outcome-range">~30% → ~52.6%</span>
+            <span className="uf-outcome-range">
+              <CountUp value="~30% → ~52.6%" />
+            </span>
             <span className="uf-outcome-label">open rate after redesign (MPP excluded)</span>
           </p>
           <p className="uf-outcome-date">First redesigned send: November 4, 2025</p>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProjectCover } from "@/components/project-cover";
+import { TransitionLink } from "@/components/transition-link";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectHighlight } from "@/components/project-highlight";
 import { ProjectSectionCard } from "@/components/project-section-card";
@@ -62,10 +62,10 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
     <main className="page-shell project-page" id="main-content" data-project-slug={slug}>
       <SiteNav />
       <nav className="project-topbar" aria-label="Breadcrumb">
-        <Link href="/#work">
+        <TransitionLink href="/#work">
           <span aria-hidden="true">← </span>
           Selected work
-        </Link>
+        </TransitionLink>
       </nav>
 
       <section className="hero project-hero" aria-labelledby="project-title">

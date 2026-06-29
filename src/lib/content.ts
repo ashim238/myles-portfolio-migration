@@ -233,7 +233,14 @@ export type PlayEntry = {
   /** Interactive embed (iframe). For digital / browser-runnable pieces. */
   embedPath?: string;
   /** Image-based media. For physical / 3D / printed work. */
-  images?: Array<{ src: string; alt: string }>;
+  images?: Array<{ src: string; alt: string; label?: string }>;
+  /** Specimen dossier metadata — renders a museum-card treatment. */
+  specimen?: {
+    designation: string;
+    classification: string;
+    material: string;
+    status: string;
+  };
 };
 
 export const playEntries: PlayEntry[] = [
@@ -249,12 +256,20 @@ export const playEntries: PlayEntry[] = [
       {
         src: "/play/sukunas-finger/01.jpg",
         alt: "Sukuna's finger sculpt resting in a 3D-printed tray with cotton bedding: burgundy skin with green undertones, painted wounds and lesions, layer lines visible on the tray exterior.",
+        label: "Full specimen",
       },
       {
         src: "/play/sukunas-finger/02.jpg",
         alt: "Texture detail of the Sukuna's finger sculpt: the painted skin surface, wound finishes, and color variation across the burgundy tones.",
+        label: "Surface detail",
       },
     ],
+    specimen: {
+      designation: "Sukuna's Finger — Ryomen Sukuna",
+      classification: "Special Grade Cursed Object",
+      material: "PLA filament, acrylic paint, matte varnish",
+      status: "SEALED",
+    },
   },
   {
     slug: "loom",
