@@ -1371,6 +1371,13 @@ button:focus-visible,
   color: color-mix(in srgb, var(--muted) 92%, var(--foreground));
 }
 
+.work-showcase-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.55rem;
+}
+
 .work-showcase-tag {
   font-size: 0.72rem;
   letter-spacing: 0.08em;

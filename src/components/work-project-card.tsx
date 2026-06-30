@@ -90,12 +90,16 @@ export function WorkProjectCard({
             {project.role ? (
               <span className="work-showcase-meta-item">{project.role}</span>
             ) : null}
-            {project.tags.slice(0, 2).map((tag) => (
-              <span key={tag} className="work-showcase-tag">
-                {tag}
-              </span>
-            ))}
           </div>
+          {project.tags.length > 0 && (
+            <div className="work-showcase-tags">
+              {project.tags.slice(0, 2).map((tag) => (
+                <span key={tag} className="work-showcase-tag">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
 
         {project.coverImage ? (
