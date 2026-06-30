@@ -20,9 +20,9 @@ type PhoneFrameProps = {
 
 export function PhoneFrame({ children, variant = "default" }: PhoneFrameProps) {
   return (
-    <div className={`fg-phone fg-phone--${variant}`} aria-hidden="true">
+    <div className={`fg-phone fg-phone--${variant}`} role="group">
       <div className="fg-phone-bezel">
-        {variant !== "screenshot" ? <span className="fg-phone-notch" /> : null}
+        {variant !== "screenshot" ? <span className="fg-phone-notch" aria-hidden="true" /> : null}
         <div className="fg-phone-screen">{children}</div>
       </div>
     </div>
@@ -122,7 +122,7 @@ export function ArchitectureDiagram() {
         xmlns="http://www.w3.org/2000/svg"
         className="fg-arch-svg"
         role="img"
-        aria-label="Three-layer architecture: eight public data sources feed an adapter layer, which feeds a deterministic scoring layer, which feeds the screen layer."
+        aria-label="Three-layer architecture: eight public data sources feed an adapter layer, which feeds a deterministic scoring layer, which feeds the screen layer. Community reports are one of the eight sources, authenticated with an anonymous device UUID and stored in Postgres under row-level security, the same data routed to the moderation queue."
       >
         <defs>
           <marker
@@ -162,7 +162,7 @@ export function ArchitectureDiagram() {
           <text x="850" y="50" fontSize="10" opacity="0.62">weather + visibility</text>
 
           <text x="1000" y="32">Community reports</text>
-          <text x="1000" y="50" fontSize="10" opacity="0.62">observations · weighted</text>
+          <text x="1000" y="50" fontSize="10" opacity="0.62">anon device-UUID · Postgres + RLS</text>
         </g>
 
         {/* Arrows from sources into the adapter layer */}
@@ -276,7 +276,9 @@ export function ArchitectureDiagram() {
       </div>
       <figcaption className="fg-arch-caption">
         Eight public data sources feed an adapter, a deterministic scoring layer,
-        then the screen.
+        then the screen. Community reports are one source, authenticated with an
+        anonymous device UUID and held in Postgres under row-level security, the
+        same data routed to the moderation queue.
         <span className="fg-arch-scrollhint"> Scroll the diagram to read it all.</span>
       </figcaption>
     </figure>
@@ -431,31 +433,31 @@ const SIGNALS = [
     color: "#2f6b46",
     name: "Green",
     role: "In-flow action",
-    note: "The brand greens carry every CTA, link, and secondary action: the only non-reserved color allowed to mean \"go.\"",
+    note: "Every CTA, link, and secondary action. The only non-reserved color allowed to mean \"go.\"",
   },
   {
     color: "#d24a3b",
     name: "Red",
     role: "Alert",
-    note: "SOS, the live audio-recording indicator on /pulled-over, inline form-validation errors, and destructive actions like sign out or delete.",
+    note: "SOS, the live recording indicator, form errors, and destructive actions.",
   },
   {
     color: "#f08a4b",
     name: "Orange",
     role: "Hazard · caution",
-    note: "Speed-limit and construction zones, the Report affordance (reporting is itself a safety signal), and the route-preview hazard chips for police and low-light segments.",
+    note: "Speed-limit zones, the Report affordance, and route-preview hazard chips for police and low-light segments.",
   },
   {
     color: "#e2b340",
     name: "Yellow",
     role: "Caution · favorite",
-    note: "General caution, and the gold star for trusted stations. A documented carve-out: the favorite-star is universal iconography (like an App Store rating), so it reads as \"saved,\" not \"warning.\"",
+    note: "General caution, plus the gold star for trusted stations (a documented carve-out from the caution role).",
   },
   {
     color: "#284872",
     name: "Navy",
     role: "Safety-affordance mark",
-    note: "Reserved for the safety-affordance itself: the en-route safety-menu Shield and the /emergency SOS disc. Never used for data state or sync.",
+    note: "The en-route Shield and the /emergency SOS disc. Never used for data state or sync.",
   },
 ];
 

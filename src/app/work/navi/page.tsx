@@ -218,7 +218,7 @@ export default async function NaviPage() {
             width={1200}
             height={900}
             sizes="(max-width: 768px) 92vw, 32vw"
-            style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.5rem" }}
+            style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
           />
           <ExpandableImage
             src="/projects/navi/persona-ororo.png"
@@ -226,7 +226,7 @@ export default async function NaviPage() {
             width={1200}
             height={900}
             sizes="(max-width: 768px) 92vw, 32vw"
-            style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.5rem" }}
+            style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
           />
           <ExpandableImage
             src="/projects/navi/persona-selina.png"
@@ -234,7 +234,7 @@ export default async function NaviPage() {
             width={1200}
             height={900}
             sizes="(max-width: 768px) 92vw, 32vw"
-            style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.5rem" }}
+            style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
           />
         </div>
       </section>
@@ -274,6 +274,14 @@ export default async function NaviPage() {
             catalogued on the system page, which means the system shows up in the
             product the way it was meant to.
           </p>
+          <ExpandableImage
+            src="/projects/navi/desktop-screens.png"
+            alt="Navi product screens: feed, map search, host detail, and booking flow"
+            width={2400}
+            height={1600}
+            sizes="(max-width: 768px) 92vw, 900px"
+            style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem", marginBottom: "1.25rem" }}
+          />
           <p>
             <Link className="nv-system-cta-link" href="/work/navi/demo">Open the playable demo</Link>
           </p>
@@ -286,35 +294,24 @@ export default async function NaviPage() {
           <p>
             What started as a heatmap turned out to be solving the wrong problem. Concentration is the symptom. Disconnection from local culture and economy is the cause, and Navi is the platform that came from chasing the cause.
           </p>
+          <p>Next opportunities include deeper neighborhood pages within Learn
+            (surfacing history, local voices, and seasonal rhythms), richer
+            collaborative planning tools for group travelers, and onboarding
+            paths for local hosts and businesses to list their own experiences.
+          </p>
           <p>
             Navi showed that{" "}
             <strong>
               community-centered travel can be both practical and desirable when
               recommendations are curated with local context.
-            </strong>
+            </strong>{" "}
+            The concept validated that intent-rich exploration scales better
+            than algorithmic browsing when the goal is meaningful neighborhood
+            engagement.
           </p>
           <p>
-            The concept validated that{" "}
-            <strong>
-              intent-rich exploration scales better than algorithmic browsing when the goal
-              is meaningful neighborhood engagement.
-            </strong>
+            <Link className="nv-system-cta-link" href="/work/navi/demo">Open the playable demo</Link>
           </p>
-          <p>Next opportunities include:</p>
-          <ul>
-            <li>
-              Deeper neighborhood pages within Learn, surfacing history, local voices, and seasonal
-              rhythms.
-            </li>
-            <li>
-              Richer collaborative planning tools for group travelers coordinating across schedules
-              and interests.
-            </li>
-            <li>
-              Onboarding paths for local hosts and businesses to list and manage their own
-              experiences.
-            </li>
-          </ul>
         </div>
         <ExpandableImage
           src="/projects/navi/final-mockup.png"
@@ -322,7 +319,7 @@ export default async function NaviPage() {
           width={2400}
           height={1600}
           sizes="(max-width: 768px) 92vw, 900px"
-          style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.5rem" }}
+          style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
         />
       </section>
 

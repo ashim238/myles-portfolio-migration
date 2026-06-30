@@ -102,31 +102,32 @@ export default async function UnderstandingFafsaPage() {
 
       <ProjectToc
         sections={[
-          { title: "Context", id: "uf-context" },
-          { title: "The Problem", id: "uf-problem" },
-          { title: "Competitive Audit", id: "uf-audit" },
-          { title: "Building the System", id: "uf-system" },
-          { title: "Figma to Mailchimp", id: "uf-figma" },
-          { title: "Results", id: "uf-results" },
+          { title: "Two brands, one subscriber.", id: "uf-context" },
+          { title: "Scannable or skipped.", id: "uf-problem" },
+          { title: "120 newsletters, four criteria.", id: "uf-audit" },
+          { title: "One skeleton, multiple fills.", id: "uf-templates" },
+          { title: "Locked layers, swappable parts.", id: "uf-locked" },
+          { title: "Figma fidelity, Mailchimp reality.", id: "uf-figma" },
+          { title: "Open rates told the story.", id: "uf-results" },
         ]}
       />
 
       <section className="project-section uf-section" aria-labelledby="uf-context">
-        <h2 id="uf-context">Context</h2>
+        <h2 id="uf-context">Two brands, one subscriber.</h2>
         <div className="project-section-body">
           <p>
             UnderstandingFAFSA helps students, parents, and counselors navigate the Free Application
             for Federal Student Aid (FAFSA). The newsletter is a primary touchpoint. The website had
             already moved to a calmer, modern visual language (Saans typeface, refreshed palette),
             but the newsletter still carried an older system. Subscribers were seeing two different
-            brands. The scope was email-only; the founder assembles every issue, so the system had
+            brands. The scope was email-only. The founder assembles every issue, so the system had
             to maintain the brand&apos;s identity regardless of who was building it.
           </p>
         </div>
       </section>
 
       <section className="project-section uf-section" aria-labelledby="uf-problem">
-        <h2 id="uf-problem">The Problem</h2>
+        <h2 id="uf-problem">Scannable or skipped.</h2>
         <div className="project-section-body">
           <p>
             The old template failed where busy readers notice first: uneven CTAs, a muted palette that
@@ -144,7 +145,7 @@ export default async function UnderstandingFafsaPage() {
       </section>
 
       <section className="project-section uf-section" aria-labelledby="uf-audit">
-        <h2 id="uf-audit">Competitive Audit</h2>
+        <h2 id="uf-audit">120 newsletters, four criteria.</h2>
         <div className="project-section-body">
           <p>
             Before touching templates, we compiled over <strong>120 newsletter examples</strong> and
@@ -163,26 +164,26 @@ export default async function UnderstandingFafsaPage() {
           <p>The deep dive highlights:</p>
           <ul>
             <li>
-              All five newsletters leveraged selective type bolding to create visual entry points
-              without adding imagery; Revenews used this well with emoji section headers and concise
-              intros
+              <strong>Selective bolding</strong> created visual entry points without adding imagery.
+              Revenews paired this with emoji section headers and concise intros.
             </li>
             <li>
-              Custom bespoke bulletpoints that reinforced brand identity in the smallest details,
-              like Folderly&apos;s use of brand-colored accents
+              <strong>Bespoke bullet styles</strong> reinforced brand identity in the smallest
+              details, like Folderly&apos;s use of brand-colored accents.
             </li>
             <li>
-              Action-focused section titles that turned bulk information into content readers could
-              parse in a single scroll
+              <strong>Action-focused section titles</strong> turned bulk information into content
+              readers could parse in a single scroll.
             </li>
             <li>
-              Tone calibration by audience: student-facing emails could carry emojis and GIFs;
-              counselor-facing emails needed the more earnest, formal register we saw in The 74
+              <strong>Tone calibration by audience</strong>: student-facing emails could carry
+              emojis and GIFs, while counselor-facing emails needed the more earnest, formal
+              register we saw in The 74.
             </li>
             <li>
-              Personalization through structure: Next&apos;s if/then link framing (&quot;if
-              you&apos;re looking for help with X, then...&quot;) gave readers agency, and author
-              photos with brief bios made the sender feel human
+              <strong>Personalization through structure</strong>: Next&apos;s if/then link framing
+              (&quot;if you&apos;re looking for help with X, then read this&quot;) gave readers
+              agency, and author photos with brief bios made the sender feel human.
             </li>
           </ul>
           <p>
@@ -195,9 +196,9 @@ export default async function UnderstandingFafsaPage() {
 
       <section
         className="project-section uf-section project-section--wide uf-section--wide"
-        aria-labelledby="uf-system"
+        aria-labelledby="uf-templates"
       >
-        <h2 id="uf-system">Building the System</h2>
+        <h2 id="uf-templates">One skeleton, multiple fills.</h2>
         <div className="project-section-body">
           <p>
             The system ships through a shared modular framework: a welcome email that sets
@@ -216,32 +217,39 @@ export default async function UnderstandingFafsaPage() {
         <TemplateSwitcher />
 
         <ModularBlockGallery />
+      </section>
+
+      <section
+        className="project-section uf-section project-section--wide uf-section--wide"
+        aria-labelledby="uf-locked"
+      >
+        <h2 id="uf-locked">Locked layers, swappable parts.</h2>
+        <div className="project-section-body">
+          <p>
+            The locked-vs-swappable distinction was the core design decision. Spacing, dividers, type,
+            and the structural skeleton stay locked so swaps don&apos;t quietly undo the brand.
+            Editors swap body copy and emoji-style section images. The founder drafts each
+            week&apos;s copy for editorial.
+          </p>
+          <p>
+            Color variants were chosen to stay in harmony with UnderstandingFAFSA&apos;s design
+            system. Enough flexibility for the founder to move fast, enough rigidity that no send
+            drifts off-brand.
+          </p>
+        </div>
 
         <LockedSwappableView />
 
         <ColorPalette colors={UF_COLORS} />
-
-        <div className="project-section-body uf-system-outro">
-          <p>
-            Template work lived in Figma and Mailchimp. The founder drafts each week&apos;s copy for
-            editorial. Editors swap body copy and emoji-style section images. Spacing, dividers, type,
-            and the structural skeleton stay locked so swaps don&apos;t quietly undo the brand.
-          </p>
-          <p>
-            Color variants were chosen to stay in harmony with UnderstandingFAFSA&apos;s design
-            system. The locked-vs-swappable distinction was the core design decision: enough
-            flexibility for the founder to move fast, enough rigidity that no send drifts off-brand.
-          </p>
-        </div>
       </section>
 
       <section className="project-section uf-section" aria-labelledby="uf-figma">
-        <h2 id="uf-figma">Figma to Mailchimp</h2>
+        <h2 id="uf-figma">Figma fidelity, Mailchimp reality.</h2>
         <div className="project-section-body">
           <p>
             The hierarchy, spacing, modular rhythm all lived in Figma, but the live template had to be
             rebuilt in Mailchimp so the founder could edit without touching HTML. Matching Figma
-            spacing inside the builder was a dead end; every container and wrapper added bloat. I
+            spacing inside the builder was a dead end. Every container and wrapper added bloat. I
             reframed hierarchy so section headers and body read clearly in email, not on a static
             artboard.
           </p>
@@ -269,11 +277,13 @@ export default async function UnderstandingFafsaPage() {
       </section>
 
       <section className="project-section uf-section" aria-labelledby="uf-results">
-        <h2 id="uf-results">Results</h2>
+        <h2 id="uf-results">Open rates told the story.</h2>
         <div className="project-section-body">
           <p>
-            What&apos;s out in the open: master template, modular blocks, explicit locked-vs-swappable
-            rules, and three template variants on the same design vocabulary.
+            This was my first time designing a system someone else assembles every week. If the
+            founder can break the brand by dragging a block, the template failed. If she can move
+            fast and stay on-brand, it worked. That constraint changed how I think about fidelity
+            in anything that ships without a designer in the room.
           </p>
         </div>
         <aside className="uf-outcome" aria-label="Open rate outcome">
@@ -288,14 +298,9 @@ export default async function UnderstandingFafsaPage() {
         <div className="project-section-body">
           <p>
             Open rates moved from <strong>~30% to ~52.6%</strong> (Mailchimp reporting with MPP
-            excluded), with clicks, bounces, and unsubscribes still in a healthy band.
-          </p>
-          <p>
-            The counselor-focused toolkit, extending the same system for a more professional
-            audience, is nearly complete and shipping soon.
-          </p>
-          <p>
-            The Mailchimp template set the structure for what non-web asset creation could look like.
+            excluded), with clicks, bounces, and unsubscribes still in a healthy band. What
+            shipped: a master template, modular blocks, explicit locked-vs-swappable rules, and
+            three template variants on the same design vocabulary.
           </p>
         </div>
       </section>

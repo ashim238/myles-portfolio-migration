@@ -3,7 +3,7 @@ slug: understandingfafsa
 title: UnderstandingFAFSA
 summary: Redesigned a newsletter system to match a fresh site rebrand. Modular templates, competitive research across 120+ examples, and a 75% lift in open rates.
 role: Product Designer
-timeframe: February 2025 - Ongoing
+timeframe: February 2025 – Ongoing
 status: published
 order: 2
 coverImage: /projects/understandingfafsa/cover.png

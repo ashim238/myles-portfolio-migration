@@ -2693,7 +2693,8 @@ button:focus-visible,
   position: relative;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.45rem 0.65rem 0.5rem;
+  padding: 0.55rem 0.65rem 0.6rem;
+  min-height: 44px;
   border: none;
   border-radius: 0.3rem;
   background: transparent;
@@ -2930,7 +2931,8 @@ button:focus-visible,
   }
 
   .project-toc-link {
-    padding: 0.55rem 0.2rem;
+    padding: 0.75rem 0.2rem;
+    min-height: 44px;
     font-size: 0.82rem;
     border-radius: 0;
   }
@@ -3891,10 +3893,9 @@ button:focus-visible,
 }
 
 .fg-feature-thesis-label {
-  font-family: var(--font-mono), monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   color: var(--fg-accent);
   margin-right: 0.3rem;
 }
@@ -4435,6 +4436,12 @@ button:focus-visible,
   width: 100%;
   height: 100%;
   cursor: zoom-in;
+}
+
+.expandable-trigger:focus-visible {
+  outline: 2px solid var(--fg-accent, var(--accent, currentColor));
+  outline-offset: 2px;
+  border-radius: 0.25rem;
 }
 
 /* Backdrop — separate element, full-screen, click closes */
@@ -5875,12 +5882,11 @@ button:focus-visible,
 .nv-heuristic-card {
   padding: 1.25rem 1.2rem 1.35rem;
   border: 1px solid var(--line);
-  border-radius: 0.75rem;
+  border-radius: 0.7rem;
   background: var(--surface);
   transition:
     transform 220ms ease,
-    border-color 220ms ease,
-    box-shadow 220ms ease;
+    border-color 220ms ease;
 }
 
 .nv-reveal--visible .nv-heuristic-card {
@@ -5891,16 +5897,9 @@ button:focus-visible,
 .nv-heuristic-card:hover {
   transform: translateY(-3px);
   border-color: var(--nv-accent-line);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
 }
 
-.nv-heuristic-index {
-  display: block;
-  margin-bottom: 0.65rem;
-  font-family: var(--font-mono), monospace;
-  font-size: 0.72rem;
-  color: var(--nv-accent);
-}
+/* .nv-heuristic-index removed — numbered indices dropped from insight cards */
 
 .nv-heuristic-card h3 {
   margin: 0 0 0.55rem;
@@ -6086,7 +6085,7 @@ button:focus-visible,
 .nv-type-cell {
   padding: 0.85rem 1rem;
   border: 1px solid var(--nv-ui-border);
-  border-radius: 0.65rem;
+  border-radius: 0.7rem;
   background: var(--nv-ui-bg);
 }
 
@@ -6143,7 +6142,7 @@ button:focus-visible,
   min-height: 44px;
   padding: 0.55rem 0.65rem;
   border: 1px solid var(--nv-ui-border);
-  border-radius: 0.55rem;
+  border-radius: 0.35rem;
   background: var(--nv-ui-bg);
   cursor: pointer;
   text-align: left;
@@ -6303,7 +6302,7 @@ button:focus-visible,
 
 .nv-ui-button--focus,
 .nv-ui-button:focus-visible {
-  outline: 2px solid #3a86ff;
+  outline: 2px solid var(--focus-ring, #8ab4ff);
   outline-offset: 2px;
 }
 
@@ -6332,7 +6331,7 @@ button:focus-visible,
 
 .nv-ui-tab--focus,
 .nv-ui-tab:focus-visible {
-  outline: 2px solid #3a86ff;
+  outline: 2px solid var(--focus-ring, #8ab4ff);
   outline-offset: 2px;
 }
 
@@ -6357,7 +6356,7 @@ button:focus-visible,
   gap: 0.65rem;
   padding: 1rem;
   border: 1px solid var(--nv-ui-border);
-  border-radius: 0.65rem;
+  border-radius: 0.7rem;
   background: var(--nv-ui-bg);
 }
 
@@ -6386,7 +6385,7 @@ button:focus-visible,
 .nv-ui-field textarea {
   width: 100%;
   padding: 0.55rem 0.65rem;
-  border-radius: 0.45rem;
+  border-radius: 0.35rem;
   border: 1px solid var(--nv-ui-border);
   background: var(--surface);
   color: var(--foreground);
@@ -6424,10 +6423,9 @@ button:focus-visible,
 
 .nv-composition-eyebrow {
   margin: 0 0 0.75rem;
-  font-family: var(--font-mono), monospace;
+  font-family: inherit;
   font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0;
   color: var(--muted);
 }
 
@@ -6471,6 +6469,21 @@ button:focus-visible,
   font-weight: 700;
 }
 
+.nv-specimen-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  background: var(--nv-accent);
+  color: #fff;
+  font-family: var(--font-navi-ui), var(--font-sans), sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  user-select: none;
+  pointer-events: none;
+}
+
 .nv-composition-cards {
   display: grid;
   gap: 0.75rem;
@@ -6487,7 +6500,7 @@ button:focus-visible,
 .nv-composition-card {
   padding: 0.95rem 1rem;
   border: 1px solid var(--nv-ui-border);
-  border-radius: 0.65rem;
+  border-radius: 0.7rem;
   background: var(--surface);
 }
 
@@ -6526,7 +6539,7 @@ button:focus-visible,
   max-height: 320px;
   overflow-y: auto;
   border: 1px solid var(--line);
-  border-radius: 0.75rem;
+  border-radius: 0.7rem;
 }
 
 .nv-heatmap-item {
@@ -6567,7 +6580,7 @@ button:focus-visible,
 .nv-heatmap-map-wrap {
   padding: 1.25rem 1rem 1rem;
   border: 1px solid var(--line);
-  border-radius: 0.75rem;
+  border-radius: 0.7rem;
   background: var(--surface);
   text-align: center;
 }
@@ -6977,11 +6990,11 @@ button:focus-visible,
 }
 
 .uf-lock-key--swap {
-  border-top: 3px solid #f26938;
+  border-top: 3px solid var(--uf-accent-warm);
 }
 
 .uf-lock-key--lock {
-  border-top: 3px dashed #164f73;
+  border-top: 3px dashed var(--uf-accent-cool);
 }
 
 .uf-switcher-note {
@@ -7077,7 +7090,7 @@ button:focus-visible,
 .uf-outcome {
   margin: 1.75rem 0 2rem;
   padding: 1.35rem 1.5rem;
-  border-radius: 0.65rem;
+  border-radius: 0.7rem;
   border: 1px solid var(--uf-accent-line);
   background: var(--uf-accent-soft);
   max-width: 28rem;

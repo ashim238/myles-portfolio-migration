@@ -52,9 +52,6 @@ export function HeuristicInsightCards() {
           style={{ "--nv-stagger": `${i * 80}ms` } as React.CSSProperties}
           role="listitem"
         >
-          <span className="nv-heuristic-index" aria-hidden="true">
-            {String(i + 1).padStart(2, "0")}
-          </span>
           <h3>{item.headline}</h3>
           <p>{item.body}</p>
         </article>
@@ -154,9 +151,9 @@ export function CompositionStrip() {
             <span className="nv-trust-label">Locally owned</span>
             <span className="nv-trust-label">Nature first</span>
           </div>
-          <button type="button" className="nv-ui-button nv-ui-button--primary">
+          <span className="nv-specimen-label" aria-hidden="true">
             Start exploring
-          </button>
+          </span>
         </div>
         <div ref={stripRef} className="nv-composition-cards">
           {COMPOSITION_CARDS.map((card) => (
@@ -194,6 +191,7 @@ export function HeatmapExplorer() {
       let next = -1;
       if (e.key === "ArrowDown") next = idx < 0 ? 0 : Math.min(ids.length - 1, idx + 1);
       else if (e.key === "ArrowUp") next = idx < 0 ? ids.length - 1 : Math.max(0, idx - 1);
+      else if (e.key === "Escape") { setActiveId(""); return; }
       else if (e.key === "Home") next = 0;
       else if (e.key === "End") next = ids.length - 1;
       if (next < 0) return;
