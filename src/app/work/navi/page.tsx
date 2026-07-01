@@ -309,18 +309,17 @@ export default async function NaviPage() {
             than algorithmic browsing when the goal is meaningful neighborhood
             engagement.
           </p>
-          <p>
-            <Link className="nv-system-cta-link" href="/work/navi/demo">Open the playable demo</Link>
-          </p>
         </div>
-        <ExpandableImage
-          src="/projects/navi/final-mockup.png"
-          alt="Final Navi mockup: neighborhood-led travel homepage"
-          width={2400}
-          height={1600}
-          sizes="(max-width: 768px) 92vw, 900px"
-          style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
-        />
+        <div style={{ marginTop: "1.5rem" }}>
+          <ExpandableImage
+            src="/projects/navi/final-mockup.png"
+            alt="Final Navi mockup: neighborhood-led travel homepage"
+            width={2400}
+            height={1600}
+            sizes="(max-width: 768px) 92vw, 900px"
+            style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
+          />
+        </div>
       </section>
 
       <ProjectWorkJump currentSlug="navi" projects={allProjects} />
