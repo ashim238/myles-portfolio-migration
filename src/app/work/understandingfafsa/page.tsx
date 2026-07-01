@@ -11,7 +11,7 @@ import {
   BeforeAfterPhones,
   FigmaMailchimpPair,
   LockedSwappableView,
-  ModularBlockGallery,
+  NewsletterComposer,
   TemplateSwitcher,
 } from "@/components/understandingfafsa";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
@@ -216,7 +216,7 @@ export default async function UnderstandingFafsaPage() {
 
         <TemplateSwitcher />
 
-        <ModularBlockGallery />
+        <NewsletterComposer />
       </section>
 
       <section

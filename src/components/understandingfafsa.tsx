@@ -1,9 +1,10 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ExpandableImage } from "@/components/expandable-image";
-import { UF_ASSETS } from "@/lib/understandingfafsa-assets";
+import { UF_ASSETS, type UfAsset } from "@/lib/understandingfafsa-assets";
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -161,6 +162,320 @@ export function ModularBlockGallery() {
   );
 }
 
+/* ── Newsletter composer ─────────────────────────────── */
+
+type ComposerBlockId =
+  | "header"
+  | "reading"
+  | "related"
+  | "best"
+  | "students"
+  | "guides"
+  | "closer";
+
+type ComposerBlock = {
+  id: ComposerBlockId;
+  name: string;
+  role: string;
+  asset: UfAsset;
+  alt: string;
+  approxKb: number;
+};
+
+// Same seven modules as ModularBlockGallery. Sizes are directional estimates
+// tuned to what actually landed in the send: header + reading are heaviest.
+const COMPOSER_BLOCKS: readonly ComposerBlock[] = [
+  { id: "header", name: "Header", role: "Banner + brand lockup", asset: UF_ASSETS.modular.header, alt: "Newsletter header block: FAFSA banner, wave divider, brand lockup.", approxKb: 24 },
+  { id: "reading", name: "Lead story", role: "Emoji header + bullets", asset: UF_ASSETS.modular.reading, alt: "Lead story block: emoji header, structured bullets, orange link accents.", approxKb: 30 },
+  { id: "related", name: "Related reading", role: "News icon + links", asset: UF_ASSETS.modular.related, alt: "Related reading block: news icon, orange link accents.", approxKb: 18 },
+  { id: "best", name: "Editor's picks", role: "Trophy icon + links", asset: UF_ASSETS.modular.best, alt: "Curated reading block: trophy icon, branded link styling.", approxKb: 20 },
+  { id: "students", name: "Students split", role: "Juniors + seniors", asset: UF_ASSETS.modular.students, alt: "Students block: juniors + seniors segmented link lists.", approxKb: 22 },
+  { id: "guides", name: "Guides", role: "Downloadable cards", asset: UF_ASSETS.modular.guides, alt: "Guide cards section linking to downloadable resources.", approxKb: 26 },
+  { id: "closer", name: "Footer", role: "CTA + social + credit", asset: UF_ASSETS.modular.closer, alt: "Footer block: subscribe CTA, social links, and The New School credit.", approxKb: 16 },
+] as const;
+
+const COMPOSER_DEFAULT: ComposerBlockId[] = ["header", "reading", "guides", "closer"];
+const COMPOSER_KB_CEILING = 102;
+
+function makeInstanceId(id: ComposerBlockId): string {
+  const rand = typeof crypto !== "undefined" && "randomUUID" in crypto
+    ? crypto.randomUUID().slice(0, 6)
+    : Math.floor(Math.random() * 1e6).toString(36);
+  return `${id}-${rand}`;
+}
+
+type ComposerRow = { key: string; id: ComposerBlockId };
+
+function seedRows(order: ComposerBlockId[]): ComposerRow[] {
+  return order.map((id) => ({ key: makeInstanceId(id), id }));
+}
+
+export function NewsletterComposer() {
+  const [rows, setRows] = useState<ComposerRow[]>(() => seedRows(COMPOSER_DEFAULT));
+  const [justAddedKey, setJustAddedKey] = useState<string | null>(null);
+  const [dragKey, setDragKey] = useState<string | null>(null);
+  const [dragOverKey, setDragOverKey] = useState<string | null>(null);
+  const reducedMotion = usePrefersReducedMotion();
+  const blockMap = useMemo(() => {
+    const m = new Map<ComposerBlockId, ComposerBlock>();
+    COMPOSER_BLOCKS.forEach((b) => m.set(b.id, b));
+    return m;
+  }, []);
+
+  const totalKb = rows.reduce((sum, r) => sum + (blockMap.get(r.id)?.approxKb ?? 0), 0);
+  const overCeiling = totalKb > COMPOSER_KB_CEILING;
+
+  const addBlock = useCallback((id: ComposerBlockId) => {
+    setRows((prev) => {
+      const row = { key: makeInstanceId(id), id };
+      setJustAddedKey(row.key);
+      return [...prev, row];
+    });
+  }, []);
+
+  const removeRow = useCallback((key: string) => {
+    setRows((prev) => prev.filter((r) => r.key !== key));
+  }, []);
+
+  const moveRow = useCallback((key: string, delta: -1 | 1) => {
+    setRows((prev) => {
+      const idx = prev.findIndex((r) => r.key === key);
+      const next = idx + delta;
+      if (idx < 0 || next < 0 || next >= prev.length) return prev;
+      const copy = [...prev];
+      const [taken] = copy.splice(idx, 1);
+      copy.splice(next, 0, taken);
+      return copy;
+    });
+  }, []);
+
+  const randomize = useCallback(() => {
+    setRows((prev) => {
+      if (prev.length === 0) return prev;
+      const copy = [...prev];
+      for (let i = copy.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    });
+  }, []);
+
+  const reset = useCallback(() => {
+    setRows(seedRows(COMPOSER_DEFAULT));
+  }, []);
+
+  useEffect(() => {
+    if (!justAddedKey) return;
+    const t = setTimeout(() => setJustAddedKey(null), 520);
+    return () => clearTimeout(t);
+  }, [justAddedKey]);
+
+  const onDragStart = (key: string) => (e: React.DragEvent<HTMLDivElement>) => {
+    setDragKey(key);
+    e.dataTransfer.effectAllowed = "move";
+    // Firefox requires setData for drag to fire.
+    e.dataTransfer.setData("text/plain", key);
+  };
+
+  const onDragOver = (key: string) => (e: React.DragEvent<HTMLDivElement>) => {
+    if (!dragKey || dragKey === key) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    if (dragOverKey !== key) setDragOverKey(key);
+  };
+
+  const onDragLeave = (key: string) => () => {
+    if (dragOverKey === key) setDragOverKey(null);
+  };
+
+  const onDrop = (targetKey: string) => (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (!dragKey || dragKey === targetKey) {
+      setDragKey(null);
+      setDragOverKey(null);
+      return;
+    }
+    setRows((prev) => {
+      const from = prev.findIndex((r) => r.key === dragKey);
+      const to = prev.findIndex((r) => r.key === targetKey);
+      if (from < 0 || to < 0) return prev;
+      const copy = [...prev];
+      const [taken] = copy.splice(from, 1);
+      copy.splice(to, 0, taken);
+      return copy;
+    });
+    setDragKey(null);
+    setDragOverKey(null);
+  };
+
+  const onDragEnd = () => {
+    setDragKey(null);
+    setDragOverKey(null);
+  };
+
+  return (
+    <div className="uf-composer" aria-label="Interactive newsletter composer">
+      <header className="uf-composer-toolbar">
+        <div className="uf-composer-toolbar-title">
+          <p className="uf-composer-eyebrow">Try it: assemble a send</p>
+          <p className="uf-composer-help">
+            Add blocks from the shelf, drag to reorder, or use the arrows. The kit stays on-brand no matter the order.
+          </p>
+        </div>
+        <div className="uf-composer-toolbar-actions" role="group" aria-label="Composer actions">
+          <button type="button" className="uf-composer-btn" onClick={randomize} disabled={rows.length < 2}>
+            Randomize
+          </button>
+          <button type="button" className="uf-composer-btn" onClick={reset}>
+            Reset
+          </button>
+        </div>
+      </header>
+
+      <div className="uf-composer-layout">
+        <section className="uf-composer-shelf" aria-label="Available blocks">
+          <h3 className="uf-composer-heading">Block shelf</h3>
+          <ul className="uf-composer-shelf-list" role="list">
+            {COMPOSER_BLOCKS.map((b) => {
+              const usedCount = rows.filter((r) => r.id === b.id).length;
+              return (
+                <li key={b.id} className="uf-composer-shelf-item">
+                  <button
+                    type="button"
+                    className="uf-composer-shelf-btn"
+                    onClick={() => addBlock(b.id)}
+                    aria-label={`Add ${b.name} block. ${usedCount > 0 ? `In send: ${usedCount}.` : ""}`}
+                  >
+                    <span className="uf-composer-shelf-thumb" aria-hidden="true">
+                      <Image
+                        src={b.asset.src}
+                        alt=""
+                        width={120}
+                        height={Math.round((120 * b.asset.height) / b.asset.width)}
+                        sizes="120px"
+                      />
+                    </span>
+                    <span className="uf-composer-shelf-meta">
+                      <span className="uf-composer-shelf-name">{b.name}</span>
+                      <span className="uf-composer-shelf-role">{b.role}</span>
+                    </span>
+                    <span className="uf-composer-shelf-add" aria-hidden="true">
+                      {usedCount > 0 ? `+${usedCount}` : "+"}
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+
+        <section className="uf-composer-preview" aria-label="Assembled send">
+          <div className="uf-composer-preview-head">
+            <h3 className="uf-composer-heading">Your send</h3>
+            <p className={`uf-composer-weight${overCeiling ? " uf-composer-weight--over" : ""}`}>
+              <span>{rows.length} block{rows.length === 1 ? "" : "s"}</span>
+              <span aria-hidden="true"> · </span>
+              <span>~{totalKb} KB</span>
+              <span aria-hidden="true"> · </span>
+              <span>{COMPOSER_KB_CEILING} KB Gmail ceiling</span>
+            </p>
+          </div>
+
+          <ol className="uf-composer-canvas" role="list" aria-live="polite">
+            {rows.length === 0 ? (
+              <li className="uf-composer-empty">
+                <p>Empty send. Add blocks from the shelf.</p>
+              </li>
+            ) : (
+              rows.map((row, index) => {
+                const block = blockMap.get(row.id);
+                if (!block) return null;
+                const isDragging = dragKey === row.key;
+                const isDragOver = dragOverKey === row.key;
+                const isEntering = justAddedKey === row.key;
+                return (
+                  <li
+                    key={row.key}
+                    className={`uf-composer-item${isDragging ? " uf-composer-item--dragging" : ""}${isDragOver ? " uf-composer-item--dragover" : ""}${isEntering && !reducedMotion ? " uf-composer-item--enter" : ""}`}
+                  >
+                    <div
+                      className="uf-composer-item-body"
+                      draggable
+                      onDragStart={onDragStart(row.key)}
+                      onDragOver={onDragOver(row.key)}
+                      onDragLeave={onDragLeave(row.key)}
+                      onDrop={onDrop(row.key)}
+                      onDragEnd={onDragEnd}
+                    >
+                      <span className="uf-composer-item-handle" aria-hidden="true" title="Drag to reorder">
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                      </span>
+                      <span className="uf-composer-item-thumb">
+                        <Image
+                          src={block.asset.src}
+                          alt={block.alt}
+                          width={160}
+                          height={Math.round((160 * block.asset.height) / block.asset.width)}
+                          sizes="160px"
+                        />
+                      </span>
+                      <span className="uf-composer-item-meta">
+                        <span className="uf-composer-item-name">{block.name}</span>
+                        <span className="uf-composer-item-role">{block.role}</span>
+                        <span className="uf-composer-item-position">Position {index + 1} of {rows.length}</span>
+                      </span>
+                      <span className="uf-composer-item-controls" role="group" aria-label={`Reorder ${block.name}`}>
+                        <button
+                          type="button"
+                          className="uf-composer-mini"
+                          onClick={() => moveRow(row.key, -1)}
+                          disabled={index === 0}
+                          aria-label={`Move ${block.name} up`}
+                        >
+                          <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+                            <path d="M2 8l4-4 4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </button>
+                        <button
+                          type="button"
+                          className="uf-composer-mini"
+                          onClick={() => moveRow(row.key, 1)}
+                          disabled={index === rows.length - 1}
+                          aria-label={`Move ${block.name} down`}
+                        >
+                          <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+                            <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </button>
+                        <button
+                          type="button"
+                          className="uf-composer-mini uf-composer-mini--remove"
+                          onClick={() => removeRow(row.key)}
+                          aria-label={`Remove ${block.name}`}
+                        >
+                          <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+                            <path d="M3 3l6 6M9 3l-6 6" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                          </svg>
+                        </button>
+                      </span>
+                    </div>
+                  </li>
+                );
+              })
+            )}
+          </ol>
+        </section>
+      </div>
+    </div>
+  );
+}
+
 type TemplateVariant = "weekly" | "event";
 
 type TemplateMeta = {
@@ -243,14 +558,27 @@ const LOCK_SWAP_SWAPPABLE = [
 ];
 const LOCK_SWAP_FRAME = { x: 6, y: 6, w: 588, h: 943 }; // wave dividers + padding rails
 
+// Six brand tints editors can swap through without leaving the palette.
+const LOCK_SWAP_ACCENTS: readonly { hex: string; name: string }[] = [
+  { hex: "#f26938", name: "Signal orange" },
+  { hex: "#be5abf", name: "Magenta" },
+  { hex: "#2788c1", name: "Sky" },
+  { hex: "#2fac38", name: "Meadow" },
+  { hex: "#f2b544", name: "Sunbeam" },
+  { hex: "#164f73", name: "Deep navy" },
+] as const;
+
 export function LockedSwappableView() {
   const [focus, setFocus] = useState<LockSwapFocus>("both");
+  const [accent, setAccent] = useState<string>(LOCK_SWAP_ACCENTS[0].hex);
   const reducedMotion = usePrefersReducedMotion();
   const base = UF_ASSETS.lockedSwappableBase;
 
   const swapOpacity = focus === "locked" ? 0.12 : 1;
   const lockOpacity = focus === "swappable" ? 0.12 : 1;
   const layerTransition = reducedMotion ? undefined : "opacity 240ms ease";
+  const accentFill = `${accent}1a`; // ~10% alpha
+  const rectTransition = reducedMotion ? undefined : "fill 260ms ease, stroke 260ms ease";
 
   return (
     <div className="uf-lock-toggle" aria-label="Locked structure and swappable content, shown together">
@@ -319,19 +647,51 @@ export function LockedSwappableView() {
                 width={r.w}
                 height={r.h}
                 rx={8}
-                fill="rgba(242, 105, 56, 0.10)"
-                stroke="#f26938"
+                fill={accentFill}
+                stroke={accent}
                 strokeWidth={3}
+                style={{ transition: rectTransition }}
               />
             ))}
             <g transform="translate(44 392)">
-              <rect width={132} height={26} rx={4} fill="#f26938" />
+              <rect
+                width={132}
+                height={26}
+                rx={4}
+                fill={accent}
+                style={{ transition: rectTransition }}
+              />
               <text x={66} y={18} textAnchor="middle" fill="#fff" fontSize={15} fontWeight={600}>
                 Swappable
               </text>
             </g>
           </g>
         </svg>
+      </div>
+
+      <div
+        className="uf-lock-palette"
+        role="group"
+        aria-label="Recolor the swappable regions"
+      >
+        <p className="uf-lock-palette-caption">Try a swap — the palette re-tints the region markers.</p>
+        <ul role="list">
+          {LOCK_SWAP_ACCENTS.map((a) => (
+            <li key={a.hex}>
+              <button
+                type="button"
+                className={`uf-lock-palette-swatch${accent === a.hex ? " uf-lock-palette-swatch--active" : ""}`}
+                style={{ "--uf-swatch": a.hex } as React.CSSProperties}
+                onClick={() => setAccent(a.hex)}
+                aria-pressed={accent === a.hex}
+                aria-label={`Use ${a.name} (${a.hex}) as the swappable accent`}
+              >
+                <span aria-hidden="true" />
+                <span className="sr-only">{a.name}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <ul className="uf-lock-legend" role="list">
