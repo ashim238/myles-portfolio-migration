@@ -3,6 +3,12 @@ import { SiteNav } from "@/components/site-nav";
 import { playEntries } from "@/lib/content";
 import { ExpandableImage } from "@/components/expandable-image";
 import { SpecimenCard } from "@/components/specimen-card";
+import { siteConfig } from "@/lib/site-config";
+
+export const metadata = {
+  title: "Play",
+  description: "Recreational experiments: game sketches, generative studies, and the occasional sculpt.",
+};
 
 export default function PlayPage() {
   return (
@@ -88,6 +94,7 @@ export default function PlayPage() {
                         alt={image.alt}
                         width={1200}
                         height={1600}
+                        sizes="(max-width: 900px) 92vw, 720px"
                         style={{ width: "100%", height: "auto", display: "block" }}
                       />
                     ))}

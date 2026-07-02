@@ -108,6 +108,69 @@ export function SurveyStatRings() {
   );
 }
 
+/* ── Progressive design system build ────────────────── */
+
+const SYSTEM_PALETTE = [
+  { hex: "var(--nv-accent)", label: "Accent" },
+  { hex: "var(--nv-accent-soft)", label: "Soft" },
+  { hex: "var(--nv-ink)", label: "Ink" },
+  { hex: "var(--nv-surface)", label: "Surface" },
+  { hex: "var(--nv-ui-bg)", label: "Canvas" },
+  { hex: "var(--nv-ui-border)", label: "Border" },
+] as const;
+
+const SYSTEM_SPACING = [4, 8, 12, 16, 24, 32] as const;
+
+export function SystemProgressiveBuild() {
+  return (
+    <div className="nv-system-build" aria-label="Design system layers">
+      <div className="nv-build-layer">
+        <span className="nv-build-layer-label">Palette + scale</span>
+        <div className="nv-build-palette">
+          {SYSTEM_PALETTE.map((c) => (
+            <div key={c.label} className="nv-build-chip">
+              <span className="nv-build-chip-dot" style={{ background: c.hex }} />
+              <span className="nv-build-chip-name">{c.label}</span>
+            </div>
+          ))}
+        </div>
+        <div className="nv-build-scale" aria-label="4px spacing system">
+          {SYSTEM_SPACING.map((v) => (
+            <div key={v} className="nv-build-scale-step">
+              <span className="nv-build-scale-bar" style={{ width: `${v * 2.5}px` }} />
+              <span className="nv-build-scale-val">{v}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="nv-build-layer">
+        <span className="nv-build-layer-label">Typography</span>
+        <div className="nv-build-type-pair">
+          <div className="nv-build-type-specimen">
+            <p className="nv-build-type-sample nv-build-type-sample--display">Jost</p>
+            <p className="nv-build-type-role">Display headings, wayfinding</p>
+          </div>
+          <div className="nv-build-type-specimen">
+            <p className="nv-build-type-sample nv-build-type-sample--body">Lato</p>
+            <p className="nv-build-type-role">Interface text, navigation</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="nv-build-layer">
+        <span className="nv-build-layer-label">Components</span>
+        <div className="nv-build-parts">
+          <span className="nv-build-btn nv-build-btn--primary">Book experience</span>
+          <span className="nv-build-btn nv-build-btn--outline">View details</span>
+          <span className="nv-build-pill">Local favorite</span>
+          <span className="nv-build-pill nv-build-pill--accent">Verified</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ── Composition strip ───────────────────────────────── */
 
 const COMPOSITION_CARDS = [

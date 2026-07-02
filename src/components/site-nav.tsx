@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { SiteLogo } from "@/components/site-logo";
+import { SiteNavList } from "@/components/site-nav-list";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { navItems, siteConfig } from "@/lib/site-config";
+import { siteConfig } from "@/lib/site-config";
 
 export function SiteNav() {
   return (
@@ -18,13 +19,7 @@ export function SiteNav() {
       </div>
       <div className="site-header-right">
         <nav aria-label="Primary">
-          <ul className="site-nav-list">
-            {navItems.map((item) => (
-              <li key={item.label}>
-                <Link href={item.href}>{item.label}</Link>
-              </li>
-            ))}
-          </ul>
+          <SiteNavList />
         </nav>
       </div>
     </header>

@@ -62,8 +62,47 @@ const BEFORE_AFTER = [
 ] as const;
 
 export function BeforeAfterPhones() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const reduced = usePrefersReducedMotion();
+
+  useEffect(() => {
+    if (reduced) return;
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const screens = section.querySelectorAll<HTMLElement>(".uf-phone-screen--scroll");
+    if (screens.length === 0) return;
+
+    section.setAttribute("data-scroll-sync", "");
+
+    let raf = 0;
+    const sync = () => {
+      const rect = section.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const progress = Math.max(0, Math.min(1, (vh - rect.top) / (vh + rect.height)));
+
+      screens.forEach((screen) => {
+        const range = screen.scrollHeight - screen.clientHeight;
+        if (range > 0) screen.scrollTop = progress * range;
+      });
+    };
+
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(sync);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    sync();
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [reduced]);
+
   return (
-    <div className="uf-before-after" aria-label="Newsletter open rate before and after redesign">
+    <div ref={sectionRef} className="uf-before-after" aria-label="Newsletter open rate before and after redesign">
       {BEFORE_AFTER.map((item) => (
         <figure key={item.label} className="uf-before-after-item">
           <EmailPhoneFrame tilt={item.tilt} scrollable>

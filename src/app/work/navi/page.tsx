@@ -13,6 +13,7 @@ import {
   HeatmapExplorer,
   HeuristicInsightCards,
   SurveyStatRings,
+  SystemProgressiveBuild,
 } from "@/components/navi";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
 import { NAVI_SURVEY_META } from "@/lib/navi-survey-data";
@@ -261,6 +262,7 @@ export default async function NaviPage() {
             booking flow. <Link href="/work/navi/demo">Open the demo</Link>.
           </p>
         </div>
+        <SystemProgressiveBuild />
         <CompositionStrip />
       </section>
 

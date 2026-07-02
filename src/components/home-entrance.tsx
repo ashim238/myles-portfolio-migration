@@ -30,6 +30,7 @@ function runEntranceTimeline(main: HTMLElement, settle: (skipAnimation: boolean)
   const heroName = main.querySelector(".hero-name");
   const heroTyper = main.querySelector(".hero-typer");
   const heroTagline = main.querySelector(".hero-tagline");
+  const heroCredentials = main.querySelector(".hero-credentials");
   const workHeading = main.querySelector("#work > h2");
   const workLede = main.querySelector("#work > .work-lede");
   const workItems = main.querySelectorAll("#work > .work-list > .work-item");
@@ -71,19 +72,23 @@ function runEntranceTimeline(main: HTMLElement, settle: (skipAnimation: boolean)
     timeline.add(heroTagline, { ...fadeIn, y: [6, 0], duration: 320 }, 600);
   }
 
+  if (heroCredentials) {
+    timeline.add(heroCredentials, { ...fadeIn, y: [4, 0], duration: 280 }, 720);
+  }
+
   if (workHeading) {
-    timeline.add(workHeading, { ...fadeIn, y: [8, 0], duration: 320 }, 720);
+    timeline.add(workHeading, { ...fadeIn, y: [8, 0], duration: 320 }, 800);
   }
 
   if (workLede) {
-    timeline.add(workLede, { ...fadeIn, y: [6, 0], duration: 320 }, 760);
+    timeline.add(workLede, { ...fadeIn, y: [6, 0], duration: 320 }, 840);
   }
 
   if (workItems.length) {
     timeline.add(
       workItems,
       { ...fadeIn, y: [10, 0], duration: 380, delay: stagger(58) },
-      820,
+      900,
     );
   }
 

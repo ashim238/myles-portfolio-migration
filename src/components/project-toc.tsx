@@ -24,6 +24,7 @@ export function ProjectToc({ sections }: ProjectTocProps) {
   const sentinelRef = useRef<HTMLDivElement>(null);
   const activeItemRef = useRef<HTMLButtonElement>(null);
   const listRef = useRef<HTMLOListElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
   const backTopRef = useRef<HTMLButtonElement>(null);
   const reducedRef = useRef(false);
 
@@ -253,6 +254,12 @@ export function ProjectToc({ sections }: ProjectTocProps) {
         case "End":
           target = last;
           break;
+        case "Escape":
+          if (!isOpen) return;
+          event.preventDefault();
+          setIsOpen(false);
+          toggleRef.current?.focus();
+          return;
         default:
           return;
       }
@@ -260,7 +267,7 @@ export function ProjectToc({ sections }: ProjectTocProps) {
       const links = listRef.current?.querySelectorAll<HTMLButtonElement>(".project-toc-link");
       links?.[target]?.focus();
     },
-    [sections.length]
+    [sections.length, isOpen]
   );
 
   const activeIndex = sections.findIndex((s) => s.id === activeId);
@@ -281,8 +288,15 @@ export function ProjectToc({ sections }: ProjectTocProps) {
         {/* Mobile: collapsed current-section bar. The overall progress fills
             the hairline beneath it. */}
         <button
+          ref={toggleRef}
           className="project-toc-toggle"
           onClick={() => setIsOpen(!isOpen)}
+          onKeyDown={(event) => {
+            if (event.key === "Escape" && isOpen) {
+              event.preventDefault();
+              setIsOpen(false);
+            }
+          }}
           aria-expanded={isOpen}
           aria-controls="project-toc-list"
         >
@@ -319,7 +333,7 @@ export function ProjectToc({ sections }: ProjectTocProps) {
               const num = String(i + 1).padStart(2, "0");
 
               return (
-                <li key={section.id} className="project-toc-item">
+                <li key={section.id} className="project-toc-item" style={{ "--toc-i": i } as React.CSSProperties}>
                   <button
                     ref={isActive ? activeItemRef : undefined}
                     className={`project-toc-link${isActive ? " project-toc-link--active" : ""}`}

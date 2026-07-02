@@ -56,9 +56,11 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
     };
     window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
+    document.body.dataset.lightboxOpen = "true";
     return () => {
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
+      delete document.body.dataset.lightboxOpen;
       triggerRef.current?.focus();
       triggerRef.current = null;
     };
@@ -91,20 +93,12 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
               </svg>
             </button>
             <Image
+              className="lb-image"
               src={state.src}
               alt={state.alt}
               width={1200}
               height={2600}
               unoptimized={state.src.startsWith("/")}
-              style={{
-                width: "auto",
-                height: "auto",
-                maxHeight: "92vh",
-                maxWidth: "92vw",
-                objectFit: "contain",
-                borderRadius: "0.75rem",
-                boxShadow: "0 32px 80px rgba(0,0,0,0.65)",
-              }}
             />
           </div>
         </>
