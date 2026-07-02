@@ -212,6 +212,10 @@ type ComposerBlockId =
   | "guides"
   | "closer";
 
+const PINNED_TOP: ComposerBlockId = "header";
+const PINNED_BOTTOM: ComposerBlockId = "closer";
+const SWAPPABLE_IDS: ComposerBlockId[] = ["reading", "related", "best", "students", "guides"];
+
 type ComposerBlock = {
   id: ComposerBlockId;
   name: string;
@@ -233,7 +237,7 @@ const COMPOSER_BLOCKS: readonly ComposerBlock[] = [
   { id: "closer", name: "Footer", role: "CTA + social + credit", asset: UF_ASSETS.modular.closer, alt: "Footer block: subscribe CTA, social links, and The New School credit.", approxKb: 16 },
 ] as const;
 
-const COMPOSER_DEFAULT: ComposerBlockId[] = ["header", "reading", "guides", "closer"];
+const COMPOSER_DEFAULT: ComposerBlockId[] = ["reading", "guides"];
 const COMPOSER_KB_CEILING = 102;
 
 function makeInstanceId(id: ComposerBlockId): string {
@@ -261,7 +265,11 @@ export function NewsletterComposer() {
     return m;
   }, []);
 
-  const totalKb = rows.reduce((sum, r) => sum + (blockMap.get(r.id)?.approxKb ?? 0), 0);
+  const pinnedTopBlock = blockMap.get(PINNED_TOP)!;
+  const pinnedBottomBlock = blockMap.get(PINNED_BOTTOM)!;
+  const pinnedKb = pinnedTopBlock.approxKb + pinnedBottomBlock.approxKb;
+  const totalKb = pinnedKb + rows.reduce((sum, r) => sum + (blockMap.get(r.id)?.approxKb ?? 0), 0);
+  const totalBlockCount = rows.length + 2;
   const overCeiling = totalKb > COMPOSER_KB_CEILING;
 
   const addBlock = useCallback((id: ComposerBlockId) => {
@@ -359,7 +367,7 @@ export function NewsletterComposer() {
         <div className="uf-composer-toolbar-title">
           <p className="uf-composer-eyebrow">Try it: assemble a send</p>
           <p className="uf-composer-help">
-            Add blocks from the shelf, drag to reorder, or use the arrows. The kit stays on-brand no matter the order.
+            Header and footer stay locked. Add middle blocks from the shelf, drag to reorder, or use the arrows. The kit stays on-brand no matter the order.
           </p>
         </div>
         <div className="uf-composer-toolbar-actions" role="group" aria-label="Composer actions">
@@ -376,7 +384,7 @@ export function NewsletterComposer() {
         <section className="uf-composer-shelf" aria-label="Available blocks">
           <h3 className="uf-composer-heading">Block shelf</h3>
           <ul className="uf-composer-shelf-list" role="list">
-            {COMPOSER_BLOCKS.map((b) => {
+            {COMPOSER_BLOCKS.filter((b) => SWAPPABLE_IDS.includes(b.id)).map((b) => {
               const usedCount = rows.filter((r) => r.id === b.id).length;
               return (
                 <li key={b.id} className="uf-composer-shelf-item">
@@ -413,7 +421,7 @@ export function NewsletterComposer() {
           <div className="uf-composer-preview-head">
             <h3 className="uf-composer-heading">Your send</h3>
             <p className={`uf-composer-weight${overCeiling ? " uf-composer-weight--over" : ""}`}>
-              <span>{rows.length} block{rows.length === 1 ? "" : "s"}</span>
+              <span>{totalBlockCount} block{totalBlockCount === 1 ? "" : "s"}</span>
               <span aria-hidden="true"> · </span>
               <span>~{totalKb} KB</span>
               <span aria-hidden="true"> · </span>
@@ -421,94 +429,144 @@ export function NewsletterComposer() {
             </p>
           </div>
 
-          <ol className="uf-composer-canvas" role="list" aria-live="polite">
-            {rows.length === 0 ? (
-              <li className="uf-composer-empty">
-                <p>Empty send. Add blocks from the shelf.</p>
-              </li>
-            ) : (
-              rows.map((row, index) => {
-                const block = blockMap.get(row.id);
-                if (!block) return null;
-                const isDragging = dragKey === row.key;
-                const isDragOver = dragOverKey === row.key;
-                const isEntering = justAddedKey === row.key;
-                return (
-                  <li
-                    key={row.key}
-                    className={`uf-composer-item${isDragging ? " uf-composer-item--dragging" : ""}${isDragOver ? " uf-composer-item--dragover" : ""}${isEntering && !reducedMotion ? " uf-composer-item--enter" : ""}`}
-                  >
-                    <div
-                      className="uf-composer-item-body"
-                      draggable
-                      onDragStart={onDragStart(row.key)}
-                      onDragOver={onDragOver(row.key)}
-                      onDragLeave={onDragLeave(row.key)}
-                      onDrop={onDrop(row.key)}
-                      onDragEnd={onDragEnd}
+          <div className="uf-composer-canvas" role="list" aria-live="polite">
+            <div className="uf-composer-pinned" aria-label={`${pinnedTopBlock.name} (locked)`}>
+              <div className="uf-composer-pinned-body">
+                <span className="uf-composer-pinned-lock" aria-hidden="true">
+                  <svg viewBox="0 0 12 14" width="12" height="14">
+                    <path d="M2 6V4a4 4 0 018 0v2h.5a1.5 1.5 0 011.5 1.5v4a1.5 1.5 0 01-1.5 1.5h-9A1.5 1.5 0 010 11.5v-4A1.5 1.5 0 011.5 6H2zm2 0h4V4a2 2 0 10-4 0v2z" fill="currentColor" />
+                  </svg>
+                </span>
+                <span className="uf-composer-pinned-thumb">
+                  <Image
+                    src={pinnedTopBlock.asset.src}
+                    alt={pinnedTopBlock.alt}
+                    width={160}
+                    height={Math.round((160 * pinnedTopBlock.asset.height) / pinnedTopBlock.asset.width)}
+                    sizes="160px"
+                  />
+                </span>
+                <span className="uf-composer-item-meta">
+                  <span className="uf-composer-item-name">{pinnedTopBlock.name}</span>
+                  <span className="uf-composer-item-role">{pinnedTopBlock.role}</span>
+                </span>
+                <span className="uf-composer-pinned-badge">Locked</span>
+              </div>
+            </div>
+
+            <ol className="uf-composer-middle" role="list">
+              {rows.length === 0 ? (
+                <li className="uf-composer-empty">
+                  <p>No middle blocks. Add some from the shelf.</p>
+                </li>
+              ) : (
+                rows.map((row, index) => {
+                  const block = blockMap.get(row.id);
+                  if (!block) return null;
+                  const isDragging = dragKey === row.key;
+                  const isDragOver = dragOverKey === row.key;
+                  const isEntering = justAddedKey === row.key;
+                  return (
+                    <li
+                      key={row.key}
+                      className={`uf-composer-item${isDragging ? " uf-composer-item--dragging" : ""}${isDragOver ? " uf-composer-item--dragover" : ""}${isEntering && !reducedMotion ? " uf-composer-item--enter" : ""}`}
                     >
-                      <span className="uf-composer-item-handle" aria-hidden="true" title="Drag to reorder">
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                      </span>
-                      <span className="uf-composer-item-thumb">
-                        <Image
-                          src={block.asset.src}
-                          alt={block.alt}
-                          width={160}
-                          height={Math.round((160 * block.asset.height) / block.asset.width)}
-                          sizes="160px"
-                        />
-                      </span>
-                      <span className="uf-composer-item-meta">
-                        <span className="uf-composer-item-name">{block.name}</span>
-                        <span className="uf-composer-item-role">{block.role}</span>
-                        <span className="uf-composer-item-position">Position {index + 1} of {rows.length}</span>
-                      </span>
-                      <span className="uf-composer-item-controls" role="group" aria-label={`Reorder ${block.name}`}>
-                        <button
-                          type="button"
-                          className="uf-composer-mini"
-                          onClick={() => moveRow(row.key, -1)}
-                          disabled={index === 0}
-                          aria-label={`Move ${block.name} up`}
-                        >
-                          <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
-                            <path d="M2 8l4-4 4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        </button>
-                        <button
-                          type="button"
-                          className="uf-composer-mini"
-                          onClick={() => moveRow(row.key, 1)}
-                          disabled={index === rows.length - 1}
-                          aria-label={`Move ${block.name} down`}
-                        >
-                          <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
-                            <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        </button>
-                        <button
-                          type="button"
-                          className="uf-composer-mini uf-composer-mini--remove"
-                          onClick={() => removeRow(row.key)}
-                          aria-label={`Remove ${block.name}`}
-                        >
-                          <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
-                            <path d="M3 3l6 6M9 3l-6 6" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-                          </svg>
-                        </button>
-                      </span>
-                    </div>
-                  </li>
-                );
-              })
-            )}
-          </ol>
+                      <div
+                        className="uf-composer-item-body"
+                        draggable
+                        onDragStart={onDragStart(row.key)}
+                        onDragOver={onDragOver(row.key)}
+                        onDragLeave={onDragLeave(row.key)}
+                        onDrop={onDrop(row.key)}
+                        onDragEnd={onDragEnd}
+                      >
+                        <span className="uf-composer-item-handle" aria-hidden="true" title="Drag to reorder">
+                          <span />
+                          <span />
+                          <span />
+                          <span />
+                          <span />
+                          <span />
+                        </span>
+                        <span className="uf-composer-item-thumb">
+                          <Image
+                            src={block.asset.src}
+                            alt={block.alt}
+                            width={160}
+                            height={Math.round((160 * block.asset.height) / block.asset.width)}
+                            sizes="160px"
+                          />
+                        </span>
+                        <span className="uf-composer-item-meta">
+                          <span className="uf-composer-item-name">{block.name}</span>
+                          <span className="uf-composer-item-role">{block.role}</span>
+                          <span className="uf-composer-item-position">Position {index + 2} of {totalBlockCount}</span>
+                        </span>
+                        <span className="uf-composer-item-controls" role="group" aria-label={`Reorder ${block.name}`}>
+                          <button
+                            type="button"
+                            className="uf-composer-mini"
+                            onClick={() => moveRow(row.key, -1)}
+                            disabled={index === 0}
+                            aria-label={`Move ${block.name} up`}
+                          >
+                            <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+                              <path d="M2 8l4-4 4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          </button>
+                          <button
+                            type="button"
+                            className="uf-composer-mini"
+                            onClick={() => moveRow(row.key, 1)}
+                            disabled={index === rows.length - 1}
+                            aria-label={`Move ${block.name} down`}
+                          >
+                            <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+                              <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          </button>
+                          <button
+                            type="button"
+                            className="uf-composer-mini uf-composer-mini--remove"
+                            onClick={() => removeRow(row.key)}
+                            aria-label={`Remove ${block.name}`}
+                          >
+                            <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
+                              <path d="M3 3l6 6M9 3l-6 6" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                            </svg>
+                          </button>
+                        </span>
+                      </div>
+                    </li>
+                  );
+                })
+              )}
+            </ol>
+
+            <div className="uf-composer-pinned" aria-label={`${pinnedBottomBlock.name} (locked)`}>
+              <div className="uf-composer-pinned-body">
+                <span className="uf-composer-pinned-lock" aria-hidden="true">
+                  <svg viewBox="0 0 12 14" width="12" height="14">
+                    <path d="M2 6V4a4 4 0 018 0v2h.5a1.5 1.5 0 011.5 1.5v4a1.5 1.5 0 01-1.5 1.5h-9A1.5 1.5 0 010 11.5v-4A1.5 1.5 0 011.5 6H2zm2 0h4V4a2 2 0 10-4 0v2z" fill="currentColor" />
+                  </svg>
+                </span>
+                <span className="uf-composer-pinned-thumb">
+                  <Image
+                    src={pinnedBottomBlock.asset.src}
+                    alt={pinnedBottomBlock.alt}
+                    width={160}
+                    height={Math.round((160 * pinnedBottomBlock.asset.height) / pinnedBottomBlock.asset.width)}
+                    sizes="160px"
+                  />
+                </span>
+                <span className="uf-composer-item-meta">
+                  <span className="uf-composer-item-name">{pinnedBottomBlock.name}</span>
+                  <span className="uf-composer-item-role">{pinnedBottomBlock.role}</span>
+                </span>
+                <span className="uf-composer-pinned-badge">Locked</span>
+              </div>
+            </div>
+          </div>
         </section>
       </div>
     </div>
