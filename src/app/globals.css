@@ -6094,6 +6094,9 @@ button:focus-visible,
 .nv-section--wide .project-section-body {
   max-width: 65ch;
 }
+.nv-section--wide {
+  max-width: none;
+}
 
 .nv-survey-note {
   font-size: 0.92rem;
@@ -10276,6 +10279,209 @@ button:focus-visible,
       opacity: 1;
       transform: translateY(0);
     }
+  }
+}
+
+/* ── Navi demo embed ───────────────────────────────────────────── */
+.nv-demo-embed {
+  margin-top: 1.5rem;
+  border-radius: 0.7rem;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--surface, #fafafa);
+}
+.nv-demo-embed-chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--foreground) 4%, var(--background));
+}
+.nv-demo-embed-dots {
+  display: flex;
+  gap: 6px;
+}
+.nv-demo-embed-dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--line);
+}
+.nv-demo-embed-url {
+  flex: 1;
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.nv-demo-embed-viewport {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+.nv-demo-embed-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+.nv-demo-embed-fallback {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.nv-demo-embed-fallback img {
+  object-fit: cover;
+  object-position: top left;
+  width: 100%;
+  height: 100%;
+}
+.nv-demo-embed-mobile-cta {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--background) 50%, transparent);
+  backdrop-filter: blur(4px);
+  color: var(--foreground);
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-decoration: none;
+}
+.nv-demo-embed-cta {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+
+/* ── Navi closing parallax ─────────────────────────────────────── */
+.nv-closing {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.7rem;
+  height: clamp(420px, 56vw, 680px);
+  margin-top: 1.5rem;
+}
+.nv-closing-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    165deg,
+    oklch(0.30 0.06 45) 0%,
+    oklch(0.38 0.10 42) 40%,
+    oklch(0.48 0.14 38) 100%
+  );
+}
+.nv-closing-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+.nv-closing-screen {
+  border-radius: 0.7rem;
+  box-shadow: 0 12px 48px oklch(0 0 0 / 0.35);
+}
+.nv-closing-screen--main {
+  width: 68%;
+  height: auto;
+  transform: translateY(4%) rotate(-1.5deg);
+}
+.nv-closing-screen--detail {
+  position: absolute;
+  right: 4%;
+  bottom: 8%;
+  width: 36%;
+  height: auto;
+  transform: rotate(2deg);
+}
+.nv-closing-accent {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.18;
+}
+.nv-closing-accent--1 {
+  width: 180px;
+  height: 180px;
+  top: -40px;
+  left: -30px;
+  background: oklch(0.72 0.18 45);
+}
+.nv-closing-accent--2 {
+  width: 100px;
+  height: 100px;
+  bottom: 12%;
+  left: 8%;
+  background: oklch(0.80 0.14 50);
+}
+.nv-closing-accent--3 {
+  width: 60px;
+  height: 60px;
+  top: 20%;
+  right: 12%;
+  background: oklch(0.85 0.10 55);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .nv-closing-layer--back {
+      animation: nvClosingBack linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 60%;
+    }
+    .nv-closing-layer--mid {
+      animation: nvClosingMid linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 60%;
+    }
+    .nv-closing-layer--front {
+      animation: nvClosingFront linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 60%;
+    }
+    @keyframes nvClosingBack {
+      from { transform: translateY(30px); }
+      to { transform: translateY(-10px); }
+    }
+    @keyframes nvClosingMid {
+      from { transform: translateY(60px); }
+      to { transform: translateY(-20px); }
+    }
+    @keyframes nvClosingFront {
+      from { transform: translateY(90px); }
+      to { transform: translateY(-30px); }
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .nv-closing {
+    height: clamp(280px, 72vw, 400px);
+  }
+  .nv-closing-screen--main {
+    width: 82%;
+  }
+  .nv-closing-screen--detail {
+    width: 48%;
+    right: 2%;
+    bottom: 4%;
+  }
+  .nv-closing-accent--1 {
+    width: 100px;
+    height: 100px;
+  }
+  .nv-closing-accent--2 {
+    width: 60px;
+    height: 60px;
+  }
+  .nv-closing-accent--3 {
+    display: none;
   }
 }
 
