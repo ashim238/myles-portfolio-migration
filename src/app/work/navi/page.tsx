@@ -13,7 +13,9 @@ import {
   HeatmapExplorer,
   HeuristicInsightCards,
   SurveyStatRings,
+  SystemProgressiveBuild,
 } from "@/components/navi";
+import { NaviDemoEmbed } from "@/components/navi-demo-embed";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
 import { NAVI_SURVEY_META } from "@/lib/navi-survey-data";
 
@@ -157,8 +159,8 @@ export default async function NaviPage() {
           </p>
           <p>
             Early on, the team considered a heatmap solution to reroute tourists away from
-            congestion. The research reframed the problem: residents did not want fewer tourists;
-            they wanted visitors who engage more intentionally.
+            congestion. The research reframed the problem: residents did not want fewer tourists.
+            They wanted visitors who engage more intentionally.
           </p>
         </div>
         <HeuristicInsightCards />
@@ -261,10 +263,11 @@ export default async function NaviPage() {
             booking flow. <Link href="/work/navi/demo">Open the demo</Link>.
           </p>
         </div>
+        <SystemProgressiveBuild />
         <CompositionStrip />
       </section>
 
-      <section className="project-section nv-section" aria-labelledby="nv-screens">
+      <section className="project-section nv-section project-section--wide nv-section--wide" aria-labelledby="nv-screens">
         <h2 id="nv-screens">See it in product</h2>
         <div className="project-section-body">
           <p>
@@ -274,18 +277,8 @@ export default async function NaviPage() {
             catalogued on the system page, which means the system shows up in the
             product the way it was meant to.
           </p>
-          <ExpandableImage
-            src="/projects/navi/desktop-screens.png"
-            alt="Navi product screens: feed, map search, host detail, and booking flow"
-            width={2400}
-            height={1600}
-            sizes="(max-width: 768px) 92vw, 900px"
-            style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem", marginBottom: "1.25rem" }}
-          />
-          <p>
-            <Link className="nv-system-cta-link" href="/work/navi/demo">Open the playable demo</Link>
-          </p>
         </div>
+        <NaviDemoEmbed />
       </section>
 
       <section className="project-section nv-section" aria-labelledby="nv-outcome">
@@ -309,16 +302,6 @@ export default async function NaviPage() {
             than algorithmic browsing when the goal is meaningful neighborhood
             engagement.
           </p>
-        </div>
-        <div style={{ marginTop: "1.5rem" }}>
-          <ExpandableImage
-            src="/projects/navi/final-mockup.png"
-            alt="Final Navi mockup: neighborhood-led travel homepage"
-            width={2400}
-            height={1600}
-            sizes="(max-width: 768px) 92vw, 900px"
-            style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
-          />
         </div>
       </section>
 

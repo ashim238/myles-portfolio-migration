@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import { Geist_Mono, Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
+import { ConsoleGreeting } from "@/components/console-greeting";
 import { LightboxProvider } from "@/components/lightbox-provider";
+import { MobileNav } from "@/components/mobile-nav";
 import { ProjectEnterTransition } from "@/components/project-enter-transition";
+import { ScrollRevealFallback } from "@/components/scroll-reveal-fallback";
 
 const sans = Instrument_Sans({
   variable: "--font-family-sans",
@@ -69,14 +72,20 @@ export default function RootLayout({
             __html: `(function(){try{var p=location.pathname;if(p!=="/"&&p!=="")return;var b=sessionStorage.getItem("home-browser-intro-seen")==="1";var e=sessionStorage.getItem("home-intro-seen")==="1";var r=window.matchMedia("(prefers-reduced-motion: reduce)").matches;if(!r&&(!b||!e)){document.documentElement.classList.add("home-intro-wait");setTimeout(function(){document.documentElement.classList.remove("home-intro-wait")},2600)}}catch(err){}})();`,
           }}
         />
+        <noscript>
+          <style>{`.home-intro-wait .home-page, .home-intro-wait .home-page * { opacity: 1 !important; }`}</style>
+        </noscript>
       </head>
       <body className="min-h-full flex flex-col">
         <a className="skip-link" href="#main-content">
           Skip to main content
         </a>
+        <ConsoleGreeting />
         <LightboxProvider>
           <ProjectEnterTransition>{children}</ProjectEnterTransition>
         </LightboxProvider>
+        <MobileNav />
+        <ScrollRevealFallback />
       </body>
     </html>
   );

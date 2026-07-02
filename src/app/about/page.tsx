@@ -3,7 +3,7 @@ import { SiteNav } from "@/components/site-nav";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata = {
-  title: `About | ${siteConfig.name}`,
+  title: "About",
   description: `About ${siteConfig.name}: product designer based in Brooklyn.`,
 };
 
@@ -89,9 +89,9 @@ export default function AboutPage() {
             <div className="about-detail">
               <dt>Contact</dt>
               <dd>
-                <Link href={`mailto:${siteConfig.email}`}>
+                <a href={`mailto:${siteConfig.email}`}>
                   {siteConfig.email}
-                </Link>
+                </a>
               </dd>
             </div>
           </dl>

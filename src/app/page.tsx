@@ -22,14 +22,15 @@ export default async function Home() {
         <HomeEntrance />
         <SiteNav />
 
-      <section className="hero">
-        <h1 className="hero-name">{siteConfig.name}</h1>
+      <section className="hero" aria-labelledby="hero-name">
+        <h1 id="hero-name" className="hero-name">{siteConfig.name}</h1>
         <HeroInterestTyper awaitHomeEntrance />
         <p className="hero-tagline">Product designer working where interaction craft meets social responsibility — and I build past the prototype.</p>
+        <p className="hero-credentials">Previously TikTok, UMG. MFA at Parsons.</p>
       </section>
 
-      <section className="work" id="work">
-        <h2>Selected Work</h2>
+      <section className="work" id="work" aria-labelledby="work-title">
+        <h2 id="work-title">Selected Work</h2>
         <p className="work-lede">
           Each of these starts from the same question — who does the product
           leave out? Black travelers on the road, students decoding financial
@@ -55,12 +56,12 @@ export default async function Home() {
         </section>
       ) : null}
 
-      <section className="about" id="about">
-        <h2>About</h2>
+      <section className="about" id="about" aria-labelledby="about-title">
+        <h2 id="about-title">About</h2>
         <p>
-          Brooklyn-based product designer. Creative-strategy at TikTok and
-          UMG before going back for an MFA in Design and Technology at
-          Parsons. I design end to end and tend to go past the prototype.
+          I design end to end and ship past the prototype. Ask me about the
+          Gmail HTML ceiling or why the Navi daylight cue is a WCAG dash
+          pattern.
         </p>
         <p className="about-actions">
           <Link className="about-action" href="/about">
@@ -78,6 +79,8 @@ export default async function Home() {
         </p>
       </section>
 
+      </main>
+
       <footer className="footer">
         <nav className="footer-nav" aria-label="Footer">
           <Link href="/#work">Work</Link>
@@ -90,7 +93,6 @@ export default async function Home() {
           © {new Date().getFullYear()} {siteConfig.name}
         </p>
       </footer>
-      </main>
     </>
   );
 }
