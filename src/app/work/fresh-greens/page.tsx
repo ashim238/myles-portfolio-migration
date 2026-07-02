@@ -274,19 +274,6 @@ export default async function FreshGreensPage() {
           </p>
         </div>
 
-        <figure className="fg-safety-visual">
-          <PhoneFrame variant="screenshot">
-            <Shot
-              name="emergency"
-              alt="The /emergency screen with a Franklin Bold countdown numeral, the largest type in the app, and DM Serif reassurance text"
-            />
-          </PhoneFrame>
-          <figcaption className="fg-safety-visual-caption">
-            The <code>/emergency</code> countdown is the largest type in the
-            app. Bold is reserved for the number the driver needs to read at
-            a glance.
-          </figcaption>
-        </figure>
       </section>
 
       {/* ── Section 6: Reserved color that holds ─────── */}
@@ -392,18 +379,6 @@ export default async function FreshGreensPage() {
           </p>
         </div>
 
-        <figure className="fg-safety-visual">
-          <PhoneFrame variant="screenshot">
-            <Shot
-              name="moderation"
-              alt="A /moderation queue item expanded to show the investigation panel with submitter history, nearby reports, and coordination-detection flags"
-            />
-          </PhoneFrame>
-          <figcaption className="fg-safety-visual-caption">
-            An expanded queue item, showing the investigation panel each
-            report enters with.
-          </figcaption>
-        </figure>
       </section>
 
       {/* ── Section 8: Six interviews, four markers ──── */}
@@ -441,7 +416,23 @@ export default async function FreshGreensPage() {
             toggle. SunCalc&apos;s model shifts with latitude, which matters
             because the drivers who mentioned it were routing across states.
           </p>
+        </div>
 
+        <figure className="fg-safety-visual">
+          <PhoneFrame variant="screenshot">
+            <Shot
+              name="route-preview"
+              alt="A Fresh Greens route preview to Vineland Flea Market showing the daylight-graded route line and a sunrise-to-night gradient strip marking how much of the drive falls in daylight"
+            />
+          </PhoneFrame>
+          <figcaption className="fg-safety-visual-caption">
+            The daylight gradient made visible: the route strip grades from
+            sunrise to night, so a driver can see how much of a drive falls in
+            daylight before choosing it.
+          </figcaption>
+        </figure>
+
+        <div className="project-section-body">
           <h3 className="fg-h3">
             The voice at <code>/pulled-over</code>.
           </h3>
@@ -472,7 +463,23 @@ export default async function FreshGreensPage() {
             category system that only allows negative reports fails to
             capture the community knowledge that was actually described.
           </p>
+        </div>
 
+        <figure className="fg-safety-visual">
+          <PhoneFrame variant="screenshot">
+            <Shot
+              name="report-picker"
+              alt="The Fresh Greens report picker: a grid of six categories — Incident, Felt unsafe, Lighting, Hazard, Felt welcome, and Black-owned — placing positive community signals next to hazards"
+            />
+          </PhoneFrame>
+          <figcaption className="fg-safety-visual-caption">
+            &quot;Felt welcome&quot; and &quot;Black-owned&quot; sit in the same
+            grid as &quot;Incident&quot; and &quot;Hazard.&quot; A positive
+            signal is data the next driver can use.
+          </figcaption>
+        </figure>
+
+        <div className="project-section-body">
           <h3 className="fg-h3">Where I had to step back.</h3>
           <p>
             My first instinct after the interviews was to load the interface
