@@ -12,6 +12,7 @@ import {
   SignalSwatches,
 } from "@/components/fresh-greens";
 import { Device3D } from "@/components/device-3d";
+import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getPublishedProjects } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -66,7 +67,7 @@ export default async function FreshGreensPage() {
           A wayfinding app for Black drivers in America, built solo as a
           graduate thesis. The argument is narrower than &quot;an app for
           safety&quot;:{" "}
-          <em>whose safety knowledge counts when the route is computed?</em>{" "}
+          <mark className="case-highlight">whose safety knowledge counts when the route is computed?</mark>{" "}
           Fresh Greens answers by running community observations through the
           same pipeline as OpenStreetMap, DOT-511, OSRM, and SunCalc,
           weighted the same way. Six driver interviews shaped the routing
@@ -144,7 +145,7 @@ export default async function FreshGreensPage() {
           </p>
           <p>
             They&apos;re not a separate feed with their own view. They pass
-            through the same adapter, the same scoring function, and land on
+            through <mark className="case-highlight">the same adapter, the same scoring function</mark>, and land on
             the same route-preview strip that OpenStreetMap does. Weighted
             the same way. Attributable the same way. Both paths carry the
             source of the score, so the driver can see whether a segment
@@ -177,8 +178,8 @@ export default async function FreshGreensPage() {
         <h2 id="fg-held-question">The Held-Question Rule.</h2>
         <div className="project-section-body">
           <p>
-            Every in-modal prompt in Fresh Greens is set in Libre Franklin
-            Regular. Not Bold. The safety modal asks &quot;What&apos;s going
+            <mark className="case-highlight">Every in-modal prompt in Fresh Greens is set in Libre Franklin
+            Regular. Not Bold.</mark> The safety modal asks &quot;What&apos;s going
             on?&quot; The share-location sheet asks &quot;What&apos;s the
             situation?&quot; The Lifeline modal says &quot;You&apos;re not
             alone.&quot;
@@ -247,9 +248,9 @@ export default async function FreshGreensPage() {
         <h2 id="fg-material">The material of calm.</h2>
         <div className="project-section-body">
           <p>
-            Fresh Greens replaces iOS&apos;s default cool grays with five
-            warm surfaces, all derived in OKLCH at 0.008 to 0.012 chroma on
-            the brand-green hue. Page, card, sheet, elevated, and tinted.
+            Fresh Greens replaces iOS&apos;s default cool grays with{" "}
+            <mark className="case-highlight">five warm surfaces, all derived in OKLCH at 0.008 to 0.012 chroma on
+            the brand-green hue</mark>. Page, card, sheet, elevated, and tinted.
             The neutrals across the whole app share a single tonal source
             instead of tracking the platform&apos;s default gray ramp.
           </p>
@@ -302,7 +303,7 @@ export default async function FreshGreensPage() {
             signals only, each tied to one specific meaning. Because those
             four colors are reserved, a red dot or an orange chip in the app
             points to something specific. Across 20+ screens and hundreds of
-            accessibility attributes, the rule holds without exception.
+            accessibility attributes, <mark className="case-highlight">the rule holds without exception</mark>.
           </p>
         </div>
 
@@ -381,8 +382,13 @@ export default async function FreshGreensPage() {
             every unpublish.
           </p>
           <p>
-            A v2 transparency page will publish moderation outcomes so the
-            queue&apos;s work is auditable outside the queue.
+            <mark className="case-highlight">
+              /moderation is where &quot;whose knowledge counts&quot; gets
+              renegotiated
+            </mark>{" "}
+            with real reports and real stakes. A v2 transparency page will
+            publish moderation outcomes so the queue&apos;s work is auditable
+            outside the queue.
           </p>
         </div>
 
@@ -454,9 +460,11 @@ export default async function FreshGreensPage() {
           <h3 className="fg-h3">Community as the authority.</h3>
           <p>
             The six report categories exist because the interviews kept
-            surfacing two overlapping habits: skepticism of the authorities
-            and reliance on community members for the ground truth of a
-            place. Drivers already asked around before entering an unfamiliar
+            surfacing two overlapping habits:{" "}
+            <mark className="case-highlight">
+              skepticism of the authorities and reliance on community members
+            </mark>{" "}
+            for the ground truth of a place. Drivers already asked around before entering an unfamiliar
             area. The report picker turns that habit into a first-class
             input. &quot;Felt welcome&quot; and &quot;Black-owned&quot; sit
             next to &quot;Incident&quot; and &quot;Hazard&quot; because a
@@ -496,63 +504,38 @@ export default async function FreshGreensPage() {
             <ul className="fg-scope-list" role="list">
               <li>
                 Equal-weighting routing pipeline across OpenStreetMap,
-                DOT-511 network incidents, OSRM, SunCalc, and community
-                reports
-              </li>
-              <li>Daylight-graded route polyline with a WCAG dash pattern</li>
-              <li>
-                Community-first discovery and the six-category report picker
+                DOT-511, OSRM, SunCalc, and community reports
               </li>
               <li>
                 Six-surface safety toolkit, with <code>/pulled-over</code>{" "}
-                carrying ACLU-sourced guidance and on-device audio capture
+                carrying ACLU-sourced guidance, on-device audio capture, and
+                the Held-Question voice
               </li>
               <li>
-                Mapbox turn-by-turn navigation with a four-layer fallback
-                chain: Mapbox → OSRM public demo → local route cache →
-                mocked response. The cache is the real offline layer, which
-                matters where signal is patchy
-              </li>
-              <li>
-                Two-font system: Libre Franklin across the hierarchy, DM
-                Serif Display reserved for six emotional-payoff moments
-              </li>
-              <li>
-                Warm surface ramp (5 OKLCH surfaces at 0.008 to 0.012 chroma
-                on the brand-green hue) applied across 26+ screens
-              </li>
-              <li>
-                Reserved-color discipline holding across 300+ accessibility
-                attributes, with documented WCAG-math carve-outs
-              </li>
-              <li>
-                Departure-reminder local notifications with permission asked
-                in-context, not eagerly at onboarding
-              </li>
-              <li>
-                Delight layer: arrival-moment animation,
-                community-confirmation micro-interaction, sign-out
-                illustration, context-specific loading copy
-              </li>
-              <li>
-                Supabase community cloud with anonymous device-UUID auth and
-                Postgres row-level security
+                Warm surface ramp and reserved-color discipline holding
+                across 26+ screens and 300+ accessibility attributes
               </li>
               <li>
                 <code>/moderation</code> queue with per-report investigation
-                panels (submitter history, nearby reports via haversine
-                distance, coordination detection for IP and device-duplicate
-                patterns), bulk-select with per-request{" "}
-                <code>Promise.allSettled</code> inspection, and hold-to-remove
-                destructive gestures
+                panels, coordination detection for IP and device duplicates,
+                and a hold-to-remove destructive gesture
               </li>
               <li>
-                Design system published as a Figma library: 62 variables in a
-                one-mode Color collection with 1:1 parity to{" "}
-                <code>theme/colors.ts</code>, scoped per token role, WEB +
-                iOS code syntax
+                Design system published as a Figma library: 62 variables at
+                1:1 parity with <code>theme/colors.ts</code>, scoped per
+                token role
               </li>
             </ul>
+            <p className="fg-scope-also">
+              Also on the list: daylight-graded route polyline with a WCAG
+              dash pattern, six-category report picker, four-layer Mapbox
+              fallback chain (Mapbox → OSRM → cache → mock), two-font
+              Franklin plus reserved DM Serif Display, departure-reminder
+              local notifications, a delight layer of arrival and
+              community-confirmation moments, and the Supabase community
+              cloud with anonymous device-UUID auth and Postgres row-level
+              security.
+            </p>
           </div>
           <div className="fg-scope-col">
             <p className="fg-scope-label">Next, v2</p>
@@ -576,15 +559,16 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body" style={{ marginTop: "2.4rem" }}>
           <p>
-            Typography took three tries. Jost first, then Space Grotesk,
-            then Libre Franklin with DM Serif Display reserved for the six
-            emotional beats. Franklin held the register the earlier two
-            couldn&apos;t.
+            <mark className="case-highlight">Typography took three tries.</mark>{" "}
+            Jost first, then Space Grotesk, then Libre Franklin with DM
+            Serif Display reserved for the six emotional beats. Franklin
+            held the register the earlier two couldn&apos;t.
           </p>
         </div>
       </section>
 
       <ProjectWorkJump currentSlug="fresh-greens" projects={allProjects} />
+      <CaseHighlightObserver />
     </main>
   );
 }

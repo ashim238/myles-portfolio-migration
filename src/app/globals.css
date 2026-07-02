@@ -2312,10 +2312,11 @@ button:focus-visible,
 }
 
 .project-topbar a {
-  display: inline-block;
-  /* 44px tap target via padding; negative margin preserves visual spacing */
-  padding: 0.6rem 0;
-  margin: -0.6rem 0;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.7rem 0;
+  margin: -0.7rem 0;
   transition: opacity 160ms ease, transform 200ms ease;
 }
 
@@ -2334,6 +2335,21 @@ button:focus-visible,
 .project-cover {
   margin: 0 0 2rem;
   animation: fadeUp 480ms ease-out 40ms both;
+}
+
+/* When the cover lands after an intro/argument section instead of directly
+   after the hero, restore the vertical rhythm the hero's bottom margin was
+   providing. */
+.project-section + .project-cover {
+  margin-top: 3.3rem;
+}
+
+/* Italic type crowds the roman word that follows optically. A hair-space of
+   padding on the trailing edge of every case-study italic prevents the
+   crowding without adding real word spacing. */
+.project-hero-lede em,
+.project-section-body em {
+  padding-inline-end: 0.08em;
 }
 
 .project-cover-image {
@@ -3040,7 +3056,8 @@ button:focus-visible,
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 0.7rem 0;
+    min-height: 44px;
+    padding: 0.75rem 0;
     border: none;
     background: transparent;
     color: var(--foreground);
@@ -4552,10 +4569,15 @@ button:focus-visible,
 
 .fg-scope-label {
   margin: 0 0 0.85rem;
-  font-family: var(--font-mono), monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.fg-scope-also {
+  margin: 1rem 0 0;
+  font-size: 0.9rem;
+  line-height: var(--lead-long);
   color: var(--muted);
 }
 
@@ -7251,11 +7273,17 @@ button:focus-visible,
   --uf-accent-cool-text: #82c5fb;
   --uf-accent-soft: color-mix(in oklch, var(--uf-accent-warm) 14%, transparent);
   --uf-accent-line: color-mix(in srgb, var(--uf-accent-warm) 55%, transparent);
+  /* Sunbeam yellow from the FAFSA vibrancy palette, promoted to a token so
+     the case-highlight mark can reach for the newsletter's highlighter
+     register instead of overlapping with Navi's warm orange. */
+  --uf-accent-highlight: #f2b544;
 }
 
 :root[data-theme="light"] .uf-page {
   --uf-accent-soft: color-mix(in oklch, var(--uf-accent-warm) 10%, transparent);
   --uf-accent-cool-text: #164f73;
+  /* Deeper on light so the highlight reads as ink-on-paper, not washout. */
+  --uf-accent-highlight: #e3a233;
 }
 
 .uf-eyebrow {
@@ -10457,6 +10485,76 @@ button:focus-visible,
   padding: 0.75rem 1rem;
   border-top: 1px solid var(--line);
   text-align: center;
+}
+
+/* Case-study highlight: load-bearing phrase per section. Default state is
+   fully visible; observer swaps to the animated sweep once mounted. */
+
+mark.case-highlight {
+  background-color: color-mix(in srgb, var(--case-highlight-color, var(--foreground)) var(--case-highlight-opacity, 14%), transparent);
+  color: inherit;
+  padding: 0.05em 0.22em;
+  border-radius: 0.35rem;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+main[data-project-slug="fresh-greens"] {
+  --case-highlight-color: var(--fg-accent);
+  --case-highlight-opacity: 14%;
+}
+main[data-project-slug="navi"] {
+  --case-highlight-color: var(--nv-accent);
+  --case-highlight-opacity: 14%;
+}
+main[data-project-slug="understandingfafsa"] {
+  --case-highlight-color: var(--uf-accent-highlight, #f2b544);
+  --case-highlight-opacity: 22%;
+}
+
+/* Default reveal (Navi): the neighborhood-mapping sweep. */
+main[data-highlight-anim-ready] mark.case-highlight {
+  background-color: transparent;
+  background-image: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--case-highlight-color, var(--foreground)) var(--case-highlight-opacity, 14%), transparent),
+    color-mix(in srgb, var(--case-highlight-color, var(--foreground)) var(--case-highlight-opacity, 14%), transparent)
+  );
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  background-position: 0 0;
+  transition: background-size 720ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+main[data-highlight-anim-ready] mark.case-highlight.is-revealed {
+  background-size: 100% 100%;
+}
+
+/* Fresh Greens: fade-under. The mark's color settles under the type
+   instead of sweeping across it. Register-matching: calm companion. */
+main[data-project-slug="fresh-greens"][data-highlight-anim-ready] mark.case-highlight {
+  background-image: none;
+  background-size: auto;
+  background-color: transparent;
+  transition: background-color 640ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+main[data-project-slug="fresh-greens"][data-highlight-anim-ready] mark.case-highlight.is-revealed {
+  background-color: color-mix(in srgb, var(--case-highlight-color) var(--case-highlight-opacity), transparent);
+}
+
+/* UnderstandingFAFSA: highlighter-slash. Faster and sharper so the
+   sweep reads as a marker drag on paper, on-theme for the newsletter. */
+main[data-project-slug="understandingfafsa"][data-highlight-anim-ready] mark.case-highlight {
+  transition: background-size 420ms cubic-bezier(0.42, 0, 0.15, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main[data-highlight-anim-ready] mark.case-highlight,
+  main[data-project-slug="fresh-greens"][data-highlight-anim-ready] mark.case-highlight,
+  main[data-project-slug="understandingfafsa"][data-highlight-anim-ready] mark.case-highlight {
+    background-size: 100% 100%;
+    background-color: color-mix(in srgb, var(--case-highlight-color) var(--case-highlight-opacity), transparent);
+    transition: none;
+  }
 }
 
 

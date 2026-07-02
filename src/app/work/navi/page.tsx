@@ -16,6 +16,7 @@ import {
   SystemProgressiveBuild,
 } from "@/components/navi";
 import { NaviDemoEmbed } from "@/components/navi-demo-embed";
+import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
 import { NAVI_SURVEY_META } from "@/lib/navi-survey-data";
 
@@ -123,8 +124,13 @@ export default async function NaviPage() {
             and residents absorb the side effects of concentrated foot traffic.
           </p>
           <p>
-            Navi was designed to change that dynamic by connecting visitors to neighborhood-level
-            experiences that return value to the communities they visit.
+            Navi was designed to change that dynamic by connecting visitors
+            to{" "}
+            <mark className="case-highlight">
+              neighborhood-level experiences that return value to the
+              communities they visit
+            </mark>
+            .
           </p>
         </div>
       </section>
@@ -136,7 +142,8 @@ export default async function NaviPage() {
             Before any of the user interviews, the first move was visual. Tourists overload a handful of spots, and the patterns are easy to picture: the swaths of people taking photos in front of the Brooklyn Bridge in Dumbo, the perpetual crush around Times Square. If a routing layer could see this imbalance in real time, the thinking went, it could steer visitors toward neighborhoods that get less attention.
           </p>
           <p>
-            Select a neighborhood to see how that early concept worked. Regions represent narrative emphasis, not live geo analytics. This is the prototype that would have shipped on day one. The research pushed back.
+            Select a neighborhood to see how that early concept worked. Regions represent narrative emphasis, not live geo analytics. This is the prototype that would have shipped on day one.{" "}
+            <mark className="case-highlight">The research pushed back.</mark>
           </p>
           <p>
             The instinct felt right, and also a little like a bandaid. Routing tourists somewhere quieter still lets them visit that place the same shallow way. So before committing to redirection as the lever, the next step was talking to the people who would actually use the thing.
@@ -159,8 +166,11 @@ export default async function NaviPage() {
           </p>
           <p>
             Early on, the team considered a heatmap solution to reroute tourists away from
-            congestion. The research reframed the problem: residents did not want fewer tourists.
-            They wanted visitors who engage more intentionally.
+            congestion. The research reframed the problem:{" "}
+            <mark className="case-highlight">
+              residents did not want fewer tourists. They wanted visitors who
+              engage more intentionally.
+            </mark>
           </p>
         </div>
         <HeuristicInsightCards />
@@ -175,8 +185,11 @@ export default async function NaviPage() {
           </p>
           <p>
             Major concerns included overcrowding, rising local costs, and the loss of neighborhood
-            authenticity. Participants were open to AI personalization only when it remained subtle
-            and transparent.
+            authenticity. Participants were open to{" "}
+            <mark className="case-highlight">
+              AI personalization only when it remained subtle and transparent
+            </mark>
+            .
           </p>
           <p className="nv-survey-note">
             Highlights from {NAVI_SURVEY_META.responseCount} survey responses:{" "}
@@ -198,7 +211,8 @@ export default async function NaviPage() {
             coherent concept with real neighborhoods, realistic pricing, and clear user pathways.
           </p>
           <p>
-            The resulting framework was <strong>Learn, Plan, Go</strong>:
+            The resulting framework was{" "}
+            <mark className="case-highlight"><strong>Learn, Plan, Go</strong></mark>:
           </p>
           <ul>
             <li>
@@ -248,7 +262,10 @@ export default async function NaviPage() {
         <h2 id="nv-system">Building a system that reflects the New York state of mind</h2>
         <div className="project-section-body">
           <p>
-            Every design decision linked back to research findings or persona needs.
+            <mark className="case-highlight">
+              Every design decision linked back to research findings or
+              persona needs.
+            </mark>
           </p>
           <p>
             Jost was selected for display typography to echo urban wayfinding cues. Orange became
@@ -271,8 +288,11 @@ export default async function NaviPage() {
         <h2 id="nv-screens">See it in product</h2>
         <div className="project-section-body">
           <p>
-            The Navi system runs as a real, interactive product, not a static
-            screenshot. Browse the feed, search a neighborhood on the map, open
+            The Navi system{" "}
+            <mark className="case-highlight">
+              runs as a real, interactive product, not a static screenshot
+            </mark>
+            . Browse the feed, search a neighborhood on the map, open
             a host and try a booking. Everything is assembled from the components
             catalogued on the system page, which means the system shows up in the
             product the way it was meant to.
@@ -294,10 +314,12 @@ export default async function NaviPage() {
           </p>
           <p>
             Navi showed that{" "}
-            <strong>
-              community-centered travel can be both practical and desirable when
-              recommendations are curated with local context.
-            </strong>{" "}
+            <mark className="case-highlight">
+              <strong>
+                community-centered travel can be both practical and desirable
+                when recommendations are curated with local context.
+              </strong>
+            </mark>{" "}
             The concept validated that intent-rich exploration scales better
             than algorithmic browsing when the goal is meaningful neighborhood
             engagement.
@@ -306,6 +328,7 @@ export default async function NaviPage() {
       </section>
 
       <ProjectWorkJump currentSlug="navi" projects={allProjects} />
+      <CaseHighlightObserver />
     </main>
   );
 }

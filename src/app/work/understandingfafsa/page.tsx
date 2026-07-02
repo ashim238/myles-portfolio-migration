@@ -14,6 +14,7 @@ import {
   NewsletterComposer,
   TemplateSwitcher,
 } from "@/components/understandingfafsa";
+import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
 
 const UF_DESCRIPTION =
@@ -120,8 +121,12 @@ export default async function UnderstandingFafsaPage() {
             for Federal Student Aid (FAFSA). The newsletter is a primary touchpoint. The website had
             already moved to a calmer, modern visual language (Saans typeface, refreshed palette),
             but the newsletter still carried an older system. Subscribers were seeing two different
-            brands. The scope was email-only. The founder assembles every issue, so the system had
-            to maintain the brand&apos;s identity regardless of who was building it.
+            brands. The scope was email-only. The founder assembles every issue, so{" "}
+            <mark className="case-highlight">
+              the system had to maintain the brand&apos;s identity regardless
+              of who was building it
+            </mark>
+            .
           </p>
         </div>
       </section>
@@ -132,8 +137,11 @@ export default async function UnderstandingFafsaPage() {
           <p>
             The old template failed where busy readers notice first: uneven CTAs, a muted palette that
             didn&apos;t carry the rebrand, long unscannable stretches of text, weak section breaks, and
-            a layout that wasn&apos;t optimized for mobile users. Open rates sat around{" "}
-            <strong>~30%</strong>.
+            a layout that wasn&apos;t optimized for mobile users.{" "}
+            <mark className="case-highlight">
+              Open rates sat around <strong>~30%</strong>
+            </mark>
+            .
           </p>
           <p>
             If email stayed weak, people would miss deadline-driven guidance at key checkpoints:
@@ -148,9 +156,13 @@ export default async function UnderstandingFafsaPage() {
         <h2 id="uf-audit">120 newsletters, four criteria.</h2>
         <div className="project-section-body">
           <p>
-            Before touching templates, we compiled over <strong>120 newsletter examples</strong> and
-            evaluated them against four criteria: clarity, personalization, tone of voice, and visual
-            appeal and branding consistency.
+            Before touching templates, we compiled over{" "}
+            <mark className="case-highlight">
+              <strong>120 newsletter examples</strong>
+            </mark>{" "}
+            and evaluated them against four criteria: clarity,
+            personalization, tone of voice, and visual appeal and branding
+            consistency.
           </p>
           <p>
             Five newsletters got the deepest treatment: Revenews, The 74, Next by Jeff Selingo,
@@ -201,9 +213,11 @@ export default async function UnderstandingFafsaPage() {
         <h2 id="uf-templates">One skeleton, multiple fills.</h2>
         <div className="project-section-body">
           <p>
-            The system ships through a shared modular framework: a welcome email that sets
-            expectations, the core weekly newsletter, and an event-specific variant with fewer
-            blocks and faster assembly for invites and recaps. A counselor-focused toolkit extends
+            The system ships through a{" "}
+            <mark className="case-highlight">shared modular framework</mark>:
+            a welcome email that sets expectations, the core weekly
+            newsletter, and an event-specific variant with fewer blocks and
+            faster assembly for invites and recaps. A counselor-focused toolkit extends
             the same vocabulary (duotone icons, formal register) and is in progress.
           </p>
           <p>
@@ -226,8 +240,12 @@ export default async function UnderstandingFafsaPage() {
         <h2 id="uf-locked">Locked layers, swappable parts.</h2>
         <div className="project-section-body">
           <p>
-            The locked-vs-swappable distinction was the core design decision. Spacing, dividers, type,
-            and the structural skeleton stay locked so swaps don&apos;t quietly undo the brand.
+            <mark className="case-highlight">
+              The locked-vs-swappable distinction was the core design
+              decision.
+            </mark>{" "}
+            Spacing, dividers, type, and the structural skeleton stay locked
+            so swaps don&apos;t quietly undo the brand.
             Editors swap body copy and emoji-style section images. The founder drafts each
             week&apos;s copy for editorial.
           </p>
@@ -254,7 +272,10 @@ export default async function UnderstandingFafsaPage() {
             artboard.
           </p>
           <p>
-            Gmail&apos;s <strong>102KB HTML ceiling</strong> and clipping created a rigid constraint.
+            <mark className="case-highlight">
+              Gmail&apos;s <strong>102KB HTML ceiling</strong> and clipping
+              created a rigid constraint.
+            </mark>
             Early weight came from custom section icons and themed dividers exported from Figma. The
             fix arrived through test sends, stripping redundant wrappers and dividers, merging sections
             where it still scanned, and compressing PNGs through an external tool. For dark-mode-friendly
@@ -280,32 +301,31 @@ export default async function UnderstandingFafsaPage() {
         <h2 id="uf-results">Open rates told the story.</h2>
         <div className="project-section-body">
           <p>
-            This was my first time designing a system someone else assembles every week. If the
-            founder can break the brand by dragging a block, the template failed. If she can move
-            fast and stay on-brand, it worked. That constraint changed how I think about fidelity
+            <mark className="case-highlight">
+              This was my first time designing a system someone else
+              assembles every week.
+            </mark>{" "}
+            If the founder can break the brand by dragging a block, the
+            template failed. If she can move fast and stay on-brand, it
+            worked. That constraint changed how I think about fidelity
             in anything that ships without a designer in the room.
           </p>
         </div>
-        <aside className="uf-outcome" aria-label="Open rate outcome">
-          <p className="uf-outcome-metric">
-            <span className="uf-outcome-range">
-              <CountUp value="~30% → ~52.6%" />
-            </span>
-            <span className="uf-outcome-label">open rate after redesign (MPP excluded)</span>
-          </p>
-          <p className="uf-outcome-date">First redesigned send: November 4, 2025</p>
-        </aside>
         <div className="project-section-body">
           <p>
-            Open rates moved from <strong>~30% to ~52.6%</strong> (Mailchimp reporting with MPP
-            excluded), with clicks, bounces, and unsubscribes still in a healthy band. What
-            shipped: a master template, modular blocks, explicit locked-vs-swappable rules, and
-            three template variants on the same design vocabulary.
+            The first redesigned send went out November 4, 2025. Open rates
+            moved from{" "}
+            <CountUp value="~30% → ~52.6%" /> (Mailchimp reporting with MPP
+            excluded), with clicks, bounces, and unsubscribes still in a
+            healthy band. What shipped: a master template, modular blocks,
+            explicit locked-vs-swappable rules, and three template variants
+            on the same design vocabulary.
           </p>
         </div>
       </section>
 
       <ProjectWorkJump currentSlug="understandingfafsa" projects={allProjects} />
+      <CaseHighlightObserver />
     </main>
   );
 }
