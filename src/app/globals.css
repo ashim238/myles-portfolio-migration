@@ -4616,7 +4616,9 @@ button:focus-visible,
 
 /* ── Safety flows: menu screenshot + 2x2 route grid ───────────── */
 .fg-safety-visual {
-  margin: 2.2rem auto 0;
+  /* Bottom margin gives the caption room to breathe before the next block;
+     section flow is normal so this collapses against adjacent figures. */
+  margin: 2.2rem auto 2.6rem;
   max-width: 276px;
 }
 
