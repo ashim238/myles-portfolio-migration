@@ -178,8 +178,9 @@ export default async function FreshGreensPage() {
         <h2 id="fg-held-question">The Held-Question Rule.</h2>
         <div className="project-section-body">
           <p>
-            <mark className="case-highlight">Every in-modal prompt in Fresh Greens is set in Libre Franklin
-            Regular. Not Bold.</mark> The safety modal asks &quot;What&apos;s going
+            Every in-modal prompt in Fresh Greens is set in{" "}
+            <mark className="case-highlight">Libre Franklin Regular. Not Bold.</mark>{" "}
+            The safety modal asks &quot;What&apos;s going
             on?&quot; The share-location sheet asks &quot;What&apos;s the
             situation?&quot; The Lifeline modal says &quot;You&apos;re not
             alone.&quot;
@@ -248,9 +249,9 @@ export default async function FreshGreensPage() {
         <h2 id="fg-material">The material of calm.</h2>
         <div className="project-section-body">
           <p>
-            Fresh Greens replaces iOS&apos;s default cool grays with{" "}
-            <mark className="case-highlight">five warm surfaces, all derived in OKLCH at 0.008 to 0.012 chroma on
-            the brand-green hue</mark>. Page, card, sheet, elevated, and tinted.
+            Fresh Greens replaces iOS&apos;s default cool grays with five
+            warm surfaces, all derived in OKLCH at 0.008 to 0.012 chroma on
+            the brand-green hue. Page, card, sheet, elevated, and tinted.
             The neutrals across the whole app share a single tonal source
             instead of tracking the platform&apos;s default gray ramp.
           </p>
@@ -369,11 +370,8 @@ export default async function FreshGreensPage() {
             every unpublish.
           </p>
           <p>
-            <mark className="case-highlight">
-              <code>/moderation</code> is where &quot;whose knowledge
-              counts&quot; gets renegotiated
-            </mark>{" "}
-            with real reports and real stakes. A v2 transparency page will
+            <code>/moderation</code> is where &quot;whose knowledge
+            counts&quot; gets renegotiated with real reports and real stakes. A v2 transparency page will
             publish moderation outcomes so the queue&apos;s work is auditable
             outside the queue.
           </p>
@@ -451,11 +449,9 @@ export default async function FreshGreensPage() {
           <h3 className="fg-h3">Community as the authority.</h3>
           <p>
             The six report categories exist because the interviews kept
-            surfacing two overlapping habits:{" "}
-            <mark className="case-highlight">
-              skepticism of the authorities and reliance on community members
-            </mark>{" "}
-            for the ground truth of a place. Drivers already asked around before entering an unfamiliar
+            surfacing two overlapping habits: skepticism of the authorities
+            and reliance on community members for the ground truth of a
+            place. Drivers already asked around before entering an unfamiliar
             area. The report picker turns that habit into a first-class
             input. &quot;Felt welcome&quot; and &quot;Black-owned&quot; sit
             next to &quot;Incident&quot; and &quot;Hazard&quot; because a
@@ -566,8 +562,7 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body fg-scope-closer">
           <p>
-            <mark className="case-highlight">Typography took three tries.</mark>{" "}
-            Jost first, then Space Grotesk, then Libre Franklin with DM
+            Typography took three tries. Jost first, then Space Grotesk, then Libre Franklin with DM
             Serif Display reserved for the six emotional beats. Franklin
             held the register the earlier two couldn&apos;t.
           </p>

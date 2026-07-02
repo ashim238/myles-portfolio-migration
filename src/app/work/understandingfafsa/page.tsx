@@ -138,7 +138,7 @@ export default async function UnderstandingFafsaPage() {
             The old template failed where busy readers notice first: uneven CTAs, a muted palette that
             didn&apos;t carry the rebrand, long unscannable stretches of text, weak section breaks, and
             a layout that wasn&apos;t optimized for mobile users.{" "}
-            <mark className="case-highlight">Open rates sat around ~30%</mark>.
+            Open rates sat around ~30%.
           </p>
           <p>
             If email stayed weak, people would miss deadline-driven guidance at key checkpoints:
@@ -153,9 +153,8 @@ export default async function UnderstandingFafsaPage() {
         <h2 id="uf-audit">120 newsletters, four criteria.</h2>
         <div className="project-section-body">
           <p>
-            Before touching templates, we compiled over{" "}
-            <mark className="case-highlight">120 newsletter examples</mark>{" "}
-            and evaluated them against four criteria: clarity,
+            Before touching templates, we compiled over 120 newsletter
+            examples and evaluated them against four criteria: clarity,
             personalization, tone of voice, and visual appeal and branding
             consistency.
           </p>
@@ -208,9 +207,8 @@ export default async function UnderstandingFafsaPage() {
         <h2 id="uf-templates">One skeleton, multiple fills.</h2>
         <div className="project-section-body">
           <p>
-            The system ships through a{" "}
-            <mark className="case-highlight">shared modular framework</mark>:
-            a welcome email that sets expectations, the core weekly
+            The system ships through a shared modular framework: a welcome
+            email that sets expectations, the core weekly
             newsletter, and an event-specific variant with fewer blocks and
             faster assembly for invites and recaps. A counselor-focused toolkit extends
             the same vocabulary (duotone icons, formal register) and is in progress.
