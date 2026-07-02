@@ -3,7 +3,7 @@ import { SiteNav } from "@/components/site-nav";
 import { siteConfig } from "@/lib/site-config";
 
 const RESUME_PATH = "/myles-ashitey-cv.pdf";
-const RESUME_UPDATED = "June 2026";
+const RESUME_UPDATED = "July 2026";
 
 type ResumeRole = {
   role: string;
@@ -14,32 +14,32 @@ type ResumeRole = {
 
 const EXPERIENCE: ResumeRole[] = [
   {
-    role: "MFA candidate, Design and Technology",
+    role: "MFA, Design and Technology",
     org: "Parsons School of Design",
-    dates: "2024 – Present",
+    dates: "Aug 2024 – May 2026",
     summary:
-      "Thesis: Navi, a solo-built React Native wayfinding app for Black travelers with VoiceOver labels, dynamic type, and a WCAG daylight cue built in from the start.",
+      "Thesis: Fresh Greens, a solo-built React Native wayfinding app for Black travel in America with WCAG dash-pattern encoding, dynamic type, and VoiceOver support built in from the start.",
   },
   {
-    role: "Creative strategy",
-    org: "TikTok",
-    dates: "2022 – 2024",
+    role: "Creative Strategy Assistant",
+    org: "Universal Music Group, Island Records",
+    dates: "Aug 2023 – Aug 2024",
     summary:
-      "Brand and product-adjacent creative direction across campaigns and cross-functional launches.",
+      "Led tour promotion end to end and coordinated on-time music video delivery for global artists across Vevo, Facebook, and Apple, working across vendors, stakeholders, and fixed client timelines.",
   },
   {
-    role: "Creative strategy",
-    org: "Universal Music Group",
-    dates: "2020 – 2022",
+    role: "Creative Strategist Intern",
+    org: "TikTok (ByteDance)",
+    dates: "May – Aug 2022",
     summary:
-      "Learned how brands talk to people. Realized I wanted to build rather than just shape.",
+      "Designed the TikTok World summit visual experience and wrote Shopping Ads launch copy later reused across TikTok for Business e-commerce offerings.",
   },
   {
-    role: "Product design (contract)",
-    org: "UnderstandingFAFSA",
-    dates: "2025",
+    role: "Creative Strategist Intern",
+    org: "TikTok (ByteDance)",
+    dates: "May – Aug 2021",
     summary:
-      "Rebuilt the newsletter system as modular templates a non-designer could run without breaking the brand. Open rates went from 30% to 52.6%.",
+      "Designed the first batch of Dynamic Showcase Ad templates for SMB merchants. One template was adopted by American Eagle Outfitters, enabling cost-effective campaigns without an in-house creative team.",
   },
 ];
 
@@ -47,20 +47,20 @@ const SKILLS: { label: string; items: string[] }[] = [
   {
     label: "Design",
     items: [
-      "Product design",
-      "Interaction design",
+      "End-to-end product design",
+      "UX research and testing",
+      "Interaction and visual design",
       "Design systems",
-      "Prototyping",
-      "Accessibility (WCAG 2.2 AA)",
+      "Accessibility (WCAG)",
     ],
   },
   {
     label: "Build",
-    items: ["React Native", "TypeScript", "Next.js", "CSS / Tailwind"],
+    items: ["React Native", "TypeScript", "Expo", "HTML", "CSS"],
   },
   {
     label: "Tools",
-    items: ["Figma", "Adobe Suite", "Framer", "Cursor"],
+    items: ["Figma", "Adobe Creative Suite", "After Effects", "Claude Code"],
   },
 ];
 
@@ -119,7 +119,7 @@ export default function ResumePage() {
             </div>
             <div className="resume-detail">
               <dt>Location</dt>
-              <dd>Brooklyn, NY</dd>
+              <dd>New York, NY</dd>
             </div>
             <div className="resume-detail">
               <dt>Contact</dt>
