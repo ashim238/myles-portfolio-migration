@@ -274,19 +274,6 @@ export default async function FreshGreensPage() {
           </p>
         </div>
 
-        <figure className="fg-safety-visual">
-          <PhoneFrame variant="screenshot">
-            <Shot
-              name="emergency"
-              alt="The /emergency screen with a Franklin Bold countdown numeral, the largest type in the app, and DM Serif reassurance text"
-            />
-          </PhoneFrame>
-          <figcaption className="fg-safety-visual-caption">
-            The <code>/emergency</code> countdown is the largest type in the
-            app. Bold is reserved for the number the driver needs to read at
-            a glance.
-          </figcaption>
-        </figure>
       </section>
 
       {/* ── Section 6: Reserved color that holds ─────── */}
@@ -392,18 +379,6 @@ export default async function FreshGreensPage() {
           </p>
         </div>
 
-        <figure className="fg-safety-visual">
-          <PhoneFrame variant="screenshot">
-            <Shot
-              name="moderation"
-              alt="A /moderation queue item expanded to show the investigation panel with submitter history, nearby reports, and coordination-detection flags"
-            />
-          </PhoneFrame>
-          <figcaption className="fg-safety-visual-caption">
-            An expanded queue item, showing the investigation panel each
-            report enters with.
-          </figcaption>
-        </figure>
       </section>
 
       {/* ── Section 8: Six interviews, four markers ──── */}
