@@ -6061,6 +6061,16 @@ button:focus-visible,
   --nv-surface: color-mix(in srgb, var(--nv-accent) 6%, var(--surface));
   --nv-ui-bg: #ffffff;
   --nv-ui-border: color-mix(in srgb, var(--nv-ink) 18%, transparent);
+  --nv-error: #e5383b;
+  --nv-success: #2a9d8f;
+}
+
+:root[data-theme="dark"] .nv-page {
+  --nv-ink: var(--foreground);
+  --nv-ui-bg: #141214;
+  --nv-ui-border: color-mix(in srgb, var(--foreground) 18%, transparent);
+  --nv-error: #ff6b6b;
+  --nv-success: #4ecdc4;
 }
 
 :root[data-theme="light"] .nv-page {
@@ -6655,12 +6665,12 @@ button:focus-visible,
 
 .nv-form-column--error .nv-ui-field input,
 .nv-form-column--error .nv-ui-field select {
-  border-color: #e5383b;
+  border-color: var(--nv-error);
 }
 
 .nv-form-column--success .nv-ui-field input,
 .nv-form-column--success .nv-ui-field select {
-  border-color: #2a9d8f;
+  border-color: var(--nv-success);
 }
 
 .nv-field-message {
@@ -6669,11 +6679,11 @@ button:focus-visible,
 }
 
 .nv-field-message--error {
-  color: #e5383b;
+  color: var(--nv-error);
 }
 
 .nv-field-message--success {
-  color: #2a9d8f;
+  color: var(--nv-success);
 }
 
 /* ── Progressive design system build ───────────────── */
@@ -7038,10 +7048,12 @@ button:focus-visible,
     transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 420ms cubic-bezier(0.16, 1, 0.3, 1),
     border-color 220ms ease;
-  will-change: transform;
 }
 
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .nv-composition-card {
+    will-change: transform;
+  }
   .nv-composition-card:hover {
     transform: translateY(-4px) rotateX(3deg) rotateY(-3deg);
     border-color: var(--nv-accent-line);
@@ -10352,6 +10364,27 @@ button:focus-visible,
   font-size: 1.1rem;
   text-decoration: none;
 }
+.nv-demo-embed-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2.5rem 2rem;
+}
+.nv-demo-embed-skeleton-bar {
+  height: 1rem;
+  width: 60%;
+  border-radius: 0.35rem;
+  background: color-mix(in srgb, var(--foreground) 8%, transparent);
+  animation: nvSkeletonPulse 1.6s ease-in-out infinite;
+}
+.nv-demo-embed-skeleton-bar--short {
+  width: 35%;
+}
+@keyframes nvSkeletonPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
 .nv-demo-embed-cta {
   padding: 0.75rem 1rem;
   border-top: 1px solid var(--line);

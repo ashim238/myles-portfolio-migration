@@ -6,6 +6,8 @@ import Link from "next/link";
 
 export function NaviDemoEmbed() {
   const [useIframe, setUseIframe] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [errored, setErrored] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -15,6 +17,23 @@ export function NaviDemoEmbed() {
     mq.addEventListener("change", handler);
     return () => mq.removeEventListener("change", handler);
   }, []);
+
+  const fallbackImage = (
+    <div className="nv-demo-embed-fallback">
+      <Image
+        src="/projects/navi/desktop-screens.png"
+        alt="Navi product screens: feed, map search, host detail, and booking flow"
+        width={2275}
+        height={1517}
+        sizes="92vw"
+        style={{ width: "100%", height: "auto", display: "block" }}
+      />
+      <Link href="/work/navi/demo" className="nv-demo-embed-mobile-cta">
+        Open the demo
+        <span aria-hidden="true"> ↗</span>
+      </Link>
+    </div>
+  );
 
   return (
     <div className="nv-demo-embed" ref={containerRef}>
@@ -27,28 +46,26 @@ export function NaviDemoEmbed() {
         <p className="nv-demo-embed-url">mylesdesignsthings.com/work/navi/demo</p>
       </div>
       <div className="nv-demo-embed-viewport">
-        {useIframe ? (
-          <iframe
-            className="nv-demo-embed-frame"
-            src="/work/navi/demo"
-            title="Navi interactive demo"
-            loading="lazy"
-          />
-        ) : (
-          <div className="nv-demo-embed-fallback">
-            <Image
-              src="/projects/navi/desktop-screens.png"
-              alt="Navi product screens: feed, map search, host detail, and booking flow"
-              width={2275}
-              height={1517}
-              sizes="92vw"
-              style={{ width: "100%", height: "auto", display: "block" }}
+        {useIframe && !errored ? (
+          <>
+            {!loaded && (
+              <div className="nv-demo-embed-skeleton" aria-label="Loading demo">
+                <div className="nv-demo-embed-skeleton-bar" />
+                <div className="nv-demo-embed-skeleton-bar nv-demo-embed-skeleton-bar--short" />
+              </div>
+            )}
+            <iframe
+              className="nv-demo-embed-frame"
+              src="/work/navi/demo"
+              title="Navi interactive demo"
+              loading="lazy"
+              onLoad={() => setLoaded(true)}
+              onError={() => setErrored(true)}
+              style={!loaded ? { opacity: 0, position: "absolute" } : undefined}
             />
-            <Link href="/work/navi/demo" className="nv-demo-embed-mobile-cta">
-              Open the demo
-              <span aria-hidden="true"> ↗</span>
-            </Link>
-          </div>
+          </>
+        ) : (
+          fallbackImage
         )}
       </div>
       <div className="nv-demo-embed-cta">

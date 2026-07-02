@@ -159,8 +159,8 @@ export default async function NaviPage() {
           </p>
           <p>
             Early on, the team considered a heatmap solution to reroute tourists away from
-            congestion. The research reframed the problem: residents did not want fewer tourists;
-            they wanted visitors who engage more intentionally.
+            congestion. The research reframed the problem: residents did not want fewer tourists.
+            They wanted visitors who engage more intentionally.
           </p>
         </div>
         <HeuristicInsightCards />
