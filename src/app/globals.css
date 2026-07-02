@@ -2344,11 +2344,14 @@ button:focus-visible,
   margin-top: 3.3rem;
 }
 
-/* Italic type crowds the roman word that follows optically. A hair-space of
-   padding on the trailing edge of every case-study italic prevents the
+/* Italic and inline-monospace both crowd the roman word that follows
+   optically. A hair-space of trailing padding on each prevents the
    crowding without adding real word spacing. */
 .project-hero-lede em,
-.project-section-body em {
+.project-section-body em,
+.project-hero-lede code,
+.project-section-body code,
+.fg-safety-visual-caption code {
   padding-inline-end: 0.08em;
 }
 
@@ -4012,8 +4015,9 @@ button:focus-visible,
 }
 
 .fg-arch-caption {
-  margin-top: 0.8rem;
-  font-size: 0.8rem;
+  /* Shares the .fg-safety-visual-caption rhythm; 0.8 vs 0.85 was drift. */
+  margin-top: 0.85rem;
+  font-size: 0.88rem;
   line-height: 1.4;
   color: var(--muted);
 }
@@ -4524,7 +4528,8 @@ button:focus-visible,
 }
 
 .fg-legend {
-  margin: 0;
+  /* Breathing room from the reserved-color prose that precedes the legend. */
+  margin: 2.2rem 0 0;
   padding: 0;
   list-style: none;
   display: flex;
@@ -4579,6 +4584,10 @@ button:focus-visible,
   font-size: 0.9rem;
   line-height: var(--lead-long);
   color: var(--muted);
+}
+
+.fg-scope-closer {
+  margin-top: 2.4rem;
 }
 
 .fg-scope-list {
@@ -6107,6 +6116,13 @@ button:focus-visible,
   color: var(--nv-accent);
 }
 
+/* Accent-as-text: #f3722c is only 2.77:1 on the light background, so the
+   eyebrow darkens within the same orange family (4.9:1). The --nv-accent
+   token itself stays untouched; it colors Navi product artwork, not text. */
+:root[data-theme="light"] .nv-eyebrow {
+  color: #b84d13;
+}
+
 .nv-page .nv-title {
   font-family: var(--font-navi-display), var(--font-sans), sans-serif;
   font-size: clamp(2.5rem, 7vw, 4.6rem);
@@ -7294,6 +7310,12 @@ button:focus-visible,
   color: var(--uf-accent-warm);
 }
 
+/* Same accent-as-text treatment as .nv-eyebrow: #f26938 is 2.94:1 on light,
+   the darkened warm passes AA at 4.66:1. Fills and borders keep the token. */
+:root[data-theme="light"] .uf-eyebrow {
+  color: #c14e18;
+}
+
 .uf-page .uf-title {
   font-size: clamp(2.5rem, 7vw, 4.6rem);
 }
@@ -8236,43 +8258,6 @@ button:focus-visible,
   margin-top: 0.65rem;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.75rem;
-  color: var(--uf-accent-cool-text);
-}
-
-/* ── Results callout ───────────────────────────────────── */
-
-.uf-outcome {
-  margin: 1.75rem 0 2rem;
-  padding: 1.35rem 1.5rem;
-  border-radius: 0.7rem;
-  border: 1px solid var(--uf-accent-line);
-  background: var(--uf-accent-soft);
-  max-width: 28rem;
-}
-
-.uf-outcome-metric {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-.uf-outcome-range {
-  font-size: clamp(1.5rem, 4vw, 2rem);
-  font-weight: 600;
-  color: var(--uf-accent-warm);
-  letter-spacing: -0.02em;
-}
-
-.uf-outcome-label {
-  font-size: 0.88rem;
-  color: var(--muted);
-}
-
-.uf-outcome-date {
-  margin: 0.75rem 0 0;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.78rem;
   color: var(--uf-accent-cool-text);
 }
 
@@ -10549,13 +10534,37 @@ main[data-project-slug="understandingfafsa"][data-highlight-anim-ready] mark.cas
   transition: background-size 420ms cubic-bezier(0.42, 0, 0.15, 1);
 }
 
+/* Marker character for the FAFSA stroke: a 100deg gradient slants both
+   tips the way an angled felt tip does, and the ink lays down heavier
+   where the drag starts (30% -> 22% -> 17%). Declared after the animated
+   rules so its background-image wins for FAFSA while background-size
+   still comes from the shared sweep. With no JS the gradient paints at
+   the default auto size, so the base state stays fully visible. */
+main[data-project-slug="understandingfafsa"] mark.case-highlight {
+  background-color: transparent;
+  background-image: linear-gradient(
+    100deg,
+    transparent 0,
+    color-mix(in srgb, var(--case-highlight-color) 30%, transparent) 0.4em,
+    color-mix(in srgb, var(--case-highlight-color) 22%, transparent) 55%,
+    color-mix(in srgb, var(--case-highlight-color) 17%, transparent) calc(100% - 0.4em),
+    transparent 100%
+  );
+  background-repeat: no-repeat;
+}
+
 @media (prefers-reduced-motion: reduce) {
   main[data-highlight-anim-ready] mark.case-highlight,
   main[data-project-slug="fresh-greens"][data-highlight-anim-ready] mark.case-highlight,
   main[data-project-slug="understandingfafsa"][data-highlight-anim-ready] mark.case-highlight {
     background-size: 100% 100%;
-    background-color: color-mix(in srgb, var(--case-highlight-color) var(--case-highlight-opacity), transparent);
     transition: none;
+  }
+  /* Only the fade-under variant paints via background-color. Setting it on
+     the gradient variants too would stack tint on gradient and render the
+     reduced-motion highlight at double strength. */
+  main[data-project-slug="fresh-greens"][data-highlight-anim-ready] mark.case-highlight {
+    background-color: color-mix(in srgb, var(--case-highlight-color) var(--case-highlight-opacity), transparent);
   }
 }
 
