@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Jost, Lato } from "next/font/google";
 import Link from "next/link";
-import { ExpandableImage } from "@/components/expandable-image";
 import { ProjectCover } from "@/components/project-cover";
 import { TransitionLink } from "@/components/transition-link";
 import { SiteNav } from "@/components/site-nav";
@@ -13,7 +12,6 @@ import {
   HeatmapExplorer,
   HeuristicInsightCards,
   SurveyStatRings,
-  SystemProgressiveBuild,
 } from "@/components/navi";
 import { NaviDemoEmbed } from "@/components/navi-demo-embed";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
@@ -220,32 +218,6 @@ export default async function NaviPage() {
           </ul>
           <p>Journey mapping validated the structure across all three personas.</p>
         </div>
-        <div className="nv-persona-grid">
-          <ExpandableImage
-            src="/projects/navi/persona-cain.png"
-            alt="Cain persona: group planner who coordinates schedules and budgets"
-            width={1200}
-            height={900}
-            sizes="(max-width: 768px) 92vw, 32vw"
-            style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
-          />
-          <ExpandableImage
-            src="/projects/navi/persona-ororo.png"
-            alt="Ororo persona: newcomer who needs neighborhood context"
-            width={1200}
-            height={900}
-            sizes="(max-width: 768px) 92vw, 32vw"
-            style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
-          />
-          <ExpandableImage
-            src="/projects/navi/persona-selina.png"
-            alt="Selina persona: commuter who needs precision filters"
-            width={1200}
-            height={900}
-            sizes="(max-width: 768px) 92vw, 32vw"
-            style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
-          />
-        </div>
       </section>
 
       <section
@@ -271,7 +243,6 @@ export default async function NaviPage() {
             booking flow. <Link href="/work/navi/demo">Open the demo</Link>.
           </p>
         </div>
-        <SystemProgressiveBuild />
         <CompositionStrip />
       </section>
 
