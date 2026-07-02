@@ -138,10 +138,7 @@ export default async function UnderstandingFafsaPage() {
             The old template failed where busy readers notice first: uneven CTAs, a muted palette that
             didn&apos;t carry the rebrand, long unscannable stretches of text, weak section breaks, and
             a layout that wasn&apos;t optimized for mobile users.{" "}
-            <mark className="case-highlight">
-              Open rates sat around <strong>~30%</strong>
-            </mark>
-            .
+            <mark className="case-highlight">Open rates sat around ~30%</mark>.
           </p>
           <p>
             If email stayed weak, people would miss deadline-driven guidance at key checkpoints:
@@ -157,9 +154,7 @@ export default async function UnderstandingFafsaPage() {
         <div className="project-section-body">
           <p>
             Before touching templates, we compiled over{" "}
-            <mark className="case-highlight">
-              <strong>120 newsletter examples</strong>
-            </mark>{" "}
+            <mark className="case-highlight">120 newsletter examples</mark>{" "}
             and evaluated them against four criteria: clarity,
             personalization, tone of voice, and visual appeal and branding
             consistency.
@@ -265,7 +260,7 @@ export default async function UnderstandingFafsaPage() {
         <h2 id="uf-figma">Figma fidelity, Mailchimp reality.</h2>
         <div className="project-section-body">
           <p>
-            The hierarchy, spacing, modular rhythm all lived in Figma, but the live template had to be
+            The hierarchy, spacing, and modular rhythm all lived in Figma, but the live template had to be
             rebuilt in Mailchimp so the founder could edit without touching HTML. Matching Figma
             spacing inside the builder was a dead end. Every container and wrapper added bloat. I
             reframed hierarchy so section headers and body read clearly in email, not on a static
@@ -273,8 +268,8 @@ export default async function UnderstandingFafsaPage() {
           </p>
           <p>
             <mark className="case-highlight">
-              Gmail&apos;s <strong>102KB HTML ceiling</strong> and clipping
-              created a rigid constraint.
+              Gmail&apos;s 102KB HTML ceiling and clipping created a rigid
+              constraint.
             </mark>
             Early weight came from custom section icons and themed dividers exported from Figma. The
             fix arrived through test sends, stripping redundant wrappers and dividers, merging sections
@@ -290,7 +285,7 @@ export default async function UnderstandingFafsaPage() {
             full brand palette, even when trying to maintain the founder&apos;s appetite for vibrancy.
           </p>
           <p>
-            Same students block in Figma and Mailchimp: layout guides and spacing rails in design,
+            The same students block in Figma and Mailchimp: layout guides and spacing rails in design,
             editable modules in the builder.
           </p>
         </div>
@@ -314,10 +309,9 @@ export default async function UnderstandingFafsaPage() {
         <div className="project-section-body">
           <p>
             The first redesigned send went out November 4, 2025. Open rates
-            moved from{" "}
-            <CountUp value="~30% → ~52.6%" /> (Mailchimp reporting with MPP
-            excluded), with clicks, bounces, and unsubscribes still in a
-            healthy band. What shipped: a master template, modular blocks,
+            moved from around 30% to <CountUp value="~52.6%" /> (Mailchimp
+            reporting with MPP excluded), with clicks, bounces, and
+            unsubscribes still in a healthy band. What shipped: a master template, modular blocks,
             explicit locked-vs-swappable rules, and three template variants
             on the same design vocabulary.
           </p>

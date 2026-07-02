@@ -110,7 +110,7 @@ export default async function NaviPage() {
           { title: "What the data did (and did not) say", id: "nv-insights" },
           { title: "From research to framework", id: "nv-framework" },
           { title: "Building a system", id: "nv-system" },
-          { title: "What it looks like in product", id: "nv-screens" },
+          { title: "See it in product", id: "nv-screens" },
           { title: "What Navi proved", id: "nv-outcome" },
         ]}
       />
@@ -212,7 +212,7 @@ export default async function NaviPage() {
           </p>
           <p>
             The resulting framework was{" "}
-            <mark className="case-highlight"><strong>Learn, Plan, Go</strong></mark>:
+            <mark className="case-highlight">Learn, Plan, Go</mark>:
           </p>
           <ul>
             <li>
@@ -262,10 +262,8 @@ export default async function NaviPage() {
         <h2 id="nv-system">Building a system that reflects the New York state of mind</h2>
         <div className="project-section-body">
           <p>
-            <mark className="case-highlight">
-              Every design decision linked back to research findings or
-              persona needs.
-            </mark>
+            Every design decision linked back to research findings or
+            persona needs.
           </p>
           <p>
             Jost was selected for display typography to echo urban wayfinding cues. Orange became
@@ -313,16 +311,13 @@ export default async function NaviPage() {
             paths for local hosts and businesses to list their own experiences.
           </p>
           <p>
-            Navi showed that{" "}
+            In concept testing,{" "}
             <mark className="case-highlight">
-              <strong>
-                community-centered travel can be both practical and desirable
-                when recommendations are curated with local context.
-              </strong>
-            </mark>{" "}
-            The concept validated that intent-rich exploration scales better
-            than algorithmic browsing when the goal is meaningful neighborhood
-            engagement.
+              78% preferred neighborhood-led recommendations over generic
+              top-ten lists
+            </mark>
+            . That number is what Navi proved: community-centered travel
+            holds up when the recommendations carry local context.
           </p>
         </div>
       </section>

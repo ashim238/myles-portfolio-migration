@@ -289,7 +289,7 @@ export default async function FreshGreensPage() {
             affordance. Red, orange, yellow, and navy are reserved for safety
             signals only, each tied to one specific meaning. Because those
             four colors are reserved, a red dot or an orange chip in the app
-            points to something specific. Across 20+ screens and hundreds of
+            points to something specific. Across 26+ screens and 300+
             accessibility attributes, <mark className="case-highlight">the rule holds without exception</mark>.
           </p>
         </div>
@@ -370,8 +370,8 @@ export default async function FreshGreensPage() {
           </p>
           <p>
             <mark className="case-highlight">
-              /moderation is where &quot;whose knowledge counts&quot; gets
-              renegotiated
+              <code>/moderation</code> is where &quot;whose knowledge
+              counts&quot; gets renegotiated
             </mark>{" "}
             with real reports and real stakes. A v2 transparency page will
             publish moderation outcomes so the queue&apos;s work is auditable
@@ -469,7 +469,7 @@ export default async function FreshGreensPage() {
           <PhoneFrame variant="screenshot">
             <Shot
               name="report-picker"
-              alt="The Fresh Greens report picker: a grid of six categories — Incident, Felt unsafe, Lighting, Hazard, Felt welcome, and Black-owned — placing positive community signals next to hazards"
+              alt="The Fresh Greens report picker: a grid of six categories (Incident, Felt unsafe, Lighting, Hazard, Felt welcome, and Black-owned) placing positive community signals next to hazards"
             />
           </PhoneFrame>
           <figcaption className="fg-safety-visual-caption">
@@ -564,7 +564,7 @@ export default async function FreshGreensPage() {
           </div>
         </div>
 
-        <div className="project-section-body" style={{ marginTop: "2.4rem" }}>
+        <div className="project-section-body fg-scope-closer">
           <p>
             <mark className="case-highlight">Typography took three tries.</mark>{" "}
             Jost first, then Space Grotesk, then Libre Franklin with DM
