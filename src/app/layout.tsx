@@ -6,6 +6,7 @@ import { ConsoleGreeting } from "@/components/console-greeting";
 import { LightboxProvider } from "@/components/lightbox-provider";
 import { MobileNav } from "@/components/mobile-nav";
 import { ProjectEnterTransition } from "@/components/project-enter-transition";
+import { ScrollRevealFallback } from "@/components/scroll-reveal-fallback";
 
 const sans = Instrument_Sans({
   variable: "--font-family-sans",
@@ -84,6 +85,7 @@ export default function RootLayout({
           <ProjectEnterTransition>{children}</ProjectEnterTransition>
         </LightboxProvider>
         <MobileNav />
+        <ScrollRevealFallback />
       </body>
     </html>
   );

@@ -7979,11 +7979,13 @@ button:focus-visible,
   background: transparent;
   color: var(--foreground);
   cursor: pointer;
+  position: relative;
   transition:
     background 160ms ease,
     border-color 160ms ease,
     transform 160ms ease;
 }
+.uf-composer-mini::before { content: ''; position: absolute; inset: -0.5rem; }
 
 .uf-composer-mini:hover:not(:disabled) {
   background: var(--uf-accent-soft);
@@ -8694,8 +8696,10 @@ button:focus-visible,
   color: var(--nv-text);
   transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
-.nv-icon-btn--sm { width: 32px; height: 32px; }
-.nv-icon-btn--md { width: 40px; height: 40px; }
+.nv-icon-btn--sm { width: 32px; height: 32px; position: relative; }
+.nv-icon-btn--sm::before { content: ''; position: absolute; inset: -6px; }
+.nv-icon-btn--md { width: 40px; height: 40px; position: relative; }
+.nv-icon-btn--md::before { content: ''; position: absolute; inset: -2px; }
 .nv-icon-btn--lg { width: 48px; height: 48px; }
 .nv-icon-btn--primary { background: var(--nv-action); color: var(--nv-text-on-action); }
 .nv-icon-btn--primary:hover { background: var(--nv-action-strong); color: var(--nv-text-on-action); border-color: transparent; }
@@ -8866,10 +8870,11 @@ button:focus-visible,
 
 /* ── CarouselArrow + PaginationDots ─────────────────────────────── */
 .nv-carousel-arrow {
-  width: 44px; height: 44px; border-radius: var(--nv-r-pill);
+  width: 44px; min-width: 44px; height: 44px; border-radius: var(--nv-r-pill);
   border: 1px solid var(--nv-border); background: var(--nv-surface);
   color: var(--nv-text); cursor: pointer; padding: 0;
   display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
 }
 .nv-carousel-arrow:hover { border-color: var(--nv-action); color: var(--nv-action); }
 .nv-carousel-arrow:disabled { color: var(--nv-disabled-text); border-color: transparent; cursor: not-allowed; }
@@ -8877,7 +8882,9 @@ button:focus-visible,
 .nv-dot {
   width: 10px; height: 10px; border-radius: var(--nv-r-pill);
   border: 1px solid var(--nv-border); background: transparent; cursor: pointer; padding: 0;
+  position: relative;
 }
+.nv-dot::before { content: ''; position: absolute; inset: -17px; }
 .nv-dot--active { background: var(--nv-action); border-color: var(--nv-action); }
 
 /* ── Tooltip ────────────────────────────────────────────────────── */
@@ -10028,8 +10035,9 @@ button:focus-visible,
 .nv-slide-over-close {
   width: 36px; height: 36px; border-radius: 50%;
   border: 1px solid var(--nv-border); background: var(--nv-surface);
-  cursor: pointer;
+  cursor: pointer; position: relative;
 }
+.nv-slide-over-close::before { content: ''; position: absolute; inset: -4px; border-radius: 50%; }
 .nv-slide-over-body {
   padding: var(--nv-sp-lg);
   overflow-y: auto;
@@ -10039,7 +10047,7 @@ button:focus-visible,
 .nv-slide-over-legend { font-weight: 700; margin-bottom: var(--nv-sp-sm); padding: 0; }
 .nv-slide-over-pills { display: flex; flex-wrap: wrap; gap: var(--nv-sp-xs); }
 .nv-slide-over-pill {
-  min-height: 36px; padding: 0 var(--nv-sp-md);
+  min-height: 44px; padding: 0 var(--nv-sp-md);
   border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill);
   background: var(--nv-surface); cursor: pointer; font: inherit;
 }
@@ -10224,5 +10232,50 @@ button:focus-visible,
   width: auto;
   max-height: clamp(440px, 62vh, 660px);
   border-radius: var(--rounded-lg, 1rem);
+}
+
+/* ── Scroll-reveal IntersectionObserver fallback (Firefox) ──────── */
+@supports not (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .work-showcase-item,
+    .work-showcase-media-frame,
+    .project-page .project-section,
+    .project-highlight,
+    .project-work-jump > h2,
+    .project-work-jump-list > li,
+    .play-entry,
+    .about-detail,
+    .resume-detail,
+    .home-page .about,
+    .footer,
+    .fg-features-heading,
+    .fg-features-grid > *,
+    .nv-build-layer,
+    .nv-persona-grid > * {
+      opacity: 0;
+      transform: translateY(1.2rem);
+      transition: opacity 480ms cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .work-showcase-item.sr-revealed,
+    .work-showcase-media-frame.sr-revealed,
+    .project-page .project-section.sr-revealed,
+    .project-highlight.sr-revealed,
+    .project-work-jump > h2.sr-revealed,
+    .project-work-jump-list > li.sr-revealed,
+    .play-entry.sr-revealed,
+    .about-detail.sr-revealed,
+    .resume-detail.sr-revealed,
+    .home-page .about.sr-revealed,
+    .footer.sr-revealed,
+    .fg-features-heading.sr-revealed,
+    .fg-features-grid > .sr-revealed,
+    .nv-build-layer.sr-revealed,
+    .nv-persona-grid > .sr-revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
 
