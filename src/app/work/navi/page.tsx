@@ -16,7 +16,6 @@ import {
   SystemProgressiveBuild,
 } from "@/components/navi";
 import { NaviDemoEmbed } from "@/components/navi-demo-embed";
-import { NaviClosingParallax } from "@/components/navi-closing-parallax";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
 import { NAVI_SURVEY_META } from "@/lib/navi-survey-data";
 
@@ -282,7 +281,7 @@ export default async function NaviPage() {
         <NaviDemoEmbed />
       </section>
 
-      <section className="project-section nv-section project-section--wide nv-section--wide" aria-labelledby="nv-outcome">
+      <section className="project-section nv-section" aria-labelledby="nv-outcome">
         <h2 id="nv-outcome">What Navi proved and where it goes next</h2>
         <div className="project-section-body">
           <p>
@@ -304,7 +303,6 @@ export default async function NaviPage() {
             engagement.
           </p>
         </div>
-        <NaviClosingParallax />
       </section>
 
       <ProjectWorkJump currentSlug="navi" projects={allProjects} />
