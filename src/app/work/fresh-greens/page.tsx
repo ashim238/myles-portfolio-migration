@@ -504,63 +504,38 @@ export default async function FreshGreensPage() {
             <ul className="fg-scope-list" role="list">
               <li>
                 Equal-weighting routing pipeline across OpenStreetMap,
-                DOT-511 network incidents, OSRM, SunCalc, and community
-                reports
-              </li>
-              <li>Daylight-graded route polyline with a WCAG dash pattern</li>
-              <li>
-                Community-first discovery and the six-category report picker
+                DOT-511, OSRM, SunCalc, and community reports
               </li>
               <li>
                 Six-surface safety toolkit, with <code>/pulled-over</code>{" "}
-                carrying ACLU-sourced guidance and on-device audio capture
+                carrying ACLU-sourced guidance, on-device audio capture, and
+                the Held-Question voice
               </li>
               <li>
-                Mapbox turn-by-turn navigation with a four-layer fallback
-                chain: Mapbox → OSRM public demo → local route cache →
-                mocked response. The cache is the real offline layer, which
-                matters where signal is patchy
-              </li>
-              <li>
-                Two-font system: Libre Franklin across the hierarchy, DM
-                Serif Display reserved for six emotional-payoff moments
-              </li>
-              <li>
-                Warm surface ramp (5 OKLCH surfaces at 0.008 to 0.012 chroma
-                on the brand-green hue) applied across 26+ screens
-              </li>
-              <li>
-                Reserved-color discipline holding across 300+ accessibility
-                attributes, with documented WCAG-math carve-outs
-              </li>
-              <li>
-                Departure-reminder local notifications with permission asked
-                in-context, not eagerly at onboarding
-              </li>
-              <li>
-                Delight layer: arrival-moment animation,
-                community-confirmation micro-interaction, sign-out
-                illustration, context-specific loading copy
-              </li>
-              <li>
-                Supabase community cloud with anonymous device-UUID auth and
-                Postgres row-level security
+                Warm surface ramp and reserved-color discipline holding
+                across 26+ screens and 300+ accessibility attributes
               </li>
               <li>
                 <code>/moderation</code> queue with per-report investigation
-                panels (submitter history, nearby reports via haversine
-                distance, coordination detection for IP and device-duplicate
-                patterns), bulk-select with per-request{" "}
-                <code>Promise.allSettled</code> inspection, and hold-to-remove
-                destructive gestures
+                panels, coordination detection for IP and device duplicates,
+                and a hold-to-remove destructive gesture
               </li>
               <li>
-                Design system published as a Figma library: 62 variables in a
-                one-mode Color collection with 1:1 parity to{" "}
-                <code>theme/colors.ts</code>, scoped per token role, WEB +
-                iOS code syntax
+                Design system published as a Figma library: 62 variables at
+                1:1 parity with <code>theme/colors.ts</code>, scoped per
+                token role
               </li>
             </ul>
+            <p className="fg-scope-also">
+              Also on the list: daylight-graded route polyline with a WCAG
+              dash pattern, six-category report picker, four-layer Mapbox
+              fallback chain (Mapbox → OSRM → cache → mock), two-font
+              Franklin plus reserved DM Serif Display, departure-reminder
+              local notifications, a delight layer of arrival and
+              community-confirmation moments, and the Supabase community
+              cloud with anonymous device-UUID auth and Postgres row-level
+              security.
+            </p>
           </div>
           <div className="fg-scope-col">
             <p className="fg-scope-label">Next, v2</p>

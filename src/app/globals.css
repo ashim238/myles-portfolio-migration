@@ -2312,10 +2312,11 @@ button:focus-visible,
 }
 
 .project-topbar a {
-  display: inline-block;
-  /* 44px tap target via padding; negative margin preserves visual spacing */
-  padding: 0.6rem 0;
-  margin: -0.6rem 0;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.7rem 0;
+  margin: -0.7rem 0;
   transition: opacity 160ms ease, transform 200ms ease;
 }
 
@@ -3055,7 +3056,8 @@ button:focus-visible,
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 0.7rem 0;
+    min-height: 44px;
+    padding: 0.75rem 0;
     border: none;
     background: transparent;
     color: var(--foreground);
@@ -4570,6 +4572,13 @@ button:focus-visible,
   font-size: 0.95rem;
   font-weight: 500;
   color: var(--foreground);
+}
+
+.fg-scope-also {
+  margin: 1rem 0 0;
+  font-size: 0.9rem;
+  line-height: var(--lead-long);
+  color: var(--muted);
 }
 
 .fg-scope-list {
@@ -10503,6 +10512,7 @@ main[data-project-slug="understandingfafsa"] {
   --case-highlight-opacity: 22%;
 }
 
+/* Default reveal (Navi): the neighborhood-mapping sweep. */
 main[data-highlight-anim-ready] mark.case-highlight {
   background-color: transparent;
   background-image: linear-gradient(
@@ -10519,9 +10529,30 @@ main[data-highlight-anim-ready] mark.case-highlight.is-revealed {
   background-size: 100% 100%;
 }
 
+/* Fresh Greens: fade-under. The mark's color settles under the type
+   instead of sweeping across it. Register-matching: calm companion. */
+main[data-project-slug="fresh-greens"][data-highlight-anim-ready] mark.case-highlight {
+  background-image: none;
+  background-size: auto;
+  background-color: transparent;
+  transition: background-color 640ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+main[data-project-slug="fresh-greens"][data-highlight-anim-ready] mark.case-highlight.is-revealed {
+  background-color: color-mix(in srgb, var(--case-highlight-color) var(--case-highlight-opacity), transparent);
+}
+
+/* UnderstandingFAFSA: highlighter-slash. Faster and sharper so the
+   sweep reads as a marker drag on paper, on-theme for the newsletter. */
+main[data-project-slug="understandingfafsa"][data-highlight-anim-ready] mark.case-highlight {
+  transition: background-size 420ms cubic-bezier(0.42, 0, 0.15, 1);
+}
+
 @media (prefers-reduced-motion: reduce) {
-  main[data-highlight-anim-ready] mark.case-highlight {
+  main[data-highlight-anim-ready] mark.case-highlight,
+  main[data-project-slug="fresh-greens"][data-highlight-anim-ready] mark.case-highlight,
+  main[data-project-slug="understandingfafsa"][data-highlight-anim-ready] mark.case-highlight {
     background-size: 100% 100%;
+    background-color: color-mix(in srgb, var(--case-highlight-color) var(--case-highlight-opacity), transparent);
     transition: none;
   }
 }
