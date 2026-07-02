@@ -2336,6 +2336,21 @@ button:focus-visible,
   animation: fadeUp 480ms ease-out 40ms both;
 }
 
+/* When the cover lands after an intro/argument section instead of directly
+   after the hero, restore the vertical rhythm the hero's bottom margin was
+   providing. */
+.project-section + .project-cover {
+  margin-top: 3.3rem;
+}
+
+/* Italic type crowds the roman word that follows optically. A hair-space of
+   padding on the trailing edge of every case-study italic prevents the
+   crowding without adding real word spacing. */
+.project-hero-lede em,
+.project-section-body em {
+  padding-inline-end: 0.08em;
+}
+
 .project-cover-image {
   width: 100%;
   height: auto;
@@ -7251,6 +7266,10 @@ button:focus-visible,
   --uf-accent-cool-text: #82c5fb;
   --uf-accent-soft: color-mix(in oklch, var(--uf-accent-warm) 14%, transparent);
   --uf-accent-line: color-mix(in srgb, var(--uf-accent-warm) 55%, transparent);
+  /* Sunbeam yellow from the FAFSA vibrancy palette, promoted to a token so
+     the case-highlight mark can reach for the newsletter's highlighter
+     register instead of overlapping with Navi's warm orange. */
+  --uf-accent-highlight: #f2b544;
 }
 
 :root[data-theme="light"] .uf-page {
@@ -10463,7 +10482,7 @@ button:focus-visible,
    fully visible; observer swaps to the animated sweep once mounted. */
 
 mark.case-highlight {
-  background-color: color-mix(in srgb, var(--case-highlight-color, var(--foreground)) 20%, transparent);
+  background-color: color-mix(in srgb, var(--case-highlight-color, var(--foreground)) var(--case-highlight-opacity, 14%), transparent);
   color: inherit;
   padding: 0.05em 0.22em;
   border-radius: 0.35rem;
@@ -10473,20 +10492,23 @@ mark.case-highlight {
 
 main[data-project-slug="fresh-greens"] {
   --case-highlight-color: var(--fg-accent);
+  --case-highlight-opacity: 14%;
 }
 main[data-project-slug="navi"] {
   --case-highlight-color: var(--nv-accent);
+  --case-highlight-opacity: 14%;
 }
 main[data-project-slug="understandingfafsa"] {
-  --case-highlight-color: var(--uf-accent-warm);
+  --case-highlight-color: var(--uf-accent-highlight, #f2b544);
+  --case-highlight-opacity: 32%;
 }
 
 main[data-highlight-anim-ready] mark.case-highlight {
   background-color: transparent;
   background-image: linear-gradient(
     90deg,
-    color-mix(in srgb, var(--case-highlight-color, var(--foreground)) 20%, transparent),
-    color-mix(in srgb, var(--case-highlight-color, var(--foreground)) 20%, transparent)
+    color-mix(in srgb, var(--case-highlight-color, var(--foreground)) var(--case-highlight-opacity, 14%), transparent),
+    color-mix(in srgb, var(--case-highlight-color, var(--foreground)) var(--case-highlight-opacity, 14%), transparent)
   );
   background-repeat: no-repeat;
   background-size: 0% 100%;
