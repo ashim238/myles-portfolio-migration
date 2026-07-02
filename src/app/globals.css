@@ -2344,11 +2344,14 @@ button:focus-visible,
   margin-top: 3.3rem;
 }
 
-/* Italic type crowds the roman word that follows optically. A hair-space of
-   padding on the trailing edge of every case-study italic prevents the
+/* Italic and inline-monospace both crowd the roman word that follows
+   optically. A hair-space of trailing padding on each prevents the
    crowding without adding real word spacing. */
 .project-hero-lede em,
-.project-section-body em {
+.project-section-body em,
+.project-hero-lede code,
+.project-section-body code,
+.fg-safety-visual-caption code {
   padding-inline-end: 0.08em;
 }
 
@@ -4525,7 +4528,8 @@ button:focus-visible,
 }
 
 .fg-legend {
-  margin: 0;
+  /* Breathing room from the reserved-color prose that precedes the legend. */
+  margin: 2.2rem 0 0;
   padding: 0;
   list-style: none;
   display: flex;

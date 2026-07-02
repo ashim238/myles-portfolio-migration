@@ -303,15 +303,13 @@ export default async function UnderstandingFafsaPage() {
             worked. That constraint changed how I think about fidelity
             in anything that ships without a designer in the room.
           </p>
-        </div>
-        <div className="project-section-body">
           <p>
             The first redesigned send went out November 4, 2025. Open rates
             moved from around 30% to <CountUp value="~52.6%" /> (Mailchimp
             reporting with MPP excluded), with clicks, bounces, and
-            unsubscribes still in a healthy band. What shipped: a master template, modular blocks,
-            explicit locked-vs-swappable rules, and three template variants
-            on the same design vocabulary.
+            unsubscribes still in a healthy band. What shipped: a master
+            template, modular blocks, explicit locked-vs-swappable rules,
+            and three template variants on the same design vocabulary.
           </p>
         </div>
       </section>
