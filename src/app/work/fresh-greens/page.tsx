@@ -67,7 +67,7 @@ export default async function FreshGreensPage() {
           A wayfinding app for Black drivers in America, built solo as a
           graduate thesis. The argument is narrower than &quot;an app for
           safety&quot;:{" "}
-          <em><mark className="case-highlight">whose safety knowledge counts when the route is computed?</mark></em>{" "}
+          <mark className="case-highlight">whose safety knowledge counts when the route is computed?</mark>{" "}
           Fresh Greens answers by running community observations through the
           same pipeline as OpenStreetMap, DOT-511, OSRM, and SunCalc,
           weighted the same way. Six driver interviews shaped the routing

@@ -4567,11 +4567,9 @@ button:focus-visible,
 
 .fg-scope-label {
   margin: 0 0 0.85rem;
-  font-family: var(--font-mono), monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--foreground);
 }
 
 .fg-scope-list {
@@ -7275,6 +7273,8 @@ button:focus-visible,
 :root[data-theme="light"] .uf-page {
   --uf-accent-soft: color-mix(in oklch, var(--uf-accent-warm) 10%, transparent);
   --uf-accent-cool-text: #164f73;
+  /* Deeper on light so the highlight reads as ink-on-paper, not washout. */
+  --uf-accent-highlight: #e3a233;
 }
 
 .uf-eyebrow {
@@ -10500,7 +10500,7 @@ main[data-project-slug="navi"] {
 }
 main[data-project-slug="understandingfafsa"] {
   --case-highlight-color: var(--uf-accent-highlight, #f2b544);
-  --case-highlight-opacity: 32%;
+  --case-highlight-opacity: 22%;
 }
 
 main[data-highlight-anim-ready] mark.case-highlight {
