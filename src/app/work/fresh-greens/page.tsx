@@ -7,11 +7,9 @@ import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
 import {
   ArchitectureDiagram,
-  DaylightLegend,
   PhoneFrame,
-  SignalSwatches,
+  ReservedPalette,
 } from "@/components/fresh-greens";
-import { ReservedColorFilter } from "@/components/fresh-greens-filter";
 import { Device3D } from "@/components/device-3d";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getPublishedProjects } from "@/lib/content";
@@ -296,19 +294,21 @@ export default async function FreshGreensPage() {
           </p>
         </div>
 
-        <SignalSwatches />
+        <ReservedPalette />
 
-        <div className="project-section-body">
-          <p>
-            The demo below runs the same claim on a real screen. Flip the
-            toggle: brand-green fades because it isn&apos;t a reserved role,
-            and the only elements still carrying color are the four
-            reserved-role instances on the surface. Focus any of them to
-            read the carve-out that pins the color to that meaning.
-          </p>
-        </div>
-
-        <ReservedColorFilter />
+        <figure className="fg-safety-visual">
+          <PhoneFrame variant="screenshot">
+            <Shot
+              name="en-route"
+              alt="The Fresh Greens en-route screen: a navy safety Shield, hazard markers, and the daylight-graded route line — the reserved colors holding together on one real screen"
+            />
+          </PhoneFrame>
+          <figcaption className="fg-safety-visual-caption">
+            The reserved palette holding on a real screen: navy for the safety
+            Shield, the daylight gradient on the route, hazard markers in their
+            reserved hues — and nothing else non-green.
+          </figcaption>
+        </figure>
 
         <div className="project-section-body">
           <p>
@@ -332,27 +332,6 @@ export default async function FreshGreensPage() {
           </figcaption>
         </figure>
 
-        <div className="project-section-body">
-          <p>The exceptions are worth naming, because each one is defended by contrast math.</p>
-          <p>
-            Error text on light surfaces uses a darker error red
-            (severityCritical, roughly 5.6:1 against white) instead of the
-            iOS default #FF3B30 (roughly 3.5:1, which fails AA for body
-            copy). Same color role, different token, chosen because the
-            contrast math forced it. Error signals (the dot, the pill) still
-            use the iOS red because they&apos;re not body copy. On the dark
-            auth screens the AA argument inverts, so error text there stays
-            iOS red, with in-code annotations naming the split.
-          </p>
-          <p>
-            The recording indicator on <code>/pulled-over</code> pulses red
-            because a live audio-capture state is exactly what red is
-            reserved for. Destructive-action labels use red for the same
-            reason.
-          </p>
-        </div>
-
-        <DaylightLegend />
       </section>
 
       {/* ── Section 7: Where the argument gets tested ── */}
