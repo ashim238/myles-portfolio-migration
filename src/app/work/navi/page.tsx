@@ -11,6 +11,7 @@ import {
   CompositionStrip,
   HeatmapExplorer,
   HeuristicInsightCards,
+  NaviAnimReady,
   SurveyStatRings,
 } from "@/components/navi";
 import { NaviDemoEmbed } from "@/components/navi-demo-embed";
@@ -285,6 +286,7 @@ export default async function NaviPage() {
 
       <ProjectWorkJump currentSlug="navi" projects={allProjects} />
       <CaseHighlightObserver />
+      <NaviAnimReady />
     </main>
   );
 }

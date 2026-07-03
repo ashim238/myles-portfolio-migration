@@ -9,7 +9,7 @@ import { DrawOnView } from "@/components/draw-on-view";
 /* ──────────────────────────────────────────
    Phone frame
    Real device chrome (notch, rounded bezel),
-   takes either a child illustration OR an <img>.
+   takes either a child illustration or an image element.
    Aspect approximates iPhone (~9:19.5).
    ────────────────────────────────────────── */
 

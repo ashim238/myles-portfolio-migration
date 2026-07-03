@@ -11,6 +11,7 @@ import {
   PhoneFrame,
   SignalSwatches,
 } from "@/components/fresh-greens";
+import { ReservedColorFilter } from "@/components/fresh-greens-filter";
 import { Device3D } from "@/components/device-3d";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getPublishedProjects } from "@/lib/content";
@@ -296,6 +297,18 @@ export default async function FreshGreensPage() {
         </div>
 
         <SignalSwatches />
+
+        <div className="project-section-body">
+          <p>
+            The demo below runs the same claim on a real screen. Flip the
+            toggle: brand-green fades because it isn&apos;t a reserved role,
+            and the only elements still carrying color are the four
+            reserved-role instances on the surface. Focus any of them to
+            read the carve-out that pins the color to that meaning.
+          </p>
+        </div>
+
+        <ReservedColorFilter />
 
         <div className="project-section-body">
           <p>
