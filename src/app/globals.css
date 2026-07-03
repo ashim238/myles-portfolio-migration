@@ -4435,63 +4435,121 @@ button:focus-visible,
   gap: 8px;
 }
 
-/* ── Signal swatches ──────────────────────────────────── */
+/* ── Reserved palette (grouped lanes) ─────────────────── */
 
-.fg-signal-list {
-  margin: 2rem 0 2.2rem;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  gap: 0.7rem;
-  max-width: 56ch;
+.fg-palette {
+  margin: 2.4rem 0 0;
 }
 
-.fg-signal {
+.fg-palette-baseline {
+  margin: 0 0 1.7rem;
+  font-size: 0.98rem;
+  line-height: var(--lead-long, 1.6);
+  color: var(--foreground);
+  max-width: 62ch;
+  text-wrap: pretty;
+}
+
+.fg-palette-baseline strong {
+  font-weight: 600;
+}
+
+.fg-palette-lanes {
+  margin: 0;
+}
+
+.fg-palette-gradient-intro {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--muted);
+}
+
+.fg-palette-gradient-intro + .fg-palette-lanes .fg-palette-lane:first-child {
+  border-top: 0;
+  padding-top: 0.3rem;
+}
+
+.fg-palette-lane {
   display: grid;
-  grid-template-columns: 1.7rem 1fr;
-  gap: 0.85rem;
-  align-items: start;
-  padding: 0.65rem 0;
+  grid-template-columns: 1fr;
+  gap: 0.55rem 1.6rem;
+  padding: 1.15rem 0;
   border-top: 1px solid var(--line);
 }
 
-.fg-signal:first-child {
-  border-top: none;
+.fg-palette-lane:first-child {
+  border-top: 0;
   padding-top: 0;
 }
 
-.fg-signal-swatch {
-  width: 1.4rem;
-  height: 1.4rem;
-  border-radius: 4px;
-  margin-top: 0.16rem;
-  display: block;
+@media (min-width: 640px) {
+  .fg-palette-lane {
+    grid-template-columns: 168px 1fr;
+    align-items: start;
+  }
 }
 
-.fg-signal-name {
-  margin: 0 0 0.18rem;
+.fg-palette-head {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.45rem 0.65rem;
-  font-size: 0.96rem;
-  font-weight: 500;
-}
-
-.fg-signal-role {
-  font-family: var(--font-mono), monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  font-weight: 400;
-}
-
-.fg-signal-note {
+  align-items: flex-start;
+  gap: 0.6rem;
   margin: 0;
-  font-size: 0.86rem;
-  line-height: 1.5;
+}
+
+.fg-palette-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  flex: none;
+  margin-top: 0.05rem;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--foreground) 18%, transparent);
+}
+
+.fg-palette-headtext {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.fg-palette-name {
+  font-weight: 600;
+  color: var(--foreground);
+  font-size: 0.98rem;
+  line-height: 1.1;
+}
+
+.fg-palette-role {
+  font-size: 0.78rem;
+  font-style: italic;
   color: var(--muted);
+  opacity: 0.75;
+}
+
+.fg-palette-carveouts {
+  margin: 0;
+  min-width: 0;
+}
+
+.fg-palette-carveouts ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.fg-palette-tag {
+  font-weight: 600;
+  color: var(--foreground);
+  font-size: 0.92rem;
+}
+
+.fg-palette-note {
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
   text-wrap: pretty;
 }
 
@@ -4527,33 +4585,7 @@ button:focus-visible,
   text-wrap: pretty;
 }
 
-.fg-legend {
-  /* Breathing room from the reserved-color prose that precedes the legend. */
-  margin: 2.2rem 0 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-}
 
-.fg-legend-row {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-}
-
-.fg-legend-line {
-  width: 60px;
-  height: 12px;
-  flex-shrink: 0;
-}
-
-.fg-legend-label {
-  font-size: 0.82rem;
-  color: var(--muted);
-  letter-spacing: 0.005em;
-}
 
 /* ── Scope columns ────────────────────────────────────── */
 
@@ -6155,21 +6187,25 @@ button:focus-visible,
 
 /* ── Reveal motion ───────────────────────────────────── */
 
+/* Reveal starts visible; the JS-driven arm attribute opts into the
+   opacity/transform gate so headless renders and reduced-motion
+   never leave content hidden. */
 .nv-reveal {
-  opacity: 0;
-  transform: translateY(14px);
+  opacity: 1;
+  transform: none;
   transition:
     opacity 560ms ease,
     transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.nv-reveal--visible {
-  opacity: 1;
-  transform: translateY(0);
+.nv-page[data-nv-anim-ready] .nv-reveal:not(.nv-reveal--visible) {
+  opacity: 0;
+  transform: translateY(14px);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .nv-reveal {
+  .nv-reveal,
+  .nv-page[data-nv-anim-ready] .nv-reveal:not(.nv-reveal--visible) {
     opacity: 1;
     transform: none;
     transition: none;
@@ -6290,7 +6326,7 @@ button:focus-visible,
   transition: stroke-dashoffset 900ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.nv-reveal:not(.nv-reveal--visible) .nv-ring-progress {
+.nv-page[data-nv-anim-ready] .nv-reveal:not(.nv-reveal--visible) .nv-ring-progress {
   stroke-dashoffset: 339.292 !important;
 }
 
@@ -7076,6 +7112,14 @@ button:focus-visible,
   font-family: var(--font-navi-display), var(--font-sans), sans-serif;
   color: var(--nv-accent);
   font-weight: 700;
+}
+
+.nv-heatmap-map-pos {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: color-mix(in srgb, var(--muted) 85%, transparent);
+  white-space: nowrap;
 }
 
 .nv-page h2[id^="nv-"] {

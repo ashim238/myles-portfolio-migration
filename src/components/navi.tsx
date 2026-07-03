@@ -12,39 +12,51 @@ import { NAVI_SURVEY_STATS } from "@/lib/navi-survey-data";
 
 /* ── Shared reveal helpers ───────────────────────────── */
 
-function useRevealOnce<T extends HTMLElement>() {
-  const ref = useRef<T | null>(null);
-
+/* The parent .nv-page element is armed with data-nv-anim-ready once JS
+   hydrates. Only then does the CSS gate the reveal state; without the
+   attribute, reveal targets stay visible, so headless renders and
+   observer-blocked contexts never ship blank sections. One shared
+   observer covers every reveal target on the page. */
+export function NaviAnimReady() {
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      el.classList.add("nv-reveal--visible");
+    const page = document.querySelector<HTMLElement>('main.nv-page[data-project-slug="navi"]');
+    if (!page) return;
+    page.dataset.nvAnimReady = "true";
+
+    const targets = page.querySelectorAll<HTMLElement>(".nv-reveal");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced || targets.length === 0) {
+      targets.forEach((el) => el.classList.add("nv-reveal--visible"));
       return;
     }
+
     const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add("nv-reveal--visible");
-          io.disconnect();
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("nv-reveal--visible");
+            io.unobserve(entry.target);
+          }
         }
       },
       { threshold: 0.2 },
     );
-    io.observe(el);
-    return () => io.disconnect();
+    targets.forEach((el) => io.observe(el));
+
+    return () => {
+      io.disconnect();
+      delete page.dataset.nvAnimReady;
+    };
   }, []);
 
-  return ref;
+  return null;
 }
 
 /* ── Heuristic insight cards ─────────────────────────── */
 
 export function HeuristicInsightCards() {
-  const ref = useRevealOnce<HTMLDivElement>();
-
   return (
-    <div ref={ref} className="nv-heuristic nv-reveal" role="list">
+    <div className="nv-heuristic nv-reveal" role="list">
       {NAVI_HEURISTIC_INSIGHTS.map((item, i) => (
         <article
           key={item.id}
@@ -63,13 +75,12 @@ export function HeuristicInsightCards() {
 /* ── Survey stat rings ───────────────────────────────── */
 
 function SurveyRing({ value, label, caption }: { value: number; label: string; caption: string }) {
-  const ref = useRevealOnce<HTMLElement>();
   const radius = 54;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (value / 100) * circumference;
 
   return (
-    <figure ref={ref} className="nv-ring nv-reveal">
+    <figure className="nv-ring nv-reveal">
       <svg viewBox="0 0 140 140" className="nv-ring-svg" aria-hidden="true">
         <circle className="nv-ring-track" cx="70" cy="70" r={radius} />
         <circle
@@ -117,7 +128,6 @@ const COMPOSITION_CARDS = [
 ] as const;
 
 export function CompositionStrip() {
-  const ref = useRevealOnce<HTMLDivElement>();
   const stripRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -126,23 +136,39 @@ export function CompositionStrip() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (window.matchMedia("(max-width: 767px)").matches) return;
 
+    let rect: DOMRect | null = null;
+    const readRect = () => {
+      rect = el.getBoundingClientRect();
+    };
+    const onEnter = () => readRect();
     const onMove = (e: MouseEvent) => {
-      const rect = el.getBoundingClientRect();
+      if (!rect) readRect();
+      if (!rect) return;
       const x = (e.clientX - rect.left) / rect.width - 0.5;
       el.style.setProperty("--nv-parallax-x", `${x * 6}px`);
     };
-    const onLeave = () => el.style.setProperty("--nv-parallax-x", "0px");
+    const onLeave = () => {
+      rect = null;
+      el.style.setProperty("--nv-parallax-x", "0px");
+    };
+    const onResize = () => {
+      rect = null;
+    };
 
+    el.addEventListener("mouseenter", onEnter);
     el.addEventListener("mousemove", onMove);
     el.addEventListener("mouseleave", onLeave);
+    window.addEventListener("resize", onResize);
     return () => {
+      el.removeEventListener("mouseenter", onEnter);
       el.removeEventListener("mousemove", onMove);
       el.removeEventListener("mouseleave", onLeave);
+      window.removeEventListener("resize", onResize);
     };
   }, []);
 
   return (
-    <div ref={ref} className="nv-composition nv-reveal">
+    <div className="nv-composition nv-reveal">
       <p className="nv-composition-eyebrow">Editorial homepage slice</p>
       <div className="nv-composition-strip">
         <div className="nv-composition-header">
@@ -262,10 +288,13 @@ export function HeatmapExplorer() {
           {activeName ? (
             <>
               <strong className="nv-heatmap-map-name">{activeName}.</strong>{" "}
+              <span className="nv-heatmap-map-pos">
+                {sorted.findIndex((n) => n.id === activeId) + 1} of {sorted.length}
+              </span>{" "}
               {NAVI_LEARN_CONTEXT}
             </>
           ) : (
-            "Select a neighborhood to preview how Learn would frame it."
+            `Select from the list to preview how Learn would frame each of ${sorted.length} neighborhoods.`
           )}
         </p>
       </div>

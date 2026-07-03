@@ -5,11 +5,12 @@
 
 import type { ReactNode } from "react";
 import { DrawOnView } from "@/components/draw-on-view";
+import { RESERVED_LANES, type ReservedLane } from "@/lib/fresh-greens/palette";
 
 /* ──────────────────────────────────────────
    Phone frame
    Real device chrome (notch, rounded bezel),
-   takes either a child illustration OR an <img>.
+   takes either a child illustration or an image element.
    Aspect approximates iPhone (~9:19.5).
    ────────────────────────────────────────── */
 
@@ -65,10 +66,10 @@ export function HeroRouteIllustration() {
           {/* The daylight-graded route polyline.
               4 segments: solid day (orange) → twilight dash → twilight dot → night dot */}
           <g fill="none" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M40 340 L40 280 L100 280 L100 220" stroke="#f6a86b" />
+            <path d="M40 340 L40 280 L100 280 L100 220" stroke="#FFB347" />
             <path
               d="M100 220 L160 220 L160 160"
-              stroke="#c87a8a"
+              stroke="#C4785A"
               strokeDasharray="9 6"
             />
             <path
@@ -78,7 +79,7 @@ export function HeroRouteIllustration() {
             />
             <path
               d="M220 100 L260 100 L260 40"
-              stroke="#4a4280"
+              stroke="#2D1B69"
               strokeDasharray="2 6"
             />
           </g>
@@ -86,7 +87,7 @@ export function HeroRouteIllustration() {
           {/* Start + end pins */}
           <circle cx="40" cy="340" r="6" fill="#f4f4f4" />
           <circle cx="40" cy="340" r="3" fill="#0a0a0a" />
-          <circle cx="260" cy="40" r="6" fill="#4a4280" />
+          <circle cx="260" cy="40" r="6" fill="#2D1B69" />
           <circle cx="260" cy="40" r="3" fill="#f4f4f4" />
         </svg>
       </div>
@@ -423,114 +424,80 @@ export function ProcessGraph() {
 }
 
 /* ──────────────────────────────────────────
-   Reserved-color signaling chips
-   Real swatches with their meaning, not aspirational chips.
-   The whole point of the system is that these colors are committed.
+   Reserved palette — the §6 exhibit.
+   Green stated once as the baseline, then the four
+   reserved colors plus the daylight gradient, each
+   grouped with its documented carve-outs. Static:
+   no toggle, no gadget. Swatches are decorative; the
+   color name carries the meaning.
    ────────────────────────────────────────── */
 
-const SIGNALS = [
-  {
-    color: "#2f6b46",
-    name: "Green",
-    role: "In-flow action",
-    note: "Every CTA, link, and secondary action. The only non-reserved color allowed to mean \"go.\"",
-  },
-  {
-    color: "#d24a3b",
-    name: "Red",
-    role: "Alert",
-    note: "SOS, the live recording indicator, form errors, and destructive actions.",
-  },
-  {
-    color: "#f08a4b",
-    name: "Orange",
-    role: "Hazard · caution",
-    note: "Speed-limit zones, the Report affordance, and route-preview hazard chips for police and low-light segments.",
-  },
-  {
-    color: "#e2b340",
-    name: "Yellow",
-    role: "Caution · favorite",
-    note: "General caution, plus the gold star for trusted stations (a documented carve-out from the caution role).",
-  },
-  {
-    color: "#284872",
-    name: "Navy",
-    role: "Safety-affordance mark",
-    note: "The en-route Shield and the /emergency SOS disc. Never used for data state or sync.",
-  },
-];
+export function ReservedPalette() {
+  const solidLanes = RESERVED_LANES.filter((l) => l.family !== "daylight");
+  const daylightLane = RESERVED_LANES.find((l) => l.family === "daylight")!;
 
-export function SignalSwatches() {
+  function renderLane(lane: ReservedLane) {
+    return (
+      <div className="fg-palette-lane" key={lane.family}>
+        <dt className="fg-palette-head">
+          {lane.family === "daylight" ? (
+            <svg
+              className="fg-palette-swatch"
+              width="28"
+              height="28"
+              viewBox="0 0 28 28"
+              aria-hidden="true"
+            >
+              <line x1="4" y1="7" x2="24" y2="7" stroke="#FFB347" strokeWidth="3" strokeLinecap="round" />
+              <line x1="4" y1="14" x2="24" y2="14" stroke="#C4785A" strokeWidth="3" strokeLinecap="round" strokeDasharray="5 3" />
+              <line x1="4" y1="21" x2="24" y2="21" stroke="#2D1B69" strokeWidth="3" strokeLinecap="round" strokeDasharray="2 3" />
+            </svg>
+          ) : (
+            <span
+              className="fg-palette-swatch"
+              style={{ background: lane.swatch }}
+              aria-hidden="true"
+            />
+          )}
+          <span className="fg-palette-headtext">
+            <span className="fg-palette-name">{lane.name}</span>
+            <span className="fg-palette-role">{lane.role}</span>
+          </span>
+        </dt>
+        <dd className="fg-palette-carveouts">
+          <ul role="list">
+            {lane.carveOuts.map((c) => (
+              <li key={c.tag}>
+                <span className="fg-palette-tag">{c.tag}</span>{" "}
+                <span className="fg-palette-note">{c.note}</span>
+              </li>
+            ))}
+          </ul>
+        </dd>
+      </div>
+    );
+  }
+
   return (
-    <ul className="fg-signal-list" role="list">
-      {SIGNALS.map((s) => (
-        <li key={s.name} className="fg-signal">
-          <span
-            className="fg-signal-swatch"
-            style={{ background: s.color }}
-            aria-hidden="true"
-          />
-          <div className="fg-signal-text">
-            <p className="fg-signal-name">
-              <span>{s.name}</span>
-              <span className="fg-signal-role">{s.role}</span>
-            </p>
-            <p className="fg-signal-note">{s.note}</p>
-          </div>
-        </li>
-      ))}
-    </ul>
+    <div className="fg-palette">
+      <p className="fg-palette-baseline">
+        <strong>Green</strong> carries every CTA, link, and affordance — the
+        only non-reserved color. Four colors are held to safety-signal work; the
+        documented carve-outs are below.
+      </p>
+      <dl className="fg-palette-lanes">
+        {solidLanes.map(renderLane)}
+      </dl>
+      <p className="fg-palette-gradient-intro">
+        And where color is the data:
+      </p>
+      <dl className="fg-palette-lanes">
+        {renderLane(daylightLane)}
+      </dl>
+    </div>
   );
 }
 
-/* ──────────────────────────────────────────
-   Daylight dash-pattern legend
-   Demonstrates the WCAG 1.4.1 non-color cue.
-   ────────────────────────────────────────── */
-
-export function DaylightLegend() {
-  return (
-    <ul className="fg-legend" role="list">
-      <li className="fg-legend-row">
-        <svg viewBox="0 0 80 12" className="fg-legend-line" aria-hidden="true">
-          <line x1="2" y1="6" x2="78" y2="6" stroke="#f6a86b" strokeWidth="3" strokeLinecap="round" />
-        </svg>
-        <span className="fg-legend-label">Solid · daylight remaining</span>
-      </li>
-      <li className="fg-legend-row">
-        <svg viewBox="0 0 80 12" className="fg-legend-line" aria-hidden="true">
-          <line
-            x1="2"
-            y1="6"
-            x2="78"
-            y2="6"
-            stroke="#c87a8a"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeDasharray="9 6"
-          />
-        </svg>
-        <span className="fg-legend-label">Dashed · twilight</span>
-      </li>
-      <li className="fg-legend-row">
-        <svg viewBox="0 0 80 12" className="fg-legend-line" aria-hidden="true">
-          <line
-            x1="2"
-            y1="6"
-            x2="78"
-            y2="6"
-            stroke="#4a4280"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeDasharray="2 6"
-          />
-        </svg>
-        <span className="fg-legend-label">Dotted · night</span>
-      </li>
-    </ul>
-  );
-}
 
 /* ──────────────────────────────────────────
    Feature card
