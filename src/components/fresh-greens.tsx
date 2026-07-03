@@ -424,46 +424,6 @@ export function ProcessGraph() {
 }
 
 /* ──────────────────────────────────────────
-   Reserved-color signaling chips
-   Real swatches with their meaning, not aspirational chips.
-   The whole point of the system is that these colors are committed.
-   ────────────────────────────────────────── */
-
-// Hexes are the app's real reserved palette from theme/colors.ts.
-const SIGNALS = [
-  {
-    color: "#41AD49",
-    name: "Green",
-    role: "In-flow action",
-    note: "Every CTA, link, and secondary action. The only non-reserved color allowed to mean \"go.\"",
-  },
-  {
-    color: "#FF3B30",
-    name: "Red",
-    role: "Alert",
-    note: "SOS, the live recording indicator, form errors, and destructive actions.",
-  },
-  {
-    color: "#FF9500",
-    name: "Orange",
-    role: "Hazard · caution",
-    note: "Speed-limit zones, the Report affordance, and route-preview hazard chips for police and low-light segments.",
-  },
-  {
-    color: "#FFCC00",
-    name: "Yellow",
-    role: "Caution · favorite",
-    note: "General caution, plus the gold star for trusted stations (a documented carve-out from the caution role).",
-  },
-  {
-    color: "#041E49",
-    name: "Navy",
-    role: "Safety-affordance mark",
-    note: "The en-route Shield and the /emergency SOS disc. Never used for data state or sync.",
-  },
-];
-
-/* ──────────────────────────────────────────
    Reserved palette — the §6 exhibit.
    Green stated once as the baseline, then the four
    reserved colors plus the daylight gradient, each
@@ -511,76 +471,6 @@ export function ReservedPalette() {
   );
 }
 
-export function SignalSwatches() {
-  return (
-    <ul className="fg-signal-list" role="list">
-      {SIGNALS.map((s) => (
-        <li key={s.name} className="fg-signal">
-          <span
-            className="fg-signal-swatch"
-            style={{ background: s.color }}
-            aria-hidden="true"
-          />
-          <div className="fg-signal-text">
-            <p className="fg-signal-name">
-              <span>{s.name}</span>
-              <span className="fg-signal-role">{s.role}</span>
-            </p>
-            <p className="fg-signal-note">{s.note}</p>
-          </div>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-/* ──────────────────────────────────────────
-   Daylight dash-pattern legend
-   Demonstrates the WCAG 1.4.1 non-color cue.
-   ────────────────────────────────────────── */
-
-export function DaylightLegend() {
-  return (
-    <ul className="fg-legend" role="list">
-      <li className="fg-legend-row">
-        <svg viewBox="0 0 80 12" className="fg-legend-line" aria-hidden="true">
-          <line x1="2" y1="6" x2="78" y2="6" stroke="#FFB347" strokeWidth="3" strokeLinecap="round" />
-        </svg>
-        <span className="fg-legend-label">Solid · daylight remaining</span>
-      </li>
-      <li className="fg-legend-row">
-        <svg viewBox="0 0 80 12" className="fg-legend-line" aria-hidden="true">
-          <line
-            x1="2"
-            y1="6"
-            x2="78"
-            y2="6"
-            stroke="#C4785A"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeDasharray="9 6"
-          />
-        </svg>
-        <span className="fg-legend-label">Dashed · twilight</span>
-      </li>
-      <li className="fg-legend-row">
-        <svg viewBox="0 0 80 12" className="fg-legend-line" aria-hidden="true">
-          <line
-            x1="2"
-            y1="6"
-            x2="78"
-            y2="6"
-            stroke="#2D1B69"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeDasharray="2 6"
-          />
-        </svg>
-        <span className="fg-legend-label">Dotted · night</span>
-      </li>
-    </ul>
-  );
-}
 
 /* ──────────────────────────────────────────
    Feature card
