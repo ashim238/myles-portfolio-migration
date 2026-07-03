@@ -5,6 +5,7 @@
 
 import type { ReactNode } from "react";
 import { DrawOnView } from "@/components/draw-on-view";
+import { RESERVED_LANES } from "@/lib/fresh-greens/palette";
 
 /* ──────────────────────────────────────────
    Phone frame
@@ -461,6 +462,54 @@ const SIGNALS = [
     note: "The en-route Shield and the /emergency SOS disc. Never used for data state or sync.",
   },
 ];
+
+/* ──────────────────────────────────────────
+   Reserved palette — the §6 exhibit.
+   Green stated once as the baseline, then the four
+   reserved colors plus the daylight gradient, each
+   grouped with its documented carve-outs. Static:
+   no toggle, no gadget. Swatches are decorative; the
+   color name carries the meaning.
+   ────────────────────────────────────────── */
+
+export function ReservedPalette() {
+  return (
+    <div className="fg-palette">
+      <p className="fg-palette-baseline">
+        <strong>Green</strong> carries every CTA, link, and affordance — the
+        only non-reserved color. Four colors, plus the daylight gradient, are
+        held back, each to one meaning.
+      </p>
+      <dl className="fg-palette-lanes">
+        {RESERVED_LANES.map((lane) => (
+          <div className="fg-palette-lane" key={lane.family}>
+            <dt className="fg-palette-head">
+              <span
+                className="fg-palette-swatch"
+                style={{ background: lane.swatch }}
+                aria-hidden="true"
+              />
+              <span className="fg-palette-headtext">
+                <span className="fg-palette-name">{lane.name}</span>
+                <span className="fg-palette-role">{lane.role}</span>
+              </span>
+            </dt>
+            <dd className="fg-palette-carveouts">
+              <ul role="list">
+                {lane.carveOuts.map((c) => (
+                  <li key={c.tag}>
+                    <span className="fg-palette-tag">{c.tag}.</span>{" "}
+                    <span className="fg-palette-note">{c.note}</span>
+                  </li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  );
+}
 
 export function SignalSwatches() {
   return (
