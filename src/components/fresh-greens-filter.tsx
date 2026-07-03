@@ -263,7 +263,9 @@ function MockHome({
     return `M ${cx - r} ${cy} C ${cx - r} ${cy - r * 1.35} ${cx + r} ${cy - r * 1.35} ${cx + r} ${cy} C ${cx + r} ${cy + r * 0.95} ${cx + r * 0.4} ${cy + r * 1.5} ${cx} ${tip} C ${cx - r * 0.4} ${cy + r * 1.5} ${cx - r} ${cy + r * 0.95} ${cx - r} ${cy} Z`;
   };
 
-  const ROUTE = "M 40 648 C 118 612 150 528 182 472 C 216 412 250 356 300 300";
+  // Runs the full height of the map, from the start dot near the bottom to
+  // the destination pin up top — no stopping short mid-canvas.
+  const ROUTE = "M 72 690 C 128 636 150 548 190 476 C 232 398 246 300 262 196";
 
   return (
     <div className="fg-filter-frame">
@@ -330,27 +332,24 @@ function MockHome({
         >
           <path d={ROUTE} fill="none" stroke="transparent" strokeWidth="30" strokeLinecap="round" className="fg-filter-hit" />
           <path d={ROUTE} fill="none" stroke="var(--fg-accent)" strokeWidth="13" strokeLinecap="round" className="fg-route-glow" />
-          <path d={ROUTE} fill="none" stroke="url(#fgm-daylight)" strokeWidth="5" strokeLinecap="round" />
-          <circle cx="40" cy="648" r="4.5" fill="#f6a86b" />
-          <circle cx="300" cy="300" r="4.5" fill="#4a4280" />
+          <path d={ROUTE} fill="none" stroke="url(#fgm-daylight)" strokeWidth="6" strokeLinecap="round" />
+          <circle cx="72" cy="690" r="4.5" fill="#f6a86b" />
         </g>
 
-        {/* Green vehicle marker (brand — fades when muted) */}
+        {/* Destination pin at the route end (neutral — fades when muted) */}
         <g>
-          <circle cx="196" cy="452" r="19" fill="var(--fgm-brand)" />
-          <path
-            d="M 187 454 h 18 v -5 q 0 -3 -3 -3 h -12 q -3 0 -3 3 Z"
-            fill="var(--fgm-page)"
-            opacity="0.92"
-          />
-          <circle cx="191" cy="456" r="2" fill="var(--fgm-brand)" />
-          <circle cx="201" cy="456" r="2" fill="var(--fgm-brand)" />
+          <path d={pin(262, 190, 12)} fill="var(--fgm-ink)" opacity="0.85" />
+          <circle cx="262" cy="189" r="4" fill="var(--fgm-page)" />
         </g>
 
-        {/* Current-location dot (neutral system UI — fades when muted) */}
-        <circle cx="250" cy="502" r="12" fill="var(--fgm-brand)" opacity="0.18" />
-        <circle cx="250" cy="502" r="5.5" fill="var(--fgm-ink)" opacity="0.75" />
-        <circle cx="250" cy="502" r="5.5" fill="none" stroke="var(--fgm-page)" strokeWidth="1.5" />
+        {/* Green vehicle marker on the route (brand — fades when muted) */}
+        <g>
+          <circle cx="190" cy="476" r="18" fill="var(--fgm-brand)" />
+          <rect x="181.5" y="473" width="17" height="6.5" rx="2.4" fill="var(--fgm-page)" />
+          <path d="M 185 473 l 1.8 -3 h 6.4 l 1.8 3 Z" fill="var(--fgm-page)" />
+          <circle cx="185.5" cy="480.4" r="1.7" fill="var(--fgm-page)" />
+          <circle cx="194.5" cy="480.4" r="1.7" fill="var(--fgm-page)" />
+        </g>
 
         {/* ▸▸ Reserved: community eye-pin ─────────────────── */}
         <ReservedGroup
@@ -388,10 +387,11 @@ function MockHome({
             Where are you headed?
           </text>
           {/* Mic icon */}
-          <g stroke="var(--fgm-muted)" strokeWidth="1.6" fill="none" strokeLinecap="round">
-            <rect x="341" y="72" width="8" height="14" rx="4" fill="var(--fgm-muted)" stroke="none" />
-            <path d="M 338 82 a 7 7 0 0 0 14 0" />
-            <line x1="345" y1="89" x2="345" y2="94" />
+          <g stroke="var(--fgm-muted)" strokeWidth="1.5" fill="none" strokeLinecap="round">
+            <rect x="341.5" y="72" width="7" height="12" rx="3.5" fill="var(--fgm-muted)" stroke="none" />
+            <path d="M 338 81 v 1 a 7 7 0 0 0 14 0 v -1" />
+            <line x1="345" y1="89" x2="345" y2="92.5" />
+            <line x1="341.5" y1="93" x2="348.5" y2="93" />
           </g>
         </g>
 
@@ -445,7 +445,15 @@ function MockHome({
 
           {/* Weather chip */}
           <rect x="296" y="636" width="70" height="34" rx="12" fill="var(--fgm-page)" />
-          <circle cx="313" cy="653" r="6" fill="none" stroke="var(--fgm-muted)" strokeWidth="1.4" />
+          <g stroke="var(--fgm-muted)" strokeWidth="1.3" strokeLinecap="round">
+            <circle cx="313" cy="653" r="4" fill="none" />
+            <line x1="313" y1="645.5" x2="313" y2="647" />
+            <line x1="313" y1="659" x2="313" y2="660.5" />
+            <line x1="305.5" y1="653" x2="307" y2="653" />
+            <line x1="319" y1="653" x2="320.5" y2="653" />
+            <line x1="307.7" y1="647.7" x2="308.7" y2="648.7" />
+            <line x1="317.3" y1="657.3" x2="318.3" y2="658.3" />
+          </g>
           <text x="326" y="658" fill="var(--fgm-ink)" fontSize="13" fontFamily="var(--font-fg-body, system-ui)">
             66°
           </text>
