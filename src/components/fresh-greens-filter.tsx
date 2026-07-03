@@ -250,6 +250,20 @@ function MockHome({
   onActivate: (id: string) => void;
 }) {
   const activate = (id: string) => () => onActivate(id);
+  const key = (id: string) => (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onActivate(id);
+    }
+  };
+
+  // One teardrop silhouette, one radius — every map marker is the same size.
+  const pin = (cx: number, cy: number, r = 15) => {
+    const tip = cy + r * 2.3;
+    return `M ${cx - r} ${cy} C ${cx - r} ${cy - r * 1.35} ${cx + r} ${cy - r * 1.35} ${cx + r} ${cy} C ${cx + r} ${cy + r * 0.95} ${cx + r * 0.4} ${cy + r * 1.5} ${cx} ${tip} C ${cx - r * 0.4} ${cy + r * 1.5} ${cx - r} ${cy + r * 0.95} ${cx - r} ${cy} Z`;
+  };
+
+  const ROUTE = "M 40 648 C 118 612 150 528 182 472 C 216 412 250 356 300 300";
 
   return (
     <div className="fg-filter-frame">
@@ -257,212 +271,196 @@ function MockHome({
         viewBox="0 0 390 844"
         className="fg-filter-svg"
         role="img"
-        aria-label="Fresh Greens /home screen mock. Four reserved-color elements are focusable: the daylight polyline strip at top, an orange community-report pin on the map, a yellow hazard teardrop on the map, and an orange report action button at bottom-right."
+        aria-label="Fresh Greens /home screen mock: a full-screen map under a search bar and a bottom sheet of local recommendations. Four reserved-color elements are focusable: the daylight-graded route line, an orange community-report pin, a yellow hazard marker, and the orange alert button at bottom-right."
         xmlns="http://www.w3.org/2000/svg"
       >
-        {/* Page background */}
-        <rect x="0" y="0" width="390" height="844" fill="var(--fgm-page)" />
+        <defs>
+          <linearGradient id="fgm-daylight" x1="0" y1="1" x2="1" y2="0">
+            <stop offset="0" stopColor="#f6a86b" />
+            <stop offset="0.4" stopColor="#c87a8a" />
+            <stop offset="0.72" stopColor="#7d6ba8" />
+            <stop offset="1" stopColor="#4a4280" />
+          </linearGradient>
+        </defs>
 
-        {/* Status bar */}
-        <g fill="var(--fgm-ink)" fontFamily="var(--font-mono, ui-monospace)" fontSize="14" fontWeight="600">
-          <text x="26" y="34">9:41</text>
-        </g>
-        <g fill="var(--fgm-ink)" opacity="0.9">
-          <rect x="316" y="22" width="22" height="12" rx="2" />
-          <circle cx="348" cy="28" r="3" />
-          <rect x="356" y="20" width="16" height="16" rx="3" />
-        </g>
+        {/* ── Map canvas (full bleed) ─────────────────────── */}
+        <rect x="0" y="0" width="390" height="844" fill="var(--fgm-map)" />
 
-        {/* Wordmark */}
-        <text
-          x="26"
-          y="82"
-          fill="var(--fgm-ink)"
-          fontFamily="var(--font-fg-display, Georgia, serif)"
-          fontSize="26"
-          fontWeight="500"
-          letterSpacing="-0.02em"
+        {/* Park / green space */}
+        <path
+          d="M 150 520 Q 250 500 300 560 Q 320 640 220 660 Q 130 650 130 580 Z"
+          fill="var(--fgm-brand)"
+          opacity="0.12"
+        />
+        {/* Building footprints */}
+        <g fill="var(--fgm-ink)" opacity="0.06">
+          <rect x="44" y="300" width="78" height="58" rx="4" />
+          <rect x="250" y="322" width="90" height="70" rx="4" />
+          <rect x="60" y="150" width="70" height="52" rx="4" />
+          <rect x="286" y="470" width="70" height="70" rx="4" />
+        </g>
+        {/* Road casings */}
+        <g stroke="var(--fgm-street)" fill="none" strokeLinecap="round">
+          <path d="M -10 250 C 120 235 260 275 400 250" strokeWidth="16" />
+          <path d="M 200 -10 C 185 200 235 460 210 860" strokeWidth="15" />
+          <path d="M -10 470 C 130 450 250 495 400 460" strokeWidth="13" />
+        </g>
+        {/* One avenue carries brand-green traffic (fades when muted) */}
+        <path
+          d="M -10 250 C 120 235 260 275 400 250"
+          stroke="var(--fgm-brand)"
+          strokeWidth="5"
+          fill="none"
+          strokeLinecap="round"
+          opacity="0.85"
+        />
+
+        {/* ▸▸ Reserved: daylight-graded route line ────────── */}
+        <g
+          className={`fg-filter-reserved fg-filter-route${activeId === "daylight-poly" ? " fg-filter-reserved--active" : ""}`}
+          data-id="daylight-poly"
+          role="button"
+          tabIndex={0}
+          aria-label="Daylight-graded route line"
+          aria-pressed={activeId === "daylight-poly"}
+          onClick={activate("daylight-poly")}
+          onFocus={activate("daylight-poly")}
+          onMouseEnter={activate("daylight-poly")}
+          onKeyDown={key("daylight-poly")}
         >
-          fresh greens
-        </text>
-        <text
-          x="26"
-          y="106"
-          fill="var(--fgm-muted)"
-          fontFamily="var(--font-fg-body, system-ui)"
-          fontSize="12"
-        >
-          good morning, myles.
-        </text>
-
-        {/* Search pill */}
-        <g>
-          <rect
-            x="26"
-            y="126"
-            width="338"
-            height="48"
-            rx="24"
-            fill="var(--fgm-surface)"
-            stroke="var(--fgm-surface-line)"
-            strokeWidth="1"
-          />
-          <circle cx="50" cy="150" r="6" fill="none" stroke="var(--fgm-muted)" strokeWidth="1.4" />
-          <line x1="55" y1="155" x2="60" y2="160" stroke="var(--fgm-muted)" strokeWidth="1.4" strokeLinecap="round" />
-          <text x="72" y="155" fill="var(--fgm-muted)" fontSize="14" fontFamily="var(--font-fg-body, system-ui)">
-            where to?
-          </text>
+          <path d={ROUTE} fill="none" stroke="transparent" strokeWidth="30" strokeLinecap="round" className="fg-filter-hit" />
+          <path d={ROUTE} fill="none" stroke="var(--fg-accent)" strokeWidth="13" strokeLinecap="round" className="fg-route-glow" />
+          <path d={ROUTE} fill="none" stroke="url(#fgm-daylight)" strokeWidth="5" strokeLinecap="round" />
+          <circle cx="40" cy="648" r="4.5" fill="#f6a86b" />
+          <circle cx="300" cy="300" r="4.5" fill="#4a4280" />
         </g>
 
-        {/* Route card containing the daylight polyline strip */}
+        {/* Green vehicle marker (brand — fades when muted) */}
         <g>
-          <rect
-            x="26"
-            y="192"
-            width="338"
-            height="98"
-            rx="18"
-            fill="var(--fgm-surface)"
-            stroke="var(--fgm-surface-line)"
-            strokeWidth="1"
-          />
-          <text x="42" y="220" fill="var(--fgm-ink)" fontFamily="var(--font-fg-body, system-ui)" fontSize="13" fontWeight="500">
-            Continue to Vineland Flea Market
-          </text>
-          <text x="42" y="238" fill="var(--fgm-muted)" fontFamily="var(--font-fg-body, system-ui)" fontSize="11">
-            2h 18m · leaves in 22 min
-          </text>
-
-          {/* ▸▸ Reserved element: daylight polyline strip ─── */}
-          <ReservedGroup
-            id="daylight-poly"
-            active={activeId === "daylight-poly"}
-            onActivate={activate("daylight-poly")}
-            label="Daylight polyline strip"
-            bbox={{ x: 40, y: 254, w: 310, h: 22 }}
-          >
-            {/* Sunrise-to-night gradient in four segments, each with its dash cadence */}
-            <g strokeWidth="6" strokeLinecap="round" fill="none">
-              <line x1="46" y1="266" x2="120" y2="266" stroke="#f6a86b" />
-              <line x1="128" y1="266" x2="200" y2="266" stroke="#c87a8a" strokeDasharray="10 6" />
-              <line x1="208" y1="266" x2="272" y2="266" stroke="#7d6ba8" strokeDasharray="3 6" />
-              <line x1="280" y1="266" x2="346" y2="266" stroke="#4a4280" strokeDasharray="3 6" />
-            </g>
-            {/* Start / end dots */}
-            <circle cx="46" cy="266" r="4" fill="#f6a86b" />
-            <circle cx="346" cy="266" r="4" fill="#4a4280" />
-          </ReservedGroup>
-        </g>
-
-        {/* Map card */}
-        <g>
-          <rect
-            x="26"
-            y="306"
-            width="338"
-            height="360"
-            rx="20"
-            fill="var(--fgm-map)"
-            stroke="var(--fgm-surface-line)"
-            strokeWidth="1"
-          />
-          {/* Street grid */}
-          <g stroke="var(--fgm-street)" strokeWidth="1" opacity="0.6">
-            <line x1="26" y1="360" x2="364" y2="360" />
-            <line x1="26" y1="420" x2="364" y2="420" />
-            <line x1="26" y1="480" x2="364" y2="480" />
-            <line x1="26" y1="540" x2="364" y2="540" />
-            <line x1="26" y1="600" x2="364" y2="600" />
-            <line x1="90" y1="306" x2="90" y2="666" />
-            <line x1="170" y1="306" x2="170" y2="666" />
-            <line x1="250" y1="306" x2="250" y2="666" />
-            <line x1="310" y1="306" x2="310" y2="666" />
-          </g>
-
-          {/* A brand-green route trace across the map */}
+          <circle cx="196" cy="452" r="19" fill="var(--fgm-brand)" />
           <path
-            d="M 60 620 Q 130 580 160 500 T 240 400 T 320 340"
-            fill="none"
-            stroke="var(--fgm-brand)"
-            strokeWidth="4"
-            strokeLinecap="round"
+            d="M 187 454 h 18 v -5 q 0 -3 -3 -3 h -12 q -3 0 -3 3 Z"
+            fill="var(--fgm-page)"
+            opacity="0.92"
           />
-          {/* Trip start pin */}
-          <circle cx="60" cy="620" r="8" fill="var(--fgm-ink)" />
-          <circle cx="60" cy="620" r="3" fill="var(--fgm-page)" />
-          {/* Trip end pin */}
-          <circle cx="320" cy="340" r="8" fill="var(--fgm-brand)" />
-          <circle cx="320" cy="340" r="3" fill="var(--fgm-page)" />
-
-          {/* ▸▸ Reserved element: community eye pin ────────── */}
-          <ReservedGroup
-            id="orange-community"
-            active={activeId === "orange-community"}
-            onActivate={activate("orange-community")}
-            label="Community-report pin"
-            bbox={{ x: 130, y: 400, w: 44, h: 44 }}
-          >
-            <path
-              d="M 152 402 C 168 402 178 414 178 428 C 178 440 152 460 152 460 C 152 460 126 440 126 428 C 126 414 136 402 152 402 Z"
-              fill="#f08a4b"
-            />
-            {/* Eye glyph inside */}
-            <ellipse cx="152" cy="426" rx="10" ry="6" fill="#fff" />
-            <circle cx="152" cy="426" r="3" fill="#f08a4b" />
-          </ReservedGroup>
-
-          {/* ▸▸ Reserved element: yellow hazard teardrop ────── */}
-          <ReservedGroup
-            id="yellow-caution"
-            active={activeId === "yellow-caution"}
-            onActivate={activate("yellow-caution")}
-            label="Hazard caution teardrop"
-            bbox={{ x: 254, y: 452, w: 40, h: 44 }}
-          >
-            <path
-              d="M 274 456 C 288 456 296 466 296 478 C 296 490 274 508 274 508 C 274 508 252 490 252 478 C 252 466 260 456 274 456 Z"
-              fill="#e2b340"
-            />
-            <rect x="272" y="470" width="4" height="12" fill="#3a2c05" rx="1" />
-            <circle cx="274" cy="488" r="2" fill="#3a2c05" />
-          </ReservedGroup>
-
-          {/* Neutral non-reserved map pins for context (mock-ink) */}
-          <circle cx="100" cy="380" r="4" fill="var(--fgm-ink)" opacity="0.55" />
-          <circle cx="220" cy="560" r="4" fill="var(--fgm-ink)" opacity="0.55" />
-          <circle cx="290" cy="500" r="4" fill="var(--fgm-ink)" opacity="0.55" />
-
-          {/* ▸▸ Reserved element: report FAB ──────────────── */}
-          <ReservedGroup
-            id="orange-fab"
-            active={activeId === "orange-fab"}
-            onActivate={activate("orange-fab")}
-            label="Report action button"
-            bbox={{ x: 296, y: 588, w: 56, h: 56 }}
-          >
-            <circle cx="324" cy="616" r="26" fill="#f08a4b" />
-            <line x1="324" y1="606" x2="324" y2="626" stroke="#fff" strokeWidth="3" strokeLinecap="round" />
-            <line x1="314" y1="616" x2="334" y2="616" stroke="#fff" strokeWidth="3" strokeLinecap="round" />
-          </ReservedGroup>
+          <circle cx="191" cy="456" r="2" fill="var(--fgm-brand)" />
+          <circle cx="201" cy="456" r="2" fill="var(--fgm-brand)" />
         </g>
 
-        {/* Bottom nav — five items evenly centered across the 26–364 span */}
+        {/* Current-location dot (neutral system UI — fades when muted) */}
+        <circle cx="250" cy="502" r="12" fill="var(--fgm-brand)" opacity="0.18" />
+        <circle cx="250" cy="502" r="5.5" fill="var(--fgm-ink)" opacity="0.75" />
+        <circle cx="250" cy="502" r="5.5" fill="none" stroke="var(--fgm-page)" strokeWidth="1.5" />
+
+        {/* ▸▸ Reserved: community eye-pin ─────────────────── */}
+        <ReservedGroup
+          id="orange-community"
+          active={activeId === "orange-community"}
+          onActivate={activate("orange-community")}
+          label="Community-report pin"
+          bbox={{ x: 305, y: 204, w: 34, h: 60 }}
+        >
+          <path d={pin(322, 226)} fill="#f08a4b" />
+          <ellipse cx="322" cy="224" rx="9" ry="5.5" fill="#fff" />
+          <circle cx="322" cy="224" r="2.6" fill="#f08a4b" />
+        </ReservedGroup>
+
+        {/* ▸▸ Reserved: yellow hazard marker (same size) ──── */}
+        <ReservedGroup
+          id="yellow-caution"
+          active={activeId === "yellow-caution"}
+          onActivate={activate("yellow-caution")}
+          label="Hazard caution marker"
+          bbox={{ x: 123, y: 358, w: 34, h: 60 }}
+        >
+          <path d={pin(140, 380)} fill="#e2b340" />
+          <rect x="138" y="371" width="4" height="11" rx="1.5" fill="#3a2c05" />
+          <circle cx="140" cy="388" r="2" fill="#3a2c05" />
+        </ReservedGroup>
+
+        {/* ── Search bar (over the map) ───────────────────── */}
         <g>
-          <rect
+          <rect x="20" y="58" width="350" height="48" rx="24" fill="var(--fgm-surface)" />
+          <rect x="20.5" y="58.5" width="349" height="47" rx="23.5" fill="none" stroke="var(--fgm-surface-line)" strokeWidth="1" />
+          <circle cx="46" cy="82" r="6" fill="none" stroke="var(--fgm-muted)" strokeWidth="1.6" />
+          <line x1="50.5" y1="86.5" x2="55" y2="91" stroke="var(--fgm-muted)" strokeWidth="1.6" strokeLinecap="round" />
+          <text x="66" y="87" fill="var(--fgm-muted)" fontSize="14" fontFamily="var(--font-fg-body, system-ui)">
+            Where are you headed?
+          </text>
+          {/* Mic icon */}
+          <g stroke="var(--fgm-muted)" strokeWidth="1.6" fill="none" strokeLinecap="round">
+            <rect x="341" y="72" width="8" height="14" rx="4" fill="var(--fgm-muted)" stroke="none" />
+            <path d="M 338 82 a 7 7 0 0 0 14 0" />
+            <line x1="345" y1="89" x2="345" y2="94" />
+          </g>
+        </g>
+
+        {/* Menu button (top-left) */}
+        <g>
+          <rect x="20" y="118" width="46" height="46" rx="14" fill="var(--fgm-surface)" />
+          <rect x="20.5" y="118.5" width="45" height="45" rx="13.5" fill="none" stroke="var(--fgm-surface-line)" strokeWidth="1" />
+          <g stroke="var(--fgm-ink)" strokeWidth="1.8" strokeLinecap="round">
+            <line x1="32" y1="135" x2="54" y2="135" />
+            <line x1="32" y1="141" x2="54" y2="141" />
+            <line x1="32" y1="147" x2="48" y2="147" />
+          </g>
+        </g>
+
+        {/* ▸▸ Reserved: alert button (over map, above sheet) ─ */}
+        <ReservedGroup
+          id="orange-fab"
+          active={activeId === "orange-fab"}
+          onActivate={activate("orange-fab")}
+          label="Alert / report button"
+          bbox={{ x: 307, y: 531, w: 50, h: 50 }}
+        >
+          <circle cx="332" cy="556" r="24" fill="var(--fgm-surface)" />
+          <circle cx="332" cy="556" r="19" fill="#f08a4b" />
+          <rect x="330" y="546" width="4" height="12" rx="2" fill="#fff" />
+          <circle cx="332" cy="565" r="2.2" fill="#fff" />
+        </ReservedGroup>
+
+        {/* ── Bottom sheet ────────────────────────────────── */}
+        <g>
+          <rect x="0" y="598" width="390" height="246" rx="30" fill="var(--fgm-surface)" />
+          <rect x="0.5" y="598.5" width="389" height="60" rx="29.5" fill="none" stroke="var(--fgm-surface-line)" strokeWidth="1" />
+          <rect x="177" y="612" width="36" height="5" rx="2.5" fill="var(--fgm-muted)" opacity="0.6" />
+
+          <text x="26" y="652" fill="var(--fgm-muted)" fontSize="12" fontFamily="var(--font-fg-body, system-ui)">
+            Local recs
+          </text>
+          {/* Body font, not the serif — the app reserves DM Serif for six
+              emotional beats, and a district heading isn't one of them. */}
+          <text
             x="26"
-            y="694"
-            width="338"
-            height="96"
-            rx="26"
-            fill="var(--fgm-surface)"
-            stroke="var(--fgm-surface-line)"
-            strokeWidth="1"
-          />
-          <NavItem cx={60} label="home" active />
-          <NavItem cx={127} label="route" />
-          <NavItem cx={195} label="explore" />
-          <NavItem cx={263} label="safety" />
-          <NavItem cx={330} label="me" />
+            y="682"
+            fill="var(--fgm-ink)"
+            fontSize="18"
+            fontWeight="600"
+            fontFamily="var(--font-fg-body, system-ui)"
+            letterSpacing="-0.01em"
+          >
+            East Historic District
+          </text>
+
+          {/* Weather chip */}
+          <rect x="296" y="636" width="70" height="34" rx="12" fill="var(--fgm-page)" />
+          <circle cx="313" cy="653" r="6" fill="none" stroke="var(--fgm-muted)" strokeWidth="1.4" />
+          <text x="326" y="658" fill="var(--fgm-ink)" fontSize="13" fontFamily="var(--font-fg-body, system-ui)">
+            66°
+          </text>
+
+          {/* Section row */}
+          <text x="26" y="726" fill="var(--fgm-ink)" fontSize="13" fontWeight="500" fontFamily="var(--font-fg-body, system-ui)">
+            Things to Do: Black Owned
+          </text>
+          <path d="M 350 728 l 6 -6 l 6 6" fill="none" stroke="var(--fgm-muted)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+
+          {/* Photo card hint */}
+          <rect x="26" y="742" width="338" height="86" rx="14" fill="var(--fgm-map)" />
+          <rect x="26" y="742" width="338" height="86" rx="14" fill="var(--fgm-ink)" opacity="0.04" />
+          <circle cx="60" cy="812" r="3" fill="var(--fgm-muted)" opacity="0.5" />
+          <rect x="74" y="806" width="120" height="6" rx="3" fill="var(--fgm-muted)" opacity="0.4" />
         </g>
       </svg>
     </div>
@@ -528,26 +526,6 @@ function ReservedGroup({
         className="fg-filter-ring"
       />
       {children}
-    </g>
-  );
-}
-
-function NavItem({ cx, label, active = false }: { cx: number; label: string; active?: boolean }) {
-  return (
-    <g>
-      <circle cx={cx} cy={726} r="9" fill={active ? "var(--fgm-brand)" : "var(--fgm-muted)"} opacity={active ? 1 : 0.5} />
-      <text
-        x={cx}
-        y={756}
-        textAnchor="middle"
-        fill={active ? "var(--fgm-brand)" : "var(--fgm-muted)"}
-        fontSize="11"
-        fontWeight={active ? 600 : 400}
-        opacity={active ? 1 : 0.7}
-        fontFamily="var(--font-fg-body, system-ui)"
-      >
-        {label}
-      </text>
     </g>
   );
 }

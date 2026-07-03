@@ -4719,6 +4719,19 @@ button:focus-visible,
   stroke-width: 2;
 }
 
+/* The route line can't take a rectangular ring, so its focus cue is a soft
+   glow tracing the same path. */
+.fg-route-glow {
+  opacity: 0;
+  transition: opacity 180ms ease-out;
+}
+
+.fg-filter-route:hover .fg-route-glow,
+.fg-filter-route:focus-visible .fg-route-glow,
+.fg-filter-reserved--active .fg-route-glow {
+  opacity: 0.26;
+}
+
 /* ── Panel ────────────────────────────────────────────── */
 
 .fg-filter-panel {
@@ -4866,6 +4879,7 @@ button:focus-visible,
   .fg-filter-toggle-track,
   .fg-filter-toggle-thumb,
   .fg-filter-ring,
+  .fg-route-glow,
   .fg-filter-list-item {
     transition: none;
   }
