@@ -160,26 +160,26 @@ export function ReservedColorFilter() {
 
   return (
     <div ref={rootRef} className="fg-filter" role="group" aria-label="Reserved-color filter interactive">
+      <div className="fg-filter-toolbar">
+        <label className="fg-filter-toggle" htmlFor={toggleId}>
+          <input
+            id={toggleId}
+            type="checkbox"
+            checked={muted}
+            onChange={(e) => handleToggle(e.target.checked)}
+          />
+          <span className="fg-filter-toggle-track" aria-hidden="true">
+            <span className="fg-filter-toggle-thumb" />
+          </span>
+          <span className="fg-filter-toggle-label">Show reserved colors only</span>
+        </label>
+        <p className="fg-filter-count">
+          {muted ? "4 of 4 reserved elements visible" : "The rest of the surface reads brand-green"}
+        </p>
+      </div>
+
       <div className="fg-filter-body">
         <div className="fg-filter-stage" data-muted={muted}>
-          <div className="fg-filter-toolbar">
-            <label className="fg-filter-toggle" htmlFor={toggleId}>
-              <input
-                id={toggleId}
-                type="checkbox"
-                checked={muted}
-                onChange={(e) => handleToggle(e.target.checked)}
-              />
-              <span className="fg-filter-toggle-track" aria-hidden="true">
-                <span className="fg-filter-toggle-thumb" />
-              </span>
-              <span className="fg-filter-toggle-label">Show reserved colors only</span>
-            </label>
-            <p className="fg-filter-count">
-              {muted ? "4 of 4 reserved elements visible" : "The rest of the surface reads brand-green"}
-            </p>
-          </div>
-
           <MockHome
             activeId={activeId}
             onActivate={handleActivate}
@@ -446,23 +446,23 @@ function MockHome({
           </ReservedGroup>
         </g>
 
-        {/* Bottom nav */}
+        {/* Bottom nav — five items evenly centered across the 26–364 span */}
         <g>
           <rect
             x="26"
-            y="686"
+            y="694"
             width="338"
-            height="112"
-            rx="24"
+            height="96"
+            rx="26"
             fill="var(--fgm-surface)"
             stroke="var(--fgm-surface-line)"
             strokeWidth="1"
           />
-          <NavItem cx={72} label="home" active />
-          <NavItem cx={142} label="route" />
-          <NavItem cx={212} label="explore" />
-          <NavItem cx={282} label="safety" />
-          <NavItem cx={342} label="me" />
+          <NavItem cx={60} label="home" active />
+          <NavItem cx={127} label="route" />
+          <NavItem cx={195} label="explore" />
+          <NavItem cx={263} label="safety" />
+          <NavItem cx={330} label="me" />
         </g>
       </svg>
     </div>
@@ -535,13 +535,15 @@ function ReservedGroup({
 function NavItem({ cx, label, active = false }: { cx: number; label: string; active?: boolean }) {
   return (
     <g>
-      <circle cx={cx} cy={720} r="10" fill={active ? "var(--fgm-brand)" : "var(--fgm-muted)"} opacity={active ? 1 : 0.55} />
+      <circle cx={cx} cy={726} r="9" fill={active ? "var(--fgm-brand)" : "var(--fgm-muted)"} opacity={active ? 1 : 0.5} />
       <text
         x={cx}
-        y={752}
+        y={756}
         textAnchor="middle"
         fill={active ? "var(--fgm-brand)" : "var(--fgm-muted)"}
-        fontSize="10"
+        fontSize="11"
+        fontWeight={active ? 600 : 400}
+        opacity={active ? 1 : 0.7}
         fontFamily="var(--font-fg-body, system-ui)"
       >
         {label}

@@ -4498,29 +4498,50 @@ button:focus-visible,
 /* ── Reserved-color filter demo ───────────────────────── */
 
 .fg-filter {
-  margin: 2.4rem 0 0;
+  margin: 2.6rem 0 3.2rem;
   border: 1px solid var(--line);
   border-radius: 20px;
   background: var(--surface, transparent);
-  overflow: hidden;
+  padding: 1.4rem 1.5rem 1.6rem;
+}
+
+@media (min-width: 900px) {
+  .fg-filter {
+    padding: 1.6rem 1.8rem 1.8rem;
+  }
 }
 
 .fg-filter-body {
   display: grid;
   grid-template-columns: 1fr;
+  gap: 1.5rem;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 760px) {
   .fg-filter-body {
-    grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 248px) minmax(0, 1fr);
+    gap: 1.8rem;
+    align-items: stretch;
+  }
+}
+
+@media (min-width: 1040px) {
+  .fg-filter-body {
+    grid-template-columns: minmax(0, 260px) minmax(0, 1fr);
+    gap: 2.2rem;
   }
 }
 
 .fg-filter-stage {
   position: relative;
-  padding: 1.6rem 1.4rem 1.8rem;
-  background: color-mix(in oklch, var(--fg-accent) 4%, var(--background));
-  border-bottom: 1px solid var(--line);
+  padding: 1.5rem 1rem;
+  border-radius: 16px;
+  /* A quiet pedestal, not a bordered card — the phone already carries its
+     own device chrome and shadow, so a second border would nest cards. */
+  background: color-mix(in oklch, var(--fg-accent) 6%, var(--background));
+  display: flex;
+  align-items: center;
+  justify-content: center;
   /* Mock tokens — brand-lit state (default; shown when toggle is off) */
   --fgm-page: #f6f1e9;
   --fgm-surface: #ffffff;
@@ -4530,13 +4551,6 @@ button:focus-visible,
   --fgm-brand: #2f6b46;
   --fgm-map: #eaf0e6;
   --fgm-street: rgba(47, 107, 70, 0.28);
-}
-
-@media (min-width: 900px) {
-  .fg-filter-stage {
-    border-bottom: 0;
-    border-right: 1px solid var(--line);
-  }
 }
 
 /* Muted state — everything neutral fades to gray, so the reserved
@@ -4580,8 +4594,10 @@ button:focus-visible,
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1.3rem;
+  gap: 0.6rem 1.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid var(--line);
   flex-wrap: wrap;
 }
 
@@ -4656,15 +4672,15 @@ button:focus-visible,
 .fg-filter-frame {
   display: flex;
   justify-content: center;
-  padding: 0.6rem 0 0.2rem;
+  width: 100%;
 }
 
 .fg-filter-svg {
   width: 100%;
-  max-width: 230px;
+  max-width: 236px;
   height: auto;
   display: block;
-  border-radius: 32px;
+  border-radius: 30px;
   background: var(--fgm-page);
   transition: filter 360ms ease-out;
   box-shadow:
@@ -4672,9 +4688,9 @@ button:focus-visible,
     0 22px 48px -28px rgba(0, 0, 0, 0.35);
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1040px) {
   .fg-filter-svg {
-    max-width: 240px;
+    max-width: 250px;
   }
 }
 
@@ -4706,17 +4722,11 @@ button:focus-visible,
 /* ── Panel ────────────────────────────────────────────── */
 
 .fg-filter-panel {
-  padding: 1.6rem 1.4rem 1.8rem;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
+  gap: 1.5rem;
   min-width: 0;
-}
-
-@media (min-width: 900px) {
-  .fg-filter-panel {
-    padding: 1.9rem 1.7rem 2rem;
-  }
 }
 
 .fg-filter-focus {
@@ -4773,29 +4783,22 @@ button:focus-visible,
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.35rem;
-}
-
-@media (min-width: 620px) {
-  .fg-filter-list {
-    grid-template-columns: 1fr 1fr;
-    gap: 0.4rem 0.8rem;
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
 }
 
 .fg-filter-list-item {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
+  gap: 0.6rem;
   width: 100%;
   padding: 0.5rem 0.6rem;
   border: 1px solid transparent;
-  border-radius: 10px;
+  border-radius: 9px;
   background: transparent;
   color: var(--foreground);
-  font-size: 0.86rem;
+  font-size: 0.88rem;
   text-align: left;
   cursor: pointer;
   transition:
