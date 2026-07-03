@@ -65,10 +65,10 @@ export function HeroRouteIllustration() {
           {/* The daylight-graded route polyline.
               4 segments: solid day (orange) → twilight dash → twilight dot → night dot */}
           <g fill="none" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M40 340 L40 280 L100 280 L100 220" stroke="#f6a86b" />
+            <path d="M40 340 L40 280 L100 280 L100 220" stroke="#FFB347" />
             <path
               d="M100 220 L160 220 L160 160"
-              stroke="#c87a8a"
+              stroke="#C4785A"
               strokeDasharray="9 6"
             />
             <path
@@ -78,7 +78,7 @@ export function HeroRouteIllustration() {
             />
             <path
               d="M220 100 L260 100 L260 40"
-              stroke="#4a4280"
+              stroke="#2D1B69"
               strokeDasharray="2 6"
             />
           </g>
@@ -86,7 +86,7 @@ export function HeroRouteIllustration() {
           {/* Start + end pins */}
           <circle cx="40" cy="340" r="6" fill="#f4f4f4" />
           <circle cx="40" cy="340" r="3" fill="#0a0a0a" />
-          <circle cx="260" cy="40" r="6" fill="#4a4280" />
+          <circle cx="260" cy="40" r="6" fill="#2D1B69" />
           <circle cx="260" cy="40" r="3" fill="#f4f4f4" />
         </svg>
       </div>
@@ -428,33 +428,34 @@ export function ProcessGraph() {
    The whole point of the system is that these colors are committed.
    ────────────────────────────────────────── */
 
+// Hexes are the app's real reserved palette from theme/colors.ts.
 const SIGNALS = [
   {
-    color: "#2f6b46",
+    color: "#41AD49",
     name: "Green",
     role: "In-flow action",
     note: "Every CTA, link, and secondary action. The only non-reserved color allowed to mean \"go.\"",
   },
   {
-    color: "#d24a3b",
+    color: "#FF3B30",
     name: "Red",
     role: "Alert",
     note: "SOS, the live recording indicator, form errors, and destructive actions.",
   },
   {
-    color: "#f08a4b",
+    color: "#FF9500",
     name: "Orange",
     role: "Hazard · caution",
     note: "Speed-limit zones, the Report affordance, and route-preview hazard chips for police and low-light segments.",
   },
   {
-    color: "#e2b340",
+    color: "#FFCC00",
     name: "Yellow",
     role: "Caution · favorite",
     note: "General caution, plus the gold star for trusted stations (a documented carve-out from the caution role).",
   },
   {
-    color: "#284872",
+    color: "#041E49",
     name: "Navy",
     role: "Safety-affordance mark",
     note: "The en-route Shield and the /emergency SOS disc. Never used for data state or sync.",
@@ -494,7 +495,7 @@ export function DaylightLegend() {
     <ul className="fg-legend" role="list">
       <li className="fg-legend-row">
         <svg viewBox="0 0 80 12" className="fg-legend-line" aria-hidden="true">
-          <line x1="2" y1="6" x2="78" y2="6" stroke="#f6a86b" strokeWidth="3" strokeLinecap="round" />
+          <line x1="2" y1="6" x2="78" y2="6" stroke="#FFB347" strokeWidth="3" strokeLinecap="round" />
         </svg>
         <span className="fg-legend-label">Solid · daylight remaining</span>
       </li>
@@ -505,7 +506,7 @@ export function DaylightLegend() {
             y1="6"
             x2="78"
             y2="6"
-            stroke="#c87a8a"
+            stroke="#C4785A"
             strokeWidth="3"
             strokeLinecap="round"
             strokeDasharray="9 6"
@@ -520,7 +521,7 @@ export function DaylightLegend() {
             y1="6"
             x2="78"
             y2="6"
-            stroke="#4a4280"
+            stroke="#2D1B69"
             strokeWidth="3"
             strokeLinecap="round"
             strokeDasharray="2 6"

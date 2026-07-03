@@ -283,11 +283,11 @@ function MockHome({
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
+          {/* Real daylight anchors from theme/colors.ts: dawn, dusk, night. */}
           <linearGradient id="fgm-daylight" x1="0" y1="1" x2="1" y2="0">
-            <stop offset="0" stopColor="#f6a86b" />
-            <stop offset="0.4" stopColor="#c87a8a" />
-            <stop offset="0.72" stopColor="#7d6ba8" />
-            <stop offset="1" stopColor="#4a4280" />
+            <stop offset="0" stopColor="#FFB347" />
+            <stop offset="0.5" stopColor="#C4785A" />
+            <stop offset="1" stopColor="#2D1B69" />
           </linearGradient>
         </defs>
 
@@ -339,7 +339,7 @@ function MockHome({
           <path d={ROUTE} fill="none" stroke="transparent" strokeWidth="30" strokeLinecap="round" className="fg-filter-hit" />
           <path d={ROUTE} fill="none" stroke="var(--fg-accent)" strokeWidth="13" strokeLinecap="round" className="fg-route-glow" />
           <path d={ROUTE} fill="none" stroke="url(#fgm-daylight)" strokeWidth="6" strokeLinecap="round" />
-          <circle cx="72" cy="690" r="4.5" fill="#f6a86b" />
+          <circle cx="72" cy="690" r="4.5" fill="#FFB347" />
         </g>
 
         {/* Destination pin at the route end (neutral — fades when muted) */}
@@ -347,6 +347,13 @@ function MockHome({
           <path d={pin(262, 190, 12)} fill="var(--fgm-ink)" opacity="0.85" />
           <circle cx="262" cy="189" r="4" fill="var(--fgm-page)" />
         </g>
+
+        {/* Current-location dot — the app's iOS systemBlue. Not a reserved
+            color, so it correctly greys with everything else when muted:
+            proof the rule survives even the platform's own accent. */}
+        <circle cx="234" cy="536" r="13" fill="var(--fgm-location)" opacity="0.18" />
+        <circle cx="234" cy="536" r="6" fill="var(--fgm-location)" />
+        <circle cx="234" cy="536" r="6" fill="none" stroke="var(--fgm-page)" strokeWidth="2" />
 
         {/* Green vehicle marker on the route — the app's real edge-marker car
             glyph (assets/edge-marker-glyph-car.svg, Figma 1133:13250), recolored
@@ -374,10 +381,10 @@ function MockHome({
           bbox={{ x: 301, y: 211, w: 42, h: 52 }}
         >
           <g transform="translate(303.25 213.25) scale(1.25)">
-            <path d={PIN} fill="#f08a4b" />
+            <path d={PIN} fill="#FF9500" />
           </g>
           <ellipse cx="322" cy="231" rx="6" ry="3.7" fill="#fff" />
-          <circle cx="322" cy="231" r="2.5" fill="#f08a4b" />
+          <circle cx="322" cy="231" r="2.5" fill="#FF9500" />
         </ReservedGroup>
 
         {/* ▸▸ Reserved: yellow hazard marker — same real silhouette. ──── */}
@@ -389,7 +396,7 @@ function MockHome({
           bbox={{ x: 119, y: 365, w: 42, h: 52 }}
         >
           <g transform="translate(121.25 367.25) scale(1.25)">
-            <path d={PIN} fill="#e2b340" />
+            <path d={PIN} fill="#FFCC00" />
           </g>
           <rect x="138" y="379" width="4" height="9.5" rx="1.5" fill="#3a2c05" />
           <circle cx="140" cy="392.5" r="2" fill="#3a2c05" />
@@ -433,7 +440,7 @@ function MockHome({
           bbox={{ x: 307, y: 531, w: 50, h: 50 }}
         >
           <circle cx="332" cy="556" r="24" fill="var(--fgm-surface)" />
-          <circle cx="332" cy="556" r="19" fill="#f08a4b" />
+          <circle cx="332" cy="556" r="19" fill="#FF9500" />
           <rect x="330" y="546" width="4" height="12" rx="2" fill="#fff" />
           <circle cx="332" cy="565" r="2.2" fill="#fff" />
         </ReservedGroup>

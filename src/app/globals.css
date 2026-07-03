@@ -4542,15 +4542,19 @@ button:focus-visible,
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Mock tokens — brand-lit state (default; shown when toggle is off) */
-  --fgm-page: #f6f1e9;
-  --fgm-surface: #ffffff;
-  --fgm-surface-line: rgba(0, 0, 0, 0.06);
-  --fgm-ink: #1c231d;
-  --fgm-muted: #7a827b;
-  --fgm-brand: #2f6b46;
-  --fgm-map: #eaf0e6;
-  --fgm-street: rgba(47, 107, 70, 0.28);
+  /* Mock tokens — brand-lit state (default; shown when toggle is off).
+     Values are the app's real theme/colors.ts tokens, not approximations.
+     (The map base is Apple MapKit mutedStandard, which has no public hex, so
+     --fgm-map/-street stay a faithful warm-gray stand-in.) */
+  --fgm-page: #f4f4ed;          /* surfacePage */
+  --fgm-surface: #fefdfb;       /* surfaceCard */
+  --fgm-surface-line: #e3e1d9;  /* borderSubtle */
+  --fgm-ink: #3c3c43;           /* labelSecondary */
+  --fgm-muted: rgba(60, 60, 67, 0.6); /* mutedSecondary */
+  --fgm-brand: #41ad49;         /* freshgreen */
+  --fgm-map: #e7e4dc;
+  --fgm-street: rgba(90, 88, 78, 0.22);
+  --fgm-location: #007aff;      /* systemBlue */
 }
 
 /* Muted state — everything neutral fades to gray, so the reserved
@@ -4565,6 +4569,7 @@ button:focus-visible,
   --fgm-brand: #9a9a9a;
   --fgm-map: #dedede;
   --fgm-street: rgba(0, 0, 0, 0.09);
+  --fgm-location: #9a9a9a;
 }
 
 :root[data-theme="dark"] .fg-filter-stage {
@@ -4577,6 +4582,7 @@ button:focus-visible,
   --fgm-brand: #6aab7e;
   --fgm-map: #22261f;
   --fgm-street: rgba(106, 171, 126, 0.22);
+  --fgm-location: #3b82c4;
 }
 
 :root[data-theme="dark"] .fg-filter-stage[data-muted="true"] {
@@ -4588,6 +4594,7 @@ button:focus-visible,
   --fgm-brand: #6a6d6a;
   --fgm-map: #2f3230;
   --fgm-street: rgba(255, 255, 255, 0.05);
+  --fgm-location: #6a6d6a;
 }
 
 .fg-filter-toolbar {
@@ -4866,12 +4873,12 @@ button:focus-visible,
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
-.fg-filter-swatch--red { background: #d24a3b; }
-.fg-filter-swatch--orange { background: #f08a4b; }
-.fg-filter-swatch--yellow { background: #e2b340; }
-.fg-filter-swatch--navy { background: #284872; }
+.fg-filter-swatch--red { background: #ff3b30; }
+.fg-filter-swatch--orange { background: #ff9500; }
+.fg-filter-swatch--yellow { background: #ffcc00; }
+.fg-filter-swatch--navy { background: #041e49; }
 .fg-filter-swatch--gradient {
-  background: linear-gradient(90deg, #f6a86b 0%, #c87a8a 45%, #7d6ba8 75%, #4a4280 100%);
+  background: linear-gradient(90deg, #ffb347 0%, #c4785a 50%, #2d1b69 100%);
 }
 
 @media (prefers-reduced-motion: reduce) {
