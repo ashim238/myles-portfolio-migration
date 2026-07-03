@@ -2348,11 +2348,14 @@ button:focus-visible,
    optically. A hair-space of trailing padding on each prevents the
    crowding without adding real word spacing. */
 .project-hero-lede em,
-.project-section-body em,
+.project-section-body em {
+  padding-inline-end: 0.08em;
+}
+
 .project-hero-lede code,
 .project-section-body code,
 .fg-safety-visual-caption code {
-  padding-inline-end: 0.08em;
+  padding-inline: 0.15em;
 }
 
 .project-cover-image {
