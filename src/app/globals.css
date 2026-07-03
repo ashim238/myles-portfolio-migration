@@ -2575,6 +2575,16 @@ button:focus-visible,
   margin-top: 0.9rem;
 }
 
+.project-section-body p + h3,
+.project-section-body ul + h3,
+.project-section-body ol + h3 {
+  margin-top: 2.2rem;
+}
+
+.project-section-body h3 + p {
+  margin-top: 0.4rem;
+}
+
 .project-section-body ul,
 .project-section-body ol {
   margin: 0.8rem 0 0.8rem 1.25rem;
@@ -4611,11 +4621,24 @@ button:focus-visible,
   color: var(--foreground);
 }
 
-.fg-scope-also {
-  margin: 1rem 0 0;
-  font-size: 0.9rem;
-  line-height: var(--lead-long);
+.fg-scope-also-label {
+  margin: 1.2rem 0 0.4rem;
+  font-size: 0.88rem;
+  font-weight: 500;
   color: var(--muted);
+}
+
+.fg-scope-also-list {
+  margin: 0;
+  padding: 0 0 0 1rem;
+  list-style: disc;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.fg-scope-also-list li + li {
+  margin-top: 0.3rem;
 }
 
 .fg-scope-closer {

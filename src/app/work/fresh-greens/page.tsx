@@ -521,16 +521,26 @@ export default async function FreshGreensPage() {
                 token role
               </li>
             </ul>
-            <p className="fg-scope-also">
-              Also on the list: daylight-graded route polyline with a WCAG
-              dash pattern, six-category report picker, four-layer Mapbox
-              fallback chain (Mapbox → OSRM → cache → mock), two-font
-              Franklin plus reserved DM Serif Display, departure-reminder
-              local notifications, a delight layer of arrival and
-              community-confirmation moments, and the Supabase community
-              cloud with anonymous device-UUID auth and Postgres row-level
-              security.
-            </p>
+            <p className="fg-scope-also-label">Also on the list:</p>
+            <ul className="fg-scope-also-list" role="list">
+              <li>Daylight-graded route polyline with a WCAG dash pattern</li>
+              <li>Six-category report picker</li>
+              <li>
+                Four-layer Mapbox fallback chain (Mapbox → OSRM → cache →
+                mock)
+              </li>
+              <li>
+                Two-font Franklin plus reserved DM Serif Display
+              </li>
+              <li>Departure-reminder local notifications</li>
+              <li>
+                Delight layer of arrival and community-confirmation moments
+              </li>
+              <li>
+                Supabase community cloud with anonymous device-UUID auth and
+                Postgres row-level security
+              </li>
+            </ul>
           </div>
           <div className="fg-scope-col">
             <p className="fg-scope-label">Next, v2</p>
@@ -554,9 +564,9 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body fg-scope-closer">
           <p>
-            Typography took three tries. Jost first, then Space Grotesk, then Libre Franklin with DM
-            Serif Display reserved for the six emotional beats. Franklin
-            held the register the earlier two couldn&apos;t.
+            Typography took three tries. Jost first, then Space Grotesk, then
+            Libre Franklin with DM Serif Display reserved for the six emotional
+            beats.
           </p>
         </div>
       </section>
