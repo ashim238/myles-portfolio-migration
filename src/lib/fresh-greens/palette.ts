@@ -31,7 +31,7 @@ export const RESERVED_LANES: ReservedLane[] = [
       },
       {
         tag: "Error copy on light",
-        note: "Swaps to the darker severityCritical token for AA (~5.6:1 vs red's ~3.5:1).",
+        note: "Swaps to the darker severityCritical token for AA (~5.6 : 1 vs red’s ~3.5 : 1).",
       },
       {
         tag: "iOS red on dark auth",
@@ -94,7 +94,7 @@ export const RESERVED_LANES: ReservedLane[] = [
   {
     family: "daylight",
     name: "Daylight",
-    role: "Gradient",
+    role: "Route grade",
     swatch: "linear-gradient(135deg, #FFB347, #C4785A, #2D1B69)",
     carveOuts: [
       {

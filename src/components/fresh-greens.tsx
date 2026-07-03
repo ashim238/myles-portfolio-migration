@@ -5,7 +5,7 @@
 
 import type { ReactNode } from "react";
 import { DrawOnView } from "@/components/draw-on-view";
-import { RESERVED_LANES } from "@/lib/fresh-greens/palette";
+import { RESERVED_LANES, type ReservedLane } from "@/lib/fresh-greens/palette";
 
 /* ──────────────────────────────────────────
    Phone frame
@@ -433,39 +433,66 @@ export function ProcessGraph() {
    ────────────────────────────────────────── */
 
 export function ReservedPalette() {
+  const solidLanes = RESERVED_LANES.filter((l) => l.family !== "daylight");
+  const daylightLane = RESERVED_LANES.find((l) => l.family === "daylight")!;
+
+  function renderLane(lane: ReservedLane) {
+    return (
+      <div className="fg-palette-lane" key={lane.family}>
+        <dt className="fg-palette-head">
+          {lane.family === "daylight" ? (
+            <svg
+              className="fg-palette-swatch"
+              width="28"
+              height="28"
+              viewBox="0 0 28 28"
+              aria-hidden="true"
+            >
+              <line x1="4" y1="7" x2="24" y2="7" stroke="#FFB347" strokeWidth="3" strokeLinecap="round" />
+              <line x1="4" y1="14" x2="24" y2="14" stroke="#C4785A" strokeWidth="3" strokeLinecap="round" strokeDasharray="5 3" />
+              <line x1="4" y1="21" x2="24" y2="21" stroke="#2D1B69" strokeWidth="3" strokeLinecap="round" strokeDasharray="2 3" />
+            </svg>
+          ) : (
+            <span
+              className="fg-palette-swatch"
+              style={{ background: lane.swatch }}
+              aria-hidden="true"
+            />
+          )}
+          <span className="fg-palette-headtext">
+            <span className="fg-palette-name">{lane.name}</span>
+            <span className="fg-palette-role">{lane.role}</span>
+          </span>
+        </dt>
+        <dd className="fg-palette-carveouts">
+          <ul role="list">
+            {lane.carveOuts.map((c) => (
+              <li key={c.tag}>
+                <span className="fg-palette-tag">{c.tag}</span>{" "}
+                <span className="fg-palette-note">{c.note}</span>
+              </li>
+            ))}
+          </ul>
+        </dd>
+      </div>
+    );
+  }
+
   return (
     <div className="fg-palette">
       <p className="fg-palette-baseline">
         <strong>Green</strong> carries every CTA, link, and affordance — the
-        only non-reserved color. Four colors, plus the daylight gradient, are
-        held back, each to one meaning.
+        only non-reserved color. Four colors are held to safety-signal work; the
+        documented carve-outs are below.
       </p>
       <dl className="fg-palette-lanes">
-        {RESERVED_LANES.map((lane) => (
-          <div className="fg-palette-lane" key={lane.family}>
-            <dt className="fg-palette-head">
-              <span
-                className="fg-palette-swatch"
-                style={{ background: lane.swatch }}
-                aria-hidden="true"
-              />
-              <span className="fg-palette-headtext">
-                <span className="fg-palette-name">{lane.name}</span>
-                <span className="fg-palette-role">{lane.role}</span>
-              </span>
-            </dt>
-            <dd className="fg-palette-carveouts">
-              <ul role="list">
-                {lane.carveOuts.map((c) => (
-                  <li key={c.tag}>
-                    <span className="fg-palette-tag">{c.tag}.</span>{" "}
-                    <span className="fg-palette-note">{c.note}</span>
-                  </li>
-                ))}
-              </ul>
-            </dd>
-          </div>
-        ))}
+        {solidLanes.map(renderLane)}
+      </dl>
+      <p className="fg-palette-gradient-intro">
+        And where color is the data:
+      </p>
+      <dl className="fg-palette-lanes">
+        {renderLane(daylightLane)}
       </dl>
     </div>
   );

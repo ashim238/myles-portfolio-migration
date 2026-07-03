@@ -290,7 +290,7 @@ export default async function FreshGreensPage() {
             signals only, each tied to one specific meaning. Because those
             four colors are reserved, a red dot or an orange chip in the app
             points to something specific. Across 26+ screens and 300+
-            accessibility attributes, <mark className="case-highlight">the rule holds without exception</mark>.
+            accessibility attributes, <mark className="case-highlight">the rule holds — with documented carve-outs</mark>.
           </p>
         </div>
 

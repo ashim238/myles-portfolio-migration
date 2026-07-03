@@ -4451,12 +4451,23 @@ button:focus-visible,
 }
 
 .fg-palette-baseline strong {
-  color: var(--fg-accent);
   font-weight: 600;
 }
 
 .fg-palette-lanes {
   margin: 0;
+}
+
+.fg-palette-gradient-intro {
+  margin: 1.4rem 0 0;
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--muted);
+}
+
+.fg-palette-gradient-intro + .fg-palette-lanes .fg-palette-lane:first-child {
+  border-top: 0;
+  padding-top: 0.3rem;
 }
 
 .fg-palette-lane {
@@ -4487,12 +4498,12 @@ button:focus-visible,
 }
 
 .fg-palette-swatch {
-  width: 22px;
-  height: 22px;
-  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
   flex: none;
-  margin-top: 0.1rem;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  margin-top: 0.05rem;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--foreground) 18%, transparent);
 }
 
 .fg-palette-headtext {
@@ -4509,10 +4520,10 @@ button:focus-visible,
 }
 
 .fg-palette-role {
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-size: 0.78rem;
+  font-style: italic;
   color: var(--muted);
+  opacity: 0.75;
 }
 
 .fg-palette-carveouts {
