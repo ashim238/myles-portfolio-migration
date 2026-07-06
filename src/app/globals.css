@@ -10444,3 +10444,38 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 }
 
 
+
+/* ── Case-study readability: recruiter cut + landmarks ──────────── */
+.case-lead-media { margin: 1.6rem 0 2rem; border-radius: 0.7rem; overflow: hidden; border: 1px solid var(--line); }
+.case-lead-img, .case-lead-video { display: block; width: 100%; height: auto; }
+
+.case-cut { margin: 0 0 2.2rem; display: grid; gap: 1.4rem; max-width: 70ch; }
+.case-cut-facts { margin: 0; display: grid; gap: 0.6rem; }
+.case-cut-row { display: grid; grid-template-columns: 120px 1fr; gap: 1rem; align-items: baseline; }
+@media (max-width: 560px) { .case-cut-row { grid-template-columns: 1fr; gap: 0.1rem; } }
+.case-cut-row dt { font-family: var(--font-geist-mono); font-size: 0.72rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted); margin: 0; }
+.case-cut-row dd { margin: 0; color: var(--foreground); font-size: 1rem; line-height: 1.5; }
+.case-cut-metric { font-weight: 600; }
+.case-cut-outcome dd { font-size: 1.05rem; }
+.case-cut-moves-label { font-family: var(--font-geist-mono); font-size: 0.72rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted); margin: 0 0 0.5rem; }
+.case-cut-moves ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+.case-cut-moves li { position: relative; padding-left: 1.1rem; color: var(--foreground);
+  font-size: 0.98rem; line-height: 1.5; }
+.case-cut-moves li::before { content: "→"; position: absolute; left: 0; color: var(--muted); }
+
+.case-tier-divider { display: flex; align-items: center; gap: 1rem; margin: 2.6rem 0 2rem; color: var(--muted); }
+.case-tier-divider::before, .case-tier-divider::after { content: ""; height: 1px; background: var(--line); flex: 1; }
+.case-tier-divider span { font-family: var(--font-geist-mono); font-size: 0.72rem; letter-spacing: 0.1em;
+  text-transform: uppercase; white-space: nowrap; }
+
+.case-section-lead { margin: 0 0 1rem; font-size: 1.08rem; line-height: 1.5; font-weight: 600;
+  color: var(--foreground); text-wrap: pretty; max-width: 68ch; }
+.case-pullquote { margin: 2.2rem 0; padding: 0; border: 0; max-width: 30ch;
+  font-size: clamp(1.5rem, 3.2vw, 2.1rem); font-weight: 600; letter-spacing: var(--track-title);
+  line-height: 1.15; color: var(--foreground); text-wrap: balance; }
+
+/* Type pass: cap the case-study prose measure for comfortable reading */
+.project-section-body { max-width: 68ch; }
+.project-section-body p { text-wrap: pretty; }
