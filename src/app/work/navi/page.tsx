@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Jost, Lato } from "next/font/google";
 import Link from "next/link";
-import { ProjectCover } from "@/components/project-cover";
+import { LeadMedia } from "@/components/lead-media";
+import { RecruiterCut } from "@/components/recruiter-cut";
 import { TransitionLink } from "@/components/transition-link";
 import { SiteNav } from "@/components/site-nav";
-import { ProjectHighlight } from "@/components/project-highlight";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
 import {
@@ -74,31 +74,19 @@ export default async function NaviPage() {
         </p>
       </section>
 
-      <ProjectCover
-        src="/projects/navi/cover.png"
-        alt="Navi cover: neighborhood-led travel platform for New York City"
-        priority
-      />
-
-      <dl className="project-meta nv-meta" aria-label="Project details">
-        <div className="project-meta-field">
-          <dt>Role</dt>
-          <dd>{project?.role ?? "UI/UX Designer"}</dd>
-        </div>
-        <div className="project-meta-field">
-          <dt>Timeframe</dt>
-          <dd>{project?.timeframe ?? "January 2025 – June 2025"}</dd>
-        </div>
-        <div className="project-meta-field">
-          <dt>Tags</dt>
-          <dd>{project?.tags?.join(" · ") ?? "Product Design · Research · Strategy"}</dd>
-        </div>
-      </dl>
-
-      <ProjectHighlight
-        quote={project?.highlightQuote}
-        metricValue={project?.outcomeMetricValue}
-        metricLabel={project?.outcomeMetricLabel}
+      <LeadMedia cover="/projects/navi/cover.png" alt="Navi cover" />
+      <RecruiterCut
+        problem="NYC tourism defaults to top-ten checklists that skip the neighborhoods and people who make the city."
+        role="UI/UX Designer"
+        timeline="January 2025 – June 2025"
+        stack="Figma, research"
+        outcomeValue={project?.outcomeMetricValue}
+        outcomeLabel={project?.outcomeMetricLabel}
+        moves={[
+          "Mapped tourist density across Manhattan to find where the checklists cluster.",
+          "Ran three user groups and six platforms through one heuristic evaluation.",
+          "Turned the research into a neighborhood-participation framework.",
+        ]}
       />
 
       <ProjectToc
@@ -114,8 +102,13 @@ export default async function NaviPage() {
         ]}
       />
 
+      <div className="case-tier-divider"><span>The full breakdown ↓</span></div>
+
       <section className="project-section nv-section" aria-labelledby="nv-intro">
         <h2 id="nv-intro">A regenerative travel platform for New York City</h2>
+        <p className="case-section-lead">
+          Connecting visitors to neighborhood-level experiences returns value to the communities they visit.
+        </p>
         <div className="project-section-body">
           <p>
             New York City sees over 60 million visitors each year. Most go to the same ten
@@ -132,6 +125,9 @@ export default async function NaviPage() {
 
       <section className="project-section nv-section" aria-labelledby="nv-heatmap">
         <h2 id="nv-heatmap">Before the research, a Manhattan heatmap</h2>
+        <p className="case-section-lead">
+          Mapping tourist density showed where the checklists cluster and where neighborhoods get skipped.
+        </p>
         <div className="project-section-body">
           <p>
             Before any of the user interviews, the first move was visual. Tourists overload a handful of spots, and the patterns are easy to picture: the swaths of people taking photos in front of the Brooklyn Bridge in Dumbo, the perpetual crush around Times Square. If a routing layer could see this imbalance in real time, the thinking went, it could steer visitors toward neighborhoods that get less attention.
@@ -149,6 +145,10 @@ export default async function NaviPage() {
 
       <section className="project-section nv-section" aria-labelledby="nv-research">
         <h2 id="nv-research">Three user groups, six platforms, one heuristic evaluation</h2>
+        <p className="case-section-lead">
+          Auditing six platforms and surveying three groups reframed the problem away from congestion.
+        </p>
+        <blockquote className="case-pullquote">Residents did not want fewer tourists. They wanted visitors who engage more intentionally.</blockquote>
         <div className="project-section-body">
           <p>
             We audited six travel platforms and ran a heuristic evaluation of Airbnb using
@@ -161,11 +161,7 @@ export default async function NaviPage() {
           </p>
           <p>
             Early on, the team considered a heatmap solution to reroute tourists away from
-            congestion. The research reframed the problem:{" "}
-            <mark className="case-highlight">
-              residents did not want fewer tourists. They wanted visitors who
-              engage more intentionally.
-            </mark>
+            congestion. The research reframed the problem, and it wasn&apos;t about volume.
           </p>
         </div>
         <HeuristicInsightCards />
@@ -173,6 +169,9 @@ export default async function NaviPage() {
 
       <section className="project-section nv-section" aria-labelledby="nv-insights">
         <h2 id="nv-insights">What the data did (and did not) say</h2>
+        <p className="case-section-lead">
+          The research pointed to intentional participation, not more destinations.
+        </p>
         <div className="project-section-body">
           <p>
             Residents consistently favored hidden gems over tourist traps and aligned with
@@ -193,6 +192,9 @@ export default async function NaviPage() {
 
       <section className="project-section nv-section" aria-labelledby="nv-framework">
         <h2 id="nv-framework">From research to framework</h2>
+        <p className="case-section-lead">
+          Three personas fed a Learn, Plan, Go structure that journey mapping validated.
+        </p>
         <div className="project-section-body">
           <p>
             Three personas emerged: Cain (group planner), Ororo (newcomer needing context), and
@@ -226,6 +228,9 @@ export default async function NaviPage() {
         aria-labelledby="nv-system"
       >
         <h2 id="nv-system">Building a system that reflects the New York state of mind</h2>
+        <p className="case-section-lead">
+          Every type, color, and spacing choice traces back to a research finding or a persona need.
+        </p>
         <div className="project-section-body">
           <p>
             Every design decision linked back to research findings or
@@ -249,6 +254,9 @@ export default async function NaviPage() {
 
       <section className="project-section nv-section project-section--wide nv-section--wide" aria-labelledby="nv-screens">
         <h2 id="nv-screens">See it in product</h2>
+        <p className="case-section-lead">
+          The system runs as a live, interactive product assembled from the catalogued components, not a screenshot.
+        </p>
         <div className="project-section-body">
           <p>
             The Navi system runs as a real, interactive product, not a
@@ -263,6 +271,9 @@ export default async function NaviPage() {
 
       <section className="project-section nv-section" aria-labelledby="nv-outcome">
         <h2 id="nv-outcome">What Navi proved and where it goes next</h2>
+        <p className="case-section-lead">
+          The heatmap solved the symptom. Navi went after the cause, and concept testing backed the shift.
+        </p>
         <div className="project-section-body">
           <p>
             What started as a heatmap turned out to be solving the wrong problem. Concentration is the symptom. Disconnection from local culture and economy is the cause, and Navi is the platform that came from chasing the cause.
