@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ExpandableImage } from "@/components/expandable-image";
-import { ProjectCover } from "@/components/project-cover";
+import { LeadMedia } from "@/components/lead-media";
+import { RecruiterCut } from "@/components/recruiter-cut";
 import { TransitionLink } from "@/components/transition-link";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectToc } from "@/components/project-toc";
@@ -74,46 +75,24 @@ export default async function FreshGreensPage() {
         </p>
       </section>
 
-      {/* ── Section 2: The argument ──────────────────── */}
-      <section className="project-section fg-section" aria-labelledby="fg-argument">
-        <h2 id="fg-argument">Whose knowledge counts.</h2>
-        <div className="project-section-body">
-          <p>
-            The Green Book guided Black travelers across mid-century America
-            by cataloguing the homes, restaurants, and stops where they&apos;d
-            be received in safety. It was a routing system built on community
-            knowledge because no institutional one existed.
-          </p>
-          <p>
-            Fresh Greens returns to that question with today&apos;s data
-            stack. Community observations don&apos;t sit next to public data
-            as an editorial layer. They flow through the same adapter, the
-            same scoring, and the same audit trail.
-          </p>
-        </div>
-      </section>
-
-      <ProjectCover
-        src="/projects/fresh-greens/cover.png"
-        alt="Fresh Greens cover: a route preview map showing a daylight-graded path from Brooklyn to southern New Jersey"
-        priority
+      <LeadMedia
+        cover="/projects/fresh-greens/cover.png"
+        alt="Fresh Greens cover"
       />
-
-      {/* ── Project meta ─────────────────────────────── */}
-      <dl className="project-meta fg-meta" aria-label="Project details">
-        <div className="project-meta-field">
-          <dt>Role</dt>
-          <dd>Solo · design + engineering</dd>
-        </div>
-        <div className="project-meta-field">
-          <dt>Stack</dt>
-          <dd>React Native · Expo · TypeScript · Supabase</dd>
-        </div>
-        <div className="project-meta-field">
-          <dt>Timeline</dt>
-          <dd>Sep 2025 – Jun 2026</dd>
-        </div>
-      </dl>
+      <RecruiterCut
+        problem="Routing engines optimize for time and distance, not for whose safety knowledge counts."
+        role="Solo, design and engineering"
+        timeline="Sep 2025 – Jun 2026"
+        stack="React Native, Expo, TypeScript, Supabase"
+        outcomeValue="62"
+        outcomeLabel="design tokens shipped as a Figma library, 1:1 with the app's theme"
+        moves={[
+          "Ran community safety reports through the same pipeline as OpenStreetMap, DOT-511, OSRM, and SunCalc, weighted the same way.",
+          "Built the en-route screen around one-thumb reach: turn card, 3D map, and a safety column.",
+          "Held the reserved-color rule across 26+ screens and 300+ accessibility attributes.",
+          "Shaped the routing signals from six driver interviews.",
+        ]}
+      />
 
       <ProjectToc
         sections={[
@@ -128,12 +107,36 @@ export default async function FreshGreensPage() {
         ]}
       />
 
+      <div className="case-tier-divider"><span>The full breakdown ↓</span></div>
+
+      {/* ── Section 2: The argument ──────────────────── */}
+      <section className="project-section fg-section" aria-labelledby="fg-argument">
+        <h2 id="fg-argument">Whose knowledge counts.</h2>
+        <blockquote className="case-pullquote">The Green Book was a routing system built on community knowledge, because no institutional one existed.</blockquote>
+        <div className="project-section-body">
+          <p>
+            The Green Book guided Black travelers across mid-century America
+            by cataloguing the homes, restaurants, and stops where they&apos;d
+            be received in safety.
+          </p>
+          <p>
+            Fresh Greens returns to that question with today&apos;s data
+            stack. Community observations don&apos;t sit next to public data
+            as an editorial layer. They flow through the same adapter, the
+            same scoring, and the same audit trail.
+          </p>
+        </div>
+      </section>
+
       {/* ── Section 3: The pipeline is the answer ────── */}
       <section
         className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-pipeline"
       >
         <h2 id="fg-pipeline">The pipeline is the answer.</h2>
+        <p className="case-section-lead">
+          Community reports and public data share one adapter, one scoring function, and one audit trail.
+        </p>
         <div className="project-section-body">
           <p>
             Every route in Fresh Greens is scored against four markers that
@@ -175,6 +178,9 @@ export default async function FreshGreensPage() {
         aria-labelledby="fg-held-question"
       >
         <h2 id="fg-held-question">The Held-Question Rule.</h2>
+        <p className="case-section-lead">
+          The interface asks before it assumes, so a driver stays in control under pressure.
+        </p>
         <div className="project-section-body">
           <p>
             Every in-modal prompt in Fresh Greens is set in{" "}
@@ -246,6 +252,9 @@ export default async function FreshGreensPage() {
         aria-labelledby="fg-material"
       >
         <h2 id="fg-material">The material of calm.</h2>
+        <p className="case-section-lead">
+          Warm OKLCH surfaces and a reserved serif give the type and color specific work to do at each phase of a trip.
+        </p>
         <div className="project-section-body">
           <p>
             Fresh Greens replaces iOS&apos;s default cool grays with five
@@ -282,6 +291,9 @@ export default async function FreshGreensPage() {
         aria-labelledby="fg-color"
       >
         <h2 id="fg-color">Reserved color that holds.</h2>
+        <p className="case-section-lead">
+          Four colors and the daylight gradient are held to safety signals, with documented carve-outs.
+        </p>
 
         <div className="project-section-body">
           <p>
@@ -290,7 +302,7 @@ export default async function FreshGreensPage() {
             signals only, each tied to one specific meaning. Because those
             four colors are reserved, a red dot or an orange chip in the app
             points to something specific. Across 26+ screens and 300+
-            accessibility attributes, <mark className="case-highlight">the rule holds — with documented carve-outs</mark>.
+            accessibility attributes, <mark className="case-highlight">the rule holds, with documented carve-outs</mark>.
           </p>
         </div>
 
@@ -300,13 +312,13 @@ export default async function FreshGreensPage() {
           <PhoneFrame variant="screenshot">
             <Shot
               name="en-route"
-              alt="The Fresh Greens en-route screen: a navy safety Shield, hazard markers, and the daylight-graded route line — the reserved colors holding together on one real screen"
+              alt="The Fresh Greens en-route screen: a navy safety Shield, hazard markers, and the daylight-graded route line, the reserved colors holding together on one real screen"
             />
           </PhoneFrame>
           <figcaption className="fg-safety-visual-caption">
             The reserved palette holding on a real screen: navy for the safety
             Shield, the daylight gradient on the route, hazard markers in their
-            reserved hues — and nothing else non-green.
+            reserved hues, and nothing else non-green.
           </figcaption>
         </figure>
 
@@ -486,6 +498,9 @@ export default async function FreshGreensPage() {
       {/* ── Section 9: Honest scope ──────────────────── */}
       <section className="project-section fg-section fg-scope" aria-labelledby="fg-scope">
         <h2 id="fg-scope">Honest scope.</h2>
+        <p className="case-section-lead">
+          Naming what isn&apos;t done yet is part of the thesis stance, so here&apos;s what shipped and what&apos;s next.
+        </p>
         <div className="project-section-body">
           <p>
             Naming what isn&apos;t done is part of the thesis stance. Honesty

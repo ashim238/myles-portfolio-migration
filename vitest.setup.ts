@@ -11,6 +11,30 @@ vi.mock("next/font/google", () => ({
   Lato: () => ({ variable: "--nv-font-body", className: "navi-body" }),
 }));
 
+// jsdom does not implement matchMedia. Several components query
+// prefers-reduced-motion (and similar) in effects; stub a default
+// "no match" implementation so mounting them doesn't throw.
+if (typeof window !== "undefined" && !window.matchMedia) {
+  window.matchMedia = vi.fn().mockImplementation((query: string) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  }));
+}
+
+// jsdom does not implement HTMLMediaElement playback. Components that call
+// video.play()/.pause() in effects (e.g. autoplaying lead media) would
+// otherwise throw "not implemented" when mounted in tests.
+if (typeof window !== "undefined") {
+  window.HTMLMediaElement.prototype.play = vi.fn().mockResolvedValue(undefined);
+  window.HTMLMediaElement.prototype.pause = vi.fn();
+}
+
 afterEach(() => {
   cleanup();
 });

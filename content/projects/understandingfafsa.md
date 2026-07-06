@@ -8,7 +8,7 @@ status: published
 order: 2
 coverImage: /projects/understandingfafsa/cover.png
 highlightQuote: The newsletter should feel as trustworthy and modern as the newly rebranded website.
-outcomeMetricLabel: open rate after redesign (MPP excluded)
+outcomeMetricLabel: open rate after the redesign, up from ~30%, a 75% lift
 outcomeMetricValue: ~52.6%
 tags:
   - Product Design
