@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { ColorPalette } from "@/components/color-palette";
 import { CountUp } from "@/components/count-up";
-import { ProjectCover } from "@/components/project-cover";
+import { LeadMedia } from "@/components/lead-media";
+import { RecruiterCut } from "@/components/recruiter-cut";
 import { TransitionLink } from "@/components/transition-link";
 import { SiteNav } from "@/components/site-nav";
-import { ProjectHighlight } from "@/components/project-highlight";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
 import {
@@ -74,31 +74,19 @@ export default async function UnderstandingFafsaPage() {
         </p>
       </section>
 
-      <ProjectCover
-        src="/projects/understandingfafsa/cover.png"
-        alt="UnderstandingFAFSA cover: newsletter system redesign"
-        priority
-      />
-
-      <dl className="project-meta uf-meta" aria-label="Project details">
-        <div className="project-meta-field">
-          <dt>Role</dt>
-          <dd>{project?.role ?? "Product Designer"}</dd>
-        </div>
-        <div className="project-meta-field">
-          <dt>Timeframe</dt>
-          <dd>{project?.timeframe ?? "February 2025 – Ongoing"}</dd>
-        </div>
-        <div className="project-meta-field">
-          <dt>Tags</dt>
-          <dd>{project?.tags?.join(" · ") ?? "Product Design · Content Design · Email Design"}</dd>
-        </div>
-      </dl>
-
-      <ProjectHighlight
-        quote={project?.highlightQuote}
-        metricValue={project?.outcomeMetricValue}
-        metricLabel={project?.outcomeMetricLabel}
+      <LeadMedia cover="/projects/understandingfafsa/cover.png" alt="UnderstandingFAFSA cover" />
+      <RecruiterCut
+        problem="A freshly rebranded site left its newsletter looking dated and off-brand."
+        role="Product Designer"
+        timeline="February 2025 – Ongoing"
+        stack="Figma, Mailchimp"
+        outcomeValue={project?.outcomeMetricValue}
+        outcomeLabel={project?.outcomeMetricLabel}
+        moves={[
+          "Researched 120+ newsletters against four criteria.",
+          "Built a modular template system with locked layers and swappable parts.",
+          "Matched the newsletter to the rebranded site so subscribers see one brand.",
+        ]}
       />
 
       <ProjectToc
@@ -113,15 +101,20 @@ export default async function UnderstandingFafsaPage() {
         ]}
       />
 
+      <div className="case-tier-divider"><span>The full breakdown ↓</span></div>
+
       <section className="project-section uf-section" aria-labelledby="uf-context">
         <h2 id="uf-context">Two brands, one subscriber.</h2>
+        <p className="case-section-lead">
+          A rebranded site left the newsletter on an older system, so the channel looked like a different product.
+        </p>
+        <blockquote className="case-pullquote">Subscribers were seeing two different brands.</blockquote>
         <div className="project-section-body">
           <p>
             UnderstandingFAFSA helps students, parents, and counselors navigate the Free Application
             for Federal Student Aid (FAFSA). The newsletter is a primary touchpoint. The website had
             already moved to a calmer, modern visual language (Saans typeface, refreshed palette),
-            but the newsletter still carried an older system. Subscribers were seeing two different
-            brands. The scope was email-only. The founder assembles every issue, so{" "}
+            but the newsletter still carried an older system. The scope was email-only. The founder assembles every issue, so{" "}
             <mark className="case-highlight">
               the system had to maintain the brand&apos;s identity regardless
               of who was building it
@@ -133,6 +126,9 @@ export default async function UnderstandingFafsaPage() {
 
       <section className="project-section uf-section" aria-labelledby="uf-problem">
         <h2 id="uf-problem">Scannable or skipped.</h2>
+        <p className="case-section-lead">
+          The old template lost busy readers on mobile, and open rates sat around 30%.
+        </p>
         <div className="project-section-body">
           <p>
             The old template failed where busy readers notice first: uneven CTAs, a muted palette that
@@ -151,6 +147,9 @@ export default async function UnderstandingFafsaPage() {
 
       <section className="project-section uf-section" aria-labelledby="uf-audit">
         <h2 id="uf-audit">120 newsletters, four criteria.</h2>
+        <p className="case-section-lead">
+          A competitive audit set the bar: what makes a newsletter clear, personal, on-tone, and on-brand.
+        </p>
         <div className="project-section-body">
           <p>
             Before touching templates, we compiled over 120 newsletter
@@ -205,6 +204,9 @@ export default async function UnderstandingFafsaPage() {
         aria-labelledby="uf-templates"
       >
         <h2 id="uf-templates">One skeleton, multiple fills.</h2>
+        <p className="case-section-lead">
+          One modular framework covers the welcome email, the weekly newsletter, and lighter event sends.
+        </p>
         <div className="project-section-body">
           <p>
             The system ships through a shared modular framework: a welcome
@@ -231,6 +233,9 @@ export default async function UnderstandingFafsaPage() {
         aria-labelledby="uf-locked"
       >
         <h2 id="uf-locked">Locked layers, swappable parts.</h2>
+        <p className="case-section-lead">
+          Structure and type stay locked, so a non-designer can swap copy and images without breaking the brand.
+        </p>
         <div className="project-section-body">
           <p>
             <mark className="case-highlight">
@@ -256,6 +261,9 @@ export default async function UnderstandingFafsaPage() {
 
       <section className="project-section uf-section" aria-labelledby="uf-figma">
         <h2 id="uf-figma">Figma fidelity, Mailchimp reality.</h2>
+        <p className="case-section-lead">
+          Rebuilding the design in Mailchimp meant fighting Gmail&apos;s 102KB clip limit without losing the brand.
+        </p>
         <div className="project-section-body">
           <p>
             The hierarchy, spacing, and modular rhythm all lived in Figma, but the live template had to be
@@ -282,16 +290,15 @@ export default async function UnderstandingFafsaPage() {
             typography tuned to the closest Mailchimp sans to the site&apos;s Saans typeface, and the
             full brand palette, even when trying to maintain the founder&apos;s appetite for vibrancy.
           </p>
-          <p>
-            The same students block in Figma and Mailchimp: layout guides and spacing rails in design,
-            editable modules in the builder.
-          </p>
         </div>
         <FigmaMailchimpPair />
       </section>
 
       <section className="project-section uf-section" aria-labelledby="uf-results">
         <h2 id="uf-results">Open rates told the story.</h2>
+        <p className="case-section-lead">
+          The first redesigned send moved open rates from around 30% to about 52.6%.
+        </p>
         <div className="project-section-body">
           <p>
             <mark className="case-highlight">
