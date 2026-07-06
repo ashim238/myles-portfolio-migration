@@ -304,7 +304,7 @@ export default async function FreshGreensPage() {
             signals only, each tied to one specific meaning. Because those
             four colors are reserved, a red dot or an orange chip in the app
             points to something specific. Across 26+ screens and 300+
-            accessibility attributes, <mark className="case-highlight">the rule holds — with documented carve-outs</mark>.
+            accessibility attributes, <mark className="case-highlight">the rule holds, with documented carve-outs</mark>.
           </p>
         </div>
 
@@ -314,13 +314,13 @@ export default async function FreshGreensPage() {
           <PhoneFrame variant="screenshot">
             <Shot
               name="en-route"
-              alt="The Fresh Greens en-route screen: a navy safety Shield, hazard markers, and the daylight-graded route line — the reserved colors holding together on one real screen"
+              alt="The Fresh Greens en-route screen: a navy safety Shield, hazard markers, and the daylight-graded route line, the reserved colors holding together on one real screen"
             />
           </PhoneFrame>
           <figcaption className="fg-safety-visual-caption">
             The reserved palette holding on a real screen: navy for the safety
             Shield, the daylight gradient on the route, hazard markers in their
-            reserved hues — and nothing else non-green.
+            reserved hues, and nothing else non-green.
           </figcaption>
         </figure>
 
