@@ -80,6 +80,7 @@ export default async function NaviPage() {
         role="UI/UX Designer"
         timeline="January 2025 – June 2025"
         stack="Figma, research"
+        stackLabel="Tools"
         outcomeValue={project?.outcomeMetricValue}
         outcomeLabel={project?.outcomeMetricLabel}
         moves={[
@@ -145,9 +146,6 @@ export default async function NaviPage() {
 
       <section className="project-section nv-section" aria-labelledby="nv-research">
         <h2 id="nv-research">Three user groups, six platforms, one heuristic evaluation</h2>
-        <p className="case-section-lead">
-          Auditing six platforms and surveying three groups reframed the problem away from congestion.
-        </p>
         <blockquote className="case-pullquote">Residents did not want fewer tourists. They wanted visitors who engage more intentionally.</blockquote>
         <div className="project-section-body">
           <p>
@@ -228,9 +226,6 @@ export default async function NaviPage() {
         aria-labelledby="nv-system"
       >
         <h2 id="nv-system">Building a system that reflects the New York state of mind</h2>
-        <p className="case-section-lead">
-          Every type, color, and spacing choice traces back to a research finding or a persona need.
-        </p>
         <div className="project-section-body">
           <p>
             Every design decision linked back to research findings or

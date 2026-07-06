@@ -80,6 +80,7 @@ export default async function UnderstandingFafsaPage() {
         role="Product Designer"
         timeline="February 2025 – Ongoing"
         stack="Figma, Mailchimp"
+        stackLabel="Tools"
         outcomeValue={project?.outcomeMetricValue}
         outcomeLabel={project?.outcomeMetricLabel}
         moves={[
@@ -105,9 +106,6 @@ export default async function UnderstandingFafsaPage() {
 
       <section className="project-section uf-section" aria-labelledby="uf-context">
         <h2 id="uf-context">Two brands, one subscriber.</h2>
-        <p className="case-section-lead">
-          A rebranded site left the newsletter on an older system, so the channel looked like a different product.
-        </p>
         <blockquote className="case-pullquote">Subscribers were seeing two different brands.</blockquote>
         <div className="project-section-body">
           <p>
@@ -147,9 +145,6 @@ export default async function UnderstandingFafsaPage() {
 
       <section className="project-section uf-section" aria-labelledby="uf-audit">
         <h2 id="uf-audit">120 newsletters, four criteria.</h2>
-        <p className="case-section-lead">
-          A competitive audit set the bar: what makes a newsletter clear, personal, on-tone, and on-brand.
-        </p>
         <div className="project-section-body">
           <p>
             Before touching templates, we compiled over 120 newsletter

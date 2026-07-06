@@ -112,9 +112,6 @@ export default async function FreshGreensPage() {
       {/* ── Section 2: The argument ──────────────────── */}
       <section className="project-section fg-section" aria-labelledby="fg-argument">
         <h2 id="fg-argument">Whose knowledge counts.</h2>
-        <p className="case-section-lead">
-          The Green Book routed Black travelers on community knowledge because no institutional map would. Fresh Greens returns to that question with today&apos;s data.
-        </p>
         <blockquote className="case-pullquote">Whose safety knowledge counts when the route is computed?</blockquote>
         <div className="project-section-body">
           <p>
@@ -356,9 +353,6 @@ export default async function FreshGreensPage() {
         aria-labelledby="fg-moderation"
       >
         <h2 id="fg-moderation">Where the argument gets tested.</h2>
-        <p className="case-section-lead">
-          The moderation queue is where equal weighting for community reports has to survive bad-faith reports and real stakes.
-        </p>
         <div className="project-section-body">
           <p>
             The pipeline&apos;s claim is that community reports get scored
@@ -396,9 +390,6 @@ export default async function FreshGreensPage() {
         aria-labelledby="fg-interviews"
       >
         <h2 id="fg-interviews">Six interviews, four markers.</h2>
-        <p className="case-section-lead">
-          Six conversations with Black drivers grounded the four markers the shipped app leans on most.
-        </p>
         <div className="project-section-body">
           <p>
             Six semi-structured interviews with Black drivers across the
