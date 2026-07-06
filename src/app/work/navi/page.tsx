@@ -255,7 +255,7 @@ export default async function NaviPage() {
       <section className="project-section nv-section project-section--wide nv-section--wide" aria-labelledby="nv-screens">
         <h2 id="nv-screens">See it in product</h2>
         <p className="case-section-lead">
-          The system runs as a live, interactive product assembled from the catalogued components, not a screenshot.
+          Every screen in this section is pulled from the running build, not mocked up for the page.
         </p>
         <div className="project-section-body">
           <p>

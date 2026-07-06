@@ -84,6 +84,8 @@ export default async function FreshGreensPage() {
         role="Solo, design and engineering"
         timeline="Sep 2025 – Jun 2026"
         stack="React Native, Expo, TypeScript, Supabase"
+        outcomeValue="62"
+        outcomeLabel="design tokens shipped as a Figma library, 1:1 with the app's theme"
         moves={[
           "Ran community safety reports through the same pipeline as OpenStreetMap, DOT-511, OSRM, and SunCalc, weighted the same way.",
           "Built the en-route screen around one-thumb reach: turn card, 3D map, and a safety column.",
@@ -111,7 +113,7 @@ export default async function FreshGreensPage() {
       <section className="project-section fg-section" aria-labelledby="fg-argument">
         <h2 id="fg-argument">Whose knowledge counts.</h2>
         <p className="case-section-lead">
-          Community observations run through the same adapter, scoring, and audit trail as public data, not a separate editorial layer.
+          The Green Book routed Black travelers on community knowledge because no institutional map would. Fresh Greens returns to that question with today&apos;s data.
         </p>
         <blockquote className="case-pullquote">Whose safety knowledge counts when the route is computed?</blockquote>
         <div className="project-section-body">
