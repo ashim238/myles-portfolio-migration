@@ -10456,13 +10456,13 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 .case-cut-row dt { font-family: var(--font-geist-mono); font-size: 0.72rem; letter-spacing: 0.1em;
   text-transform: uppercase; color: var(--muted); margin: 0; }
 .case-cut-row dd { margin: 0; color: var(--foreground); font-size: 1rem; line-height: 1.5; }
-.case-cut-metric { font-weight: 600; }
+.case-cut-metric { font-weight: 600; font-variant-numeric: tabular-nums; }
 .case-cut-outcome dd { font-size: 1.05rem; }
 .case-cut-moves-label { font-family: var(--font-geist-mono); font-size: 0.72rem; letter-spacing: 0.1em;
   text-transform: uppercase; color: var(--muted); margin: 0 0 0.5rem; }
 .case-cut-moves ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
 .case-cut-moves li { position: relative; padding-left: 1.1rem; color: var(--foreground);
-  font-size: 0.98rem; line-height: 1.5; }
+  font-size: 1rem; line-height: 1.55; }
 .case-cut-moves li::before { content: "→"; position: absolute; left: 0; color: var(--muted); }
 
 .case-tier-divider { display: flex; align-items: center; gap: 1rem; margin: 2.6rem 0 2rem; color: var(--muted); }
