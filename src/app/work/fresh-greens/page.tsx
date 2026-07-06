@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ExpandableImage } from "@/components/expandable-image";
-import { ProjectCover } from "@/components/project-cover";
+import { LeadMedia } from "@/components/lead-media";
+import { RecruiterCut } from "@/components/recruiter-cut";
 import { TransitionLink } from "@/components/transition-link";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectToc } from "@/components/project-toc";
@@ -74,9 +75,45 @@ export default async function FreshGreensPage() {
         </p>
       </section>
 
+      <LeadMedia
+        cover="/projects/fresh-greens/cover.png"
+        alt="Fresh Greens cover"
+      />
+      <RecruiterCut
+        problem="Routing engines optimize for time and distance, not for whose safety knowledge counts."
+        role="Solo, design and engineering"
+        timeline="Sep 2025 – Jun 2026"
+        stack="React Native, Expo, TypeScript, Supabase"
+        moves={[
+          "Ran community safety reports through the same pipeline as OpenStreetMap, DOT-511, OSRM, and SunCalc, weighted the same way.",
+          "Built the en-route screen around one-thumb reach: turn card, 3D map, and a safety column.",
+          "Held the reserved-color rule across 26+ screens and 300+ accessibility attributes.",
+          "Shaped the routing signals from six driver interviews.",
+        ]}
+      />
+
+      <ProjectToc
+        sections={[
+          { title: "Whose knowledge counts", id: "fg-argument" },
+          { title: "The pipeline is the answer", id: "fg-pipeline" },
+          { title: "The Held-Question Rule", id: "fg-held-question" },
+          { title: "The material of calm", id: "fg-material" },
+          { title: "Reserved color that holds", id: "fg-color" },
+          { title: "Where the argument gets tested", id: "fg-moderation" },
+          { title: "Six interviews, four markers", id: "fg-interviews" },
+          { title: "Honest scope", id: "fg-scope" },
+        ]}
+      />
+
+      <div className="case-tier-divider"><span>The full breakdown ↓</span></div>
+
       {/* ── Section 2: The argument ──────────────────── */}
       <section className="project-section fg-section" aria-labelledby="fg-argument">
         <h2 id="fg-argument">Whose knowledge counts.</h2>
+        <p className="case-section-lead">
+          Community observations run through the same adapter, scoring, and audit trail as public data, not a separate editorial layer.
+        </p>
+        <blockquote className="case-pullquote">Whose safety knowledge counts when the route is computed?</blockquote>
         <div className="project-section-body">
           <p>
             The Green Book guided Black travelers across mid-century America
@@ -93,47 +130,15 @@ export default async function FreshGreensPage() {
         </div>
       </section>
 
-      <ProjectCover
-        src="/projects/fresh-greens/cover.png"
-        alt="Fresh Greens cover: a route preview map showing a daylight-graded path from Brooklyn to southern New Jersey"
-        priority
-      />
-
-      {/* ── Project meta ─────────────────────────────── */}
-      <dl className="project-meta fg-meta" aria-label="Project details">
-        <div className="project-meta-field">
-          <dt>Role</dt>
-          <dd>Solo · design + engineering</dd>
-        </div>
-        <div className="project-meta-field">
-          <dt>Stack</dt>
-          <dd>React Native · Expo · TypeScript · Supabase</dd>
-        </div>
-        <div className="project-meta-field">
-          <dt>Timeline</dt>
-          <dd>Sep 2025 – Jun 2026</dd>
-        </div>
-      </dl>
-
-      <ProjectToc
-        sections={[
-          { title: "Whose knowledge counts", id: "fg-argument" },
-          { title: "The pipeline is the answer", id: "fg-pipeline" },
-          { title: "The Held-Question Rule", id: "fg-held-question" },
-          { title: "The material of calm", id: "fg-material" },
-          { title: "Reserved color that holds", id: "fg-color" },
-          { title: "Where the argument gets tested", id: "fg-moderation" },
-          { title: "Six interviews, four markers", id: "fg-interviews" },
-          { title: "Honest scope", id: "fg-scope" },
-        ]}
-      />
-
       {/* ── Section 3: The pipeline is the answer ────── */}
       <section
         className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-pipeline"
       >
         <h2 id="fg-pipeline">The pipeline is the answer.</h2>
+        <p className="case-section-lead">
+          Community reports and public data share one adapter, one scoring function, and one audit trail.
+        </p>
         <div className="project-section-body">
           <p>
             Every route in Fresh Greens is scored against four markers that
@@ -175,6 +180,9 @@ export default async function FreshGreensPage() {
         aria-labelledby="fg-held-question"
       >
         <h2 id="fg-held-question">The Held-Question Rule.</h2>
+        <p className="case-section-lead">
+          The interface asks before it assumes, so a driver stays in control under pressure.
+        </p>
         <div className="project-section-body">
           <p>
             Every in-modal prompt in Fresh Greens is set in{" "}
@@ -246,6 +254,9 @@ export default async function FreshGreensPage() {
         aria-labelledby="fg-material"
       >
         <h2 id="fg-material">The material of calm.</h2>
+        <p className="case-section-lead">
+          Warm OKLCH surfaces and a reserved serif give the type and color specific work to do at each phase of a trip.
+        </p>
         <div className="project-section-body">
           <p>
             Fresh Greens replaces iOS&apos;s default cool grays with five
@@ -282,6 +293,9 @@ export default async function FreshGreensPage() {
         aria-labelledby="fg-color"
       >
         <h2 id="fg-color">Reserved color that holds.</h2>
+        <p className="case-section-lead">
+          Four colors and the daylight gradient are held to safety signals, with documented carve-outs.
+        </p>
 
         <div className="project-section-body">
           <p>
@@ -340,6 +354,9 @@ export default async function FreshGreensPage() {
         aria-labelledby="fg-moderation"
       >
         <h2 id="fg-moderation">Where the argument gets tested.</h2>
+        <p className="case-section-lead">
+          The moderation queue is where equal weighting for community reports has to survive bad-faith reports and real stakes.
+        </p>
         <div className="project-section-body">
           <p>
             The pipeline&apos;s claim is that community reports get scored
@@ -377,6 +394,9 @@ export default async function FreshGreensPage() {
         aria-labelledby="fg-interviews"
       >
         <h2 id="fg-interviews">Six interviews, four markers.</h2>
+        <p className="case-section-lead">
+          Six conversations with Black drivers grounded the four markers the shipped app leans on most.
+        </p>
         <div className="project-section-body">
           <p>
             Six semi-structured interviews with Black drivers across the
@@ -486,6 +506,9 @@ export default async function FreshGreensPage() {
       {/* ── Section 9: Honest scope ──────────────────── */}
       <section className="project-section fg-section fg-scope" aria-labelledby="fg-scope">
         <h2 id="fg-scope">Honest scope.</h2>
+        <p className="case-section-lead">
+          Naming what isn&apos;t done yet is part of the thesis stance, so here&apos;s what shipped and what&apos;s next.
+        </p>
         <div className="project-section-body">
           <p>
             Naming what isn&apos;t done is part of the thesis stance. Honesty
