@@ -112,13 +112,12 @@ export default async function FreshGreensPage() {
       {/* ── Section 2: The argument ──────────────────── */}
       <section className="project-section fg-section" aria-labelledby="fg-argument">
         <h2 id="fg-argument">Whose knowledge counts.</h2>
-        <blockquote className="case-pullquote">Whose safety knowledge counts when the route is computed?</blockquote>
+        <blockquote className="case-pullquote">The Green Book was a routing system built on community knowledge, because no institutional one existed.</blockquote>
         <div className="project-section-body">
           <p>
             The Green Book guided Black travelers across mid-century America
             by cataloguing the homes, restaurants, and stops where they&apos;d
-            be received in safety. It was a routing system built on community
-            knowledge because no institutional one existed.
+            be received in safety.
           </p>
           <p>
             Fresh Greens returns to that question with today&apos;s data
