@@ -5,13 +5,14 @@ type RecruiterCutProps = {
   role: string;
   timeline: string;
   stack: string;
+  stackLabel?: string;
   outcomeValue?: string;
   outcomeLabel?: string;
   moves: string[];
 };
 
 export function RecruiterCut({
-  problem, role, timeline, stack, outcomeValue, outcomeLabel, moves,
+  problem, role, timeline, stack, stackLabel = "Stack", outcomeValue, outcomeLabel, moves,
 }: RecruiterCutProps) {
   return (
     <section className="case-cut" aria-label="At a glance">
@@ -19,7 +20,7 @@ export function RecruiterCut({
         <div className="case-cut-row"><dt>Problem</dt><dd>{problem}</dd></div>
         <div className="case-cut-row"><dt>Role</dt><dd>{role}</dd></div>
         <div className="case-cut-row"><dt>Timeline</dt><dd>{timeline}</dd></div>
-        <div className="case-cut-row"><dt>Stack</dt><dd>{stack}</dd></div>
+        <div className="case-cut-row"><dt>{stackLabel}</dt><dd>{stack}</dd></div>
         {outcomeValue && outcomeLabel ? (
           <div className="case-cut-row case-cut-outcome">
             <dt>Outcome</dt>
