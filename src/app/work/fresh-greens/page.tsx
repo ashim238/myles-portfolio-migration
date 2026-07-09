@@ -244,20 +244,13 @@ export default async function FreshGreensPage() {
         </p>
         <div className="project-section-body">
           <p>
-            Every route in Fresh Greens is scored against four markers that
-            surfaced in the driver interviews: light (SunCalc daylight
-            gradient), police presence, wildlife crossings (OpenStreetMap),
-            and road conditions (DOT-511, OSRM). Community reports feed the
-            same four markers.
-          </p>
-          <p>
-            They&apos;re not a separate feed with their own view. They pass
-            through <mark className="case-highlight">the same adapter, the same scoring function</mark>, and land on
-            the same route-preview strip that OpenStreetMap does. Weighted
-            the same way. Attributable the same way. Both paths carry the
-            source of the score, so the driver can see whether a segment
-            scored low because SunCalc says so or because someone in the
-            community reported something.
+            Every route is scored on four things the interviews kept raising:
+            light, police presence, wildlife, and road conditions. A community
+            report feeds those same four markers, and it&apos;s{" "}
+            <mark className="case-highlight">weighted exactly like the data from OpenStreetMap or SunCalc</mark>.
+            Not a separate feed off to the side. Every score carries its source
+            too, so a driver can see whether a segment scored low from the sun
+            angle or because someone reported it.
           </p>
         </div>
 
@@ -265,10 +258,8 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body">
           <p>
-            The en-route screen is where the pipeline shows up at once: a
-            turn card with the maneuver and any hazard glyph, a 3D map, and
-            the safety column down the right edge. All inside thumb reach.
-            Drag the phone to turn it.
+            The en-route screen is where it all lands: a turn card, a 3D map
+            you can drag, and a safety column within thumb&apos;s reach.
           </p>
         </div>
         <Device3D
@@ -288,28 +279,19 @@ export default async function FreshGreensPage() {
         </p>
         <div className="project-section-body">
           <p>
-            Every in-modal prompt in Fresh Greens is set in{" "}
-            <mark className="case-highlight">Libre Franklin Regular. Not Bold.</mark>{" "}
-            The safety modal asks &quot;What&apos;s going
-            on?&quot; The share-location sheet asks &quot;What&apos;s the
-            situation?&quot; The Lifeline modal says &quot;You&apos;re not
-            alone.&quot;
+            Every prompt in a safety moment is set in{" "}
+            <mark className="case-highlight">Libre Franklin Regular, not Bold</mark>. The
+            safety modal asks &quot;What&apos;s going on?&quot; The share sheet
+            asks &quot;What&apos;s the situation?&quot; A driver who just got
+            pulled over doesn&apos;t need &quot;REPORT INCIDENT&quot; shouted at
+            them in a heavier weight than their own thoughts.
           </p>
           <p>
-            Regular weight is a held register. A driver who just got pulled
-            over doesn&apos;t need an app displaying &quot;REPORT
-            INCIDENT&quot; at them in a heavier weight than the ambient text.
-            Franklin Regular puts the prompt in the same weight as the
-            driver&apos;s own thinking.
-          </p>
-          <p>
-            The rule came out of the driver interviews. Respondents described
-            the moments where the app would matter most as high-pressure
-            situations that needed something closer to a companion than a
-            control interface. Regular-weight prompts hold that register.
-            Bold shows up only on the numbers the app is confident about
-            (mileage, ETA, the <code>/emergency</code> countdown), and
-            nowhere else in the safety flow.
+            That came straight from the interviews. People said the moments the
+            app matters most need something closer to a companion than a
+            control panel. So Bold shows up only on facts the app is sure of,
+            like ETA and the <code>/emergency</code> countdown, and nowhere
+            else in the safety flow.
           </p>
         </div>
 
@@ -342,11 +324,10 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body">
           <p>
-            The other four safety surfaces (<code>/roadside</code>,{" "}
-            <code>/unfamiliar</code>, <code>/share-location</code>, and{" "}
-            <code>/emergency</code>) follow the same voice. Each is a
-            first-class route with its own state machine. None depend on a
-            live network connection.
+            The other safety surfaces (<code>/roadside</code>,{" "}
+            <code>/unfamiliar</code>, <code>/share-location</code>,{" "}
+            <code>/emergency</code>) use the same voice, each a first-class
+            route that works with no signal.
           </p>
         </div>
       </section>
@@ -358,33 +339,21 @@ export default async function FreshGreensPage() {
       >
         <h2 id="fg-typecolor">Type and color.</h2>
         <p className="case-section-lead">
-          Warm OKLCH surfaces and a reserved serif give the type and color specific work to do at each phase of a trip.
+          Warm surfaces and a reserved serif give type and color a job at each phase of a trip.
         </p>
         <div className="project-section-body">
           <p>
-            Fresh Greens replaces iOS&apos;s default cool grays with five
-            warm surfaces, all derived in OKLCH at 0.008 to 0.012 chroma on
-            the brand-green hue. Page, card, sheet, elevated, and tinted.
-            The neutrals across the whole app share a single tonal source
-            instead of tracking the platform&apos;s default gray ramp.
+            I swapped iOS&apos;s cool grays for five warm surfaces, all built
+            in OKLCH on the brand-green hue, so the whole app shares one tonal
+            source instead of the platform&apos;s default gray.
           </p>
           <p>
-            Type does the same work. Libre Franklin carries the whole
-            hierarchy from display through caption. DM Serif Display appears
-            in six places: the emergency reassurance line, the{" "}
-            <code>/trip-summary</code> &quot;Thanks for sharing,&quot; the
-            sign-out farewell, and three other moments of similar emotional
-            weight. Reserving the serif for those six lines is what keeps
-            them visible against Franklin&apos;s rhythm elsewhere.
-          </p>
-          <p>
-            The two disciplines combine into an emotional arc that runs the
-            whole session. Calm entry at auth. Warm onboarding. Steady
-            cruising on home and search. Heightened attention en-route.
-            Crisis response through the safety toolkit. Resolution on{" "}
-            <code>/trip-summary</code>, where DM Serif returns. The arc is
-            planned as six discrete phases so the type and the color both
-            have specific work to do at each one.
+            Libre Franklin carries the whole type hierarchy. DM Serif Display
+            shows up in exactly six emotional moments, like the emergency
+            reassurance line and the &quot;Thanks for sharing&quot; on{" "}
+            <code>/trip-summary</code>. Reserving it for those six is what
+            keeps them landing. Type and color both shift across the session,
+            calm at entry, heightened en-route, resolved at the trip summary.
           </p>
         </div>
 
@@ -402,12 +371,10 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body">
           <p>
-            The brand greens carry every CTA, every link, every interactive
-            affordance. Red, orange, yellow, and navy are reserved for safety
-            signals only, each tied to one specific meaning. Because those
-            four colors are reserved, a red dot or an orange chip in the app
-            points to something specific. Across 26+ screens and 300+
-            accessibility attributes, <mark className="case-highlight">the rule holds, with documented carve-outs</mark>.
+            Green carries every button and link. Red, orange, yellow, and navy
+            are reserved for safety signals, each tied to one meaning, so a red
+            dot always points to something specific. Across 26+ screens,{" "}
+            <mark className="case-highlight">the rule holds, with documented carve-outs</mark>.
           </p>
         </div>
 
@@ -429,10 +396,10 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body">
           <p>
-            Where color IS the signal, a second channel rides alongside it.
-            On <code>/report</code>, severity pairs a filled WarningDiamond
-            glyph with the color, so the cue survives for anyone who
-            can&apos;t lean on hue alone (WCAG 1.4.1).
+            Where color is the signal, a second channel rides with it. On{" "}
+            <code>/report</code>, severity pairs a filled warning glyph with
+            the color, so the cue survives for anyone who can&apos;t rely on
+            hue (WCAG 1.4.1).
           </p>
         </div>
 
@@ -459,30 +426,22 @@ export default async function FreshGreensPage() {
         <h2 id="fg-trust">Keeping community reports trustworthy.</h2>
         <div className="project-section-body">
           <p>
-            The pipeline&apos;s claim is that community reports get scored
-            the same way as public data. What tests that claim is the queue
-            where bad-faith reports, mistaken reports, and reports about
-            someone else&apos;s identity have to be handled without
-            collapsing back into &quot;we don&apos;t trust community
-            data.&quot; That queue is <code>/moderation</code>.
+            The pipeline only works if community reports can be trusted like
+            public data. So bad-faith and mistaken reports have to be caught
+            without falling back to &quot;we don&apos;t trust community
+            data.&quot; That&apos;s what <code>/moderation</code> is for.
           </p>
           <p>
-            Moderator role is gated. Every report enters the queue with an
-            investigation panel: source device fingerprint, prior reports at
-            the same coordinates, nearby reports via haversine distance,
-            coordination detection for IP and device-duplicate patterns, and
-            timestamps that show whether a report is retaliation for
-            another. Bulk-select handles spam with per-request{" "}
-            <code>Promise.allSettled</code> inspection. Destructive actions
-            require a hold-to-remove gesture. Nothing gets published without
-            a human decision, and the audit trail follows every publish and
-            every unpublish.
+            Every report enters a queue with an investigation panel: the source
+            device, prior reports at the same spot, nearby reports, and
+            coordination checks for duplicate IPs and devices. Nothing
+            publishes without a human decision, and every publish and unpublish
+            is logged.
           </p>
           <p>
-            <code>/moderation</code> is where &quot;whose knowledge
-            counts&quot; gets renegotiated with real reports and real stakes. A v2 transparency page will
-            publish moderation outcomes so the queue&apos;s work is auditable
-            outside the queue.
+            It&apos;s where the trust question gets settled with real reports
+            and real stakes. A future transparency page will publish the
+            outcomes so the queue&apos;s work is auditable from outside.
           </p>
         </div>
 
@@ -492,12 +451,12 @@ export default async function FreshGreensPage() {
       <section className="project-section fg-section fg-scope" aria-labelledby="fg-scope">
         <h2 id="fg-scope">What shipped, and what didn't.</h2>
         <p className="case-section-lead">
-          Naming what isn&apos;t done yet is part of the thesis stance, so here&apos;s what shipped and what&apos;s next.
+          What shipped, and what&apos;s still on the list.
         </p>
         <div className="project-section-body">
           <p>
-            Naming what isn&apos;t done is part of the thesis stance. Honesty
-            of disclosure applies to the case study, not only the product.
+            Naming what isn&apos;t done yet matters as much as what is. So
+            here&apos;s the honest split.
           </p>
         </div>
 
