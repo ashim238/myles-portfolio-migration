@@ -15,6 +15,7 @@ import {
   TemplateAnatomy,
   TikTokLogo,
 } from "@/components/tiktok-dsa";
+import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
 
 const TIKTOK_DESCRIPTION =
@@ -107,6 +108,9 @@ export default async function TikTokPage() {
       {/* ── Section 01 — The brief ─────────────────────── */}
       <section className="project-section tt-section" aria-labelledby="tt-brief">
         <h2 id="tt-brief">A template format, built for a platform of niches.</h2>
+        <p className="case-section-lead">
+          Dynamic Showcase Ads had to feel native to a platform built on subcultures, not just push a catalog into the feed.
+        </p>
         <div className="project-section-body">
           <p>
             Dynamic Showcase Ads were TikTok&apos;s answer to a partner
@@ -119,8 +123,12 @@ export default async function TikTokPage() {
             value sits in its subcultures (Y2K, Maximalism, Dark Academia,
             Cottagecore, WitchTok), and a single ad treatment for all of
             them flattens what people are there to find. The bet I went in
-            with: catalog templates designed against subcultures, not
-            against the platform as a whole.
+            with:{" "}
+            <mark className="case-highlight">
+              catalog templates designed against subcultures, not against the
+              platform as a whole
+            </mark>
+            .
           </p>
         </div>
 
@@ -130,6 +138,9 @@ export default async function TikTokPage() {
       {/* ── Section 02 — Reading the platform ──────────── */}
       <section className="project-section tt-section" aria-labelledby="tt-research">
         <h2 id="tt-research">Five subcultures. Three buckets.</h2>
+        <p className="case-section-lead">
+          I mapped how TikTok&apos;s users actually browse, then narrowed five subcultures to three a brand could build against.
+        </p>
         <div className="project-section-body">
           <p>
             Desk research first. Scrolling the way TikTok&apos;s users
@@ -140,23 +151,26 @@ export default async function TikTokPage() {
           <p>
             Five was too many to build templates against. I narrowed to
             three groupings (high-saturation joy, edge and texture, quiet
-            and considered), broad enough that a brand could see itself
-            in one without per-brand customization.
+            and considered), broad enough that{" "}
+            <mark className="case-highlight">
+              a brand could see itself in one without per-brand customization
+            </mark>
+            .
           </p>
         </div>
 
-        <figure className="tt-pullquote">
-          <blockquote>
-            An in-feed ad either feels native or it doesn&apos;t.
-            Subcultures are how TikTok&apos;s audience tells the difference.
-          </blockquote>
-          <figcaption>Working hypothesis · TikTok DSA, 2021</figcaption>
-        </figure>
+        <blockquote className="case-pullquote">
+          An in-feed ad either feels native or it doesn&apos;t. Subcultures are
+          how TikTok&apos;s audience tells the difference.
+        </blockquote>
       </section>
 
       {/* ── Section 03 — The system ────────────────────── */}
       <section className="project-section tt-section tt-section--wide" aria-labelledby="tt-system">
         <h2 id="tt-system">One skeleton. Three fills.</h2>
+        <p className="case-section-lead">
+          One slot map holds the structure, so only the fill changes from one aesthetic to the next.
+        </p>
         <div className="project-section-body">
           <p>
             The constraints only resolve if the variability lives in
@@ -238,12 +252,18 @@ export default async function TikTokPage() {
       {/* ── Section 05 — What shipped ─────────────────── */}
       <section className="project-section tt-section" aria-labelledby="tt-shipped">
         <h2 id="tt-shipped">What ended up on TikTok.</h2>
+        <p className="case-section-lead">
+          One of the three shipped, and American Eagle put it in market.
+        </p>
         <OutcomeCard />
       </section>
 
       {/* ── Section 06 — Honest scope ──────────────────── */}
       <section className="project-section tt-section" aria-labelledby="tt-scope">
         <h2 id="tt-scope">Where the work went.</h2>
+        <p className="case-section-lead">
+          TikTok retired DSA in 2023, but the mechanic it introduced kept shipping under new names.
+        </p>
         <div className="project-section-body">
           <p>
             TikTok deprecated DSA on April 3, 2023, folding the mechanics
@@ -254,8 +274,11 @@ export default async function TikTokPage() {
           <p>
             My contribution sits in the launch generation. I designed three
             templates, one per aesthetic, part of the roughly ten the studio
-            built for launch. The Light Academia one shipped, and American
-            Eagle adopted it. The mechanic outlived the product that
+            built for launch.{" "}
+            <mark className="case-highlight">
+              The Light Academia one shipped, and American Eagle adopted it.
+            </mark>{" "}
+            The mechanic outlived the product that
             introduced it.
           </p>
         </div>
@@ -266,10 +289,15 @@ export default async function TikTokPage() {
       {/* ── Section 07 — Retrospective ────────────────── */}
       <section className="project-section tt-section" aria-labelledby="tt-retro">
         <h2 id="tt-retro">What it actually taught me.</h2>
+        <p className="case-section-lead">
+          What looked like an ad-template brief was really my first product work.
+        </p>
         <div className="project-section-body">
           <p>
             The brief said &quot;design three ad templates.&quot; What I
-            spent the summer doing was closer to product work: researching
+            spent the summer doing was{" "}
+            <mark className="case-highlight">closer to product work</mark>:
+            researching
             an audience I didn&apos;t belong to, narrowing scope so the
             system could hold, building a reusable structure around
             constraints I couldn&apos;t change. I was 21 and didn&apos;t
@@ -285,6 +313,7 @@ export default async function TikTokPage() {
       </section>
 
       <ProjectWorkJump currentSlug="tiktok" projects={allProjects} />
+      <CaseHighlightObserver />
     </main>
   );
 }

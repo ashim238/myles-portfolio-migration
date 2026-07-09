@@ -10373,6 +10373,10 @@ main[data-project-slug="understandingfafsa"] {
   --case-highlight-color: var(--uf-accent-highlight, #f2b544);
   --case-highlight-opacity: 22%;
 }
+main[data-project-slug="tiktok"] {
+  --case-highlight-color: var(--tt-magenta, #fe2c55);
+  --case-highlight-opacity: 16%;
+}
 
 /* Default reveal (Navi): the neighborhood-mapping sweep. */
 main[data-highlight-anim-ready] mark.case-highlight {
