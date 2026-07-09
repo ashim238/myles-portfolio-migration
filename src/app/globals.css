@@ -4996,7 +4996,7 @@ button:focus-visible,
 .tt-cover {
   position: relative;
   width: min(var(--content-max), 100%);
-  margin: 1.75rem auto 0;
+  margin: 1.75rem auto clamp(2.25rem, 4.5vw, 3.5rem);
   min-height: clamp(26rem, 60vh, 40rem);
   display: flex;
   align-items: flex-end;
@@ -5073,50 +5073,50 @@ button:focus-visible,
 }
 @keyframes tt-bfloat1 {
   from {
-    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    transform: translate3d(0, 0, 0) rotate(-2deg) scale(1);
   }
   to {
-    transform: translate3d(0.8vw, -1vw, 0) rotate(2.5deg) scale(1.04);
+    transform: translate3d(2.2vw, -2.6vw, 0) rotate(4.5deg) scale(1.07);
   }
 }
 @keyframes tt-bfloat2 {
   from {
-    transform: translate3d(0, 0, 0) rotate(0deg) scale(1.02);
+    transform: translate3d(0, 0, 0) rotate(1.5deg) scale(1.03);
   }
   to {
-    transform: translate3d(-1vw, 0.8vw, 0) rotate(-2.5deg) scale(0.97);
+    transform: translate3d(-2.6vw, 2.2vw, 0) rotate(-4deg) scale(0.94);
   }
 }
 @keyframes tt-bfloat3 {
   from {
-    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.98);
+    transform: translate3d(0, 0, 0) rotate(-1.5deg) scale(0.96);
   }
   to {
-    transform: translate3d(0.9vw, 1.1vw, 0) rotate(3deg) scale(1.05);
+    transform: translate3d(2.4vw, 2.8vw, 0) rotate(5deg) scale(1.08);
   }
 }
 @keyframes tt-bfloat4 {
   from {
-    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+    transform: translate3d(0, 0, 0) rotate(2deg) scale(1);
   }
   to {
-    transform: translate3d(-1.1vw, -0.9vw, 0) rotate(-3deg) scale(1.03);
+    transform: translate3d(-2.8vw, -2.4vw, 0) rotate(-5deg) scale(1.06);
   }
 }
 @keyframes tt-bfloat5 {
   from {
-    transform: translate3d(0, 0, 0) rotate(0deg) scale(1.03);
+    transform: translate3d(0, 0, 0) rotate(-1deg) scale(1.04);
   }
   to {
-    transform: translate3d(1.1vw, 0.9vw, 0) rotate(2deg) scale(0.96);
+    transform: translate3d(2.8vw, 2.4vw, 0) rotate(4deg) scale(0.93);
   }
 }
 @keyframes tt-bfloat6 {
   from {
-    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.97);
+    transform: translate3d(0, 0, 0) rotate(1deg) scale(0.95);
   }
   to {
-    transform: translate3d(-0.9vw, -1.1vw, 0) rotate(-2deg) scale(1.05);
+    transform: translate3d(-2.4vw, -2.8vw, 0) rotate(-4deg) scale(1.08);
   }
 }
 
