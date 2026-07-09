@@ -112,15 +112,11 @@ export default async function FreshGreensPage() {
         <blockquote className="case-pullquote">The Green Book was a routing system built on community knowledge, because no institutional one existed.</blockquote>
         <div className="project-section-body">
           <p>
-            The Green Book guided Black travelers across mid-century America
-            by cataloguing the homes, restaurants, and stops where they&apos;d
-            be received in safety.
-          </p>
-          <p>
-            Fresh Greens returns to that question with today&apos;s data
-            stack. Community observations don&apos;t sit next to public data
-            as an editorial layer. They flow through the same adapter, the
-            same scoring, and the same audit trail.
+            For a Black driver, a route isn&apos;t only time and distance.
+            It&apos;s whether the roads are lit, whether a town feels safe to
+            stop in, where police tend to sit. Nav apps don&apos;t weigh any of
+            that. Fresh Greens brings that kind of knowledge back into the
+            route.
           </p>
         </div>
       </section>
