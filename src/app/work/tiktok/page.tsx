@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectToc } from "@/components/project-toc";
+import { RecruiterCut } from "@/components/recruiter-cut";
 import { ProjectWorkJump } from "@/components/project-work-jump";
 import { AESTHETICS } from "@/lib/tiktok-data";
 import {
@@ -74,20 +75,20 @@ export default async function TikTokPage() {
         </div>
       </section>
 
-      <dl className="project-meta tt-meta" aria-label="Project details">
-        <div className="project-meta-field">
-          <dt>Role</dt>
-          <dd>Visual Designer · Brand Studio</dd>
-        </div>
-        <div className="project-meta-field">
-          <dt>Stack</dt>
-          <dd>Illustrator · Photoshop</dd>
-        </div>
-        <div className="project-meta-field">
-          <dt>Timeline</dt>
-          <dd>May – Aug 2021</dd>
-        </div>
-      </dl>
+      <RecruiterCut
+        problem="On TikTok, recycled product creative does not land. One ad treatment for every subculture flattens what people are there to find."
+        role="Visual Designer, Brand Studio"
+        timeline="May – August 2021"
+        stack="Illustrator, Photoshop"
+        stackLabel="Tools"
+        outcomeValue="1"
+        outcomeLabel="of 3 templates shipped, adopted by American Eagle"
+        moves={[
+          "Mapped TikTok's subcultures down to three aesthetic systems a brand could see itself in.",
+          "Designed one slot-map skeleton with three subculture fills, so a catalog stays native to each audience.",
+          "Shipped the Light Academia template. American Eagle adopted it.",
+        ]}
+      />
 
       <ProjectToc
         sections={[
@@ -100,6 +101,8 @@ export default async function TikTokPage() {
           { title: "Retrospective", id: "tt-retro" },
         ]}
       />
+
+      <div className="case-tier-divider"><span>The full breakdown ↓</span></div>
 
       {/* ── Section 01 — The brief ─────────────────────── */}
       <section className="project-section tt-section" aria-labelledby="tt-brief">
