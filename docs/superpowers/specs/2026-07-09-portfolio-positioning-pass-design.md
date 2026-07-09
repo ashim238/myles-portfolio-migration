@@ -53,12 +53,11 @@ Insert the shared recruiter-cut scaffold after the hero and before the first
 2. `<RecruiterCut ... />` with these fields:
    - **problem:** "On TikTok, recycled product creative does not land. One ad
      treatment for every subculture flattens what people are there to find."
-   - **role:** "Creative Strategist Intern, Brand Studio" (reconcile with
-     frontmatter `role: Visual Designer · Brand Studio` — pick one; résumé says
-     Creative Strategist Intern, so use that).
+   - **role:** "Visual Designer, Brand Studio" (function over official title,
+     matching the other cases' Role convention and this case's frontmatter; the
+     May–Aug 2021 timeline beside it signals the internship scope).
    - **timeline:** "May – August 2021"
-   - **stack / stackLabel:** stack "Figma, Adobe Suite", stackLabel "Tools"
-     (confirm exact tools with the designer before finalizing).
+   - **stack / stackLabel:** stack "Figma, Adobe Suite", stackLabel "Tools".
    - **outcomeValue / outcomeLabel:** value "1", label "of 3 templates shipped,
      adopted by American Eagle". (CountUp on 1 is acceptable; if it reads flat,
      drop the outcome row and let Key moves carry it.)
