@@ -13,6 +13,7 @@ import {
   OutcomeCard,
   SystemOverviewBand,
   TemplateAnatomy,
+  TikTokCoverBlobs,
   TikTokLogo,
 } from "@/components/tiktok-dsa";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
@@ -58,12 +59,7 @@ export default async function TikTokPage() {
       </nav>
 
       <header className="tt-cover" data-project-enter-cover>
-        <div className="tt-cover-art" aria-hidden="true" />
-        <span className="tt-cover-blob tt-cover-blob--cyan" aria-hidden="true" />
-        <span
-          className="tt-cover-blob tt-cover-blob--magenta"
-          aria-hidden="true"
-        />
+        <TikTokCoverBlobs />
         <div className="tt-cover-inner">
           <p className="tt-eyebrow">
             <TikTokLogo />

@@ -1,6 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
 import { ExpandableImage } from "@/components/expandable-image";
 import { AESTHETICS } from "@/lib/tiktok-data";
 
@@ -67,6 +73,73 @@ export function TikTokLogo() {
    already shows all three aesthetics at angled
    perspective; we just give it gentle motion.
    ────────────────────────────────────────── */
+
+/* ──────────────────────────────────────────
+   Cover metaball field
+   Rebuilds the gradient cover art as living blobs: each drifts
+   and scales on its own loop, merging organically via an SVG goo
+   filter. Palette echoes the source PSD. Reduced-motion: the
+   blobs hold their base positions (still a full composition).
+   ────────────────────────────────────────── */
+
+const COVER_BLOBS = [
+  // central merged cluster
+  { x: 48, y: 42, w: 15, c: "blue", f: 1, d: 17 },
+  { x: 53, y: 47, w: 12, c: "cyan", f: 2, d: 13 },
+  { x: 43, y: 50, w: 12, c: "white", f: 3, d: 19 },
+  { x: 54, y: 53, w: 10, c: "pink", f: 4, d: 15 },
+  { x: 48, y: 37, w: 6, c: "magenta", f: 5, d: 12 },
+  // the red hook lower-center
+  { x: 57, y: 61, w: 17, c: "red", f: 2, d: 21 },
+  // the cyan bar (pill) upper-center
+  { x: 45, y: 26, w: 4, h: 12, c: "cyan", f: 1, d: 14, pill: true },
+  // white lobe upper-right of center
+  { x: 59, y: 29, w: 10, c: "white", f: 6, d: 18 },
+  // scattered accent dots (float solo)
+  { x: 28, y: 20, w: 3, c: "pink", f: 3, d: 11 },
+  { x: 72, y: 18, w: 2.6, c: "cyan", f: 4, d: 13 },
+  { x: 20, y: 56, w: 3.6, c: "cyan", f: 5, d: 15 },
+  { x: 76, y: 64, w: 3, c: "blue", f: 6, d: 12 },
+  { x: 33, y: 78, w: 2.8, c: "pink", f: 1, d: 14 },
+  { x: 67, y: 80, w: 2.2, c: "magenta", f: 2, d: 10 },
+] as const;
+
+export function TikTokCoverBlobs() {
+  return (
+    <div className="tt-cover-goo" aria-hidden="true">
+      <svg className="tt-goo-defs" aria-hidden="true" focusable="false">
+        <defs>
+          <filter id="tt-goo">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="14" result="blur" />
+            <feColorMatrix
+              in="blur"
+              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9"
+            />
+          </filter>
+        </defs>
+      </svg>
+      <div className="tt-cover-field">
+        {COVER_BLOBS.map((b, i) => (
+          <span
+            key={i}
+            className={`tt-cblob tt-cblob--${b.c} tt-cblob--f${b.f}`}
+            style={
+              {
+                left: `${b.x}%`,
+                top: `${b.y}%`,
+                width: `${b.w}vw`,
+                height: `${"h" in b ? b.h : b.w}vw`,
+                borderRadius: "pill" in b && b.pill ? `${b.w}vw` : "50%",
+                animationDelay: `${-i * 0.9}s`,
+                "--d": `${b.d}s`,
+              } as CSSProperties
+            }
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export function HeroThreePhones() {
   const ref = useRef<HTMLDivElement | null>(null);
