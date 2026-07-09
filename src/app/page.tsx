@@ -59,9 +59,9 @@ export default async function Home() {
       <section className="about" id="about" aria-labelledby="about-title">
         <h2 id="about-title">About</h2>
         <p>
-          I design end to end and ship past the prototype. Ask me about the
-          Gmail HTML ceiling or why the Navi daylight cue is a WCAG dash
-          pattern.
+          Strategy, design, and code, and I ship past the prototype. Ask me
+          how a nonprofit newsletter went from 30% to 52.6% open rates, or why
+          the Navi daylight cue is a WCAG dash pattern.
         </p>
         <p className="about-actions">
           <Link className="about-action" href="/about">
