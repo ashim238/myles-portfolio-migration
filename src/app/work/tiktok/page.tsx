@@ -57,24 +57,29 @@ export default async function TikTokPage() {
         </Link>
       </nav>
 
-      <section className="hero project-hero tt-hero" aria-labelledby="tt-title">
-        <p className="tt-eyebrow">
-          <TikTokLogo />
-          <span>Internship · 2021</span>
-        </p>
-        <h1 id="tt-title" className="project-hero-title tt-title">
-          TikTok Dynamic Showcase Ads
-        </h1>
-        <p className="project-hero-lede tt-lede">
-          A modular template system built for TikTok&apos;s Dynamic Showcase
-          Ads, designed around the platform&apos;s subculture density so the
-          ads could read as in-feed, not at-feed. American Eagle adopted one
-          of the three.
-        </p>
-        <div className="tt-hero-device" data-project-enter-cover>
-          <HeroThreePhones />
+      <header className="tt-cover" data-project-enter-cover>
+        <div className="tt-cover-art" aria-hidden="true" />
+        <span className="tt-cover-blob tt-cover-blob--cyan" aria-hidden="true" />
+        <span
+          className="tt-cover-blob tt-cover-blob--magenta"
+          aria-hidden="true"
+        />
+        <div className="tt-cover-inner">
+          <p className="tt-eyebrow">
+            <TikTokLogo />
+            <span>Internship · 2021</span>
+          </p>
+          <h1 id="tt-title" className="project-hero-title tt-title">
+            TikTok Dynamic Showcase Ads
+          </h1>
+          <p className="project-hero-lede tt-lede">
+            A modular template system built for TikTok&apos;s Dynamic Showcase
+            Ads, designed around the platform&apos;s subculture density so the
+            ads could read as in-feed, not at-feed. American Eagle adopted one
+            of the three.
+          </p>
         </div>
-      </section>
+      </header>
 
       <RecruiterCut
         problem="On TikTok, recycled product creative does not land. One ad treatment for every subculture flattens what people are there to find."
@@ -111,6 +116,9 @@ export default async function TikTokPage() {
         <p className="case-section-lead">
           Dynamic Showcase Ads had to feel native to a platform built on subcultures, not just push a catalog into the feed.
         </p>
+        <div className="tt-hero-device">
+          <HeroThreePhones />
+        </div>
         <div className="project-section-body">
           <p>
             Dynamic Showcase Ads were TikTok&apos;s answer to a partner
