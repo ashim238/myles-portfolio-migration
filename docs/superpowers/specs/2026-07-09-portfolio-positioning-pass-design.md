@@ -45,19 +45,26 @@ introduced it." Do NOT restate "three ... shipped" anywhere.
 
 ### 1b. Structural parity (mirror the other three cases)
 
-Insert the shared recruiter-cut scaffold after the hero and before the first
-`tt-section`, exactly as `understandingfafsa/page.tsx` and `navi/page.tsx` do:
+Bring the case level with the other three's recruiter-cut treatment. Note the
+TikTok page already has a `ProjectToc` (keep it) and its hero already embeds
+`HeroThreePhones` marked `data-project-enter-cover` — that device composite is
+this case's cover, so it does NOT get a `LeadMedia` (the other three add
+`LeadMedia` only because their heroes are text-only). The actual gap is the
+at-a-glance block and the tier divider.
 
-1. `<LeadMedia cover="/projects/tiktok/composite-flower.png" alt="TikTok Dynamic Showcase Ads cover" />`
-   (reuse the frontmatter `coverImage`).
-2. `<RecruiterCut ... />` with these fields:
+Replace the old `<dl className="project-meta tt-meta">` strip (page lines 77-90)
+with `RecruiterCut`, and add the tier divider after the existing `ProjectToc`:
+
+1. `<RecruiterCut ... />` (replaces the old meta dl) with these fields:
    - **problem:** "On TikTok, recycled product creative does not land. One ad
      treatment for every subculture flattens what people are there to find."
    - **role:** "Visual Designer, Brand Studio" (function over official title,
      matching the other cases' Role convention and this case's frontmatter; the
      May–Aug 2021 timeline beside it signals the internship scope).
    - **timeline:** "May – August 2021"
-   - **stack / stackLabel:** stack "Figma, Adobe Suite", stackLabel "Tools".
+   - **stack / stackLabel:** stack "Illustrator, Photoshop", stackLabel "Tools"
+     (the page's own meta strip records Illustrator · Photoshop — the real 2021
+     tools, not the earlier Figma guess).
    - **outcomeValue / outcomeLabel:** value "1", label "of 3 templates shipped,
      adopted by American Eagle". (CountUp on 1 is acceptable; if it reads flat,
      drop the outcome row and let Key moves carry it.)
@@ -67,18 +74,12 @@ Insert the shared recruiter-cut scaffold after the hero and before the first
      - "Designed one slot-map skeleton with three subculture fills, so a catalog
        stays native to each audience."
      - "Shipped the Light Academia template. American Eagle adopted it."
-3. `<ProjectToc sections={[...]} />` — one entry per existing section:
-   - "A template format for a platform of niches" → `tt-brief`
-   - "Five subcultures, three buckets" → `tt-research`
-   - "One skeleton, three fills" → `tt-system`
-   - "Three aesthetics" → `tt-aesthetics`
-   - "What ended up on TikTok" → `tt-shipped`
-   - "Where the work went" → `tt-scope`
-   - "What it taught me" → `tt-retro`
-4. `<div className="case-tier-divider"><span>The full breakdown ↓</span></div>`
+2. Keep the existing `<ProjectToc>` (already present, lines 92-102) unchanged.
+3. Add `<div className="case-tier-divider"><span>The full breakdown ↓</span></div>`
+   immediately after the `ProjectToc`, before the first `tt-section`.
 
-The bespoke `HeroThreePhones` hero stays (it is the case's signature). LeadMedia
-sits below it like the other cases' covers sit below their heroes.
+The bespoke `HeroThreePhones` hero stays untouched (it is the case's signature
+and its cover).
 
 ### 1c. Un-hide
 
