@@ -249,9 +249,11 @@ export default async function TikTokPage() {
             name and a newer optimization layer.
           </p>
           <p>
-            My contribution sits in the launch generation: three of the
-            30+ templates that shipped when the format went live. The
-            mechanic outlived the product that introduced it.
+            My contribution sits in the launch generation. I designed three
+            templates, one per aesthetic, part of the roughly ten the studio
+            built for launch. The Light Academia one shipped, and American
+            Eagle adopted it. The mechanic outlived the product that
+            introduced it.
           </p>
         </div>
 
