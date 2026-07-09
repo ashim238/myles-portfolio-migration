@@ -4995,55 +4995,28 @@ button:focus-visible,
    hero never ships blank on a hidden tab / headless render. */
 .tt-cover {
   position: relative;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-top: 0.5rem;
-  min-height: clamp(24rem, 62vh, 40rem);
+  width: min(var(--content-max), 100%);
+  margin: 1.75rem auto 0;
+  min-height: clamp(26rem, 60vh, 40rem);
   display: flex;
   align-items: flex-end;
   overflow: hidden;
+  border-radius: 1.4rem;
   background: #0a0a0f;
   isolation: isolate;
 }
-.tt-cover-goo {
+.tt-cover-field {
   position: absolute;
   inset: 0;
   z-index: 0;
   overflow: hidden;
-  background: radial-gradient(120% 92% at 50% 40%, #14141f 0%, #08080d 68%);
-}
-.tt-goo-defs {
-  position: absolute;
-  width: 0;
-  height: 0;
-}
-.tt-cover-field {
-  position: absolute;
-  inset: -8%;
-  filter: url(#tt-goo);
+  background: radial-gradient(120% 105% at 50% 32%, #16161f 0%, #08080d 70%);
 }
 .tt-cblob {
   position: absolute;
-  transform: translate(-50%, -50%);
+  height: auto;
   will-change: transform;
-}
-.tt-cblob--cyan {
-  background: #25f4ee;
-}
-.tt-cblob--blue {
-  background: #2f7bff;
-}
-.tt-cblob--white {
-  background: #eef0ff;
-}
-.tt-cblob--pink {
-  background: #ff8fc4;
-}
-.tt-cblob--magenta {
-  background: #fe2c55;
-}
-.tt-cblob--red {
-  background: #fe3b57;
+  filter: drop-shadow(0 12px 38px rgba(0, 0, 0, 0.3));
 }
 .tt-cover::after {
   content: "";
@@ -5079,71 +5052,71 @@ button:focus-visible,
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .tt-cblob--f1 {
-    animation: tt-bf1 var(--d) ease-in-out infinite alternate;
+  .tt-cblob--a1 {
+    animation: tt-bfloat1 var(--d) ease-in-out infinite alternate;
   }
-  .tt-cblob--f2 {
-    animation: tt-bf2 var(--d) ease-in-out infinite alternate;
+  .tt-cblob--a2 {
+    animation: tt-bfloat2 var(--d) ease-in-out infinite alternate;
   }
-  .tt-cblob--f3 {
-    animation: tt-bf3 var(--d) ease-in-out infinite alternate;
+  .tt-cblob--a3 {
+    animation: tt-bfloat3 var(--d) ease-in-out infinite alternate;
   }
-  .tt-cblob--f4 {
-    animation: tt-bf4 var(--d) ease-in-out infinite alternate;
+  .tt-cblob--a4 {
+    animation: tt-bfloat4 var(--d) ease-in-out infinite alternate;
   }
-  .tt-cblob--f5 {
-    animation: tt-bf5 var(--d) ease-in-out infinite alternate;
+  .tt-cblob--a5 {
+    animation: tt-bfloat5 var(--d) ease-in-out infinite alternate;
   }
-  .tt-cblob--f6 {
-    animation: tt-bf6 var(--d) ease-in-out infinite alternate;
-  }
-}
-@keyframes tt-bf1 {
-  from {
-    transform: translate(-50%, -50%) translate3d(0, 0, 0) scale(1);
-  }
-  to {
-    transform: translate(-50%, -50%) translate3d(2.6vw, -2vw, 0) scale(1.16);
+  .tt-cblob--a6 {
+    animation: tt-bfloat6 var(--d) ease-in-out infinite alternate;
   }
 }
-@keyframes tt-bf2 {
+@keyframes tt-bfloat1 {
   from {
-    transform: translate(-50%, -50%) translate3d(0, 0, 0) scale(1.05);
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
   }
   to {
-    transform: translate(-50%, -50%) translate3d(-2.2vw, 1.8vw, 0) scale(0.92);
+    transform: translate3d(0.8vw, -1vw, 0) rotate(2.5deg) scale(1.04);
   }
 }
-@keyframes tt-bf3 {
+@keyframes tt-bfloat2 {
   from {
-    transform: translate(-50%, -50%) translate3d(0, 0, 0) scale(0.95);
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1.02);
   }
   to {
-    transform: translate(-50%, -50%) translate3d(1.8vw, 2.4vw, 0) scale(1.12);
+    transform: translate3d(-1vw, 0.8vw, 0) rotate(-2.5deg) scale(0.97);
   }
 }
-@keyframes tt-bf4 {
+@keyframes tt-bfloat3 {
   from {
-    transform: translate(-50%, -50%) translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.98);
   }
   to {
-    transform: translate(-50%, -50%) translate3d(-2.8vw, -1.6vw, 0) scale(1.1);
+    transform: translate3d(0.9vw, 1.1vw, 0) rotate(3deg) scale(1.05);
   }
 }
-@keyframes tt-bf5 {
+@keyframes tt-bfloat4 {
   from {
-    transform: translate(-50%, -50%) translate3d(0, 0, 0) scale(1.08);
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
   }
   to {
-    transform: translate(-50%, -50%) translate3d(2vw, 2vw, 0) scale(0.9);
+    transform: translate3d(-1.1vw, -0.9vw, 0) rotate(-3deg) scale(1.03);
   }
 }
-@keyframes tt-bf6 {
+@keyframes tt-bfloat5 {
   from {
-    transform: translate(-50%, -50%) translate3d(0, 0, 0) scale(0.96);
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1.03);
   }
   to {
-    transform: translate(-50%, -50%) translate3d(-1.6vw, -2.4vw, 0) scale(1.14);
+    transform: translate3d(1.1vw, 0.9vw, 0) rotate(2deg) scale(0.96);
+  }
+}
+@keyframes tt-bfloat6 {
+  from {
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(0.97);
+  }
+  to {
+    transform: translate3d(-0.9vw, -1.1vw, 0) rotate(-2deg) scale(1.05);
   }
 }
 
