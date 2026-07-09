@@ -18,11 +18,11 @@ import { getPublishedProjects } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Fresh Greens",
   description:
-    "A graduate thesis: a routing problem that asks whose safety knowledge counts. Community observations flow through the same pipeline as OpenStreetMap, DOT-511, OSRM, and SunCalc, weighted the same way.",
+    "A wayfinding app for Black drivers in America, built solo for a grad thesis. It weighs what drivers know about a road's safety as seriously as the official map data.",
   openGraph: {
     title: "Fresh Greens",
     description:
-      "A graduate thesis: a routing problem that asks whose safety knowledge counts.",
+      "A wayfinding app for Black drivers in America, weighing safety knowledge from drivers alongside the official map data.",
     type: "article",
   },
 };
@@ -64,14 +64,11 @@ export default async function FreshGreensPage() {
           Fresh Greens
         </h1>
         <p className="project-hero-lede fg-lede">
-          A wayfinding app for Black drivers in America, built solo as a
-          graduate thesis. The argument is narrower than &quot;an app for
-          safety&quot;:{" "}
-          <mark className="case-highlight">whose safety knowledge counts when the route is computed?</mark>{" "}
-          Fresh Greens answers by running community observations through the
-          same pipeline as OpenStreetMap, DOT-511, OSRM, and SunCalc,
-          weighted the same way. Six driver interviews shaped the routing
-          signals.
+          A wayfinding app for Black drivers in America, built solo for my grad
+          thesis. Most navigation weighs time and distance. Fresh Greens weighs
+          safety too, and it treats{" "}
+          <mark className="case-highlight">what a driver knows about a road as seriously as the official map data</mark>.
+          Six interviews shaped what it looks for.
         </p>
       </section>
 
@@ -80,7 +77,7 @@ export default async function FreshGreensPage() {
         alt="Fresh Greens cover"
       />
       <RecruiterCut
-        problem="Routing engines optimize for time and distance, not for whose safety knowledge counts."
+        problem="Navigation weighs time and distance, not what a driver knows about a road's safety."
         role="Solo, design and engineering"
         timeline="Sep 2025 – Jun 2026"
         stack="React Native, Expo, TypeScript, Supabase"
