@@ -10628,17 +10628,22 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 .fg-synth { margin: 1.75rem 0 0; }
 .fg-synth-markers {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 0.9rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
+@media (max-width: 560px) {
+  .fg-synth-markers {
+    grid-template-columns: 1fr;
+  }
+}
 .fg-synth-marker {
   border: 1px solid var(--line);
-  border-radius: 0.9rem;
-  padding: 1.05rem 1.15rem;
-  background: color-mix(in srgb, var(--foreground) 2.5%, transparent);
+  border-radius: 0.7rem;
+  padding: 1.1rem;
+  background: var(--surface);
 }
 .fg-synth-marker-head {
   display: flex;
