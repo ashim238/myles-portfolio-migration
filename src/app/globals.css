@@ -3827,6 +3827,53 @@ button:focus-visible,
   max-width: 65ch;
 }
 
+/* In wide sections, designed artifacts get to breathe — capped so they
+   don't span the full page-shell, aligned left with the prose column. */
+.fg-section--wide .fg-token-figure,
+.fg-section--wide .fg-illustrations,
+.fg-section--wide .fg-palette,
+.fg-section--wide .fg-pivot,
+.fg-section--wide .fg-moderation,
+.fg-section--wide .fg-safety-pair {
+  max-width: min(52rem, 100%);
+}
+
+/* Cap caption line length so wider figures still read as body copy. */
+.fg-section--wide .fg-safety-visual-caption {
+  max-width: 60ch;
+  margin-inline: auto;
+}
+
+/* Pulled-over: two safety flows finally read as a pair on desktop. */
+.fg-safety-pair {
+  display: grid;
+  gap: 1.8rem;
+  margin: 2.2rem 0 2.6rem;
+}
+@media (min-width: 820px) {
+  .fg-safety-pair {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.8rem;
+    align-items: start;
+  }
+  .fg-safety-pair > .fg-safety-visual {
+    margin: 0;
+    max-width: none;
+  }
+}
+
+/* Illustration strip: was floating on transparent bg, now a warm-neutral
+   presentation panel that gives the yellow illustrations a designed frame. */
+.fg-illustrations {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 0.9rem;
+  padding: 1.4rem 1.4rem 1.1rem;
+}
+.fg-illustrations img {
+  border-radius: 0.35rem;
+}
+
 /* ── Phone frame ──────────────────────────────────────── */
 
 .fg-phone {

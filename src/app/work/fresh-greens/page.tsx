@@ -209,7 +209,7 @@ export default async function FreshGreensPage() {
 
       {/* ── Section 4: The Held-Question Rule ────────── */}
       <section
-        className="project-section fg-section"
+        className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-pulled-over"
       >
         <h2 id="fg-pulled-over">Designing for the pulled-over moment.</h2>
@@ -233,32 +233,34 @@ export default async function FreshGreensPage() {
           </p>
         </div>
 
-        <figure className="fg-safety-visual">
-          <PhoneFrame variant="screenshot">
-            <Shot
-              name="safety-toolkit"
-              alt="The /safety toolkit modal opening with 'What's going on?' set in Libre Franklin Regular over a 2x2 grid of Pulled-over, Roadside, Unfamiliar area, and Share location"
-            />
-          </PhoneFrame>
-          <figcaption className="fg-safety-visual-caption">
-            The Held-Question Rule in situ. <code>/safety</code>{" "}
-            opens on the driver&apos;s own question.
-          </figcaption>
-        </figure>
+        <div className="fg-safety-pair">
+          <figure className="fg-safety-visual">
+            <PhoneFrame variant="screenshot">
+              <Shot
+                name="safety-toolkit"
+                alt="The /safety toolkit modal opening with 'What's going on?' set in Libre Franklin Regular over a 2x2 grid of Pulled-over, Roadside, Unfamiliar area, and Share location"
+              />
+            </PhoneFrame>
+            <figcaption className="fg-safety-visual-caption">
+              The Held-Question Rule in situ. <code>/safety</code>{" "}
+              opens on the driver&apos;s own question.
+            </figcaption>
+          </figure>
 
-        <figure className="fg-safety-visual">
-          <PhoneFrame variant="screenshot">
-            <Shot
-              name="pulled-over-guidance"
-              alt="The /pulled-over guidance state with ACLU-sourced rights in plain language, a Read-aloud toggle, and a live recording indicator"
-            />
-          </PhoneFrame>
-          <figcaption className="fg-safety-visual-caption">
-            <code>/pulled-over</code> carries the ACLU rights guidance in
-            plain language, in Regular weight. The recording indicator is
-            the one exception red is allowed to make.
-          </figcaption>
-        </figure>
+          <figure className="fg-safety-visual">
+            <PhoneFrame variant="screenshot">
+              <Shot
+                name="pulled-over-guidance"
+                alt="The /pulled-over guidance state with ACLU-sourced rights in plain language, a Read-aloud toggle, and a live recording indicator"
+              />
+            </PhoneFrame>
+            <figcaption className="fg-safety-visual-caption">
+              <code>/pulled-over</code> carries the ACLU rights guidance in
+              plain language, in Regular weight. The recording indicator is
+              the one exception red is allowed to make.
+            </figcaption>
+          </figure>
+        </div>
 
         <div className="project-section-body">
           <p>
@@ -272,7 +274,7 @@ export default async function FreshGreensPage() {
 
       {/* ── Section 5: The material of calm ──────────── */}
       <section
-        className="project-section fg-section"
+        className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-typecolor"
       >
         <h2 id="fg-typecolor">Type and color.</h2>
@@ -338,7 +340,7 @@ export default async function FreshGreensPage() {
 
       {/* ── Section 6: Reserved color that holds ─────── */}
       <section
-        className="project-section fg-section fg-craft"
+        className="project-section fg-section fg-section--wide fg-craft"
         aria-labelledby="fg-color"
       >
         <h2 id="fg-color">The reserved color system.</h2>
@@ -397,7 +399,7 @@ export default async function FreshGreensPage() {
 
       {/* ── Section 7: Where the argument gets tested ── */}
       <section
-        className="project-section fg-section"
+        className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-trust"
       >
         <h2 id="fg-trust">Keeping community reports trustworthy.</h2>
