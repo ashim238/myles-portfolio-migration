@@ -85,7 +85,7 @@ export default async function FreshGreensPage() {
         timeline="Sep 2025 – Jun 2026"
         stack="React Native, Expo, TypeScript, Supabase"
         outcomeValue="26+"
-        outcomeLabel="screens shipped, holding a reserved-color rule and 300+ accessibility attributes"
+        outcomeLabel="screens shipped, held to a reserved-color rule"
         moves={[
           "Ran community safety reports through the same pipeline as OpenStreetMap, DOT-511, OSRM, and SunCalc, weighted the same way.",
           "Built the en-route screen around one-thumb reach: turn card, 3D map, and a safety column.",
@@ -157,9 +157,10 @@ export default async function FreshGreensPage() {
             style={{ width: "100%", height: "auto", display: "block" }}
           />
           <figcaption className="fg-safety-visual-caption">
-            The zone-flow storyboard, done by hand. That layered route stroke
-            marking a wildlife zone in the last panel got simplified into the
-            daylight gradient once it had to read at a glance.
+            The zone-flow storyboard, done by hand. The layered route stroke
+            marking a wildlife zone in the last panel was too dense to read at
+            a glance, so it got simplified into the daylight gradient the app
+            uses now.
           </figcaption>
         </figure>
 
@@ -460,9 +461,9 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body">
           <p>
-            It&apos;s where the trust question gets settled with real stakes. A
-            planned transparency page will publish the outcomes so the queue is
-            auditable from outside.
+            It&apos;s where community reports and public data meet the same
+            review. A planned transparency page will publish the outcomes so
+            the queue is auditable from outside.
           </p>
         </div>
 

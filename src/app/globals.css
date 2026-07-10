@@ -11121,59 +11121,13 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   Fresh Greens · Daylight-graded reading experience (overdrive)
-   The case is *about* a daylight-graded route, so the case-page
-   becomes one: page background subtly drifts from dawn cream → midday
-   → afternoon → dusk → deep evening as the reader scrolls. The ToC
-   rail traces the same journey through the reserved palette, so
-   scrolling the case literally draws a route in the app's own color
-   language. Progressive enhancement: reduced-motion & unsupported
-   browsers get the static midday tone. Light theme only.
+   Fresh Greens · Route-stroke ToC (overdrive)
+   The case is *about* a daylight-graded route, so the ToC becomes one:
+   its rail segments trace the same journey through the reserved palette
+   the case will announce in §6. Scrolling the case literally draws a
+   route in the app's own color language. Reduced-motion safe; segment
+   fills track scroll position directly with no easing.
    ══════════════════════════════════════════════════════════════════ */
-
-@property --fg-bg {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: #fafafa;
-}
-
-:root {
-  --fg-day-dawn: oklch(0.98 0.008 75);
-  --fg-day-noon: oklch(0.985 0.004 90);
-  --fg-day-afternoon: oklch(0.97 0.011 55);
-  --fg-day-dusk: oklch(0.95 0.015 320);
-  --fg-day-evening: oklch(0.93 0.02 265);
-}
-
-/* Static fallback — used when scroll-driven animations aren't supported
-   or when the reader prefers reduced motion. Midday tone, always readable. */
-body:has(.fg-page) {
-  --fg-bg: var(--fg-day-noon);
-  background: var(--fg-bg);
-}
-
-@supports (animation-timeline: scroll()) {
-  @media (prefers-reduced-motion: no-preference) {
-    body:has(.fg-page) {
-      animation: fg-daylight-arc linear both;
-      animation-timeline: scroll();
-    }
-  }
-}
-
-@keyframes fg-daylight-arc {
-  0%   { --fg-bg: var(--fg-day-dawn); }
-  22%  { --fg-bg: var(--fg-day-noon); }
-  55%  { --fg-bg: var(--fg-day-afternoon); }
-  82%  { --fg-bg: var(--fg-day-dusk); }
-  100% { --fg-bg: var(--fg-day-evening); }
-}
-
-/* Dark theme: no daylight metaphor — keep the current dark bg static. */
-:root[data-theme="dark"] body:has(.fg-page) {
-  --fg-bg: var(--background);
-  animation: none;
-}
 
 /* ── Route-stroke ToC: rail segments trace the reserved palette
       across the case's emotional arc. The colors are the same ones
