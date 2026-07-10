@@ -10875,13 +10875,6 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
   text-transform: uppercase;
   color: var(--muted);
 }
-.fg-pivot-canvas {
-  width: 100%;
-  max-width: 40rem;
-  border: 1px solid var(--line);
-  border-radius: 0.75rem;
-  overflow: hidden;
-}
 .fg-pivot-phone {
   width: 100%;
   max-width: 16.5rem;

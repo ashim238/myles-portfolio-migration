@@ -2,9 +2,10 @@ import { PhoneFrame } from "@/components/fresh-greens";
 import { ExpandableImage } from "@/components/expandable-image";
 
 /**
- * The design-direction pivot: v1 borrowed Google Maps (Fresh Greens imagined
- * as a plugin), then broke away into its own build. Two staged shots, the
- * borrowed idiom against the distinct result, each with a one-line rationale.
+ * The design-direction pivot: v1 was Fresh Greens as a feature inside Google
+ * Maps (Google's chrome, safety controls bolted on), then rebuilt as a
+ * standalone app with its own identity. Two phone shots, the Google-Maps
+ * feature against the distinct result, each with a one-line rationale.
  */
 export function PivotJourney() {
   return (
@@ -15,21 +16,23 @@ export function PivotJourney() {
       <ol className="fg-pivot-steps" role="list">
         <li className="fg-pivot-step fg-pivot-step--v1">
           <p className="fg-pivot-step-label">First pass</p>
-          <div className="fg-pivot-canvas">
-            <ExpandableImage
-              src="/projects/fresh-greens/process/pivot-google-v1-tile.png"
-              alt="An early Figma flow from when Fresh Greens was designed as a Google Maps feature: a route-overview card beside six turn-by-turn screens with a green Head South banner and Google's map chrome."
-              width={790}
-              height={250}
-              sizes="(max-width: 768px) 92vw, 680px"
-              style={{ width: "100%", height: "auto", display: "block" }}
-            />
+          <div className="fg-pivot-phone">
+            <PhoneFrame variant="screenshot">
+              <ExpandableImage
+                src="/projects/fresh-greens/process/pivot-google-v1-screen.png"
+                alt="An early Fresh Greens screen from when it was a Google Maps feature: Google's own green turn banner, blue route line, and 3D map chrome, with Fresh Greens' Safety button and a hazard marker added down the side."
+                width={390}
+                height={844}
+                sizes="(max-width: 768px) 62vw, 300px"
+                className="fg-feature-shot"
+              />
+            </PhoneFrame>
           </div>
           <p className="fg-pivot-caption">
             At first I imagined Fresh Greens as a feature inside Google Maps, so
-            v1 was built in Google&apos;s own turn cards and chrome. That moved
-            fast, and it capped the whole idea at Google Maps with a few extra
-            pins.
+            v1 wore Google&apos;s turn banner and map chrome, with my safety
+            controls down the side. That moved fast, and it capped the whole
+            idea at Google Maps with a safety layer bolted on.
           </p>
         </li>
 
