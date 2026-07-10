@@ -313,7 +313,8 @@ export default async function FreshGreensPage() {
             source instead of the platform&apos;s default gray.
           </p>
           <p>
-            Libre Franklin carries the whole type hierarchy. DM Serif Display
+            Type took three tries. Jost first, then Space Grotesk, then Libre
+            Franklin, which carries the whole hierarchy now. DM Serif Display
             shows up in exactly six emotional moments, like the emergency
             reassurance line and the &quot;Thanks for sharing&quot; on{" "}
             <code>/trip-summary</code>. Reserving it for those six is what
@@ -542,9 +543,11 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body fg-scope-closer">
           <p>
-            Typography took three tries. Jost first, then Space Grotesk, then
-            Libre Franklin with DM Serif Display reserved for the six emotional
-            beats.
+            What comes next is less about features and more about
+            accountability. The transparency page is the one I care about most.
+            It puts the <code>/moderation</code> queue&apos;s decisions in
+            public, so the trust the whole system runs on can be checked from
+            outside.
           </p>
         </div>
       </section>
