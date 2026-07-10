@@ -11134,36 +11134,37 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   Fresh Greens · Reserved-palette ToC (overdrive)
-   The ToC becomes a live demonstration of §6's reserved-palette rule.
-   Each segment gets the reserved color whose role in the app matches
-   what the section argues:
+   Fresh Greens · Daylight-arc ToC (overdrive)
+   The ToC traces a dawn-to-night arc across the case's nine sections.
+   No prior knowledge required — a first-time viewer scrolling the case
+   just feels time passing as they read. When they later reach §6 and
+   learn the app uses a daylight-graded route, the metaphor snaps into
+   place retroactively: the reading was the drive.
 
-     §1 Problem       → orange (hazard)
-     §2 Research      → yellow (caution)
-     §3 Scoring       → freshgreen (primary CTA / in-flow)
-     §4 Pulled-over   → navy (safety affordance)
-     §5 Design pivot  → freshgreen (primary — brand return)
-     §6 Type & color  → wiltedgreen (secondary CTA / headers)
-     §7 Reserved      → burntgreen (deep accents)
-     §8 Trust         → navy (safety affordance)
-     §9 Scope         → burntgreen (deep accents)
+     §1 Problem       → sunrise orange
+     §2 Research      → morning gold
+     §3 Scoring       → bright morning
+     §4 Pulled-over   → peak-sun coral
+     §5 Design pivot  → afternoon warm
+     §6 Type & color  → sunset rose
+     §7 Reserved      → dusk purple
+     §8 Trust         → evening indigo
+     §9 Scope         → night navy
 
-   Red does not appear — it's reserved in the app for one exception,
-   and the ToC keeps that discipline. Reduced-motion safe; segment
-   fills track scroll position with no easing.
+   Reduced-motion safe; segment fills track scroll position with no
+   easing.
    ══════════════════════════════════════════════════════════════════ */
 
-/* ── Section colors, mapped to reserved-palette roles ────────────── */
-.fg-page .project-toc-item:nth-child(1) { --seg-color: #FF9500; } /* orange     — hazard (Problem) */
-.fg-page .project-toc-item:nth-child(2) { --seg-color: #FFCC00; } /* yellow     — caution (Research) */
-.fg-page .project-toc-item:nth-child(3) { --seg-color: #41AD49; } /* freshgreen — primary CTA (Scoring) */
-.fg-page .project-toc-item:nth-child(4) { --seg-color: #041E49; } /* navy       — safety affordance (Pulled-over) */
-.fg-page .project-toc-item:nth-child(5) { --seg-color: #41AD49; } /* freshgreen — primary, brand return (Design pivot) */
-.fg-page .project-toc-item:nth-child(6) { --seg-color: #326936; } /* wiltedgreen— secondary CTA / headers (Type & color) */
-.fg-page .project-toc-item:nth-child(7) { --seg-color: #003F04; } /* burntgreen — deep accents (Reserved) */
-.fg-page .project-toc-item:nth-child(8) { --seg-color: #041E49; } /* navy       — safety affordance (Trust) */
-.fg-page .project-toc-item:nth-child(9) { --seg-color: #003F04; } /* burntgreen — deep accents (Scope) */
+/* ── Section colors, arranged as a dawn → night arc ──────────────── */
+.fg-page .project-toc-item:nth-child(1) { --seg-color: #F09456; } /* sunrise orange     */
+.fg-page .project-toc-item:nth-child(2) { --seg-color: #F9C048; } /* morning gold       */
+.fg-page .project-toc-item:nth-child(3) { --seg-color: #FDD350; } /* bright morning     */
+.fg-page .project-toc-item:nth-child(4) { --seg-color: #EA6D3C; } /* peak-sun coral     */
+.fg-page .project-toc-item:nth-child(5) { --seg-color: #C74757; } /* afternoon warm     */
+.fg-page .project-toc-item:nth-child(6) { --seg-color: #A03E7C; } /* sunset rose        */
+.fg-page .project-toc-item:nth-child(7) { --seg-color: #664188; } /* dusk purple        */
+.fg-page .project-toc-item:nth-child(8) { --seg-color: #3B3878; } /* evening indigo     */
+.fg-page .project-toc-item:nth-child(9) { --seg-color: #1B1E4B; } /* night navy         */
 
 .fg-page .project-toc-rail::after {
   background: var(--seg-color, var(--toc-fill));
@@ -11174,29 +11175,30 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 }
 
 .fg-page .project-toc-link--active {
-  /* Active section still gets its faint tint, but keyed to the section's
-     own reserved-palette color instead of a single flat accent. */
+  /* Active section still gets its faint tint, keyed to the section's
+     own daylight color so the tint reads as "the sky at this moment." */
   background: color-mix(in srgb, var(--seg-color, var(--toc-fill)) 10%, transparent);
 }
 
-/* Mobile / tablet progress hairline: paint the full 9-segment reserved
-   palette behind, then use a mask to reveal only the portion the reader
-   has scrolled through. Same section-to-role mapping as the desktop
-   rails — you see where you've been in the app's own color language. */
+/* Mobile / tablet progress hairline: paint the full daylight arc behind,
+   then use a mask to reveal only the portion the reader has scrolled
+   through. As they scroll the bar drifts from dawn orange through peak
+   sun to night navy — same journey the desktop rails trace, drawn as a
+   continuous horizon. */
 .fg-page .project-toc-progress {
   transform: none;
   width: 100%;
   background: linear-gradient(
     to right,
-    #FF9500 0 11.11%,
-    #FFCC00 11.11% 22.22%,
-    #41AD49 22.22% 33.33%,
-    #041E49 33.33% 44.44%,
-    #41AD49 44.44% 55.55%,
-    #326936 55.55% 66.66%,
-    #003F04 66.66% 77.77%,
-    #041E49 77.77% 88.88%,
-    #003F04 88.88% 100%
+    #F09456 0 11.11%,
+    #F9C048 11.11% 22.22%,
+    #FDD350 22.22% 33.33%,
+    #EA6D3C 33.33% 44.44%,
+    #C74757 44.44% 55.55%,
+    #A03E7C 55.55% 66.66%,
+    #664188 66.66% 77.77%,
+    #3B3878 77.77% 88.88%,
+    #1B1E4B 88.88% 100%
   );
   -webkit-mask: linear-gradient(
     to right,
