@@ -14,6 +14,7 @@ import {
 import { Device3D } from "@/components/device-3d";
 import { ResearchSynthesis } from "@/components/fresh-greens/research-synthesis";
 import { TokenExhibit } from "@/components/fresh-greens/token-exhibit";
+import { PivotJourney } from "@/components/fresh-greens/pivot-journey";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getPublishedProjects } from "@/lib/content";
 
@@ -279,6 +280,16 @@ export default async function FreshGreensPage() {
         <p className="case-section-lead">
           Warm surfaces and a reserved serif give type and color a job at each phase of a trip.
         </p>
+        <div className="project-section-body">
+          <p>
+            The look didn&apos;t start distinct. v1 leaned on Google Maps, back
+            when I still pictured Fresh Greens as a plugin. Breaking out of that
+            frame is what forced a type and color system of its own.
+          </p>
+        </div>
+
+        <PivotJourney />
+
         <div className="project-section-body">
           <p>
             I swapped iOS&apos;s cool grays for five warm surfaces, all built

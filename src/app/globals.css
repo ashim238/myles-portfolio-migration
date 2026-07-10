@@ -10840,3 +10840,58 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
     font-size: 0.82rem;
   }
 }
+
+/* ── Fresh Greens Google→distinct pivot ──────────────── */
+.fg-pivot {
+  margin: 1.75rem 0 0;
+}
+.fg-pivot-steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 1.4rem;
+}
+.fg-pivot-step {
+  display: grid;
+  justify-items: center;
+  gap: 0.9rem;
+  text-align: center;
+}
+/* the arrow tracing v1 → the break */
+.fg-pivot-step:not(:last-child)::after {
+  content: "↓";
+  font-size: 1.15rem;
+  line-height: 1;
+  color: var(--fg-accent);
+  opacity: 0.7;
+  margin-top: 0.5rem;
+}
+.fg-pivot-step-label {
+  margin: 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.fg-pivot-canvas {
+  width: 100%;
+  max-width: 40rem;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+.fg-pivot-phone {
+  width: 100%;
+  max-width: 16.5rem;
+  margin-inline: auto;
+}
+.fg-pivot-caption {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
