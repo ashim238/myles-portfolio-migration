@@ -10988,6 +10988,73 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
   margin: 2.2rem 0 2.6rem;
 }
 
+/* ── Zone-flow thesis storyboard (§3) ─────────────────── */
+.fg-zone-flow {
+  margin: 2.2rem 0 2.6rem;
+  max-width: min(52rem, 100%);
+}
+.fg-zone-flow img {
+  border-radius: 0.5rem;
+  border: 1px solid var(--line);
+}
+
+/* ── Pulled-over: emotional-peak H2 anchor ────────────── */
+.project-section > h2#fg-pulled-over {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -0.028em;
+  line-height: 1.08;
+}
+
+/* ── Pivot: side-by-side on desktop ───────────────────── */
+@media (min-width: 820px) {
+  .fg-pivot-steps {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  /* Vertical arrow was between stacked steps; on desktop the side-by-side
+     layout IS the comparison, no arrow needed. */
+  .fg-pivot-step:not(:last-child)::after {
+    content: none;
+  }
+}
+
+/* ── Pivot micro-reveal (matches token exhibit craft) ─── */
+.fg-pivot[data-reveal="pending"] .fg-pivot-step {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.fg-pivot[data-reveal] .fg-pivot-step {
+  transition:
+    opacity 0.55s ease-out,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.fg-pivot[data-reveal] .fg-pivot-step:nth-child(1) { transition-delay: 0.05s; }
+.fg-pivot[data-reveal] .fg-pivot-step:nth-child(2) { transition-delay: 0.35s; }
+.fg-pivot[data-reveal="in"] .fg-pivot-step {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Reserved color: palette + phone pair on desktop ──── */
+.fg-color-pair {
+  display: grid;
+  gap: 1.8rem;
+  margin: 2.2rem 0 2.6rem;
+  max-width: min(52rem, 100%);
+}
+@media (min-width: 820px) {
+  .fg-color-pair {
+    grid-template-columns: 1.35fr 1fr;
+    gap: 2.4rem;
+    align-items: center;
+  }
+  .fg-color-pair > .fg-safety-visual {
+    margin: 0;
+    max-width: none;
+  }
+}
+
 /* ── Fresh Greens moderation flow ─────────────────────── */
 .fg-moderation {
   margin: 2.2rem 0 2.6rem;

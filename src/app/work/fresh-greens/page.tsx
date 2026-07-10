@@ -131,9 +131,10 @@ export default async function FreshGreensPage() {
       >
         <h2 id="fg-research">Listening to six drivers.</h2>
         <p className="case-section-lead">
-          Six interviews with Black drivers across the Southern US. The timeline
-          was tight, so the synthesis stayed lean: I pulled the recurring trends
-          into four routing markers.
+          Six interviews with Black drivers across the Southern US, anonymized
+          in synthesis and led with joy and fear before any product questions.
+          The timeline was tight, so the synthesis stayed lean: I pulled the
+          recurring trends into four routing markers.
         </p>
 
         <figure className="fg-pullquote">
@@ -201,6 +202,24 @@ export default async function FreshGreensPage() {
             you can drag, and a safety column within thumb&apos;s reach.
           </p>
         </div>
+
+        <figure className="fg-zone-flow">
+          <ExpandableImage
+            src="/projects/fresh-greens/process/thesis-zone-flow.png"
+            alt="Hand-drawn thesis storyboard of the zone flow across four panels: baseline navigation, one mile out from a zone, actively entering a zone, and in the zone, with annotations about tooltip timing and route stroke behavior."
+            width={2675}
+            height={1407}
+            sizes="(max-width: 768px) 92vw, 832px"
+            style={{ width: "100%", height: "auto", display: "block" }}
+          />
+          <figcaption className="fg-safety-visual-caption">
+            The zone-flow storyboard, hand-drawn during thesis. The layered
+            route stroke marking a wildlife zone in the last panel got
+            simplified into the daylight gradient once it had to read at a
+            glance.
+          </figcaption>
+        </figure>
+
         <Device3D
           screen="/projects/fresh-greens/v2/en-route.png"
           alt="Fresh Greens en-route screen running on an iPhone: a turn card reading 'Head out on Spencer Street,' a 3D map, and a side column for Guide, SOS, Safety, Report, and Recenter."
@@ -357,21 +376,23 @@ export default async function FreshGreensPage() {
           </p>
         </div>
 
-        <ReservedPalette />
+        <div className="fg-color-pair">
+          <ReservedPalette />
 
-        <figure className="fg-safety-visual">
-          <PhoneFrame variant="screenshot">
-            <Shot
-              name="en-route"
-              alt="The Fresh Greens en-route screen: a navy safety Shield, hazard markers, and the daylight-graded route line, the reserved colors holding together on one real screen"
-            />
-          </PhoneFrame>
-          <figcaption className="fg-safety-visual-caption">
-            The reserved palette holding on a real screen: navy for the safety
-            Shield, the daylight gradient on the route, hazard markers in their
-            reserved hues, and green everywhere else.
-          </figcaption>
-        </figure>
+          <figure className="fg-safety-visual">
+            <PhoneFrame variant="screenshot">
+              <Shot
+                name="en-route"
+                alt="The Fresh Greens en-route screen: a navy safety Shield, hazard markers, and the daylight-graded route line, the reserved colors holding together on one real screen"
+              />
+            </PhoneFrame>
+            <figcaption className="fg-safety-visual-caption">
+              The reserved palette holding on a real screen: navy for the
+              safety Shield, the daylight gradient on the route, hazard markers
+              in their reserved hues, and green everywhere else.
+            </figcaption>
+          </figure>
+        </div>
 
         <div className="project-section-body">
           <p>

@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import { PhoneFrame } from "@/components/fresh-greens";
 import { ExpandableImage } from "@/components/expandable-image";
 
@@ -5,13 +8,51 @@ import { ExpandableImage } from "@/components/expandable-image";
  * The design-direction pivot: v1 was Fresh Greens as a feature inside Google
  * Maps (Google's chrome, safety controls bolted on), then rebuilt as a
  * standalone app with its own identity. Two phone shots, the Google-Maps
- * feature against the distinct result, each with a one-line rationale.
+ * feature against the distinct result, each with a one-line rationale. On
+ * scroll into view the two steps stagger-fade in — matches the token
+ * exhibit's motion craft. Visible by default (no-JS / reduced-motion
+ * untouched) with a timeout fallback so a headless render never ships blank.
  */
 export function PivotJourney() {
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    el.setAttribute("data-reveal", "pending");
+    const reveal = () => el.setAttribute("data-reveal", "in");
+
+    if (!("IntersectionObserver" in window)) {
+      reveal();
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            reveal();
+            io.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" },
+    );
+    io.observe(el);
+    const fallback = window.setTimeout(reveal, 3000);
+    return () => {
+      io.disconnect();
+      window.clearTimeout(fallback);
+    };
+  }, []);
+
   return (
     <div
       className="fg-pivot"
       aria-label="From a Google Maps feature to a standalone app"
+      ref={rootRef}
     >
       <ol className="fg-pivot-steps" role="list">
         <li className="fg-pivot-step fg-pivot-step--v1">
