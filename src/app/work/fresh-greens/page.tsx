@@ -12,6 +12,7 @@ import {
   ReservedPalette,
 } from "@/components/fresh-greens";
 import { Device3D } from "@/components/device-3d";
+import { ResearchSynthesis } from "@/components/fresh-greens/research-synthesis";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getPublishedProjects } from "@/lib/content";
 
@@ -123,17 +124,15 @@ export default async function FreshGreensPage() {
 
       {/* ── Section 2: Listening to six drivers ──────── */}
       <section
-        className="project-section fg-section"
+        className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-research"
       >
         <h2 id="fg-research">Listening to six drivers.</h2>
-        <div className="project-section-body">
-          <p>
-            Six semi-structured interviews with Black drivers across the
-            Southern US grounded the whole project. The four traces below
-            carry the most weight in the shipped app.
-          </p>
-        </div>
+        <p className="case-section-lead">
+          Six interviews with Black drivers across the Southern US. The timeline
+          was tight, so the synthesis stayed lean: I pulled the recurring trends
+          into four routing markers.
+        </p>
 
         <figure className="fg-pullquote">
           <blockquote>
@@ -143,92 +142,30 @@ export default async function FreshGreensPage() {
           <figcaption>Thesis · Fresh Greens, 2026</figcaption>
         </figure>
 
-        <div className="project-section-body">
-          <h3 className="fg-h3">Daylight as a first-class input.</h3>
-          <p>
-            Factoring light into a routing decision came up in almost every
-            conversation. Drivers described leaving before sunrise on long
-            trips so there&apos;d be daylight at the destination, and
-            choosing gas stations with lit cashier windows over darker
-            options. One respondent named daylight explicitly as a factor
-            they routed against. That became the SunCalc gradient: a
-            per-segment daylight score baked into scoring, not a night-mode
-            toggle. SunCalc&apos;s model shifts with latitude, which matters
-            because the drivers who mentioned it were routing across states.
-          </p>
-        </div>
+        <ResearchSynthesis />
 
-        <figure className="fg-safety-visual">
-          <PhoneFrame variant="screenshot">
-            <Shot
-              name="route-preview"
-              alt="A Fresh Greens route preview to Vineland Flea Market showing the daylight-graded route line and a sunrise-to-night gradient strip marking how much of the drive falls in daylight"
-            />
-          </PhoneFrame>
+        <figure className="fg-lofi">
+          <ExpandableImage
+            src="/projects/fresh-greens/process/lofi-board.png"
+            alt="Hand-drawn lo-fi wireframes of Fresh Greens: route selection, the zone flow, active navigation, and the hold-to-call emergency flow"
+            width={2400}
+            height={1350}
+            sizes="(max-width: 768px) 92vw, 900px"
+            style={{ width: "100%", height: "auto", display: "block" }}
+          />
           <figcaption className="fg-safety-visual-caption">
-            The daylight gradient made visible: the route strip grades from
-            sunrise to night, so a driver can see how much of a drive falls in
-            daylight before choosing it.
+            The last lo-fi pass, done by hand. That layered route stroke marking
+            a zone got simplified once it had to read on a small screen at a
+            glance.
           </figcaption>
         </figure>
 
         <div className="project-section-body">
-          <h3 className="fg-h3">
-            The voice at <code>/pulled-over</code>.
-          </h3>
           <p>
-            Respondents talked about being wary and cautious around law
-            enforcement, and named the behaviors they&apos;d been taught by
-            family and community to stay safe. Drivers described those
-            moments as high-pressure and named what they wanted from any
-            tool present: a voice that felt human, not a UI they had to
-            operate. That&apos;s the observation that produced the
-            Held-Question Rule, and it&apos;s why the ACLU-sourced{" "}
-            <code>/pulled-over</code> language sits in Libre Franklin Regular
-            rather than a bold warning banner.
-          </p>
-
-          <h3 className="fg-h3">Community as the authority.</h3>
-          <p>
-            The six report categories exist because the interviews kept
-            surfacing two overlapping habits: skepticism of the authorities
-            and reliance on community members for the ground truth of a
-            place. Drivers already asked around before entering an unfamiliar
-            area. The report picker turns that habit into a first-class
-            input. &quot;Felt welcome&quot; and &quot;Black-owned&quot; sit
-            next to &quot;Incident&quot; and &quot;Hazard&quot; because a
-            positive signal is data the next driver can use, and because a
-            category system that only allows negative reports fails to
-            capture the community knowledge that was actually described.
-          </p>
-        </div>
-
-        <figure className="fg-safety-visual">
-          <PhoneFrame variant="screenshot">
-            <Shot
-              name="report-picker"
-              alt="The Fresh Greens report picker: a grid of six categories (Incident, Felt unsafe, Lighting, Hazard, Felt welcome, and Black-owned) placing positive community signals next to hazards"
-            />
-          </PhoneFrame>
-          <figcaption className="fg-safety-visual-caption">
-            &quot;Felt welcome&quot; and &quot;Black-owned&quot; sit in the same
-            grid as &quot;Incident&quot; and &quot;Hazard.&quot; A positive
-            signal is data the next driver can use.
-          </figcaption>
-        </figure>
-
-        <div className="project-section-body">
-          <h3 className="fg-h3">Where I had to step back.</h3>
-          <p>
-            My first instinct after the interviews was to load the interface
-            with as many safety layers as possible: zone-entry stroke
-            variants on the route line, warning chips stacked across every
-            screen, ambient alerts. What the interviews also said, quietly,
-            was that driving already takes focus, and a safety app that
-            stacks alerts on top of that is asking the driver to hold more
-            than they can. I scaled back. The safety toolkit stays hidden
-            until a driver reaches for it. The route preview shows the
-            daylight strip and the zone chips and nothing more.
+            My first instinct after the interviews was to stack every safety
+            layer onto the screen. The interviews also said, quietly, that
+            driving already takes focus. So I pulled most of it back. The safety
+            toolkit stays hidden until a driver reaches for it.
           </p>
         </div>
       </section>
