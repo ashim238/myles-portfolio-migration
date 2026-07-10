@@ -241,8 +241,8 @@ export default async function FreshGreensPage() {
             />
           </PhoneFrame>
           <figcaption className="fg-safety-visual-caption">
-            The Held-Question Rule in situ. <code>/safety</code> opens on
-            the driver&apos;s own question.
+            The Held-Question Rule in situ. <code>/safety</code>{" "}
+            opens on the driver&apos;s own question.
           </figcaption>
         </figure>
 
@@ -545,9 +545,9 @@ export default async function FreshGreensPage() {
           <p>
             What comes next is mostly about accountability. The transparency
             page is the one I care about most.
-            It puts the <code>/moderation</code> queue&apos;s decisions in
-            public, so the trust the whole system runs on can be checked from
-            outside.
+            It puts the <code>/moderation</code>{" "}
+            queue&apos;s decisions in public, so the trust the whole system
+            runs on can be checked from outside.
           </p>
         </div>
       </section>
