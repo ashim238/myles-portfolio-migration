@@ -11182,11 +11182,12 @@ body:has(.fg-page) {
 .fg-page .project-toc-item:nth-child(1) { --seg-color: #FF9500; } /* orange — dawn */
 .fg-page .project-toc-item:nth-child(2) { --seg-color: #FFCC00; } /* yellow — morning */
 .fg-page .project-toc-item:nth-child(3) { --seg-color: #41AD49; } /* freshgreen — midday */
-.fg-page .project-toc-item:nth-child(4) { --seg-color: #FF3B30; } /* red — pulled-over peak */
-.fg-page .project-toc-item:nth-child(5) { --seg-color: #326936; } /* wiltedgreen — afternoon */
-.fg-page .project-toc-item:nth-child(6) { --seg-color: #003F04; } /* burntgreen — dusk */
-.fg-page .project-toc-item:nth-child(7) { --seg-color: #041E49; } /* navy — evening */
-.fg-page .project-toc-item:nth-child(8) { --seg-color: #003F04; } /* burntgreen — night */
+.fg-page .project-toc-item:nth-child(4) { --seg-color: #041E49; } /* navy — pulled-over: safety affordance, not alarm */
+.fg-page .project-toc-item:nth-child(5) { --seg-color: #41AD49; } /* freshgreen — pivot: return to brand identity */
+.fg-page .project-toc-item:nth-child(6) { --seg-color: #326936; } /* wiltedgreen — afternoon */
+.fg-page .project-toc-item:nth-child(7) { --seg-color: #003F04; } /* burntgreen — dusk */
+.fg-page .project-toc-item:nth-child(8) { --seg-color: #041E49; } /* navy — evening */
+.fg-page .project-toc-item:nth-child(9) { --seg-color: #003F04; } /* burntgreen — night */
 
 .fg-page .project-toc-rail::after {
   background: var(--seg-color, var(--toc-fill));

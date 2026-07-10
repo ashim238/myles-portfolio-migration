@@ -84,12 +84,11 @@ export default async function FreshGreensPage() {
         role="Solo, design and engineering"
         timeline="Sep 2025 – Jun 2026"
         stack="React Native, Expo, TypeScript, Supabase"
-        outcomeValue="62"
-        outcomeLabel="design tokens shipped as a Figma library, 1:1 with the app's theme"
+        outcomeValue="26+"
+        outcomeLabel="screens shipped, holding a reserved-color rule and 300+ accessibility attributes"
         moves={[
           "Ran community safety reports through the same pipeline as OpenStreetMap, DOT-511, OSRM, and SunCalc, weighted the same way.",
           "Built the en-route screen around one-thumb reach: turn card, 3D map, and a safety column.",
-          "Held the reserved-color rule across 26+ screens and 300+ accessibility attributes.",
           "Shaped the routing signals from six driver interviews.",
         ]}
       />
@@ -100,6 +99,7 @@ export default async function FreshGreensPage() {
           { title: "Listening to six drivers", id: "fg-research" },
           { title: "How routes get scored", id: "fg-scoring" },
           { title: "Designing for the pulled-over moment", id: "fg-pulled-over" },
+          { title: "The direction I tried first", id: "fg-pivot" },
           { title: "Type and color", id: "fg-typecolor" },
           { title: "The reserved color system", id: "fg-color" },
           { title: "Keeping community reports trustworthy", id: "fg-trust" },
@@ -274,7 +274,20 @@ export default async function FreshGreensPage() {
         </div>
       </section>
 
-      {/* ── Section 5: The material of calm ──────────── */}
+      {/* ── Section 5: The design pivot ───────────────── */}
+      <section
+        className="project-section fg-section fg-section--wide"
+        aria-labelledby="fg-pivot"
+      >
+        <h2 id="fg-pivot">The direction I tried first.</h2>
+        <p className="case-section-lead">
+          The first pass was a Google Maps feature.
+        </p>
+
+        <PivotJourney />
+      </section>
+
+      {/* ── Section 6: Type and color ─────────────────── */}
       <section
         className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-typecolor"
@@ -283,16 +296,6 @@ export default async function FreshGreensPage() {
         <p className="case-section-lead">
           Warm surfaces and a reserved serif give type and color a job at each phase of a trip.
         </p>
-        <div className="project-section-body">
-          <p>
-            The look didn&apos;t start distinct. I first imagined Fresh Greens
-            as a feature inside Google Maps, so v1 wore Google&apos;s own chrome.
-            Rebuilding it as a standalone app is what forced a type and color
-            system of its own.
-          </p>
-        </div>
-
-        <PivotJourney />
 
         <figure className="fg-illustrations">
           <ExpandableImage
