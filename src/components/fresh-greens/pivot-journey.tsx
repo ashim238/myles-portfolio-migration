@@ -10,7 +10,7 @@ export function PivotJourney() {
   return (
     <div
       className="fg-pivot"
-      aria-label="From a Google Maps plugin to a build of its own"
+      aria-label="From a Google Maps feature to a standalone app"
     >
       <ol className="fg-pivot-steps" role="list">
         <li className="fg-pivot-step fg-pivot-step--v1">
@@ -18,7 +18,7 @@ export function PivotJourney() {
           <div className="fg-pivot-canvas">
             <ExpandableImage
               src="/projects/fresh-greens/process/pivot-google-v1-tile.png"
-              alt="An early Figma flow where Fresh Greens borrowed Google Maps: a route-overview card beside six turn-by-turn screens with a green Head South banner and Google's map chrome."
+              alt="An early Figma flow from when Fresh Greens was designed as a Google Maps feature: a route-overview card beside six turn-by-turn screens with a green Head South banner and Google's map chrome."
               width={790}
               height={250}
               sizes="(max-width: 768px) 92vw, 680px"
@@ -26,9 +26,10 @@ export function PivotJourney() {
             />
           </div>
           <p className="fg-pivot-caption">
-            I first pictured Fresh Greens as a layer inside Google Maps, so the
-            first Figma pass borrowed its turn cards and chrome. It moved fast,
-            and it boxed the whole idea into Google Maps with a few extra pins.
+            At first I imagined Fresh Greens as a feature inside Google Maps, so
+            v1 was built in Google&apos;s own turn cards and chrome. That moved
+            fast, and it capped the whole idea at Google Maps with a few extra
+            pins.
           </p>
         </li>
 
@@ -47,8 +48,8 @@ export function PivotJourney() {
             </PhoneFrame>
           </div>
           <p className="fg-pivot-caption">
-            Leaving that frame is what let the safety signals become the
-            interface. The route preview grades the road by daylight, reads
+            Rebuilding it as its own app is what let the safety signals become
+            the interface. The route preview grades the road by daylight, reads
             safety at a glance, flags a station you trust, and carries its own
             glyphs on the warm surfaces.
           </p>

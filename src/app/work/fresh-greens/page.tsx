@@ -281,9 +281,10 @@ export default async function FreshGreensPage() {
         </p>
         <div className="project-section-body">
           <p>
-            The look didn&apos;t start distinct. v1 leaned on Google Maps, back
-            when I still pictured Fresh Greens as a plugin. Breaking out of that
-            frame is what forced a type and color system of its own.
+            The look didn&apos;t start distinct. I first imagined Fresh Greens
+            as a feature inside Google Maps, so v1 wore Google&apos;s own chrome.
+            Rebuilding it as a standalone app is what forced a type and color
+            system of its own.
           </p>
         </div>
 
