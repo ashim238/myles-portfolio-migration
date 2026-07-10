@@ -13,6 +13,7 @@ import {
 } from "@/components/fresh-greens";
 import { Device3D } from "@/components/device-3d";
 import { ResearchSynthesis } from "@/components/fresh-greens/research-synthesis";
+import { TokenExhibit } from "@/components/fresh-greens/token-exhibit";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getPublishedProjects } from "@/lib/content";
 
@@ -293,6 +294,17 @@ export default async function FreshGreensPage() {
             calm at entry, heightened en-route, resolved at the trip summary.
           </p>
         </div>
+
+        <figure className="fg-token-figure">
+          <TokenExhibit />
+          <figcaption className="fg-safety-visual-caption">
+            The tokens themselves, pulled straight from{" "}
+            <code>theme/colors.ts</code> and <code>theme/spacing.ts</code>. The
+            spacing scale started implicit and drifted to stragglers at 5, 6,
+            13, and 18. Making the 4pt ramp explicit is what made that drift
+            easy to catch.
+          </figcaption>
+        </figure>
 
       </section>
 
