@@ -4006,7 +4006,7 @@ button:focus-visible,
 /* ── Architecture diagram ─────────────────────────────── */
 
 .fg-arch {
-  margin: 2.2rem 0 1.4rem;
+  margin: 2.2rem 0 2.6rem;
   padding: 1.5rem 1.2rem;
   border: 1px solid var(--line);
   border-radius: 0.7rem;
@@ -4451,7 +4451,7 @@ button:focus-visible,
 /* ── Reserved palette (grouped lanes) ─────────────────── */
 
 .fg-palette {
-  margin: 2.4rem 0 0;
+  margin: 2.2rem 0 0;
 }
 
 .fg-palette-baseline {
@@ -4603,7 +4603,7 @@ button:focus-visible,
 /* ── Scope columns ────────────────────────────────────── */
 
 .fg-scope-grid {
-  margin-top: 1.8rem;
+  margin-top: 2.2rem;
   display: grid;
   gap: 2.2rem;
   border-top: 1px solid var(--line);
@@ -10299,7 +10299,7 @@ button:focus-visible,
    Motion-play: 3D device block (Fresh Greens)
    ─────────────────────────────────────────────────────────────── */
 .device-3d {
-  margin-top: 1.6rem;
+  margin-top: 2.2rem;
 }
 
 .device-3d-stage {
@@ -10748,7 +10748,7 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 }
 
 .fg-lofi {
-  margin: 1.75rem 0 2.6rem;
+  margin: 2.2rem 0 2.6rem;
 }
 .fg-lofi img {
   border-radius: 0.9rem;
@@ -10757,7 +10757,7 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 
 /* ── Fresh Greens design-token exhibit ───────────────── */
 .fg-token-figure {
-  margin: 2rem 0 0;
+  margin: 2.2rem 0 0;
 }
 .fg-tokens {
   margin: 0 0 0.9rem;
@@ -10885,7 +10885,7 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 
 /* ── Fresh Greens Google→distinct pivot ──────────────── */
 .fg-pivot {
-  margin: 1.75rem 0 0;
+  margin: 2.2rem 0 0;
 }
 .fg-pivot-steps {
   margin: 0;
@@ -10933,12 +10933,12 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 
 /* ── Fresh Greens onboarding illustrations ───────────── */
 .fg-illustrations {
-  margin: 2.4rem 0 2.6rem;
+  margin: 2.2rem 0 2.6rem;
 }
 
 /* ── Fresh Greens moderation flow ─────────────────────── */
 .fg-moderation {
-  margin: 1.8rem 0 0.4rem;
+  margin: 2.2rem 0 2.6rem;
 }
 .fg-mod-flow {
   display: flex;
