@@ -289,22 +289,6 @@ export default async function FreshGreensPage() {
 
         <PivotJourney />
 
-        <div className="project-section-body">
-          <p>
-            I swapped iOS&apos;s cool grays for five warm surfaces, all built
-            in OKLCH on the brand-green hue, so the whole app shares one tonal
-            source instead of the platform&apos;s default gray.
-          </p>
-          <p>
-            Libre Franklin carries the whole type hierarchy. DM Serif Display
-            shows up in exactly six emotional moments, like the emergency
-            reassurance line and the &quot;Thanks for sharing&quot; on{" "}
-            <code>/trip-summary</code>. Reserving it for those six is what
-            keeps them landing. Type and color both shift across the session,
-            calm at entry, heightened en-route, resolved at the trip summary.
-          </p>
-        </div>
-
         <figure className="fg-illustrations">
           <ExpandableImage
             src="/projects/fresh-greens/process/onboarding-illustrations.svg"
@@ -320,6 +304,22 @@ export default async function FreshGreensPage() {
             appears.
           </figcaption>
         </figure>
+
+        <div className="project-section-body">
+          <p>
+            I swapped iOS&apos;s cool grays for five warm surfaces, all built
+            in OKLCH on the brand-green hue, so the whole app shares one tonal
+            source instead of the platform&apos;s default gray.
+          </p>
+          <p>
+            Libre Franklin carries the whole type hierarchy. DM Serif Display
+            shows up in exactly six emotional moments, like the emergency
+            reassurance line and the &quot;Thanks for sharing&quot; on{" "}
+            <code>/trip-summary</code>. Reserving it for those six is what
+            keeps them landing. Type and color both shift across the session,
+            calm at entry, heightened en-route, resolved at the trip summary.
+          </p>
+        </div>
 
         <figure className="fg-token-figure">
           <TokenExhibit />
@@ -412,6 +412,42 @@ export default async function FreshGreensPage() {
             duplicate IPs and devices. Nothing publishes without a human
             decision, and every publish and unpublish is logged.
           </p>
+        </div>
+
+        <div
+          className="fg-moderation"
+          aria-label="How a report moves through moderation"
+        >
+          <div className="fg-mod-flow">
+            <div className="fg-mod-stage">
+              <p className="fg-mod-stage-label">Enters</p>
+              <p className="fg-mod-stage-text">A report joins the queue</p>
+            </div>
+            <span className="fg-mod-arrow" aria-hidden="true">
+              →
+            </span>
+            <div className="fg-mod-stage fg-mod-stage--panel">
+              <p className="fg-mod-stage-label">Investigation panel</p>
+              <ul className="fg-mod-checks" role="list">
+                <li>Source device</li>
+                <li>Prior reports at the same spot</li>
+                <li>Nearby reports</li>
+                <li>Coordination: duplicate IPs and devices</li>
+              </ul>
+            </div>
+            <span className="fg-mod-arrow" aria-hidden="true">
+              →
+            </span>
+            <div className="fg-mod-stage">
+              <p className="fg-mod-stage-label">Human decision</p>
+              <p className="fg-mod-stage-text">
+                Published or held, every action logged
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="project-section-body">
           <p>
             It&apos;s where the trust question gets settled with real stakes. A
             planned transparency page will publish the outcomes so the queue is

@@ -10900,3 +10900,78 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 .fg-illustrations {
   margin: 2.4rem 0 0;
 }
+
+/* ── Fresh Greens moderation flow ─────────────────────── */
+.fg-moderation {
+  margin: 1.8rem 0 0.4rem;
+}
+.fg-mod-flow {
+  display: flex;
+  align-items: stretch;
+  gap: 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 0.7rem;
+  padding: 1.1rem 1.2rem;
+}
+.fg-mod-stage {
+  flex: 1 1 7rem;
+  display: grid;
+  gap: 0.55rem;
+  align-content: start;
+}
+.fg-mod-stage--panel {
+  flex: 1.5 1 11rem;
+}
+.fg-mod-stage-label {
+  margin: 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--fg-accent);
+}
+.fg-mod-stage-text {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--foreground);
+}
+.fg-mod-checks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.35rem;
+}
+.fg-mod-checks li {
+  position: relative;
+  padding-left: 0.95rem;
+  font-size: 0.85rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
+.fg-mod-checks li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 0.36rem;
+  height: 0.36rem;
+  border-radius: 50%;
+  background: var(--fg-accent);
+}
+.fg-mod-arrow {
+  align-self: center;
+  color: var(--fg-accent);
+  opacity: 0.65;
+  font-size: 1rem;
+}
+@media (max-width: 620px) {
+  .fg-mod-flow {
+    flex-direction: column;
+  }
+  .fg-mod-arrow {
+    transform: rotate(90deg);
+    align-self: center;
+  }
+}
