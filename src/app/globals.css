@@ -10922,8 +10922,10 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 }
 .fg-tokens[data-reveal] .fg-token-space-bar {
   transform-origin: left;
-  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: calc(var(--i, 0) * 55ms);
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  /* Stagger: swatches finish reveal first (~9 * 40ms = 360ms), then the
+     ramp starts and grows one bar at a time — reads as a ramp filling. */
+  transition-delay: calc(400ms + var(--i, 0) * 140ms);
 }
 .fg-tokens[data-reveal="in"] .fg-token-space-bar {
   transform: scaleX(1);
@@ -10986,6 +10988,17 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 /* ── Fresh Greens onboarding illustrations ───────────── */
 .fg-illustrations {
   margin: 2.2rem 0 2.6rem;
+}
+
+/* ── Fresh Greens en-route video (§3) ─────────────────── */
+.fg-en-route-video {
+  margin: 2.2rem auto 2.6rem;
+  max-width: 320px; /* phone-shot scale — video is a phone screen recording */
+}
+.fg-en-route-video .case-lead-video {
+  border-radius: 0.9rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
 }
 
 /* ── Pulled-over: emotional-peak H2 anchor ────────────── */

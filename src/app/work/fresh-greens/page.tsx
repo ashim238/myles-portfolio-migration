@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ExpandableImage } from "@/components/expandable-image";
 import { LeadMedia } from "@/components/lead-media";
+import { LeadVideo } from "@/components/lead-video";
 import { RecruiterCut } from "@/components/recruiter-cut";
 import { TransitionLink } from "@/components/transition-link";
 import { SiteNav } from "@/components/site-nav";
@@ -11,7 +12,6 @@ import {
   PhoneFrame,
   ReservedPalette,
 } from "@/components/fresh-greens";
-import { Device3D } from "@/components/device-3d";
 import { ResearchSynthesis } from "@/components/fresh-greens/research-synthesis";
 import { TokenExhibit } from "@/components/fresh-greens/token-exhibit";
 import { PivotJourney } from "@/components/fresh-greens/pivot-journey";
@@ -200,14 +200,22 @@ export default async function FreshGreensPage() {
         <div className="project-section-body">
           <p>
             The en-route screen is where it all lands: a turn card, a 3D map
-            you can drag, and a safety column within thumb&apos;s reach.
+            that drags with the drive, and a safety column within thumb&apos;s
+            reach.
           </p>
         </div>
 
-        <Device3D
-          screen="/projects/fresh-greens/v2/en-route.png"
-          alt="Fresh Greens en-route screen running on an iPhone: a turn card reading 'Head out on Spencer Street,' a 3D map, and a side column for Guide, SOS, Safety, Report, and Recenter."
-        />
+        <figure className="fg-en-route-video">
+          <LeadVideo
+            clip="/projects/fresh-greens/process/active-nav.mp4"
+            poster="/projects/fresh-greens/v2/en-route.png"
+            alt="Fresh Greens running turn-by-turn navigation: the 3D map drags with the car along the route, the turn card updates on each maneuver, and the safety column stays in thumb reach."
+          />
+          <figcaption className="fg-safety-visual-caption">
+            The en-route screen in motion. Turn card, 3D map, safety column —
+            all live, all thumb-reachable.
+          </figcaption>
+        </figure>
       </section>
 
       {/* ── Section 4: The Held-Question Rule ────────── */}
@@ -241,7 +249,7 @@ export default async function FreshGreensPage() {
             <PhoneFrame variant="screenshot">
               <Shot
                 name="safety-toolkit"
-                alt="The /safety toolkit modal opening with 'What's going on?' set in Libre Franklin Regular over a 2x2 grid of Pulled-over, Roadside, Unfamiliar area, and Share location"
+                alt="The /safety toolkit modal opening with a navy safety Shield above the heading 'What's going on?' in Libre Franklin Regular, a 2x2 grid of Pulled-over, Roadside assistance, Unfamiliar area, and Share location, and a bottom Emergency panel that reaches a trusted contact or 911."
               />
             </PhoneFrame>
             <figcaption className="fg-safety-visual-caption">
@@ -254,13 +262,14 @@ export default async function FreshGreensPage() {
             <PhoneFrame variant="screenshot">
               <Shot
                 name="pulled-over-guidance"
-                alt="The /pulled-over guidance state with ACLU-sourced rights in plain language, a Read-aloud toggle, and a live recording indicator"
+                alt="The /pulled-over reassurance step: a discreet padlock at the top, 'We'll walk you through what to do' set in the reserved serif, then 'We've started recording for your safety' in muted body copy, a green Continue button, and a hint that a Trusted Contact is one step away."
               />
             </PhoneFrame>
             <figcaption className="fg-safety-visual-caption">
-              <code>/pulled-over</code> carries the ACLU rights guidance in
-              plain language, in Regular weight. The recording indicator is
-              the one exception red is allowed to make.
+              <code>/pulled-over</code> opens on reassurance in the reserved
+              serif — one of the six emotional moments the app spends it on.
+              Recording has already started, quietly. The ACLU rights guidance
+              is one tap away.
             </figcaption>
           </figure>
         </div>
@@ -370,13 +379,13 @@ export default async function FreshGreensPage() {
             <PhoneFrame variant="screenshot">
               <Shot
                 name="en-route"
-                alt="The Fresh Greens en-route screen: a navy safety Shield, hazard markers, and the daylight-graded route line, the reserved colors holding together on one real screen"
+                alt="The Fresh Greens en-route screen: a green turn card reading 'Continue on Stockton Street in 120 m' with a yellow swerve-caution glyph, a 3D map, and a right-side column with a red alert, a navy safety Shield, an orange hazard marker, and a recenter control."
               />
             </PhoneFrame>
             <figcaption className="fg-safety-visual-caption">
               The reserved palette holding on a real screen: navy for the
-              safety Shield, the daylight gradient on the route, hazard markers
-              in their reserved hues, and green everywhere else.
+              safety Shield, red on the alert dot, orange on the hazard, yellow
+              on the swerve-caution glyph, and green everywhere else.
             </figcaption>
           </figure>
         </div>
