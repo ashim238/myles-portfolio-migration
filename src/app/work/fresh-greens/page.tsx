@@ -164,10 +164,10 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body">
           <p>
-            My first instinct after the interviews was to stack every safety
-            layer onto the screen. The interviews also said, quietly, that
-            driving already takes focus. So I pulled most of it back. The safety
-            toolkit stays hidden until a driver reaches for it.
+            My first instinct was to stack every safety layer onto the screen.
+            But the interviews also said driving already takes focus, so I
+            pulled most of it back. The safety toolkit stays hidden until a
+            driver reaches for it.
           </p>
         </div>
       </section>
@@ -185,11 +185,11 @@ export default async function FreshGreensPage() {
           <p>
             Every route is scored on four things the interviews kept raising:
             light, police presence, wildlife, and road conditions. A community
-            report feeds those same four markers, and it&apos;s{" "}
-            <mark className="case-highlight">weighted exactly like the data from OpenStreetMap or SunCalc</mark>.
-            Not a separate feed off to the side. Every score carries its source
-            too, so a driver can see whether a segment scored low from the sun
-            angle or because someone reported it.
+            report feeds those same four markers. It&apos;s{" "}
+            <mark className="case-highlight">weighted exactly like the data from OpenStreetMap or SunCalc</mark>{" "}
+            and runs through the same pipeline as everything else. Each score
+            carries its source, so a driver can see whether a segment scored low
+            from the sun angle or from a report.
           </p>
         </div>
 
@@ -226,11 +226,10 @@ export default async function FreshGreensPage() {
             them in a heavier weight than their own thoughts.
           </p>
           <p>
-            That came straight from the interviews. People said the moments the
-            app matters most need something closer to a companion than a
-            control panel. So Bold shows up only on facts the app is sure of,
-            like ETA and the <code>/emergency</code> countdown, and nowhere
-            else in the safety flow.
+            That came from the interviews too. People said the moments the app
+            matters most call for a companion more than a control panel. So
+            Bold appears only on facts the app is sure of, like ETA and the{" "}
+            <code>/emergency</code> countdown.
           </p>
         </div>
 
@@ -403,21 +402,20 @@ export default async function FreshGreensPage() {
         <div className="project-section-body">
           <p>
             The pipeline only works if community reports can be trusted like
-            public data. So bad-faith and mistaken reports have to be caught
-            without falling back to &quot;we don&apos;t trust community
-            data.&quot; That&apos;s what <code>/moderation</code> is for.
+            public data. Bad-faith and mistaken reports have to be caught
+            without falling back to distrusting community data. That&apos;s
+            what <code>/moderation</code> is for.
           </p>
           <p>
             Every report enters a queue with an investigation panel: the source
-            device, prior reports at the same spot, nearby reports, and
-            coordination checks for duplicate IPs and devices. Nothing
-            publishes without a human decision, and every publish and unpublish
-            is logged.
+            device, prior and nearby reports, and coordination checks for
+            duplicate IPs and devices. Nothing publishes without a human
+            decision, and every publish and unpublish is logged.
           </p>
           <p>
-            It&apos;s where the trust question gets settled with real reports
-            and real stakes. A future transparency page will publish the
-            outcomes so the queue&apos;s work is auditable from outside.
+            It&apos;s where the trust question gets settled with real stakes. A
+            planned transparency page will publish the outcomes so the queue is
+            auditable from outside.
           </p>
         </div>
 
