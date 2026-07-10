@@ -11121,27 +11121,36 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   Fresh Greens · Route-stroke ToC (overdrive)
-   The case is *about* a daylight-graded route, so the ToC becomes one:
-   its rail segments trace the same journey through the reserved palette
-   the case will announce in §6. Scrolling the case literally draws a
-   route in the app's own color language. Reduced-motion safe; segment
-   fills track scroll position directly with no easing.
+   Fresh Greens · Reserved-palette ToC (overdrive)
+   The ToC becomes a live demonstration of §6's reserved-palette rule.
+   Each segment gets the reserved color whose role in the app matches
+   what the section argues:
+
+     §1 Problem       → orange (hazard)
+     §2 Research      → yellow (caution)
+     §3 Scoring       → freshgreen (primary CTA / in-flow)
+     §4 Pulled-over   → navy (safety affordance)
+     §5 Design pivot  → freshgreen (primary — brand return)
+     §6 Type & color  → wiltedgreen (secondary CTA / headers)
+     §7 Reserved      → burntgreen (deep accents)
+     §8 Trust         → navy (safety affordance)
+     §9 Scope         → burntgreen (deep accents)
+
+   Red does not appear — it's reserved in the app for one exception,
+   and the ToC keeps that discipline. Reduced-motion safe; segment
+   fills track scroll position with no easing.
    ══════════════════════════════════════════════════════════════════ */
 
-/* ── Route-stroke ToC: rail segments trace the reserved palette
-      across the case's emotional arc. The colors are the same ones
-      documented in the reserved-color section, so the ToC becomes a
-      live demonstration of the very rule it announces. ─────────── */
-.fg-page .project-toc-item:nth-child(1) { --seg-color: #FF9500; } /* orange — dawn */
-.fg-page .project-toc-item:nth-child(2) { --seg-color: #FFCC00; } /* yellow — morning */
-.fg-page .project-toc-item:nth-child(3) { --seg-color: #41AD49; } /* freshgreen — midday */
-.fg-page .project-toc-item:nth-child(4) { --seg-color: #041E49; } /* navy — pulled-over: safety affordance, not alarm */
-.fg-page .project-toc-item:nth-child(5) { --seg-color: #41AD49; } /* freshgreen — pivot: return to brand identity */
-.fg-page .project-toc-item:nth-child(6) { --seg-color: #326936; } /* wiltedgreen — afternoon */
-.fg-page .project-toc-item:nth-child(7) { --seg-color: #003F04; } /* burntgreen — dusk */
-.fg-page .project-toc-item:nth-child(8) { --seg-color: #041E49; } /* navy — evening */
-.fg-page .project-toc-item:nth-child(9) { --seg-color: #003F04; } /* burntgreen — night */
+/* ── Section colors, mapped to reserved-palette roles ────────────── */
+.fg-page .project-toc-item:nth-child(1) { --seg-color: #FF9500; } /* orange     — hazard (Problem) */
+.fg-page .project-toc-item:nth-child(2) { --seg-color: #FFCC00; } /* yellow     — caution (Research) */
+.fg-page .project-toc-item:nth-child(3) { --seg-color: #41AD49; } /* freshgreen — primary CTA (Scoring) */
+.fg-page .project-toc-item:nth-child(4) { --seg-color: #041E49; } /* navy       — safety affordance (Pulled-over) */
+.fg-page .project-toc-item:nth-child(5) { --seg-color: #41AD49; } /* freshgreen — primary, brand return (Design pivot) */
+.fg-page .project-toc-item:nth-child(6) { --seg-color: #326936; } /* wiltedgreen— secondary CTA / headers (Type & color) */
+.fg-page .project-toc-item:nth-child(7) { --seg-color: #003F04; } /* burntgreen — deep accents (Reserved) */
+.fg-page .project-toc-item:nth-child(8) { --seg-color: #041E49; } /* navy       — safety affordance (Trust) */
+.fg-page .project-toc-item:nth-child(9) { --seg-color: #003F04; } /* burntgreen — deep accents (Scope) */
 
 .fg-page .project-toc-rail::after {
   background: var(--seg-color, var(--toc-fill));
@@ -11152,15 +11161,15 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 }
 
 .fg-page .project-toc-link--active {
-  /* Active section still gets its faint tint, but now keyed to the
-     segment's own daylight color instead of a single flat accent. */
+  /* Active section still gets its faint tint, but keyed to the section's
+     own reserved-palette color instead of a single flat accent. */
   background: color-mix(in srgb, var(--seg-color, var(--toc-fill)) 10%, transparent);
 }
 
-/* Mobile / tablet progress hairline: paint the full 9-segment daylight
-   gradient behind, then use a mask to reveal only the portion the reader
-   has scrolled through. The bar becomes the same route the desktop rails
-   trace — you see where you've been in the app's own color language. */
+/* Mobile / tablet progress hairline: paint the full 9-segment reserved
+   palette behind, then use a mask to reveal only the portion the reader
+   has scrolled through. Same section-to-role mapping as the desktop
+   rails — you see where you've been in the app's own color language. */
 .fg-page .project-toc-progress {
   transform: none;
   width: 100%;
