@@ -306,6 +306,22 @@ export default async function FreshGreensPage() {
           </p>
         </div>
 
+        <figure className="fg-illustrations">
+          <ExpandableImage
+            src="/projects/fresh-greens/process/onboarding-illustrations.svg"
+            alt="Four hand-drawn onboarding illustrations: a figure soaring as a map pin over green hills at sunrise, a pensive thinker, the navy safety shield, and a figure at ease with speech bubbles."
+            width={1920}
+            height={1080}
+            sizes="(max-width: 768px) 92vw, 640px"
+            style={{ width: "100%", height: "auto", display: "block" }}
+          />
+          <figcaption className="fg-safety-visual-caption">
+            The onboarding illustrations, drawn by hand. They set the warm,
+            human register the app opens on, before a single safety signal
+            appears.
+          </figcaption>
+        </figure>
+
         <figure className="fg-token-figure">
           <TokenExhibit />
           <figcaption className="fg-safety-visual-caption">
