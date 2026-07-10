@@ -10988,16 +10988,6 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
   margin: 2.2rem 0 2.6rem;
 }
 
-/* ── Zone-flow thesis storyboard (§3) ─────────────────── */
-.fg-zone-flow {
-  margin: 2.2rem 0 2.6rem;
-  max-width: min(52rem, 100%);
-}
-.fg-zone-flow img {
-  border-radius: 0.5rem;
-  border: 1px solid var(--line);
-}
-
 /* ── Pulled-over: emotional-peak H2 anchor ────────────── */
 .project-section > h2#fg-pulled-over {
   font-size: clamp(2rem, 4vw, 3.2rem);

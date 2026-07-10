@@ -149,17 +149,17 @@ export default async function FreshGreensPage() {
 
         <figure className="fg-lofi">
           <ExpandableImage
-            src="/projects/fresh-greens/process/lofi-board.png"
-            alt="Hand-drawn lo-fi wireframes of Fresh Greens: route selection, the zone flow, active navigation, and the hold-to-call emergency flow"
-            width={2400}
-            height={1350}
+            src="/projects/fresh-greens/process/thesis-zone-flow.png"
+            alt="Hand-drawn thesis storyboard of the zone flow across four panels: baseline navigation, one mile out from a zone, actively entering a zone, and in the zone, with annotations about tooltip timing and route stroke behavior."
+            width={2675}
+            height={1407}
             sizes="(max-width: 768px) 92vw, 900px"
             style={{ width: "100%", height: "auto", display: "block" }}
           />
           <figcaption className="fg-safety-visual-caption">
-            The last lo-fi pass, done by hand. That layered route stroke marking
-            a zone got simplified once it had to read on a small screen at a
-            glance.
+            The zone-flow storyboard, done by hand. That layered route stroke
+            marking a wildlife zone in the last panel got simplified into the
+            daylight gradient once it had to read at a glance.
           </figcaption>
         </figure>
 
@@ -202,23 +202,6 @@ export default async function FreshGreensPage() {
             you can drag, and a safety column within thumb&apos;s reach.
           </p>
         </div>
-
-        <figure className="fg-zone-flow">
-          <ExpandableImage
-            src="/projects/fresh-greens/process/thesis-zone-flow.png"
-            alt="Hand-drawn thesis storyboard of the zone flow across four panels: baseline navigation, one mile out from a zone, actively entering a zone, and in the zone, with annotations about tooltip timing and route stroke behavior."
-            width={2675}
-            height={1407}
-            sizes="(max-width: 768px) 92vw, 832px"
-            style={{ width: "100%", height: "auto", display: "block" }}
-          />
-          <figcaption className="fg-safety-visual-caption">
-            The zone-flow storyboard, hand-drawn during thesis. The layered
-            route stroke marking a wildlife zone in the last panel got
-            simplified into the daylight gradient once it had to read at a
-            glance.
-          </figcaption>
-        </figure>
 
         <Device3D
           screen="/projects/fresh-greens/v2/en-route.png"
