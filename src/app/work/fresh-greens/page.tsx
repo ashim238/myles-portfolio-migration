@@ -179,7 +179,7 @@ export default async function FreshGreensPage() {
       >
         <h2 id="fg-scoring">How routes get scored.</h2>
         <p className="case-section-lead">
-          Community reports and public data share one adapter, one scoring function, and one audit trail.
+          Community reports and public data share one adapter and one scoring function, with a single audit trail behind both.
         </p>
         <div className="project-section-body">
           <p>
@@ -227,7 +227,7 @@ export default async function FreshGreensPage() {
           </p>
           <p>
             That came from the interviews too. People said the moments the app
-            matters most call for a companion more than a control panel. So
+            matters most call for a companion. So
             Bold appears only on facts the app is sure of, like ETA and the{" "}
             <code>/emergency</code> countdown.
           </p>
@@ -241,8 +241,8 @@ export default async function FreshGreensPage() {
             />
           </PhoneFrame>
           <figcaption className="fg-safety-visual-caption">
-            The Held-Question Rule in situ. <code>/safety</code> opens with
-            the driver&apos;s question, not the app&apos;s command.
+            The Held-Question Rule in situ. <code>/safety</code> opens on
+            the driver&apos;s own question.
           </figcaption>
         </figure>
 
@@ -310,7 +310,7 @@ export default async function FreshGreensPage() {
           <p>
             I swapped iOS&apos;s cool grays for five warm surfaces, all built
             in OKLCH on the brand-green hue, so the whole app shares one tonal
-            source instead of the platform&apos;s default gray.
+            source.
           </p>
           <p>
             Type took three tries. Jost first, then Space Grotesk, then Libre
@@ -367,7 +367,7 @@ export default async function FreshGreensPage() {
           <figcaption className="fg-safety-visual-caption">
             The reserved palette holding on a real screen: navy for the safety
             Shield, the daylight gradient on the route, hazard markers in their
-            reserved hues, and nothing else non-green.
+            reserved hues, and green everywhere else.
           </figcaption>
         </figure>
 
@@ -543,8 +543,8 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body fg-scope-closer">
           <p>
-            What comes next is less about features and more about
-            accountability. The transparency page is the one I care about most.
+            What comes next is mostly about accountability. The transparency
+            page is the one I care about most.
             It puts the <code>/moderation</code> queue&apos;s decisions in
             public, so the trust the whole system runs on can be checked from
             outside.
