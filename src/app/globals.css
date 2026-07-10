@@ -10748,7 +10748,7 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 }
 
 .fg-lofi {
-  margin: 1.75rem 0 0;
+  margin: 1.75rem 0 2.6rem;
 }
 .fg-lofi img {
   border-radius: 0.9rem;
@@ -10898,7 +10898,7 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 
 /* ── Fresh Greens onboarding illustrations ───────────── */
 .fg-illustrations {
-  margin: 2.4rem 0 0;
+  margin: 2.4rem 0 2.6rem;
 }
 
 /* ── Fresh Greens moderation flow ─────────────────────── */
