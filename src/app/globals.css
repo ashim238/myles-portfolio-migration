@@ -11202,3 +11202,34 @@ body:has(.fg-page) {
      segment's own daylight color instead of a single flat accent. */
   background: color-mix(in srgb, var(--seg-color, var(--toc-fill)) 10%, transparent);
 }
+
+/* Mobile / tablet progress hairline: paint the full 9-segment daylight
+   gradient behind, then use a mask to reveal only the portion the reader
+   has scrolled through. The bar becomes the same route the desktop rails
+   trace — you see where you've been in the app's own color language. */
+.fg-page .project-toc-progress {
+  transform: none;
+  width: 100%;
+  background: linear-gradient(
+    to right,
+    #FF9500 0 11.11%,
+    #FFCC00 11.11% 22.22%,
+    #41AD49 22.22% 33.33%,
+    #041E49 33.33% 44.44%,
+    #41AD49 44.44% 55.55%,
+    #326936 55.55% 66.66%,
+    #003F04 66.66% 77.77%,
+    #041E49 77.77% 88.88%,
+    #003F04 88.88% 100%
+  );
+  -webkit-mask: linear-gradient(
+    to right,
+    #000 0 calc(var(--toc-progress, 0) * 100%),
+    transparent calc(var(--toc-progress, 0) * 100%)
+  );
+  mask: linear-gradient(
+    to right,
+    #000 0 calc(var(--toc-progress, 0) * 100%),
+    transparent calc(var(--toc-progress, 0) * 100%)
+  );
+}
