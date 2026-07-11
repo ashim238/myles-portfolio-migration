@@ -1,6 +1,5 @@
 "use client";
 
-import { createTimeline } from "animejs";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -16,6 +15,8 @@ import {
   type ProjectEnterRequestDetail,
   type ProjectEnterRect,
 } from "@/lib/project-enter";
+
+const EASE_OUT_CUBIC = "cubic-bezier(0.33, 1, 0.68, 1)";
 
 type OverlayPhase = "zoom-in" | "navigating" | "settling";
 
@@ -99,39 +100,35 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
       const endY = targetCenterY - startCenterY;
       const targetRadius = getComputedStyle(cover).borderRadius || "0.65rem";
 
-      const timeline = createTimeline({ defaults: { ease: "outCubic" } });
-
-      timeline.add(
-        frame,
+      const frameAnim = frame.animate(
+        [
+          {
+            transform: `translate(${zoomOffset.x}px, ${zoomOffset.y}px) scale(${coverScale})`,
+            borderRadius: state.borderRadius,
+          },
+          {
+            transform: `translate(${endX}px, ${endY}px) scale(${endScale})`,
+            borderRadius: targetRadius,
+          },
+        ],
         {
-          translateX: [zoomOffset.x, endX],
-          translateY: [zoomOffset.y, endY],
-          scale: [coverScale, endScale],
           duration: PROJECT_ENTER_SETTLE_MS,
+          easing: EASE_OUT_CUBIC,
+          fill: "forwards",
         },
-        0,
       );
 
-      timeline.add(
-        frame,
+      const shellAnim = shell.animate(
+        [{ opacity: 1 }, { opacity: 0 }],
         {
-          borderRadius: [state.borderRadius, targetRadius],
-          duration: PROJECT_ENTER_SETTLE_MS,
-        },
-        0,
-      );
-
-      timeline.add(
-        shell,
-        {
-          opacity: [1, 0],
           duration: 220,
-          ease: "outCubic",
+          delay: PROJECT_ENTER_SETTLE_MS - 180,
+          easing: EASE_OUT_CUBIC,
+          fill: "forwards",
         },
-        PROJECT_ENTER_SETTLE_MS - 180,
       );
 
-      await timeline.then();
+      await Promise.all([frameAnim.finished, shellAnim.finished]).catch(() => undefined);
       finishTransition();
     },
     [finishTransition],
@@ -209,20 +206,21 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
 
     frame.style.transform = "translate(0px, 0px) scale(1)";
 
-    const timeline = createTimeline({ defaults: { ease: "outCubic" } });
-
-    timeline.add(
-      frame,
+    const zoomAnim = frame.animate(
+      [
+        { transform: "translate(0px, 0px) scale(1)" },
+        {
+          transform: `translate(${offset.x}px, ${offset.y}px) scale(${coverScale})`,
+        },
+      ],
       {
-        translateX: [0, offset.x],
-        translateY: [0, offset.y],
-        scale: [1, coverScale],
         duration: PROJECT_ENTER_ZOOM_IN_MS,
+        easing: EASE_OUT_CUBIC,
+        fill: "forwards",
       },
-      0,
     );
 
-    void timeline.then(() => {
+    void zoomAnim.finished.catch(() => undefined).then(() => {
       setOverlay((current) =>
         current ? { ...current, phase: "navigating" } : current,
       );
