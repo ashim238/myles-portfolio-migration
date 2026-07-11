@@ -62,6 +62,8 @@ export type Project = {
   highlightQuote?: string;
   outcomeMetricLabel?: string;
   outcomeMetricValue?: string;
+  outcomeLead?: string;
+  outcomeRest?: string;
   sections: ProjectSection[];
   bodyHtml: string;
 };
@@ -173,6 +175,8 @@ async function parseProjectFrontmatter(
     outcomeMetricValue: data.outcomeMetricValue
       ? String(data.outcomeMetricValue)
       : undefined,
+    outcomeLead: data.outcomeLead ? String(data.outcomeLead) : undefined,
+    outcomeRest: data.outcomeRest ? String(data.outcomeRest) : undefined,
     sections: await parseProjectSections(data),
   };
 

@@ -8,6 +8,8 @@ status: published
 order: 2
 coverImage: /projects/fresh-greens/cover.png
 highlightQuote: A shipped wayfinding app that weights community safety knowledge alongside public data — every route traceable to an auditable source.
+outcomeLead: Shipped, solo.
+outcomeRest: 26+ screens in the running React Native build.
 tags:
   - Thesis
   - Mobile · React Native
