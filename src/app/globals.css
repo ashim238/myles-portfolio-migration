@@ -1371,6 +1371,11 @@ button:focus-visible,
 }
 
 .work-showcase-item h3 {
+  /* Fill the copy column instead of shrinking to content width, so a long
+     title wraps within its column rather than overflowing under the image.
+     The parent sets align-items: flex-start, which would otherwise size this
+     to its widest unbroken word. */
+  align-self: stretch;
   font-size: clamp(1.85rem, 3.8vw, 2.85rem);
   line-height: var(--lead-title);
   letter-spacing: var(--track-title);

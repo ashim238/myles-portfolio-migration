@@ -1,5 +1,6 @@
 "use client";
 
+import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/lib/content";
@@ -17,6 +18,20 @@ type WorkProjectCardProps = {
 
 function formatIndex(index: number): string {
   return String(index + 1).padStart(2, "0");
+}
+
+// Insert soft break opportunities at camelCase / word-to-ACRONYM seams
+// (e.g. "UnderstandingFAFSA" -> "Understanding" <wbr/> "FAFSA") so a long
+// single-token title wraps at a natural point instead of mid-word.
+function titleWithSoftBreaks(title: string) {
+  const parts = title.split(/(?<=[a-z])(?=[A-Z])/);
+  if (parts.length === 1) return title;
+  return parts.map((part, i) => (
+    <Fragment key={i}>
+      {i > 0 ? <wbr /> : null}
+      {part}
+    </Fragment>
+  ));
 }
 
 export function WorkProjectCard({
@@ -80,7 +95,7 @@ export function WorkProjectCard({
           <span className="work-showcase-index" aria-hidden="true">
             {formatIndex(index)}
           </span>
-          <h3>{project.title}</h3>
+          <h3>{titleWithSoftBreaks(project.title)}</h3>
           <p>{project.summary}</p>
           <WorkShowcaseMetric phrases={metricPhrases} isActive={isActive} />
           <div className="work-showcase-meta">
