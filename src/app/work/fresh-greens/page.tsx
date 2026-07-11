@@ -97,11 +97,11 @@ export default async function FreshGreensPage() {
         sections={[
           { title: "The problem I set out to solve", id: "fg-problem" },
           { title: "Listening to six drivers", id: "fg-research" },
-          { title: "How routes get scored", id: "fg-scoring" },
+          { title: "Turning the interviews into a scoring system", id: "fg-scoring" },
           { title: "Designing for the pulled-over moment", id: "fg-pulled-over" },
           { title: "The direction I tried first", id: "fg-pivot" },
-          { title: "Type and color", id: "fg-typecolor" },
-          { title: "The reserved color system", id: "fg-color" },
+          { title: "Choosing type and color", id: "fg-typecolor" },
+          { title: "Holding four colors in reserve", id: "fg-color" },
           { title: "Keeping community reports trustworthy", id: "fg-trust" },
           { title: "What shipped, and what didn't", id: "fg-scope" },
         ]}
@@ -179,7 +179,7 @@ export default async function FreshGreensPage() {
         className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-scoring"
       >
-        <h2 id="fg-scoring">How routes get scored.</h2>
+        <h2 id="fg-scoring">Turning the interviews into a scoring system.</h2>
         <p className="case-section-lead">
           Community reports and public data share one adapter and one scoring function, with a single audit trail behind both.
         </p>
@@ -212,8 +212,7 @@ export default async function FreshGreensPage() {
             alt="Fresh Greens running turn-by-turn navigation: the 3D map drags with the car along the route, the turn card updates on each maneuver, and the safety column stays in thumb reach."
           />
           <figcaption className="fg-safety-visual-caption">
-            The en-route screen in motion. Turn card, 3D map, safety column,
-            all live, all thumb-reachable.
+            The en-route screen in motion.
           </figcaption>
         </figure>
       </section>
@@ -331,7 +330,7 @@ export default async function FreshGreensPage() {
         className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-typecolor"
       >
-        <h2 id="fg-typecolor">Type and color.</h2>
+        <h2 id="fg-typecolor">Choosing type and color.</h2>
         <p className="case-section-lead">
           Warm surfaces and a reserved serif give type and color a job at each phase of a trip.
         </p>
@@ -387,7 +386,7 @@ export default async function FreshGreensPage() {
         className="project-section fg-section fg-section--wide fg-craft"
         aria-labelledby="fg-color"
       >
-        <h2 id="fg-color">The reserved color system.</h2>
+        <h2 id="fg-color">Holding four colors in reserve.</h2>
         <p className="case-section-lead">
           Four colors and the daylight gradient are held to safety signals, with documented carve-outs.
         </p>
@@ -424,8 +423,7 @@ export default async function FreshGreensPage() {
           <p>
             The daylight gradient is the one non-reserved color the system
             allows itself. On <code>/route-preview</code>, a sun-to-moon dashed
-            band traces what the light will do along the route. It says one
-            thing, everywhere it appears.
+            band traces what the light will do along the route.
           </p>
         </div>
 
@@ -459,8 +457,7 @@ export default async function FreshGreensPage() {
             />
           </PhoneFrame>
           <figcaption className="fg-safety-visual-caption">
-            Severity rides two channels: color plus the filled
-            WarningDiamond glyph. The rule survives even without hue.
+            Severity pairs color with the filled WarningDiamond glyph.
           </figcaption>
         </figure>
 
@@ -534,14 +531,8 @@ export default async function FreshGreensPage() {
       <section className="project-section fg-section fg-scope" aria-labelledby="fg-scope">
         <h2 id="fg-scope">What shipped, and what didn't.</h2>
         <p className="case-section-lead">
-          What shipped, and what&apos;s still on the list.
+          The honest split between what&apos;s in the build and what&apos;s still on the list.
         </p>
-        <div className="project-section-body">
-          <p>
-            Naming what isn&apos;t done yet matters as much as what is. So
-            here&apos;s the honest split.
-          </p>
-        </div>
 
         <div className="fg-scope-grid">
           <div className="fg-scope-col">

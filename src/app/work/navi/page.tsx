@@ -92,10 +92,10 @@ export default async function NaviPage() {
 
       <ProjectToc
         sections={[
-          { title: "A regenerative travel platform", id: "nv-intro" },
-          { title: "Before the research, a Manhattan heatmap", id: "nv-heatmap" },
-          { title: "Three user groups, six platforms", id: "nv-research" },
-          { title: "What the data did (and did not) say", id: "nv-insights" },
+          { title: "The concept: regenerative travel", id: "nv-intro" },
+          { title: "The first idea was a heatmap", id: "nv-heatmap" },
+          { title: "Surveying three user groups", id: "nv-research" },
+          { title: "What the data said", id: "nv-insights" },
           { title: "From research to framework", id: "nv-framework" },
           { title: "Building a system", id: "nv-system" },
           { title: "See it in product", id: "nv-screens" },
@@ -106,7 +106,7 @@ export default async function NaviPage() {
       <div className="case-tier-divider"><span>The full breakdown ↓</span></div>
 
       <section className="project-section nv-section" aria-labelledby="nv-intro">
-        <h2 id="nv-intro">A regenerative travel platform for New York City</h2>
+        <h2 id="nv-intro">The concept: a regenerative travel platform for New York City</h2>
         <p className="case-section-lead">
           Connecting visitors to neighborhood-level experiences returns value to the communities they visit.
         </p>
@@ -125,7 +125,7 @@ export default async function NaviPage() {
       </section>
 
       <section className="project-section nv-section" aria-labelledby="nv-heatmap">
-        <h2 id="nv-heatmap">Before the research, a Manhattan heatmap</h2>
+        <h2 id="nv-heatmap">The first idea was a Manhattan heatmap</h2>
         <p className="case-section-lead">
           Mapping tourist density showed where the checklists cluster and where neighborhoods get skipped.
         </p>
@@ -145,7 +145,7 @@ export default async function NaviPage() {
       </section>
 
       <section className="project-section nv-section" aria-labelledby="nv-research">
-        <h2 id="nv-research">Three user groups, six platforms, one heuristic evaluation</h2>
+        <h2 id="nv-research">Surveying three user groups, auditing six platforms</h2>
         <blockquote className="case-pullquote">Residents did not want fewer tourists. They wanted visitors who engage more intentionally.</blockquote>
         <div className="project-section-body">
           <p>
@@ -166,7 +166,7 @@ export default async function NaviPage() {
       </section>
 
       <section className="project-section nv-section" aria-labelledby="nv-insights">
-        <h2 id="nv-insights">What the data did (and did not) say</h2>
+        <h2 id="nv-insights">What the data said</h2>
         <p className="case-section-lead">
           The research pointed to intentional participation, not more destinations.
         </p>
@@ -267,11 +267,11 @@ export default async function NaviPage() {
       <section className="project-section nv-section" aria-labelledby="nv-outcome">
         <h2 id="nv-outcome">What Navi proved and where it goes next</h2>
         <p className="case-section-lead">
-          The heatmap solved the symptom. Navi went after the cause, and concept testing backed the shift.
+          Spreading tourists out was never going to change how they visit. Concept testing backed the deeper move.
         </p>
         <div className="project-section-body">
           <p>
-            What started as a heatmap turned out to be solving the wrong problem. Concentration is the symptom. Disconnection from local culture and economy is the cause, and Navi is the platform that came from chasing the cause.
+            What started as a heatmap turned out to be solving the wrong problem. Spreading tourists out doesn&apos;t change how shallow the visit is. Navi came from designing for the connection between visitors and the neighborhoods they&apos;re in.
           </p>
           <p>Next opportunities include deeper neighborhood pages within Learn
             (surfacing history, local voices, and seasonal rhythms), richer

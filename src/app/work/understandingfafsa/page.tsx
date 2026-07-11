@@ -92,20 +92,20 @@ export default async function UnderstandingFafsaPage() {
 
       <ProjectToc
         sections={[
-          { title: "Two brands, one subscriber.", id: "uf-context" },
-          { title: "Scannable or skipped.", id: "uf-problem" },
-          { title: "120 newsletters, four criteria.", id: "uf-audit" },
-          { title: "One skeleton, multiple fills.", id: "uf-templates" },
-          { title: "Locked layers, swappable parts.", id: "uf-locked" },
-          { title: "Figma fidelity, Mailchimp reality.", id: "uf-figma" },
-          { title: "Open rates told the story.", id: "uf-results" },
+          { title: "Where it started: a rebranded site, a dated newsletter.", id: "uf-context" },
+          { title: "Why the old template lost readers.", id: "uf-problem" },
+          { title: "Auditing 120 newsletters against four criteria.", id: "uf-audit" },
+          { title: "Designing one skeleton for three kinds of sends.", id: "uf-templates" },
+          { title: "The core decision: locked layers, swappable parts.", id: "uf-locked" },
+          { title: "Rebuilding it in Mailchimp.", id: "uf-figma" },
+          { title: "The results: open rates after the first send.", id: "uf-results" },
         ]}
       />
 
       <div className="case-tier-divider"><span>The full breakdown ↓</span></div>
 
       <section className="project-section uf-section" aria-labelledby="uf-context">
-        <h2 id="uf-context">Two brands, one subscriber.</h2>
+        <h2 id="uf-context">Where it started: a rebranded site, a dated newsletter.</h2>
         <blockquote className="case-pullquote">Subscribers were seeing two different brands.</blockquote>
         <div className="project-section-body">
           <p>
@@ -123,7 +123,7 @@ export default async function UnderstandingFafsaPage() {
       </section>
 
       <section className="project-section uf-section" aria-labelledby="uf-problem">
-        <h2 id="uf-problem">Scannable or skipped.</h2>
+        <h2 id="uf-problem">Why the old template lost readers.</h2>
         <p className="case-section-lead">
           The old template lost busy readers on mobile, and open rates sat around 30%.
         </p>
@@ -144,7 +144,7 @@ export default async function UnderstandingFafsaPage() {
       </section>
 
       <section className="project-section uf-section" aria-labelledby="uf-audit">
-        <h2 id="uf-audit">120 newsletters, four criteria.</h2>
+        <h2 id="uf-audit">Auditing 120 newsletters against four criteria.</h2>
         <div className="project-section-body">
           <p>
             Before touching templates, we compiled over 120 newsletter
@@ -198,7 +198,7 @@ export default async function UnderstandingFafsaPage() {
         className="project-section uf-section project-section--wide uf-section--wide"
         aria-labelledby="uf-templates"
       >
-        <h2 id="uf-templates">One skeleton, multiple fills.</h2>
+        <h2 id="uf-templates">Designing one skeleton for three kinds of sends.</h2>
         <p className="case-section-lead">
           One modular framework covers the welcome email, the weekly newsletter, and lighter event sends.
         </p>
@@ -227,7 +227,7 @@ export default async function UnderstandingFafsaPage() {
         className="project-section uf-section project-section--wide uf-section--wide"
         aria-labelledby="uf-locked"
       >
-        <h2 id="uf-locked">Locked layers, swappable parts.</h2>
+        <h2 id="uf-locked">The core decision: locked layers, swappable parts.</h2>
         <p className="case-section-lead">
           Structure and type stay locked, so a non-designer can swap copy and images without breaking the brand.
         </p>
@@ -244,8 +244,8 @@ export default async function UnderstandingFafsaPage() {
           </p>
           <p>
             Color variants were chosen to stay in harmony with UnderstandingFAFSA&apos;s design
-            system. Enough flexibility for the founder to move fast, enough rigidity that no send
-            drifts off-brand.
+            system. The founder can assemble an issue quickly without any single swap
+            pulling the send off-brand.
           </p>
         </div>
 
@@ -255,7 +255,7 @@ export default async function UnderstandingFafsaPage() {
       </section>
 
       <section className="project-section uf-section" aria-labelledby="uf-figma">
-        <h2 id="uf-figma">Figma fidelity, Mailchimp reality.</h2>
+        <h2 id="uf-figma">Rebuilding it in Mailchimp.</h2>
         <p className="case-section-lead">
           Rebuilding the design in Mailchimp meant fighting Gmail&apos;s 102KB clip limit without losing the brand.
         </p>
@@ -290,7 +290,7 @@ export default async function UnderstandingFafsaPage() {
       </section>
 
       <section className="project-section uf-section" aria-labelledby="uf-results">
-        <h2 id="uf-results">Open rates told the story.</h2>
+        <h2 id="uf-results">The results: open rates after the first send.</h2>
         <p className="case-section-lead">
           The first redesigned send moved open rates from around 30% to about 52.6%.
         </p>
@@ -300,10 +300,9 @@ export default async function UnderstandingFafsaPage() {
               This was my first time designing a system someone else
               assembles every week.
             </mark>{" "}
-            If the founder can break the brand by dragging a block, the
-            template failed. If she can move fast and stay on-brand, it
-            worked. That constraint changed how I think about fidelity
-            in anything that ships without a designer in the room.
+            No designer looks at a send before it goes out. The founder swaps
+            copy and images herself, which means the locked layers carry the
+            review a designer would normally do.
           </p>
           <p>
             The first redesigned send went out November 4, 2025. Open rates
