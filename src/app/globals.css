@@ -3827,6 +3827,53 @@ button:focus-visible,
   max-width: 65ch;
 }
 
+/* In wide sections, designed artifacts get to breathe — capped so they
+   don't span the full page-shell, aligned left with the prose column. */
+.fg-section--wide .fg-token-figure,
+.fg-section--wide .fg-illustrations,
+.fg-section--wide .fg-palette,
+.fg-section--wide .fg-pivot,
+.fg-section--wide .fg-moderation,
+.fg-section--wide .fg-safety-pair {
+  max-width: min(52rem, 100%);
+}
+
+/* Cap caption line length so wider figures still read as body copy. */
+.fg-section--wide .fg-safety-visual-caption {
+  max-width: 60ch;
+  margin-inline: auto;
+}
+
+/* Pulled-over: two safety flows finally read as a pair on desktop. */
+.fg-safety-pair {
+  display: grid;
+  gap: 1.8rem;
+  margin: 2.2rem 0 2.6rem;
+}
+@media (min-width: 820px) {
+  .fg-safety-pair {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.8rem;
+    align-items: start;
+  }
+  .fg-safety-pair > .fg-safety-visual {
+    margin: 0;
+    max-width: none;
+  }
+}
+
+/* Illustration strip: was floating on transparent bg, now a warm-neutral
+   presentation panel that gives the yellow illustrations a designed frame. */
+.fg-illustrations {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 0.9rem;
+  padding: 1.4rem 1.4rem 1.1rem;
+}
+.fg-illustrations img {
+  border-radius: 0.35rem;
+}
+
 /* ── Phone frame ──────────────────────────────────────── */
 
 .fg-phone {
@@ -4006,7 +4053,7 @@ button:focus-visible,
 /* ── Architecture diagram ─────────────────────────────── */
 
 .fg-arch {
-  margin: 2.2rem 0 1.4rem;
+  margin: 2.2rem 0 2.6rem;
   padding: 1.5rem 1.2rem;
   border: 1px solid var(--line);
   border-radius: 0.7rem;
@@ -4451,7 +4498,7 @@ button:focus-visible,
 /* ── Reserved palette (grouped lanes) ─────────────────── */
 
 .fg-palette {
-  margin: 2.4rem 0 0;
+  margin: 2.2rem 0 0;
 }
 
 .fg-palette-baseline {
@@ -4603,7 +4650,7 @@ button:focus-visible,
 /* ── Scope columns ────────────────────────────────────── */
 
 .fg-scope-grid {
-  margin-top: 1.8rem;
+  margin-top: 2.2rem;
   display: grid;
   gap: 2.2rem;
   border-top: 1px solid var(--line);
@@ -4686,7 +4733,7 @@ button:focus-visible,
   /* Bottom margin gives the caption room to breathe before the next block;
      section flow is normal so this collapses against adjacent figures. */
   margin: 2.2rem auto 2.6rem;
-  max-width: 276px;
+  max-width: 320px;
 }
 
 .fg-safety-visual-caption {
@@ -4985,6 +5032,138 @@ button:focus-visible,
   .tt-hero-tilt {
     transform: none;
     transition: none;
+  }
+}
+
+/* ── Cover: animated gradient (drenched, dark) ─────────
+   Full-bleed. The gradient art is a CSS background (always
+   painted); the title is real DOM (always visible). Motion
+   plays transform-only over an already-painted cover, so the
+   hero never ships blank on a hidden tab / headless render. */
+.tt-cover {
+  position: relative;
+  width: min(var(--content-max), 100%);
+  margin: 1.75rem auto clamp(2.25rem, 4.5vw, 3.5rem);
+  min-height: clamp(26rem, 60vh, 40rem);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  border-radius: 1.4rem;
+  background: #0a0a0f;
+  isolation: isolate;
+}
+.tt-cover-field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: radial-gradient(120% 105% at 50% 32%, #16161f 0%, #08080d 70%);
+}
+.tt-cblob {
+  position: absolute;
+  height: auto;
+  will-change: transform;
+  filter: drop-shadow(0 12px 38px rgba(0, 0, 0, 0.3));
+}
+.tt-cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    to top,
+    rgba(6, 6, 10, 0.82) 0%,
+    rgba(6, 6, 10, 0.34) 42%,
+    rgba(6, 6, 10, 0) 72%
+  );
+  pointer-events: none;
+}
+.tt-cover-inner {
+  position: relative;
+  z-index: 3;
+  width: min(var(--content-max), 100%);
+  margin: 0 auto;
+  padding: clamp(6rem, 22vh, 12rem) var(--page-gutter, 1.25rem)
+    clamp(2rem, 5vw, 3.25rem);
+}
+.tt-cover .tt-eyebrow {
+  color: rgba(255, 255, 255, 0.86);
+  margin-bottom: 1rem;
+}
+.tt-cover .tt-title {
+  color: #fff;
+}
+.tt-cover .tt-lede {
+  color: rgba(255, 255, 255, 0.82);
+  margin-top: 1.1rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tt-cblob--a1 {
+    animation: tt-bfloat1 var(--d) ease-in-out infinite alternate;
+  }
+  .tt-cblob--a2 {
+    animation: tt-bfloat2 var(--d) ease-in-out infinite alternate;
+  }
+  .tt-cblob--a3 {
+    animation: tt-bfloat3 var(--d) ease-in-out infinite alternate;
+  }
+  .tt-cblob--a4 {
+    animation: tt-bfloat4 var(--d) ease-in-out infinite alternate;
+  }
+  .tt-cblob--a5 {
+    animation: tt-bfloat5 var(--d) ease-in-out infinite alternate;
+  }
+  .tt-cblob--a6 {
+    animation: tt-bfloat6 var(--d) ease-in-out infinite alternate;
+  }
+}
+@keyframes tt-bfloat1 {
+  from {
+    transform: translate3d(0, 0, 0) rotate(-2deg) scale(1);
+  }
+  to {
+    transform: translate3d(2.2vw, -2.6vw, 0) rotate(4.5deg) scale(1.07);
+  }
+}
+@keyframes tt-bfloat2 {
+  from {
+    transform: translate3d(0, 0, 0) rotate(1.5deg) scale(1.03);
+  }
+  to {
+    transform: translate3d(-2.6vw, 2.2vw, 0) rotate(-4deg) scale(0.94);
+  }
+}
+@keyframes tt-bfloat3 {
+  from {
+    transform: translate3d(0, 0, 0) rotate(-1.5deg) scale(0.96);
+  }
+  to {
+    transform: translate3d(2.4vw, 2.8vw, 0) rotate(5deg) scale(1.08);
+  }
+}
+@keyframes tt-bfloat4 {
+  from {
+    transform: translate3d(0, 0, 0) rotate(2deg) scale(1);
+  }
+  to {
+    transform: translate3d(-2.8vw, -2.4vw, 0) rotate(-5deg) scale(1.06);
+  }
+}
+@keyframes tt-bfloat5 {
+  from {
+    transform: translate3d(0, 0, 0) rotate(-1deg) scale(1.04);
+  }
+  to {
+    transform: translate3d(2.8vw, 2.4vw, 0) rotate(4deg) scale(0.93);
+  }
+}
+@keyframes tt-bfloat6 {
+  from {
+    transform: translate3d(0, 0, 0) rotate(1deg) scale(0.95);
+  }
+  to {
+    transform: translate3d(-2.4vw, -2.8vw, 0) rotate(-4deg) scale(1.08);
   }
 }
 
@@ -10167,7 +10346,7 @@ button:focus-visible,
    Motion-play: 3D device block (Fresh Greens)
    ─────────────────────────────────────────────────────────────── */
 .device-3d {
-  margin-top: 1.6rem;
+  margin-top: 2.2rem;
 }
 
 .device-3d-stage {
@@ -10373,6 +10552,10 @@ main[data-project-slug="understandingfafsa"] {
   --case-highlight-color: var(--uf-accent-highlight, #f2b544);
   --case-highlight-opacity: 22%;
 }
+main[data-project-slug="tiktok"] {
+  --case-highlight-color: var(--tt-magenta, #fe2c55);
+  --case-highlight-opacity: 16%;
+}
 
 /* Default reveal (Navi): the neighborhood-mapping sweep. */
 main[data-highlight-anim-ready] mark.case-highlight {
@@ -10487,3 +10670,544 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 /* Type pass: cap the case-study prose measure for comfortable reading */
 .project-section-body { max-width: 68ch; }
 .project-section-body p { text-wrap: pretty; }
+
+/* ── Fresh Greens research synthesis exhibit ─────────── */
+.fg-synth { margin: 1.75rem 0 0; }
+.fg-synth-markers {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@media (max-width: 560px) {
+  .fg-synth-markers {
+    grid-template-columns: 1fr;
+  }
+}
+.fg-synth-marker {
+  border: 1px solid var(--line);
+  border-radius: 0.7rem;
+  padding: 1.1rem;
+  background: var(--surface);
+}
+.fg-synth-marker-head {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.55rem;
+}
+.fg-synth-glyph {
+  flex: none;
+  opacity: 0.9;
+  width: 1.6rem;
+  height: 1.6rem;
+}
+.fg-synth-label {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.fg-synth-count {
+  margin: 0 0 0 auto;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.78rem;
+  color: var(--fg-accent);
+}
+.fg-synth-insight {
+  margin: 0 0 0.7rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.fg-synth-snippets {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.35rem;
+}
+.fg-synth-snippets li {
+  position: relative;
+  padding-left: 0.9rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--foreground);
+}
+.fg-synth-snippets li::before {
+  content: "\201C";
+  position: absolute;
+  left: 0;
+  top: 0.05em;
+  color: color-mix(in srgb, var(--foreground) 32%, transparent);
+}
+.fg-synth-community {
+  margin-top: 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--fg-accent) 55%, var(--line));
+  border-radius: 0.9rem;
+  padding: 1.1rem 1.25rem;
+  background: color-mix(in srgb, var(--fg-accent) 7%, transparent);
+}
+.fg-synth-community .fg-synth-insight {
+  color: var(--foreground);
+  font-size: 0.96rem;
+}
+.fg-synth-asked {
+  margin-top: 1.5rem;
+}
+.fg-synth-asked-label {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.fg-synth-asked ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.7rem;
+}
+.fg-synth-asked-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0.9rem;
+  align-items: center;
+}
+.fg-synth-asked-quote {
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.fg-synth-asked-arrow {
+  color: var(--fg-accent);
+  font-weight: 600;
+}
+.fg-synth-asked-became {
+  font-weight: 600;
+}
+@media (max-width: 560px) {
+  .fg-synth-asked-row {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+  .fg-synth-asked-arrow {
+    display: none;
+  }
+}
+
+.fg-lofi {
+  margin: 2.2rem 0 2.6rem;
+}
+.fg-lofi img {
+  border-radius: 0.9rem;
+  border: 1px solid var(--line);
+}
+
+/* ── Fresh Greens design-token exhibit ───────────────── */
+.fg-token-figure {
+  margin: 2.2rem 0 0;
+}
+.fg-tokens {
+  margin: 0 0 0.9rem;
+  display: grid;
+  gap: 2rem;
+}
+.fg-tokens-lane-label {
+  margin: 0 0 1rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Color: swatches grouped by the job they do */
+.fg-swatch-groups {
+  display: grid;
+  gap: 1.5rem;
+}
+.fg-swatch-group-label {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--foreground);
+}
+.fg-swatches {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: 0.9rem;
+}
+.fg-swatch {
+  display: grid;
+  gap: 0.2rem;
+  align-content: start;
+}
+.fg-swatch-chip {
+  height: 3.25rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.35rem;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--foreground) 14%, transparent);
+}
+.fg-swatch-name {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.8rem;
+  color: var(--foreground);
+}
+.fg-swatch-hex {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.fg-swatch-role {
+  font-size: 0.8rem;
+  line-height: 1.35;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+/* Spacing ramp */
+.fg-tokens-spacing {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+  max-width: 30rem;
+}
+.fg-token-space {
+  display: grid;
+  grid-template-columns: 2.4rem 1fr 2.4rem;
+  gap: 0.8rem;
+  align-items: center;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.8rem;
+}
+.fg-token-space-name {
+  color: var(--muted);
+}
+.fg-token-space-bar {
+  height: 0.8rem;
+  background: var(--fg-accent);
+}
+.fg-token-space-px {
+  color: var(--muted);
+  text-align: right;
+}
+
+/* Entrance reveal — JS sets data-reveal only when motion is allowed, so
+   no-JS and reduced-motion readers keep the finished, visible panel. */
+.fg-tokens[data-reveal="pending"] .fg-swatch {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.fg-tokens[data-reveal="pending"] .fg-token-space-bar {
+  transform: scaleX(0);
+}
+.fg-tokens[data-reveal] .fg-swatch {
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i, 0) * 40ms);
+}
+.fg-tokens[data-reveal="in"] .fg-swatch {
+  opacity: 1;
+  transform: none;
+}
+.fg-tokens[data-reveal] .fg-token-space-bar {
+  transform-origin: left;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  /* Stagger: swatches finish reveal first (~9 * 40ms = 360ms), then the
+     ramp starts and grows one bar at a time — reads as a ramp filling. */
+  transition-delay: calc(400ms + var(--i, 0) * 140ms);
+}
+.fg-tokens[data-reveal="in"] .fg-token-space-bar {
+  transform: scaleX(1);
+}
+
+@media (max-width: 560px) {
+  .fg-swatches {
+    grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  }
+}
+
+/* ── Fresh Greens Google→distinct pivot ──────────────── */
+.fg-pivot {
+  margin: 2.2rem 0 0;
+}
+.fg-pivot-steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 1.4rem;
+}
+.fg-pivot-step {
+  display: grid;
+  justify-items: center;
+  gap: 0.9rem;
+  text-align: center;
+}
+/* the arrow tracing v1 → the break */
+.fg-pivot-step:not(:last-child)::after {
+  content: "↓";
+  font-size: 1.15rem;
+  line-height: 1;
+  color: var(--fg-accent);
+  opacity: 0.7;
+  margin-top: 0.5rem;
+}
+.fg-pivot-step-label {
+  margin: 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.fg-pivot-phone {
+  width: 100%;
+  max-width: 16.5rem;
+  margin-inline: auto;
+}
+.fg-pivot-caption {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+/* ── Fresh Greens onboarding illustrations ───────────── */
+.fg-illustrations {
+  margin: 2.2rem 0 2.6rem;
+}
+
+/* ── Fresh Greens en-route video (§3) ─────────────────── */
+.fg-en-route-video {
+  margin: 2.2rem auto 2.6rem;
+  max-width: 320px; /* phone-shot scale — video is a phone screen recording */
+}
+.fg-en-route-video .case-lead-video {
+  border-radius: 0.9rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+/* ── Pulled-over: emotional-peak H2 anchor ────────────── */
+.project-section > h2#fg-pulled-over {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -0.028em;
+  line-height: 1.08;
+}
+
+/* ── Pivot: side-by-side on desktop ───────────────────── */
+@media (min-width: 820px) {
+  .fg-pivot-steps {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  /* Vertical arrow was between stacked steps; on desktop the side-by-side
+     layout IS the comparison, no arrow needed. */
+  .fg-pivot-step:not(:last-child)::after {
+    content: none;
+  }
+}
+
+/* ── Pivot micro-reveal (matches token exhibit craft) ─── */
+.fg-pivot[data-reveal="pending"] .fg-pivot-step {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.fg-pivot[data-reveal] .fg-pivot-step {
+  transition:
+    opacity 0.55s ease-out,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.fg-pivot[data-reveal] .fg-pivot-step:nth-child(1) { transition-delay: 0.05s; }
+.fg-pivot[data-reveal] .fg-pivot-step:nth-child(2) { transition-delay: 0.35s; }
+.fg-pivot[data-reveal="in"] .fg-pivot-step {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Reserved color: palette + phone pair on desktop ──── */
+.fg-color-pair {
+  display: grid;
+  gap: 1.8rem;
+  margin: 2.2rem 0 2.6rem;
+  max-width: min(52rem, 100%);
+}
+@media (min-width: 820px) {
+  .fg-color-pair {
+    grid-template-columns: 1.35fr 1fr;
+    gap: 2.4rem;
+    align-items: center;
+  }
+  .fg-color-pair > .fg-safety-visual {
+    margin: 0;
+    max-width: none;
+  }
+}
+
+/* ── Fresh Greens moderation flow ─────────────────────── */
+.fg-moderation {
+  margin: 2.2rem 0 2.6rem;
+}
+.fg-mod-flow {
+  display: flex;
+  align-items: stretch;
+  gap: 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 0.7rem;
+  padding: 1.1rem 1.2rem;
+}
+.fg-mod-stage {
+  flex: 1 1 7rem;
+  display: grid;
+  gap: 0.55rem;
+  align-content: start;
+}
+.fg-mod-stage--panel {
+  flex: 1.5 1 11rem;
+}
+.fg-mod-stage-label {
+  margin: 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--fg-accent);
+}
+.fg-mod-stage-text {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--foreground);
+}
+.fg-mod-checks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.35rem;
+}
+.fg-mod-checks li {
+  position: relative;
+  padding-left: 0.95rem;
+  font-size: 0.85rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
+.fg-mod-checks li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 0.36rem;
+  height: 0.36rem;
+  border-radius: 50%;
+  background: var(--fg-accent);
+}
+.fg-mod-arrow {
+  align-self: center;
+  color: var(--fg-accent);
+  opacity: 0.65;
+  font-size: 1rem;
+}
+@media (max-width: 620px) {
+  .fg-mod-flow {
+    flex-direction: column;
+  }
+  .fg-mod-arrow {
+    transform: rotate(90deg);
+    align-self: center;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Fresh Greens · Daylight-arc ToC (overdrive)
+   The ToC traces a dawn-to-night arc across the case's nine sections.
+   No prior knowledge required — a first-time viewer scrolling the case
+   just feels time passing as they read. When they later reach §6 and
+   learn the app uses a daylight-graded route, the metaphor snaps into
+   place retroactively: the reading was the drive.
+
+     §1 Problem       → sunrise orange
+     §2 Research      → morning gold
+     §3 Scoring       → bright morning
+     §4 Pulled-over   → peak-sun coral
+     §5 Design pivot  → afternoon warm
+     §6 Type & color  → sunset rose
+     §7 Reserved      → dusk purple
+     §8 Trust         → evening indigo
+     §9 Scope         → night navy
+
+   Reduced-motion safe; segment fills track scroll position with no
+   easing.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── Section colors, arranged as a dawn → night arc ──────────────── */
+.fg-page .project-toc-item:nth-child(1) { --seg-color: #F09456; } /* sunrise orange     */
+.fg-page .project-toc-item:nth-child(2) { --seg-color: #F9C048; } /* morning gold       */
+.fg-page .project-toc-item:nth-child(3) { --seg-color: #FDD350; } /* bright morning     */
+.fg-page .project-toc-item:nth-child(4) { --seg-color: #EA6D3C; } /* peak-sun coral     */
+.fg-page .project-toc-item:nth-child(5) { --seg-color: #C74757; } /* afternoon warm     */
+.fg-page .project-toc-item:nth-child(6) { --seg-color: #A03E7C; } /* sunset rose        */
+.fg-page .project-toc-item:nth-child(7) { --seg-color: #664188; } /* dusk purple        */
+.fg-page .project-toc-item:nth-child(8) { --seg-color: #3B3878; } /* evening indigo     */
+.fg-page .project-toc-item:nth-child(9) { --seg-color: #1B1E4B; } /* night navy         */
+
+.fg-page .project-toc-rail::after {
+  background: var(--seg-color, var(--toc-fill));
+}
+
+.fg-page .project-toc-link--active .project-toc-dot {
+  background: var(--seg-color, var(--toc-fill));
+}
+
+.fg-page .project-toc-link--active {
+  /* Active section still gets its faint tint, keyed to the section's
+     own daylight color so the tint reads as "the sky at this moment." */
+  background: color-mix(in srgb, var(--seg-color, var(--toc-fill)) 10%, transparent);
+}
+
+/* Mobile / tablet progress hairline: paint the full daylight arc behind,
+   then use a mask to reveal only the portion the reader has scrolled
+   through. As they scroll the bar drifts from dawn orange through peak
+   sun to night navy — same journey the desktop rails trace, drawn as a
+   continuous horizon. */
+.fg-page .project-toc-progress {
+  transform: none;
+  width: 100%;
+  background: linear-gradient(
+    to right,
+    #F09456 0 11.11%,
+    #F9C048 11.11% 22.22%,
+    #FDD350 22.22% 33.33%,
+    #EA6D3C 33.33% 44.44%,
+    #C74757 44.44% 55.55%,
+    #A03E7C 55.55% 66.66%,
+    #664188 66.66% 77.77%,
+    #3B3878 77.77% 88.88%,
+    #1B1E4B 88.88% 100%
+  );
+  -webkit-mask: linear-gradient(
+    to right,
+    #000 0 calc(var(--toc-progress, 0) * 100%),
+    transparent calc(var(--toc-progress, 0) * 100%)
+  );
+  mask: linear-gradient(
+    to right,
+    #000 0 calc(var(--toc-progress, 0) * 100%),
+    transparent calc(var(--toc-progress, 0) * 100%)
+  );
+}

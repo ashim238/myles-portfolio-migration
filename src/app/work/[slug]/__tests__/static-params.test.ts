@@ -52,7 +52,7 @@ describe("work/[slug] route hides hidden projects", () => {
       makeProject("navi", "published"),
       makeProject("understandingfafsa", "published"),
       makeProject("work-in-progress", "draft"),
-      makeProject("tiktok", "hidden"),
+      makeProject("secret-case", "hidden"),
     ]);
 
     const slugs = (await generateStaticParams()).map((p) => p.slug);
@@ -60,14 +60,14 @@ describe("work/[slug] route hides hidden projects", () => {
     expect(slugs).toEqual(
       expect.arrayContaining(["navi", "understandingfafsa", "work-in-progress"]),
     );
-    expect(slugs).not.toContain("tiktok");
+    expect(slugs).not.toContain("secret-case");
   });
 
   it("404s a hidden project requested directly", async () => {
-    getProjectBySlug.mockResolvedValue(makeProject("tiktok", "hidden"));
+    getProjectBySlug.mockResolvedValue(makeProject("secret-case", "hidden"));
 
     await expect(
-      ProjectPage({ params: Promise.resolve({ slug: "tiktok" }) }),
+      ProjectPage({ params: Promise.resolve({ slug: "secret-case" }) }),
     ).rejects.toThrow("NEXT_NOT_FOUND");
   });
 

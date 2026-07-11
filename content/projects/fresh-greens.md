@@ -5,7 +5,7 @@ summary: A wayfinding app for Black travel in America. Routes that maximize dayl
 role: Product Designer · Solo build
 timeframe: 2025
 status: published
-order: 1
+order: 2
 coverImage: /projects/fresh-greens/cover.png
 highlightQuote: A shipped wayfinding app that weights community safety knowledge alongside public data — every route traceable to an auditable source.
 tags:

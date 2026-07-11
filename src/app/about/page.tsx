@@ -32,14 +32,16 @@ export default function AboutPage() {
               went back for an MFA in Design and Technology at Parsons.
             </p>
             <p>
-              I design end to end and tend to go past the prototype. My
-              thesis was a solo-built React Native wayfinding app for Black
-              travelers in America, with VoiceOver labels, dynamic type, and
-              a WCAG dash pattern for the daylight cue built in from the
-              start. For a financial-aid nonprofit, I rebuilt their
-              newsletter system as modular templates a non-designer could
-              run without breaking the brand. Open rates went from 30% to
-              52.6%.
+              I design end to end and tend to go past the prototype, pulling
+              strategy, design, and code into the same process. My thesis was a
+              solo-built React Native wayfinding app for Black travelers in
+              America, with VoiceOver labels, dynamic type, and a WCAG dash
+              pattern for the daylight cue built in from the start. For a
+              financial-aid nonprofit, I rebuilt the newsletter as modular
+              templates a non-designer could run without breaking the brand,
+              and open rates went from 30% to 52.6%. At TikTok I designed
+              catalog ad templates around the platform&apos;s subcultures, and
+              American Eagle adopted one.
             </p>
             <p>
               I care about accessibility that isn&apos;t an afterthought,

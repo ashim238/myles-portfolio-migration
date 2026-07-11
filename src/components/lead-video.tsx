@@ -2,11 +2,19 @@
 
 import { useEffect, useRef } from "react";
 
-type LeadVideoProps = { clip: string; poster: string; alt: string };
+type LeadVideoProps = {
+  clip: string;
+  poster: string;
+  alt: string;
+  /** MIME type of the clip. Defaults to video/mp4. Use video/quicktime for
+   *  screen recordings straight out of macOS QuickTime (they're .mov files
+   *  wrapped as .mp4). */
+  type?: string;
+};
 
 /** Muted autoplay loop. Under reduced-motion we do not autoplay; the poster
  *  (the still cover) shows instead, so the section is never blank or busy. */
-export function LeadVideo({ clip, poster, alt }: LeadVideoProps) {
+export function LeadVideo({ clip, poster, alt, type = "video/mp4" }: LeadVideoProps) {
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -31,7 +39,10 @@ export function LeadVideo({ clip, poster, alt }: LeadVideoProps) {
       autoPlay
       aria-label={alt}
     >
-      <source src={clip} type="video/mp4" />
+      <source src={clip} type={type} />
+      {/* Fallback: some browsers reject the primary type; also declare mp4
+          so H.264 content plays even when the container is quirky. */}
+      {type !== "video/mp4" ? <source src={clip} type="video/mp4" /> : null}
     </video>
   );
 }

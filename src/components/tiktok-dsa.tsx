@@ -1,6 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
 import { ExpandableImage } from "@/components/expandable-image";
 import { AESTHETICS } from "@/lib/tiktok-data";
 
@@ -67,6 +73,63 @@ export function TikTokLogo() {
    already shows all three aesthetics at angled
    perspective; we just give it gentle motion.
    ────────────────────────────────────────── */
+
+/* ──────────────────────────────────────────
+   Cover metaball field
+   Rebuilds the gradient cover art as living blobs: each drifts
+   and scales on its own loop, merging organically via an SVG goo
+   filter. Palette echoes the source PSD. Reduced-motion: the
+   blobs hold their base positions (still a full composition).
+   ────────────────────────────────────────── */
+
+// Real blobs extracted from the source PSD (visible Layers 27 + 29) by
+// connected-component split, so each is the designer's actual crisp art.
+// x/y = top-left %, w = width % of the 16:9 art canvas; a = float variant,
+// d = loop seconds. Ordered largest-first (paint order = back to front).
+const COVER_BLOBS = [
+  { f: "b08", x: 42.44, y: 41.15, w: 15.56, a: 1, d: 16 },
+  { f: "b14", x: 38.35, y: 34.81, w: 10.52, a: 2, d: 13 },
+  { f: "b15", x: 45.81, y: 35.48, w: 9.25, a: 3, d: 18 },
+  { f: "b13", x: 49.62, y: 17.74, w: 9.54, a: 4, d: 20 },
+  { f: "b05", x: 37.29, y: 37.0, w: 4.9, a: 5, d: 12 },
+  { f: "b02", x: 54.52, y: 17.85, w: 5.15, a: 6, d: 15 },
+  { f: "b03", x: 48.81, y: 20.22, w: 2.15, a: 2, d: 11 },
+  { f: "b04", x: 42.31, y: 32.11, w: 5.08, a: 1, d: 14 },
+  { f: "b00", x: 41.77, y: 6.74, w: 3.54, a: 3, d: 10 },
+  { f: "b10", x: 69.65, y: 65.0, w: 2.94, a: 4, d: 13 },
+  { f: "b06", x: 47.04, y: 37.22, w: 1.71, a: 5, d: 9 },
+  { f: "b12", x: 52.0, y: 85.93, w: 1.96, a: 6, d: 12 },
+  { f: "b07", x: 29.52, y: 37.67, w: 1.83, a: 1, d: 11 },
+  { f: "b01", x: 68.92, y: 15.67, w: 1.71, a: 2, d: 10 },
+  { f: "b11", x: 32.21, y: 71.52, w: 1.35, a: 3, d: 13 },
+  { f: "b09", x: 63.08, y: 48.56, w: 0.79, a: 4, d: 9 },
+] as const;
+
+export function TikTokCoverBlobs() {
+  return (
+    <div className="tt-cover-field" aria-hidden="true">
+      {COVER_BLOBS.map((b) => (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          key={b.f}
+          src={`/projects/tiktok/cover-blobs/${b.f}.png`}
+          alt=""
+          draggable={false}
+          className={`tt-cblob tt-cblob--a${b.a}`}
+          style={
+            {
+              left: `${b.x}%`,
+              top: `${b.y}%`,
+              width: `${b.w}%`,
+              animationDelay: `${-b.d * 0.5}s`,
+              "--d": `${b.d}s`,
+            } as CSSProperties
+          }
+        />
+      ))}
+    </div>
+  );
+}
 
 export function HeroThreePhones() {
   const ref = useRef<HTMLDivElement | null>(null);
