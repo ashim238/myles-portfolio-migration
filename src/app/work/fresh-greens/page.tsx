@@ -282,9 +282,8 @@ export default async function FreshGreensPage() {
               />
             </PhoneFrame>
             <figcaption className="fg-safety-visual-caption">
-              The Held-Question in action. &quot;Are you armed?&quot; set in
-              Regular, with three composed options where a Bold prompt would
-              have read as an accusation.
+              &quot;Are you armed?&quot; in Regular, three composed options
+              where Bold would have read as an accusation.
             </figcaption>
           </figure>
 
@@ -296,9 +295,8 @@ export default async function FreshGreensPage() {
               />
             </PhoneFrame>
             <figcaption className="fg-safety-visual-caption">
-              The one exception red is allowed to make: the recording indicator.
-              &quot;You&apos;re not alone.&quot; is another of the six serif
-              moments, and the trusted contact is one tap away.
+              &quot;You&apos;re not alone.&quot; in the reserved serif. The
+              recording indicator is the one exception red is allowed to make.
             </figcaption>
           </figure>
         </div>
@@ -394,9 +392,8 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body">
           <p>
-            Green carries every button and link. Red, orange, yellow, and navy
-            are reserved for safety signals, each tied to one meaning, so a red
-            dot always points to something specific. Across 26+ screens,{" "}
+            Green carries every button and link. Four hues are reserved for
+            safety signals, each tied to one meaning. Across 26+ screens,{" "}
             <mark className="case-highlight">the rule holds, with documented carve-outs</mark>.
           </p>
         </div>
@@ -420,15 +417,6 @@ export default async function FreshGreensPage() {
           </figure>
         </div>
 
-        <div className="project-section-body">
-          <p>
-            The daylight gradient is the one non-reserved color the system
-            allows itself. On <code>/route-preview</code>, a sun-to-moon dashed
-            band traces what the light will do along the route. It says one
-            thing, everywhere it appears.
-          </p>
-        </div>
-
         <figure className="fg-safety-visual">
           <PhoneFrame variant="screenshot">
             <Shot
@@ -437,8 +425,9 @@ export default async function FreshGreensPage() {
             />
           </PhoneFrame>
           <figcaption className="fg-safety-visual-caption">
-            The daylight indicator, held to one job: telling the driver what
-            light they can expect, from now until arrival.
+            The daylight indicator, the one non-reserved color the system
+            allows itself. It tells the driver what light to expect, from
+            now until arrival.
           </figcaption>
         </figure>
 
