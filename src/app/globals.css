@@ -1122,465 +1122,261 @@ button:focus-visible,
   border-top: 1px solid var(--line);
 }
 
-.work-showcase-shell {
-  display: block;
-}
-
-@media (min-width: 1024px) {
-  .work-showcase-shell {
-    display: grid;
-    grid-template-columns: minmax(7.5rem, 9.5rem) minmax(0, 1fr);
-    gap: clamp(1.5rem, 3vw, 2.75rem);
-    align-items: start;
-  }
-}
-
-.work-showcase-rail {
-  display: none;
-}
-
-@media (min-width: 1024px) {
-  .work-showcase-rail {
-    display: block;
-    position: sticky;
-    top: 5rem;
-    padding-top: 0.35rem;
-    /* Cap to the viewport so a long project list scrolls within the rail
-       instead of pushing items below the fold while it's stuck. */
-    max-height: calc(100vh - 7rem);
-    overflow-y: auto;
-    scrollbar-width: thin;
-  }
-}
-
-.work-showcase-rail-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-}
-
-.work-showcase-rail-button {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.12rem;
-  width: 100%;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: color-mix(in srgb, var(--muted) 82%, transparent);
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-  transition:
-    color 280ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.work-showcase-rail-button:hover,
-.work-showcase-rail-button:focus-visible {
-  color: var(--foreground);
-}
-
-.work-showcase-rail-button:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 3px;
-  border-radius: 0.2rem;
-}
-
-.work-showcase-rail-button--active {
-  color: var(--foreground);
-  transform: translateX(2px);
-}
-
-.work-showcase-rail-index {
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.work-showcase-rail-title {
-  font-size: 0.78rem;
-  line-height: 1.35;
-  letter-spacing: var(--track-body);
-  text-wrap: balance;
-}
-
-.work-showcase {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-
-.work-showcase-item {
+/* ── Work gallery (visual-first, "working file" signature) ───────── */
+.work-gallery {
   position: relative;
-  padding: 0;
-  border-top: none;
-  transform-origin: center center;
-  transition:
-    opacity 520ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
-    filter 520ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.work-showcase-item::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+.work-gallery-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 0 0.9rem;
+  font-family: var(--font-geist-mono, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.work-gallery-head span:first-child {
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+.work-gallery-rule {
   height: 1px;
   background: var(--line);
-  transform: scaleX(1);
   transform-origin: left center;
 }
 
-.work-showcase-item:first-child::before {
-  display: none;
+.work-gallery-feature {
+  padding: 2rem 0 2.4rem;
 }
 
-.work-showcase-shell[data-focus-ready="true"] .work-showcase-item[data-focus-distance="1"] {
-  opacity: 0.88;
-  transform: scale(0.985);
+.work-gallery-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.6rem, 4vw, 2.75rem);
+  padding: 2rem 0 1.6rem;
 }
 
-.work-showcase-shell[data-focus-ready="true"] .work-showcase-item[data-focus-distance="2"] {
-  opacity: 0.72;
-  transform: scale(0.97);
-  filter: blur(0.25px);
-}
-
-.work-showcase-shell[data-focus-ready="true"] .work-showcase-item[data-active="true"] {
-  opacity: 1;
-  transform: scale(1);
-  filter: none;
-}
-
-.work-showcase-shell[data-focus-ready="true"] .work-showcase-item[data-active="true"] .work-showcase-index {
-  color: var(--foreground);
-  animation: workShowcaseIndexPulse 340ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@keyframes workShowcaseIndexPulse {
-  0% {
-    opacity: 0.55;
-  }
-
-  45% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 1;
+@media (max-width: 760px) {
+  .work-gallery-pair {
+    grid-template-columns: 1fr;
+    gap: 2.2rem;
   }
 }
 
-.work-showcase-metric {
-  margin: 0.65rem 0 0;
-  min-height: 1.35em;
-  max-width: min(100%, 42ch);
-  font-size: 0.92rem;
-  line-height: 1.45;
-  letter-spacing: var(--track-body);
-  color: color-mix(in srgb, var(--foreground) 88%, var(--muted));
+.work-gallery-index {
+  display: block;
+  margin: 0 0 0.75rem;
+  font-family: var(--font-geist-mono, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
 }
 
-.work-showcase-item:not([data-active="true"]) .work-showcase-metric {
-  opacity: 0;
-  min-height: 0;
-  margin: 0;
-  overflow: hidden;
+.work-card {
+  display: block;
+  color: inherit;
+  cursor: pointer;
+}
+
+.work-card:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 6px;
+  border-radius: 0.75rem;
+}
+
+.work-media {
+  position: relative;
+}
+
+/* Echo sheet: one offset page behind the featured cover, the "stack of
+   work" cue carried over from the old showcase's media stack. */
+.work-thumb-echo {
+  position: absolute;
+  inset: 0.9rem -0.7rem -0.9rem 0.7rem;
+  border-radius: 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  transform: rotate(-0.6deg);
   pointer-events: none;
 }
 
-.work-showcase-metric-text {
-  white-space: pre-wrap;
+.work-thumb {
+  position: relative;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: var(--surface);
+  aspect-ratio: 3 / 2;
+  border: 1px solid var(--line);
+  box-shadow: 0 1.2rem 2.4rem -1.4rem color-mix(in srgb, #000 72%, transparent);
+  transition:
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 420ms ease;
 }
 
-.work-showcase-metric-cursor {
-  margin-left: 1px;
-  font-weight: 300;
-  color: var(--muted);
-  opacity: 0;
-  transition: opacity 80ms ease;
+.work-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.work-showcase-metric-cursor--on {
-  opacity: 1;
+.work-card:hover .work-thumb,
+.work-card:focus-visible .work-thumb {
+  transform: translateY(-4px);
+  box-shadow: 0 1.9rem 3rem -1.5rem color-mix(in srgb, #000 78%, transparent);
 }
 
-.work-showcase-link {
-  display: grid;
-  gap: 1.35rem;
-  padding: 2.4rem 0 2.85rem;
-  transition: transform 140ms ease;
+.work-card:hover .work-thumb img,
+.work-card:focus-visible .work-thumb img {
+  transform: scale(1.03);
 }
 
-@media (min-width: 768px) {
-  .work-showcase-link {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-    align-items: center;
-    gap: clamp(1.5rem, 4vw, 3.5rem);
-    padding: clamp(2.6rem, 5vw, 4rem) 0;
-  }
-
-  .work-showcase-item--reverse .work-showcase-link {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-  }
-
-  .work-showcase-item--reverse .work-showcase-copy {
-    order: 2;
-  }
-
-  .work-showcase-item--reverse .work-showcase-media {
-    order: 1;
-  }
-
-  .work-showcase-item--featured .work-showcase-link {
-    padding-top: clamp(2.8rem, 6vw, 4.8rem);
-    padding-bottom: clamp(3rem, 6vw, 4.8rem);
-  }
+/* The corner tab: role · year pinned to the cover like a label on a
+   physical artifact. It straightens when the card is engaged. */
+.work-tab {
+  position: absolute;
+  top: 0.9rem;
+  left: 0.9rem;
+  padding: 0.3rem 0.6rem;
+  font-family: var(--font-geist-mono, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.05em;
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--background) 92%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 0.25rem;
+  transform: rotate(-1.7deg);
+  transform-origin: left top;
+  box-shadow: 0 2px 8px -4px color-mix(in srgb, #000 60%, transparent);
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  backdrop-filter: blur(6px);
 }
 
-.work-showcase-copy {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  min-width: 0;
+.work-gallery-pair .work-gallery-cell:nth-child(2) .work-tab {
+  transform: rotate(1.4deg);
 }
 
-.work-showcase-shell[data-focus-ready="true"] .work-showcase-item[data-active="true"] .work-showcase-copy {
-  transform: translate3d(0, var(--parallax-copy, 0px), 0);
-  will-change: transform;
+.work-card:hover .work-tab,
+.work-card:focus-visible .work-tab {
+  transform: rotate(0deg);
 }
 
-.work-showcase-shell[data-focus-ready="true"] .work-showcase-item[data-active="true"] .work-showcase-media {
-  transform: translate3d(0, var(--parallax-media, 0px), 0);
-  will-change: transform;
+.work-cap {
+  margin-top: 1.1rem;
 }
 
-.work-showcase-index {
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  /* Full --muted, not a transparency: the 78% mix computed to ~4.17:1 on the
-     light bg at this size, under the 4.5:1 AA minimum. */
-  color: var(--muted);
-  margin-bottom: 0.55rem;
-}
-
-.work-showcase-item h3 {
-  /* Fill the copy column instead of shrinking to content width, so a long
-     title wraps within its column rather than overflowing under the image.
-     The parent sets align-items: flex-start, which would otherwise size this
-     to its widest unbroken word. */
-  align-self: stretch;
-  font-size: clamp(1.85rem, 3.8vw, 2.85rem);
-  line-height: var(--lead-title);
+.work-title {
+  font-weight: 600;
   letter-spacing: var(--track-title);
+  line-height: 1.06;
+  margin: 0;
+  color: var(--foreground);
   overflow-wrap: break-word;
   text-wrap: balance;
 }
 
-.work-showcase-item--featured h3 {
-  font-size: clamp(2.05rem, 4.4vw, 3.2rem);
+.work-gallery-feature .work-title {
+  font-size: clamp(1.9rem, 3.6vw, 2.6rem);
 }
 
-.work-showcase-item p {
-  margin-top: 0.45rem;
+.work-gallery-pair .work-title {
+  font-size: clamp(1.35rem, 2.4vw, 1.6rem);
+}
+
+.work-out {
+  margin: 0.65rem 0 0;
   color: var(--muted);
-  font-size: 1.01rem;
-  line-height: var(--lead-copy);
-  text-wrap: pretty;
-  max-width: 46ch;
+  line-height: 1.5;
+  font-size: 0.97rem;
+  max-width: 58ch;
 }
 
-.work-showcase-meta {
+.work-gallery-pair .work-out {
+  font-size: 0.92rem;
+}
+
+.work-out strong {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.work-gallery-foot {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem 0.65rem;
-  margin-top: 1rem;
-}
-
-.work-showcase-meta-item {
-  font-size: 0.78rem;
-  letter-spacing: var(--track-body);
-  color: color-mix(in srgb, var(--muted) 92%, var(--foreground));
-}
-
-.work-showcase-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-top: 0.55rem;
-}
-
-.work-showcase-tag {
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  justify-content: space-between;
+  padding: 1.2rem 0 0;
+  font-family: var(--font-geist-mono, monospace);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
   color: var(--muted);
-  border: 1px solid color-mix(in srgb, var(--line) 88%, var(--foreground));
-  border-radius: 999px;
-  padding: 0.18rem 0.55rem;
 }
 
-.work-showcase-media {
-  position: relative;
-  perspective: 900px;
-  min-width: 0;
+/* Entrance cascade: content visible by default; keyframes play OVER it,
+   armed by GalleryReveal only on a visible tab (robust reveal). */
+.work-gallery.wg-animate .wg-anim {
+  animation: wgFade 600ms cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s) both;
 }
 
-.work-showcase-media-stack {
-  position: absolute;
-  inset: 0.85rem -0.65rem -0.85rem 0.65rem;
-  border-radius: 0.75rem;
-  border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
-  background: color-mix(in srgb, var(--surface) 88%, transparent);
-  transform: translate3d(0, 0.2rem, -1rem) rotate(-0.6deg);
-  opacity: 0.48;
-  pointer-events: none;
-  transition:
-    opacity 520ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+.work-gallery.wg-animate .wg-anim.wg-tick {
+  animation-name: wgTick;
 }
 
-.work-showcase-shell[data-focus-ready="true"] .work-showcase-item[data-active="true"] .work-showcase-media-stack {
-  opacity: 0.92;
-  transform: translate3d(0, 0.55rem, -1rem) rotate(-2deg);
-  animation: workShowcaseStackBreathe 5.5s ease-in-out infinite;
+.work-gallery.wg-animate .wg-anim.wg-rise {
+  animation-name: wgRise;
 }
 
-.work-showcase-item--reverse .work-showcase-media-stack {
-  inset: 0.85rem 0.65rem -0.85rem -0.65rem;
-  transform: translate3d(0, 0.2rem, -1rem) rotate(0.6deg);
+.work-gallery.wg-animate .work-gallery-rule.wg-anim {
+  animation-name: wgRule;
 }
 
-.work-showcase-shell[data-focus-ready="true"] .work-showcase-item[data-active="true"].work-showcase-item--reverse .work-showcase-media-stack {
-  transform: translate3d(0, 0.55rem, -1rem) rotate(2deg);
+.work-gallery.wg-animate .work-thumb.wg-anim {
+  animation-name: wgWipe;
+  animation-duration: 700ms;
 }
 
-@keyframes workShowcaseStackBreathe {
-  0%,
-  100% {
-    transform: translate3d(0, 0.5rem, -1rem) rotate(-2deg);
+@keyframes wgFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes wgTick {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes wgRise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes wgRule {
+  from { opacity: 0; transform: scaleX(0); }
+  to { opacity: 1; transform: scaleX(1); }
+}
+
+@keyframes wgWipe {
+  from { opacity: 0; clip-path: inset(0 0 100% 0); }
+  to { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-gallery.wg-animate .wg-anim {
+    animation: none;
   }
 
-  50% {
-    transform: translate3d(0, 0.62rem, -1rem) rotate(-2.35deg);
-  }
-}
-
-.work-showcase-shell[data-focus-ready="true"] .work-showcase-item[data-active="true"].work-showcase-item--reverse .work-showcase-media-stack {
-  animation-name: workShowcaseStackBreatheReverse;
-}
-
-@keyframes workShowcaseStackBreatheReverse {
-  0%,
-  100% {
-    transform: translate3d(0, 0.5rem, -1rem) rotate(2deg);
+  .work-thumb,
+  .work-thumb img,
+  .work-tab {
+    transition: none;
   }
 
-  50% {
-    transform: translate3d(0, 0.62rem, -1rem) rotate(2.35deg);
-  }
-}
-
-.work-showcase-media-frame {
-  position: relative;
-  z-index: 1;
-  border-radius: 0.75rem;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  background: var(--surface);
-  box-shadow:
-    0 1.2rem 2.4rem -1.4rem color-mix(in srgb, #000 72%, transparent),
-    0 0 0 1px color-mix(in srgb, var(--foreground) 4%, transparent);
-  transform: translate3d(0, 0, 0);
-  transition:
-    transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 240ms ease,
-    box-shadow 420ms ease;
-}
-
-.work-showcase-image {
-  display: block;
-  width: 100%;
-  height: auto;
-  transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .work-showcase-item::before {
-      transform: scaleX(0);
-      animation: workShowcaseLineDraw linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 32%;
-    }
-
-    .work-showcase-item--reverse::before {
-      transform-origin: right center;
-    }
-
-    @keyframes workShowcaseLineDraw {
-      to {
-        transform: scaleX(1);
-      }
-    }
-
-    .work-showcase-media-frame {
-      animation: workShowcaseScrollIn linear both;
-      animation-timeline: view();
-      animation-range: entry 8% cover 42%;
-    }
-
-    @keyframes workShowcaseScrollIn {
-      from {
-        opacity: 0.82;
-        transform: translate3d(0, 1.4rem, 0) scale(0.985);
-      }
-
-      to {
-        opacity: 1;
-        transform: translate3d(0, 0, 0) scale(1);
-      }
-    }
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .work-showcase-link:hover .work-showcase-media-frame,
-  .work-showcase-link:focus-visible .work-showcase-media-frame {
-    transform: translate3d(0, -0.35rem, 0) rotateX(1.4deg) rotateY(-2deg);
-    border-color: color-mix(in srgb, var(--line) 55%, var(--foreground));
-    box-shadow:
-      0 1.6rem 3rem -1.2rem color-mix(in srgb, #000 78%, transparent),
-      0 0 0 1px color-mix(in srgb, var(--foreground) 8%, transparent);
-  }
-
-  .work-showcase-item--reverse .work-showcase-link:hover .work-showcase-media-frame,
-  .work-showcase-item--reverse .work-showcase-link:focus-visible .work-showcase-media-frame {
-    transform: translate3d(0, -0.35rem, 0) rotateX(1.4deg) rotateY(2deg);
-  }
-
-  .work-showcase-link:hover .work-showcase-image,
-  .work-showcase-link:focus-visible .work-showcase-image {
-    transform: scale(1.03);
-  }
-
-  .work-showcase-link:hover .work-showcase-media-stack,
-  .work-showcase-link:focus-visible .work-showcase-media-stack {
-    opacity: 0.92;
-    transform: translate3d(0, 0.55rem, -1rem) rotate(-2deg);
-  }
-
-  .work-showcase-item--reverse .work-showcase-link:hover .work-showcase-media-stack,
-  .work-showcase-item--reverse .work-showcase-link:focus-visible .work-showcase-media-stack {
-    transform: translate3d(0, 0.55rem, -1rem) rotate(2deg);
+  .work-card:hover .work-thumb img {
+    transform: none;
   }
 }
 
@@ -1589,11 +1385,7 @@ button:focus-visible,
   border-top: 1px solid var(--line);
 }
 
-.work-showcase .work-item {
-  padding: 0;
-}
-
-.work-item:not(.work-showcase-item) a {
+.work-item a {
   display: block;
   transition: transform 140ms ease;
 }
@@ -1671,7 +1463,7 @@ button:focus-visible,
     animation-delay: 300ms;
   }
 
-  .work-showcase-link:active,
+  .work-card:active,
   .work-item a:active {
     transform: scale(0.992);
   }
@@ -1679,7 +1471,7 @@ button:focus-visible,
 
 /* Instant tap feedback (opacity, not motion) so touch and reduced-motion
    users get a press response even without the scale above. */
-.work-showcase-link:active,
+.work-card:active,
 .work-item a:active {
   opacity: 0.88;
 }
@@ -3646,13 +3438,11 @@ button:focus-visible,
     transform-origin: left center;
   }
 
-  .work-showcase-link,
   .work-item a {
     text-decoration: none;
     transition: transform 140ms ease;
   }
 
-  .work-showcase-item h3,
   .work-item h3 {
     display: inline;
     background-image: linear-gradient(var(--foreground), var(--foreground));
@@ -3662,7 +3452,6 @@ button:focus-visible,
     transition: background-size 320ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
-  .work-showcase-link:hover h3,
   .work-item a:hover h3 {
     background-size: 100% 1px;
   }
@@ -3737,32 +3526,11 @@ button:focus-visible,
     animation: none !important;
   }
 
-  .work-showcase-shell[data-focus-ready="true"] .work-showcase-item[data-active="true"] .work-showcase-copy,
-  .work-showcase-shell[data-focus-ready="true"] .work-showcase-item[data-active="true"] .work-showcase-media {
-    transform: none;
-    will-change: auto;
-  }
-
-  .work-showcase-shell[data-focus-ready="true"] .work-showcase-item[data-focus-distance="2"] {
-    filter: none;
-  }
-
-  .work-showcase-shell[data-focus-ready="true"] .work-showcase-item[data-active="true"] .work-showcase-media-stack {
-    animation: none !important;
-  }
-
   .work-item-image,
-  .work-showcase-image,
-  .work-showcase-media-frame,
-  .work-showcase-media-stack,
-  .work-showcase-rail-button,
-  .work-showcase-metric-cursor,
-  .work-showcase-item::before,
   .project-cover-image,
   .project-section-image,
   .project-work-jump-thumb,
   .site-nav-list a,
-  .work-showcase-link,
   .work-item a,
   .project-topbar a,
   .project-work-jump-card,
@@ -8357,17 +8125,6 @@ button:focus-visible,
    @supports (animation-timeline: view()) and reduced-motion.
    ============================================================ */
 
-/* ── Homepage: work cards rise into place on scroll ─── */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .work-showcase-item {
-      animation: od-card-rise linear both;
-      animation-timeline: view();
-      animation-range: entry 0% cover 30%;
-    }
-  }
-}
-
 @keyframes od-card-rise {
   0% {
     opacity: 0.35;
@@ -10396,8 +10153,6 @@ button:focus-visible,
 /* ── Scroll-reveal IntersectionObserver fallback (Firefox) ──────── */
 @supports not (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .work-showcase-item,
-    .work-showcase-media-frame,
     .project-page .project-section,
     .project-highlight,
     .project-work-jump > h2,
@@ -10417,8 +10172,6 @@ button:focus-visible,
                   transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .work-showcase-item.sr-revealed,
-    .work-showcase-media-frame.sr-revealed,
     .project-page .project-section.sr-revealed,
     .project-highlight.sr-revealed,
     .project-work-jump > h2.sr-revealed,

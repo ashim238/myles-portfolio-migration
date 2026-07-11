@@ -6,14 +6,12 @@ import Link from "next/link";
 import type { Project } from "@/lib/content";
 import { prefersReducedMotion } from "@/lib/home-intro";
 import { dispatchProjectEnterRequest } from "@/lib/project-enter";
-import { getProjectMetricPhrases } from "@/lib/work-showcase-metrics";
-import { WorkShowcaseMetric } from "@/components/work-showcase-metric";
+import { galleryOutcome } from "@/lib/work-gallery-data";
 
 type WorkProjectCardProps = {
   project: Project;
-  index: number;
-  isActive?: boolean;
-  focusDistance?: number;
+  index: number; // 0-based; drives the mono index label
+  featured?: boolean;
 };
 
 function formatIndex(index: number): string {
@@ -34,15 +32,16 @@ function titleWithSoftBreaks(title: string) {
   ));
 }
 
-export function WorkProjectCard({
-  project,
-  index,
-  isActive = false,
-  focusDistance = 0,
-}: WorkProjectCardProps) {
-  const reverse = index % 2 === 1;
-  const featured = index === 0;
-  const metricPhrases = getProjectMetricPhrases(project);
+// The tactile corner tab: role · year, pinned to the cover like a label on a
+// physical artifact. Year is the last 4-digit run in the timeframe.
+function tabText(project: Project): string {
+  const year = project.timeframe?.match(/\d{4}(?!.*\d{4})/)?.[0];
+  return [project.role, year].filter(Boolean).join(" · ");
+}
+
+export function WorkProjectCard({ project, index, featured = false }: WorkProjectCardProps) {
+  const { lead, rest } = galleryOutcome(project);
+  const tab = tabText(project);
 
   const handleProjectEnter = (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (
@@ -56,22 +55,14 @@ export function WorkProjectCard({
     ) {
       return;
     }
-
-    const frame = event.currentTarget.querySelector<HTMLElement>(".work-showcase-media-frame");
+    const frame = event.currentTarget.querySelector<HTMLElement>(".work-thumb");
     if (!frame) return;
-
     event.preventDefault();
-
     const rect = frame.getBoundingClientRect();
     dispatchProjectEnterRequest({
       slug: project.slug,
       href: `/work/${project.slug}`,
-      rect: {
-        top: rect.top,
-        left: rect.left,
-        width: rect.width,
-        height: rect.height,
-      },
+      rect: { top: rect.top, left: rect.left, width: rect.width, height: rect.height },
       imageSrc: project.coverImage,
       imageAlt: `${project.title} preview`,
       borderRadius: getComputedStyle(frame).borderRadius,
@@ -79,61 +70,55 @@ export function WorkProjectCard({
   };
 
   return (
-    <li
-      id={`work-${project.slug}`}
-      data-project-index={index}
-      data-active={isActive ? "true" : undefined}
-      data-focus-distance={focusDistance > 0 ? String(focusDistance) : undefined}
-      className={`work-item work-showcase-item${reverse ? " work-showcase-item--reverse" : ""}${featured ? " work-showcase-item--featured" : ""}`}
-    >
-      <Link
-        className="work-showcase-link"
-        href={`/work/${project.slug}`}
-        onClick={handleProjectEnter}
+    <div className={featured ? "work-gallery-feature" : "work-gallery-cell"}>
+      <span
+        className="work-gallery-index wg-anim wg-tick"
+        style={{ ["--d" as string]: featured ? ".32s" : ".78s" }}
+        aria-hidden="true"
       >
-        <div className="work-showcase-copy">
-          <span className="work-showcase-index" aria-hidden="true">
-            {formatIndex(index)}
-          </span>
-          <h3>{titleWithSoftBreaks(project.title)}</h3>
-          <p>{project.summary}</p>
-          <WorkShowcaseMetric phrases={metricPhrases} isActive={isActive} />
-          <div className="work-showcase-meta">
-            {project.timeframe ? (
-              <span className="work-showcase-meta-item">{project.timeframe}</span>
-            ) : null}
-            {project.role ? (
-              <span className="work-showcase-meta-item">{project.role}</span>
-            ) : null}
-          </div>
-          {project.tags.length > 0 && (
-            <div className="work-showcase-tags">
-              {project.tags.slice(0, 2).map((tag) => (
-                <span key={tag} className="work-showcase-tag">
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
-
+        {formatIndex(index)}
+      </span>
+      <Link className="work-card" href={`/work/${project.slug}`} onClick={handleProjectEnter}>
         {project.coverImage ? (
-          <div className="work-showcase-media">
-            <div className="work-showcase-media-stack" aria-hidden="true" />
-            <div className="work-showcase-media-frame">
+          <div className="work-media">
+            {featured ? <div className="work-thumb-echo" aria-hidden="true" /> : null}
+            <div
+              className="work-thumb wg-anim"
+              style={{ ["--d" as string]: featured ? ".38s" : ".82s" }}
+            >
               <Image
-                className="work-showcase-image"
                 src={project.coverImage}
                 alt={`${project.title} preview`}
                 width={1400}
-                height={900}
-                sizes="(max-width: 768px) 100vw, min(52vw, 640px)"
+                height={933}
+                sizes={
+                  featured
+                    ? "(max-width: 760px) 100vw, min(92vw, 1088px)"
+                    : "(max-width: 760px) 100vw, min(46vw, 524px)"
+                }
                 priority={featured}
               />
+              {tab ? <span className="work-tab">{tab}</span> : null}
             </div>
           </div>
         ) : null}
+        <div className="work-cap">
+          <h3
+            className="work-title wg-anim wg-rise"
+            style={{ ["--d" as string]: featured ? ".50s" : ".90s" }}
+          >
+            {titleWithSoftBreaks(project.title)}
+          </h3>
+          <p
+            className="work-out wg-anim wg-rise"
+            style={{ ["--d" as string]: featured ? ".56s" : ".94s" }}
+          >
+            {lead ? <strong>{lead}</strong> : null}
+            {lead ? " " : ""}
+            {rest}
+          </p>
+        </div>
       </Link>
-    </li>
+    </div>
   );
 }

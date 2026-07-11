@@ -5,7 +5,7 @@ import { HomeIntroFocusGuard } from "@/components/home-intro-focus-guard";
 import { HomeIntroGuard } from "@/components/home-intro-guard";
 import { HeroInterestTyper } from "@/components/hero-interest-typer";
 import { SiteNav } from "@/components/site-nav";
-import { WorkShowcase } from "@/components/work-showcase";
+import { WorkGallery } from "@/components/work-gallery";
 import { getDraftProjects, getPublishedProjects } from "@/lib/content";
 import { siteConfig } from "@/lib/site-config";
 
@@ -36,7 +36,7 @@ export default async function Home() {
           leave out? Black travelers on the road, students decoding financial
           aid, visitors who want a neighborhood instead of a checklist.
         </p>
-        <WorkShowcase projects={projects} />
+        <WorkGallery projects={projects} />
       </section>
 
       {draftProjects.length > 0 ? (

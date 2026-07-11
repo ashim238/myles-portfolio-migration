@@ -3,8 +3,6 @@
 import { useEffect } from "react";
 
 const SELECTORS = [
-  ".work-showcase-item",
-  ".work-showcase-media-frame",
   ".project-page .project-section",
   ".project-highlight",
   ".project-work-jump > h2",
