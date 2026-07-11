@@ -1366,7 +1366,9 @@ button:focus-visible,
   font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--muted) 78%, transparent);
+  /* Full --muted, not a transparency: the 78% mix computed to ~4.17:1 on the
+     light bg at this size, under the 4.5:1 AA minimum. */
+  color: var(--muted);
   margin-bottom: 0.55rem;
 }
 
