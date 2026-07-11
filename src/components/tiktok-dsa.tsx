@@ -164,10 +164,10 @@ export function HeroThreePhones() {
     <div ref={ref} className="tt-hero-stage">
       <div className="tt-hero-tilt">
         <ExpandableImage
-          src="/projects/tiktok/hero-rolling-phones.png"
-          alt="Five iPhones tumbling through space. Dopamine Dressing 'FIT CHECK' centered in the foreground, Light Academia and E-Boy/E-Girl templates rolling around it."
-          width={2400}
-          height={1600}
+          src="/projects/tiktok/shipped-light-academia-in-hand.png"
+          alt="An iPhone held in-hand showing the shipped Light Academia template: a hanging denim shirt on a soft-beige background, 'THE STYLE ZINE' masthead, TikTok in-feed chrome. The kind of moment the template was designed for."
+          width={6000}
+          height={4000}
           priority
           sizes="(max-width: 768px) 92vw, 880px"
           style={{ width: "100%", height: "auto", display: "block" }}
@@ -271,7 +271,9 @@ export function AestheticShowcaseCard({
             height: "auto",
             display: "block",
             borderRadius: "0.45rem",
-            background: "var(--surface)",
+            background: "#f5efe4",
+            padding: "1.4rem",
+            boxShadow: "0 1px 2px rgba(60, 40, 15, 0.06), 0 8px 24px rgba(60, 40, 15, 0.08)",
             filter: "contrast(1.15) saturate(1.25)",
           }}
         />
