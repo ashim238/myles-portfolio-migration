@@ -128,7 +128,13 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
         },
       );
 
-      await Promise.all([frameAnim.finished, shellAnim.finished]).catch(() => undefined);
+      // Same guarantee as the zoom-in phase: settle on real completion when
+      // the timeline runs, but fall back to a timer so a frozen timeline can
+      // never leave the overlay and scroll lock hanging.
+      await Promise.race([
+        Promise.all([frameAnim.finished, shellAnim.finished]).catch(() => undefined),
+        new Promise((resolve) => window.setTimeout(resolve, PROJECT_ENTER_SETTLE_MS + 250)),
+      ]);
       finishTransition();
     },
     [finishTransition],
@@ -220,12 +226,24 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
       },
     );
 
-    void zoomAnim.finished.catch(() => undefined).then(() => {
+    // Navigate when the zoom finishes, but never depend on the animation
+    // timeline alone. A backgrounded or throttled tab freezes
+    // document.timeline, so finished() would stay pending forever, and the
+    // card's native link was already preventDefault()-ed. The timeout
+    // backstop guarantees the push always fires and the user is never stranded.
+    let navigated = false;
+    const advance = () => {
+      if (navigated) return;
+      navigated = true;
       setOverlay((current) =>
         current ? { ...current, phase: "navigating" } : current,
       );
       router.push(overlay.href);
-    });
+    };
+    zoomAnim.finished.then(advance, advance);
+    const navBackstop = window.setTimeout(advance, PROJECT_ENTER_ZOOM_IN_MS + 150);
+
+    return () => window.clearTimeout(navBackstop);
   }, [overlay, router]);
 
   useEffect(() => {
