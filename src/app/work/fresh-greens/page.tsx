@@ -212,7 +212,7 @@ export default async function FreshGreensPage() {
             alt="Fresh Greens running turn-by-turn navigation: the 3D map drags with the car along the route, the turn card updates on each maneuver, and the safety column stays in thumb reach."
           />
           <figcaption className="fg-safety-visual-caption">
-            The en-route screen in motion. Turn card, 3D map, safety column —
+            The en-route screen in motion. Turn card, 3D map, safety column,
             all live, all thumb-reachable.
           </figcaption>
         </figure>
@@ -267,9 +267,38 @@ export default async function FreshGreensPage() {
             </PhoneFrame>
             <figcaption className="fg-safety-visual-caption">
               <code>/pulled-over</code> opens on reassurance in the reserved
-              serif — one of the six emotional moments the app spends it on.
-              Recording has already started, quietly. The ACLU rights guidance
-              is one tap away.
+              serif, one of the six emotional moments the app spends it on.
+              Recording has already started, quietly.
+            </figcaption>
+          </figure>
+        </div>
+
+        <div className="fg-safety-pair">
+          <figure className="fg-safety-visual">
+            <PhoneFrame variant="screenshot">
+              <Shot
+                name="pulled-over-armed"
+                alt="The /pulled-over armed question: 'Ok. Got it. Are you armed?' set in Libre Franklin Regular over three tap cards. Yes (I have a firearm, knife, or other weapon on me). No (I do not have a firearm, knife, or other weapon on me). Prefer not to answer."
+              />
+            </PhoneFrame>
+            <figcaption className="fg-safety-visual-caption">
+              The Held-Question in action. &quot;Are you armed?&quot; set in
+              Regular, with three composed options where a Bold prompt would
+              have read as an accusation.
+            </figcaption>
+          </figure>
+
+          <figure className="fg-safety-visual">
+            <PhoneFrame variant="screenshot">
+              <Shot
+                name="pulled-over-contact"
+                alt="The /pulled-over trusted contact screen: a red Recording indicator with a 00:01:07 timer, 'You're not alone.' in the reserved serif, body copy about trusted contacts being alerted and able to see current location, an initialed avatar for Brianna Agyemang, a green Call button, a Text button, and an underlined Review guidance link."
+              />
+            </PhoneFrame>
+            <figcaption className="fg-safety-visual-caption">
+              The one exception red is allowed to make: the recording indicator.
+              &quot;You&apos;re not alone.&quot; is another of the six serif
+              moments, and the trusted contact is one tap away.
             </figcaption>
           </figure>
         </div>
@@ -379,16 +408,39 @@ export default async function FreshGreensPage() {
             <PhoneFrame variant="screenshot">
               <Shot
                 name="en-route"
-                alt="The Fresh Greens en-route screen: a green turn card reading 'Continue on Stockton Street in 120 m' with a yellow swerve-caution glyph, a 3D map, and a right-side column with a red alert, a navy safety Shield, an orange hazard marker, and a recenter control."
+                alt="The Fresh Greens en-route screen: a green turn card reading 'Turn right onto Cyril Magnin Street in 160 m,' a 3D map, a posted speed sign next to a 25 mph readout, and a right-side column with a red alert, a navy safety Shield, an orange hazard marker, and a recenter control. The bottom sheet shows an 11:39 arrival marked with a moon glyph."
               />
             </PhoneFrame>
             <figcaption className="fg-safety-visual-caption">
               The reserved palette holding on a real screen: navy for the
-              safety Shield, red on the alert dot, orange on the hazard, yellow
-              on the swerve-caution glyph, and green everywhere else.
+              safety Shield, red on the alert dot, orange on the hazard, a
+              moon glyph carrying the daylight-arrival cue, and green
+              everywhere else.
             </figcaption>
           </figure>
         </div>
+
+        <div className="project-section-body">
+          <p>
+            The daylight gradient is the one non-reserved color the system
+            allows itself. On <code>/route-preview</code>, a sun-to-moon dashed
+            band traces what the light will do along the route. It says one
+            thing, everywhere it appears.
+          </p>
+        </div>
+
+        <figure className="fg-safety-visual">
+          <PhoneFrame variant="screenshot">
+            <Shot
+              name="route-preview"
+              alt="The Fresh Greens route preview: a map at top with a recenter and an orange hazard control, a bottom sheet showing South Lake Tahoe, 4 hr 8 min, an 11:39 PM arrival at 189.2 mi, an orange 'road condition' chip and a green 'residential block' chip along the route, a sun-to-moon dashed daylight indicator, and a green Go button."
+            />
+          </PhoneFrame>
+          <figcaption className="fg-safety-visual-caption">
+            The daylight indicator, held to one job: telling the driver what
+            light they can expect, from now until arrival.
+          </figcaption>
+        </figure>
 
         <div className="project-section-body">
           <p>
