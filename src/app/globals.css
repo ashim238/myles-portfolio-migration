@@ -1093,6 +1093,7 @@ button:focus-visible,
   letter-spacing: var(--track-hero-typer);
   font-weight: 500;
   color: var(--foreground);
+  overflow: hidden;
 }
 
 .hero-typer-text {

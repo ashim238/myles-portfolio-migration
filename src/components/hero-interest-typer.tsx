@@ -87,6 +87,9 @@ export function HeroInterestTyper({ awaitHomeEntrance = false }: HeroInterestTyp
     for (const phrase of PHRASES) {
       textSpan.textContent = phrase;
       maxH = Math.max(maxH, el.scrollHeight);
+      // Also measure with widest glyphs to cover scramble-state wrapping
+      textSpan.textContent = phrase.replace(/\S/g, "W");
+      maxH = Math.max(maxH, el.scrollHeight);
     }
     textSpan.textContent = prev ?? "";
 
