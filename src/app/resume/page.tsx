@@ -12,34 +12,58 @@ type ResumeRole = {
   summary: string;
 };
 
-const EXPERIENCE: ResumeRole[] = [
+type IndependentProject = {
+  name: string;
+  role: string;
+  dates: string;
+  summary: string;
+};
+
+const INDEPENDENT_WORK: IndependentProject[] = [
   {
-    role: "MFA, Design and Technology",
-    org: "Parsons School of Design",
-    dates: "Aug 2024 – May 2026",
+    name: "Fresh Greens",
+    role: "Solo Designer & Engineer",
+    dates: "2025 – 2026",
     summary:
-      "Thesis: Fresh Greens, a solo-built React Native wayfinding app for Black travel in America with WCAG dash-pattern encoding, dynamic type, and VoiceOver support built in from the start.",
+      "Wayfinding app for Black travel in America, designed and shipped solo in React Native. Built on a three-layer architecture so every routing decision stays auditable, with a reserved-color signaling system and accessibility built in from the start: WCAG dash-pattern encoding, dynamic type, and VoiceOver support.",
   },
+  {
+    name: "UnderstandingFAFSA",
+    role: "Product Designer",
+    dates: "Feb 2025 – Present",
+    summary:
+      "Newsletter redesign for a nonprofit navigating financial aid. Built modular Figma to Mailchimp templates with locked-vs-swappable rules so a non-designer founder could ship on-brand without a designer in the loop. Ran a competitive audit of 120+ newsletters to ground the redesign. Open rates went from about 30% to 52.6%.",
+  },
+  {
+    name: "Navi",
+    role: "UI/UX Designer",
+    dates: "Jan – Jun 2025",
+    summary:
+      "Regenerative-travel platform for NYC neighborhood experiences. Resident-led research, three personas, and concept testing before visual execution: 78% preferred neighborhood-led recommendations over generic top-ten lists. Defined IA, the Learn/Plan/Go framework, and the visual system.",
+  },
+];
+
+const EXPERIENCE: ResumeRole[] = [
   {
     role: "Creative Strategy Assistant",
     org: "Universal Music Group, Island Records",
     dates: "Aug 2023 – Aug 2024",
     summary:
-      "Led tour promotion end to end and coordinated on-time music video delivery for global artists across Vevo, Facebook, and Apple, working across vendors, stakeholders, and fixed client timelines.",
+      "Owned music-video delivery across the Island Records roster: partnered with artist production teams pre-shoot to meet UMG’s ingestion and monetization specs, managed deadlines and vendor handoffs (Vevo, Apple), ran Vevo release events, and handled last-minute re-ingests through high-pressure releases like Sabrina Carpenter’s “Feather.”",
   },
   {
     role: "Creative Strategist Intern",
     org: "TikTok (ByteDance)",
     dates: "May – Aug 2022",
     summary:
-      "Designed the TikTok World summit visual experience and wrote Shopping Ads launch copy later reused across TikTok for Business e-commerce offerings.",
+      "Pitched the “rabbit hole” creative concept for TikTok World 2022 (global product summit, 400+ agencies): an infinite-scroll-inspired immersive theme the team ran with, realized as a funhouse-style portal entry with interactive activations. Wrote Shopping Ads launch copy later reused across TikTok for Business e-commerce.",
   },
   {
     role: "Creative Strategist Intern",
     org: "TikTok (ByteDance)",
     dates: "May – Aug 2021",
     summary:
-      "Designed the first batch of Dynamic Showcase Ad templates for SMB merchants. One template was adopted by American Eagle Outfitters, enabling cost-effective campaigns without an in-house creative team.",
+      "Designed 3 of ~10 templates in TikTok’s Dynamic Showcase Ads launch batch. One shipped and was adopted by American Eagle. The format debuted at TikTok World 2021 and was later folded into TikTok’s Video Shopping Ads.",
   },
 ];
 
@@ -47,20 +71,30 @@ const SKILLS: { label: string; items: string[] }[] = [
   {
     label: "Design",
     items: [
-      "End-to-end product design",
-      "UX research and testing",
-      "Interaction and visual design",
+      "End-to-end product & UX design",
+      "User research",
+      "Design thinking",
+      "IA",
+      "Prototyping",
+      "Interaction & visual design",
       "Design systems",
+      "Typography",
       "Accessibility (WCAG)",
     ],
   },
   {
-    label: "Build",
-    items: ["React Native", "TypeScript", "Expo", "HTML", "CSS"],
-  },
-  {
-    label: "Tools",
-    items: ["Figma", "Adobe Creative Suite", "After Effects", "Claude Code"],
+    label: "Tools & Build",
+    items: [
+      "Figma",
+      "Adobe Creative Suite",
+      "After Effects",
+      "React Native",
+      "TypeScript",
+      "Expo",
+      "HTML",
+      "CSS",
+      "Claude Code",
+    ],
   },
 ];
 
@@ -87,8 +121,9 @@ export default function ResumePage() {
             {siteConfig.name}
           </h1>
           <p className="resume-body">
-            Product designer focused on strategy, interaction detail, and
-            clear storytelling through digital products.
+            Product designer (MFA, Parsons) with a creative strategy
+            background at TikTok and Universal Music Group. I design end to
+            end and tend to go past the prototype.
           </p>
           <div className="resume-actions">
             <a
@@ -131,9 +166,29 @@ export default function ResumePage() {
         </aside>
       </section>
 
+      <section className="resume-experience" aria-labelledby="resume-independent-title">
+        <h2 id="resume-independent-title" className="resume-section-heading">
+          Independent Work
+        </h2>
+        <ol className="resume-role-list" role="list">
+          {INDEPENDENT_WORK.map((project) => (
+            <li key={project.name} className="resume-role">
+              <div className="resume-role-head">
+                <div>
+                  <p className="resume-role-title">{project.name}</p>
+                  <p className="resume-role-org">{project.role}</p>
+                </div>
+                <p className="resume-role-dates">{project.dates}</p>
+              </div>
+              <p className="resume-role-summary">{project.summary}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
       <section className="resume-experience" aria-labelledby="resume-experience-title">
         <h2 id="resume-experience-title" className="resume-section-heading">
-          Experience
+          Work Experience
         </h2>
         <ol className="resume-role-list" role="list">
           {EXPERIENCE.map((role) => (
@@ -148,6 +203,33 @@ export default function ResumePage() {
               <p className="resume-role-summary">{role.summary}</p>
             </li>
           ))}
+        </ol>
+      </section>
+
+      <section className="resume-experience" aria-labelledby="resume-education-title">
+        <h2 id="resume-education-title" className="resume-section-heading">
+          Education
+        </h2>
+        <ol className="resume-role-list" role="list">
+          <li className="resume-role">
+            <div className="resume-role-head">
+              <div>
+                <p className="resume-role-title">
+                  MFA, Design &amp; Technology
+                </p>
+                <p className="resume-role-org">Parsons School of Design</p>
+              </div>
+              <p className="resume-role-dates">Aug 2024 – May 2026</p>
+            </div>
+          </li>
+          <li className="resume-role">
+            <div className="resume-role-head">
+              <div>
+                <p className="resume-role-title">BA, Media Studies</p>
+                <p className="resume-role-org">Pomona College</p>
+              </div>
+            </div>
+          </li>
         </ol>
       </section>
 
