@@ -55,6 +55,7 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
   const zoomRanRef = useRef(false);
   const settleRanRef = useRef(false);
   const failsafeRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pageAnimRef = useRef<Animation | null>(null);
 
   const finishTransition = useCallback(() => {
     if (failsafeRef.current) {
@@ -66,6 +67,12 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
     zoomRanRef.current = false;
     settleRanRef.current = false;
     unlockProjectEnter();
+    // Release the page fade-in only after the settling class is gone, so the
+    // page hands back to its natural opacity in the same frame — no flash.
+    if (pageAnimRef.current) {
+      pageAnimRef.current.cancel();
+      pageAnimRef.current = null;
+    }
     setOverlay(null);
   }, []);
 
@@ -118,22 +125,49 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
         },
       );
 
+      // Crossfade, not a cut. The overlay (holding the zoom frame) fades out
+      // while the real case-study page fades in underneath it. The frame image
+      // and the cover are the same picture in the same spot by this point, so
+      // the cover reads as continuous while the title, lede and meta dissolve
+      // in instead of snapping to full opacity when the overlay is torn down.
+      const CROSSFADE_MS = 380;
+      const crossfadeDelay = PROJECT_ENTER_SETTLE_MS - 200;
+
       const shellAnim = shell.animate(
         [{ opacity: 1 }, { opacity: 0 }],
         {
-          duration: 220,
-          delay: PROJECT_ENTER_SETTLE_MS - 180,
+          duration: CROSSFADE_MS,
+          delay: crossfadeDelay,
           easing: EASE_OUT_CUBIC,
           fill: "forwards",
         },
       );
 
+      // The page sits at opacity:0 via `.project-enter-settling`; this WAAPI
+      // fill overrides that rule to fade it up in lockstep with the overlay.
+      const page = cover.closest<HTMLElement>(".project-page");
+      const pageAnim = page?.animate(
+        [{ opacity: 0 }, { opacity: 1 }],
+        {
+          duration: CROSSFADE_MS,
+          delay: crossfadeDelay,
+          easing: EASE_OUT_CUBIC,
+          fill: "forwards",
+        },
+      );
+      pageAnimRef.current = pageAnim ?? null;
+
       // Same guarantee as the zoom-in phase: settle on real completion when
       // the timeline runs, but fall back to a timer so a frozen timeline can
       // never leave the overlay and scroll lock hanging.
+      const settleTimeout = crossfadeDelay + CROSSFADE_MS + 120;
       await Promise.race([
-        Promise.all([frameAnim.finished, shellAnim.finished]).catch(() => undefined),
-        new Promise((resolve) => window.setTimeout(resolve, PROJECT_ENTER_SETTLE_MS + 250)),
+        Promise.all([
+          frameAnim.finished,
+          shellAnim.finished,
+          ...(pageAnim ? [pageAnim.finished] : []),
+        ]).catch(() => undefined),
+        new Promise((resolve) => window.setTimeout(resolve, settleTimeout)),
       ]);
       finishTransition();
     },

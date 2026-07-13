@@ -1,24 +1,50 @@
 "use client";
 
 import { useEffect, useState, useSyncExternalStore } from "react";
-import {
-  CURSOR_BLINK_MS,
-  DELETE_MS,
-  PAUSE_AFTER_CLEAR_MS,
-  PAUSE_AFTER_FULL_MS,
-  TYPE_MS,
-} from "@/lib/motion";
+import { CURSOR_BLINK_MS, PAUSE_AFTER_FULL_MS } from "@/lib/motion";
 import { HOME_ENTRANCE_COMPLETE } from "@/lib/home-intro";
 
 const PHRASES = [
   "sweats the empty states and the error copy.",
-  "is an avid comic reader.",
-  "talks to people before opening Figma.",
-  "loves to cook Jamaican cuisine.",
   "is Auto Layout's biggest fan.",
+  "makes his own roti from scratch.",
+  "counts down to each Absolute Batman drop.",
+  "adores the MTA map redesign.",
 ];
 
 const STATIC_INTERESTS = PHRASES.join(" · ");
+
+// Decode/scramble timing. Each tick re-randomizes the still-encrypted glyphs;
+// a resolve wave sweeps left→right locking real characters into place.
+const SCRAMBLE_FRAME_MS = 42; // flicker refresh + reveal cadence
+const SCRAMBLE_LEAD = 8; // ticks the whole line shimmers before the wave starts
+const SCRAMBLE_OUT_TICKS = 5; // ticks the settled line re-encrypts on exit
+const PAUSE_AFTER_CLEAR_TICKS = 3; // beat of empty space between phrases
+
+// Curated glyph pool — mostly latin + symbols, a little katakana and block
+// texture so it reads as "decoding" without becoming visual noise.
+const GLYPHS =
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#%&*/<>+=~ｱｶｻﾀﾅﾊﾏﾖ█▓▒░".split(
+    "",
+  );
+
+function randomGlyph(): string {
+  return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+}
+
+/**
+ * Render a phrase mid-decode: characters before `resolved` are locked to their
+ * real value, everything after flickers as a random glyph. Spaces never
+ * scramble so word shapes stay legible while the line resolves.
+ */
+function decodeFrame(phrase: string, resolved: number): string {
+  let out = "";
+  for (let i = 0; i < phrase.length; i += 1) {
+    const ch = phrase[i];
+    out += i < resolved || ch === " " ? ch : randomGlyph();
+  }
+  return out;
+}
 
 function subscribeReducedMotion(cb: () => void) {
   const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -72,41 +98,57 @@ export function HeroInterestTyper({ awaitHomeEntrance = false }: HeroInterestTyp
 
     let cancelled = false;
     let phraseIndex = 0;
-    let charIndex = 0;
-    let deleting = false;
-    let timeoutId: ReturnType<typeof setTimeout>;
+    // Start behind zero so the whole line shimmers as noise before resolving.
+    let resolved = -SCRAMBLE_LEAD;
+    let mode: "in" | "hold" | "out" | "clear" = "in";
+    let holdTicks = 0;
+    let modeTicks = 0;
+    const holdTarget = Math.max(1, Math.round(PAUSE_AFTER_FULL_MS / SCRAMBLE_FRAME_MS));
 
-    const step = () => {
+    const tick = () => {
       if (cancelled) return;
       const phrase = PHRASES[phraseIndex % PHRASES.length];
 
-      if (!deleting) {
-        if (charIndex < phrase.length) {
-          charIndex += 1;
-          setAnimated(phrase.slice(0, charIndex));
-          timeoutId = setTimeout(step, TYPE_MS);
+      if (mode === "in") {
+        if (resolved >= phrase.length) {
+          setAnimated(phrase); // fully decoded — lock the clean line
+          mode = "hold";
+          holdTicks = holdTarget;
         } else {
-          timeoutId = setTimeout(() => {
-            deleting = true;
-            step();
-          }, PAUSE_AFTER_FULL_MS);
+          setAnimated(decodeFrame(phrase, resolved));
+          resolved += 1;
         }
-      } else if (charIndex > 0) {
-        charIndex -= 1;
-        setAnimated(phrase.slice(0, charIndex));
-        timeoutId = setTimeout(step, DELETE_MS);
+      } else if (mode === "hold") {
+        holdTicks -= 1;
+        if (holdTicks <= 0) {
+          mode = "out";
+          modeTicks = SCRAMBLE_OUT_TICKS;
+        }
+      } else if (mode === "out") {
+        // Re-encrypt the settled line into noise before clearing it.
+        setAnimated(decodeFrame(phrase, 0));
+        modeTicks -= 1;
+        if (modeTicks <= 0) {
+          mode = "clear";
+          modeTicks = PAUSE_AFTER_CLEAR_TICKS;
+          setAnimated("");
+        }
       } else {
-        deleting = false;
-        phraseIndex += 1;
-        timeoutId = setTimeout(step, PAUSE_AFTER_CLEAR_MS);
+        modeTicks -= 1;
+        if (modeTicks <= 0) {
+          phraseIndex += 1;
+          resolved = -SCRAMBLE_LEAD;
+          mode = "in";
+        }
       }
     };
 
-    step();
+    tick();
+    const id = setInterval(tick, SCRAMBLE_FRAME_MS);
 
     return () => {
       cancelled = true;
-      clearTimeout(timeoutId);
+      clearInterval(id);
     };
   }, [reducedMotion, entranceReady]);
 

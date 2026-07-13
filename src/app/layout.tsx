@@ -3,6 +3,7 @@ import { Geist_Mono, Instrument_Sans, Instrument_Serif } from "next/font/google"
 import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
 import { ConsoleGreeting } from "@/components/console-greeting";
+import { DotCursor } from "@/components/dot-cursor";
 import { LightboxProvider } from "@/components/lightbox-provider";
 import { MobileNav } from "@/components/mobile-nav";
 import { ProjectEnterTransition } from "@/components/project-enter-transition";
@@ -93,6 +94,7 @@ export default function RootLayout({
         <LightboxProvider>
           <ProjectEnterTransition>{children}</ProjectEnterTransition>
         </LightboxProvider>
+        <DotCursor />
         <MobileNav />
         <ScrollRevealFallback />
       </body>
