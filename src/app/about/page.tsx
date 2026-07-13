@@ -32,23 +32,25 @@ export default function AboutPage() {
               went back for an MFA in Design and Technology at Parsons.
             </p>
             <p>
-              I design end to end and tend to go past the prototype, pulling
-              strategy, design, and code into the same process. My thesis was a
-              solo-built React Native wayfinding app for Black travelers in
-              America, with VoiceOver labels, dynamic type, and a WCAG dash
-              pattern for the daylight cue built in from the start. For a
-              financial-aid nonprofit, I rebuilt the newsletter as modular
-              templates a non-designer could run without breaking the brand,
-              and open rates went from 30% to 52.6%. At TikTok I designed
-              catalog ad templates around the platform&apos;s subcultures, and
-              American Eagle adopted one.
+              I (try to) design end to end and tend to go past the prototype,
+              pulling strategy, design, and code into the same process. My
+              thesis was a solo-built React Native wayfinding app for Black
+              travelers in America, with VoiceOver labels, dynamic type, and
+              a WCAG dash pattern for the daylight cue built in from the
+              start. For a financial-aid nonprofit, I rebuilt the newsletter
+              as modular templates a non-designer could run without deviating
+              from the brand voice, causing open rates to jump from 30% to
+              52.6%. At TikTok I designed catalog ad templates around the
+              platform&apos;s subcultures, and American Eagle adopted one.
             </p>
             <p>
-              I care about accessibility that isn&apos;t an afterthought,
-              design systems that hold up, and testing ideas before
-              committing to them. Figma and Adobe Suite are home base; React
-              Native and TypeScript when the design needs that extra{" "}
-              <em>oomph</em>.
+              Outside of all that, I&apos;m a huge comic fan. The work Daniel
+              Mora&apos;s been doing on World&apos;s Finest
+              is &ldquo;chef&apos;s kiss.&rdquo; Conversely I&apos;ve been
+              trying to hike more, as much as the city will let me, but my
+              debilitating allergies have been getting in the way of that.
+              Hit me up if you want to talk product design, RPGs, or maybe a
+              bit of both?
             </p>
           </div>
 
