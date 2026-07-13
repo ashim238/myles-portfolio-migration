@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { CURSOR_BLINK_MS, PAUSE_AFTER_FULL_MS } from "@/lib/motion";
 import { HOME_ENTRANCE_COMPLETE } from "@/lib/home-intro";
 
@@ -21,22 +21,14 @@ const SCRAMBLE_LEAD = 8; // ticks the whole line shimmers before the wave starts
 const SCRAMBLE_OUT_TICKS = 5; // ticks the settled line re-encrypts on exit
 const PAUSE_AFTER_CLEAR_TICKS = 3; // beat of empty space between phrases
 
-// Curated glyph pool — mostly latin + symbols, a little katakana and block
-// texture so it reads as "decoding" without becoming visual noise.
-const GLYPHS =
-  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#%&*/<>+=~ｱｶｻﾀﾅﾊﾏﾖ█▓▒░".split(
-    "",
-  );
+// Latin-only glyph pool — no katakana or block chars, whose wider metrics
+// cause different word-wrap breakpoints and make the page jump each tick.
+const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#%&*/<>+=~".split("");
 
 function randomGlyph(): string {
   return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
 }
 
-/**
- * Render a phrase mid-decode: characters before `resolved` are locked to their
- * real value, everything after flickers as a random glyph. Spaces never
- * scramble so word shapes stay legible while the line resolves.
- */
 function decodeFrame(phrase: string, resolved: number): string {
   let out = "";
   for (let i = 0; i < phrase.length; i += 1) {
@@ -74,8 +66,34 @@ export function HeroInterestTyper({ awaitHomeEntrance = false }: HeroInterestTyp
   const [animated, setAnimated] = useState("");
   const [showCursor, setShowCursor] = useState(true);
   const [entranceReady, setEntranceReady] = useState(!awaitHomeEntrance);
+  const containerRef = useRef<HTMLParagraphElement>(null);
+  const measured = useRef(false);
 
   const display = reducedMotion ? STATIC_INTERESTS : animated;
+
+  // Measure the tallest phrase once and lock the container height so the
+  // scramble (which uses glyphs with slightly different widths) can't cause
+  // reflow that shifts the page.
+  const lockHeight = useCallback(() => {
+    const el = containerRef.current;
+    if (!el || measured.current || reducedMotion) return;
+    measured.current = true;
+
+    const textSpan = el.querySelector<HTMLElement>(".hero-typer-text");
+    if (!textSpan) return;
+
+    const prev = textSpan.textContent;
+    let maxH = 0;
+    for (const phrase of PHRASES) {
+      textSpan.textContent = phrase;
+      maxH = Math.max(maxH, el.scrollHeight);
+    }
+    textSpan.textContent = prev ?? "";
+
+    if (maxH > 0) {
+      el.style.minHeight = `${maxH}px`;
+    }
+  }, [reducedMotion]);
 
   useEffect(() => {
     if (!awaitHomeEntrance || reducedMotion) {
@@ -92,6 +110,20 @@ export function HeroInterestTyper({ awaitHomeEntrance = false }: HeroInterestTyp
     window.addEventListener(HOME_ENTRANCE_COMPLETE, onReady, { once: true });
     return () => window.removeEventListener(HOME_ENTRANCE_COMPLETE, onReady);
   }, [awaitHomeEntrance, reducedMotion]);
+
+  useEffect(() => {
+    if (!entranceReady) return;
+    lockHeight();
+
+    const onResize = () => {
+      measured.current = false;
+      const el = containerRef.current;
+      if (el) el.style.minHeight = "";
+      lockHeight();
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [entranceReady, lockHeight]);
 
   useEffect(() => {
     if (reducedMotion || !entranceReady) return;
@@ -111,7 +143,7 @@ export function HeroInterestTyper({ awaitHomeEntrance = false }: HeroInterestTyp
 
       if (mode === "in") {
         if (resolved >= phrase.length) {
-          setAnimated(phrase); // fully decoded — lock the clean line
+          setAnimated(phrase); // fully decoded — switch to plain string
           mode = "hold";
           holdTicks = holdTarget;
         } else {
@@ -125,7 +157,6 @@ export function HeroInterestTyper({ awaitHomeEntrance = false }: HeroInterestTyp
           modeTicks = SCRAMBLE_OUT_TICKS;
         }
       } else if (mode === "out") {
-        // Re-encrypt the settled line into noise before clearing it.
         setAnimated(decodeFrame(phrase, 0));
         modeTicks -= 1;
         if (modeTicks <= 0) {
@@ -159,7 +190,7 @@ export function HeroInterestTyper({ awaitHomeEntrance = false }: HeroInterestTyp
   }, [reducedMotion, entranceReady]);
 
   return (
-    <p className="hero-typer" suppressHydrationWarning>
+    <p className="hero-typer" ref={containerRef} suppressHydrationWarning>
       <span className="hero-typer-text" aria-hidden="true">
         {display}
       </span>

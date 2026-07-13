@@ -33,8 +33,7 @@ export default async function Home() {
         <h2 id="work-title">Selected Work</h2>
         <p className="work-lede">
           Each of these starts from the same question — who does the product
-          leave out? Black travelers on the road, students decoding financial
-          aid, visitors who want a neighborhood instead of a checklist.
+          leave out?
         </p>
         <WorkGallery projects={projects} />
       </section>
