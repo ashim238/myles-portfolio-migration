@@ -51,3 +51,7 @@ next-env.d.ts
 # Local tooling (per project convention — not shared)
 .impeccable/
 skill-observations/
+
+# Abandoned khanglee/exploded-build home planning (keep local, don't track)
+docs/superpowers/plans/2026-07-11-khanglee-home-presentation.md
+docs/superpowers/specs/2026-07-11-khanglee-home-presentation-design.md

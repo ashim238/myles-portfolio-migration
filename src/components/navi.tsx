@@ -35,7 +35,8 @@ export function NaviAnimReady() {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             entry.target.classList.add("nv-reveal--visible");
-            io.unobserve(entry.target);
+          } else {
+            entry.target.classList.remove("nv-reveal--visible");
           }
         }
       },

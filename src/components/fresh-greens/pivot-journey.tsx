@@ -33,8 +33,8 @@ export function PivotJourney() {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             reveal();
-            io.disconnect();
-            break;
+          } else if (el.getAttribute("data-reveal") === "in") {
+            el.setAttribute("data-reveal", "pending");
           }
         }
       },

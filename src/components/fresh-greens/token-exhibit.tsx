@@ -32,8 +32,8 @@ export function TokenExhibit() {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             reveal();
-            io.disconnect();
-            break;
+          } else if (el.getAttribute("data-reveal") === "in") {
+            el.setAttribute("data-reveal", "pending");
           }
         }
       },
@@ -41,8 +41,6 @@ export function TokenExhibit() {
     );
     io.observe(el);
 
-    // Safety net: never leave the panel hidden if the observer never fires
-    // (background tab, headless render). Reveals after a beat, no harm done.
     const fallback = window.setTimeout(reveal, 3000);
 
     return () => {

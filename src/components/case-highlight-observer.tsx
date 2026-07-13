@@ -37,20 +37,19 @@ export function CaseHighlightObserver() {
     }
 
     const observer = new IntersectionObserver(
-      (entries, obs) => {
+      (entries) => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             entry.target.classList.add("is-revealed");
-            obs.unobserve(entry.target);
+          } else {
+            entry.target.classList.remove("is-revealed");
           }
         }
       },
       { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
     );
 
-    marks.forEach((m) => {
-      if (!m.classList.contains("is-revealed")) observer.observe(m);
-    });
+    marks.forEach((m) => observer.observe(m));
 
     return () => observer.disconnect();
   }, []);
