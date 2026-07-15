@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { HeroInterestTyper } from "@/components/hero-interest-typer";
 import { SiteNav } from "@/components/site-nav";
 import { WorkGallery } from "@/components/work-gallery";
 import { getDraftProjects, getPublishedProjects } from "@/lib/content";
@@ -17,16 +18,12 @@ export default async function Home() {
         <p className="hero-role">Product Designer</p>
         <h1 id="hero-name" className="hero-name">{siteConfig.name}</h1>
         <p className="hero-tagline">
-          I design products end to end and tend to go past the prototype.
-        </p>
-        <p className="hero-proof">
-          For my Parsons thesis, I designed and built a React Native app with
-          more than 26 screens, VoiceOver labels, dynamic type, and a WCAG dash
-          pattern.
+          I design digital products and stay close through the build.
         </p>
         <p className="hero-credentials">
-          Previously TikTok and UMG. MFA in Design and Technology from Parsons.
+          Previously TikTok and UMG. My latest project is Fresh Greens.
         </p>
+        <HeroInterestTyper />
         <p className="hero-actions">
           <Link className="about-action" href="/#work">
             View selected work

@@ -32,7 +32,7 @@ vi.mock("@/components/home-intro-guard", () => ({
 }));
 
 vi.mock("@/components/hero-interest-typer", () => ({
-  HeroInterestTyper: () => <p data-testid="endless-interest-typer" />,
+  HeroInterestTyper: () => <p data-testid="finite-interest-decoder" />,
 }));
 
 describe("homepage first impression", () => {
@@ -41,30 +41,25 @@ describe("homepage first impression", () => {
 
     expect(screen.getByText("Product Designer")).toBeInTheDocument();
     expect(
-      screen.getByText("I design products end to end and tend to go past the prototype."),
+      screen.getByText("I design digital products and stay close through the build."),
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        "For my Parsons thesis, I designed and built a React Native app with more than 26 screens, VoiceOver labels, dynamic type, and a WCAG dash pattern.",
+        "Previously TikTok and UMG. My latest project is Fresh Greens.",
       ),
     ).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        "Previously TikTok and UMG. MFA in Design and Technology from Parsons.",
-      ),
-    ).toBeInTheDocument();
+    expect(screen.getByTestId("finite-interest-decoder")).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: "View selected work" }),
     ).toHaveAttribute("href", "/#work");
   });
 
-  it("does not block the homepage with intro choreography or an endless typer", async () => {
+  it("does not block the homepage with intro choreography", async () => {
     render(await Home());
 
     expect(screen.queryByTestId("blocking-browser-intro")).toBeNull();
     expect(screen.queryByTestId("chained-home-entrance")).toBeNull();
     expect(screen.queryByTestId("home-focus-guard")).toBeNull();
     expect(screen.queryByTestId("home-intro-guard")).toBeNull();
-    expect(screen.queryByTestId("endless-interest-typer")).toBeNull();
   });
 });

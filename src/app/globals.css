@@ -546,6 +546,24 @@ html.project-enter-settling .project-page {
   font-weight: 500;
 }
 
+@media (min-width: 900px) {
+  .home-page .site-header {
+    align-items: center;
+    margin-bottom: 2.2rem;
+  }
+
+  .home-page .site-header-right,
+  .home-page .site-nav-list {
+    flex-direction: row;
+  }
+
+  .home-page .site-nav-list {
+    display: flex;
+    gap: 1.3rem;
+    font-size: 0.94rem;
+  }
+}
+
 .site-nav-list a {
   text-decoration: none;
   display: inline-block;
@@ -683,6 +701,33 @@ button:focus-visible,
   color: var(--muted);
   letter-spacing: 0.03em;
   opacity: 0.8;
+}
+
+.hero-typer {
+  margin-top: 1rem;
+  min-height: 1.5em;
+  max-width: 40rem;
+  overflow: hidden;
+  color: var(--foreground);
+  font-family: var(--font-mono);
+  font-size: clamp(0.82rem, 1.7vw, 0.96rem);
+  line-height: 1.5;
+}
+
+.hero-typer-prefix {
+  white-space: pre-wrap;
+}
+
+.hero-typer-cursor {
+  margin-left: 1px;
+  color: var(--muted);
+  animation: hero-cursor-blink 760ms step-end infinite;
+}
+
+@keyframes hero-cursor-blink {
+  50% {
+    opacity: 0;
+  }
 }
 
 .hero-actions {
@@ -3091,6 +3136,7 @@ button:focus-visible,
   .project-cover,
   .hero-tagline,
   .hero-credentials,
+  .hero-typer-cursor,
   .not-found,
   .resume-layout,
   .resume-label,
