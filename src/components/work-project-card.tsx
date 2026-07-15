@@ -12,6 +12,7 @@ type WorkProjectCardProps = {
   project: Project;
   index: number; // 0-based; drives the mono index label
   featured?: boolean;
+  closing?: boolean;
 };
 
 function formatIndex(index: number): string {
@@ -39,7 +40,12 @@ function tabText(project: Project): string {
   return [project.role, year].filter(Boolean).join(" · ");
 }
 
-export function WorkProjectCard({ project, index, featured = false }: WorkProjectCardProps) {
+export function WorkProjectCard({
+  project,
+  index,
+  featured = false,
+  closing = false,
+}: WorkProjectCardProps) {
   const { lead, rest } = galleryOutcome(project);
   const tab = tabText(project);
 
@@ -70,7 +76,15 @@ export function WorkProjectCard({ project, index, featured = false }: WorkProjec
   };
 
   return (
-    <div className={featured ? "work-gallery-feature" : "work-gallery-cell"}>
+    <div
+      className={
+        featured
+          ? "work-gallery-feature"
+          : closing
+            ? "work-gallery-closing"
+            : "work-gallery-cell"
+      }
+    >
       <span
         className="work-gallery-index wg-anim wg-tick"
         style={{ ["--d" as string]: featured ? ".32s" : ".78s" }}
@@ -94,7 +108,9 @@ export function WorkProjectCard({ project, index, featured = false }: WorkProjec
                 sizes={
                   featured
                     ? "(max-width: 760px) 100vw, min(92vw, 1088px)"
-                    : "(max-width: 760px) 100vw, min(46vw, 524px)"
+                    : closing
+                      ? "(max-width: 760px) 100vw, min(72vw, 672px)"
+                      : "(max-width: 760px) 100vw, min(46vw, 524px)"
                 }
                 priority={featured}
               />
