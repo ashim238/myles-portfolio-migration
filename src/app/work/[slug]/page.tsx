@@ -18,11 +18,21 @@ function slugify(text: string): string {
 
 type Params = { slug: string };
 
+const dedicatedProjectSlugs = new Set<string>([
+  "fresh-greens",
+  "understandingfafsa",
+  "navi",
+  "tiktok",
+]);
+
 export async function generateStaticParams(): Promise<Params[]> {
   const projects = await getAllProjects();
-  // Hidden projects are not published, so they get no prerendered route.
+  // Dedicated routes own their output; hidden projects get no prerendered route.
   return projects
-    .filter((project) => project.status !== "hidden")
+    .filter(
+      (project) =>
+        project.status !== "hidden" && !dedicatedProjectSlugs.has(project.slug),
+    )
     .map((project) => ({ slug: project.slug }));
 }
 
