@@ -10,8 +10,6 @@ function isTheme(value: string | null): value is Theme {
 }
 
 function getThemeSnapshot(): Theme {
-  const documentTheme = document.documentElement.getAttribute("data-theme");
-  if (isTheme(documentTheme)) return documentTheme;
   const storedTheme = localStorage.getItem("theme");
   if (isTheme(storedTheme)) return storedTheme;
   return window.matchMedia("(prefers-color-scheme: light)").matches
@@ -48,7 +46,6 @@ export function ThemeToggle() {
 
   function toggle() {
     const next = theme === "dark" ? "light" : "dark";
-    document.documentElement.setAttribute("data-theme", next);
     localStorage.setItem("theme", next);
     window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
   }
