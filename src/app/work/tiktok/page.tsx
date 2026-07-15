@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectToc } from "@/components/project-toc";
 import { RecruiterCut } from "@/components/recruiter-cut";
@@ -41,6 +42,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function TikTokPage() {
+  const project = await getProjectBySlug("tiktok");
+  if (!project || project.status !== "published") {
+    notFound();
+  }
+
   const allProjects = await getPublishedProjects();
 
   return (
