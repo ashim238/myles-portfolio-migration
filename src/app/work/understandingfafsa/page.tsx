@@ -99,47 +99,33 @@ export default async function UnderstandingFafsaPage() {
         ]}
       />
 
-      <div className="case-tier-divider"><span>The full breakdown ↓</span></div>
-
       <section className="project-section uf-section" aria-labelledby="uf-context">
-        <h2 id="uf-context">Where it started: a rebranded site, a dated newsletter.</h2>
-        <blockquote className="case-pullquote">
-          The newsletter still carried the site&apos;s previous visual system.
-        </blockquote>
+        <h2 id="uf-context">The newsletter still used the old visual system</h2>
         <div className="project-section-body">
           <p>
             UnderstandingFAFSA helps students, parents, and counselors navigate the Free Application
             for Federal Student Aid (FAFSA). The newsletter carries guidance for all three groups.
-            The website had already adopted Saans and a refreshed palette, while the newsletter still
-            used the older visual system. The scope was email-only, and the founder assembles every
-            issue.
+            The website had already adopted Saans and a refreshed palette. The scope was email-only,
+            and the founder assembles every issue.
           </p>
         </div>
       </section>
 
       <section className="project-section uf-section" aria-labelledby="uf-problem">
-        <h2 id="uf-problem">Where the old template broke down.</h2>
-        <p className="case-section-lead">
-          The old template presented long text blocks and weak section breaks on mobile. Prior sends
-          opened around 30%.
-        </p>
+        <h2 id="uf-problem">Where the old template broke down</h2>
         <div className="project-section-body">
           <p>
-            The old template had uneven CTAs, a muted palette that didn&apos;t carry the rebrand, long
-            stretches of text, weak section breaks, and a layout that wasn&apos;t optimized for mobile
-            users.
-          </p>
-          <p>
             The newsletter covers deadline-driven guidance at key checkpoints: FAFSA filing windows,
-            scholarship deadlines, and policy changes. Its type and palette still came from the
-            site&apos;s previous visual system.
+            scholarship deadlines, and policy changes. The old template had uneven CTAs, long
+            stretches of text, weak section breaks, and a layout that wasn&apos;t optimized for mobile.
+            Its muted palette also came from the site&apos;s previous visual system.
           </p>
         </div>
         <BeforeAfterPhones />
       </section>
 
       <section className="project-section uf-section" aria-labelledby="uf-audit">
-        <h2 id="uf-audit">Auditing 120 newsletters against four criteria.</h2>
+        <h2 id="uf-audit">A 120-newsletter audit</h2>
         <div className="project-section-body">
           <p>
             Before touching templates, we compiled over 120 newsletter
@@ -176,11 +162,6 @@ export default async function UnderstandingFafsaPage() {
               Next used <strong>if/then link framing</strong>, author photos, and brief bios.
             </li>
           </ul>
-          <p>
-            From there we put our own spin on it, adapting these patterns to UnderstandingFAFSA&apos;s
-            voice, the founder&apos;s preference for vibrancy, and the practical constraint that a
-            non-designer would assemble every issue.
-          </p>
         </div>
       </section>
 
@@ -188,17 +169,13 @@ export default async function UnderstandingFafsaPage() {
         className="project-section uf-section project-section--wide uf-section--wide"
         aria-labelledby="uf-templates"
       >
-        <h2 id="uf-templates">Designing one skeleton for three kinds of sends.</h2>
-        <p className="case-section-lead">
-          One modular framework covers the welcome email, the weekly newsletter, and lighter event sends.
-        </p>
+        <h2 id="uf-templates">One skeleton for three send types</h2>
         <div className="project-section-body">
           <p>
-            The system ships through a shared modular framework: a welcome
-            email that sets expectations, the core weekly
+            The shared framework includes a welcome email that sets expectations, the core weekly
             newsletter, and an event-specific variant with fewer blocks for invites and recaps. A
-            counselor-focused toolkit extends
-            the same vocabulary (duotone icons, formal register) and is in progress.
+            counselor-focused toolkit extends the same vocabulary (duotone icons, formal register)
+            and is in progress.
           </p>
           <p>
             The welcome email follows a deliberate structure shaped by the audit. It includes a
@@ -217,22 +194,12 @@ export default async function UnderstandingFafsaPage() {
         className="project-section uf-section project-section--wide uf-section--wide"
         aria-labelledby="uf-locked"
       >
-        <h2 id="uf-locked">The core decision: locked layers, swappable parts.</h2>
-        <p className="case-section-lead">
-          The founder can edit copy and images within fixed spacing, type, and divider rules.
-        </p>
+        <h2 id="uf-locked">What stays locked and what changes</h2>
         <div className="project-section-body">
           <p>
-            <mark className="case-highlight">
-              The locked-vs-swappable distinction was the core design
-              decision.
-            </mark>{" "}
             Spacing, dividers, type, and the structural skeleton stay locked. Editors swap body copy
-            and emoji-style section images. The founder drafts each week&apos;s copy for editorial.
-          </p>
-          <p>
-            The color variants draw from UnderstandingFAFSA&apos;s design system. The founder edits copy
-            and images inside those fixed rules.
+            and emoji-style section images. The founder drafts each week&apos;s copy and works within
+            those fixed rules.
           </p>
         </div>
 
@@ -242,11 +209,7 @@ export default async function UnderstandingFafsaPage() {
       </section>
 
       <section className="project-section uf-section" aria-labelledby="uf-figma">
-        <h2 id="uf-figma">Rebuilding it in Mailchimp.</h2>
-        <p className="case-section-lead">
-          The Mailchimp build had to fit Gmail&apos;s 102KB clip limit while carrying the site&apos;s type
-          and palette.
-        </p>
+        <h2 id="uf-figma">Rebuilding the system in Mailchimp</h2>
         <div className="project-section-body">
           <p>
             The hierarchy, spacing, and modular rhythm all lived in Figma, but the live template had to be
@@ -277,19 +240,13 @@ export default async function UnderstandingFafsaPage() {
       </section>
 
       <section className="project-section uf-section" aria-labelledby="uf-results">
-        <h2 id="uf-results">The results: open rates after the first send.</h2>
-        <p className="case-section-lead">
-          The first redesigned send opened at about 52.6% on November 4, 2025, compared with prior
-          sends around 30%.
-        </p>
+        <h2 id="uf-results">First send after the redesign</h2>
         <div className="project-section-body">
           <p>
             <mark className="case-highlight">
               This was my first time designing a system someone else
               assembles every week.
-            </mark>{" "}
-            No designer reviews each send before it goes out. The founder edits copy and images
-            within the fixed spacing, type, and divider rules.
+            </mark>
           </p>
           <p>
             The first redesigned send went out November 4, 2025. Mailchimp reported{" "}
