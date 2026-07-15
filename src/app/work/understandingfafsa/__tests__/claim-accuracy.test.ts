@@ -31,6 +31,24 @@ describe("UnderstandingFAFSA outcome claims", () => {
     expect(projectPage).toContain("MPP excluded");
   });
 
+  it("describes the artifact without unsupported effect or performance claims", () => {
+    const projectPage = readFileSync(
+      resolve(process.cwd(), "src/app/work/understandingfafsa/page.tsx"),
+      "utf8",
+    );
+    const comparisonComponent = readFileSync(
+      resolve(process.cwd(), "src/components/understandingfafsa.tsx"),
+      "utf8",
+    );
+
+    expect(projectPage).not.toContain("primary touchpoint");
+    expect(projectPage).not.toContain("Subscribers were seeing two different brands");
+    expect(projectPage).not.toContain("still in a healthy band");
+    expect(comparisonComponent).not.toContain("stays on-brand no matter the order");
+    expect(comparisonComponent).not.toContain("faster assembly");
+    expect(comparisonComponent).toContain("Illustrative estimate");
+  });
+
   it("qualifies the open-rate labels in the mobile layout comparison", () => {
     const comparisonComponent = readFileSync(
       resolve(process.cwd(), "src/components/understandingfafsa.tsx"),

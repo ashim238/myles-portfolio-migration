@@ -371,7 +371,8 @@ export function NewsletterComposer() {
         <div className="uf-composer-toolbar-title">
           <p className="uf-composer-eyebrow">Try it: assemble a send</p>
           <p className="uf-composer-help">
-            Header and footer stay locked. Add middle blocks from the shelf, drag to reorder, or use the arrows. The kit stays on-brand no matter the order.
+            Header and footer stay locked. Add middle blocks from the shelf, drag to reorder, or use
+            the arrows. The exercise mirrors the system&apos;s locked and swappable rules.
           </p>
         </div>
         <div className="uf-composer-toolbar-actions" role="group" aria-label="Composer actions">
@@ -425,11 +426,11 @@ export function NewsletterComposer() {
           <div className="uf-composer-preview-head">
             <h3 className="uf-composer-heading">Your send</h3>
             <p className={`uf-composer-weight${overCeiling ? " uf-composer-weight--over" : ""}`}>
-              <span>{totalBlockCount} block{totalBlockCount === 1 ? "" : "s"}</span>
+              <span>Illustrative estimate: {totalBlockCount} block{totalBlockCount === 1 ? "" : "s"}</span>
               <span aria-hidden="true"> · </span>
               <span>~{totalKb} KB</span>
               <span aria-hidden="true"> · </span>
-              <span>{COMPOSER_KB_CEILING} KB Gmail ceiling</span>
+              <span>{COMPOSER_KB_CEILING} KB Gmail clipping threshold</span>
             </p>
           </div>
 
@@ -596,7 +597,7 @@ const TEMPLATE_VARIANTS: Record<TemplateVariant, TemplateMeta> = {
   event: {
     label: "Event",
     asset: UF_ASSETS.templateEvent,
-    alt: "Event-specific newsletter. Fewer blocks, faster assembly for invites and recaps.",
+    alt: "Event-specific newsletter with fewer blocks for invites and recaps.",
     descriptor: "Event-specific send. RSVP-focused layout on the same system.",
   },
 };
@@ -775,7 +776,7 @@ export function LockedSwappableView() {
         role="group"
         aria-label="Recolor the swappable regions"
       >
-        <p className="uf-lock-palette-caption">Try a swap — the palette re-tints the region markers.</p>
+        <p className="uf-lock-palette-caption">Try a swap. The palette re-tints the region markers.</p>
         <ul role="list">
           {LOCK_SWAP_ACCENTS.map((a) => (
             <li key={a.hex}>

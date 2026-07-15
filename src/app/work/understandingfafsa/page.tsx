@@ -86,7 +86,7 @@ export default async function UnderstandingFafsaPage() {
         moves={[
           "Researched 120+ newsletters against four criteria.",
           "Built a modular template system with locked layers and swappable parts.",
-          "Matched the newsletter to the rebranded site so subscribers see one brand.",
+          "Matched the newsletter type and palette to the rebranded site.",
         ]}
       />
 
@@ -106,18 +106,16 @@ export default async function UnderstandingFafsaPage() {
 
       <section className="project-section uf-section" aria-labelledby="uf-context">
         <h2 id="uf-context">Where it started: a rebranded site, a dated newsletter.</h2>
-        <blockquote className="case-pullquote">Subscribers were seeing two different brands.</blockquote>
+        <blockquote className="case-pullquote">
+          The newsletter still carried the site&apos;s previous visual system.
+        </blockquote>
         <div className="project-section-body">
           <p>
             UnderstandingFAFSA helps students, parents, and counselors navigate the Free Application
-            for Federal Student Aid (FAFSA). The newsletter is a primary touchpoint. The website had
-            already moved to a calmer, modern visual language (Saans typeface, refreshed palette),
-            but the newsletter still carried an older system. The scope was email-only. The founder assembles every issue, so{" "}
-            <mark className="case-highlight">
-              the system had to maintain the brand&apos;s identity regardless
-              of who was building it
-            </mark>
-            .
+            for Federal Student Aid (FAFSA). The newsletter carries guidance for all three groups.
+            The website had already adopted Saans and a refreshed palette, while the newsletter still
+            used the older visual system. The scope was email-only, and the founder assembles every
+            issue.
           </p>
         </div>
       </section>
@@ -125,7 +123,8 @@ export default async function UnderstandingFafsaPage() {
       <section className="project-section uf-section" aria-labelledby="uf-problem">
         <h2 id="uf-problem">Where the old template broke down.</h2>
         <p className="case-section-lead">
-          The old template was difficult to scan on mobile. Prior sends opened around 30%.
+          The old template presented long text blocks and weak section breaks on mobile. Prior sends
+          opened around 30%.
         </p>
         <div className="project-section-body">
           <p>
@@ -135,8 +134,8 @@ export default async function UnderstandingFafsaPage() {
           </p>
           <p>
             The newsletter covers deadline-driven guidance at key checkpoints: FAFSA filing windows,
-            scholarship deadlines, and policy changes. The channel needed the same credibility the
-            site had worked to develop.
+            scholarship deadlines, and policy changes. Its type and palette still came from the
+            site&apos;s previous visual system.
           </p>
         </div>
         <BeforeAfterPhones />
@@ -153,8 +152,7 @@ export default async function UnderstandingFafsaPage() {
           </p>
           <p>
             Five newsletters got the deepest treatment: Revenews, The 74, Next by Jeff Selingo,
-            Medium, and Folderly. Each newsletter adopted a different approach to the same problem:
-            making a recurring email feel worth opening.
+            Medium, and Folderly. Each used a different mix of structure, tone, and branding.
           </p>
           <p>
             The rest of the newsletter pool served as lighter references for layout, color, and
@@ -163,26 +161,22 @@ export default async function UnderstandingFafsaPage() {
           <p>The deep dive highlights:</p>
           <ul>
             <li>
-              <strong>Selective bolding</strong> created visual entry points without adding imagery.
-              Revenews paired this with emoji section headers and concise intros.
+              Revenews used <strong>selective bolding</strong>, emoji section headers, and concise
+              intros.
             </li>
             <li>
-              <strong>Bespoke bullet styles</strong> reinforced brand identity in the smallest
-              details, like Folderly&apos;s use of brand-colored accents.
+              Folderly carried <strong>brand color</strong> into its bullet styles.
             </li>
             <li>
-              <strong>Action-focused section titles</strong> turned bulk information into content
-              readers could parse in a single scroll.
+              Several references used <strong>action-focused section titles</strong> to divide long
+              sends.
             </li>
             <li>
-              <strong>Tone calibration by audience</strong>: student-facing emails could carry
-              emojis and GIFs, while counselor-facing emails needed the more earnest, formal
-              register we saw in The 74.
+              The 74 used a <strong>more formal register</strong> than student-facing references that
+              used emojis and GIFs.
             </li>
             <li>
-              <strong>Personalization through structure</strong>: Next&apos;s if/then link framing
-              (&quot;if you&apos;re looking for help with X, then read this&quot;) gave readers
-              agency, and author photos with brief bios made the sender feel human.
+              Next used <strong>if/then link framing</strong>, author photos, and brief bios.
             </li>
           </ul>
           <p>
@@ -205,8 +199,8 @@ export default async function UnderstandingFafsaPage() {
           <p>
             The system ships through a shared modular framework: a welcome
             email that sets expectations, the core weekly
-            newsletter, and an event-specific variant with fewer blocks and
-            faster assembly for invites and recaps. A counselor-focused toolkit extends
+            newsletter, and an event-specific variant with fewer blocks for invites and recaps. A
+            counselor-focused toolkit extends
             the same vocabulary (duotone icons, formal register) and is in progress.
           </p>
           <p>
@@ -228,7 +222,7 @@ export default async function UnderstandingFafsaPage() {
       >
         <h2 id="uf-locked">The core decision: locked layers, swappable parts.</h2>
         <p className="case-section-lead">
-          Structure and type stay locked, so a non-designer can swap copy and images without breaking the brand.
+          The founder can edit copy and images within fixed spacing, type, and divider rules.
         </p>
         <div className="project-section-body">
           <p>
@@ -236,15 +230,12 @@ export default async function UnderstandingFafsaPage() {
               The locked-vs-swappable distinction was the core design
               decision.
             </mark>{" "}
-            Spacing, dividers, type, and the structural skeleton stay locked
-            so swaps don&apos;t quietly undo the brand.
-            Editors swap body copy and emoji-style section images. The founder drafts each
-            week&apos;s copy for editorial.
+            Spacing, dividers, type, and the structural skeleton stay locked. Editors swap body copy
+            and emoji-style section images. The founder drafts each week&apos;s copy for editorial.
           </p>
           <p>
-            Color variants were chosen to stay in harmony with UnderstandingFAFSA&apos;s design
-            system. The founder can assemble an issue quickly without any single swap
-            pulling the send off-brand.
+            The color variants draw from UnderstandingFAFSA&apos;s design system. The founder edits copy
+            and images inside those fixed rules.
           </p>
         </div>
 
@@ -256,7 +247,8 @@ export default async function UnderstandingFafsaPage() {
       <section className="project-section uf-section" aria-labelledby="uf-figma">
         <h2 id="uf-figma">Rebuilding it in Mailchimp.</h2>
         <p className="case-section-lead">
-          Rebuilding the design in Mailchimp meant fighting Gmail&apos;s 102KB clip limit without losing the brand.
+          The Mailchimp build had to fit Gmail&apos;s 102KB clip limit while carrying the site&apos;s type
+          and palette.
         </p>
         <div className="project-section-body">
           <p>
@@ -305,12 +297,10 @@ export default async function UnderstandingFafsaPage() {
             review a designer would normally do.
           </p>
           <p>
-            The first redesigned send went out November 4, 2025. It opened at{" "}
-            <CountUp value="~52.6%" />, compared with prior sends around 30%
-            (Mailchimp reporting with MPP excluded), with clicks, bounces, and
-            unsubscribes still in a healthy band. What shipped: a master
-            template, modular blocks, explicit locked-vs-swappable rules,
-            and three template variants on the same design vocabulary.
+            The first redesigned send went out November 4, 2025. Mailchimp reported{" "}
+            <CountUp value="~52.6%" /> for the first redesigned send with MPP excluded. Earlier sends
+            opened around 30%. What shipped: a master template, modular blocks, explicit
+            locked-vs-swappable rules, and three template variants on the same design vocabulary.
           </p>
         </div>
       </section>
