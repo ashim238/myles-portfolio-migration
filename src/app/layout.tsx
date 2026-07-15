@@ -28,19 +28,17 @@ const serif = Instrument_Serif({
   style: ["normal", "italic"],
 });
 
-const BASE_URL = "https://mylesdesignsthings.com";
-
 export const metadata: Metadata = {
   title: {
     default: `${siteConfig.name} | ${siteConfig.title}`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  metadataBase: new URL(BASE_URL),
+  metadataBase: new URL(siteConfig.siteUrl),
   openGraph: {
     title: `${siteConfig.name} | ${siteConfig.title}`,
     description: siteConfig.description,
-    url: BASE_URL,
+    url: siteConfig.siteUrl,
     siteName: siteConfig.name,
     locale: "en_US",
     type: "website",

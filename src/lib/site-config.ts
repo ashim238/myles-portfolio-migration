@@ -6,6 +6,7 @@ export type NavItem = {
 export const siteConfig = {
   name: "Myles Ashitey",
   title: "Product Designer Portfolio",
+  siteUrl: "https://mylesdesignsthings.com",
   description:
     "Portfolio of Myles Ashitey featuring product design case studies, process notes, and playful experiments.",
   headerKicker: "Myles · product designer",
