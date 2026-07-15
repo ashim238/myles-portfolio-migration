@@ -22,12 +22,11 @@ export function DotCursor() {
 
     let x = -40;
     let y = -40;
+    let frame = 0;
 
-    const onMove = (e: MouseEvent) => {
-      x = e.clientX;
-      y = e.clientY;
-      dot.style.left = `${x}px`;
-      dot.style.top = `${y}px`;
+    const render = () => {
+      frame = 0;
+      dot.style.transform = `translate3d(${x}px, ${y}px, 0)`;
 
       if (!dot.classList.contains("dot-cursor--visible")) {
         dot.classList.add("dot-cursor--visible");
@@ -43,16 +42,25 @@ export function DotCursor() {
       dot.classList.toggle("dot-cursor--hover", isHover && !isInput);
     };
 
+    const onMove = (e: MouseEvent) => {
+      x = e.clientX;
+      y = e.clientY;
+      if (!frame) frame = requestAnimationFrame(render);
+    };
+
     const onLeave = () => {
       dot.classList.remove("dot-cursor--visible");
     };
 
+    document.documentElement.classList.add("dot-cursor-ready");
     document.addEventListener("mousemove", onMove, { passive: true });
     document.addEventListener("mouseleave", onLeave);
 
     return () => {
+      document.documentElement.classList.remove("dot-cursor-ready");
       document.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseleave", onLeave);
+      if (frame) cancelAnimationFrame(frame);
     };
   }, []);
 

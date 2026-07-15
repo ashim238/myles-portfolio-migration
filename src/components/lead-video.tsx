@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 type LeadVideoProps = {
   clip: string;
@@ -12,21 +12,61 @@ type LeadVideoProps = {
   type?: string;
 };
 
-/** Muted autoplay loop. Under reduced-motion we do not autoplay; the poster
- *  (the still cover) shows instead, so the section is never blank or busy. */
+function subscribeReducedMotion(callback: () => void) {
+  const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+  query.addEventListener("change", callback);
+  return () => query.removeEventListener("change", callback);
+}
+
+function getReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+/** Muted looping video that attaches its source only when it nears the
+ *  viewport. Reduced-motion readers get the poster and can opt in with the
+ *  native controls. */
 export function LeadVideo({ clip, poster, alt, type = "video/mp4" }: LeadVideoProps) {
   const ref = useRef<HTMLVideoElement>(null);
+  const [loadVideo, setLoadVideo] = useState(false);
+  const [inView, setInView] = useState(false);
+  const reducedMotion = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotion,
+    () => false,
+  );
 
   useEffect(() => {
     const v = ref.current;
     if (!v) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      v.removeAttribute("autoplay");
+
+    if (!("IntersectionObserver" in window)) {
+      const frame = requestAnimationFrame(() => {
+        setLoadVideo(true);
+        setInView(true);
+      });
+      return () => cancelAnimationFrame(frame);
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting);
+        if (entry.isIntersecting) setLoadVideo(true);
+      },
+      { rootMargin: "320px 0px" },
+    );
+    observer.observe(v);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    if (!loadVideo || !inView || reducedMotion) {
       v.pause();
       return;
     }
     v.play().catch(() => {});
-  }, []);
+  }, [inView, loadVideo, reducedMotion]);
 
   return (
     <video
@@ -36,13 +76,18 @@ export function LeadVideo({ clip, poster, alt, type = "video/mp4" }: LeadVideoPr
       muted
       loop
       playsInline
-      autoPlay
+      controls
+      preload={loadVideo ? "metadata" : "none"}
       aria-label={alt}
     >
-      <source src={clip} type={type} />
-      {/* Fallback: some browsers reject the primary type; also declare mp4
-          so H.264 content plays even when the container is quirky. */}
-      {type !== "video/mp4" ? <source src={clip} type="video/mp4" /> : null}
+      {loadVideo ? (
+        <>
+          <source src={clip} type={type} />
+          {/* Fallback: some browsers reject the primary type; also declare mp4
+              so H.264 content plays even when the container is quirky. */}
+          {type !== "video/mp4" ? <source src={clip} type="video/mp4" /> : null}
+        </>
+      ) : null}
     </video>
   );
 }

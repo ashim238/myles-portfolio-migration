@@ -9,13 +9,15 @@ describe("LeadMedia", () => {
     expect(img.tagName).toBe("IMG");
   });
 
-  it("renders a video with the cover as poster when a clip is given", () => {
+  it("renders a controlled video poster without attaching the clip immediately", () => {
     const { container } = render(
       <LeadMedia cover="/projects/navi/cover.png" alt="Navi demo" clip="/projects/navi/demo.mp4" />,
     );
     const video = container.querySelector("video");
     expect(video).not.toBeNull();
     expect(video!.getAttribute("poster")).toBe("/projects/navi/cover.png");
-    expect(container.querySelector("source")!.getAttribute("src")).toBe("/projects/navi/demo.mp4");
+    expect(video).toHaveAttribute("preload", "none");
+    expect(video).toHaveAttribute("controls");
+    expect(container.querySelector("source")).toBeNull();
   });
 });

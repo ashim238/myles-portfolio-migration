@@ -204,9 +204,10 @@ export default async function FreshGreensPage() {
 
         <figure className="fg-en-route-video">
           <LeadVideo
-            clip="/projects/fresh-greens/process/active-nav.mp4"
+            clip="/projects/fresh-greens/process/active-nav.mov"
             poster="/projects/fresh-greens/v2/en-route.png"
             alt="Fresh Greens running turn-by-turn navigation: the 3D map drags with the car along the route, the turn card updates on each maneuver, and the safety column stays in thumb reach."
+            type="video/quicktime"
           />
           <figcaption className="fg-safety-visual-caption">
             The en-route screen in motion.
