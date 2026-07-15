@@ -221,8 +221,8 @@ export function TemplateAnatomy() {
         </ol>
       </div>
       <figcaption>
-        540×960 frame. Pink markers in the original file are slot margins;
-        cyan markers are the immutable outer boundaries.
+        540×960 frame. Pink markers in the original file are slot margins.
+        Cyan markers are the fixed outer boundaries.
       </figcaption>
     </figure>
   );
