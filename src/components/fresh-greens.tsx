@@ -481,9 +481,9 @@ export function ReservedPalette() {
   return (
     <div className="fg-palette">
       <p className="fg-palette-baseline">
-        <strong>Green</strong> carries every CTA, link, and affordance — the
-        only non-reserved color. Four colors are held to safety-signal work; the
-        documented carve-outs are below.
+        <strong>Green</strong>, the only non-reserved color, carries every CTA,
+        link, and affordance. Four colors are held to safety-signal work, with
+        the documented carve-outs below.
       </p>
       <dl className="fg-palette-lanes">
         {solidLanes.map(renderLane)}

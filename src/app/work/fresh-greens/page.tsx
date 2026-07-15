@@ -103,11 +103,9 @@ export default async function FreshGreensPage() {
         ]}
       />
 
-      <div className="case-tier-divider"><span>The full breakdown ↓</span></div>
-
       {/* ── Section 1: The problem I set out to solve ── */}
       <section className="project-section fg-section" aria-labelledby="fg-problem">
-        <h2 id="fg-problem">The problem I set out to solve.</h2>
+        <h2 id="fg-problem">Why time and distance were not enough</h2>
         <blockquote className="case-pullquote">The Green Book was a routing system built on community knowledge, because no institutional one existed.</blockquote>
         <div className="project-section-body">
           <p>
@@ -125,7 +123,7 @@ export default async function FreshGreensPage() {
         className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-research"
       >
-        <h2 id="fg-research">Listening to six drivers.</h2>
+        <h2 id="fg-research">What six interviews changed</h2>
         <p className="case-section-lead">
           Six interviews with Black drivers across the Southern US, anonymized
           in synthesis and led with joy and fear before any product questions.
@@ -175,10 +173,7 @@ export default async function FreshGreensPage() {
         className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-scoring"
       >
-        <h2 id="fg-scoring">Turning the interviews into a scoring system.</h2>
-        <p className="case-section-lead">
-          Community reports and public data share one adapter and one scoring function, with a single audit trail behind both.
-        </p>
+        <h2 id="fg-scoring">How each route gets scored</h2>
         <div className="project-section-body">
           <p>
             Every route is scored on four things the interviews kept raising:
@@ -219,10 +214,7 @@ export default async function FreshGreensPage() {
         className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-pulled-over"
       >
-        <h2 id="fg-pulled-over">Designing for the pulled-over moment.</h2>
-        <p className="case-section-lead">
-          The interface asks before it assumes, so a driver stays in control under pressure.
-        </p>
+        <h2 id="fg-pulled-over">A calmer interface for a traffic stop</h2>
         <div className="project-section-body">
           <p>
             Every prompt in a safety moment is set in{" "}
@@ -257,10 +249,7 @@ export default async function FreshGreensPage() {
         className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-pivot"
       >
-        <h2 id="fg-pivot">The direction I tried first.</h2>
-        <p className="case-section-lead">
-          The first pass was a Google Maps feature.
-        </p>
+        <h2 id="fg-pivot">The Google Maps feature I moved away from</h2>
 
         <PivotJourney />
       </section>
@@ -270,10 +259,7 @@ export default async function FreshGreensPage() {
         className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-typecolor"
       >
-        <h2 id="fg-typecolor">Choosing type and color.</h2>
-        <p className="case-section-lead">
-          Warm surfaces and a reserved serif give type and color a job at each phase of a trip.
-        </p>
+        <h2 id="fg-typecolor">Type and color across a trip</h2>
 
         <OnboardingIllustrationSequence />
 
@@ -312,10 +298,7 @@ export default async function FreshGreensPage() {
         className="project-section fg-section fg-section--wide fg-craft"
         aria-labelledby="fg-color"
       >
-        <h2 id="fg-color">Holding four colors in reserve.</h2>
-        <p className="case-section-lead">
-          Four colors and the daylight gradient are held to safety signals, with documented carve-outs.
-        </p>
+        <h2 id="fg-color">Four colors stay reserved for safety</h2>
 
         <div className="project-section-body">
           <p>
@@ -394,7 +377,7 @@ export default async function FreshGreensPage() {
         className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-trust"
       >
-        <h2 id="fg-trust">Keeping community reports trustworthy.</h2>
+        <h2 id="fg-trust">Moderating community reports</h2>
         <div className="project-section-body">
           <p>
             The pipeline only works if community reports can be trusted like
@@ -455,10 +438,7 @@ export default async function FreshGreensPage() {
 
       {/* ── Section 8: What shipped, and what didn't ─── */}
       <section className="project-section fg-section fg-scope" aria-labelledby="fg-scope">
-        <h2 id="fg-scope">What shipped, and what didn&apos;t.</h2>
-        <p className="case-section-lead">
-          The honest split between what&apos;s in the build and what&apos;s still on the list.
-        </p>
+        <h2 id="fg-scope">What shipped and what comes next</h2>
 
         <div className="fg-scope-grid">
           <div className="fg-scope-col">
