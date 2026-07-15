@@ -50,13 +50,13 @@ const BEFORE_AFTER = [
   {
     asset: UF_ASSETS.mobileBefore,
     alt: "Old newsletter template on mobile before the redesign, full scroll.",
-    label: "Before · ~30% open rate",
+    label: "Prior sends · around 30% open rate",
     tilt: -2,
   },
   {
     asset: UF_ASSETS.mobileAfter,
     alt: "Redesigned newsletter on mobile with updated hierarchy and brand system, full scroll.",
-    label: "After · ~52.6% open rate",
+    label: "First redesigned send · ~52.6% open rate (MPP excluded)",
     tilt: 2,
   },
 ] as const;
@@ -102,7 +102,11 @@ export function BeforeAfterPhones() {
   }, [reduced]);
 
   return (
-    <div ref={sectionRef} className="uf-before-after" aria-label="Newsletter open rate before and after redesign">
+    <div
+      ref={sectionRef}
+      className="uf-before-after"
+      aria-label="Newsletter mobile layouts and reported open rates"
+    >
       {BEFORE_AFTER.map((item) => (
         <figure key={item.label} className="uf-before-after-item">
           <EmailPhoneFrame tilt={item.tilt} scrollable>

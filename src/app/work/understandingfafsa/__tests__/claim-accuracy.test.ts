@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 const applicantFacingFiles = [
   "content/projects/understandingfafsa.md",
   "src/app/work/understandingfafsa/page.tsx",
+  "src/components/understandingfafsa.tsx",
   "src/app/about/page.tsx",
   "src/app/resume/page.tsx",
 ];
@@ -28,5 +29,25 @@ describe("UnderstandingFAFSA outcome claims", () => {
     expect(projectPage).toContain("~52.6%");
     expect(projectPage).toContain("around 30%");
     expect(projectPage).toContain("MPP excluded");
+  });
+
+  it("qualifies the open-rate labels in the mobile layout comparison", () => {
+    const comparisonComponent = readFileSync(
+      resolve(process.cwd(), "src/components/understandingfafsa.tsx"),
+      "utf8",
+    );
+
+    expect(comparisonComponent).toContain("Prior sends · around 30% open rate");
+    expect(comparisonComponent).toContain(
+      "First redesigned send · ~52.6% open rate (MPP excluded)",
+    );
+    expect(comparisonComponent).toContain(
+      "Newsletter mobile layouts and reported open rates",
+    );
+    expect(comparisonComponent).not.toContain("Before · ~30% open rate");
+    expect(comparisonComponent).not.toContain("After · ~52.6% open rate");
+    expect(comparisonComponent).not.toContain(
+      "Newsletter open rate before and after redesign",
+    );
   });
 });
