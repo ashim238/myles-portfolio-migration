@@ -51,7 +51,7 @@ Homepage structure:
 
 - Role: `Product Designer`
 - Claim: `I design products end to end and tend to go past the prototype.`
-- Proof: `For my Parsons thesis, I designed and built a 26-screen React Native app with VoiceOver, dynamic type, and a WCAG dash pattern.`
+- Proof: `For my Parsons thesis, I designed and built a React Native app with more than 26 screens, VoiceOver labels, dynamic type, and a WCAG dash pattern.`
 - Credentials: `Previously TikTok and UMG. MFA in Design and Technology from Parsons.`
 - CTA: `View selected work`
 

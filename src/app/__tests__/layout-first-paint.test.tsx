@@ -1,0 +1,30 @@
+import { renderToStaticMarkup } from "react-dom/server";
+import { describe, expect, it, vi } from "vitest";
+import RootLayout from "@/app/layout";
+
+vi.mock("@/components/console-greeting", () => ({ ConsoleGreeting: () => null }));
+vi.mock("@/components/dot-cursor", () => ({ DotCursor: () => null }));
+vi.mock("@/components/lightbox-provider", () => ({
+  LightboxProvider: ({ children }: { children: React.ReactNode }) => children,
+}));
+vi.mock("@/components/mobile-nav", () => ({ MobileNav: () => null }));
+vi.mock("@/components/project-enter-transition", () => ({
+  ProjectEnterTransition: ({ children }: { children: React.ReactNode }) => children,
+}));
+vi.mock("@/components/scroll-reveal-fallback", () => ({
+  ScrollRevealFallback: () => null,
+}));
+
+describe("root layout first paint", () => {
+  it("does not inject a script that hides homepage content before hydration", () => {
+    const markup = renderToStaticMarkup(
+      <RootLayout>
+        <main>Portfolio</main>
+      </RootLayout>,
+    );
+
+    expect(markup).not.toContain("home-intro-guard");
+    expect(markup).not.toContain("home-intro-wait");
+    expect(markup).toContain("theme-init");
+  });
+});

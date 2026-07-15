@@ -18,10 +18,7 @@
   --track-caps: 0.11em;
   --lead-display: 0.9;
   --lead-hero-name: 1;
-  --lead-hero-typer: 1.22;
   --track-hero-name: -0.02em;
-  --track-hero-typer: -0.008em;
-  --gap-hero-name-typer: 0.72rem;
   --lead-title: 1;
   --lead-nav: 1.12;
   --lead-body: 1.58;
@@ -45,30 +42,6 @@
   /* Sky #8ab4ff is only ~2:1 on the light bg; darken so the focus ring
      clears the 3:1 WCAG UI minimum (the dark theme keeps the sky value). */
   --focus-ring: #2563eb;
-}
-
-:root[data-theme="light"] .browser-intro-overlay {
-  background: #fafafa;
-  color: #888;
-}
-
-:root[data-theme="light"] .browser-intro-window {
-  background: #fafafa;
-  border-color: #d4d4d4;
-}
-
-:root[data-theme="light"] .browser-intro-chrome {
-  background: #f0f0f0;
-  border-color: #d4d4d4;
-}
-
-:root[data-theme="light"] .browser-intro-viewport {
-  background: #fafafa;
-}
-
-:root[data-theme="light"] .browser-intro-preview-blocks span {
-  background: linear-gradient(90deg, #ececec 0%, #e0e0e0 100%);
-  border-color: #d4d4d4;
 }
 
 :root[data-theme="light"] .project-highlight,
@@ -286,15 +259,6 @@ a {
   padding: 1.2rem 1.4rem 4.5rem;
 }
 
-/* Browser-window zoom intro — once per session, before homepage entrance */
-html.browser-intro-lock {
-  overflow: hidden;
-}
-
-html.browser-intro-lock body {
-  overflow: hidden;
-}
-
 /* Project cover zoom — home work card into case study */
 html.project-enter-lock {
   overflow: hidden;
@@ -334,341 +298,6 @@ html.project-enter-settling .project-page {
 
 @media (prefers-reduced-motion: reduce) {
   .project-enter-overlay {
-    display: none;
-  }
-}
-
-.browser-intro-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 10000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.35rem;
-  background: #ffffff;
-  color: #5a5a5a;
-  perspective: 900px;
-  pointer-events: none;
-  opacity: 1;
-}
-
-.browser-intro-desktop {
-  display: block;
-}
-
-.browser-intro-mobile {
-  display: none;
-}
-
-.browser-intro-stage {
-  transform: scale(0.38);
-  transform-origin: center center;
-  will-change: transform;
-  backface-visibility: hidden;
-}
-
-.browser-intro-window {
-  width: min(31rem, 90vw);
-  border: 1px solid #d8d8d8;
-  border-radius: 0.7rem;
-  overflow: hidden;
-  background: #0a0a0a;
-  box-shadow:
-    0 32px 80px rgba(0, 0, 0, 0.14),
-    0 12px 28px rgba(0, 0, 0, 0.08),
-    0 0 0 1px rgba(0, 0, 0, 0.06);
-}
-
-.browser-intro-chrome {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  padding: 0.55rem 0.7rem;
-  border-bottom: 1px solid var(--line);
-  background: #111;
-}
-
-.browser-intro-traffic {
-  display: flex;
-  gap: 0.35rem;
-}
-
-.browser-intro-traffic span {
-  width: 0.52rem;
-  height: 0.52rem;
-  border-radius: 50%;
-  background: #3a3a3a;
-}
-
-.browser-intro-traffic span:nth-child(1) {
-  background: #5c5c5c;
-}
-
-.browser-intro-traffic span:nth-child(2) {
-  background: #4a4a4a;
-}
-
-.browser-intro-traffic span:nth-child(3) {
-  background: #6a6a6a;
-}
-
-.browser-intro-url {
-  margin: 0;
-  flex: 1;
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
-  color: var(--muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.browser-intro-viewport {
-  padding: 0.85rem 0.9rem 1rem;
-  background: #050505;
-}
-
-.browser-intro-preview {
-  display: grid;
-  gap: 0.45rem;
-}
-
-.browser-intro-preview-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.5rem;
-  color: var(--muted);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.browser-intro-preview-name {
-  margin: 0.15rem 0 0;
-  font-size: 1.35rem;
-  line-height: var(--lead-display);
-  letter-spacing: var(--track-display);
-  font-weight: 400;
-}
-
-.browser-intro-preview-line {
-  margin: 0;
-  font-size: 0.58rem;
-  line-height: 1.4;
-  color: var(--muted);
-}
-
-.browser-intro-preview-blocks {
-  display: grid;
-  gap: 0.35rem;
-  margin-top: 0.35rem;
-}
-
-.browser-intro-preview-blocks span {
-  display: block;
-  height: 1.35rem;
-  border-radius: 0.25rem;
-  border: 1px solid var(--line);
-  background: linear-gradient(90deg, #121212 0%, #1a1a1a 100%);
-}
-
-.browser-intro-preview-blocks span:nth-child(2) {
-  height: 2.4rem;
-}
-
-.browser-intro-status {
-  margin: 0;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #5a5a5a;
-}
-
-.browser-intro-loader {
-  width: min(12rem, 42vw);
-  height: 2px;
-  border-radius: 999px;
-  background: #e2e2e2;
-  overflow: hidden;
-}
-
-.browser-intro-loader-fill {
-  display: block;
-  width: 100%;
-  height: 100%;
-  transform: scaleX(0);
-  transform-origin: left center;
-  background: linear-gradient(90deg, #8a8a8a 0%, #1a1a1a 100%);
-  border-radius: inherit;
-  will-change: transform;
-}
-
-.browser-intro-status,
-.browser-intro-loader,
-.browser-intro-chrome,
-.browser-intro-mobile-chrome,
-.browser-intro-mobile-home-indicator {
-  will-change: opacity;
-}
-
-/* Mobile intro — phone frame instead of browser window */
-.browser-intro-mobile-phone {
-  width: min(11.5rem, 58vw);
-  aspect-ratio: 9 / 19.2;
-  border: 2px solid #d0d0d0;
-  border-radius: 1.65rem;
-  overflow: hidden;
-  background: #0a0a0a;
-  box-shadow:
-    0 28px 64px rgba(0, 0, 0, 0.16),
-    0 10px 24px rgba(0, 0, 0, 0.1),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-}
-
-.browser-intro-mobile-chrome {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.55rem 0.85rem 0.35rem;
-  background: #050505;
-}
-
-.browser-intro-mobile-island {
-  position: absolute;
-  left: 50%;
-  top: 0.42rem;
-  width: 2.35rem;
-  height: 0.62rem;
-  transform: translateX(-50%);
-  border-radius: 999px;
-  background: #111;
-  border: 1px solid #2a2a2a;
-}
-
-.browser-intro-mobile-time {
-  font-size: 0.48rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: #f4f4f4;
-}
-
-.browser-intro-mobile-signal {
-  display: flex;
-  align-items: flex-end;
-  gap: 0.1rem;
-  height: 0.45rem;
-}
-
-.browser-intro-mobile-signal span {
-  display: block;
-  width: 0.14rem;
-  border-radius: 999px;
-  background: #f4f4f4;
-}
-
-.browser-intro-mobile-signal span:nth-child(1) {
-  height: 0.22rem;
-  opacity: 0.45;
-}
-
-.browser-intro-mobile-signal span:nth-child(2) {
-  height: 0.32rem;
-  opacity: 0.7;
-}
-
-.browser-intro-mobile-signal span:nth-child(3) {
-  height: 0.42rem;
-}
-
-.browser-intro-mobile-screen {
-  padding: 0.55rem 0.7rem 0.65rem;
-  background: #050505;
-  min-height: 0;
-}
-
-.browser-intro-mobile-preview {
-  display: grid;
-  gap: 0.38rem;
-}
-
-.browser-intro-mobile-url {
-  margin: 0;
-  font-size: 0.44rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.browser-intro-mobile-name {
-  margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.05;
-  letter-spacing: var(--track-display);
-  font-weight: 400;
-  color: var(--foreground);
-}
-
-.browser-intro-mobile-line {
-  margin: 0;
-  font-size: 0.48rem;
-  line-height: 1.35;
-  color: var(--muted);
-}
-
-.browser-intro-mobile-blocks {
-  display: grid;
-  gap: 0.28rem;
-  margin-top: 0.15rem;
-}
-
-.browser-intro-mobile-blocks span {
-  display: block;
-  height: 0.95rem;
-  border-radius: 0.22rem;
-  border: 1px solid var(--line);
-  background: linear-gradient(90deg, #121212 0%, #1a1a1a 100%);
-}
-
-.browser-intro-mobile-blocks span:nth-child(2) {
-  height: 1.65rem;
-}
-
-.browser-intro-mobile-home-indicator {
-  justify-self: center;
-  width: 2.4rem;
-  height: 0.18rem;
-  margin: 0.35rem 0 0.42rem;
-  border-radius: 999px;
-  background: #3a3a3a;
-}
-
-@media (max-width: 639px) {
-  .browser-intro-desktop {
-    display: none;
-  }
-
-  .browser-intro-mobile {
-    display: block;
-  }
-
-  .browser-intro-mobile-stage {
-    transform: scale(0.58);
-  }
-
-  .browser-intro-overlay {
-    gap: 1.05rem;
-    perspective: 640px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .browser-intro-overlay {
     display: none;
   }
 }
@@ -831,62 +460,6 @@ html.project-enter-settling .project-page {
   }
 }
 
-/* ------------------------------------------------------------------ */
-/* Homepage entrance (anime.js) — once per session                    */
-/* ------------------------------------------------------------------ */
-
-/* Before React: hide intro targets on first visit only */
-html.home-intro-wait .home-page .site-kicker,
-html.home-intro-wait .home-page .site-nav-list li,
-html.home-intro-wait .home-page .hero-name,
-html.home-intro-wait .home-page .hero-typer,
-html.home-intro-wait .home-page .hero-tagline,
-html.home-intro-wait .home-page .hero-credentials,
-html.home-intro-wait .home-page #work > h2,
-html.home-intro-wait .home-page #work > .work-lede,
-html.home-intro-wait .home-page #work > .work-list > .work-item {
-  opacity: 0;
-}
-
-.home-page.home-entrance-active .site-header,
-.home-page.home-entrance-active .hero,
-.home-page.home-entrance-active .hero-tagline,
-.home-page.home-entrance-active .hero-credentials,
-.home-page.home-entrance-active .work:not(.work-drafts) > h2,
-.home-page.home-entrance-active .work:not(.work-drafts) > .work-lede,
-.home-page.home-entrance-active .work:not(.work-drafts) > .work-list > .work-item {
-  animation: none !important;
-}
-
-.home-page.home-entrance-active:not(.home-entrance-done) .site-kicker,
-.home-page.home-entrance-active:not(.home-entrance-done) .site-nav-list li,
-.home-page.home-entrance-active:not(.home-entrance-done) .hero-name,
-.home-page.home-entrance-active:not(.home-entrance-done) .hero-typer,
-.home-page.home-entrance-active:not(.home-entrance-done) .hero-tagline,
-.home-page.home-entrance-active:not(.home-entrance-done) .hero-credentials,
-.home-page.home-entrance-active:not(.home-entrance-done) #work > h2,
-.home-page.home-entrance-active:not(.home-entrance-done) #work > .work-lede,
-.home-page.home-entrance-active:not(.home-entrance-done) #work > .work-list > .work-item {
-  opacity: 0;
-}
-
-/* After anime.js: lock final state so CSS fadeUp does not re-run (causes a visible flash) */
-.home-page.home-entrance-done:not(.home-entrance-skipped) .site-header,
-.home-page.home-entrance-done:not(.home-entrance-skipped) .hero,
-.home-page.home-entrance-done:not(.home-entrance-skipped) .site-kicker,
-.home-page.home-entrance-done:not(.home-entrance-skipped) .site-nav-list li,
-.home-page.home-entrance-done:not(.home-entrance-skipped) .hero-name,
-.home-page.home-entrance-done:not(.home-entrance-skipped) .hero-typer,
-.home-page.home-entrance-done:not(.home-entrance-skipped) .hero-tagline,
-.home-page.home-entrance-done:not(.home-entrance-skipped) .hero-credentials,
-.home-page.home-entrance-done:not(.home-entrance-skipped) #work > h2,
-.home-page.home-entrance-done:not(.home-entrance-skipped) #work > .work-lede,
-.home-page.home-entrance-done:not(.home-entrance-skipped) #work > .work-list > .work-item {
-  animation: none !important;
-  opacity: 1;
-  transform: none;
-}
-
 .site-header {
   display: flex;
   justify-content: space-between;
@@ -961,12 +534,6 @@ html.home-intro-wait .home-page #work > .work-list > .work-item {
   display: block;
 }
 
-/* Matches the visual footprint of .theme-toggle (tap target expansion is via ::before) */
-.theme-toggle-placeholder {
-  width: 1.75rem;
-  height: 1.75rem;
-}
-
 .site-nav-list {
   list-style: none;
   padding: 0;
@@ -1022,7 +589,6 @@ button:focus-visible,
 
 .hero {
   margin-bottom: 3.3rem;
-  animation: fadeUp 500ms ease-out 90ms both;
 }
 
 /* Work pages: separate site chrome from project title */
@@ -1083,61 +649,44 @@ button:focus-visible,
   white-space: nowrap;
 }
 
-
-.hero-typer {
-  margin-top: var(--gap-hero-name-typer);
-  min-height: 1.45em;
-  max-width: min(100%, 36rem);
-  font-size: clamp(1.15rem, 2.6vw, 1.65rem);
-  line-height: var(--lead-hero-typer);
-  letter-spacing: var(--track-hero-typer);
-  font-weight: 500;
-  color: var(--foreground);
-  overflow: hidden;
-}
-
-.hero-typer-text {
-  white-space: pre-wrap;
-}
-
-.hero-typer-cursor {
-  margin-left: 1px;
-  font-weight: 300;
+.hero-role {
+  margin: 0 0 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
   color: var(--muted);
-  opacity: 0;
-  transition: opacity 80ms ease;
-}
-
-.hero-typer-cursor--on {
-  opacity: 1;
 }
 
 .hero-tagline {
+  margin-top: 1.2rem;
+  max-width: 38ch;
+  font-size: clamp(1.18rem, 2.5vw, 1.55rem);
+  font-weight: 500;
+  line-height: 1.38;
+  text-wrap: pretty;
+}
+
+.hero-proof {
   margin-top: 1rem;
+  max-width: 56ch;
+  font-size: 1rem;
   color: var(--muted);
-  max-width: 44ch;
-  font-size: 1.03rem;
   line-height: var(--lead-body);
   text-wrap: pretty;
 }
 
 .hero-credentials {
-  margin-top: 0.65rem;
+  margin-top: 0.85rem;
+  max-width: 56ch;
   font-size: 0.82rem;
   color: var(--muted);
   letter-spacing: 0.03em;
-  opacity: 0.72;
+  opacity: 0.8;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .hero-tagline {
-    opacity: 0;
-    animation: fadeUp 580ms ease-out 200ms both;
-  }
-
-  .hero-credentials {
-    animation: fadeUp 480ms ease-out 360ms both;
-  }
+.hero-actions {
+  margin-top: 1.15rem;
 }
 
 .work,
@@ -1162,15 +711,6 @@ button:focus-visible,
   font-weight: 600;
   color: var(--foreground);
   opacity: 0.55;
-}
-
-.work-lede {
-  max-width: 54ch;
-  margin: 0 0 2.4rem;
-  color: var(--muted);
-  font-size: 1.03rem;
-  line-height: var(--lead-body);
-  text-wrap: pretty;
 }
 
 .work-list {
@@ -3449,10 +2989,6 @@ button:focus-visible,
   .hero-name {
     white-space: normal;
     overflow-wrap: break-word;
-  }
-
-  .hero-typer {
-    font-size: clamp(1.05rem, 4vw, 1.35rem);
   }
 
   /* Prevent horizontal scroll without breaking position: sticky.

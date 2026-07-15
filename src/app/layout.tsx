@@ -73,16 +73,6 @@ export default function RootLayout({
             __html: `(function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`,
           }}
         />
-        <script
-          id="home-intro-guard"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var p=location.pathname;if(p!=="/"&&p!=="")return;var b=sessionStorage.getItem("home-browser-intro-seen")==="1";var e=sessionStorage.getItem("home-intro-seen")==="1";var r=window.matchMedia("(prefers-reduced-motion: reduce)").matches;if(!r&&(!b||!e)){document.documentElement.classList.add("home-intro-wait");setTimeout(function(){document.documentElement.classList.remove("home-intro-wait")},2600)}}catch(err){}})();`,
-          }}
-        />
-        <noscript>
-          <style>{`.home-intro-wait .home-page, .home-intro-wait .home-page * { opacity: 1 !important; }`}</style>
-        </noscript>
       </head>
       <body className="min-h-full flex flex-col">
         <a className="skip-link" href="#main-content">

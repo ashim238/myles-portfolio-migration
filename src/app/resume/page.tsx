@@ -122,8 +122,9 @@ export default function ResumePage() {
           </h1>
           <p className="resume-body">
             Product designer (MFA, Parsons) with a creative strategy
-            background at TikTok and Universal Music Group. I design end to
-            end and tend to go past the prototype.
+            background at TikTok and Universal Music Group. I&apos;ve taken
+            projects from resident interviews and usability tests through
+            visual systems and working React Native builds.
           </p>
           <div className="resume-actions">
             <a
