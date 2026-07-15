@@ -1,5 +1,23 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import nextConfig from "../../../next.config";
+
+async function getContentSecurityPolicy(nodeEnv: string) {
+  vi.resetModules();
+  vi.stubEnv("NODE_ENV", nodeEnv);
+
+  const { default: config } = await import("../../../next.config");
+  const rules = await config.headers!();
+  const globalRule = rules.find((rule) => rule.source === "/(.*)");
+
+  return globalRule!.headers.find(
+    ({ key }) => key === "Content-Security-Policy",
+  )!.value;
+}
+
+afterEach(() => {
+  vi.unstubAllEnvs();
+  vi.resetModules();
+});
 
 describe("release security headers", () => {
   it("removes framework disclosure and applies baseline headers globally", async () => {
@@ -33,5 +51,17 @@ describe("release security headers", () => {
     expect(headers["Permissions-Policy"]).toBe(
       "camera=(), microphone=(), geolocation=()",
     );
+  });
+
+  it("allows React evaluation only in development", async () => {
+    expect(await getContentSecurityPolicy("development")).toContain(
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com",
+    );
+
+    for (const nodeEnv of ["production", "test"]) {
+      expect(await getContentSecurityPolicy(nodeEnv)).not.toContain(
+        "'unsafe-eval'",
+      );
+    }
   });
 });
