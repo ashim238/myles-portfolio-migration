@@ -67,7 +67,7 @@ export default async function UnderstandingFafsaPage() {
       <section className="hero project-hero uf-hero" aria-labelledby="uf-title">
         <p className="uf-eyebrow">Product design · 2025</p>
         <h1 id="uf-title" className="project-hero-title uf-title">
-          UnderstandingFAFSA
+          Understanding<wbr />FAFSA
         </h1>
         <p className="project-hero-lede uf-lede">
           {project?.summary ?? UF_DESCRIPTION}

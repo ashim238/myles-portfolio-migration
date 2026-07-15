@@ -9,6 +9,18 @@ const page = readFileSync(
 const prose = page.replace(/\s+/g, " ");
 
 describe("UnderstandingFAFSA case-study structure", () => {
+  it("offers a preferred title break without changing the product name", () => {
+    const title = page.match(
+      /<h1 id="uf-title" className="project-hero-title uf-title">([\s\S]*?)<\/h1>/,
+    )?.[1];
+
+    expect(title).toBeDefined();
+    expect(title).toMatch(/Understanding\s*<wbr\s*\/>\s*FAFSA/);
+    expect(title?.replace(/<[^>]+>/g, "").replace(/\s+/g, "").trim()).toBe(
+      "UnderstandingFAFSA",
+    );
+  });
+
   it("uses plain, mixed process headings in chronological order", () => {
     const headings = Array.from(
       page.matchAll(/<h2 id="([^"]+)">([^<]+)<\/h2>/g),
