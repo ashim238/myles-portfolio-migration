@@ -16,6 +16,7 @@ import { ResearchSynthesis } from "@/components/fresh-greens/research-synthesis"
 import { TokenExhibit } from "@/components/fresh-greens/token-exhibit";
 import { PivotJourney } from "@/components/fresh-greens/pivot-journey";
 import { PulledOverJourney } from "@/components/fresh-greens/pulled-over-journey";
+import { OnboardingIllustrationSequence } from "@/components/fresh-greens/onboarding-illustration-sequence";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getPublishedProjects } from "@/lib/content";
 
@@ -276,21 +277,7 @@ export default async function FreshGreensPage() {
           Warm surfaces and a reserved serif give type and color a job at each phase of a trip.
         </p>
 
-        <figure className="fg-illustrations">
-          <ExpandableImage
-            src="/projects/fresh-greens/process/onboarding-illustrations.svg"
-            alt="Four hand-drawn onboarding illustrations: a figure soaring as a map pin over green hills at sunrise, a pensive thinker, the navy safety shield, and a figure at ease with speech bubbles."
-            width={1920}
-            height={1080}
-            sizes="(max-width: 768px) 92vw, 640px"
-            style={{ width: "100%", height: "auto", display: "block" }}
-          />
-          <figcaption className="fg-safety-visual-caption">
-            The onboarding illustrations, drawn by hand. They set the warm,
-            human register the app opens on, before a single safety signal
-            appears.
-          </figcaption>
-        </figure>
+        <OnboardingIllustrationSequence />
 
         <div className="project-section-body">
           <p>

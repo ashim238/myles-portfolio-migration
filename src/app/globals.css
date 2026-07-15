@@ -3283,16 +3283,94 @@ button:focus-visible,
   margin-inline: auto;
 }
 
-/* Illustration strip: was floating on transparent bg, now a warm-neutral
-   presentation panel that gives the yellow illustrations a designed frame. */
+/* Individual onboarding artboards preserve the story sequence at a readable
+   size: 2x2 by default, four-up on wide screens, and a scroll-snap strip on
+   phones. The figure remains the single warm-neutral presentation panel. */
 .fg-illustrations {
+  margin: 2.2rem 0 2.6rem;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 0.9rem;
   padding: 1.4rem 1.4rem 1.1rem;
 }
-.fg-illustrations img {
+
+.fg-illustration-track {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.fg-illustration-panel {
+  min-width: 0;
+}
+
+.fg-illustration-panel .expandable-trigger {
+  height: auto;
   border-radius: 0.35rem;
+}
+
+.fg-illustration-panel img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.35rem;
+}
+
+@media (min-width: 900px) {
+  .fg-illustration-track {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .fg-illustrations {
+    padding: 1rem 0;
+  }
+
+  .fg-illustration-track {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 84%;
+    gap: 0.9rem;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    padding: 0.4rem 1rem 0.7rem;
+    scroll-padding-inline: 1rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+  }
+
+  .fg-illustration-panel {
+    scroll-snap-align: start;
+  }
+
+  .fg-illustrations > .fg-safety-visual-caption {
+    margin-inline: 1rem;
+  }
+}
+
+/* The static render is fully visible. JS adds these states only when motion
+   is allowed, and pending panels remain legible while the stagger settles. */
+@media (prefers-reduced-motion: no-preference) {
+  .fg-illustrations[data-reveal="pending"] .fg-illustration-panel {
+    opacity: 0.72;
+    transform: translateY(10px);
+  }
+
+  .fg-illustrations[data-reveal] .fg-illustration-panel {
+    transition:
+      opacity 0.5s ease-out,
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--fg-illustration-index) * 90ms);
+  }
+
+  .fg-illustrations[data-reveal="in"] .fg-illustration-panel {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* ── Phone frame ──────────────────────────────────────── */
@@ -10542,11 +10620,6 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
   font-size: 0.88rem;
   line-height: 1.5;
   text-wrap: pretty;
-}
-
-/* ── Fresh Greens onboarding illustrations ───────────── */
-.fg-illustrations {
-  margin: 2.2rem 0 2.6rem;
 }
 
 /* ── Fresh Greens en-route video (§3) ─────────────────── */
