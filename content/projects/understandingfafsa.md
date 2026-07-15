@@ -5,7 +5,7 @@ summary: Redesigned a newsletter system to match a fresh site rebrand. Modular t
 role: Product Designer
 timeframe: February 2025 – Ongoing
 status: published
-order: 1
+order: 2
 coverImage: /projects/understandingfafsa/cover.png
 highlightQuote: The newsletter should feel as trustworthy and modern as the newly rebranded website.
 outcomeMetricLabel: open rate after the redesign, up from ~30%, a 75% lift

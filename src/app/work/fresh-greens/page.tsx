@@ -15,13 +15,14 @@ import {
 import { ResearchSynthesis } from "@/components/fresh-greens/research-synthesis";
 import { TokenExhibit } from "@/components/fresh-greens/token-exhibit";
 import { PivotJourney } from "@/components/fresh-greens/pivot-journey";
+import { PulledOverJourney } from "@/components/fresh-greens/pulled-over-journey";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getPublishedProjects } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Fresh Greens",
   description:
-    "A wayfinding app for Black drivers in America, built solo for a grad thesis. It weighs what drivers know about a road's safety as seriously as the official map data.",
+    "A wayfinding app for Black drivers that brings community safety knowledge into route planning alongside public map data.",
   openGraph: {
     title: "Fresh Greens",
     description:
@@ -62,16 +63,15 @@ export default async function FreshGreensPage() {
 
       {/* ── Hero ─────────────────────────────────────── */}
       <section className="hero project-hero fg-hero" aria-labelledby="fg-title">
-        <p className="fg-eyebrow">Graduate thesis · 2026</p>
+        <p className="fg-eyebrow">Product design + engineering · 2025–2026</p>
         <h1 id="fg-title" className="project-hero-title fg-title">
           Fresh Greens
         </h1>
         <p className="project-hero-lede fg-lede">
-          A wayfinding app for Black drivers in America, built solo for my grad
-          thesis. Most navigation weighs time and distance. Fresh Greens weighs
-          safety too, and it treats{" "}
-          <mark className="case-highlight">what a driver knows about a road as seriously as the official map data</mark>.
-          Six interviews shaped what it looks for.
+          Fresh Greens brings community safety knowledge into route planning
+          for Black drivers. I designed and built the React Native app after six
+          interviews, scoring{" "}
+          <mark className="case-highlight">daylight, road conditions, and community reports alongside public map data</mark>.
         </p>
       </section>
 
@@ -95,15 +95,12 @@ export default async function FreshGreensPage() {
 
       <ProjectToc
         sections={[
-          { title: "The problem I set out to solve", id: "fg-problem" },
-          { title: "Listening to six drivers", id: "fg-research" },
-          { title: "Turning the interviews into a scoring system", id: "fg-scoring" },
-          { title: "Designing for the pulled-over moment", id: "fg-pulled-over" },
-          { title: "The direction I tried first", id: "fg-pivot" },
-          { title: "Choosing type and color", id: "fg-typecolor" },
-          { title: "Holding four colors in reserve", id: "fg-color" },
-          { title: "Keeping community reports trustworthy", id: "fg-trust" },
-          { title: "What shipped, and what didn't", id: "fg-scope" },
+          { title: "Problem", id: "fg-problem" },
+          { title: "Research into route signals", id: "fg-research" },
+          { title: "Scoring and navigation", id: "fg-scoring" },
+          { title: "Safety interactions", id: "fg-pulled-over" },
+          { title: "Visual system", id: "fg-pivot" },
+          { title: "Trust and shipped scope", id: "fg-trust" },
         ]}
       />
 
@@ -243,64 +240,7 @@ export default async function FreshGreensPage() {
           </p>
         </div>
 
-        <div className="fg-safety-pair">
-          <figure className="fg-safety-visual">
-            <PhoneFrame variant="screenshot">
-              <Shot
-                name="safety-toolkit"
-                alt="The /safety toolkit modal opening with a navy safety Shield above the heading 'What's going on?' in Libre Franklin Regular, a 2x2 grid of Pulled-over, Roadside assistance, Unfamiliar area, and Share location, and a bottom Emergency panel that reaches a trusted contact or 911."
-              />
-            </PhoneFrame>
-            <figcaption className="fg-safety-visual-caption">
-              The Held-Question Rule in situ. <code>/safety</code>{" "}
-              opens on the driver&apos;s own question.
-            </figcaption>
-          </figure>
-
-          <figure className="fg-safety-visual">
-            <PhoneFrame variant="screenshot">
-              <Shot
-                name="pulled-over-guidance"
-                alt="The /pulled-over reassurance step: a discreet padlock at the top, 'We'll walk you through what to do' set in the reserved serif, then 'We've started recording for your safety' in muted body copy, a green Continue button, and a hint that a Trusted Contact is one step away."
-              />
-            </PhoneFrame>
-            <figcaption className="fg-safety-visual-caption">
-              <code>/pulled-over</code> opens on reassurance in the reserved
-              serif, one of the six emotional moments the app spends it on.
-              Recording has already started, quietly.
-            </figcaption>
-          </figure>
-        </div>
-
-        <div className="fg-safety-pair">
-          <figure className="fg-safety-visual">
-            <PhoneFrame variant="screenshot">
-              <Shot
-                name="pulled-over-armed"
-                alt="The /pulled-over armed question: 'Ok. Got it. Are you armed?' set in Libre Franklin Regular over three tap cards. Yes (I have a firearm, knife, or other weapon on me). No (I do not have a firearm, knife, or other weapon on me). Prefer not to answer."
-              />
-            </PhoneFrame>
-            <figcaption className="fg-safety-visual-caption">
-              The Held-Question in action. &quot;Are you armed?&quot; set in
-              Regular, with three composed options where a Bold prompt would
-              have read as an accusation.
-            </figcaption>
-          </figure>
-
-          <figure className="fg-safety-visual">
-            <PhoneFrame variant="screenshot">
-              <Shot
-                name="pulled-over-contact"
-                alt="The /pulled-over trusted contact screen: a red Recording indicator with a 00:01:07 timer, 'You're not alone.' in the reserved serif, body copy about trusted contacts being alerted and able to see current location, an initialed avatar for Brianna Agyemang, a green Call button, a Text button, and an underlined Review guidance link."
-              />
-            </PhoneFrame>
-            <figcaption className="fg-safety-visual-caption">
-              The one exception red is allowed to make: the recording indicator.
-              &quot;You&apos;re not alone.&quot; is another of the six serif
-              moments, and the trusted contact is one tap away.
-            </figcaption>
-          </figure>
-        </div>
+        <PulledOverJourney />
 
         <div className="project-section-body">
           <p>

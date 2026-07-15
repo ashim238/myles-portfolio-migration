@@ -547,20 +547,28 @@ html.project-enter-settling .project-page {
 }
 
 @media (min-width: 900px) {
-  .home-page .site-header {
+  .home-page .site-header,
+  .project-page .site-header {
     align-items: center;
     margin-bottom: 2.2rem;
   }
 
   .home-page .site-header-right,
-  .home-page .site-nav-list {
+  .home-page .site-nav-list,
+  .project-page .site-header-right,
+  .project-page .site-nav-list {
     flex-direction: row;
   }
 
-  .home-page .site-nav-list {
+  .home-page .site-nav-list,
+  .project-page .site-nav-list {
     display: flex;
     gap: 1.3rem;
     font-size: 0.94rem;
+  }
+
+  .project-page .site-header {
+    margin-bottom: 0;
   }
 }
 
@@ -3246,7 +3254,7 @@ button:focus-visible,
 .fg-section--wide .fg-palette,
 .fg-section--wide .fg-pivot,
 .fg-section--wide .fg-moderation,
-.fg-section--wide .fg-safety-pair {
+.fg-section--wide .fg-pulled-journey {
   max-width: min(52rem, 100%);
 }
 
@@ -3254,24 +3262,6 @@ button:focus-visible,
 .fg-section--wide .fg-safety-visual-caption {
   max-width: 60ch;
   margin-inline: auto;
-}
-
-/* Pulled-over: two safety flows finally read as a pair on desktop. */
-.fg-safety-pair {
-  display: grid;
-  gap: 1.8rem;
-  margin: 2.2rem 0 2.6rem;
-}
-@media (min-width: 820px) {
-  .fg-safety-pair {
-    grid-template-columns: 1fr 1fr;
-    gap: 2.8rem;
-    align-items: start;
-  }
-  .fg-safety-pair > .fg-safety-visual {
-    margin: 0;
-    max-width: none;
-  }
 }
 
 /* Illustration strip: was floating on transparent bg, now a warm-neutral
@@ -10077,30 +10067,38 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 
 /* ── Fresh Greens research synthesis exhibit ─────────── */
 .fg-synth { margin: 1.75rem 0 0; }
-.fg-synth-markers {
+.fg-synth-tabs {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.9rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
 }
-@media (max-width: 560px) {
-  .fg-synth-markers {
-    grid-template-columns: 1fr;
-  }
-}
-.fg-synth-marker {
-  border: 1px solid var(--line);
-  border-radius: 0.7rem;
-  padding: 1.1rem;
-  background: var(--surface);
-}
-.fg-synth-marker-head {
+.fg-synth-tab {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  margin-bottom: 0.55rem;
+  gap: 0.65rem;
+  min-height: 4.5rem;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.65rem;
+  background: var(--surface);
+  color: var(--foreground);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+.fg-synth-tab:hover {
+  border-color: var(--line-hover);
+}
+.fg-synth-tab:active {
+  transform: scale(0.98);
+}
+.fg-synth-tab[aria-selected="true"] {
+  border-color: color-mix(in srgb, var(--fg-accent) 68%, var(--line));
+  background: color-mix(in srgb, var(--fg-accent) 8%, var(--surface));
+}
+.fg-synth-tab-copy {
+  display: grid;
+  gap: 0.15rem;
 }
 .fg-synth-glyph {
   flex: none;
@@ -10111,18 +10109,37 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 .fg-synth-label {
   margin: 0;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 .fg-synth-count {
-  margin: 0 0 0 auto;
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 0.78rem;
   color: var(--fg-accent);
 }
+.fg-synth-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) auto minmax(12rem, 0.8fr);
+  align-items: center;
+  gap: 1.4rem;
+  min-height: 16rem;
+  margin-top: 0.75rem;
+  padding: clamp(1.1rem, 2.8vw, 2rem);
+  border: 1px solid var(--line);
+  border-radius: 0.8rem;
+  background: var(--surface);
+}
+.fg-synth-panel-label {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
 .fg-synth-insight {
   margin: 0 0 0.7rem;
-  font-size: 0.9rem;
-  line-height: 1.45;
+  font-size: 0.95rem;
+  line-height: 1.5;
   color: var(--muted);
 }
 .fg-synth-snippets {
@@ -10135,7 +10152,7 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 .fg-synth-snippets li {
   position: relative;
   padding-left: 0.9rem;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   line-height: 1.4;
   color: var(--foreground);
 }
@@ -10146,60 +10163,179 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
   top: 0.05em;
   color: color-mix(in srgb, var(--foreground) 32%, transparent);
 }
+.fg-synth-transform-arrow {
+  color: var(--fg-accent);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 1.2rem;
+}
+.fg-synth-response p:last-child,
+.fg-synth-community-response {
+  margin: 0;
+  font-size: clamp(1.2rem, 2.4vw, 1.65rem);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
 .fg-synth-community {
   margin-top: 0.9rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) auto minmax(12rem, 0.8fr);
+  align-items: center;
+  gap: 1.4rem;
   border: 1px solid color-mix(in srgb, var(--fg-accent) 55%, var(--line));
   border-radius: 0.9rem;
   padding: 1.1rem 1.25rem;
   background: color-mix(in srgb, var(--fg-accent) 7%, transparent);
 }
 .fg-synth-community .fg-synth-insight {
+  margin-bottom: 0;
   color: var(--foreground);
   font-size: 0.96rem;
 }
-.fg-synth-asked {
-  margin-top: 1.5rem;
+@media (prefers-reduced-motion: no-preference) {
+  .fg-synth-panel {
+    animation: fg-synth-panel-in 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
 }
-.fg-synth-asked-label {
-  margin: 0 0 0.65rem;
+@keyframes fg-synth-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+}
+@media (max-width: 720px) {
+  .fg-synth-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .fg-synth-panel,
+  .fg-synth-community {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .fg-synth-transform-arrow {
+    transform: rotate(90deg);
+  }
+  .fg-synth-panel {
+    min-height: 0;
+  }
+}
+
+/* ── Fresh Greens pulled-over decision sequence ───────── */
+.fg-pulled-journey {
+  margin: 2.2rem 0 2.6rem;
+}
+.fg-pulled-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin-bottom: 0.75rem;
+}
+.fg-pulled-tab {
+  display: grid;
+  gap: 0.25rem;
+  min-height: 4.25rem;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.65rem;
+  background: var(--surface);
+  color: var(--foreground);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+.fg-pulled-tab:hover {
+  border-color: var(--line-hover);
+}
+.fg-pulled-tab:active {
+  transform: scale(0.98);
+}
+.fg-pulled-tab[aria-selected="true"] {
+  border-color: color-mix(in srgb, var(--fg-accent) 68%, var(--line));
+  background: color-mix(in srgb, var(--fg-accent) 8%, var(--surface));
+}
+.fg-pulled-tab-number,
+.fg-pulled-state,
+.fg-pulled-progress {
   font-family: var(--font-mono), ui-monospace, monospace;
+}
+.fg-pulled-tab-number {
+  color: var(--fg-accent);
+  font-size: 0.7rem;
+}
+.fg-pulled-panel {
+  display: grid;
+  grid-template-columns: minmax(15rem, 0.8fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  min-height: 38rem;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  border: 1px solid var(--line);
+  border-radius: 0.85rem;
+  background: var(--surface);
+}
+.fg-pulled-phone {
+  width: min(100%, 18rem);
+  margin-inline: auto;
+}
+.fg-pulled-phone .fg-phone {
+  width: 100%;
+}
+.fg-pulled-copy {
+  display: grid;
+  align-content: center;
+}
+.fg-pulled-state {
+  margin: 0 0 0.9rem;
+  color: var(--fg-accent);
   font-size: 0.72rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--muted);
 }
-.fg-synth-asked ul {
+.fg-pulled-decision {
   margin: 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  gap: 0.7rem;
+  max-width: 18ch;
+  font-size: clamp(1.7rem, 4vw, 2.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
 }
-.fg-synth-asked-row {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 0.9rem;
-  align-items: center;
-}
-.fg-synth-asked-quote {
-  font-style: italic;
+.fg-pulled-detail {
+  margin: 1.2rem 0 0;
+  max-width: 34ch;
   color: var(--muted);
-  line-height: 1.4;
+  line-height: 1.55;
+  text-wrap: pretty;
 }
-.fg-synth-asked-arrow {
-  color: var(--fg-accent);
-  font-weight: 600;
+.fg-pulled-progress {
+  margin: 2rem 0 0;
+  color: var(--muted);
+  font-size: 0.72rem;
 }
-.fg-synth-asked-became {
-  font-weight: 600;
-}
-@media (max-width: 560px) {
-  .fg-synth-asked-row {
-    grid-template-columns: 1fr;
-    gap: 0.15rem;
+@media (prefers-reduced-motion: no-preference) {
+  .fg-pulled-panel {
+    animation: fg-pulled-panel-in 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
-  .fg-synth-asked-arrow {
-    display: none;
+}
+@keyframes fg-pulled-panel-in {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+}
+@media (max-width: 720px) {
+  .fg-pulled-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .fg-pulled-panel {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    gap: 1.5rem;
+  }
+  .fg-pulled-phone {
+    width: min(66vw, 17rem);
+  }
+  .fg-pulled-decision {
+    max-width: 22ch;
   }
 }
 

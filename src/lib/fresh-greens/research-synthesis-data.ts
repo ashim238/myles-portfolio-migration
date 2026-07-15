@@ -9,6 +9,7 @@ export type Cluster = {
   raisedBy: number; // of six
   insight: string;
   snippets: string[];
+  designResponse: string;
 };
 
 export const SYNTHESIS: Cluster[] = [
@@ -23,6 +24,7 @@ export const SYNTHESIS: Cluster[] = [
       "I wouldn't feel comfortable driving at night.",
       "The street lights were sparse.",
     ],
+    designResponse: "The daylight-graded route",
   },
   {
     key: "police",
@@ -35,6 +37,7 @@ export const SYNTHESIS: Cluster[] = [
       "If the app said there's cops here, we're going around that.",
       "Wallet out, phone out, everything visible.",
     ],
+    designResponse: "Police presence in the route score",
   },
   {
     key: "wildlife",
@@ -45,6 +48,7 @@ export const SYNTHESIS: Cluster[] = [
       "Deer at night, so I'd avoid those roads once evening hit.",
       "Deer-heavy areas.",
     ],
+    designResponse: "Wildlife warnings timed to dusk",
   },
   {
     key: "road",
@@ -57,18 +61,20 @@ export const SYNTHESIS: Cluster[] = [
       "A lot of places get flooded.",
       "I cared about road size and road quality.",
     ],
+    designResponse: "Road-condition markers along the route",
   },
   {
     key: "community",
     label: "Community knowledge",
     raisedBy: 5,
     insight:
-      "Drivers trust people over institutions. That is why community reports carry real weight in the routing, not a footnote next to the official data.",
+      "Five of six Black drivers described asking family or friends about an unfamiliar place before trusting institutional data.",
     snippets: [
       "I'd listen to family over the statistic. The powers that be aren't honest.",
       "For a new area, I'd ask friends who'd been there.",
       "I'd call someone who's already at the spot.",
     ],
+    designResponse: "Community reports weighted alongside public data",
   },
 ];
 
