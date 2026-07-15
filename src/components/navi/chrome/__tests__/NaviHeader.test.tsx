@@ -18,6 +18,18 @@ describe("NaviHeader", () => {
     );
   });
 
+  it("provides a shorter visual exit label for narrow screens", () => {
+    const { container } = render(<NaviHeader />);
+    const link = screen.getByRole("link", { name: "Return to case study" });
+    const wideLabel = container.querySelector(".nv-nav-back-wide");
+    const shortLabel = container.querySelector(".nv-nav-back-short");
+    expect(link).toHaveAttribute("href", "/work/navi");
+    expect(wideLabel).not.toBeNull();
+    expect(shortLabel).not.toBeNull();
+    expect(wideLabel!).toHaveTextContent("Return to case study");
+    expect(shortLabel!).toHaveTextContent("Case study");
+  });
+
   it("links to the system and demo surfaces", () => {
     render(<NaviHeader />);
     expect(screen.getByRole("link", { name: /system/i })).toHaveAttribute(

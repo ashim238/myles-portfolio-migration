@@ -8495,6 +8495,9 @@ button:focus-visible,
   padding-right: var(--nv-sp-md);
   border-right: 1px solid var(--nv-border);
 }
+.nv-nav-back-short {
+  display: none;
+}
 /* Animated underline that draws in from the left on hover/focus. Uses a
    scaleX pseudo-element rather than text-decoration so the line is GPU
    accelerated and the right edge stops at the text, not at the hairline. */
@@ -8619,13 +8622,17 @@ button:focus-visible,
 @media (max-width: 640px) {
   .nv-header {
     padding: var(--nv-sp-sm) var(--nv-sp-md);
+    gap: var(--nv-sp-xs);
   }
   /* The bottom tab bar carries Explore/Impact/System on mobile, so the header
      keeps the wordmark, the "Host an event" action the tab bar lacks, and the
      "Case study" up-link (the tab bar has no route back out of the demo). */
-  .nv-nav { gap: var(--nv-sp-sm); }
+  .nv-nav { min-width: 0; gap: var(--nv-sp-xs); }
   .nv-nav a:not(.nv-nav-host):not(.nv-nav-back) { display: none; }
   .nv-nav a.nv-nav-back { padding-right: 0; border-right: none; }
+  .nv-nav-back-wide { display: none; }
+  .nv-nav-back-short { display: inline; }
+  .nv-nav-host { padding: 6px 10px; }
 }
 
 /* ── Button ────────────────────────────────────────────────────── */
