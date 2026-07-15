@@ -92,14 +92,10 @@ export default async function NaviPage() {
 
       <ProjectToc
         sections={[
-          { title: "The concept: regenerative travel", id: "nv-intro" },
-          { title: "The first idea was a heatmap", id: "nv-heatmap" },
-          { title: "Surveying three user groups", id: "nv-research" },
-          { title: "What the data said", id: "nv-insights" },
-          { title: "From research to framework", id: "nv-framework" },
-          { title: "Building a system", id: "nv-system" },
-          { title: "See it in product", id: "nv-screens" },
-          { title: "What Navi proved", id: "nv-outcome" },
+          { title: "Concept and first direction", id: "nv-intro" },
+          { title: "Research pivot", id: "nv-research" },
+          { title: "Participation framework", id: "nv-framework" },
+          { title: "Product and outcome", id: "nv-screens" },
         ]}
       />
 

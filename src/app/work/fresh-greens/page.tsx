@@ -97,11 +97,9 @@ export default async function FreshGreensPage() {
       <ProjectToc
         sections={[
           { title: "Problem", id: "fg-problem" },
-          { title: "Research into route signals", id: "fg-research" },
-          { title: "Scoring and navigation", id: "fg-scoring" },
-          { title: "Safety interactions", id: "fg-pulled-over" },
-          { title: "Visual system", id: "fg-pivot" },
-          { title: "Trust and shipped scope", id: "fg-trust" },
+          { title: "Research and route scoring", id: "fg-research" },
+          { title: "Safety interaction", id: "fg-pulled-over" },
+          { title: "Visual system, trust, and scope", id: "fg-pivot" },
         ]}
       />
 

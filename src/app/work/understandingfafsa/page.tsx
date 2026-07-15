@@ -92,13 +92,10 @@ export default async function UnderstandingFafsaPage() {
 
       <ProjectToc
         sections={[
-          { title: "Where it started: a rebranded site, a dated newsletter.", id: "uf-context" },
-          { title: "Where the old template broke down.", id: "uf-problem" },
-          { title: "Auditing 120 newsletters against four criteria.", id: "uf-audit" },
-          { title: "Designing one skeleton for three kinds of sends.", id: "uf-templates" },
-          { title: "The core decision: locked layers, swappable parts.", id: "uf-locked" },
-          { title: "Rebuilding it in Mailchimp.", id: "uf-figma" },
-          { title: "The results: open rates after the first send.", id: "uf-results" },
+          { title: "Context and problem", id: "uf-context" },
+          { title: "Newsletter audit", id: "uf-audit" },
+          { title: "Template system", id: "uf-templates" },
+          { title: "Mailchimp build and results", id: "uf-figma" },
         ]}
       />
 
