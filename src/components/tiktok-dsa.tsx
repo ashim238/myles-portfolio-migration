@@ -8,9 +8,8 @@ import {
   type CSSProperties,
 } from "react";
 import { ExpandableImage } from "@/components/expandable-image";
-import { AESTHETICS } from "@/lib/tiktok-data";
 
-export { AESTHETICS };
+export { AESTHETICS } from "@/lib/tiktok-data";
 
 /* ──────────────────────────────────────────
    Copy-to-clipboard hook
@@ -178,12 +177,6 @@ export function HeroThreePhones() {
 }
 
 /* ──────────────────────────────────────────
-   System overview band
-   9 swatches in a 3-row by 3-column preview.
-   Hex label appears on hover/focus.
-   ────────────────────────────────────────── */
-
-/* ──────────────────────────────────────────
    Template anatomy
    The real grid Myles built against — preserved
    as a photographic artifact with original
@@ -331,164 +324,5 @@ export function AestheticShowcaseCard({
         <blockquote className="tt-aesthetic-feedback">{feedback}</blockquote>
       </div>
     </article>
-  );
-}
-
-/* ──────────────────────────────────────────
-   American Eagle outcome card
-   Scroll-triggered fade + scale entrance.
-   prefers-reduced-motion: static.
-   ────────────────────────────────────────── */
-
-export function OutcomeCard() {
-  const ref = useRef<HTMLElement | null>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      el.classList.add("tt-outcome--visible");
-      return;
-    }
-
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.classList.add("tt-outcome--visible");
-          io.disconnect();
-        }
-      },
-      { threshold: 0.3 },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  return (
-    <article ref={ref} className="tt-outcome">
-      <div className="tt-outcome-text">
-        <p className="tt-outcome-headline">
-          American Eagle adopted the Light Academia template.
-        </p>
-        <p className="tt-outcome-sub">Shipped via TikTok DSA, 2021.</p>
-      </div>
-      <div className="tt-outcome-image">
-        <ExpandableImage
-          src="/projects/tiktok/shipped-light-academia-in-hand.png"
-          alt="The Light Academia template shown on a phone held in-hand. The version American Eagle adopted."
-          width={1200}
-          height={800}
-          sizes="(max-width: 768px) 92vw, 620px"
-          priority
-          style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.5rem" }}
-        />
-      </div>
-    </article>
-  );
-}
-
-/* ──────────────────────────────────────────
-   DSA lineage timeline
-   Three-node horizontal timeline SVG.
-   Matches the Geist Mono + line-only language
-   used in the Fresh Greens architecture diagram.
-   ────────────────────────────────────────── */
-
-const TIMELINE_NODES = [
-  { year: "2021", label: "DSA launches", detail: "30+ templates introduced" },
-  { year: "2023", label: "Migration", detail: "Mechanics move to Video Shopping Ads" },
-  { year: "2026", label: "Smart+ Catalog Ads", detail: "Modular-template logic continues" },
-] as const;
-
-export function LineageTimeline() {
-  return (
-    <figure className="tt-timeline" aria-label="DSA feature lineage">
-      <div className="tt-timeline-track">
-        {TIMELINE_NODES.map((n, i) => (
-          <div key={n.year} className="tt-timeline-node">
-            <span className="tt-timeline-dot" aria-hidden="true" />
-            {i < TIMELINE_NODES.length - 1 && (
-              <span className="tt-timeline-connector" aria-hidden="true" />
-            )}
-            <p className="tt-timeline-year">{n.year}</p>
-            <p className="tt-timeline-label">{n.label}</p>
-            <p className="tt-timeline-detail">{n.detail}</p>
-          </div>
-        ))}
-      </div>
-      <figcaption>
-        The template-from-catalog mechanic I contributed to still ships
-        under a different product name today.
-      </figcaption>
-    </figure>
-  );
-}
-
-/* ──────────────────────────────────────────
-   Console hello
-   A quiet message for anyone reading source.
-   ────────────────────────────────────────── */
-
-export function ConsoleHello() {
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const key = "tt-hello-shown";
-    if (sessionStorage.getItem(key)) return;
-    sessionStorage.setItem(key, "1");
-    console.log(
-      "%cIf you're reading the source, that's flattering. Reach me at ashim238@newschool.edu. Myles",
-      "color: #6aab7e; font-family: ui-monospace, monospace; font-size: 12px; padding: 4px 0;",
-    );
-  }, []);
-  return null;
-}
-
-export function SystemOverviewBand() {
-  const { copied, copy } = useCopyToClipboard();
-  return (
-    <figure className="tt-overview" aria-label="Color system across three aesthetics">
-      <span className="sr-only" aria-live="polite" aria-atomic="true">
-        {copied ? `Copied ${copied} to clipboard` : ""}
-      </span>
-      {AESTHETICS.map((a) => (
-        <div key={a.key} className="tt-overview-row">
-          <p className="tt-overview-label">{a.internalLabel}</p>
-          <ul className="tt-overview-swatches" role="list">
-            {a.palette.map((p) => (
-              <li key={p.hex} className="tt-overview-swatch-wrap">
-                <button
-                  type="button"
-                  className={`tt-overview-swatch${copied === p.hex ? " tt-overview-swatch--copied" : ""}`}
-                  onClick={() => copy(p.hex)}
-                  title={`Copy ${p.hex} (${p.label})`}
-                  aria-label={`Copy hex ${p.hex} for ${p.label}`}
-                >
-                  <span style={{ background: p.hex }} aria-hidden="true">
-                    <span className="tt-overview-check" aria-hidden="true">
-                      <svg viewBox="0 0 16 16" width="16" height="16">
-                        <path
-                          d="M3 8.5L6.5 12L13 4.5"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </span>
-                  </span>
-                  <span className="tt-overview-meta">
-                    <span className="tt-overview-name">{p.label}</span>
-                    <span className="tt-overview-hex-label">
-                      {copied === p.hex ? "Copied" : p.hex}
-                    </span>
-                  </span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </figure>
   );
 }
