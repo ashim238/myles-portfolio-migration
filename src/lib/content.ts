@@ -3,8 +3,9 @@ import path from "node:path";
 import matter from "gray-matter";
 import { marked } from "marked";
 import sharp from "sharp";
+import { parseProjectStatus } from "@/lib/project-status.mjs";
 
-export type ProjectStatus = "published" | "draft" | "hidden";
+export type ProjectStatus = ReturnType<typeof parseProjectStatus>;
 
 export type ProjectImage = {
   src: string;
@@ -154,9 +155,7 @@ async function parseProjectSections(
 async function parseProjectFrontmatter(
   data: Record<string, unknown>,
 ): Promise<ProjectFrontmatter> {
-  const rawStatus = String(data.status ?? "").toLowerCase();
-  const status: ProjectStatus =
-    rawStatus === "hidden" ? "hidden" : rawStatus === "draft" ? "draft" : "published";
+  const status = parseProjectStatus(data.status);
 
   const project = {
     slug: String(data.slug ?? ""),

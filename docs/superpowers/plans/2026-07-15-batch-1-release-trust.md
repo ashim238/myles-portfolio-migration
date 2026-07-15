@@ -118,28 +118,52 @@ git commit -m "fix: patch Next.js security advisory"
 Create `src/lib/__tests__/content-status.test.ts`:
 
 ```ts
-import { describe, expect, it } from "vitest";
-import {
-  PROJECT_STATUSES,
-  parseProjectStatus,
-} from "@/lib/project-status.mjs";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+const fixture = vi.hoisted(() => ({ source: "" }));
+vi.mock("node:fs/promises", () => ({
+  default: {
+    readdir: async () => ["fixture.md"],
+    readFile: async () => fixture.source,
+  },
+}));
+
+import { getAllProjects } from "@/lib/content";
+
+function projectSource(status: string) {
+  return `---
+slug: fixture
+title: Fixture
+summary: Fixture summary
+role: Product Designer
+timeframe: 2026
+status: ${status}
+order: 1
+tags: []
+sections: []
+---`;
+}
 
 describe("project status contract", () => {
-  it("accepts the three supported visibility states", () => {
-    expect(PROJECT_STATUSES).toEqual(["published", "draft", "hidden"]);
-    for (const status of PROJECT_STATUSES) {
-      expect(parseProjectStatus(status)).toBe(status);
-    }
+  beforeEach(() => {
+    fixture.source = "";
   });
 
-  it.each([undefined, null, "", "private", "Published"])(
-    "rejects unsupported status %s",
-    (status) => {
-      expect(() => parseProjectStatus(status)).toThrow(
-        "Project status must be published, draft, or hidden",
-      );
+  it.each(["published", "draft", "hidden"] as const)(
+    "accepts %s",
+    async (status) => {
+      fixture.source = projectSource(status);
+      const [project] = await getAllProjects();
+      expect(project.status).toBe(status);
     },
   );
+
+  it("rejects an unknown status instead of publishing it", async () => {
+    fixture.source = projectSource("private");
+    await expect(getAllProjects()).rejects.toThrow(
+      "Project status must be published, draft, or hidden",
+    );
+  });
 });
 ```
 
@@ -151,7 +175,7 @@ Run:
 npm test -- src/lib/__tests__/content-status.test.ts
 ```
 
-Expected: FAIL because `@/lib/project-status.mjs` does not exist.
+Expected: three valid-state cases pass and the unknown-state case FAILS because the current loader silently returns `published`.
 
 - [ ] **Step 3: Add the shared strict parser**
 
