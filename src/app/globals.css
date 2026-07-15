@@ -10423,36 +10423,34 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 
 /* ══════════════════════════════════════════════════════════════════
    Fresh Greens · Daylight-arc ToC (overdrive)
-   The ToC traces a dawn-to-night arc across the case's nine sections.
+   The ToC traces a dawn-to-night arc across the case's four chapters.
    No prior knowledge required — a first-time viewer scrolling the case
-   just feels time passing as they read. When they later reach §6 and
-   learn the app uses a daylight-graded route, the metaphor snaps into
+   just feels time passing as they read. When they reach the visual system
+   and learn the app uses a daylight-graded route, the metaphor snaps into
    place retroactively: the reading was the drive.
 
-     §1 Problem       → sunrise orange
-     §2 Research      → morning gold
-     §3 Scoring       → bright morning
-     §4 Pulled-over   → peak-sun coral
-     §5 Design pivot  → afternoon warm
-     §6 Type & color  → sunset rose
-     §7 Reserved      → dusk purple
-     §8 Trust         → evening indigo
-     §9 Scope         → night navy
+     §1 Problem                           → sunrise orange
+     §2 Research and route scoring        → daylight gold
+     §3 Safety interaction                → late-day alert warmth
+     §4 Visual system, trust, and scope   → night navy
 
    Reduced-motion safe; segment fills track scroll position with no
    easing.
    ══════════════════════════════════════════════════════════════════ */
 
 /* ── Section colors, arranged as a dawn → night arc ──────────────── */
+.fg-page {
+  --fg-toc-night: #5559A8;
+}
+
+:root[data-theme="light"] .fg-page {
+  --fg-toc-night: #1B1E4B;
+}
+
 .fg-page .project-toc-item:nth-child(1) { --seg-color: #F09456; } /* sunrise orange     */
-.fg-page .project-toc-item:nth-child(2) { --seg-color: #F9C048; } /* morning gold       */
-.fg-page .project-toc-item:nth-child(3) { --seg-color: #FDD350; } /* bright morning     */
-.fg-page .project-toc-item:nth-child(4) { --seg-color: #EA6D3C; } /* peak-sun coral     */
-.fg-page .project-toc-item:nth-child(5) { --seg-color: #C74757; } /* afternoon warm     */
-.fg-page .project-toc-item:nth-child(6) { --seg-color: #A03E7C; } /* sunset rose        */
-.fg-page .project-toc-item:nth-child(7) { --seg-color: #664188; } /* dusk purple        */
-.fg-page .project-toc-item:nth-child(8) { --seg-color: #3B3878; } /* evening indigo     */
-.fg-page .project-toc-item:nth-child(9) { --seg-color: #1B1E4B; } /* night navy         */
+.fg-page .project-toc-item:nth-child(2) { --seg-color: #FDD350; } /* daylight gold      */
+.fg-page .project-toc-item:nth-child(3) { --seg-color: #C74757; } /* late-day alert     */
+.fg-page .project-toc-item:nth-child(4) { --seg-color: var(--fg-toc-night); } /* night navy */
 
 .fg-page .project-toc-rail::after {
   background: var(--seg-color, var(--toc-fill));
@@ -10471,22 +10469,17 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 /* Mobile / tablet progress hairline: paint the full daylight arc behind,
    then use a mask to reveal only the portion the reader has scrolled
    through. As they scroll the bar drifts from dawn orange through peak
-   sun to night navy — same journey the desktop rails trace, drawn as a
-   continuous horizon. */
+   alert warmth to night navy — the same four-stage journey the desktop
+   rails trace, drawn as a continuous horizon. */
 .fg-page .project-toc-progress {
   transform: none;
   width: 100%;
   background: linear-gradient(
     to right,
-    #F09456 0 11.11%,
-    #F9C048 11.11% 22.22%,
-    #FDD350 22.22% 33.33%,
-    #EA6D3C 33.33% 44.44%,
-    #C74757 44.44% 55.55%,
-    #A03E7C 55.55% 66.66%,
-    #664188 66.66% 77.77%,
-    #3B3878 77.77% 88.88%,
-    #1B1E4B 88.88% 100%
+    #F09456 0% 25%,
+    #FDD350 25% 50%,
+    #C74757 50% 75%,
+    var(--fg-toc-night) 75% 100%
   );
   -webkit-mask: linear-gradient(
     to right,
