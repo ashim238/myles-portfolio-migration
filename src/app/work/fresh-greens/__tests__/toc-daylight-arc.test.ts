@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const stylesheet = readFileSync(
-  resolve(process.cwd(), "src/app/globals.css"),
+  resolve(process.cwd(), "src/app/styles/late-polish.css"),
   "utf8",
 );
 

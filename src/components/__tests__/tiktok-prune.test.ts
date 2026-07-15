@@ -8,7 +8,10 @@ import { join, resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const componentPath = resolve(process.cwd(), "src/components/tiktok-dsa.tsx");
-const stylesheetPath = resolve(process.cwd(), "src/app/globals.css");
+const stylesheetPath = resolve(
+  process.cwd(),
+  "src/app/styles/portfolio-surfaces.css",
+);
 const pagePath = resolve(process.cwd(), "src/app/work/tiktok/page.tsx");
 const assetDirectory = resolve(process.cwd(), "public/projects/tiktok");
 const coverBlobDirectory = join(assetDirectory, "cover-blobs");

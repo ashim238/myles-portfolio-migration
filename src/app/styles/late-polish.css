@@ -1,0 +1,1083 @@
+/* ───────────────────────────────────────────────────────────────
+   Motion-play: scroll-driven section reveals (native, progressive)
+   Case-study sections rise + fade as they scroll into view. Pure CSS
+   scroll-driven animation — no JS, no library. Double-gated so content
+   is always visible by default: only animates where the browser
+   supports view() timelines AND the user allows motion. Because view()
+   is scroll-position-based (not time-based), sections already on screen
+   render at their correct progress immediately — no above-the-fold flash.
+   ─────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .project-page .project-section {
+      animation: sectionReveal linear both;
+      animation-timeline: view();
+      animation-range: entry 2% cover 16%;
+    }
+  }
+}
+
+@keyframes sectionReveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────
+   Motion-play: native View Transitions between case studies
+   Only runs when TransitionLink calls document.startViewTransition
+   (the "More work" cards). The homepage→case-study FLIP and ordinary
+   nav links never trigger these pseudos, so there is no conflict.
+   Reduced motion is handled in JS (TransitionLink falls back to a
+   plain push), and guarded again here.
+   ─────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: vtLeave 240ms cubic-bezier(0.4, 0, 1, 1) both;
+  }
+  ::view-transition-new(root) {
+    animation: vtEnter 420ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  }
+
+  /* Shared elements: the hero cover and title are lifted out of the root
+     crossfade and given their own view-transition group, so between two case
+     studies they morph (position + size interpolate, contents crossfade)
+     instead of blinking. Each case study has exactly one of each, so the names
+     stay unique. Navigating somewhere without them (e.g. back home) just fades
+     the old one out — no special-casing needed. */
+  .project-cover-image {
+    view-transition-name: project-cover;
+  }
+  .project-hero-title {
+    view-transition-name: project-title;
+  }
+
+  ::view-transition-group(project-cover),
+  ::view-transition-group(project-title) {
+    animation-duration: 460ms;
+    animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+}
+
+@keyframes vtLeave {
+  to {
+    opacity: 0;
+    transform: scale(0.985);
+  }
+}
+
+@keyframes vtEnter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────
+   Motion-play: 3D device block (Fresh Greens)
+   ─────────────────────────────────────────────────────────────── */
+.device-3d {
+  margin-top: 2.2rem;
+}
+
+.device-3d-stage {
+  position: relative;
+  width: 100%;
+  height: clamp(440px, 62vh, 660px);
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.device-3d-stage:active {
+  cursor: grabbing;
+}
+
+.device-3d-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 0.4rem;
+  transform: translateX(-50%);
+  margin: 0;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.device-3d-flat {
+  display: flex;
+  justify-content: center;
+}
+
+.device-3d-flat-img {
+  width: auto;
+  max-height: clamp(440px, 62vh, 660px);
+  border-radius: var(--rounded-lg, 1rem);
+}
+
+/* ── Scroll-reveal IntersectionObserver fallback (Firefox) ──────── */
+@supports not (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .project-page .project-section,
+    .project-highlight,
+    .project-work-jump > h2,
+    .project-work-jump-list > li,
+    .play-entry,
+    .about-detail,
+    .resume-detail,
+    .home-page .about,
+    .footer,
+    .fg-features-heading,
+    .fg-features-grid > *,
+    .nv-build-layer,
+    .nv-persona-grid > * {
+      opacity: 0;
+      transform: translateY(1.2rem);
+      transition: opacity 480ms cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .project-page .project-section.sr-revealed,
+    .project-highlight.sr-revealed,
+    .project-work-jump > h2.sr-revealed,
+    .project-work-jump-list > li.sr-revealed,
+    .play-entry.sr-revealed,
+    .about-detail.sr-revealed,
+    .resume-detail.sr-revealed,
+    .home-page .about.sr-revealed,
+    .footer.sr-revealed,
+    .fg-features-heading.sr-revealed,
+    .fg-features-grid > .sr-revealed,
+    .nv-build-layer.sr-revealed,
+    .nv-persona-grid > .sr-revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* ── Navi demo embed ───────────────────────────────────────────── */
+.nv-demo-embed {
+  margin-top: 1.5rem;
+  border-radius: 0.7rem;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--surface, #fafafa);
+}
+.nv-demo-embed-chrome {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--foreground) 4%, var(--background));
+}
+.nv-demo-embed-dots {
+  display: flex;
+  gap: 6px;
+}
+.nv-demo-embed-dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--line);
+}
+.nv-demo-embed-url {
+  flex: 1;
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.nv-demo-embed-viewport {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+.nv-demo-embed-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+.nv-demo-embed-fallback {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.nv-demo-embed-fallback img {
+  object-fit: cover;
+  object-position: top left;
+  width: 100%;
+  height: 100%;
+}
+.nv-demo-embed-mobile-cta {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--background) 50%, transparent);
+  backdrop-filter: blur(4px);
+  color: var(--foreground);
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-decoration: none;
+}
+.nv-demo-embed-skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2.5rem 2rem;
+}
+.nv-demo-embed-skeleton-bar {
+  height: 1rem;
+  width: 60%;
+  border-radius: 0.35rem;
+  background: color-mix(in srgb, var(--foreground) 8%, transparent);
+  animation: nvSkeletonPulse 1.6s ease-in-out infinite;
+}
+.nv-demo-embed-skeleton-bar--short {
+  width: 35%;
+}
+@keyframes nvSkeletonPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.nv-demo-embed-cta {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+
+/* Case-study highlight: load-bearing phrase per section. Default state is
+   fully visible; observer swaps to the animated sweep once mounted. */
+
+mark.case-highlight {
+  background-color: color-mix(in srgb, var(--case-highlight-color, var(--foreground)) var(--case-highlight-opacity, 14%), transparent);
+  color: inherit;
+  padding: 0.05em 0.22em;
+  border-radius: 0.35rem;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+main[data-project-slug="fresh-greens"] {
+  --case-highlight-color: var(--fg-accent);
+  --case-highlight-opacity: 14%;
+}
+main[data-project-slug="navi"] {
+  --case-highlight-color: var(--nv-accent);
+  --case-highlight-opacity: 14%;
+}
+main[data-project-slug="understandingfafsa"] {
+  --case-highlight-color: var(--uf-accent-highlight, #f2b544);
+  --case-highlight-opacity: 22%;
+}
+main[data-project-slug="tiktok"] {
+  --case-highlight-color: var(--tt-magenta, #fe2c55);
+  --case-highlight-opacity: 16%;
+}
+
+/* Default reveal (Navi): the neighborhood-mapping sweep. */
+main[data-highlight-anim-ready] mark.case-highlight {
+  background-color: transparent;
+  background-image: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--case-highlight-color, var(--foreground)) var(--case-highlight-opacity, 14%), transparent),
+    color-mix(in srgb, var(--case-highlight-color, var(--foreground)) var(--case-highlight-opacity, 14%), transparent)
+  );
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  background-position: 0 0;
+  transition: background-size 720ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+main[data-highlight-anim-ready] mark.case-highlight.is-revealed {
+  background-size: 100% 100%;
+}
+
+/* Fresh Greens: fade-under. The mark's color settles under the type
+   instead of sweeping across it. Register-matching: calm companion. */
+main[data-project-slug="fresh-greens"][data-highlight-anim-ready] mark.case-highlight {
+  background-image: none;
+  background-size: auto;
+  background-color: transparent;
+  transition: background-color 640ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+main[data-project-slug="fresh-greens"][data-highlight-anim-ready] mark.case-highlight.is-revealed {
+  background-color: color-mix(in srgb, var(--case-highlight-color) var(--case-highlight-opacity), transparent);
+}
+
+/* UnderstandingFAFSA: highlighter-slash. Faster and sharper so the
+   sweep reads as a marker drag on paper, on-theme for the newsletter. */
+main[data-project-slug="understandingfafsa"][data-highlight-anim-ready] mark.case-highlight {
+  transition: background-size 420ms cubic-bezier(0.42, 0, 0.15, 1);
+}
+
+/* Marker character for the FAFSA stroke: a 100deg gradient slants both
+   tips the way an angled felt tip does, and the ink lays down heavier
+   where the drag starts (30% -> 22% -> 17%). Declared after the animated
+   rules so its background-image wins for FAFSA while background-size
+   still comes from the shared sweep. With no JS the gradient paints at
+   the default auto size, so the base state stays fully visible. */
+main[data-project-slug="understandingfafsa"] mark.case-highlight {
+  background-color: transparent;
+  background-image: linear-gradient(
+    100deg,
+    transparent 0,
+    color-mix(in srgb, var(--case-highlight-color) 30%, transparent) 0.4em,
+    color-mix(in srgb, var(--case-highlight-color) 22%, transparent) 55%,
+    color-mix(in srgb, var(--case-highlight-color) 17%, transparent) calc(100% - 0.4em),
+    transparent 100%
+  );
+  background-repeat: no-repeat;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main[data-highlight-anim-ready] mark.case-highlight,
+  main[data-project-slug="fresh-greens"][data-highlight-anim-ready] mark.case-highlight,
+  main[data-project-slug="understandingfafsa"][data-highlight-anim-ready] mark.case-highlight {
+    background-size: 100% 100%;
+    transition: none;
+  }
+  /* Only the fade-under variant paints via background-color. Setting it on
+     the gradient variants too would stack tint on gradient and render the
+     reduced-motion highlight at double strength. */
+  main[data-project-slug="fresh-greens"][data-highlight-anim-ready] mark.case-highlight {
+    background-color: color-mix(in srgb, var(--case-highlight-color) var(--case-highlight-opacity), transparent);
+  }
+}
+
+
+
+/* ── Case-study readability: recruiter cut + landmarks ──────────── */
+.case-lead-media { margin: 1.6rem 0 2rem; border-radius: 0.7rem; overflow: hidden; border: 1px solid var(--line); }
+.case-lead-img, .case-lead-video { display: block; width: 100%; height: auto; }
+
+.case-cut { margin: 0 0 2.2rem; display: grid; gap: 1.4rem; max-width: 70ch; }
+.case-cut-facts { margin: 0; display: grid; gap: 0.6rem; }
+.case-cut-row { display: grid; grid-template-columns: 120px 1fr; gap: 1rem; align-items: baseline; }
+@media (max-width: 560px) { .case-cut-row { grid-template-columns: 1fr; gap: 0.1rem; } }
+.case-cut-row dt { font-family: var(--font-geist-mono); font-size: 0.72rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted); margin: 0; }
+.case-cut-row dd { margin: 0; color: var(--foreground); font-size: 1rem; line-height: 1.5; }
+.case-cut-metric { font-weight: 600; font-variant-numeric: tabular-nums; }
+.case-cut-outcome dd { font-size: 1.05rem; }
+.case-cut-moves-label { font-family: var(--font-geist-mono); font-size: 0.72rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted); margin: 0 0 0.5rem; }
+.case-cut-moves ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+.case-cut-moves li { position: relative; padding-left: 1.7rem; color: var(--foreground);
+  font-size: 1rem; line-height: 1.55; }
+.case-cut-moves li::before { content: "→"; position: absolute; left: 0; color: var(--muted); }
+
+.case-tier-divider { display: flex; align-items: center; gap: 1rem; margin: 2.6rem 0 2rem; color: var(--muted); }
+.case-tier-divider::before, .case-tier-divider::after { content: ""; height: 1px; background: var(--line); flex: 1; }
+.case-tier-divider span { font-family: var(--font-geist-mono); font-size: 0.72rem; letter-spacing: 0.1em;
+  text-transform: uppercase; white-space: nowrap; }
+
+.case-section-lead { margin: 0 0 1rem; font-size: 1.08rem; line-height: 1.5; font-weight: 600;
+  color: var(--foreground); text-wrap: pretty; max-width: 68ch; }
+/* Pull-quote: the one designed pause. Instrument Serif italic (paired with
+   Instrument Sans by lineage), display scale, with a hanging opening mark. */
+.case-pullquote { position: relative; margin: 2.9rem 0; padding: 0; border: 0; max-width: 28ch;
+  font-family: var(--font-quote), Georgia, serif; font-style: normal; font-weight: 400;
+  font-size: clamp(1.9rem, 4.2vw, 2.9rem); line-height: 1.2; letter-spacing: -0.01em;
+  color: var(--foreground); text-wrap: balance; }
+.case-pullquote::before { content: "\201C"; display: block;
+  font-family: var(--font-quote), Georgia, serif; font-style: normal;
+  font-size: 2.7em; line-height: 0.75;
+  color: color-mix(in srgb, var(--foreground) 22%, transparent);
+  margin: 0 0 -0.4rem -0.02em; }
+
+/* Type pass: cap the case-study prose measure for comfortable reading */
+.project-section-body { max-width: 68ch; }
+.project-section-body p { text-wrap: pretty; }
+
+/* ── Fresh Greens research synthesis exhibit ─────────── */
+.fg-synth { margin: 1.75rem 0 0; }
+.fg-synth-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+.fg-synth-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 4.5rem;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.65rem;
+  background: var(--surface);
+  color: var(--foreground);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+.fg-synth-tab:hover {
+  border-color: var(--line-hover);
+}
+.fg-synth-tab:active {
+  transform: scale(0.98);
+}
+.fg-synth-tab[aria-selected="true"] {
+  border-color: color-mix(in srgb, var(--fg-accent) 68%, var(--line));
+  background: color-mix(in srgb, var(--fg-accent) 8%, var(--surface));
+}
+.fg-synth-tab-copy {
+  display: grid;
+  gap: 0.15rem;
+}
+.fg-synth-glyph {
+  flex: none;
+  opacity: 0.9;
+  width: 1.6rem;
+  height: 1.6rem;
+}
+.fg-synth-label {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.fg-synth-count {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.78rem;
+  color: var(--fg-accent);
+}
+.fg-synth-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) auto minmax(12rem, 0.8fr);
+  align-items: center;
+  gap: 1.4rem;
+  min-height: 16rem;
+  margin-top: 0.75rem;
+  padding: clamp(1.1rem, 2.8vw, 2rem);
+  border: 1px solid var(--line);
+  border-radius: 0.8rem;
+  background: var(--surface);
+}
+.fg-synth-panel-label {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.fg-synth-insight {
+  margin: 0 0 0.7rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.fg-synth-snippets {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.35rem;
+}
+.fg-synth-snippets li {
+  position: relative;
+  padding-left: 0.9rem;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: var(--foreground);
+}
+.fg-synth-snippets li::before {
+  content: "\201C";
+  position: absolute;
+  left: 0;
+  top: 0.05em;
+  color: color-mix(in srgb, var(--foreground) 32%, transparent);
+}
+.fg-synth-transform-arrow {
+  color: var(--fg-accent);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 1.2rem;
+}
+.fg-synth-response p:last-child,
+.fg-synth-community-response {
+  margin: 0;
+  font-size: clamp(1.2rem, 2.4vw, 1.65rem);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.fg-synth-community {
+  margin-top: 0.9rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) auto minmax(12rem, 0.8fr);
+  align-items: center;
+  gap: 1.4rem;
+  border: 1px solid color-mix(in srgb, var(--fg-accent) 55%, var(--line));
+  border-radius: 0.9rem;
+  padding: 1.1rem 1.25rem;
+  background: color-mix(in srgb, var(--fg-accent) 7%, transparent);
+}
+.fg-synth-community .fg-synth-insight {
+  margin-bottom: 0;
+  color: var(--foreground);
+  font-size: 0.96rem;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .fg-synth-panel {
+    animation: fg-synth-panel-in 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+@keyframes fg-synth-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+}
+@media (max-width: 720px) {
+  .fg-synth-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .fg-synth-panel,
+  .fg-synth-community {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .fg-synth-transform-arrow {
+    transform: rotate(90deg);
+  }
+  .fg-synth-panel {
+    min-height: 0;
+  }
+}
+
+/* ── Fresh Greens pulled-over decision sequence ───────── */
+.fg-pulled-journey {
+  margin: 2.2rem 0 2.6rem;
+}
+.fg-pulled-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin-bottom: 0.75rem;
+}
+.fg-pulled-tab {
+  display: grid;
+  gap: 0.25rem;
+  min-height: 4.25rem;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 0.65rem;
+  background: var(--surface);
+  color: var(--foreground);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+.fg-pulled-tab:hover {
+  border-color: var(--line-hover);
+}
+.fg-pulled-tab:active {
+  transform: scale(0.98);
+}
+.fg-pulled-tab[aria-selected="true"] {
+  border-color: color-mix(in srgb, var(--fg-accent) 68%, var(--line));
+  background: color-mix(in srgb, var(--fg-accent) 8%, var(--surface));
+}
+.fg-pulled-tab-number,
+.fg-pulled-state,
+.fg-pulled-progress {
+  font-family: var(--font-mono), ui-monospace, monospace;
+}
+.fg-pulled-tab-number {
+  color: var(--fg-accent);
+  font-size: 0.7rem;
+}
+.fg-pulled-panel {
+  display: grid;
+  grid-template-columns: minmax(15rem, 0.8fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  min-height: 38rem;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  border: 1px solid var(--line);
+  border-radius: 0.85rem;
+  background: var(--surface);
+}
+.fg-pulled-phone {
+  width: min(100%, 18rem);
+  margin-inline: auto;
+}
+.fg-pulled-phone .fg-phone {
+  width: 100%;
+}
+.fg-pulled-copy {
+  display: grid;
+  align-content: center;
+}
+.fg-pulled-state {
+  margin: 0 0 0.9rem;
+  color: var(--fg-accent);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.fg-pulled-decision {
+  margin: 0;
+  max-width: 18ch;
+  font-size: clamp(1.7rem, 4vw, 2.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+.fg-pulled-detail {
+  margin: 1.2rem 0 0;
+  max-width: 34ch;
+  color: var(--muted);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+.fg-pulled-progress {
+  margin: 2rem 0 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .fg-pulled-panel {
+    animation: fg-pulled-panel-in 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+@keyframes fg-pulled-panel-in {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+}
+@media (max-width: 720px) {
+  .fg-pulled-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .fg-pulled-panel {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    gap: 1.5rem;
+  }
+  .fg-pulled-phone {
+    width: min(66vw, 17rem);
+  }
+  .fg-pulled-decision {
+    max-width: 22ch;
+  }
+}
+
+.fg-lofi {
+  margin: 2.2rem 0 2.6rem;
+}
+.fg-lofi img {
+  border-radius: 0.9rem;
+  border: 1px solid var(--line);
+}
+
+/* ── Fresh Greens design-token exhibit ───────────────── */
+.fg-token-figure {
+  margin: 2.2rem 0 0;
+}
+.fg-tokens {
+  margin: 0 0 0.9rem;
+  display: grid;
+  gap: 2rem;
+}
+.fg-tokens-lane-label {
+  margin: 0 0 1rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Color: swatches grouped by the job they do */
+.fg-swatch-groups {
+  display: grid;
+  gap: 1.5rem;
+}
+.fg-swatch-group-label {
+  margin: 0 0 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--foreground);
+}
+.fg-swatches {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  gap: 0.9rem;
+}
+.fg-swatch {
+  display: grid;
+  gap: 0.2rem;
+  align-content: start;
+}
+.fg-swatch-chip {
+  height: 3.25rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.35rem;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--foreground) 14%, transparent);
+}
+.fg-swatch-name {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.8rem;
+  color: var(--foreground);
+}
+.fg-swatch-hex {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.fg-swatch-role {
+  font-size: 0.8rem;
+  line-height: 1.35;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+/* Spacing ramp */
+.fg-tokens-spacing {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+  max-width: 30rem;
+}
+.fg-token-space {
+  display: grid;
+  grid-template-columns: 2.4rem 1fr 2.4rem;
+  gap: 0.8rem;
+  align-items: center;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.8rem;
+}
+.fg-token-space-name {
+  color: var(--muted);
+}
+.fg-token-space-bar {
+  height: 0.8rem;
+  background: var(--fg-accent);
+}
+.fg-token-space-px {
+  color: var(--muted);
+  text-align: right;
+}
+
+/* Entrance reveal — JS sets data-reveal only when motion is allowed, so
+   no-JS and reduced-motion readers keep the finished, visible panel. */
+.fg-tokens[data-reveal="pending"] .fg-swatch {
+  opacity: 0;
+  transform: translateY(8px);
+}
+.fg-tokens[data-reveal="pending"] .fg-token-space-bar {
+  transform: scaleX(0);
+}
+.fg-tokens[data-reveal] .fg-swatch {
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i, 0) * 40ms);
+}
+.fg-tokens[data-reveal="in"] .fg-swatch {
+  opacity: 1;
+  transform: none;
+}
+.fg-tokens[data-reveal] .fg-token-space-bar {
+  transform-origin: left;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  /* Stagger: swatches finish reveal first (~9 * 40ms = 360ms), then the
+     ramp starts and grows one bar at a time — reads as a ramp filling. */
+  transition-delay: calc(400ms + var(--i, 0) * 140ms);
+}
+.fg-tokens[data-reveal="in"] .fg-token-space-bar {
+  transform: scaleX(1);
+}
+
+@media (max-width: 560px) {
+  .fg-swatches {
+    grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  }
+}
+
+/* ── Fresh Greens Google→distinct pivot ──────────────── */
+.fg-pivot {
+  margin: 2.2rem 0 0;
+}
+.fg-pivot-steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 1.4rem;
+}
+.fg-pivot-step {
+  display: grid;
+  justify-items: center;
+  gap: 0.9rem;
+  text-align: center;
+}
+/* the arrow tracing v1 → the break */
+.fg-pivot-step:not(:last-child)::after {
+  content: "↓";
+  font-size: 1.15rem;
+  line-height: 1;
+  color: var(--fg-accent);
+  opacity: 0.7;
+  margin-top: 0.5rem;
+}
+.fg-pivot-step-label {
+  margin: 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.fg-pivot-phone {
+  width: 100%;
+  max-width: 16.5rem;
+  margin-inline: auto;
+}
+.fg-pivot-caption {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+/* ── Fresh Greens en-route video (§3) ─────────────────── */
+.fg-en-route-video {
+  margin: 2.2rem auto 2.6rem;
+  max-width: 320px; /* phone-shot scale — video is a phone screen recording */
+}
+.fg-en-route-video .case-lead-video {
+  border-radius: 0.9rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+/* ── Pulled-over: emotional-peak H2 anchor ────────────── */
+.project-section > h2#fg-pulled-over {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -0.028em;
+  line-height: 1.08;
+}
+
+/* ── Pivot: side-by-side on desktop ───────────────────── */
+@media (min-width: 820px) {
+  .fg-pivot-steps {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  /* Vertical arrow was between stacked steps; on desktop the side-by-side
+     layout IS the comparison, no arrow needed. */
+  .fg-pivot-step:not(:last-child)::after {
+    content: none;
+  }
+}
+
+/* ── Pivot micro-reveal (matches token exhibit craft) ─── */
+.fg-pivot[data-reveal="pending"] .fg-pivot-step {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.fg-pivot[data-reveal] .fg-pivot-step {
+  transition:
+    opacity 0.55s ease-out,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.fg-pivot[data-reveal] .fg-pivot-step:nth-child(1) { transition-delay: 0.05s; }
+.fg-pivot[data-reveal] .fg-pivot-step:nth-child(2) { transition-delay: 0.35s; }
+.fg-pivot[data-reveal="in"] .fg-pivot-step {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Reserved color: palette + phone pair on desktop ──── */
+.fg-color-pair {
+  display: grid;
+  gap: 1.8rem;
+  margin: 2.2rem 0 2.6rem;
+  max-width: min(52rem, 100%);
+}
+@media (min-width: 820px) {
+  .fg-color-pair {
+    grid-template-columns: 1.35fr 1fr;
+    gap: 2.4rem;
+    align-items: center;
+  }
+  .fg-color-pair > .fg-safety-visual {
+    margin: 0;
+    max-width: none;
+  }
+}
+
+/* ── Fresh Greens moderation flow ─────────────────────── */
+.fg-moderation {
+  margin: 2.2rem 0 2.6rem;
+}
+.fg-mod-flow {
+  display: flex;
+  align-items: stretch;
+  gap: 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 0.7rem;
+  padding: 1.1rem 1.2rem;
+}
+.fg-mod-stage {
+  flex: 1 1 7rem;
+  display: grid;
+  gap: 0.55rem;
+  align-content: start;
+}
+.fg-mod-stage--panel {
+  flex: 1.5 1 11rem;
+}
+.fg-mod-stage-label {
+  margin: 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--fg-accent);
+}
+.fg-mod-stage-text {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--foreground);
+}
+.fg-mod-checks {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.35rem;
+}
+.fg-mod-checks li {
+  position: relative;
+  padding-left: 0.95rem;
+  font-size: 0.85rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
+.fg-mod-checks li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 0.36rem;
+  height: 0.36rem;
+  border-radius: 50%;
+  background: var(--fg-accent);
+}
+.fg-mod-arrow {
+  align-self: center;
+  color: var(--fg-accent);
+  opacity: 0.65;
+  font-size: 1rem;
+}
+@media (max-width: 620px) {
+  .fg-mod-flow {
+    flex-direction: column;
+  }
+  .fg-mod-arrow {
+    transform: rotate(90deg);
+    align-self: center;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   Fresh Greens · Daylight-arc ToC (overdrive)
+   The ToC traces a dawn-to-night arc across the case's four chapters.
+   No prior knowledge required — a first-time viewer scrolling the case
+   just feels time passing as they read. When they reach the visual system
+   and learn the app uses a daylight-graded route, the metaphor snaps into
+   place retroactively: the reading was the drive.
+
+     §1 Problem                           → sunrise orange
+     §2 Research and route scoring        → daylight gold
+     §3 Safety interaction                → late-day alert warmth
+     §4 Visual system, trust, and scope   → night navy
+
+   Reduced-motion safe; segment fills track scroll position with no
+   easing.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* ── Section colors, arranged as a dawn → night arc ──────────────── */
+.fg-page {
+  --fg-toc-night: #5559A8;
+}
+
+:root[data-theme="light"] .fg-page {
+  --fg-toc-night: #1B1E4B;
+}
+
+.fg-page .project-toc-item:nth-child(1) { --seg-color: #F09456; } /* sunrise orange     */
+.fg-page .project-toc-item:nth-child(2) { --seg-color: #FDD350; } /* daylight gold      */
+.fg-page .project-toc-item:nth-child(3) { --seg-color: #C74757; } /* late-day alert     */
+.fg-page .project-toc-item:nth-child(4) { --seg-color: var(--fg-toc-night); } /* night navy */
+
+.fg-page .project-toc-rail::after {
+  background: var(--seg-color, var(--toc-fill));
+}
+
+.fg-page .project-toc-link--active .project-toc-dot {
+  background: var(--seg-color, var(--toc-fill));
+}
+
+.fg-page .project-toc-link--active {
+  /* Active section still gets its faint tint, keyed to the section's
+     own daylight color so the tint reads as "the sky at this moment." */
+  background: color-mix(in srgb, var(--seg-color, var(--toc-fill)) 10%, transparent);
+}
+
+/* Mobile / tablet progress hairline: paint the full daylight arc behind,
+   then use a mask to reveal only the portion the reader has scrolled
+   through. As they scroll the bar drifts from dawn orange through peak
+   alert warmth to night navy — the same four-stage journey the desktop
+   rails trace, drawn as a continuous horizon. */
+.fg-page .project-toc-progress {
+  transform: none;
+  width: 100%;
+  background: linear-gradient(
+    to right,
+    #F09456 0% 25%,
+    #FDD350 25% 50%,
+    #C74757 50% 75%,
+    var(--fg-toc-night) 75% 100%
+  );
+  -webkit-mask: linear-gradient(
+    to right,
+    #000 0 calc(var(--toc-progress, 0) * 100%),
+    transparent calc(var(--toc-progress, 0) * 100%)
+  );
+  mask: linear-gradient(
+    to right,
+    #000 0 calc(var(--toc-progress, 0) * 100%),
+    transparent calc(var(--toc-progress, 0) * 100%)
+  );
+}
