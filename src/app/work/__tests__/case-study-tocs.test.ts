@@ -40,7 +40,7 @@ const cases = [
       { title: "Concept and first direction", id: "nv-intro" },
       { title: "Research pivot", id: "nv-research" },
       { title: "Participation framework", id: "nv-framework" },
-      { title: "Product and outcome", id: "nv-screens" },
+      { title: "Portfolio rebuild", id: "nv-screens" },
     ],
   },
   {

@@ -8,9 +8,7 @@ status: published
 order: 3
 coverImage: /projects/navi/cover.png
 highlightQuote: Navi reframes tourism from destination checklists to intentional neighborhood participation.
-outcomeMetricLabel: of concept-test participants preferred neighborhood-led recommendations over generic top-ten lists
-outcomeMetricValue: 78%
-outcomeRest: of testers preferred neighborhood-led recommendations over top-ten lists.
+outcomeRest: Portfolio rebuild with a live component system and working booking flow.
 tags:
   - Product Design
   - Research

@@ -39,7 +39,7 @@ const INDEPENDENT_WORK: IndependentProject[] = [
     role: "UI/UX Designer",
     dates: "Jan – Jun 2025",
     summary:
-      "Regenerative-travel platform for NYC neighborhood experiences. Resident-led research, three personas, and concept testing before visual execution: 78% preferred neighborhood-led recommendations over generic top-ten lists. Defined IA, the Learn/Plan/Go framework, and the visual system.",
+      "Graduate-studio concept for NYC neighborhood experiences. The team audited six travel platforms, evaluated Airbnb with Nielsen’s heuristics, and reviewed 14 resident-survey responses. The concept included three personas, a Learn/Plan/Go framework, and a visual system. I later rebuilt it as a live component library and working booking flow for this portfolio.",
   },
 ];
 
