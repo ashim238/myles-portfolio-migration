@@ -14,9 +14,20 @@ describe("release security headers", () => {
       globalRule!.headers.map(({ key, value }) => [key, value]),
     );
 
-    expect(headers["Content-Security-Policy"]).toContain("default-src 'self'");
-    expect(headers["Content-Security-Policy"]).toContain("object-src 'none'");
-    expect(headers["Content-Security-Policy"]).toContain("frame-ancestors 'none'");
+    const contentSecurityPolicy = headers["Content-Security-Policy"];
+
+    expect(contentSecurityPolicy).toContain("default-src 'self'");
+    expect(contentSecurityPolicy).toContain(
+      "script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com",
+    );
+    expect(contentSecurityPolicy).toContain("style-src 'self' 'unsafe-inline'");
+    expect(contentSecurityPolicy).toContain("img-src 'self' data: blob:");
+    expect(contentSecurityPolicy).toContain("https://*.basemaps.cartocdn.com");
+    expect(contentSecurityPolicy).toContain("media-src 'self' blob:");
+    expect(contentSecurityPolicy).toContain("worker-src 'self' blob:");
+    expect(contentSecurityPolicy).toContain("frame-src 'self'");
+    expect(contentSecurityPolicy).toContain("object-src 'none'");
+    expect(contentSecurityPolicy).toContain("frame-ancestors 'self'");
     expect(headers["X-Content-Type-Options"]).toBe("nosniff");
     expect(headers["Referrer-Policy"]).toBe("strict-origin-when-cross-origin");
     expect(headers["Permissions-Policy"]).toBe(
