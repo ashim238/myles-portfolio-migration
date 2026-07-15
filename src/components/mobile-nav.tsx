@@ -62,6 +62,13 @@ const items = [
 
 export function MobileNav() {
   const pathname = usePathname();
+  const isNaviMinisite =
+    pathname === "/work/navi/demo" ||
+    pathname.startsWith("/work/navi/demo/") ||
+    pathname === "/work/navi/system" ||
+    pathname.startsWith("/work/navi/system/");
+
+  if (isNaviMinisite) return null;
 
   return (
     <nav className="mobile-nav" aria-label="Mobile navigation">
