@@ -6,8 +6,9 @@ import type React from "react";
 vi.mock("next/dynamic", () => ({
   default: (
     factory: () => Promise<{ default: React.ComponentType<Record<string, unknown>> }>,
-    _opts?: unknown,
+    opts?: unknown,
   ) => {
+    void opts;
     let ResolvedComponent: React.ComponentType<Record<string, unknown>> | null = null;
     factory().then((mod) => {
       ResolvedComponent = mod.default;

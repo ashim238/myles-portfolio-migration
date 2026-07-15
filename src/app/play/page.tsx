@@ -3,7 +3,6 @@ import { SiteNav } from "@/components/site-nav";
 import { playEntries } from "@/lib/content";
 import { ExpandableImage } from "@/components/expandable-image";
 import { SpecimenCard } from "@/components/specimen-card";
-import { siteConfig } from "@/lib/site-config";
 
 export const metadata = {
   title: "Play",

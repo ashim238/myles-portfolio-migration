@@ -58,5 +58,5 @@ export function useOverlayBehavior({
       unlockBackground();
       trigger?.focus?.();
     };
-  }, [open]);
+  }, [open, containerRef, initialFocusRef]);
 }

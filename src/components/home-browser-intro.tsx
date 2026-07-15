@@ -1,7 +1,7 @@
 "use client";
 
 import { createTimeline } from "animejs";
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useSyncExternalStore } from "react";
 import {
   HOME_BROWSER_INTRO_COMPLETE,
   HOME_BROWSER_INTRO_KEY,
@@ -16,6 +16,8 @@ type HomeBrowserIntroProps = {
 type IntroVariant = "desktop" | "mobile";
 
 const MOBILE_MAX_WIDTH = 639;
+const HOME_BROWSER_INTRO_VISIBILITY_CHANGE =
+  "home-browser-intro-visibility-change";
 
 const ZOOM_START_MS = 360;
 const ZOOM_DURATION_MS = 1080;
@@ -30,6 +32,27 @@ function getIntroVariant(): IntroVariant {
   return window.matchMedia(`(max-width: ${MOBILE_MAX_WIDTH}px)`).matches
     ? "mobile"
     : "desktop";
+}
+
+function subscribeBrowserIntroVisibility(callback: () => void) {
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  reducedMotion.addEventListener("change", callback);
+  window.addEventListener(HOME_BROWSER_INTRO_VISIBILITY_CHANGE, callback);
+  return () => {
+    reducedMotion.removeEventListener("change", callback);
+    window.removeEventListener(HOME_BROWSER_INTRO_VISIBILITY_CHANGE, callback);
+  };
+}
+
+function getBrowserIntroVisibilitySnapshot() {
+  return (
+    sessionStorage.getItem(HOME_BROWSER_INTRO_KEY) !== "1" &&
+    !prefersReducedMotion()
+  );
+}
+
+function getBrowserIntroVisibilityServerSnapshot() {
+  return true;
 }
 
 function getZoomScales(stage: HTMLElement, variant: IntroVariant) {
@@ -71,6 +94,7 @@ function handoffToEntrance() {
 function completeBrowserIntro() {
   sessionStorage.setItem(HOME_BROWSER_INTRO_KEY, "1");
   document.documentElement.classList.remove("browser-intro-lock");
+  window.dispatchEvent(new Event(HOME_BROWSER_INTRO_VISIBILITY_CHANGE));
 }
 
 function runIntroAnimation(variant: IntroVariant) {
@@ -157,14 +181,17 @@ export function HomeBrowserIntro({
   siteName,
   siteUrl = "mylesdesignsthings.com",
 }: HomeBrowserIntroProps) {
-  const [visible, setVisible] = useState(true);
+  const visible = useSyncExternalStore(
+    subscribeBrowserIntroVisibility,
+    getBrowserIntroVisibilitySnapshot,
+    getBrowserIntroVisibilityServerSnapshot,
+  );
 
   useLayoutEffect(() => {
     const seen = sessionStorage.getItem(HOME_BROWSER_INTRO_KEY) === "1";
     const reduced = prefersReducedMotion();
 
-    if (seen || reduced) {
-      setVisible(false);
+    if (!visible) {
       if (!seen && reduced) {
         sessionStorage.setItem(HOME_BROWSER_INTRO_KEY, "1");
       }
@@ -175,15 +202,13 @@ export function HomeBrowserIntro({
     document.documentElement.classList.add("browser-intro-lock");
 
     const variant = getIntroVariant();
-    const { cleanup, done } = runIntroAnimation(variant);
-
-    done.then(() => setVisible(false));
+    const { cleanup } = runIntroAnimation(variant);
 
     return () => {
       cleanup();
       document.documentElement.classList.remove("browser-intro-lock");
     };
-  }, []);
+  }, [visible]);
 
   if (!visible) {
     return null;

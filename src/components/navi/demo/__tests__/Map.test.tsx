@@ -30,8 +30,9 @@ vi.mock("@/components/navi/demo/Map.client", () => ({
 vi.mock("next/dynamic", () => ({
   default: (
     factory: () => Promise<{ default: React.ComponentType<Record<string, unknown>> }>,
-    _opts?: unknown,
+    opts?: unknown,
   ) => {
+    void opts;
     // Build a synchronous wrapper: capture the resolved component via a closure.
     // Because vi.mock hoisting runs before module evaluation and the Map.client mock
     // is already registered, the dynamic import below resolves in the same microtask.

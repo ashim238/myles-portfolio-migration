@@ -1,22 +1,32 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+function subscribeDesktopQuery(callback: () => void) {
+  const query = window.matchMedia("(min-width: 900px)");
+  query.addEventListener("change", callback);
+  return () => query.removeEventListener("change", callback);
+}
+
+function getDesktopSnapshot() {
+  return window.matchMedia("(min-width: 900px)").matches;
+}
+
+function getDesktopServerSnapshot() {
+  return false;
+}
+
 export function NaviDemoEmbed() {
-  const [useIframe, setUseIframe] = useState(false);
+  const useIframe = useSyncExternalStore(
+    subscribeDesktopQuery,
+    getDesktopSnapshot,
+    getDesktopServerSnapshot,
+  );
   const [loaded, setLoaded] = useState(false);
   const [errored, setErrored] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 900px)");
-    setUseIframe(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setUseIframe(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
 
   const fallbackImage = (
     <div className="nv-demo-embed-fallback">

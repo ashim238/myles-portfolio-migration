@@ -65,7 +65,8 @@ export function HeroInterestTyper({ awaitHomeEntrance = false }: HeroInterestTyp
   );
   const [animated, setAnimated] = useState("");
   const [showCursor, setShowCursor] = useState(true);
-  const [entranceReady, setEntranceReady] = useState(!awaitHomeEntrance);
+  const [entranceSignalReady, setEntranceSignalReady] = useState(!awaitHomeEntrance);
+  const entranceReady = reducedMotion || entranceSignalReady;
   const containerRef = useRef<HTMLParagraphElement>(null);
   const measured = useRef(false);
 
@@ -99,15 +100,12 @@ export function HeroInterestTyper({ awaitHomeEntrance = false }: HeroInterestTyp
   }, [reducedMotion]);
 
   useEffect(() => {
-    if (!awaitHomeEntrance || reducedMotion) {
-      setEntranceReady(true);
-      return;
-    }
+    if (!awaitHomeEntrance || reducedMotion) return;
 
-    const onReady = () => setEntranceReady(true);
+    const onReady = () => setEntranceSignalReady(true);
     if (document.querySelector(".home-page.home-entrance-done")) {
-      onReady();
-      return;
+      const frame = window.requestAnimationFrame(onReady);
+      return () => window.cancelAnimationFrame(frame);
     }
 
     window.addEventListener(HOME_ENTRANCE_COMPLETE, onReady, { once: true });

@@ -529,7 +529,7 @@ export default async function FreshGreensPage() {
 
       {/* ── Section 8: What shipped, and what didn't ─── */}
       <section className="project-section fg-section fg-scope" aria-labelledby="fg-scope">
-        <h2 id="fg-scope">What shipped, and what didn't.</h2>
+        <h2 id="fg-scope">What shipped, and what didn&apos;t.</h2>
         <p className="case-section-lead">
           The honest split between what&apos;s in the build and what&apos;s still on the list.
         </p>
