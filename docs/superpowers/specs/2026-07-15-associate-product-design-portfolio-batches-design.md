@@ -189,4 +189,4 @@ Each batch must:
 
 ## Current constraint
 
-The required candidate-writing guide was not found at `~/.Codex/writing-style-myles.md`, and no matching copy was discoverable in the available workspace. Batch 1 can proceed without applicant-copy drafting. Batch 2 must pause until the guide is restored or its correct path is provided.
+The candidate-writing guide was found at `~/.claude/writing-style-myles.md`. Batch 2 must load that complete file before drafting applicant-facing copy. If the documented path changes again, locate the guide before writing rather than relying on remembered rules.
