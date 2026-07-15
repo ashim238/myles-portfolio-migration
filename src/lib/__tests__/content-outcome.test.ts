@@ -6,9 +6,10 @@ describe("outcome frontmatter fields", () => {
     const projects = await getPublishedProjects();
     const fafsa = projects.find((p) => p.slug === "understandingfafsa");
     expect(fafsa).toBeDefined();
-    expect(fafsa!.outcomeLead).toBe("75% lift");
-    expect(typeof fafsa!.outcomeRest).toBe("string");
-    expect(fafsa!.outcomeRest!.length).toBeGreaterThan(0);
+    expect(fafsa!.outcomeLead).toBe("~52.6%");
+    expect(fafsa!.outcomeRest).toBe(
+      "open rate on the first redesigned send, compared with prior sends around 30%.",
+    );
   });
 
   it("leaves a field undefined when its key is absent", async () => {

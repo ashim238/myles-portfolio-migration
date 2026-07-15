@@ -18,7 +18,7 @@ import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
 
 const UF_DESCRIPTION =
-  "Redesigned a newsletter system to match a fresh site rebrand. Modular templates, competitive research across 120+ examples, and a 75% lift in open rates.";
+  "Redesigned a newsletter system to match a fresh site rebrand. The first redesigned send opened at ~52.6%, compared with prior sends around 30%.";
 
 const UF_COLORS = [
   "#be5abf",
@@ -93,7 +93,7 @@ export default async function UnderstandingFafsaPage() {
       <ProjectToc
         sections={[
           { title: "Where it started: a rebranded site, a dated newsletter.", id: "uf-context" },
-          { title: "Why the old template lost readers.", id: "uf-problem" },
+          { title: "Where the old template broke down.", id: "uf-problem" },
           { title: "Auditing 120 newsletters against four criteria.", id: "uf-audit" },
           { title: "Designing one skeleton for three kinds of sends.", id: "uf-templates" },
           { title: "The core decision: locked layers, swappable parts.", id: "uf-locked" },
@@ -123,21 +123,20 @@ export default async function UnderstandingFafsaPage() {
       </section>
 
       <section className="project-section uf-section" aria-labelledby="uf-problem">
-        <h2 id="uf-problem">Why the old template lost readers.</h2>
+        <h2 id="uf-problem">Where the old template broke down.</h2>
         <p className="case-section-lead">
-          The old template lost busy readers on mobile, and open rates sat around 30%.
+          The old template was difficult to scan on mobile. Prior sends opened around 30%.
         </p>
         <div className="project-section-body">
           <p>
-            The old template failed where busy readers notice first: uneven CTAs, a muted palette that
-            didn&apos;t carry the rebrand, long unscannable stretches of text, weak section breaks, and
-            a layout that wasn&apos;t optimized for mobile users.{" "}
-            Open rates sat around ~30%.
+            The old template had uneven CTAs, a muted palette that didn&apos;t carry the rebrand, long
+            stretches of text, weak section breaks, and a layout that wasn&apos;t optimized for mobile
+            users.
           </p>
           <p>
-            If email stayed weak, people would miss deadline-driven guidance at key checkpoints:
-            FAFSA filing windows, scholarship deadlines, policy changes. The channel needed the same
-            credibility the site had worked to develop.
+            The newsletter covers deadline-driven guidance at key checkpoints: FAFSA filing windows,
+            scholarship deadlines, and policy changes. The channel needed the same credibility the
+            site had worked to develop.
           </p>
         </div>
         <BeforeAfterPhones />
@@ -292,7 +291,8 @@ export default async function UnderstandingFafsaPage() {
       <section className="project-section uf-section" aria-labelledby="uf-results">
         <h2 id="uf-results">The results: open rates after the first send.</h2>
         <p className="case-section-lead">
-          The first redesigned send moved open rates from around 30% to about 52.6%.
+          The first redesigned send opened at about 52.6% on November 4, 2025, compared with prior
+          sends around 30%.
         </p>
         <div className="project-section-body">
           <p>
@@ -305,9 +305,9 @@ export default async function UnderstandingFafsaPage() {
             review a designer would normally do.
           </p>
           <p>
-            The first redesigned send went out November 4, 2025. Open rates
-            moved from around 30% to <CountUp value="~52.6%" /> (Mailchimp
-            reporting with MPP excluded), with clicks, bounces, and
+            The first redesigned send went out November 4, 2025. It opened at{" "}
+            <CountUp value="~52.6%" />, compared with prior sends around 30%
+            (Mailchimp reporting with MPP excluded), with clicks, bounces, and
             unsubscribes still in a healthy band. What shipped: a master
             template, modular blocks, explicit locked-vs-swappable rules,
             and three template variants on the same design vocabulary.

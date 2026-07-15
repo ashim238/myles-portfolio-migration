@@ -1,17 +1,17 @@
 ---
 slug: understandingfafsa
 title: UnderstandingFAFSA
-summary: Redesigned a newsletter system to match a fresh site rebrand. Modular templates, competitive research across 120+ examples, and a 75% lift in open rates.
+summary: Redesigned a newsletter system to match a fresh site rebrand. The first redesigned send opened at ~52.6%, compared with prior sends around 30%.
 role: Product Designer
 timeframe: February 2025 – Ongoing
 status: published
 order: 2
 coverImage: /projects/understandingfafsa/cover.png
 highlightQuote: The newsletter should feel as trustworthy and modern as the newly rebranded website.
-outcomeMetricLabel: open rate after the redesign, up from ~30%, a 75% lift
+outcomeMetricLabel: open rate on the first redesigned send, compared with prior sends around 30% (MPP excluded)
 outcomeMetricValue: ~52.6%
-outcomeLead: 75% lift
-outcomeRest: in open rate, from ~30% to ~52.6% after the modular rebuild.
+outcomeLead: ~52.6%
+outcomeRest: open rate on the first redesigned send, compared with prior sends around 30%.
 tags:
   - Product Design
   - Content Design

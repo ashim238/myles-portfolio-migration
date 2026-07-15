@@ -38,7 +38,8 @@ export default function AboutPage() {
               WCAG dash pattern for the daylight cue built in from the start.
               For a financial-aid nonprofit, I rebuilt the newsletter as
               modular templates a non-designer could run without breaking the
-              brand. Open rates went from about 30% to 52.6%. At TikTok I
+              brand. The first redesigned send opened at 52.6%, compared with
+              prior sends around 30%. At TikTok I
               designed catalog ad templates around the platform&apos;s
               subcultures, and American Eagle adopted one.
             </p>
