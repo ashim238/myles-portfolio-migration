@@ -16,6 +16,19 @@ vi.mock("@/components/scroll-reveal-fallback", () => ({
 }));
 
 describe("root layout first paint", () => {
+  it("declares smooth scrolling on the root html element", () => {
+    const markup = renderToStaticMarkup(
+      <RootLayout>
+        <main>Portfolio</main>
+      </RootLayout>,
+    );
+    const document = new DOMParser().parseFromString(markup, "text/html");
+
+    expect(document.documentElement.getAttribute("data-scroll-behavior")).toBe(
+      "smooth",
+    );
+  });
+
   it("does not inject a script that hides homepage content before hydration", () => {
     const markup = renderToStaticMarkup(
       <RootLayout>
