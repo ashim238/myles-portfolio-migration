@@ -44,9 +44,21 @@ describe("UnderstandingFAFSA outcome claims", () => {
     expect(projectPage).not.toContain("primary touchpoint");
     expect(projectPage).not.toContain("Subscribers were seeing two different brands");
     expect(projectPage).not.toContain("still in a healthy band");
+    expect(projectPage).not.toMatch(
+      /locked layers\s+carry the\s+review a designer would normally do/,
+    );
+    expect(projectPage).not.toMatch(/subscriber&apos;s\s+first impression/);
+    expect(projectPage).not.toMatch(/read clearly in email/);
     expect(comparisonComponent).not.toContain("stays on-brand no matter the order");
     expect(comparisonComponent).not.toContain("faster assembly");
-    expect(comparisonComponent).toContain("Illustrative estimate");
+    expect(comparisonComponent).not.toContain(
+      "Pick a layer to isolate it; the other dims back.",
+    );
+    expect(comparisonComponent).toContain(
+      "Event-specific newsletter with fewer blocks for invites and recaps.",
+    );
+    expect(comparisonComponent).toContain("Illustrative estimate:");
+    expect(comparisonComponent).toContain("102 KB Gmail clipping threshold");
   });
 
   it("qualifies the open-rate labels in the mobile layout comparison", () => {

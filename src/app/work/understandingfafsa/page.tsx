@@ -206,8 +206,8 @@ export default async function UnderstandingFafsaPage() {
           <p>
             The welcome email follows a deliberate structure shaped by the audit. It includes a
             banner, gratitude, what to expect, a brief history that transitions into the current
-            mission, a CTA, suggested reading, and social links. It&apos;s the subscriber&apos;s
-            first impression of the redesigned brand.
+            mission, a CTA, suggested reading, and social links. The welcome email introduces the
+            redesigned type, palette, and content structure.
           </p>
         </div>
 
@@ -255,8 +255,7 @@ export default async function UnderstandingFafsaPage() {
             The hierarchy, spacing, and modular rhythm all lived in Figma, but the live template had to be
             rebuilt in Mailchimp so the founder could edit without touching HTML. Matching Figma
             spacing inside the builder was a dead end. Every container and wrapper added bloat. I
-            reframed hierarchy so section headers and body read clearly in email, not on a static
-            artboard.
+            simplified the section-header and body hierarchy for the Mailchimp build.
           </p>
           <p>
             <mark className="case-highlight">
@@ -292,9 +291,8 @@ export default async function UnderstandingFafsaPage() {
               This was my first time designing a system someone else
               assembles every week.
             </mark>{" "}
-            No designer looks at a send before it goes out. The founder swaps
-            copy and images herself, which means the locked layers carry the
-            review a designer would normally do.
+            No designer reviews each send before it goes out. The founder edits copy and images
+            within the fixed spacing, type, and divider rules.
           </p>
           <p>
             The first redesigned send went out November 4, 2025. Mailchimp reported{" "}

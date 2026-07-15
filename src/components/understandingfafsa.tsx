@@ -430,7 +430,7 @@ export function NewsletterComposer() {
               <span aria-hidden="true"> · </span>
               <span>~{totalKb} KB</span>
               <span aria-hidden="true"> · </span>
-              <span>{COMPOSER_KB_CEILING} KB Gmail clipping threshold</span>
+              <span>102 KB Gmail clipping threshold</span>
             </p>
           </div>
 
@@ -697,7 +697,7 @@ export function LockedSwappableView() {
           </button>
         ))}
       </div>
-      <p className="uf-lock-hint">Pick a layer to isolate it; the other dims back.</p>
+      <p className="uf-lock-hint">Pick a layer to isolate it. The other dims back.</p>
       <span className="sr-only" aria-live="polite">
         {focus === "both"
           ? "Showing both layers: swappable content and the locked frame."
