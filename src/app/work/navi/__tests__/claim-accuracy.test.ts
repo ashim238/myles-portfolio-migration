@@ -53,6 +53,17 @@ describe("Navi evidence claims", () => {
     expect(projectPage).toContain("50%");
   });
 
+  it("separates research evidence, planning artifacts, and future work", () => {
+    const projectPage = readSource("src/app/work/navi/page.tsx");
+
+    expect(projectPage).toContain("research-informed archetypes");
+    expect(projectPage).toContain("internal planning artifacts");
+    expect(projectPage).toMatch(/group booking.{0,100}future opportunity/i);
+    expect(projectPage).toMatch(/not wired into the current rebuild/i);
+    expect(projectPage).not.toMatch(/three personas/i);
+    expect(projectPage).not.toContain("Those flows are present in the rebuild");
+  });
+
   it("removes the metric frontmatter and gives the gallery a factual artifact outcome", () => {
     const content = readSource("content/projects/navi.md");
 
@@ -61,6 +72,18 @@ describe("Navi evidence claims", () => {
     expect(content).toContain(
       "outcomeRest: Portfolio rebuild with a live component system and working booking flow.",
     );
+  });
+
+  it("describes the graduate-studio concept and later portfolio rebuild in condensed copy", () => {
+    const content = readSource("content/projects/navi.md");
+    const projectPage = readSource("src/app/work/navi/page.tsx");
+    const summary =
+      "A graduate-studio concept for neighborhood travel. I later rebuilt it as a working portfolio demo.";
+
+    expect(content).toContain(`summary: ${summary}`);
+    expect(projectPage).toContain(`"${summary}"`);
+    expect(content).not.toMatch(/local heartbeat/i);
+    expect(projectPage).not.toMatch(/local heartbeat/i);
   });
 
   it("labels the current system and demo as a portfolio rebuild", () => {
@@ -79,5 +102,27 @@ describe("Navi evidence claims", () => {
 
     expect(projectPage).not.toContain("case-tier-divider");
     expect(projectPage).not.toContain("The full breakdown");
+  });
+
+  it("moves from the early heatmap premise into the next concept without repeating it", () => {
+    const projectPage = readSource("src/app/work/navi/page.tsx");
+    const artifactCopy = readSource("src/components/navi.tsx");
+
+    expect(projectPage).not.toContain(
+      "Early on, the team considered a heatmap solution",
+    );
+    expect(projectPage).not.toMatch(
+      /Navi&apos;s proposed alternative connected trip planning/,
+    );
+    expect(projectPage).toMatch(
+      /The next concept paired\s+neighborhood-level experiences and local context with trip\s+planning\./,
+    );
+    expect(projectPage).toMatch(
+      /The next concept direction focused on neighborhood context and\s+participation instead\./,
+    );
+    expect(artifactCopy).not.toContain("not the same ten default stops");
+    expect(artifactCopy).toContain(
+      "Learn would open with the neighborhood’s inclusive history and local rhythm.",
+    );
   });
 });

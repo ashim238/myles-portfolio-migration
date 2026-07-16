@@ -7,18 +7,43 @@ type TocEntry = {
   id: string;
 };
 
+type TocContract = {
+  sections: TocEntry[];
+  readingEndId?: string;
+};
+
 function readCaseStudy(path: string) {
   return readFileSync(resolve(process.cwd(), path), "utf8");
 }
 
-function getProjectToc(source: string): TocEntry[] {
-  const toc = source.match(/<ProjectToc\s+sections=\{\[([\s\S]*?)\]\}\s*\/>/);
+function getProjectToc(source: string): TocContract {
+  const toc = source.match(/<ProjectToc\s+([\s\S]*?)\/>/);
 
-  expect(toc, "ProjectToc sections array").not.toBeNull();
+  expect(toc, "ProjectToc props").not.toBeNull();
 
+  const sections = toc![1].match(/sections=\{\[([\s\S]*?)\]\}/);
+  const readingEndId = toc![1].match(/readingEndId="([^"]+)"/)?.[1];
+
+  expect(sections, "ProjectToc sections array").not.toBeNull();
+
+  return {
+    sections: Array.from(
+      sections![1].matchAll(
+        /\{\s*title:\s*"([^"]+)",\s*id:\s*"([^"]+)"\s*,?\s*\}/g,
+      ),
+      ([, title, id]) => ({ title, id }),
+    ),
+    readingEndId,
+  };
+}
+
+function getStoryHeadings(source: string): TocEntry[] {
   return Array.from(
-    toc![1].matchAll(/\{ title: "([^"]+)", id: "([^"]+)" \}/g),
-    ([, title, id]) => ({ title, id }),
+    source.matchAll(/<h2 id="([^"]+)">([\s\S]*?)<\/h2>/g),
+    ([, id, title]) => ({
+      id,
+      title: title.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim(),
+    }),
   );
 }
 
@@ -32,38 +57,73 @@ const cases = [
       { title: "Safety interaction", id: "fg-pulled-over" },
       { title: "Visual system, trust, and scope", id: "fg-pivot" },
     ],
+    readingEndId: "fg-scope",
+  },
+  {
+    name: "TikTok",
+    path: "src/app/work/tiktok/page.tsx",
+    toc: [
+      { title: "Fashion subcultures on TikTok", id: "tt-research" },
+      { title: "Defining the fixed catalog structure", id: "tt-system" },
+      { title: "Templates as modular parts", id: "tt-modular" },
+      { title: "From sketches to layered files", id: "tt-templates" },
+      { title: "What shipped from the launch batch", id: "tt-outcome" },
+    ],
+    readingEndId: undefined,
   },
   {
     name: "Navi",
     path: "src/app/work/navi/page.tsx",
     toc: [
-      { title: "Concept and first direction", id: "nv-intro" },
-      { title: "Research pivot", id: "nv-research" },
-      { title: "Participation framework", id: "nv-framework" },
-      { title: "Portfolio rebuild", id: "nv-screens" },
+      { title: "Concentrated tourism as a routing problem", id: "nv-intro" },
+      { title: "The first prototype: a Manhattan heatmap", id: "nv-heatmap" },
+      {
+        title: "Platform audits and resident research",
+        id: "nv-research",
+      },
+      { title: "The resident survey redirected the concept", id: "nv-insights" },
+      { title: "Mapping the experience before the build", id: "nv-framework" },
+      { title: "Rebuilding Navi as a working system", id: "nv-system" },
+      { title: "A working booking flow", id: "nv-screens" },
+      { title: "What I would validate next", id: "nv-outcome" },
     ],
+    readingEndId: undefined,
   },
   {
     name: "UnderstandingFAFSA",
     path: "src/app/work/understandingfafsa/page.tsx",
     toc: [
-      { title: "Context and problem", id: "uf-context" },
-      { title: "Newsletter audit", id: "uf-audit" },
-      { title: "Template system", id: "uf-templates" },
-      { title: "Mailchimp build and results", id: "uf-figma" },
+      { title: "A rebrand and a weekly workflow", id: "uf-context" },
+      { title: "Where the old template broke down", id: "uf-problem" },
+      { title: "What 120 newsletters revealed", id: "uf-audit" },
+      { title: "Three send types from the audit", id: "uf-templates" },
+      { title: "Rules for fixed and swappable parts", id: "uf-locked" },
+      { title: "Rebuilding the system in Mailchimp", id: "uf-figma" },
+      { title: "The first redesigned send", id: "uf-results" },
     ],
+    readingEndId: undefined,
   },
 ] as const;
 
 describe("case-study recruiter paths", () => {
   for (const caseStudy of cases) {
-    it(`${caseStudy.name} exposes four chronological decision chapters`, () => {
+    it(`${caseStudy.name} exposes its complete chronological process`, () => {
       const source = readCaseStudy(caseStudy.path);
+      const toc = getProjectToc(source);
 
-      expect(getProjectToc(source)).toEqual(caseStudy.toc);
+      expect(toc.sections).toEqual(caseStudy.toc);
+      expect(toc.readingEndId).toBe(caseStudy.readingEndId);
+
+      if (caseStudy.name !== "Fresh Greens") {
+        expect(getStoryHeadings(source)).toEqual(caseStudy.toc);
+      }
 
       for (const { id } of caseStudy.toc) {
         expect(source).toContain(`id="${id}"`);
+      }
+
+      if (caseStudy.readingEndId) {
+        expect(source).toContain(`id="${caseStudy.readingEndId}"`);
       }
     });
   }

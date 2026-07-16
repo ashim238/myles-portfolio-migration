@@ -15,9 +15,11 @@ import {
   SurveyStatRings,
 } from "@/components/navi";
 import { NaviDemoEmbed } from "@/components/navi-demo-embed";
+import { NaviResearchArtifacts } from "@/components/navi/research-artifacts";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
 import { NAVI_SURVEY_META } from "@/lib/navi-survey-data";
+import { createRouteMetadata } from "@/lib/site-config";
 
 const jost = Jost({
   subsets: ["latin"],
@@ -35,15 +37,13 @@ const lato = Lato({
 const NAVI_DESCRIPTION =
   "A regenerative travel platform concept for NYC neighborhood experiences, developed in a graduate studio and rebuilt for this portfolio.";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createRouteMetadata({
   title: "Navi",
   description: NAVI_DESCRIPTION,
-  openGraph: {
-    title: "Navi",
-    description: NAVI_DESCRIPTION,
-    type: "article",
-  },
-};
+  path: "/work/navi",
+  image: "/projects/navi/cover.png",
+  type: "article",
+});
 
 export default async function NaviPage() {
   const project = await getProjectBySlug("navi");
@@ -70,11 +70,14 @@ export default async function NaviPage() {
         </h1>
         <p className="project-hero-lede nv-lede">
           {project?.summary ??
-            "Connecting visitors to New York City's local heartbeat."}
+            "A graduate-studio concept for neighborhood travel. I later rebuilt it as a working portfolio demo."}
         </p>
       </section>
 
-      <LeadMedia cover="/projects/navi/cover.png" alt="Navi cover" />
+      <LeadMedia
+        cover="/projects/navi/cover.png"
+        alt="Navi neighborhood experience search results and cards on a tablet on a wooden table."
+      />
       <RecruiterCut
         problem="NYC tourism defaults to top-ten checklists that skip the neighborhoods and people who make the city."
         role="UI/UX Designer"
@@ -86,21 +89,28 @@ export default async function NaviPage() {
         moves={[
           "The team explored an early Manhattan redirection concept through a heatmap.",
           "The team audited six travel platforms and evaluated Airbnb with Nielsen's heuristics.",
-          "The concept used a 14-response resident survey, three personas, and Learn, Plan, Go.",
+          "The concept used a 14-response resident survey, three research-informed archetypes, and Learn, Plan, Go.",
         ]}
       />
 
       <ProjectToc
         sections={[
-          { title: "Concept and first direction", id: "nv-intro" },
-          { title: "Research pivot", id: "nv-research" },
-          { title: "Participation framework", id: "nv-framework" },
-          { title: "Portfolio rebuild", id: "nv-screens" },
+          { title: "Concentrated tourism as a routing problem", id: "nv-intro" },
+          { title: "The first prototype: a Manhattan heatmap", id: "nv-heatmap" },
+          {
+            title: "Platform audits and resident research",
+            id: "nv-research",
+          },
+          { title: "The resident survey redirected the concept", id: "nv-insights" },
+          { title: "Mapping the experience before the build", id: "nv-framework" },
+          { title: "Rebuilding Navi as a working system", id: "nv-system" },
+          { title: "A working booking flow", id: "nv-screens" },
+          { title: "What I would validate next", id: "nv-outcome" },
         ]}
       />
 
       <section className="project-section nv-section" aria-labelledby="nv-intro">
-        <h2 id="nv-intro">The concept: a regenerative travel platform for New York City</h2>
+        <h2 id="nv-intro">Concentrated tourism as a routing problem</h2>
         <p className="case-section-lead">
           The early design premise treated concentrated tourism as a routing problem.
         </p>
@@ -111,14 +121,14 @@ export default async function NaviPage() {
             more Manhattan neighborhoods.
           </p>
           <p>
-            Navi&apos;s proposed alternative connected trip planning to neighborhood-level
-            experiences and local context.
+            The next concept paired neighborhood-level experiences and local context with trip
+            planning.
           </p>
         </div>
       </section>
 
       <section className="project-section nv-section" aria-labelledby="nv-heatmap">
-        <h2 id="nv-heatmap">The first idea was a Manhattan heatmap</h2>
+        <h2 id="nv-heatmap">The first prototype: a Manhattan heatmap</h2>
         <p className="case-section-lead">
           A Manhattan heatmap turned the routing premise into an exploratory artifact.
         </p>
@@ -143,7 +153,7 @@ export default async function NaviPage() {
       </section>
 
       <section className="project-section nv-section" aria-labelledby="nv-research">
-        <h2 id="nv-research">Auditing the category and checking the idea with residents</h2>
+        <h2 id="nv-research">Platform audits and resident research</h2>
         <div className="project-section-body">
           <p>
             The team audited six travel platforms. I evaluated Airbnb with Kaori Ogawa and Amy
@@ -155,16 +165,14 @@ export default async function NaviPage() {
             survey findings shown below.
           </p>
           <p>
-            Early on, the team considered a heatmap solution to reroute tourists away from
-            congestion. The next concept direction focused on neighborhood context and
-            participation instead.
+            The next concept direction focused on neighborhood context and participation instead.
           </p>
         </div>
         <HeuristicInsightCards />
       </section>
 
       <section className="project-section nv-section" aria-labelledby="nv-insights">
-        <h2 id="nv-insights">What the data said</h2>
+        <h2 id="nv-insights">The resident survey redirected the concept</h2>
         <p className="case-section-lead">
           Two concerns appeared most often in the 14-response resident survey.
         </p>
@@ -182,9 +190,10 @@ export default async function NaviPage() {
       </section>
 
       <section className="project-section nv-section" aria-labelledby="nv-framework">
-        <h2 id="nv-framework">From research to framework</h2>
+        <h2 id="nv-framework">Mapping the experience before the build</h2>
         <p className="case-section-lead">
-          The concept used three personas and a Learn, Plan, Go structure.
+          I created three research-informed archetypes from the survey findings, platform audits,
+          and secondary research.
         </p>
         <div className="project-section-body">
           <p>
@@ -192,8 +201,15 @@ export default async function NaviPage() {
             precise filters for shorter trips.
           </p>
           <p>
-            The graduate-studio project stopped at a concept and did not include an engineering
-            handoff.
+            The graduate-studio project stopped at a concept without an engineering handoff. Its
+            journey maps and user flows were internal planning artifacts. They connected
+            neighborhood exploration to residents wanting nearby activity without repeatedly
+            concentrating visits in tourist-heavy areas.
+          </p>
+          <p>
+            For booking, the Airbnb audit and secondary research pointed to clear cost,
+            requirements, and timing. That transparency also mattered for trust when booking with
+            lesser-known vendors.
           </p>
           <p>
             The resulting framework was{" "}
@@ -211,13 +227,14 @@ export default async function NaviPage() {
             </li>
           </ul>
         </div>
+        <NaviResearchArtifacts />
       </section>
 
       <section
         className="project-section nv-section project-section--wide nv-section--wide"
         aria-labelledby="nv-system"
       >
-        <h2 id="nv-system">Rebuilding the concept as a working system</h2>
+        <h2 id="nv-system">Rebuilding Navi as a working system</h2>
         <div className="project-section-body">
           <p>
             For this portfolio case study, I rebuilt the Navi visual system as live React
@@ -239,7 +256,7 @@ export default async function NaviPage() {
       </section>
 
       <section className="project-section nv-section project-section--wide nv-section--wide" aria-labelledby="nv-screens">
-        <h2 id="nv-screens">Trying the portfolio rebuild</h2>
+        <h2 id="nv-screens">A working booking flow</h2>
         <p className="case-section-lead">
           The screens below come from the current React build.
         </p>
@@ -254,12 +271,12 @@ export default async function NaviPage() {
       </section>
 
       <section className="project-section nv-section" aria-labelledby="nv-outcome">
-        <h2 id="nv-outcome">What I would test next</h2>
+        <h2 id="nv-outcome">What I would validate next</h2>
         <div className="project-section-body">
           <p>
-            A next round of research could test the deeper neighborhood pages in Learn, shared
-            planning for group travelers, and onboarding for local hosts and businesses. Those
-            flows are present in the rebuild, but they have not been validated with users.
+            Deeper neighborhood pages in Learn and onboarding for local hosts and businesses still
+            need validation with users.{" "}
+            {"Group booking remains a future opportunity and is not wired into the current rebuild."}
           </p>
         </div>
       </section>
