@@ -2227,6 +2227,123 @@ button:focus-visible,
   gap: 4.5rem;
 }
 
+.project-chapter {
+  --chapter-motif-accent: var(--toc-accent, var(--foreground));
+  margin-top: clamp(4.5rem, 9vw, 7rem);
+  position: relative;
+}
+
+.project-chapter[data-chapter-index="1"] {
+  margin-top: 2.5rem;
+}
+
+.project-chapter-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: 65ch;
+  margin: 0 0 0.7rem;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.project-chapter-stage {
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+.project-chapter-count {
+  font-variant-numeric: tabular-nums;
+}
+
+.project-chapter-title,
+.project-evidence-heading {
+  position: relative;
+  text-wrap: balance;
+}
+
+.project-chapter-title {
+  max-width: 22ch;
+  margin: 0;
+  padding-top: 0.85rem;
+  font-size: clamp(1.9rem, 3.8vw, 3.2rem);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: var(--track-display);
+}
+
+.project-chapter-title::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 2.5rem;
+  height: 1px;
+  background: var(--rule);
+}
+
+.project-evidence-heading {
+  margin: 0 0 1rem;
+  padding-top: 0.75rem;
+  font-size: clamp(1.35rem, 2.4vw, 1.8rem);
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: var(--track-title);
+}
+
+.project-evidence-heading::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 1.75rem;
+  height: 1px;
+  background: var(--rule);
+}
+
+.project-chapter > .project-section,
+.project-chapter > .project-section + .project-section {
+  margin-top: 2.4rem;
+}
+
+.project-chapter-motif {
+  display: block;
+  position: relative;
+  width: min(12rem, 44vw);
+  height: 1.2rem;
+  margin-top: 1.2rem;
+}
+
+.project-chapter-motif-line {
+  position: absolute;
+  left: 0.35rem;
+  right: 0.35rem;
+  top: 50%;
+  height: 1px;
+  background: var(--line);
+}
+
+.project-chapter-motif-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--chapter-motif-accent);
+  transform-origin: left center;
+}
+
+.project-chapter-motif-point {
+  position: absolute;
+  top: 50%;
+  width: 0.7rem;
+  height: 0.7rem;
+  border: 1px solid var(--chapter-motif-accent);
+  border-radius: 50%;
+  background: var(--background);
+  transform: translateY(-50%);
+}
+
+.project-chapter-motif-point--start { left: 0; }
+.project-chapter-motif-point--end { right: 0; }
+
 @media (prefers-reduced-motion: no-preference) {
   .project-sections > .project-section {
     animation: fadeUp 580ms ease-out both;

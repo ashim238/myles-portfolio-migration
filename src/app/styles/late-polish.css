@@ -29,6 +29,32 @@
   }
 }
 
+@keyframes projectChapterTrace {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .project-chapter-motif-line::after {
+      animation: projectChapterTrace linear both;
+      animation-timeline: view();
+      animation-range: entry 8% cover 34%;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce), print {
+  .project-chapter,
+  .project-chapter-title,
+  .project-evidence-heading,
+  .project-chapter-motif-line::after {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
 /* ───────────────────────────────────────────────────────────────
    Motion-play: native View Transitions between case studies
    Only runs when TransitionLink calls document.startViewTransition
