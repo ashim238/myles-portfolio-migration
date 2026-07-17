@@ -65,7 +65,7 @@ describe("Fresh Greens research synthesis", () => {
 
   it("keeps the mobile synthesis arrows centered between stacked ideas", () => {
     const styles = readFileSync(
-      resolve(process.cwd(), "src/app/globals.css"),
+      resolve(process.cwd(), "src/app/styles/late-polish.css"),
       "utf8",
     );
     const mobile = balancedBlock(styles, "@media (max-width: 720px)");

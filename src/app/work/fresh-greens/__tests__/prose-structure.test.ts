@@ -16,7 +16,7 @@ const projectContentPath = resolve(
 );
 const portfolioStylesPath = resolve(
   process.cwd(),
-  "src/app/globals.css",
+  "src/app/styles/portfolio-surfaces.css",
 );
 
 function readPage() {
