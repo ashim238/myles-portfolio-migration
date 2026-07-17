@@ -1,6 +1,7 @@
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
+import { CASE_STUDY_CHAPTERS } from "@/lib/project-chapters";
 
 const pagePath = resolve(
   process.cwd(),
@@ -18,6 +19,7 @@ const portfolioStylesPath = resolve(
   process.cwd(),
   "src/app/styles/portfolio-surfaces.css",
 );
+const baseStylesPath = resolve(process.cwd(), "src/app/styles/base.css");
 
 function readPage() {
   return readFileSync(pagePath, "utf8");
@@ -25,16 +27,45 @@ function readPage() {
 
 function getSectionHeadings(source: string) {
   return Array.from(
-    source.matchAll(/<h2 id="([^"]+)">([^<]+)<\/h2>/g),
-    ([, id, title]) => ({ id, title }),
+    source.matchAll(
+      /<h3 className="project-evidence-heading" id="([^"]+)">\s*([^<]+?)\s*<\/h3>/g,
+    ),
+    ([, id, title]) => ({ id, title: title.trim() }),
   );
 }
 
+function normalizeCopy(copy: string) {
+  return copy
+    .replace(/<[^>]+>/g, "")
+    .replace(/&apos;/g, "'")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 describe("Fresh Greens prose structure", () => {
-  it("uses varied process headings in the existing section order", () => {
+  it("keeps chapter metadata spaced, separated, and mobile-wrappable", () => {
+    const styles = readFileSync(baseStylesPath, "utf8");
+    const metaRule = styles.match(/\.project-chapter-meta\s*\{([^}]+)\}/)?.[1];
+    const titleRule = styles.match(/\.project-chapter-title\s*\{([^}]+)\}/)?.[1];
+
+    expect(metaRule, "shared chapter metadata rule").toBeDefined();
+    expect(metaRule).toMatch(/display:\s*flex;/);
+    expect(metaRule).toMatch(/flex-wrap:\s*wrap;/);
+    expect(metaRule).toMatch(/justify-content:\s*space-between;/);
+    expect(metaRule).toMatch(/gap:\s*1rem;/);
+    expect(metaRule).toMatch(/margin:\s*0 0 0\.7rem;/);
+    expect(titleRule, "shared chapter title rule").toBeDefined();
+    expect(titleRule).toMatch(/margin:\s*0;/);
+    expect(titleRule).toMatch(/padding-top:\s*0\.85rem;/);
+  });
+
+  it("keeps the five evidence headings beneath the six typed chapters", () => {
+    expect(CASE_STUDY_CHAPTERS["fresh-greens"][1]).toEqual({
+      id: "fg-research",
+      stage: "Research",
+      title: "What interviews with Black drivers changed",
+    });
     expect(getSectionHeadings(readPage())).toEqual([
-      { id: "fg-problem", title: "Why time and distance were not enough" },
-      { id: "fg-research", title: "What six interviews changed" },
       { id: "fg-scoring", title: "How each route gets scored" },
       { id: "fg-pulled-over", title: "A calmer interface for a traffic stop" },
       {
@@ -43,8 +74,6 @@ describe("Fresh Greens prose structure", () => {
       },
       { id: "fg-typecolor", title: "Type and color across a trip" },
       { id: "fg-color", title: "Four colors stay reserved for safety" },
-      { id: "fg-trust", title: "Moderating community reports" },
-      { id: "fg-scope", title: "What I built and what still needs proof" },
     ]);
   });
 
@@ -83,6 +112,15 @@ describe("Fresh Greens prose structure", () => {
     expect(source).toContain("thesis-zone-flow.png");
     expect(source).toContain('name="en-route"');
     expect(source).toContain('name="route-preview"');
+    expect(source).toContain('name="report-picker"');
+    expect(source).toContain('name="report-detail"');
+    expect(source).toContain('className="fg-moderation"');
+  });
+
+  it("retains the safety interaction and community-report evidence stack", () => {
+    const source = readPage();
+
+    expect(source).toContain("<PulledOverJourney />");
     expect(source).toContain('name="report-picker"');
     expect(source).toContain('name="report-detail"');
     expect(source).toContain('className="fg-moderation"');
@@ -198,9 +236,16 @@ describe("Fresh Greens prose structure", () => {
 
   it("closes on demonstrated judgment before describing future validation", () => {
     const source = readPage();
+    const qualifier = source.match(
+      /<div className="project-section-body fg-scope-closer">\s*<p>([\s\S]*?)<\/p>/,
+    );
 
     expect(source).not.toContain(
       "What comes next is mostly about accountability",
+    );
+    expect(qualifier, "Fresh Greens final proof qualifier").not.toBeNull();
+    expect(normalizeCopy(qualifier![1])).toBe(
+      "Building the working app made the gap between a plausible safety feature and a trustworthy one much clearer. I'm confident in the interaction choices I could trace back to interviews, especially the Held-Question rule, route chips, and source detail cards. I'd want broader route testing with Black drivers, moderation outcomes, and failure cases before calling any route safer.",
     );
     expect(source).toMatch(/before\s+calling\s+any\s+route\s+safer/);
     expect(source).toContain(

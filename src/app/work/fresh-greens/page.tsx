@@ -6,6 +6,7 @@ import { RecruiterCut } from "@/components/recruiter-cut";
 import { TransitionLink } from "@/components/transition-link";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectToc } from "@/components/project-toc";
+import { ProjectChapter } from "@/components/project-chapter";
 import { ProjectWorkJump } from "@/components/project-work-jump";
 import {
   ArchitectureDiagram,
@@ -19,7 +20,10 @@ import { PulledOverJourney } from "@/components/fresh-greens/pulled-over-journey
 import { OnboardingIllustrationSequence } from "@/components/fresh-greens/onboarding-illustration-sequence";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getPublishedProjects } from "@/lib/content";
+import { CASE_STUDY_CHAPTERS } from "@/lib/project-chapters";
 import { createRouteMetadata } from "@/lib/site-config";
+
+const chapters = CASE_STUDY_CHAPTERS["fresh-greens"];
 
 export const metadata: Metadata = createRouteMetadata({
   title: "Fresh Greens",
@@ -95,122 +99,129 @@ export default async function FreshGreensPage() {
       />
 
       <ProjectToc
-        sections={[
-          { title: "Problem", id: "fg-problem" },
-          { title: "Research", id: "fg-research" },
-          { title: "Route scoring", id: "fg-scoring" },
-          { title: "Safety interaction", id: "fg-pulled-over" },
-          { title: "Design pivot", id: "fg-pivot" },
-          { title: "Type and color", id: "fg-typecolor" },
-          { title: "Reserved color", id: "fg-color" },
-          { title: "Community trust", id: "fg-trust" },
-          { title: "Scope and proof", id: "fg-scope" },
-        ]}
+        sections={chapters}
         readingEndId="fg-scope"
       />
 
       {/* ── Section 1: The problem I set out to solve ── */}
-      <section className="project-section fg-section" aria-labelledby="fg-problem">
-        <h2 id="fg-problem">Why time and distance were not enough</h2>
-        <blockquote className="case-pullquote">
-          The Green Book collected community knowledge about where Black
-          travelers could safely stop.
-        </blockquote>
-        <div className="project-section-body">
-          <p>
-            In interviews, Black drivers described routes in terms of more than
-            time and distance: whether roads are lit, whether a town feels safe
-            to stop in, and where police tend to sit. Navigation apps don&apos;t
-            account for those signals. Fresh Greens brings them into route
-            selection.
-          </p>
+      <ProjectChapter
+        entry={chapters[0]}
+        index={1}
+        total={chapters.length}
+        variant="fresh-greens"
+      >
+        <div className="project-section fg-section">
+          <blockquote className="case-pullquote">
+            The Green Book collected community knowledge about where Black
+            travelers could safely stop.
+          </blockquote>
+          <div className="project-section-body">
+            <p>
+              In interviews, Black drivers described routes in terms of more than
+              time and distance: whether roads are lit, whether a town feels safe
+              to stop in, and where police tend to sit. Navigation apps don&apos;t
+              account for those signals. Fresh Greens brings them into route
+              selection.
+            </p>
+          </div>
         </div>
-      </section>
+      </ProjectChapter>
 
       {/* ── Section 2: Listening to six drivers ──────── */}
-      <section
-        className="project-section fg-section fg-section--wide"
-        aria-labelledby="fg-research"
+      <ProjectChapter
+        entry={chapters[1]}
+        index={2}
+        total={chapters.length}
+        variant="fresh-greens"
       >
-        <h2 id="fg-research">What six interviews changed</h2>
-        <p className="case-section-lead">
-          Six interviews with Black drivers across the Southern US, anonymized
-          in synthesis and led with joy and fear before any product questions.
-          The timeline was tight, so the synthesis stayed lean: I pulled the
-          recurring trends into four routing markers.
-        </p>
-
-        <figure className="fg-pullquote">
-          <blockquote>
-            Moments of joy and fear have a lasting effect on how Black drivers
-            interpret the spaces they inhabit. They stick.
-          </blockquote>
-          <figcaption>Thesis · Fresh Greens, 2026</figcaption>
-        </figure>
-
-        <ResearchSynthesis />
-
-        <div
-          className="fg-evidence-boundaries"
-          aria-label="Fresh Greens evidence boundaries"
-        >
-          <div className="fg-evidence-boundary">
-            <p className="fg-evidence-label">Interview-supported</p>
-            <p>
-              Six Black drivers raised daylight, police presence, wildlife,
-              and road conditions as route-planning signals.
-            </p>
-          </div>
-          <div className="fg-evidence-boundary">
-            <p className="fg-evidence-label">Built in the prototype</p>
-            <p>
-              A working React Native build scores those four signals, shows
-              route chips, and uses detail cards to explain where a signal came
-              from.
-            </p>
-          </div>
-          <div className="fg-evidence-boundary">
-            <p className="fg-evidence-label">Not yet proven</p>
-            <p>
-              Whether the recommendations improve safety still needs broader
-              route testing and moderation data.
-            </p>
-          </div>
-        </div>
-
-        <figure className="fg-lofi">
-          <ExpandableImage
-            src="/projects/fresh-greens/process/thesis-zone-flow.png"
-            alt="Hand-drawn thesis storyboard of the zone flow across four panels: baseline navigation, one mile out from a zone, actively entering a zone, and in the zone, with annotations about tooltip timing and route stroke behavior."
-            width={2675}
-            height={1407}
-            sizes="(max-width: 768px) 92vw, 900px"
-            style={{ width: "100%", height: "auto", display: "block" }}
-          />
-          <figcaption className="fg-safety-visual-caption">
-            The zone-flow storyboard, done by hand. The layered route stroke
-            marking a wildlife zone in the last panel was too dense to read at
-            a glance, so it got simplified into the daylight gradient the app
-            uses now.
-          </figcaption>
-        </figure>
-
-        <div className="project-section-body">
-          <p>
-            My first instinct was to stack every safety layer onto the screen.
-            But the interviews also said driving already takes focus, so I
-            pulled most of it back. The safety toolkit stays hidden until a
-            driver reaches for it.
+        <div className="project-section fg-section fg-section--wide">
+          <p className="case-section-lead">
+            Six interviews with Black drivers across the Southern US, anonymized
+            in synthesis and led with joy and fear before any product questions.
+            The timeline was tight, so the synthesis stayed lean: I pulled the
+            recurring trends into four routing markers.
           </p>
+
+          <figure className="fg-pullquote">
+            <blockquote>
+              Moments of joy and fear have a lasting effect on how Black drivers
+              interpret the spaces they inhabit. They stick.
+            </blockquote>
+            <figcaption>Thesis · Fresh Greens, 2026</figcaption>
+          </figure>
+
+          <ResearchSynthesis />
+
+          <div
+            className="fg-evidence-boundaries"
+            aria-label="Fresh Greens evidence boundaries"
+          >
+            <div className="fg-evidence-boundary">
+              <p className="fg-evidence-label">Interview-supported</p>
+              <p>
+                Six Black drivers raised daylight, police presence, wildlife,
+                and road conditions as route-planning signals.
+              </p>
+            </div>
+            <div className="fg-evidence-boundary">
+              <p className="fg-evidence-label">Built in the prototype</p>
+              <p>
+                A working React Native build scores those four signals, shows
+                route chips, and uses detail cards to explain where a signal came
+                from.
+              </p>
+            </div>
+            <div className="fg-evidence-boundary">
+              <p className="fg-evidence-label">Not yet proven</p>
+              <p>
+                Whether the recommendations improve safety still needs broader
+                route testing and moderation data.
+              </p>
+            </div>
+          </div>
+
+          <figure className="fg-lofi">
+            <ExpandableImage
+              src="/projects/fresh-greens/process/thesis-zone-flow.png"
+              alt="Hand-drawn thesis storyboard of the zone flow across four panels: baseline navigation, one mile out from a zone, actively entering a zone, and in the zone, with annotations about tooltip timing and route stroke behavior."
+              width={2675}
+              height={1407}
+              sizes="(max-width: 768px) 92vw, 900px"
+              style={{ width: "100%", height: "auto", display: "block" }}
+            />
+            <figcaption className="fg-safety-visual-caption">
+              The zone-flow storyboard, done by hand. The layered route stroke
+              marking a wildlife zone in the last panel was too dense to read at
+              a glance, so it got simplified into the daylight gradient the app
+              uses now.
+            </figcaption>
+          </figure>
+
+          <div className="project-section-body">
+            <p>
+              My first instinct was to stack every safety layer onto the screen.
+              But the interviews also said driving already takes focus, so I
+              pulled most of it back. The safety toolkit stays hidden until a
+              driver reaches for it.
+            </p>
+          </div>
         </div>
-      </section>
+      </ProjectChapter>
 
       {/* ── Section 3: How routes get scored ─────────── */}
+      <ProjectChapter
+        entry={chapters[2]}
+        index={3}
+        total={chapters.length}
+        variant="fresh-greens"
+      >
       <section
         className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-scoring"
       >
-        <h2 id="fg-scoring">How each route gets scored</h2>
+        <h3 className="project-evidence-heading" id="fg-scoring">
+          How each route gets scored
+        </h3>
         <div className="project-section-body">
           <p>
             Every route is scored on four things the interviews kept raising:
@@ -256,7 +267,9 @@ export default async function FreshGreensPage() {
         className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-pulled-over"
       >
-        <h2 id="fg-pulled-over">A calmer interface for a traffic stop</h2>
+        <h3 className="project-evidence-heading" id="fg-pulled-over">
+          A calmer interface for a traffic stop
+        </h3>
         <div className="project-section-body">
           <p>
             Every prompt in a safety moment is set in{" "}
@@ -285,13 +298,22 @@ export default async function FreshGreensPage() {
           </p>
         </div>
       </section>
+      </ProjectChapter>
 
       {/* ── Section 5: The design pivot ───────────────── */}
+      <ProjectChapter
+        entry={chapters[3]}
+        index={4}
+        total={chapters.length}
+        variant="fresh-greens"
+      >
       <section
         className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-pivot"
       >
-        <h2 id="fg-pivot">The Google Maps feature I moved away from</h2>
+        <h3 className="project-evidence-heading" id="fg-pivot">
+          The Google Maps feature I moved away from
+        </h3>
 
         <PivotJourney />
       </section>
@@ -301,7 +323,9 @@ export default async function FreshGreensPage() {
         className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-typecolor"
       >
-        <h2 id="fg-typecolor">Type and color across a trip</h2>
+        <h3 className="project-evidence-heading" id="fg-typecolor">
+          Type and color across a trip
+        </h3>
 
         <OnboardingIllustrationSequence />
 
@@ -340,7 +364,9 @@ export default async function FreshGreensPage() {
         className="project-section fg-section fg-section--wide fg-craft"
         aria-labelledby="fg-color"
       >
-        <h2 id="fg-color">Four colors stay reserved for safety</h2>
+        <h3 className="project-evidence-heading" id="fg-color">
+          Four colors stay reserved for safety
+        </h3>
 
         <div className="project-section-body">
           <p>
@@ -400,13 +426,16 @@ export default async function FreshGreensPage() {
         </div>
 
       </section>
+      </ProjectChapter>
 
       {/* ── Section 7: Where the argument gets tested ── */}
-      <section
-        className="project-section fg-section fg-section--wide"
-        aria-labelledby="fg-trust"
+      <ProjectChapter
+        entry={chapters[4]}
+        index={5}
+        total={chapters.length}
+        variant="fresh-greens"
       >
-        <h2 id="fg-trust">Moderating community reports</h2>
+        <div className="project-section fg-section fg-section--wide">
         <div className="project-section-body">
           <p>
             Community reports have to earn trust without being treated as less
@@ -489,12 +518,17 @@ export default async function FreshGreensPage() {
             the queue is auditable from outside.
           </p>
         </div>
-
-      </section>
+        </div>
+      </ProjectChapter>
 
       {/* ── Section 8: What was built, and what still needs proof ─── */}
-      <section className="project-section fg-section fg-scope" aria-labelledby="fg-scope">
-        <h2 id="fg-scope">What I built and what still needs proof</h2>
+      <ProjectChapter
+        entry={chapters[5]}
+        index={6}
+        total={chapters.length}
+        variant="fresh-greens"
+      >
+        <div className="project-section fg-section fg-scope">
 
         <div className="fg-scope-grid">
           <div className="fg-scope-col">
@@ -553,7 +587,8 @@ export default async function FreshGreensPage() {
             safer.
           </p>
         </div>
-      </section>
+        </div>
+      </ProjectChapter>
 
       <ProjectWorkJump currentSlug="fresh-greens" projects={allProjects} />
       <CaseHighlightObserver />

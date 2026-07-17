@@ -17,6 +17,15 @@ function getDaylightArc() {
 }
 
 describe("Fresh Greens TOC daylight arc", () => {
+  it("keeps the traffic-stop emphasis on its evidence heading", () => {
+    expect(stylesheet).toMatch(
+      /\.project-evidence-heading#fg-pulled-over\s*\{/,
+    );
+    expect(stylesheet).not.toMatch(
+      /\.project-section\s*>\s*h2#fg-pulled-over\s*\{/,
+    );
+  });
+
   it("uses a more visible night blue in the dark theme", () => {
     const arc = getDaylightArc();
 
@@ -26,7 +35,7 @@ describe("Fresh Greens TOC daylight arc", () => {
     );
   });
 
-  it("maps the nine process stages across the daylight arc", () => {
+  it("maps the six chapters across the daylight arc", () => {
     const colors = Array.from(
       getDaylightArc().matchAll(
         /\.project-toc-item:nth-child\((\d+)\)\s*\{\s*--seg-color:\s*(#[0-9A-F]{6}|var\(--fg-toc-night\));\s*\}/g,
@@ -38,16 +47,13 @@ describe("Fresh Greens TOC daylight arc", () => {
       { stage: 1, color: "#F09456" },
       { stage: 2, color: "#F09456" },
       { stage: 3, color: "#FDD350" },
-      { stage: 4, color: "#FDD350" },
-      { stage: 5, color: "#C74757" },
-      { stage: 6, color: "#C74757" },
-      { stage: 7, color: "#C74757" },
-      { stage: 8, color: "var(--fg-toc-night)" },
-      { stage: 9, color: "var(--fg-toc-night)" },
+      { stage: 4, color: "#C74757" },
+      { stage: 5, color: "var(--fg-toc-night)" },
+      { stage: 6, color: "var(--fg-toc-night)" },
     ]);
   });
 
-  it("uses nine contiguous stage ranges in the mobile gradient", () => {
+  it("uses six contiguous chapter ranges in the mobile gradient", () => {
     const background = getDaylightArc().match(
       /\.project-toc-progress\s*\{[\s\S]*?background:\s*linear-gradient\(\s*to right,([\s\S]*?)\);/,
     );
@@ -61,23 +67,38 @@ describe("Fresh Greens TOC daylight arc", () => {
         ([, color, start, end]) => ({ color, start, end }),
       ),
     ).toEqual([
-      { color: "#F09456", start: "0%", end: "11.11%" },
-      { color: "#F09456", start: "11.11%", end: "22.22%" },
-      { color: "#FDD350", start: "22.22%", end: "33.33%" },
-      { color: "#FDD350", start: "33.33%", end: "44.44%" },
-      { color: "#C74757", start: "44.44%", end: "55.56%" },
-      { color: "#C74757", start: "55.56%", end: "66.67%" },
-      { color: "#C74757", start: "66.67%", end: "77.78%" },
+      { color: "#F09456", start: "0%", end: "16.667%" },
+      { color: "#F09456", start: "16.667%", end: "33.333%" },
+      { color: "#FDD350", start: "33.333%", end: "50%" },
+      { color: "#C74757", start: "50%", end: "66.667%" },
       {
         color: "var(--fg-toc-night)",
-        start: "77.78%",
-        end: "88.89%",
+        start: "66.667%",
+        end: "83.333%",
       },
       {
         color: "var(--fg-toc-night)",
-        start: "88.89%",
+        start: "83.333%",
         end: "100%",
       },
+    ]);
+  });
+
+  it("matches chapter motifs to the approved daylight palette", () => {
+    const motifs = Array.from(
+      getDaylightArc().matchAll(
+        /\.project-chapter\[data-chapter-index="(\d+)"\]\s*\{\s*--chapter-motif-accent:\s*(#[0-9A-F]{6}|var\(--fg-toc-night\));\s*\}/g,
+      ),
+      ([, chapter, color]) => ({ chapter: Number(chapter), color }),
+    );
+
+    expect(motifs).toEqual([
+      { chapter: 1, color: "#F09456" },
+      { chapter: 2, color: "#F09456" },
+      { chapter: 3, color: "#FDD350" },
+      { chapter: 4, color: "#C74757" },
+      { chapter: 5, color: "var(--fg-toc-night)" },
+      { chapter: 6, color: "var(--fg-toc-night)" },
     ]);
   });
 });

@@ -2239,6 +2239,7 @@ button:focus-visible,
 
 .project-chapter-meta {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 1rem;
   max-width: 65ch;
