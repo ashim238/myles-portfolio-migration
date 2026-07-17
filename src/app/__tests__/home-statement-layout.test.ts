@@ -26,12 +26,15 @@ describe("homepage statement decoder layout", () => {
   it("reserves one stable grid area with the primary hero typography", () => {
     const decoder = block(".hero-statement-decoder");
     const sizer = block(".hero-statement-decoder-sizer");
+    const visible = block(".hero-statement-decoder-visible");
 
     expect(decoder).toMatch(/display:\s*grid/);
     expect(decoder).toMatch(/font-size:\s*clamp\(1\.18rem, 2\.5vw, 1\.55rem\)/);
     expect(decoder).not.toMatch(/font-family:\s*var\(--font-mono\)/);
     expect(sizer).toMatch(/grid-area:\s*1\s*\/\s*1/);
     expect(sizer).toMatch(/visibility:\s*hidden/);
+    expect(visible).toMatch(/grid-area:\s*1\s*\/\s*1/);
+    expect(visible).toMatch(/min-width:\s*0/);
   });
 
   it("removes the superseded typer selectors", () => {

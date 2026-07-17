@@ -44,16 +44,26 @@ describe("homepage first impression", () => {
     render(await Home());
 
     expect(screen.getByText("Product Designer")).toBeInTheDocument();
+    const heroName = screen.getByRole("heading", {
+      level: 1,
+      name: "Myles Ashitey",
+    });
     const statement = screen.getByTestId("finite-statement-decoder");
+    const credentials = screen.getByText(
+      "Previously TikTok and UMG. My latest project is Fresh Greens.",
+    );
     expect(statement).toHaveTextContent(
       "I design digital products and stay close through the build.",
     );
     expect(screen.queryByText(/^Also:/)).toBeNull();
     expect(
-      screen.getByText(
-        "Previously TikTok and UMG. My latest project is Fresh Greens.",
-      ),
-    ).toBeInTheDocument();
+      heroName.compareDocumentPosition(statement) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(
+      statement.compareDocumentPosition(credentials) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
     expect(
       screen.getByRole("link", { name: "View selected work" }),
     ).toHaveAttribute("href", "/#work");
