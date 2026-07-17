@@ -1,0 +1,355 @@
+- generic [active] [ref=f6e1]:
+  - link "Skip to main content" [ref=f6e2]:
+    - /url: "#main-content"
+  - main [ref=f6e3]:
+    - generic [ref=f6e4]:
+      - generic [ref=f6e5]:
+        - link "Myles Ashitey, home" [ref=f6e6]:
+          - /url: /
+        - button "Switch to dark mode" [ref=f6e64]
+      - navigation "Primary" [ref=f6e68]:
+        - list [ref=f6e69]:
+          - listitem [ref=f6e70]:
+            - link "01. Work" [ref=f6e71]:
+              - /url: /#work
+          - listitem [ref=f6e72]:
+            - link "02. About" [ref=f6e73]:
+              - /url: /about
+          - listitem [ref=f6e74]:
+            - link "03. Play" [ref=f6e75]:
+              - /url: /play
+          - listitem [ref=f6e76]:
+            - link "04. Resume" [ref=f6e77]:
+              - /url: /resume
+          - listitem [ref=f6e78]:
+            - link "05. E-mail" [ref=f6e79]:
+              - /url: mailto:mylesashitey@gmail.com
+    - navigation "Breadcrumb" [ref=f6e80]:
+      - link "Selected work" [ref=f6e81]:
+        - /url: /#work
+        - generic [ref=f6e82]: ←
+        - text: Selected work
+    - region [ref=f6e83]:
+      - paragraph [ref=f6e84]: Product design · 2025–present
+      - heading "UnderstandingFAFSA" [level=1] [ref=f6e85]
+      - paragraph [ref=f6e86]: Redesigned a newsletter system for a site rebrand. The first send opened at ~52.6% versus prior sends around 30%, with Mailchimp Privacy Protection excluded.
+    - figure [ref=f6e87]:
+      - img "Two phone mockups showing blue and orange UnderstandingFAFSA newsletter templates." [ref=f6e88]
+    - region "At a glance" [ref=f6e89]:
+      - generic [ref=f6e90]:
+        - generic [ref=f6e91]:
+          - term [ref=f6e92]: Problem
+          - definition [ref=f6e93]: A freshly rebranded site left its newsletter looking dated and off-brand.
+        - generic [ref=f6e94]:
+          - term [ref=f6e95]: Role
+          - definition [ref=f6e96]: Product Designer
+        - generic [ref=f6e97]:
+          - term [ref=f6e98]: Timeline
+          - definition [ref=f6e99]: February 2025 – Ongoing
+        - generic [ref=f6e100]:
+          - term [ref=f6e101]: Tools
+          - definition [ref=f6e102]: Figma, Mailchimp
+        - generic [ref=f6e103]:
+          - term [ref=f6e104]: Outcome
+          - definition [ref=f6e105]:
+            - generic [ref=f6e106]: ~52.6%
+            - text: open rate on the first redesigned send versus prior sends around 30%, with Mailchimp Privacy Protection excluded
+      - generic [ref=f6e107]:
+        - paragraph [ref=f6e108]: Key moves
+        - list [ref=f6e109]:
+          - listitem [ref=f6e110]: → Compiled and evaluated 120+ newsletters with one collaborator.
+          - listitem [ref=f6e111]: → Built a modular template system with locked layers and swappable parts.
+          - listitem [ref=f6e112]: → Matched the newsletter type and palette to the rebranded site.
+    - navigation "Case study sections" [ref=f6e113]:
+      - list [ref=f6e115]:
+        - listitem [ref=f6e116]:
+          - button "01. A rebrand and a weekly workflow" [ref=f6e117]:
+            - generic [ref=f6e119]: "01."
+            - generic: A rebrand and a weekly workflow
+        - listitem [ref=f6e121]:
+          - button "02. Where the old template broke down" [ref=f6e122]:
+            - generic [ref=f6e124]: "02."
+            - generic: Where the old template broke down
+        - listitem [ref=f6e126]:
+          - button "03. What 120 newsletters revealed" [ref=f6e127]:
+            - generic [ref=f6e129]: "03."
+            - generic: What 120 newsletters revealed
+        - listitem [ref=f6e131]:
+          - button "04. Three send types from the audit" [ref=f6e132]:
+            - generic [ref=f6e134]: "04."
+            - generic: Three send types from the audit
+        - listitem [ref=f6e136]:
+          - button "05. Rules for fixed and swappable parts" [ref=f6e137]:
+            - generic [ref=f6e139]: "05."
+            - generic: Rules for fixed and swappable parts
+        - listitem [ref=f6e141]:
+          - button "06. Rebuilding the system in Mailchimp" [ref=f6e142]:
+            - generic [ref=f6e144]: "06."
+            - generic: Rebuilding the system in Mailchimp
+        - listitem [ref=f6e146]:
+          - button "07. The first redesigned send" [ref=f6e147]:
+            - generic [ref=f6e149]: "07."
+            - generic: The first redesigned send
+      - paragraph [ref=f6e150]: Arrow keys move between sections. Home and End jump to the ends.
+    - status [ref=f6e151]
+    - button
+    - region [ref=f6e152]:
+      - heading "A rebrand and a weekly workflow" [level=2] [ref=f6e153]
+      - paragraph [ref=f6e155]: UnderstandingFAFSA helps students, parents, and counselors navigate the Free Application for Federal Student Aid (FAFSA). The newsletter carries guidance for all three groups. The website had already adopted Saans and a refreshed palette. The scope was email-only, and the founder assembles every issue.
+    - region [ref=f6e156]:
+      - heading "Where the old template broke down" [level=2] [ref=f6e157]
+      - paragraph [ref=f6e159]: "The newsletter covers deadline-driven guidance at key checkpoints: FAFSA filing windows, scholarship deadlines, and policy changes. The old template had uneven CTAs, long stretches of text, weak section breaks, and a layout that wasn't optimized for mobile. Its muted palette also came from the site's previous visual system."
+      - generic "Newsletter mobile layouts and reported open rates" [ref=f6e160]:
+        - figure "Prior sends · around 30% open rate" [ref=f6e161]:
+          - 'button "Expand image: Old newsletter template on mobile before the redesign, full scroll." [ref=f6e166]':
+            - img "Old newsletter template on mobile before the redesign, full scroll." [ref=f6e167]
+        - figure "First redesigned send · ~52.6% open rate (MPP excluded)" [ref=f6e169]:
+          - 'button "Expand image: Redesigned newsletter on mobile with updated hierarchy and brand system, full scroll." [ref=f6e174]':
+            - img "Redesigned newsletter on mobile with updated hierarchy and brand system, full scroll." [ref=f6e175]
+    - region [ref=f6e177]:
+      - heading "What 120 newsletters revealed" [level=2] [ref=f6e178]
+      - generic [ref=f6e179]:
+        - paragraph [ref=f6e180]: "Before touching templates, I worked with one collaborator to compile over 120 newsletter examples and evaluate them against four criteria: clarity, personalization, tone of voice, and visual appeal and branding consistency."
+        - paragraph [ref=f6e181]: "Five newsletters got the deepest treatment: Revenews, The 74, Next by Jeff Selingo, Medium, and Folderly. Each used a different mix of structure, tone, and branding."
+        - paragraph [ref=f6e182]: The rest of the newsletter pool served as lighter references for layout, color, and hierarchy patterns.
+        - paragraph [ref=f6e183]: "The deep dive highlights:"
+        - list [ref=f6e184]:
+          - listitem [ref=f6e185]:
+            - text: Revenews used
+            - strong [ref=f6e186]: selective bolding
+            - text: ", emoji section headers, and concise intros."
+          - listitem [ref=f6e187]:
+            - text: Folderly carried
+            - strong [ref=f6e188]: brand color
+            - text: into its bullet styles.
+          - listitem [ref=f6e189]:
+            - text: Several references used
+            - strong [ref=f6e190]: action-focused section titles
+            - text: to divide long sends.
+          - listitem [ref=f6e191]:
+            - text: The 74 used a
+            - strong [ref=f6e192]: more formal register
+            - text: than student-facing references that used emojis and GIFs.
+          - listitem [ref=f6e193]:
+            - text: Next used
+            - strong [ref=f6e194]: if/then link framing
+            - text: ", author photos, and brief bios."
+    - region [ref=f6e195]:
+      - heading "Three send types from the audit" [level=2] [ref=f6e196]
+      - generic [ref=f6e197]:
+        - paragraph [ref=f6e198]: The shared framework includes a welcome email that sets expectations, the core weekly newsletter, and an event-specific variant with fewer blocks for invites and recaps. A counselor-focused toolkit extends the same vocabulary (duotone icons, formal register) and is in progress.
+        - paragraph [ref=f6e199]: The welcome email follows a deliberate structure shaped by the audit. It includes a banner, gratitude, what to expect, a brief history that transitions into the current mission, a CTA, suggested reading, and social links. The welcome email introduces the redesigned type, palette, and content structure.
+      - generic "Newsletter template variants" [ref=f6e200]:
+        - group "Choose template variant" [ref=f6e201]:
+          - button "Weekly" [pressed] [ref=f6e202]
+          - button "Event" [ref=f6e203]
+        - 'button "Expand image: Full weekly newsletter. Modular kit with emoji section headers and color theme variants." [ref=f6e205]':
+          - img "Full weekly newsletter. Modular kit with emoji section headers and color theme variants." [ref=f6e206]
+        - paragraph [ref=f6e207]: Default send. Full modular kit assembled each week.
+        - paragraph [ref=f6e208]: Scroll inside the frame to read the full send. Click to expand.
+      - generic "Interactive newsletter composer" [ref=f6e209]:
+        - generic [ref=f6e210]:
+          - generic [ref=f6e211]:
+            - paragraph [ref=f6e212]: "Try it: assemble a send"
+            - paragraph [ref=f6e213]: Header and footer stay locked. Add middle blocks from the shelf, drag to reorder, or use the arrows. The exercise mirrors the system's locked and swappable rules.
+          - group "Composer actions" [ref=f6e214]:
+            - button "Randomize" [ref=f6e215]
+            - button "Reset" [ref=f6e216]
+        - status [ref=f6e217]
+        - generic [ref=f6e218]:
+          - region "Available blocks" [ref=f6e219]:
+            - heading "Block shelf" [level=3] [ref=f6e220]
+            - list [ref=f6e221]:
+              - listitem [ref=f6e222]:
+                - 'button "Add Lead story block. In send: 1." [ref=f6e223]':
+                  - generic [ref=f6e225]:
+                    - generic [ref=f6e226]: Lead story
+                    - generic [ref=f6e227]: Emoji header + bullets
+                  - generic [ref=f6e228]: "+1"
+              - listitem [ref=f6e229]:
+                - button "Add Related reading block." [ref=f6e230]:
+                  - generic [ref=f6e232]:
+                    - generic [ref=f6e233]: Related reading
+                    - generic [ref=f6e234]: News icon + links
+                  - generic [ref=f6e235]: +
+              - listitem [ref=f6e236]:
+                - button "Add Editor's picks block." [ref=f6e237]:
+                  - generic [ref=f6e239]:
+                    - generic [ref=f6e240]: Editor's picks
+                    - generic [ref=f6e241]: Trophy icon + links
+                  - generic [ref=f6e242]: +
+              - listitem [ref=f6e243]:
+                - button "Add Students split block." [ref=f6e244]:
+                  - generic [ref=f6e246]:
+                    - generic [ref=f6e247]: Students split
+                    - generic [ref=f6e248]: Juniors + seniors
+                  - generic [ref=f6e249]: +
+              - listitem [ref=f6e250]:
+                - 'button "Add Guides block. In send: 1." [ref=f6e251]':
+                  - generic [ref=f6e253]:
+                    - generic [ref=f6e254]: Guides
+                    - generic [ref=f6e255]: Downloadable cards
+                  - generic [ref=f6e256]: "+1"
+          - region "Assembled send" [ref=f6e257]:
+            - generic [ref=f6e258]:
+              - heading "Your send" [level=3] [ref=f6e259]
+              - paragraph [ref=f6e260]:
+                - generic [ref=f6e261]: "Illustrative estimate: 4 blocks"
+                - text: ·
+                - generic [ref=f6e262]: ~96 KB
+                - text: · 102 KB Gmail clipping threshold
+            - generic [ref=f6e263]:
+              - generic "Header (locked)" [ref=f6e264]:
+                - generic [ref=f6e265]:
+                  - 'img "Newsletter header block: FAFSA banner, wave divider, brand lockup." [ref=f6e270]'
+                  - generic [ref=f6e271]:
+                    - generic [ref=f6e272]: Header
+                    - generic [ref=f6e273]: Banner + brand lockup
+                  - generic [ref=f6e274]: Locked
+              - list "Swappable newsletter blocks" [ref=f6e275]:
+                - listitem [ref=f6e276]:
+                  - generic [ref=f6e277]:
+                    - 'img "Lead story block: emoji header, structured bullets, orange link accents." [ref=f6e286]'
+                    - generic [ref=f6e287]:
+                      - generic [ref=f6e288]: Lead story
+                      - generic [ref=f6e289]: Emoji header + bullets
+                      - generic [ref=f6e290]: Position 2 of 4
+                    - group "Reorder Lead story" [ref=f6e291]:
+                      - button "Move Lead story up" [disabled] [ref=f6e292]
+                      - button "Move Lead story down" [ref=f6e295]
+                      - button "Remove Lead story" [ref=f6e298]
+                - listitem [ref=f6e301]:
+                  - generic [ref=f6e302]:
+                    - img "Guide cards section linking to downloadable resources." [ref=f6e311]
+                    - generic [ref=f6e312]:
+                      - generic [ref=f6e313]: Guides
+                      - generic [ref=f6e314]: Downloadable cards
+                      - generic [ref=f6e315]: Position 3 of 4
+                    - group "Reorder Guides" [ref=f6e316]:
+                      - button "Move Guides up" [ref=f6e317]
+                      - button "Move Guides down" [disabled] [ref=f6e320]
+                      - button "Remove Guides" [ref=f6e323]
+              - generic "Footer (locked)" [ref=f6e326]:
+                - generic [ref=f6e327]:
+                  - 'img "Footer block: subscribe CTA, social links, and The New School credit." [ref=f6e332]'
+                  - generic [ref=f6e333]:
+                    - generic [ref=f6e334]: Footer
+                    - generic [ref=f6e335]: CTA + social + credit
+                  - generic [ref=f6e336]: Locked
+    - region [ref=f6e337]:
+      - heading "Rules for fixed and swappable parts" [level=2] [ref=f6e338]
+      - paragraph [ref=f6e340]: Spacing, dividers, type, and the structural skeleton stay locked. Editors swap body copy and emoji-style section images. The founder drafts each week's copy and works within those fixed rules.
+      - generic "Locked structure and swappable content, shown together" [ref=f6e341]:
+        - group "Annotation focus" [ref=f6e342]:
+          - button "Both" [pressed] [ref=f6e343]
+          - button "Swappable" [ref=f6e344]
+          - button "Locked" [ref=f6e345]
+        - paragraph [ref=f6e346]: Pick a layer to isolate it. The other dims back.
+        - generic [ref=f6e347]: "Showing both layers: swappable content and the locked frame."
+        - generic [ref=f6e348]:
+          - 'button "Expand image: Students block with the locked structural frame and swappable content regions marked together." [ref=f6e349]':
+            - img "Students block with the locked structural frame and swappable content regions marked together." [ref=f6e350]
+          - img:
+            - generic: Locked
+            - generic: Swappable
+        - group "Recolor the swappable regions" [ref=f6e351]:
+          - paragraph [ref=f6e352]: Try a swap. The palette re-tints the region markers.
+          - list [ref=f6e353]:
+            - listitem [ref=f6e354]:
+              - button "Use Signal orange (#f26938) as the swappable accent" [pressed] [ref=f6e355]:
+                - generic [ref=f6e357]: Signal orange
+            - listitem [ref=f6e358]:
+              - button "Use Magenta (#be5abf) as the swappable accent" [ref=f6e359]:
+                - generic [ref=f6e361]: Magenta
+            - listitem [ref=f6e362]:
+              - button "Use Sky (#2788c1) as the swappable accent" [ref=f6e363]:
+                - generic [ref=f6e365]: Sky
+            - listitem [ref=f6e366]:
+              - button "Use Meadow (#2fac38) as the swappable accent" [ref=f6e367]:
+                - generic [ref=f6e369]: Meadow
+            - listitem [ref=f6e370]:
+              - button "Use Sunbeam (#f2b544) as the swappable accent" [ref=f6e371]:
+                - generic [ref=f6e373]: Sunbeam
+            - listitem [ref=f6e374]:
+              - button "Use Deep navy (#164f73) as the swappable accent" [ref=f6e375]:
+                - generic [ref=f6e377]: Deep navy
+        - list [ref=f6e378]:
+          - listitem [ref=f6e379]:
+            - generic [ref=f6e381]:
+              - strong [ref=f6e382]: Swappable
+              - text: ": editors change each send (headlines, body copy, emoji icons, article links)."
+          - listitem [ref=f6e383]:
+            - generic [ref=f6e385]:
+              - strong [ref=f6e386]: Locked
+              - text: ": structure holds every send (wave dividers, padding rails, section rhythm, footer skeleton)."
+      - generic [ref=f6e387]:
+        - 'button "Copy color #be5abf" [ref=f6e388]':
+          - generic [ref=f6e390]: "#be5abf"
+        - 'button "Copy color #164f73" [ref=f6e391]':
+          - generic [ref=f6e393]: "#164f73"
+        - 'button "Copy color #82c5fb" [ref=f6e394]':
+          - generic [ref=f6e396]: "#82c5fb"
+        - 'button "Copy color #f2b544" [ref=f6e397]':
+          - generic [ref=f6e399]: "#f2b544"
+        - 'button "Copy color #f26938" [ref=f6e400]':
+          - generic [ref=f6e402]: "#f26938"
+        - 'button "Copy color #2fac38" [ref=f6e403]':
+          - generic [ref=f6e405]: "#2fac38"
+        - 'button "Copy color #6d2161" [ref=f6e406]':
+          - generic [ref=f6e408]: "#6d2161"
+        - 'button "Copy color #2788c1" [ref=f6e409]':
+          - generic [ref=f6e411]: "#2788c1"
+        - 'button "Copy color #48d1c7" [ref=f6e412]':
+          - generic [ref=f6e414]: "#48d1c7"
+        - 'button "Copy color #004aad" [ref=f6e415]':
+          - generic [ref=f6e417]: "#004aad"
+        - 'button "Copy color #e572e4" [ref=f6e418]':
+          - generic [ref=f6e420]: "#e572e4"
+        - 'button "Copy color #7100bf" [ref=f6e421]':
+          - generic [ref=f6e423]: "#7100bf"
+    - region [ref=f6e424]:
+      - heading "Rebuilding the system in Mailchimp" [level=2] [ref=f6e425]
+      - generic [ref=f6e426]:
+        - paragraph [ref=f6e427]: The hierarchy, spacing, and modular rhythm all lived in Figma, but the live template had to be rebuilt in Mailchimp so the founder could edit without touching HTML. Matching Figma spacing inside the builder was a dead end. Every container and wrapper added bloat. I simplified the section-header and body hierarchy for the Mailchimp build.
+        - paragraph [ref=f6e428]:
+          - mark [ref=f6e429]: Gmail's 102KB HTML ceiling and clipping created a rigid constraint.
+          - text: Early weight came from custom section icons and themed dividers exported from Figma. Test sends showed which wrappers and dividers could go. I merged sections where they still scanned and compressed PNGs through an external tool. For dark-mode-friendly dividers, I removed backgrounds in Photoshop so assets stayed lighter without muddying on phone.
+        - paragraph [ref=f6e430]: "Compression wasn't one recipe. The weekly kit leaned on fewer custom assets and more Mailchimp-native structure. The counselor toolkit needed more image work and tighter file discipline for its duotone icons. What I wouldn't trade for a few kilobytes: typography tuned to the closest Mailchimp sans to the site's Saans typeface, and the full brand palette, even when trying to maintain the founder's appetite for vibrancy."
+      - generic [ref=f6e431]:
+        - 'figure "Figma: students block (design source)" [ref=f6e432]':
+          - 'button "Expand image: Figma: students block with layout guides, spacing rails, and type hierarchy." [ref=f6e433]':
+            - 'img "Figma: students block with layout guides, spacing rails, and type hierarchy." [ref=f6e434]'
+        - 'figure "Mailchimp: students block (shipped module)" [ref=f6e436]':
+          - 'button "Expand image: Mailchimp: same students block after translation into editable modules." [ref=f6e437]':
+            - 'img "Mailchimp: same students block after translation into editable modules." [ref=f6e438]'
+    - region [ref=f6e440]:
+      - heading "The first redesigned send" [level=2] [ref=f6e441]
+      - generic [ref=f6e442]:
+        - paragraph [ref=f6e443]:
+          - mark [ref=f6e444]: This was my first time designing a system someone else assembles every week.
+        - paragraph [ref=f6e445]: "The first redesigned send went out November 4, 2025. Mailchimp reported ~52.6% for the first redesigned send with MPP excluded. Earlier sends opened around 30%. What shipped: a master template, modular blocks, explicit locked-vs-swappable rules, and three template variants on the same design vocabulary."
+    - region [ref=f6e446]:
+      - heading "More work" [level=2] [ref=f6e447]
+      - list [ref=f6e448]:
+        - listitem [ref=f6e449]:
+          - link [ref=f6e450]:
+            - /url: /work/fresh-greens
+            - generic [ref=f6e451]:
+              - heading "Fresh Greens" [level=3] [ref=f6e452]
+              - paragraph [ref=f6e453]: A working wayfinding prototype for Black drivers that brings community safety reports into route scoring alongside public map data.
+            - img "Fresh Greens preview" [ref=f6e454]
+        - listitem [ref=f6e455]:
+          - link [ref=f6e456]:
+            - /url: /work/navi
+            - generic [ref=f6e457]:
+              - heading "Navi" [level=3] [ref=f6e458]
+              - paragraph [ref=f6e459]: A graduate-studio concept for neighborhood travel. I later rebuilt it as a working portfolio demo.
+            - img "Navi preview" [ref=f6e460]
+        - listitem [ref=f6e461]:
+          - link [ref=f6e462]:
+            - /url: /work/tiktok
+            - generic [ref=f6e463]:
+              - heading "TikTok Dynamic Showcase Ads" [level=3] [ref=f6e464]
+              - paragraph [ref=f6e465]: Static catalog templates for TikTok's Dynamic Showcase Ads. Light Academia shipped in the launch library, and I later learned through Global Creative Lab that American Eagle selected it.
+            - img "TikTok Dynamic Showcase Ads preview" [ref=f6e466]
+  - alert [ref=f6e467]

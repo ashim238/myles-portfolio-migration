@@ -1,0 +1,504 @@
+[     133ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[     160ms] [LOG] [HMR] connected @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[     243ms] [LOG] %cHey, you're inspecting. I like that. font-size:14px;font-weight:600;color:#8ab4ff; @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[     243ms] [LOG] %cThis portfolio is built with Next.js, React 19, and Tailwind v4.
+The motion layer uses CSS scroll-driven animations and anime.js.
+If you want to talk about how any of it works: ashim238@newschool.edu font-size:12px;color:#c4c4c4; @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   81684ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   81703ms] [LOG] [HMR] connected @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   81771ms] [WARNING] Image with src "/projects/tiktok/system/dopamine.webp" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   81775ms] [LOG] %cHey, you're inspecting. I like that. font-size:14px;font-weight:600;color:#8ab4ff; @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   81775ms] [LOG] %cThis portfolio is built with Next.js, React 19, and Tailwind v4.
+The motion layer uses CSS scroll-driven animations and anime.js.
+If you want to talk about how any of it works: ashim238@newschool.edu font-size:12px;color:#c4c4c4; @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   81841ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   81858ms] [LOG] [Fast Refresh] done in 119ms @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  125097ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  125126ms] [LOG] [Fast Refresh] done in 56ms @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  259169ms] [ERROR] WebSocket connection to 'ws://localhost:3100/_next/webpack-hmr?id=Fni2AJoccJ1MfOQLJ3Rih' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13422
+[  260173ms] [ERROR] WebSocket connection to 'ws://localhost:3100/_next/webpack-hmr?id=Fni2AJoccJ1MfOQLJ3Rih' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13422
+[  261177ms] [ERROR] WebSocket connection to 'ws://localhost:3100/_next/webpack-hmr?id=Fni2AJoccJ1MfOQLJ3Rih' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13422
+[  262183ms] [ERROR] WebSocket connection to 'ws://localhost:3100/_next/webpack-hmr?id=Fni2AJoccJ1MfOQLJ3Rih' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13422
+[  263187ms] [ERROR] WebSocket connection to 'ws://localhost:3100/_next/webpack-hmr?id=Fni2AJoccJ1MfOQLJ3Rih' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13422
+[  268191ms] [ERROR] WebSocket connection to 'ws://localhost:3100/_next/webpack-hmr?id=Fni2AJoccJ1MfOQLJ3Rih' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13422
+[  273195ms] [ERROR] WebSocket connection to 'ws://localhost:3100/_next/webpack-hmr?id=Fni2AJoccJ1MfOQLJ3Rih' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13422
+[  278200ms] [ERROR] WebSocket connection to 'ws://localhost:3100/_next/webpack-hmr?id=Fni2AJoccJ1MfOQLJ3Rih' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13422
+[  283206ms] [ERROR] WebSocket connection to 'ws://localhost:3100/_next/webpack-hmr?id=Fni2AJoccJ1MfOQLJ3Rih' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13422
+[  288210ms] [ERROR] WebSocket connection to 'ws://localhost:3100/_next/webpack-hmr?id=Fni2AJoccJ1MfOQLJ3Rih' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13422
+[  293215ms] [ERROR] WebSocket connection to 'ws://localhost:3100/_next/webpack-hmr?id=Fni2AJoccJ1MfOQLJ3Rih' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13422
+[  298219ms] [ERROR] WebSocket connection to 'ws://localhost:3100/_next/webpack-hmr?id=Fni2AJoccJ1MfOQLJ3Rih' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13422
+[  445116ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  445171ms] [LOG] [HMR] connected @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  445233ms] [LOG] %cHey, you're inspecting. I like that. font-size:14px;font-weight:600;color:#8ab4ff; @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  445234ms] [LOG] %cThis portfolio is built with Next.js, React 19, and Tailwind v4.
+The motion layer uses CSS scroll-driven animations and anime.js.
+If you want to talk about how any of it works: ashim238@newschool.edu font-size:12px;color:#c4c4c4; @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[10456034ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[10456056ms] [LOG] [Fast Refresh] done in 124ms @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[10560176ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[10560195ms] [LOG] [HMR] connected @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[10560249ms] [LOG] %cHey, you're inspecting. I like that. font-size:14px;font-weight:600;color:#8ab4ff; @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[10560249ms] [LOG] %cThis portfolio is built with Next.js, React 19, and Tailwind v4.
+The motion layer uses CSS scroll-driven animations and anime.js.
+If you want to talk about how any of it works: ashim238@newschool.edu font-size:12px;color:#c4c4c4; @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[14579891ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[14580587ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[14580723ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[14581131ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[14581232ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[14581446ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[14581456ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3100/work/tiktok?_rsc=L1S_ObDang9QgHU1:0
+[14581471ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3100/work/tiktok?_rsc=L1S_ObDang9QgHU1:0
+[14581488ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3100/work/tiktok?_rsc=L1S_ObDang9QgHU1:0
+[14581501ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3100/work/tiktok?_rsc=L1S_ObDang9QgHU1:0
+[14581528ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3100/work/tiktok?_rsc=L1S_ObDang9QgHU1:0
+[14581558ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3100/work/tiktok:0
+[14581609ms] [ERROR] Refused to execute script from 'http://localhost:3100/_next/static/development/_clientMiddlewareManifest.js' because its MIME type ('application/json') is not executable, and strict MIME type checking is enabled. @ http://localhost:3100/work/tiktok:0
+[14581637ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3100/_next/static/chunks/node_modules_react-dom_0kla17-._.js:15305
+[14581674ms] Error: ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed
+
+
+    at <unknown> (Error: ./src/app/work/fresh-greens/page.tsx:1:10)
+    at Object.getCompilationErrors (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/dev/hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/lib/dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/dev/next-dev-server.js:720:42)
+    at DevServer.findPageComponents (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/dev/next-dev-server.js:690:43)
+    at async DevServer.renderErrorToResponseImpl (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/base-server.js:1753:26)
+[14581674ms] [LOG] [HMR] connected @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14581677ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14581744ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14581789ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14736032ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14736033ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14736121ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14736135ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14736240ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14736272ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14736363ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14736400ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14740853ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14740876ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14818821ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14818915ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3100/work/tiktok:0
+[14818940ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3100/_next/static/chunks/node_modules_react-dom_0kla17-._.js:15305
+[14818949ms] Error: ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed
+
+
+    at <unknown> (Error: ./src/app/work/fresh-greens/page.tsx:1:10)
+    at Object.getCompilationErrors (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/dev/hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/lib/dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/dev/next-dev-server.js:720:42)
+    at DevServer.findPageComponents (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/dev/next-dev-server.js:690:43)
+    at async DevServer.renderErrorToResponseImpl (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/base-server.js:1753:26)
+[14818950ms] [ERROR] Refused to execute script from 'http://localhost:3100/_next/static/development/_clientMiddlewareManifest.js' because its MIME type ('application/json') is not executable, and strict MIME type checking is enabled. @ http://localhost:3100/work/tiktok:0
+[14818951ms] [LOG] [HMR] connected @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14818954ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14818986ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14819117ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14819262ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3100/work/tiktok:0
+[14819276ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3100/_next/static/chunks/node_modules_react-dom_0kla17-._.js:15305
+[14819282ms] Error: ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed
+
+
+    at <unknown> (Error: ./src/app/work/fresh-greens/page.tsx:1:10)
+    at Object.getCompilationErrors (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/dev/hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/lib/dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/dev/next-dev-server.js:720:42)
+    at DevServer.findPageComponents (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/dev/next-dev-server.js:690:43)
+    at async DevServer.renderErrorToResponseImpl (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/base-server.js:1753:26)
+[14819281ms] [ERROR] Refused to execute script from 'http://localhost:3100/_next/static/development/_clientMiddlewareManifest.js' because its MIME type ('application/json') is not executable, and strict MIME type checking is enabled. @ http://localhost:3100/work/tiktok:0
+[14819284ms] [LOG] [HMR] connected @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14819286ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14819287ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14819321ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14819383ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14819399ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3100/work/tiktok:0
+[14819409ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3100/_next/static/chunks/node_modules_react-dom_0kla17-._.js:15305
+[14819412ms] [ERROR] Refused to execute script from 'http://localhost:3100/_next/static/development/_clientMiddlewareManifest.js' because its MIME type ('application/json') is not executable, and strict MIME type checking is enabled. @ http://localhost:3100/work/tiktok:0
+[14819413ms] Error: ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed
+
+
+    at <unknown> (Error: ./src/app/work/fresh-greens/page.tsx:1:10)
+    at Object.getCompilationErrors (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/dev/hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/lib/dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/dev/next-dev-server.js:720:42)
+    at DevServer.findPageComponents (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/dev/next-dev-server.js:690:43)
+    at async DevServer.renderErrorToResponseImpl (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/base-server.js:1753:26)
+[14819417ms] [LOG] [HMR] connected @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14819419ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14819454ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14819579ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14819614ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14826688ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14826724ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14834869ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14834904ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14834998ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14835032ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14840745ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14840788ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14883529ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14883568ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3100/work/tiktok:0
+[14883600ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3100/_next/static/chunks/node_modules_react-dom_0kla17-._.js:15305
+[14883608ms] Error: ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed
+
+
+    at <unknown> (Error: ./src/app/work/fresh-greens/page.tsx:1:10)
+    at Object.getCompilationErrors (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/dev/hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/lib/dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/dev/next-dev-server.js:720:42)
+    at DevServer.findPageComponents (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/dev/next-dev-server.js:690:43)
+    at async DevServer.renderErrorToResponseImpl (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/base-server.js:1753:26)
+[14883606ms] [ERROR] Refused to execute script from 'http://localhost:3100/_next/static/development/_clientMiddlewareManifest.js' because its MIME type ('application/json') is not executable, and strict MIME type checking is enabled. @ http://localhost:3100/work/tiktok:0
+[14883607ms] [LOG] [HMR] connected @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14883613ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14883642ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14883710ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14883723ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3100/work/tiktok:0
+[14883735ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3100/_next/static/chunks/node_modules_react-dom_0kla17-._.js:15305
+[14883738ms] [ERROR] Refused to execute script from 'http://localhost:3100/_next/static/development/_clientMiddlewareManifest.js' because its MIME type ('application/json') is not executable, and strict MIME type checking is enabled. @ http://localhost:3100/work/tiktok:0
+[14883740ms] Error: ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed
+
+
+    at <unknown> (Error: ./src/app/work/fresh-greens/page.tsx:1:10)
+    at Object.getCompilationErrors (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/dev/hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/lib/dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/dev/next-dev-server.js:720:42)
+    at DevServer.findPageComponents (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/dev/next-dev-server.js:690:43)
+    at async DevServer.renderErrorToResponseImpl (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/base-server.js:1753:26)
+[14883740ms] [LOG] [HMR] connected @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14883740ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14883774ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14883862ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14883876ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3100/work/tiktok:0
+[14883888ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3100/_next/static/chunks/node_modules_react-dom_0kla17-._.js:15305
+[14883891ms] [ERROR] Refused to execute script from 'http://localhost:3100/_next/static/development/_clientMiddlewareManifest.js' because its MIME type ('application/json') is not executable, and strict MIME type checking is enabled. @ http://localhost:3100/work/tiktok:0
+[14883895ms] Error: ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed
+
+
+    at <unknown> (Error: ./src/app/work/fresh-greens/page.tsx:1:10)
+    at Object.getCompilationErrors (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/dev/hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/lib/dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/dev/next-dev-server.js:720:42)
+    at DevServer.findPageComponents (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/dev/next-dev-server.js:690:43)
+    at async DevServer.renderErrorToResponseImpl (file:///Users/mylesashitey/.codex/worktrees/bdcf/myles-portfolio-migration/node_modules/next/dist/server/base-server.js:1753:26)
+[14883893ms] [LOG] [HMR] connected @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14883896ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14883929ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14905795ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14905863ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14928913ms] [ERROR] ./src/app/work/fresh-greens/page.tsx:1:10
+Expected ';', '}' or <eof>
+> 1 | Ohimport type { Metadata } from "next";
+    |          ^^^^
+  2 | import { ExpandableImage } from "@/components/expandable-image";
+  3 | import { LeadMedia } from "@/components/lead-media";
+  4 | import { LeadVideo } from "@/components/lead-video";
+
+Parsing ecmascript source code failed @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[14928957ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14967360ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14967546ms] [LOG] [Fast Refresh] done in 141ms @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[14967787ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[14967799ms] [LOG] [HMR] connected @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[14967849ms] [LOG] %cHey, you're inspecting. I like that. font-size:14px;font-weight:600;color:#8ab4ff; @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[14967849ms] [LOG] %cThis portfolio is built with Next.js, React 19, and Tailwind v4.
+The motion layer uses CSS scroll-driven animations and anime.js.
+If you want to talk about how any of it works: ashim238@newschool.edu font-size:12px;color:#c4c4c4; @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[14982345ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[14982382ms] [LOG] [Fast Refresh] done in 56ms @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[14996671ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[14996709ms] [LOG] [Fast Refresh] done in 61ms @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[15018353ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[15018390ms] [LOG] [Fast Refresh] done in 49ms @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[15224303ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[15224329ms] [LOG] [Fast Refresh] done in 61ms @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477

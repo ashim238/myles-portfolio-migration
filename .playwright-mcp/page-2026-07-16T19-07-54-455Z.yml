@@ -1,0 +1,116 @@
+- generic [active] [ref=f14e1]:
+  - link "Skip to main content" [ref=f14e2]:
+    - /url: "#main-content"
+  - main [ref=f14e3]:
+    - generic [ref=f14e5]:
+      - link "Myles Ashitey, home" [ref=f14e6]:
+        - /url: /
+      - button "Switch to dark mode" [ref=f14e64]
+    - region [ref=f14e67]:
+      - paragraph [ref=f14e68]: Product Designer
+      - heading "Myles Ashitey" [level=1] [ref=f14e69]
+      - paragraph [ref=f14e70]: I design digital products and stay close through the build.
+      - paragraph [ref=f14e71]: Previously TikTok and UMG. My latest project is Fresh Greens.
+      - paragraph [ref=f14e72]:
+        - generic [ref=f14e73]: "Also: %&T#98 B<= &c83f ~zMmzh i4+ ~l5 ZYU8* Lv/&+"
+        - generic [ref=f14e74]: Also sweats the empty states and the error copy. makes his own roti from scratch. counts down to each Absolute Batman drop.
+        - text: "|"
+      - paragraph [ref=f14e75]:
+        - link "View selected work" [ref=f14e76]:
+          - /url: /#work
+          - text: View selected work
+          - generic [ref=f14e77]: ↓
+    - region [ref=f14e78]:
+      - heading "Selected Work" [level=2] [ref=f14e79]
+      - generic [ref=f14e80]:
+        - generic [ref=f14e81]:
+          - generic [ref=f14e82]: 04 / projects
+          - generic [ref=f14e83]: working file
+        - generic [ref=f14e84]:
+          - generic [ref=f14e85]: "01"
+          - link "Fresh Greens preview Product Designer · Solo build · 2026 Fresh Greens Built solo. A working React Native prototype across 26+ screens." [ref=f14e86]:
+            - /url: /work/fresh-greens
+            - generic [ref=f14e88]:
+              - img "Fresh Greens preview" [ref=f14e89]
+              - generic [ref=f14e90]: Product Designer · Solo build · 2026
+            - generic [ref=f14e91]:
+              - heading "Fresh Greens" [level=3] [ref=f14e92]
+              - paragraph [ref=f14e93]:
+                - strong [ref=f14e94]: Built solo.
+                - text: A working React Native prototype across 26+ screens.
+        - generic [ref=f14e95]:
+          - generic [ref=f14e96]:
+            - generic [ref=f14e97]: "02"
+            - link "UnderstandingFAFSA preview Product Designer · 2025 UnderstandingFAFSA ~52.6% open rate on the first redesigned send versus prior sends around 30%, with Mailchimp Privacy Protection excluded." [ref=f14e98]:
+              - /url: /work/understandingfafsa
+              - generic [ref=f14e100]:
+                - img "UnderstandingFAFSA preview" [ref=f14e101]
+                - generic [ref=f14e102]: Product Designer · 2025
+              - generic [ref=f14e103]:
+                - heading "UnderstandingFAFSA" [level=3] [ref=f14e104]
+                - paragraph [ref=f14e105]:
+                  - strong [ref=f14e106]: ~52.6%
+                  - text: open rate on the first redesigned send versus prior sends around 30%, with Mailchimp Privacy Protection excluded.
+          - generic [ref=f14e107]:
+            - generic [ref=f14e108]: "03"
+            - link "Navi preview UI/UX Designer · 2025 Navi Portfolio rebuild with a live component system and working booking flow." [ref=f14e109]:
+              - /url: /work/navi
+              - generic [ref=f14e111]:
+                - img "Navi preview" [ref=f14e112]
+                - generic [ref=f14e113]: UI/UX Designer · 2025
+              - generic [ref=f14e114]:
+                - heading "Navi" [level=3] [ref=f14e115]
+                - paragraph [ref=f14e116]: Portfolio rebuild with a live component system and working booking flow.
+          - generic [ref=f14e118]:
+            - generic [ref=f14e119]: "04"
+            - link "Creative Strategist Intern · Global Creative Lab · 2021 TikTok Dynamic Showcase Ads Static catalog templates for TikTok's Dynamic Showcase Ads. Light Academia shipped in the launch library, and I later learned through Global Creative Lab that American Eagle selected it." [ref=f14e120]:
+              - /url: /work/tiktok
+              - generic [ref=f14e121]: Creative Strategist Intern · Global Creative Lab · 2021
+              - generic [ref=f14e125]:
+                - heading "TikTok Dynamic Showcase Ads" [level=3] [ref=f14e126]
+                - paragraph [ref=f14e127]: Static catalog templates for TikTok's Dynamic Showcase Ads. Light Academia shipped in the launch library, and I later learned through Global Creative Lab that American Eagle selected it.
+        - generic [ref=f14e128]:
+          - generic [ref=f14e129]: end · selected work
+          - generic [ref=f14e130]: baseline · 8pt
+    - region [ref=f14e131]:
+      - heading "About" [level=2] [ref=f14e132]
+      - paragraph [ref=f14e133]: I came to product design through creative strategy at TikTok and UMG. The longer version includes comics, hiking, and why I ended up building my thesis in React Native.
+      - paragraph [ref=f14e134]:
+        - link "More about" [ref=f14e135]:
+          - /url: /about
+          - text: More about
+          - generic [ref=f14e136]: →
+        - link "Read the résumé" [ref=f14e137]:
+          - /url: /resume
+          - text: Read the résumé
+          - generic [ref=f14e138]: →
+        - link "Get in touch" [ref=f14e139]:
+          - /url: mailto:mylesashitey@gmail.com
+          - text: Get in touch
+          - generic [ref=f14e140]: ↗
+  - contentinfo [ref=f14e141]:
+    - navigation "Footer" [ref=f14e142]:
+      - link "Work" [ref=f14e143]:
+        - /url: /#work
+      - link "About" [ref=f14e144]:
+        - /url: /about
+      - link "Play" [ref=f14e145]:
+        - /url: /play
+      - link "Résumé" [ref=f14e146]:
+        - /url: /resume
+      - link "Email" [ref=f14e147]:
+        - /url: mailto:mylesashitey@gmail.com
+    - paragraph [ref=f14e148]: © 2026 Myles Ashitey
+  - navigation "Mobile navigation" [ref=f14e149]:
+    - link "Work" [ref=f14e150]:
+      - /url: /#work
+    - link "About" [ref=f14e157]:
+      - /url: /about
+    - link "Play" [ref=f14e162]:
+      - /url: /play
+    - link "Resume" [ref=f14e166]:
+      - /url: /resume
+    - link "E-mail" [ref=f14e170]:
+      - /url: mailto:mylesashitey@gmail.com
+  - button "Open Next.js Dev Tools" [ref=f14e180] [cursor=pointer]
+  - alert [ref=f14e184]

@@ -1,0 +1,10 @@
+[     580ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[     621ms] [LOG] [HMR] connected @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[     696ms] [LOG] %cHey, you're inspecting. I like that. font-size:14px;font-weight:600;color:#8ab4ff; @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[     696ms] [LOG] %cThis portfolio is built with Next.js, React 19, and Tailwind v4.
+The motion layer uses CSS scroll-driven animations and anime.js.
+If you want to talk about how any of it works: ashim238@newschool.edu font-size:12px;color:#c4c4c4; @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   37490ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   37820ms] [LOG] [Fast Refresh] done in 378ms @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   38043ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   38186ms] [LOG] [Fast Refresh] done in 213ms @ http://localhost:3100/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477

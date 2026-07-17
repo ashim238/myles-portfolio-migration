@@ -1,0 +1,202 @@
+- generic [active] [ref=f3e1]:
+  - link "Skip to main content" [ref=f3e2]:
+    - /url: "#main-content"
+  - main [ref=f3e3]:
+    - generic [ref=f3e4]:
+      - generic [ref=f3e5]:
+        - link "Myles Ashitey, home" [ref=f3e6]:
+          - /url: /
+        - button "Switch to dark mode" [ref=f3e64]
+      - navigation "Primary" [ref=f3e68]:
+        - list [ref=f3e69]:
+          - listitem [ref=f3e70]:
+            - link "01. Work" [ref=f3e71]:
+              - /url: /#work
+          - listitem [ref=f3e72]:
+            - link "02. About" [ref=f3e73]:
+              - /url: /about
+          - listitem [ref=f3e74]:
+            - link "03. Play" [ref=f3e75]:
+              - /url: /play
+          - listitem [ref=f3e76]:
+            - link "04. Resume" [ref=f3e77]:
+              - /url: /resume
+          - listitem [ref=f3e78]:
+            - link "05. E-mail" [ref=f3e79]:
+              - /url: mailto:mylesashitey@gmail.com
+    - navigation "Breadcrumb" [ref=f3e80]:
+      - link "Selected work" [ref=f3e81]:
+        - /url: /#work
+        - generic [ref=f3e82]: ←
+        - text: Selected work
+    - generic [ref=f3e85]:
+      - paragraph [ref=f3e86]:
+        - generic [ref=f3e95]: Creative Strategist Intern · 2021
+      - heading "TikTok Dynamic Showcase Ads" [level=1] [ref=f3e96]
+      - paragraph [ref=f3e97]: During my 2021 internship with Global Creative Lab, I designed three static catalog templates for TikTok's Dynamic Showcase Ads. The product slot stayed fixed while the type, color, and supporting graphics changed.
+    - region "At a glance" [ref=f3e98]:
+      - generic [ref=f3e99]:
+        - generic [ref=f3e100]:
+          - term [ref=f3e101]: Problem
+          - definition [ref=f3e102]: Dynamic Showcase Ads gave brands pre-made catalog templates. GCL needed a launch batch that could cover several fashion subcultures and still look at home on TikTok.
+        - generic [ref=f3e103]:
+          - term [ref=f3e104]: Role
+          - definition [ref=f3e105]: Creative Strategist Intern
+        - generic [ref=f3e106]:
+          - term [ref=f3e107]: Contribution
+          - definition [ref=f3e108]: Designed three of roughly ten templates in TikTok's Dynamic Showcase Ads launch batch.
+        - generic [ref=f3e109]:
+          - term [ref=f3e110]: Team
+          - definition [ref=f3e111]: Global Creative Lab
+        - generic [ref=f3e112]:
+          - term [ref=f3e113]: Feedback
+          - definition [ref=f3e114]: GCL encouraged me to keep exploring the templates as modular parts and pushed each direction closer to TikTok's existing brand language.
+        - generic [ref=f3e115]:
+          - term [ref=f3e116]: Timeline
+          - definition [ref=f3e117]: May – August 2021
+        - generic [ref=f3e118]:
+          - term [ref=f3e119]: Tools
+          - definition [ref=f3e120]: Photoshop, Illustrator
+        - generic [ref=f3e121]:
+          - term [ref=f3e122]: Outcome
+          - definition [ref=f3e123]:
+            - generic [ref=f3e124]: "1"
+            - text: of 3 templates shipped in the launch library
+      - generic [ref=f3e125]:
+        - paragraph [ref=f3e126]: Key moves
+        - list [ref=f3e127]:
+          - listitem [ref=f3e128]: → Studied Y2K, Maximalism, Dark Academia, WitchTok, and Cottagecore before choosing the final directions.
+          - listitem [ref=f3e129]: → Used one product slot map across Dopamine Dressing, e-Boy/e-Girl, and Light Academia.
+          - listitem [ref=f3e130]: → Built the files in parts and tested which elements could mix across directions.
+    - navigation "Case study sections" [ref=f3e131]:
+      - list [ref=f3e133]:
+        - listitem [ref=f3e134]:
+          - button "01. Fashion subcultures on TikTok" [ref=f3e135]:
+            - generic [ref=f3e137]: "01."
+            - generic: Fashion subcultures on TikTok
+        - listitem [ref=f3e139]:
+          - button "02. Defining the fixed catalog structure" [ref=f3e140]:
+            - generic [ref=f3e142]: "02."
+            - generic: Defining the fixed catalog structure
+        - listitem [ref=f3e144]:
+          - button "03. Templates as modular parts" [ref=f3e145]:
+            - generic [ref=f3e147]: "03."
+            - generic: Templates as modular parts
+        - listitem [ref=f3e149]:
+          - button "04. From sketches to layered files" [ref=f3e150]:
+            - generic [ref=f3e152]: "04."
+            - generic: From sketches to layered files
+        - listitem [ref=f3e154]:
+          - button "05. What shipped from the launch batch" [ref=f3e155]:
+            - generic [ref=f3e157]: "05."
+            - generic: What shipped from the launch batch
+      - paragraph [ref=f3e158]: Arrow keys move between sections. Home and End jump to the ends.
+    - status [ref=f3e159]
+    - button
+    - region [ref=f3e160]:
+      - heading "Fashion subcultures on TikTok" [level=2] [ref=f3e161]
+      - paragraph [ref=f3e163]: Before I moved into mockups, I looked at Y2K, Maximalism, Dark Academia, WitchTok, and Cottagecore. Those references helped me compare how different parts of TikTok's fashion community used type, color, texture, and imagery. I moved forward with Dopamine Dressing, e-Boy/e-Girl, and Light Academia because the differences were obvious at a glance.
+    - region [ref=f3e164]:
+      - heading "Defining the fixed catalog structure" [level=2] [ref=f3e165]
+      - paragraph [ref=f3e167]: Brands added their product catalog to a pre-made template. I handed off layered Photoshop files with a slot map showing where each asset would go.
+      - region "TikTok template system" [ref=f3e168]:
+        - group "Choose a template" [ref=f3e169]:
+          - 'button "View #DopamineDressing template" [pressed] [ref=f3e170]':
+            - generic [ref=f3e172]: "#DopamineDressing"
+          - 'button "View #e-Boy/#e-Girl template" [ref=f3e174]':
+            - generic [ref=f3e176]: "#e-Boy/#e-Girl"
+          - 'button "View #LightAcademia template, shipped" [ref=f3e178]':
+            - generic [ref=f3e180]:
+              - generic [ref=f3e181]: "#LightAcademia"
+              - generic [ref=f3e182]: Shipped
+        - group "Inspect template parts" [ref=f3e183]:
+          - button "Title" [ref=f3e184]
+          - button "Catalog slot" [pressed] [ref=f3e185]
+        - 'figure "Selected template: #DopamineDressing" [ref=f3e186]':
+          - img "#DopamineDressing static Dynamic Showcase Ad template" [ref=f3e188]
+          - generic [ref=f3e189]:
+            - generic [ref=f3e190]:
+              - strong [ref=f3e191]: "#DopamineDressing"
+              - generic [ref=f3e192]: GCL feedback pushed me to bring more of TikTok's brand language and copy into the direction.
+            - generic [ref=f3e193]:
+              - generic [ref=f3e194]: Catalog slot
+              - paragraph [ref=f3e195]: Brands add product imagery and catalog details to the fixed slot shown here.
+              - generic [ref=f3e196]: Source-aligned region overlay
+    - region [ref=f3e197]:
+      - heading "Templates as modular parts" [level=2] [ref=f3e198]
+      - generic [ref=f3e199]:
+        - paragraph [ref=f3e200]: I built each template in parts so the catalog content could drop into a fixed structure. While working that way, I started to see the individual pieces as a system brands could potentially customize rather than a single locked composition.
+        - paragraph [ref=f3e201]: "I pitched that direction while I was constructing the files, and GCL encouraged me to keep exploring it. Most combinations worked best inside their own visual system. Light Academia and #e-Boy/#e-Girl shared enough structure that I could borrow some parts between them."
+    - region [ref=f3e202]:
+      - heading "From sketches to layered files" [level=2] [ref=f3e203]
+      - paragraph [ref=f3e204]: I started with loose sketches, then built each direction as a layered Photoshop file. The notes below paraphrase feedback from Global Creative Lab.
+      - generic [ref=f3e205]:
+        - article [ref=f3e206]:
+          - heading "#DopamineDressing" [level=3] [ref=f3e208]
+          - generic [ref=f3e209]:
+            - figure "Process sketch" [ref=f3e210]:
+              - 'button "Expand image: Original process sketch for #DopamineDressing" [ref=f3e211]':
+                - 'img "Original process sketch for #DopamineDressing" [ref=f3e212]'
+            - figure "Static template" [ref=f3e214]:
+              - 'button "Expand image: Finished static #DopamineDressing catalog template" [ref=f3e215]':
+                - 'img "Finished static #DopamineDressing catalog template" [ref=f3e216]'
+          - paragraph [ref=f3e218]:
+            - strong [ref=f3e219]: Iteration note
+            - generic [ref=f3e220]: GCL feedback pushed me to bring more of TikTok's brand language and copy into the direction.
+        - article [ref=f3e221]:
+          - heading "#e-Boy/#e-Girl" [level=3] [ref=f3e223]
+          - generic [ref=f3e224]:
+            - figure "Process sketch" [ref=f3e225]:
+              - 'button "Expand image: Original process sketch for #e-Boy/#e-Girl" [ref=f3e226]':
+                - 'img "Original process sketch for #e-Boy/#e-Girl" [ref=f3e227]'
+            - figure "Static template" [ref=f3e229]:
+              - 'button "Expand image: Finished static #e-Boy/#e-Girl catalog template" [ref=f3e230]':
+                - 'img "Finished static #e-Boy/#e-Girl catalog template" [ref=f3e231]'
+          - paragraph [ref=f3e233]:
+            - strong [ref=f3e234]: Iteration note
+            - generic [ref=f3e235]: The team liked the texture, but felt the direction was drifting too far from TikTok's upbeat visual language. I kept the edge and looked for more dimension.
+        - article [ref=f3e236]:
+          - generic [ref=f3e237]:
+            - heading "#LightAcademia" [level=3] [ref=f3e238]
+            - generic [ref=f3e239]: Shipped
+          - generic [ref=f3e240]:
+            - figure "Process sketch" [ref=f3e241]:
+              - 'button "Expand image: Original process sketch for #LightAcademia" [ref=f3e242]':
+                - 'img "Original process sketch for #LightAcademia" [ref=f3e243]'
+            - figure "Static template" [ref=f3e245]:
+              - 'button "Expand image: Finished static #LightAcademia catalog template" [ref=f3e246]':
+                - 'img "Finished static #LightAcademia catalog template" [ref=f3e247]'
+          - paragraph [ref=f3e249]:
+            - strong [ref=f3e250]: Iteration note
+            - generic [ref=f3e251]: The simplicity was working. GCL encouraged me to make it feel more upbeat and more deliberate.
+    - region [ref=f3e252]:
+      - heading "What shipped from the launch batch" [level=2] [ref=f3e253]
+      - paragraph [ref=f3e255]:
+        - text: Light Academia shipped in the launch library.
+        - mark [ref=f3e256]: I later learned through Global Creative Lab that American Eagle selected it.
+    - region [ref=f3e257]:
+      - heading "More work" [level=2] [ref=f3e258]
+      - list [ref=f3e259]:
+        - listitem [ref=f3e260]:
+          - link [ref=f3e261]:
+            - /url: /work/fresh-greens
+            - generic [ref=f3e262]:
+              - heading "Fresh Greens" [level=3] [ref=f3e263]
+              - paragraph [ref=f3e264]: A working wayfinding prototype for Black drivers that brings community safety reports into route scoring alongside public map data.
+            - img "Fresh Greens preview" [ref=f3e265]
+        - listitem [ref=f3e266]:
+          - link [ref=f3e267]:
+            - /url: /work/understandingfafsa
+            - generic [ref=f3e268]:
+              - heading "UnderstandingFAFSA" [level=3] [ref=f3e269]
+              - paragraph [ref=f3e270]: Redesigned a newsletter system for a site rebrand. The first send opened at ~52.6% versus prior sends around 30%, with Mailchimp Privacy Protection excluded.
+            - img "UnderstandingFAFSA preview" [ref=f3e271]
+        - listitem [ref=f3e272]:
+          - link [ref=f3e273]:
+            - /url: /work/navi
+            - generic [ref=f3e274]:
+              - heading "Navi" [level=3] [ref=f3e275]
+              - paragraph [ref=f3e276]: A graduate-studio concept for neighborhood travel. I later rebuilt it as a working portfolio demo.
+            - img "Navi preview" [ref=f3e277]
+  - button "Open Next.js Dev Tools" [ref=f3e283] [cursor=pointer]
+  - alert [ref=f3e287]

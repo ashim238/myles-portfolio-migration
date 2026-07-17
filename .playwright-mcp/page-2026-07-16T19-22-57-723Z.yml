@@ -1,0 +1,122 @@
+- generic [active] [ref=f15e1]:
+  - link "Skip to main content" [ref=f15e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=f15e3]:
+    - generic [ref=f15e4]:
+      - generic [ref=f15e5]:
+        - link "Myles Ashitey, home" [ref=f15e6] [cursor=pointer]:
+          - /url: /
+        - button "Switch to light mode" [ref=f15e64] [cursor=pointer]
+      - navigation "Primary" [ref=f15e68]:
+        - list [ref=f15e69]:
+          - listitem [ref=f15e70]:
+            - link "01. Work" [ref=f15e71] [cursor=pointer]:
+              - /url: /#work
+          - listitem [ref=f15e72]:
+            - link "02. About" [ref=f15e73] [cursor=pointer]:
+              - /url: /about
+          - listitem [ref=f15e74]:
+            - link "03. Play" [ref=f15e75] [cursor=pointer]:
+              - /url: /play
+          - listitem [ref=f15e76]:
+            - link "04. Resume" [ref=f15e77] [cursor=pointer]:
+              - /url: /resume
+          - listitem [ref=f15e78]:
+            - link "05. E-mail" [ref=f15e79] [cursor=pointer]:
+              - /url: mailto:mylesashitey@gmail.com
+    - region [ref=f15e80]:
+      - paragraph [ref=f15e81]: Product Designer
+      - heading "Myles Ashitey" [level=1] [ref=f15e82]
+      - paragraph [ref=f15e83]: I design digital products and stay close through the build.
+      - paragraph [ref=f15e84]: Previously TikTok and UMG. My latest project is Fresh Greens.
+      - paragraph [ref=f15e85]:
+        - text: "Also:"
+        - generic [ref=f15e86]: Also sweats the empty states and the error copy. makes his own roti from scratch. counts down to each Absolute Batman drop.
+        - text: "|"
+      - paragraph [ref=f15e87]:
+        - link "View selected work" [ref=f15e88] [cursor=pointer]:
+          - /url: /#work
+          - text: View selected work
+          - generic [ref=f15e89]: ↓
+    - region [ref=f15e90]:
+      - heading "Selected Work" [level=2] [ref=f15e91]
+      - generic [ref=f15e92]:
+        - generic [ref=f15e93]:
+          - generic [ref=f15e94]: 04 / projects
+          - generic [ref=f15e95]: working file
+        - generic [ref=f15e97]:
+          - generic [ref=f15e98]: "01"
+          - link "Fresh Greens preview Product Designer · Solo build · 2026 Fresh Greens Built solo. A working React Native prototype across 26+ screens." [ref=f15e99] [cursor=pointer]:
+            - /url: /work/fresh-greens
+            - generic [ref=f15e101]:
+              - img "Fresh Greens preview" [ref=f15e102]
+              - generic [ref=f15e103]: Product Designer · Solo build · 2026
+            - generic [ref=f15e104]:
+              - heading "Fresh Greens" [level=3] [ref=f15e105]
+              - paragraph [ref=f15e106]:
+                - strong [ref=f15e107]: Built solo.
+                - text: A working React Native prototype across 26+ screens.
+        - generic [ref=f15e109]:
+          - generic [ref=f15e110]:
+            - generic [ref=f15e111]: "02"
+            - link "UnderstandingFAFSA preview Product Designer · 2025 UnderstandingFAFSA ~52.6% open rate on the first redesigned send versus prior sends around 30%, with Mailchimp Privacy Protection excluded." [ref=f15e112] [cursor=pointer]:
+              - /url: /work/understandingfafsa
+              - generic [ref=f15e114]:
+                - img "UnderstandingFAFSA preview" [ref=f15e115]
+                - generic [ref=f15e116]: Product Designer · 2025
+              - generic [ref=f15e117]:
+                - heading "UnderstandingFAFSA" [level=3] [ref=f15e118]
+                - paragraph [ref=f15e119]:
+                  - strong [ref=f15e120]: ~52.6%
+                  - text: open rate on the first redesigned send versus prior sends around 30%, with Mailchimp Privacy Protection excluded.
+          - generic [ref=f15e121]:
+            - generic [ref=f15e122]: "03"
+            - link "Navi preview UI/UX Designer · 2025 Navi Portfolio rebuild with a live component system and working booking flow." [ref=f15e123] [cursor=pointer]:
+              - /url: /work/navi
+              - generic [ref=f15e125]:
+                - img "Navi preview" [ref=f15e126]
+                - generic [ref=f15e127]: UI/UX Designer · 2025
+              - generic [ref=f15e128]:
+                - heading "Navi" [level=3] [ref=f15e129]
+                - paragraph [ref=f15e130]: Portfolio rebuild with a live component system and working booking flow.
+          - generic [ref=f15e132]:
+            - generic [ref=f15e133]: "04"
+            - link "Creative Strategist Intern · Global Creative Lab · 2021 TikTok Dynamic Showcase Ads Static catalog templates for TikTok's Dynamic Showcase Ads. Light Academia shipped in the launch library, and I later learned through Global Creative Lab that American Eagle selected it." [ref=f15e134] [cursor=pointer]:
+              - /url: /work/tiktok
+              - generic [ref=f15e135]: Creative Strategist Intern · Global Creative Lab · 2021
+              - generic [ref=f15e140]:
+                - heading "TikTok Dynamic Showcase Ads" [level=3] [ref=f15e141]
+                - paragraph [ref=f15e142]: Static catalog templates for TikTok's Dynamic Showcase Ads. Light Academia shipped in the launch library, and I later learned through Global Creative Lab that American Eagle selected it.
+        - generic [ref=f15e144]:
+          - generic [ref=f15e145]: end · selected work
+          - generic [ref=f15e146]: baseline · 8pt
+    - region [ref=f15e147]:
+      - heading "About" [level=2] [ref=f15e148]
+      - paragraph [ref=f15e149]: I came to product design through creative strategy at TikTok and UMG. The longer version includes comics, hiking, and why I ended up building my thesis in React Native.
+      - paragraph [ref=f15e150]:
+        - link "More about" [ref=f15e151] [cursor=pointer]:
+          - /url: /about
+          - text: More about
+          - generic [ref=f15e152]: →
+        - link "Read the résumé" [ref=f15e153] [cursor=pointer]:
+          - /url: /resume
+          - text: Read the résumé
+          - generic [ref=f15e154]: →
+        - link "Get in touch" [ref=f15e155] [cursor=pointer]:
+          - /url: mailto:mylesashitey@gmail.com
+          - text: Get in touch
+          - generic [ref=f15e156]: ↗
+  - contentinfo [ref=f15e157]:
+    - navigation "Footer" [ref=f15e158]:
+      - link "Work" [ref=f15e159] [cursor=pointer]:
+        - /url: /#work
+      - link "About" [ref=f15e160] [cursor=pointer]:
+        - /url: /about
+      - link "Play" [ref=f15e161] [cursor=pointer]:
+        - /url: /play
+      - link "Résumé" [ref=f15e162] [cursor=pointer]:
+        - /url: /resume
+      - link "Email" [ref=f15e163] [cursor=pointer]:
+        - /url: mailto:mylesashitey@gmail.com
+    - paragraph [ref=f15e164]: © 2026 Myles Ashitey
+  - button "Open Next.js Dev Tools" [ref=f15e170] [cursor=pointer]

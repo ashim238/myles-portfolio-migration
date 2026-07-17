@@ -1,0 +1,254 @@
+- generic [active] [ref=f7e1]:
+  - link "Skip to main content" [ref=f7e2]:
+    - /url: "#main-content"
+  - main [ref=f7e3]:
+    - generic [ref=f7e4]:
+      - generic [ref=f7e5]:
+        - link "Myles Ashitey, home" [ref=f7e6]:
+          - /url: /
+        - button "Switch to dark mode" [ref=f7e64]
+      - navigation "Primary" [ref=f7e68]:
+        - list [ref=f7e69]:
+          - listitem [ref=f7e70]:
+            - link "01. Work" [ref=f7e71]:
+              - /url: /#work
+          - listitem [ref=f7e72]:
+            - link "02. About" [ref=f7e73]:
+              - /url: /about
+          - listitem [ref=f7e74]:
+            - link "03. Play" [ref=f7e75]:
+              - /url: /play
+          - listitem [ref=f7e76]:
+            - link "04. Resume" [ref=f7e77]:
+              - /url: /resume
+          - listitem [ref=f7e78]:
+            - link "05. E-mail" [ref=f7e79]:
+              - /url: mailto:mylesashitey@gmail.com
+    - navigation "Breadcrumb" [ref=f7e80]:
+      - link "Selected work" [ref=f7e81]:
+        - /url: /#work
+        - generic [ref=f7e82]: ←
+        - text: Selected work
+    - region [ref=f7e83]:
+      - paragraph [ref=f7e84]: Graduate studio · 2025
+      - heading "Navi" [level=1] [ref=f7e85]
+      - paragraph [ref=f7e86]: A graduate-studio concept for neighborhood travel. I later rebuilt it as a working portfolio demo.
+    - figure [ref=f7e87]:
+      - img "Navi neighborhood experience search results and cards on a tablet on a wooden table." [ref=f7e88]
+    - region "At a glance" [ref=f7e89]:
+      - generic [ref=f7e90]:
+        - generic [ref=f7e91]:
+          - term [ref=f7e92]: Problem
+          - definition [ref=f7e93]: NYC tourism defaults to top-ten checklists that skip the neighborhoods and people who make the city.
+        - generic [ref=f7e94]:
+          - term [ref=f7e95]: Role
+          - definition [ref=f7e96]: UI/UX Designer
+        - generic [ref=f7e97]:
+          - term [ref=f7e98]: Timeline
+          - definition [ref=f7e99]: January 2025 – June 2025
+        - generic [ref=f7e100]:
+          - term [ref=f7e101]: Tools
+          - definition [ref=f7e102]: Figma, research
+      - generic [ref=f7e103]:
+        - paragraph [ref=f7e104]: Key moves
+        - list [ref=f7e105]:
+          - listitem [ref=f7e106]: → The team explored an early Manhattan redirection concept through a heatmap.
+          - listitem [ref=f7e107]: → The team audited six travel platforms and evaluated Airbnb with Nielsen's heuristics.
+          - listitem [ref=f7e108]: → The concept used a 14-response resident survey, three personas, and Learn, Plan, Go.
+    - navigation "Case study sections" [ref=f7e109]:
+      - list [ref=f7e111]:
+        - listitem [ref=f7e112]:
+          - button "01. Concentrated tourism as a routing problem" [ref=f7e113]:
+            - generic [ref=f7e115]: "01."
+            - generic: Concentrated tourism as a routing problem
+        - listitem [ref=f7e117]:
+          - 'button "02. The first prototype: a Manhattan heatmap" [ref=f7e118]':
+            - generic [ref=f7e120]: "02."
+            - generic: "The first prototype: a Manhattan heatmap"
+        - listitem [ref=f7e122]:
+          - button "03. Platform audits and resident research" [ref=f7e123]:
+            - generic [ref=f7e125]: "03."
+            - generic: Platform audits and resident research
+        - listitem [ref=f7e127]:
+          - button "04. The resident survey redirected the concept" [ref=f7e128]:
+            - generic [ref=f7e130]: "04."
+            - generic: The resident survey redirected the concept
+        - listitem [ref=f7e132]:
+          - button "05. From research to Learn, Plan, Go" [ref=f7e133]:
+            - generic [ref=f7e135]: "05."
+            - generic: From research to Learn, Plan, Go
+        - listitem [ref=f7e137]:
+          - button "06. Rebuilding Navi as a working system" [ref=f7e138]:
+            - generic [ref=f7e140]: "06."
+            - generic: Rebuilding Navi as a working system
+        - listitem [ref=f7e142]:
+          - button "07. A working booking flow" [ref=f7e143]:
+            - generic [ref=f7e145]: "07."
+            - generic: A working booking flow
+        - listitem [ref=f7e147]:
+          - button "08. What I would validate next" [ref=f7e148]:
+            - generic [ref=f7e150]: "08."
+            - generic: What I would validate next
+      - paragraph [ref=f7e151]: Arrow keys move between sections. Home and End jump to the ends.
+    - status [ref=f7e152]
+    - button
+    - region [ref=f7e153]:
+      - heading "Concentrated tourism as a routing problem" [level=2] [ref=f7e154]
+      - paragraph [ref=f7e155]: The early design premise treated concentrated tourism as a routing problem.
+      - generic [ref=f7e156]:
+        - paragraph [ref=f7e157]: That premise came before the resident survey and without a live tourist-density dataset. The first concept explored how redirection might distribute attention across more Manhattan neighborhoods.
+        - paragraph [ref=f7e158]: The next concept paired neighborhood-level experiences and local context with trip planning.
+    - region [ref=f7e159]:
+      - 'heading "The first prototype: a Manhattan heatmap" [level=2] [ref=f7e160]'
+      - paragraph [ref=f7e161]: A Manhattan heatmap turned the routing premise into an exploratory artifact.
+      - generic [ref=f7e162]:
+        - paragraph [ref=f7e163]: Before the survey, the team sketched a routing layer that could redirect a visitor from one Manhattan neighborhood to another. It did not claim to measure actual tourist density.
+        - paragraph [ref=f7e164]: Select a neighborhood to see how that first artifact worked. Regions represent narrative emphasis, not live geo analytics. The current interactive reconstruction keeps that same constraint.
+        - paragraph [ref=f7e165]: Even within the premise, sending someone somewhere quieter left the visit itself unchanged. Before committing to redirection as the lever, the next step was the resident survey.
+      - generic [ref=f7e166]:
+        - list "Manhattan neighborhoods" [ref=f7e167]:
+          - listitem [ref=f7e168]:
+            - button "Chelsea" [ref=f7e169]
+          - listitem [ref=f7e170]:
+            - button "Chinatown" [ref=f7e171]
+          - listitem [ref=f7e172]:
+            - button "Financial District" [ref=f7e173]
+          - listitem [ref=f7e174]:
+            - button "Greenwich Village" [ref=f7e175]
+          - listitem [ref=f7e176]:
+            - button "Harlem" [ref=f7e177]
+          - listitem [ref=f7e178]:
+            - button "Inwood" [ref=f7e179]
+          - listitem [ref=f7e180]:
+            - button "Lower East Side" [ref=f7e181]
+          - listitem [ref=f7e182]:
+            - button "Midtown" [ref=f7e183]
+          - listitem [ref=f7e184]:
+            - button "SoHo" [ref=f7e185]
+          - listitem [ref=f7e186]:
+            - button "Tribeca" [ref=f7e187]
+          - listitem [ref=f7e188]:
+            - button "Upper East Side" [ref=f7e189]
+          - listitem [ref=f7e190]:
+            - button "Upper West Side" [ref=f7e191]
+        - paragraph [ref=f7e195]: Select from the list to preview how Learn would frame each of 12 neighborhoods.
+    - region [ref=f7e196]:
+      - heading "Platform audits and resident research" [level=2] [ref=f7e197]
+      - generic [ref=f7e198]:
+        - paragraph [ref=f7e199]: The team audited six travel platforms. I evaluated Airbnb with Kaori Ogawa and Amy Zhang against Nielsen's ten usability heuristics. The evaluation surfaced issues with label consistency, family-facing filters, and visual clutter.
+        - paragraph [ref=f7e200]: The resident survey produced 14 responses. That dataset is the source for the two survey findings shown below.
+        - paragraph [ref=f7e201]: The next concept direction focused on neighborhood context and participation instead.
+      - list [ref=f7e202]:
+        - listitem [ref=f7e203]:
+          - heading "Guest Favorite label overuse" [level=3] [ref=f7e204]
+          - paragraph [ref=f7e205]: The designation appeared on nearly every listing we reviewed, with no consistent criteria visible to the evaluator, eroding trust in a signal meant to shortcut decisions.
+        - listitem [ref=f7e206]:
+          - heading "Minimal family & accessibility filters" [level=3] [ref=f7e207]
+          - paragraph [ref=f7e208]: Kid-friendly and accessibility-specific filters were thin. A crib amenity was often the only family-facing signal, leaving group planners without meaningful constraints.
+        - listitem [ref=f7e209]:
+          - heading "Visual clutter and repetitive listings" [level=3] [ref=f7e210]
+          - paragraph [ref=f7e211]: Grid layouts offered minimal differentiation between stays. Similar photography and copy patterns created decision fatigue before a traveler could compare neighborhood context.
+    - region [ref=f7e212]:
+      - heading "The resident survey redirected the concept" [level=2] [ref=f7e213]
+      - paragraph [ref=f7e214]: Two concerns appeared most often in the 14-response resident survey.
+      - generic [ref=f7e215]:
+        - paragraph [ref=f7e216]: Of the 14 responses, 71% were concerned about overcrowding and over-tourism. Another 50% were concerned about a lack of authentic experiences.
+        - paragraph [ref=f7e217]: "Highlights from 14 survey responses: Reimagining NYC Tourism: A More Meaningful & Sustainable Experience (resident survey)."
+      - generic "Survey response highlights" [ref=f7e218]:
+        - figure "concerned about overcrowding and over-tourism" [ref=f7e219]:
+          - generic: 71%
+        - figure "concerned about lack of authentic experiences" [ref=f7e224]:
+          - generic: 50%
+    - region [ref=f7e229]:
+      - heading "From research to Learn, Plan, Go" [level=2] [ref=f7e230]
+      - paragraph [ref=f7e231]: The concept used three personas and a Learn, Plan, Go structure.
+      - generic [ref=f7e232]:
+        - paragraph [ref=f7e233]: Cain framed group planning, Ororo needed neighborhood context, and Selina needed precise filters for shorter trips.
+        - paragraph [ref=f7e234]: The graduate-studio project stopped at a concept and did not include an engineering handoff.
+        - paragraph [ref=f7e235]:
+          - text: The resulting framework was
+          - mark [ref=f7e236]: Learn, Plan, Go
+          - text: ":"
+        - list [ref=f7e237]:
+          - listitem [ref=f7e238]:
+            - strong [ref=f7e239]: Learn
+            - text: surfaces local context.
+          - listitem [ref=f7e240]:
+            - strong [ref=f7e241]: Plan
+            - text: helps users compare and organize.
+          - listitem [ref=f7e242]:
+            - strong [ref=f7e243]: Go
+            - text: converts intent into bookings.
+    - region [ref=f7e244]:
+      - heading "Rebuilding Navi as a working system" [level=2] [ref=f7e245]
+      - generic [ref=f7e246]:
+        - paragraph [ref=f7e247]: For this portfolio case study, I rebuilt the Navi visual system as live React components.
+        - paragraph [ref=f7e248]: Jost was selected for display typography to echo urban wayfinding cues. Orange became the primary accent to distinguish Navi from the travel platforms in the audit. The portfolio rebuild pairs it with Lato and a 4px spacing system.
+        - paragraph [ref=f7e249]:
+          - text: The rebuild includes brand primitives, semantic aliases, interactive variants, and a playground for changing component props.
+          - link "See the Navi design system" [ref=f7e250]:
+            - /url: /work/navi/system
+          - text: . Those components are assembled into a working booking flow.
+          - link "Open the demo" [ref=f7e251]:
+            - /url: /work/navi/demo
+          - text: .
+      - generic [ref=f7e252]:
+        - paragraph [ref=f7e253]: Editorial homepage slice
+        - generic [ref=f7e254]:
+          - generic [ref=f7e255]:
+            - heading "Plan a trip that gives back" [level=3] [ref=f7e256]
+            - generic [ref=f7e257]:
+              - generic [ref=f7e258]: Locally owned
+              - generic [ref=f7e259]: Nature first
+            - generic: Start exploring
+          - generic [ref=f7e260]:
+            - article [ref=f7e261]:
+              - heading "Weekend in Harlem" [level=4] [ref=f7e262]
+              - paragraph [ref=f7e263]: Jazz history, local bakeries, and a sunset walk through St. Nicholas Park.
+            - article [ref=f7e264]:
+              - heading "Chinatown food crawl" [level=4] [ref=f7e265]
+              - paragraph [ref=f7e266]: Dim sum counters and tea shops curated by residents, not star ratings.
+            - article [ref=f7e267]:
+              - heading "LES art walk" [level=4] [ref=f7e268]
+              - paragraph [ref=f7e269]: Gallery openings and community murals, timed for quieter weekday mornings.
+    - region [ref=f7e270]:
+      - heading "A working booking flow" [level=2] [ref=f7e271]
+      - paragraph [ref=f7e272]: The screens below come from the current React build.
+      - paragraph [ref=f7e274]: The graduate-studio concept did not ship. The current demo is a portfolio rebuild that lets you browse the feed, search a neighborhood on the map, open a host, and try the booking flow. It uses the same components catalogued on the system page.
+      - generic [ref=f7e275]:
+        - paragraph [ref=f7e281]: mylesdesignsthings.com/work/navi/demo
+        - generic [ref=f7e282]:
+          - status [ref=f7e283]:
+            - generic [ref=f7e284]: Loading interactive demo
+          - iframe [ref=f7e287]
+        - link "Open full demo in a new tab" [ref=f7e289]:
+          - /url: /work/navi/demo
+          - text: Open full demo in a new tab ↗
+    - region [ref=f7e290]:
+      - heading "What I would validate next" [level=2] [ref=f7e291]
+      - paragraph [ref=f7e293]: A next round of research could test the deeper neighborhood pages in Learn, shared planning for group travelers, and onboarding for local hosts and businesses. Those flows are present in the rebuild, but they have not been validated with users.
+    - region [ref=f7e294]:
+      - heading "More work" [level=2] [ref=f7e295]
+      - list [ref=f7e296]:
+        - listitem [ref=f7e297]:
+          - link [ref=f7e298]:
+            - /url: /work/fresh-greens
+            - generic [ref=f7e299]:
+              - heading "Fresh Greens" [level=3] [ref=f7e300]
+              - paragraph [ref=f7e301]: A working wayfinding prototype for Black drivers that brings community safety reports into route scoring alongside public map data.
+            - img "Fresh Greens preview" [ref=f7e302]
+        - listitem [ref=f7e303]:
+          - link [ref=f7e304]:
+            - /url: /work/understandingfafsa
+            - generic [ref=f7e305]:
+              - heading "UnderstandingFAFSA" [level=3] [ref=f7e306]
+              - paragraph [ref=f7e307]: Redesigned a newsletter system for a site rebrand. The first send opened at ~52.6% versus prior sends around 30%, with Mailchimp Privacy Protection excluded.
+            - img "UnderstandingFAFSA preview" [ref=f7e308]
+        - listitem [ref=f7e309]:
+          - link [ref=f7e310]:
+            - /url: /work/tiktok
+            - generic [ref=f7e311]:
+              - heading "TikTok Dynamic Showcase Ads" [level=3] [ref=f7e312]
+              - paragraph [ref=f7e313]: Static catalog templates for TikTok's Dynamic Showcase Ads. Light Academia shipped in the launch library, and I later learned through Global Creative Lab that American Eagle selected it.
+            - img "TikTok Dynamic Showcase Ads preview" [ref=f7e314]
+  - alert [ref=f7e315]
