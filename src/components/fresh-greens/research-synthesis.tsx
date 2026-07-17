@@ -1,8 +1,8 @@
+"use client";
+
 import Image from "next/image";
-import {
-  SYNTHESIS,
-  FEATURE_REQUESTS,
-} from "@/lib/fresh-greens/research-synthesis-data";
+import { useRef, useState } from "react";
+import { SYNTHESIS } from "@/lib/fresh-greens/research-synthesis-data";
 
 const GLYPH: Record<string, string> = {
   light: "/projects/fresh-greens/process/glyph-light.svg",
@@ -19,60 +19,102 @@ const GLYPH: Record<string, string> = {
 export function ResearchSynthesis() {
   const markers = SYNTHESIS.filter((c) => c.key !== "community");
   const community = SYNTHESIS.find((c) => c.key === "community")!;
+  const [activeKey, setActiveKey] = useState(markers[0].key);
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const activeMarker = markers.find((marker) => marker.key === activeKey)!;
+
+  function moveTab(currentIndex: number, direction: 1 | -1) {
+    const nextIndex = (currentIndex + direction + markers.length) % markers.length;
+    tabsRef.current
+      ?.querySelectorAll<HTMLButtonElement>("[role='tab']")
+      [nextIndex]?.focus();
+    setActiveKey(markers[nextIndex].key);
+  }
 
   return (
     <div className="fg-synth" aria-label="What the six interviews surfaced">
-      <ul className="fg-synth-markers" role="list">
-        {markers.map((c) => (
-          <li key={c.key} className="fg-synth-marker">
-            <div className="fg-synth-marker-head">
-              {GLYPH[c.key] ? (
+      <div
+        className="fg-synth-tabs"
+        role="tablist"
+        aria-label="Interview signals"
+        ref={tabsRef}
+      >
+        {markers.map((marker, index) => {
+          const selected = marker.key === activeKey;
+          return (
+            <button
+              type="button"
+              role="tab"
+              id={`fg-synth-tab-${marker.key}`}
+              aria-controls={`fg-synth-panel-${marker.key}`}
+              aria-selected={selected}
+              tabIndex={selected ? 0 : -1}
+              className="fg-synth-tab"
+              key={marker.key}
+              onClick={() => setActiveKey(marker.key)}
+              onKeyDown={(event) => {
+                if (event.key === "ArrowRight") {
+                  event.preventDefault();
+                  moveTab(index, 1);
+                }
+                if (event.key === "ArrowLeft") {
+                  event.preventDefault();
+                  moveTab(index, -1);
+                }
+              }}
+              aria-label={`${marker.label}, ${marker.raisedBy} of 6 interviews`}
+            >
+              {GLYPH[marker.key] ? (
                 <Image
-                  src={GLYPH[c.key]}
+                  src={GLYPH[marker.key]}
                   alt=""
                   width={26}
                   height={26}
                   className="fg-synth-glyph"
                 />
               ) : null}
-              <p className="fg-synth-label">{c.label}</p>
-              <p className="fg-synth-count">{c.raisedBy}/6</p>
-            </div>
-            <p className="fg-synth-insight">{c.insight}</p>
-            <ul className="fg-synth-snippets" role="list">
-              {c.snippets.map((s) => (
-                <li key={s}>{s}</li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ul>
-
-      <div className="fg-synth-community">
-        <p className="fg-synth-label">{community.label}</p>
-        <p className="fg-synth-insight">{community.insight}</p>
-        <ul className="fg-synth-snippets" role="list">
-          {community.snippets.map((s) => (
-            <li key={s}>{s}</li>
-          ))}
-        </ul>
+              <span className="fg-synth-tab-copy">
+                <span className="fg-synth-label">{marker.label}</span>
+                <span className="fg-synth-count">{marker.raisedBy}/6</span>
+              </span>
+            </button>
+          );
+        })}
       </div>
 
-      <div className="fg-synth-asked">
-        <p className="fg-synth-asked-label">They asked for it, unprompted</p>
-        <ul role="list">
-          {FEATURE_REQUESTS.map((r) => (
-            <li key={r.became} className="fg-synth-asked-row">
-              <span className="fg-synth-asked-quote">
-                &ldquo;{r.asked}&rdquo;
-              </span>
-              <span className="fg-synth-asked-arrow" aria-hidden="true">
-                &rarr;
-              </span>
-              <span className="fg-synth-asked-became">{r.became}</span>
-            </li>
-          ))}
-        </ul>
+      <div
+        className="fg-synth-panel"
+        role="tabpanel"
+        id={`fg-synth-panel-${activeMarker.key}`}
+        aria-labelledby={`fg-synth-tab-${activeMarker.key}`}
+        key={activeMarker.key}
+      >
+        <div className="fg-synth-evidence">
+          <p className="fg-synth-panel-label">What I heard</p>
+          <p className="fg-synth-insight">{activeMarker.insight}</p>
+          <ul className="fg-synth-snippets" role="list">
+            {activeMarker.snippets.map((snippet) => (
+              <li key={snippet}>{snippet}</li>
+            ))}
+          </ul>
+        </div>
+        <span className="fg-synth-transform-arrow" aria-hidden="true">→</span>
+        <div className="fg-synth-response">
+          <p className="fg-synth-panel-label">What I designed</p>
+          <p>{activeMarker.designResponse}</p>
+        </div>
+      </div>
+
+      <div className="fg-synth-community">
+        <div>
+          <p className="fg-synth-panel-label">
+            Raised by {community.raisedBy} of 6 Black drivers
+          </p>
+          <p className="fg-synth-label">{community.label}</p>
+          <p className="fg-synth-insight">{community.insight}</p>
+        </div>
+        <span className="fg-synth-transform-arrow" aria-hidden="true">→</span>
+        <p className="fg-synth-community-response">{community.designResponse}</p>
       </div>
     </div>
   );

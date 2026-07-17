@@ -6,9 +6,16 @@ describe("outcome frontmatter fields", () => {
     const projects = await getPublishedProjects();
     const fafsa = projects.find((p) => p.slug === "understandingfafsa");
     expect(fafsa).toBeDefined();
-    expect(fafsa!.outcomeLead).toBe("75% lift");
-    expect(typeof fafsa!.outcomeRest).toBe("string");
-    expect(fafsa!.outcomeRest!.length).toBeGreaterThan(0);
+    expect(fafsa!.summary).toBe(
+      "Built a modular newsletter system for a site rebrand. The first redesigned send had an observed ~52.6% open rate with Mailchimp Privacy Protection excluded.",
+    );
+    expect(fafsa!.outcomeMetricLabel).toBe(
+      "observed open rate on the first redesigned send, with Mailchimp Privacy Protection excluded",
+    );
+    expect(fafsa!.outcomeLead).toBe("~52.6%");
+    expect(fafsa!.outcomeRest).toBe(
+      "observed open rate on the first redesigned send, with Mailchimp Privacy Protection excluded.",
+    );
   });
 
   it("leaves a field undefined when its key is absent", async () => {

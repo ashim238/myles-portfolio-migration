@@ -5,7 +5,7 @@ type Item = { id: string; label: string; icon: ReactNode; href: string };
 
 export function TabBar({ items, active }: { items: Item[]; active: string }) {
   return (
-    <nav className="nv-tabbar" aria-label="Primary">
+    <nav className="nv-tabbar" aria-label="Navi demo sections">
       {items.map((it) => {
         const selected = it.id === active;
         return (

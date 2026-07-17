@@ -1,0 +1,1714 @@
+/* ── Navi mini-site scope (.nv-ui) ───────────────────────────────
+   Distinct from the case study's .nv-page. Light Navi product chrome.
+   Values mirror src/lib/navi/tokens.ts. */
+.nv-ui,
+.nv-overlay-root {
+  /* .nv-overlay-root is the token scope for body-portaled overlays (date modal,
+     booking sheet). They render outside .nv-ui, so without re-declaring the full
+     token block here their surface/text/radii resolve to nothing. Paired with
+     the font-variable classNames the OverlayRoot component adds, this restores
+     the complete minisite environment in the portal. */
+  /* The mini-site is light-only; pin native controls (select, radio, scrollbars)
+     to the light palette so they don't render dark under a dark OS theme. */
+  color-scheme: light;
+  accent-color: #c4541a;
+
+  --nv-darwin: #f3722c;
+  --nv-gumball: #3a86ff;
+  --nv-robinson: #4a414d;
+
+  /* #c4541a is 4.54:1 on white — passes WCAG AA for normal text, but only just.
+     Do not lighten it: any step toward orange drops below 4.5:1 and breaks AA
+     for the booking price, links, and impact text that ride on it. Need a
+     lighter accent? Add a new token; keep this one as the text-safe anchor. */
+  --nv-action: #c4541a;
+  --nv-action-strong: #9e3f0b;
+  --nv-surface: #ffffff;
+  --nv-surface-muted: #f5f5f5;
+  --nv-text: #2b2b2b;
+  --nv-text-muted: #5a5560;
+  --nv-border: #e2e0e3;
+  --nv-focus: #9e3f0b; /* action-strong: 6.07:1 on white, stronger ring than --nv-action */
+  --nv-error: #c2371f;
+  --nv-info: #3a86ff;
+  --nv-disabled-bg: #d7d5d8;
+  --nv-disabled-text: #8b8790;
+  --nv-text-on-action: #ffffff;
+  --nv-pin-location: #2f7d4f;
+  --nv-local-bg: #e6f0e8;
+  --nv-local-text: #2f5d3c;
+  --nv-impact-icon: #3a7d4f;
+
+  --nv-r-sm: 6px;
+  --nv-r-md: 10px;
+  --nv-r-lg: 16px;
+  --nv-r-pill: 999px;
+
+  --nv-sp-3xs: 2px;
+  --nv-sp-2xs: 4px;
+  --nv-sp-xs: 8px;
+  --nv-sp-sm: 12px;
+  --nv-sp-md: 16px;
+  --nv-sp-lg: 24px;
+  --nv-sp-xl: 32px;
+  --nv-sp-2xl: 64px;
+  --nv-sp-3xl: 128px;
+
+  /* Overlay stacking scale (low → high). In-flow content and the sticky section
+     nav sit below these at z 1–2. The date picker rides one tier above the
+     booking sheet so it can open from inside the sheet with its own backdrop. */
+  --nv-z-bar: 40;          /* fixed bottom bars: tab bar, mobile booking bar */
+  --nv-z-backdrop: 60;     /* bottom-sheet backdrop */
+  --nv-z-overlay: 70;      /* bottom-sheet panel */
+  --nv-z-backdrop-top: 80; /* date-picker backdrop, dims the sheet beneath it */
+  --nv-z-overlay-top: 90;  /* date-picker dialog */
+
+  font-family: var(--nv-font-body), system-ui, sans-serif;
+  color: var(--nv-text);
+  background: var(--nv-surface);
+}
+
+.nv-ui :focus-visible,
+.nv-overlay-root :focus-visible {
+  outline: 2px solid var(--nv-focus);
+  outline-offset: 2px;
+}
+
+.nv-ui h1,
+.nv-ui h2,
+.nv-ui h3,
+.nv-ui h4,
+.nv-ui h5,
+.nv-ui h6 {
+  font-family: var(--nv-font-display), system-ui, sans-serif;
+}
+
+.nv-header {
+  border-bottom: 1px solid var(--nv-border);
+}
+.nv-header-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nv-sp-lg);
+  padding: var(--nv-sp-md) var(--nv-sp-xl);
+}
+.nv-concept-disclosure {
+  margin: 0;
+  padding: 6px var(--nv-sp-xl);
+  border-bottom: 1px solid var(--nv-border);
+  background: var(--nv-surface-muted);
+  color: var(--nv-text-muted);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  text-align: center;
+}
+.nv-header-lead {
+  display: flex;
+  align-items: center;
+}
+/* "Case study" leaves the product for the case-study writeup, so it reads as a
+   muted up-link fenced off from the in-product section links by a hairline. */
+.nv-nav a.nv-nav-back {
+  position: relative;
+  color: var(--nv-text-muted);
+  font-weight: 600;
+  white-space: nowrap;
+  padding-right: var(--nv-sp-md);
+  border-right: 1px solid var(--nv-border);
+}
+.nv-nav-back-short {
+  display: none;
+}
+/* Animated underline that draws in from the left on hover/focus. Uses a
+   scaleX pseudo-element rather than text-decoration so the line is GPU
+   accelerated and the right edge stops at the text, not at the hairline. */
+.nv-nav a.nv-nav-back::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: var(--nv-sp-md);
+  bottom: 0;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nv-nav a.nv-nav-back:hover,
+.nv-nav a.nv-nav-back:focus-visible {
+  color: var(--nv-action);
+}
+.nv-nav a.nv-nav-back:hover::after,
+.nv-nav a.nv-nav-back:focus-visible::after {
+  transform: scaleX(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .nv-nav a.nv-nav-back::after { transition: none; }
+}
+.nv-wordmark {
+  font-family: var(--nv-font-display), sans-serif;
+  font-weight: 700;
+  font-size: 1.65rem;
+  line-height: 1;
+  color: var(--nv-action);
+  text-decoration: none;
+}
+.nv-nav {
+  display: flex;
+  gap: var(--nv-sp-lg);
+  align-items: center;
+}
+.nv-nav a {
+  color: var(--nv-text);
+  text-decoration: none;
+}
+.nv-nav a:hover {
+  color: var(--nv-action);
+}
+.nv-nav-host {
+  padding: var(--nv-sp-xs) var(--nv-sp-md);
+  border: 1px solid var(--nv-action);
+  border-radius: var(--nv-r-pill);
+  white-space: nowrap;
+}
+.nv-nav a.nv-nav-host {
+  color: var(--nv-action);
+}
+.nv-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--nv-sp-xl);
+  padding: var(--nv-sp-2xl) var(--nv-sp-xl);
+  border-top: 1px solid var(--nv-border);
+  background: var(--nv-surface-muted);
+}
+.nv-footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nv-sp-xs);
+  max-width: 22rem;
+}
+.nv-footer-tagline {
+  font-family: var(--nv-font-display), sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.35;
+  color: var(--nv-text);
+  margin: 0;
+}
+.nv-footer-cols {
+  display: flex;
+  gap: var(--nv-sp-2xl);
+  align-items: flex-start;
+}
+.nv-footer-heading {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nv-text-muted);
+  margin: 0 0 var(--nv-sp-sm);
+}
+.nv-footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--nv-sp-xs);
+}
+.nv-footer-col a {
+  color: var(--nv-text);
+  text-decoration: none;
+}
+.nv-footer-col a:hover {
+  color: var(--nv-action);
+}
+@media (max-width: 640px) {
+  .nv-footer {
+    grid-template-columns: 1fr;
+    padding: var(--nv-sp-xl) var(--nv-sp-md);
+  }
+  .nv-footer-cols {
+    gap: var(--nv-sp-xl);
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 640px) {
+  .nv-header-main {
+    padding: var(--nv-sp-sm) var(--nv-sp-md);
+    gap: var(--nv-sp-xs);
+  }
+  .nv-concept-disclosure {
+    padding-right: var(--nv-sp-md);
+    padding-left: var(--nv-sp-md);
+  }
+  /* The bottom tab bar carries Explore/Impact/System on mobile, so the header
+     keeps the wordmark, the "Host an event" action the tab bar lacks, and the
+     "Case study" up-link (the tab bar has no route back out of the demo). */
+  .nv-nav { min-width: 0; gap: var(--nv-sp-xs); }
+  .nv-wordmark,
+  .nv-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .nv-nav a:not(.nv-nav-host):not(.nv-nav-back) { display: none; }
+  .nv-nav a.nv-nav-back { padding-right: 0; border-right: none; }
+  .nv-nav-back-wide { display: none; }
+  .nv-nav-back-short { display: inline; }
+  .nv-nav-host { padding: 6px 10px; }
+}
+
+/* ── Button ────────────────────────────────────────────────────── */
+.nv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--nv-sp-xs);
+  border: 1px solid transparent;
+  border-radius: var(--nv-r-md);
+  font-family: var(--nv-font-body), sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.nv-btn--sm { padding: 6px 12px; font-size: 0.85rem; }
+.nv-btn--md { padding: 10px 18px; font-size: 0.95rem; }
+.nv-btn--lg { padding: 14px 24px; font-size: 1.05rem; }
+.nv-btn-icon { display: inline-flex; width: 1em; height: 1em; }
+.nv-btn-icon svg { width: 100%; height: 100%; display: block; }
+/* Icon-only buttons want a larger glyph than inline text buttons. */
+.nv-icon-btn .nv-btn-icon { width: 1.25em; height: 1.25em; }
+.nv-btn--primary { background: var(--nv-action); color: var(--nv-text-on-action); }
+.nv-btn--primary:hover { background: var(--nv-action-strong); }
+.nv-btn--transparent { background: transparent; color: var(--nv-action); }
+.nv-btn--transparent:hover { background: color-mix(in srgb, var(--nv-action) 10%, transparent); }
+.nv-btn--outline { background: transparent; color: var(--nv-action); border-color: var(--nv-action); }
+.nv-btn--outline:hover { background: color-mix(in srgb, var(--nv-action) 8%, transparent); }
+.nv-btn:disabled { background: var(--nv-disabled-bg); color: var(--nv-disabled-text); border-color: transparent; cursor: not-allowed; }
+
+/* ── IconButton ─────────────────────────────────────────────────── */
+.nv-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: var(--nv-r-pill);
+  cursor: pointer;
+  background: var(--nv-surface);
+  color: var(--nv-text);
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.nv-icon-btn--sm { width: 32px; height: 32px; position: relative; }
+.nv-icon-btn--sm::before { content: ''; position: absolute; inset: -6px; }
+.nv-icon-btn--md { width: 40px; height: 40px; position: relative; }
+.nv-icon-btn--md::before { content: ''; position: absolute; inset: -2px; }
+.nv-icon-btn--lg { width: 48px; height: 48px; }
+.nv-icon-btn--primary { background: var(--nv-action); color: var(--nv-text-on-action); }
+.nv-icon-btn--primary:hover { background: var(--nv-action-strong); color: var(--nv-text-on-action); border-color: transparent; }
+.nv-icon-btn--outline { border-color: var(--nv-action); color: var(--nv-action); }
+.nv-icon-btn--transparent { background: transparent; }
+.nv-icon-btn:hover { color: var(--nv-action); border-color: var(--nv-action); }
+.nv-icon-btn:disabled { background: var(--nv-disabled-bg); color: var(--nv-disabled-text); border-color: transparent; cursor: not-allowed; }
+
+/* ── Tag ────────────────────────────────────────────────────────── */
+.nv-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--nv-r-pill);
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: var(--nv-surface-muted);
+  color: var(--nv-text);
+}
+.nv-tag--popular { background: color-mix(in srgb, var(--nv-action) 8%, var(--nv-surface)); color: var(--nv-action-strong); }
+.nv-tag--local { background: var(--nv-local-bg); color: var(--nv-local-text); }
+
+/* ── ImpactSignal ───────────────────────────────────────────────── */
+.nv-impact {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--nv-sp-xs);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--nv-local-text);
+}
+/* Top-align the leaf with the first line, nudged to sit on the cap height. */
+.nv-impact-icon { display: inline-flex; color: var(--nv-impact-icon); margin-top: 0.15em; }
+.nv-impact--link {
+  text-decoration: none;
+  cursor: pointer;
+}
+.nv-impact--link:hover .nv-impact-text { text-decoration: underline; }
+.nv-impact--link:focus-visible {
+  outline: 2px solid var(--nv-focus);
+  outline-offset: 2px;
+  border-radius: var(--nv-r-sm);
+}
+
+/* ── Rating ─────────────────────────────────────────────────────── */
+.nv-rating { display: inline-flex; align-items: center; gap: var(--nv-sp-xs); }
+.nv-rating-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: var(--nv-r-sm);
+  background: var(--nv-action);
+  color: var(--nv-text-on-action);
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+.nv-rating-reviews { color: var(--nv-text-muted); font-size: 0.82rem; }
+
+/* ── Avatar ─────────────────────────────────────────────────────── */
+.nv-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--nv-r-pill);
+  background: var(--nv-surface-muted);
+  color: var(--nv-text);
+  font-weight: 700;
+  overflow: hidden;
+}
+.nv-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.nv-avatar--sm { width: 28px; height: 28px; font-size: 0.7rem; }
+.nv-avatar--md { width: 40px; height: 40px; font-size: 0.85rem; }
+.nv-avatar--lg { width: 56px; height: 56px; font-size: 1rem; }
+
+/* ── PillRow (shared by Tabs + sticky section nav) ─────────────── */
+.nv-pill-row {
+  display: flex;
+  gap: var(--nv-sp-xs);
+  flex-wrap: wrap;
+}
+.nv-pill-row-item {
+  min-height: 44px;
+  padding: 0 var(--nv-sp-md);
+  border: 1px solid transparent;
+  border-radius: var(--nv-r-pill);
+  background: none;
+  color: var(--nv-text-muted);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+.nv-pill-row-item:hover { color: var(--nv-text); }
+.nv-pill-row-item--active {
+  color: var(--nv-text-on-action);
+  background: var(--nv-action);
+}
+.nv-pill-row-item:focus-visible {
+  outline: 2px solid var(--nv-focus);
+  outline-offset: 2px;
+}
+.nv-pill-row--sticky-section-nav {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--nv-surface);
+  padding: var(--nv-sp-sm) 0;
+  margin-bottom: var(--nv-sp-md);
+  border-bottom: 1px solid var(--nv-border);
+}
+
+/* ── Tabs ───────────────────────────────────────────────────────── */
+.nv-tabs { display: inline-flex; gap: var(--nv-sp-lg); border-bottom: 1px solid var(--nv-border); }
+.nv-tab {
+  background: none;
+  border: none;
+  min-height: 44px;
+  padding: var(--nv-sp-xs) 0;
+  font-weight: 700;
+  color: var(--nv-text-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+.nv-tab:hover { color: var(--nv-action); }
+.nv-tab--selected { color: var(--nv-text); border-bottom-color: var(--nv-action); }
+
+/* ── Accordion ──────────────────────────────────────────────────── */
+.nv-accordion { display: flex; flex-direction: column; width: 100%; }
+.nv-accordion-row { border-bottom: 1px solid var(--nv-border); }
+.nv-accordion-trigger {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: var(--nv-sp-md) 0;
+  font-weight: 700;
+  color: var(--nv-text);
+  cursor: pointer;
+}
+.nv-accordion-panel { padding-bottom: var(--nv-sp-md); color: var(--nv-text-muted); }
+
+/* ── Label + SearchInput ────────────────────────────────────────── */
+.nv-sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0);
+  white-space: nowrap; border: 0;
+}
+.nv-label { display: inline-flex; align-items: baseline; gap: var(--nv-sp-3xs); font-weight: 700; }
+.nv-label-required { color: var(--nv-error); }
+.nv-label-optional { color: var(--nv-text-muted); font-weight: 400; }
+.nv-label-help {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 16px; height: 16px; border-radius: var(--nv-r-pill);
+  /* --nv-info as a text background only hits 3.48:1; the action token gives white 4.54:1. */
+  background: var(--nv-action); color: var(--nv-text-on-action); font-size: 0.7rem; margin-left: var(--nv-sp-2xs);
+}
+.nv-search {
+  display: flex; align-items: center; gap: var(--nv-sp-xs); width: 100%;
+  border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill);
+  padding: var(--nv-sp-xs) var(--nv-sp-md); background: var(--nv-surface);
+}
+.nv-search-icon { display: inline-flex; flex: none; color: var(--nv-text-muted); }
+.nv-search-input { flex: 1; min-width: 0; border: none; outline: none; background: none; font: inherit; }
+
+/* ── CarouselArrow + PaginationDots ─────────────────────────────── */
+.nv-carousel-arrow {
+  width: 44px; min-width: 44px; height: 44px; border-radius: var(--nv-r-pill);
+  border: 1px solid var(--nv-border); background: var(--nv-surface);
+  color: var(--nv-text); cursor: pointer; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.nv-carousel-arrow:hover { border-color: var(--nv-action); color: var(--nv-action); }
+.nv-carousel-arrow:disabled { color: var(--nv-disabled-text); border-color: transparent; cursor: not-allowed; }
+.nv-dots { display: inline-flex; gap: var(--nv-sp-xs); }
+.nv-dot {
+  width: 10px; height: 10px; border-radius: var(--nv-r-pill);
+  border: 1px solid var(--nv-border); background: transparent; cursor: pointer; padding: 0;
+  position: relative;
+}
+.nv-dot::before { content: ''; position: absolute; inset: -17px; }
+.nv-dot--active { background: var(--nv-action); border-color: var(--nv-action); }
+
+/* ── Tooltip ────────────────────────────────────────────────────── */
+.nv-tooltip { position: relative; display: inline-flex; }
+.nv-tooltip-bubble {
+  position: absolute;
+  bottom: calc(100% + var(--nv-sp-xs));
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--nv-robinson);
+  color: var(--nv-text-on-action);
+  padding: var(--nv-sp-xs) var(--nv-sp-sm);
+  border-radius: var(--nv-r-sm);
+  font-size: 0.8rem;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+/* ── Card ───────────────────────────────────────────────────────── */
+.nv-card { background: var(--nv-surface); border: 1px solid var(--nv-border); border-radius: var(--nv-r-md); }
+.nv-card--padded { padding: var(--nv-sp-md); }
+
+/* ── MapPin ─────────────────────────────────────────────────────── */
+.nv-pin {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 36px; height: 28px; padding: 0 var(--nv-sp-xs);
+  border-radius: var(--nv-r-pill);
+  font-size: 0.78rem; font-weight: 700;
+  border: 1.5px solid var(--nv-surface); /* white halo keeps the pin legible over the map */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.nv-pin--place { background: var(--nv-action); color: var(--nv-text-on-action); }
+/* The selected pin grows a touch so the list-hover -> pin link reads instantly. */
+.nv-pin--place.nv-pin--selected { background: var(--nv-action-strong); transform: scale(1.14); }
+.nv-pin--hollow { background: var(--nv-surface); color: var(--nv-action); }
+@media (prefers-reduced-motion: no-preference) {
+  .nv-pin { transition: transform 0.15s cubic-bezier(0.22, 1, 0.36, 1), background 0.15s; }
+}
+
+/* Current-location indicator: the universal "blue dot" (filled disc, white
+   ring, soft halo) rather than a teardrop pin, which reads as a place marker. */
+.nv-loc-dot {
+  display: inline-block; width: 14px; height: 14px; border-radius: 50%;
+  background: var(--nv-info); border: 2.5px solid var(--nv-surface);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--nv-info) 28%, transparent), 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* Map clustering: themed count bubble (replaces leaflet.markercluster defaults) */
+.nv-cluster-leaflet { background: none !important; border: none !important; }
+.nv-cluster {
+  display: flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--nv-action); color: var(--nv-text-on-action);
+  font-weight: 700; font-size: 0.85rem;
+  border: 2px solid var(--nv-surface);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Single venue location: orange disc with a white center, not a price pill. */
+.nv-venue-pin {
+  display: flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--nv-action); border: 2px solid var(--nv-surface);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+.nv-venue-pin::after {
+  content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--nv-surface);
+}
+
+
+/* ── Task 18: Specimen ─────────────────────────────────────────── */
+.nv-specimen { padding: var(--nv-sp-xl) 0; border-bottom: 1px solid var(--nv-border); }
+.nv-specimen-title { font-size: 1.25rem; margin-bottom: var(--nv-sp-2xs); }
+.nv-specimen-note { color: var(--nv-text-muted); margin-bottom: var(--nv-sp-md); max-width: 60ch; }
+.nv-specimen-stage { display: flex; flex-wrap: wrap; gap: var(--nv-sp-md); align-items: center; }
+/* The category rail clips + scrolls on the feed because .nv-feed-row drops it to
+   a block child on mobile and the page gutter absorbs its edge-bleed. The specimen
+   stage is flex at every width and has no gutter, so the rail would otherwise
+   expand to full content width and scroll the whole page sideways on mobile. Pin
+   it to the stage width with min-width:0, drop the bleed, and let the inner
+   overflow-x:auto do the scrolling. */
+.nv-specimen-stage .nv-feed-catwrap { flex: 1 1 100%; min-width: 0; max-width: 100%; }
+.nv-specimen-stage .nv-feed-categories { margin-inline: 0; padding-inline: 0; scroll-padding-inline: 0; }
+
+/* ── Task 19: PropPlayground ───────────────────────────────────── */
+.nv-playground { display: grid; gap: var(--nv-sp-md); border: 1px solid var(--nv-border); border-radius: var(--nv-r-lg); padding: var(--nv-sp-lg); }
+.nv-playground-stage { display: flex; justify-content: center; padding: var(--nv-sp-lg); background: var(--nv-surface-muted); border-radius: var(--nv-r-md); }
+.nv-playground-controls { display: flex; flex-wrap: wrap; gap: var(--nv-sp-lg); }
+.nv-playground-control { border: none; padding: 0; display: flex; gap: var(--nv-sp-sm); align-items: center; }
+.nv-playground-control legend { font-weight: 700; margin-right: var(--nv-sp-xs); }
+.nv-playground-opt { display: inline-flex; gap: var(--nv-sp-2xs); align-items: center; }
+.nv-playground-code { background: var(--nv-robinson); color: var(--nv-text-on-action); padding: var(--nv-sp-sm); border-radius: var(--nv-r-sm); font-size: 0.82rem; overflow-x: auto; }
+
+/* ── Task 20: System page ──────────────────────────────────────── */
+.nv-system { max-width: 60rem; margin: 0 auto; padding: var(--nv-sp-xl) var(--nv-sp-lg); }
+.nv-system-head h1 { font-size: 2rem; }
+.nv-system-head p { color: var(--nv-text-muted); max-width: 65ch; margin-top: var(--nv-sp-sm); }
+
+/* ── Chapter ───────────────────────────────────────────────────── */
+.nv-chapter { padding: var(--nv-sp-2xl) 0; border-top: 1px solid var(--nv-border); }
+.nv-chapter:first-of-type { border-top: none; }
+.nv-chapter-head { margin-bottom: var(--nv-sp-lg); }
+.nv-chapter-title { font-size: 1.6rem; margin: 0 0 var(--nv-sp-2xs); }
+.nv-chapter-intro { color: var(--nv-text-muted); margin: 0; max-width: 60ch; }
+.nv-chapter-body { display: flex; flex-direction: column; gap: var(--nv-sp-xl); }
+
+/* ── Hero ──────────────────────────────────────────────────────── */
+.nv-hero { padding: var(--nv-sp-2xl) 0; }
+.nv-hero-head { margin-bottom: var(--nv-sp-lg); }
+.nv-hero-title { font-size: 1.6rem; margin: 0 0 var(--nv-sp-2xs); }
+.nv-hero-lede { color: var(--nv-text-muted); margin: 0; max-width: 60ch; }
+.nv-hero-stage { background: var(--nv-surface-muted); border-radius: var(--nv-r-lg); padding: var(--nv-sp-xl); }
+
+.nv-tabpanel { padding-top: var(--nv-sp-md); }
+
+/* ── TabBar (mobile bottom nav) ────────────────────────────────── */
+.nv-tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: none;
+  background: var(--nv-surface);
+  border-top: 1px solid var(--nv-border);
+  padding: var(--nv-sp-xs) var(--nv-sp-sm);
+  z-index: var(--nv-z-bar);
+}
+@media (max-width: 720px) {
+  .nv-tabbar { display: flex; justify-content: space-around; }
+  /* Clear the fixed bottom bar (tab bar or booking bar) plus the home-indicator
+     inset so the last of the content is never trapped under it. */
+  body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
+}
+.nv-tabbar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--nv-sp-3xs);
+  padding: var(--nv-sp-2xs) var(--nv-sp-sm);
+  color: var(--nv-text-muted);
+  text-decoration: none;
+  font-size: 0.72rem;
+  font-weight: 700;
+  min-width: 44px;
+  min-height: 44px;
+}
+.nv-tabbar-item--active { color: var(--nv-action); }
+.nv-tabbar-icon { display: inline-flex; font-size: 1.1rem; }
+
+/* ── ExperienceCard (feed card composite) ──────────────────────── */
+.nv-exp-card {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%; /* fill the equal-height grid cell so cards in a row match */
+  background: var(--nv-surface);
+  border: 1px solid var(--nv-border);
+  border-radius: var(--nv-r-md);
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--nv-text);
+  transition: border-color 0.15s, transform 0.15s;
+}
+.nv-exp-card:hover { border-color: var(--nv-action); transform: translateY(-2px); }
+@media (prefers-reduced-motion: reduce) {
+  .nv-exp-card { transition: none; }
+  .nv-exp-card:hover { transform: none; }
+}
+.nv-exp-card-photo { position: relative; aspect-ratio: 16 / 10; overflow: hidden; }
+/* Trust badge (Popular / Locally-owned) overlaid on the photo, so the body tag
+   is free to always carry the category — one slot, one meaning each. */
+.nv-card-badge {
+  position: absolute; top: var(--nv-sp-xs); left: var(--nv-sp-xs); z-index: 1;
+  padding: 2px var(--nv-sp-xs); border-radius: var(--nv-r-pill);
+  font-size: 0.72rem; font-weight: 700; line-height: 1.5;
+  background: var(--nv-surface); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+.nv-card-badge--popular { color: var(--nv-action-strong); }
+.nv-card-badge--local { color: var(--nv-local-text); }
+.nv-exp-card-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Fallback panel for demo photography that has not been exported yet.
+   Keeps a missing asset reading as "pending", not as a broken page. */
+.nv-photo-pending {
+  width: 100%;
+  height: 100%;
+  min-height: 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--nv-sp-sm);
+  background: var(--nv-surface-muted);
+  color: var(--nv-text-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+.nv-exp-card-body { padding: var(--nv-sp-md); display: flex; flex-direction: column; gap: var(--nv-sp-xs); }
+.nv-exp-card-title { font-size: 1.05rem; margin: 0; }
+.nv-exp-card-loc { color: var(--nv-text-muted); font-size: 0.85rem; margin: 0; }
+/* margin-top:auto anchors the price to the bottom so it lines up across cards */
+.nv-exp-card-price { font-weight: 700; font-size: 0.95rem; margin: auto 0 0; padding-top: var(--nv-sp-xs); }
+
+/* ── ResultCard (search-result row composite) ──────────────────── */
+.nv-result {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: var(--nv-sp-md);
+  padding: var(--nv-sp-md) 0;
+  border-bottom: 1px solid var(--nv-border);
+  text-decoration: none;
+  color: var(--nv-text);
+}
+.nv-result:hover { background: var(--nv-surface-muted); }
+.nv-result-photo { position: relative; width: 160px; height: 120px; border-radius: var(--nv-r-md); overflow: hidden; }
+.nv-result-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.nv-result-body { display: grid; gap: var(--nv-sp-2xs); align-content: start; }
+.nv-result-title { font-size: 1rem; margin: 0; }
+.nv-result-loc { color: var(--nv-text-muted); font-size: 0.85rem; margin: 0; }
+.nv-result-price { font-weight: 700; margin: 0; }
+@media (max-width: 720px) {
+  .nv-result { grid-template-columns: 1fr; }
+  .nv-result-photo { width: 100%; height: 160px; }
+}
+
+/* ── BookingCard (sticky detail booking) ───────────────────────── */
+.nv-booking {
+  display: grid;
+  gap: var(--nv-sp-sm);
+  padding: var(--nv-sp-md);
+  border: 1px solid var(--nv-border);
+  border-radius: var(--nv-r-lg);
+  background: var(--nv-surface);
+  position: sticky;
+  top: var(--nv-sp-lg);
+}
+
+/* Host trust footer (desktop sidebar only). A full-width divider sets it apart
+   from the booking actions above so the column closes on who you're booking
+   with rather than trailing into empty space. */
+.nv-booking-reassure {
+  display: grid;
+  gap: var(--nv-sp-sm);
+  padding-top: var(--nv-sp-md);
+  border-top: 1px solid var(--nv-border);
+}
+.nv-booking-reassure-host {
+  display: flex;
+  align-items: center;
+  gap: var(--nv-sp-sm);
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--nv-text);
+}
+.nv-booking-reassure-link {
+  font-weight: 600;
+  color: var(--nv-text);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.nv-booking-reassure-link:hover { color: var(--nv-action-strong); }
+
+/* ── Mobile booking bar + bottom sheet ─────────────────────────────
+   On a phone the sticky sidebar would sit far below the fold, so the
+   booking action moves to a fixed bar in the thumb zone that opens the
+   full form as a bottom sheet. Desktop keeps the sidebar and hides both;
+   mobile hides the sidebar so there is only ever one booking surface. */
+.nv-mobilebar { display: none; }
+@media (max-width: 720px) {
+  .nv-booking { display: none; }
+  .nv-mobilebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--nv-z-bar);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--nv-sp-md);
+    padding: var(--nv-sp-sm) var(--nv-sp-md);
+    padding-bottom: calc(var(--nv-sp-sm) + env(safe-area-inset-bottom));
+    background: var(--nv-surface);
+    border-top: 1px solid var(--nv-border);
+    box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.1);
+  }
+  /* The booking bar owns the thumb zone on the detail page, so the global
+     tab bar steps aside rather than stacking two bars at the bottom. */
+  .nv-ui:has(.nv-detail) .nv-tabbar { display: none; }
+}
+.nv-mobilebar-info { display: flex; flex-direction: column; min-width: 0; line-height: 1.2; }
+.nv-mobilebar-price { font-size: 1.15rem; font-weight: 700; color: var(--nv-text); }
+.nv-mobilebar-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--nv-sp-2xs);
+  font-weight: 700;
+  color: var(--nv-action-strong);
+}
+.nv-mobilebar .nv-btn { flex: none; }
+
+.nv-booking-price { font-size: 1.6rem; font-weight: 700; margin: 0; }
+.nv-booking-dates { display: grid; gap: var(--nv-sp-xs); border: none; padding: 0; }
+/* Group label for the preset slots. Ink-on-surface (not muted) so a first-timer
+   reads it as a real label naming the dates as bookable, not decorative. */
+.nv-booking-dates-legend { padding: 0; font-size: 0.85rem; font-weight: 700; color: var(--nv-text); }
+.nv-booking-date {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--nv-sp-sm);
+  border: 1px solid var(--nv-border);
+  border-radius: var(--nv-r-md);
+  cursor: pointer;
+}
+.nv-booking-date--active { border-color: var(--nv-action); background: var(--nv-surface-muted); }
+.nv-booking-date-day { font-weight: 700; }
+.nv-booking-date-time { color: var(--nv-text-muted); }
+/* "Or pick another date" trigger — the Figma field (node 553-6399): a bordered
+   value box with an orange calendar-icon button flush to the right edge. Opens
+   the calendar + time modal. */
+.nv-booking-pick { display: grid; gap: var(--nv-sp-2xs); }
+.nv-booking-pick-label { font-size: 0.85rem; color: var(--nv-text-muted); }
+.nv-booking-pick-trigger {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 0;
+  padding: 0;
+  border: 1px solid var(--nv-border);
+  border-radius: var(--nv-r-md);
+  background: var(--nv-surface);
+  color: var(--nv-text-muted);
+  cursor: pointer;
+  overflow: hidden;
+  font: inherit;
+}
+.nv-booking-pick-trigger.is-set { color: var(--nv-text); }
+.nv-booking-pick-trigger:hover { border-color: var(--nv-action); }
+.nv-booking-pick-trigger:focus-visible { outline: 2px solid var(--nv-focus); outline-offset: 2px; }
+.nv-booking-pick-value { padding: var(--nv-sp-sm); text-align: left; align-self: center; }
+.nv-booking-pick-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--nv-sp-sm);
+  background: var(--nv-action);
+  color: var(--nv-text-on-action);
+}
+.nv-booking-pick-trigger:hover .nv-booking-pick-icon { background: var(--nv-action-strong); }
+.nv-booking-pick-icon svg { width: 20px; height: 20px; }
+
+/* ── Calendar (ui) ──────────────────────────────────────────────── */
+/* Matches Figma node 553-6053, mapped onto Navi tokens (the system uses the
+   contrast-corrected --nv-action, not the source #F3722C). */
+.nv-cal { display: flex; flex-direction: column; gap: var(--nv-sp-md); background: var(--nv-surface); }
+.nv-cal-head { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: var(--nv-sp-xs); }
+.nv-cal-title {
+  margin: 0;
+  text-align: center;
+  font-family: var(--nv-font-display), sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--nv-text);
+}
+.nv-cal-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--nv-r-pill);
+  border: 1px solid var(--nv-border);
+  background: var(--nv-surface);
+  color: var(--nv-text);
+  cursor: pointer;
+}
+.nv-cal-nav:hover:not(:disabled) { background: var(--nv-surface-muted); }
+.nv-cal-nav:disabled { opacity: 0.4; cursor: not-allowed; }
+.nv-cal-nav:focus-visible { outline: 2px solid var(--nv-focus); outline-offset: 2px; }
+.nv-cal-nav svg { width: 20px; height: 20px; }
+.nv-cal-divider { height: 1px; background: var(--nv-border); }
+.nv-cal-weekdays, .nv-cal-week { display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--nv-sp-2xs); }
+.nv-cal-weekday { text-align: center; font-size: 0.8rem; font-weight: 600; color: var(--nv-text-muted); }
+.nv-cal-grid { display: flex; flex-direction: column; gap: var(--nv-sp-2xs); }
+.nv-cal-cell {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  min-height: 44px;
+  border: none;
+  background: transparent;
+  border-radius: var(--nv-r-sm);
+  font: inherit;
+  color: var(--nv-text);
+  cursor: pointer;
+}
+.nv-cal-cell:hover:not(:disabled):not(.nv-cal-cell--selected) { background: var(--nv-surface-muted); }
+.nv-cal-cell:focus-visible { outline: 2px solid var(--nv-focus); outline-offset: 2px; }
+.nv-cal-cell--selected { background: var(--nv-action); color: var(--nv-text-on-action); font-weight: 700; }
+.nv-cal-cell:disabled { color: var(--nv-text-muted); opacity: 0.35; cursor: not-allowed; }
+.nv-cal-cell--empty { background: transparent; cursor: default; }
+
+/* ── Date + time modal (demo) ───────────────────────────────────── */
+.nv-dtmodal-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.45); z-index: var(--nv-z-backdrop-top); }
+.nv-dtmodal {
+  position: fixed;
+  z-index: var(--nv-z-overlay-top);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(92vw, 380px);
+  max-height: 90vh;
+  overflow: auto;
+  background: var(--nv-surface);
+  border-radius: var(--nv-r-lg);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .nv-dtmodal-backdrop { animation: nvFadeIn 0.18s ease both; }
+  .nv-dtmodal { animation: nvFadeIn 0.18s ease both; }
+}
+.nv-dtmodal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nv-sp-sm);
+  padding: var(--nv-sp-md) var(--nv-sp-md) 0;
+}
+.nv-dtmodal-head h2 { margin: 0; font-size: 1.05rem; font-family: var(--nv-font-display), sans-serif; }
+.nv-dtmodal-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  cursor: pointer;
+  color: var(--nv-text-muted);
+  width: 44px;
+  height: 44px;
+  border-radius: var(--nv-r-pill);
+}
+.nv-dtmodal-close:hover { background: var(--nv-surface-muted); color: var(--nv-text); }
+.nv-dtmodal-close:focus-visible { outline: 2px solid var(--nv-focus); outline-offset: 2px; }
+.nv-dtmodal-body { padding: var(--nv-sp-md); display: flex; flex-direction: column; gap: var(--nv-sp-md); }
+.nv-dtmodal-times { border: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--nv-sp-xs); min-inline-size: 0; }
+.nv-dtmodal-times-legend { padding: 0; font-size: 0.85rem; font-weight: 700; color: var(--nv-text); }
+.nv-dtmodal-times-pills { display: flex; flex-wrap: wrap; gap: var(--nv-sp-xs); }
+.nv-dtmodal-time {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: var(--nv-sp-2xs) var(--nv-sp-md);
+  border: 1px solid var(--nv-border);
+  border-radius: var(--nv-r-pill);
+  background: var(--nv-surface);
+  color: var(--nv-text);
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.nv-dtmodal-time:hover { border-color: var(--nv-action); }
+.nv-dtmodal-time.is-active { background: var(--nv-action); border-color: var(--nv-action); color: var(--nv-text-on-action); font-weight: 700; }
+.nv-dtmodal-time:focus-visible { outline: 2px solid var(--nv-focus); outline-offset: 2px; }
+.nv-dtmodal-foot { padding: 0 var(--nv-sp-md) var(--nv-sp-md); display: flex; flex-direction: column; gap: var(--nv-sp-sm); }
+.nv-dtmodal-summary { margin: 0; font-size: 0.9rem; color: var(--nv-text-muted); }
+.nv-dtmodal-actions { display: flex; gap: var(--nv-sp-sm); }
+.nv-dtmodal-cancel, .nv-dtmodal-confirm {
+  flex: 1;
+  padding: var(--nv-sp-sm);
+  border-radius: var(--nv-r-md);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.nv-dtmodal-cancel { border: 1px solid var(--nv-border); background: var(--nv-surface); color: var(--nv-text); }
+.nv-dtmodal-cancel:hover { background: var(--nv-surface-muted); }
+.nv-dtmodal-confirm { border: 1px solid var(--nv-action); background: var(--nv-action); color: var(--nv-text-on-action); }
+.nv-dtmodal-confirm:hover:not(:disabled) { background: var(--nv-action-strong); border-color: var(--nv-action-strong); }
+.nv-dtmodal-confirm:disabled { opacity: 0.5; cursor: not-allowed; }
+.nv-dtmodal-cancel:focus-visible, .nv-dtmodal-confirm:focus-visible { outline: 2px solid var(--nv-focus); outline-offset: 2px; }
+
+/* ── Booking bottom sheet (mobile) ─────────────────────────────── */
+.nv-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: var(--nv-z-backdrop);
+}
+.nv-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--nv-z-overlay);
+  max-height: 92vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  background: var(--nv-surface);
+  border-radius: var(--nv-r-lg) var(--nv-r-lg) 0 0;
+  box-shadow: 0 -12px 48px rgba(0, 0, 0, 0.3);
+}
+.nv-sheet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nv-sp-sm);
+  padding: var(--nv-sp-md) var(--nv-sp-md) 0;
+}
+.nv-sheet-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-family: var(--nv-font-display), sans-serif;
+}
+.nv-sheet-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: transparent;
+  border-radius: var(--nv-r-pill);
+  color: var(--nv-text-muted);
+  font-size: 1rem;
+  cursor: pointer;
+}
+.nv-sheet-close:hover { background: var(--nv-surface-muted); color: var(--nv-text); }
+.nv-sheet-close:focus-visible { outline: 2px solid var(--nv-focus); outline-offset: 2px; }
+/* The body holds a BookingPanel, the same fragment the desktop sidebar renders,
+   so it needs the sidebar's column gap and centered buttons. The extra bottom
+   inset clears the home indicator on a notched phone. */
+.nv-sheet-body {
+  display: grid;
+  gap: var(--nv-sp-sm);
+  padding: var(--nv-sp-md);
+  padding-bottom: calc(var(--nv-sp-md) + env(safe-area-inset-bottom));
+}
+.nv-sheet-body .nv-btn { justify-content: center; }
+@media (prefers-reduced-motion: no-preference) {
+  .nv-sheet-backdrop { animation: nvFadeIn 0.2s ease both; }
+  .nv-sheet { animation: nvSlideUp 0.28s cubic-bezier(0.22, 1, 0.36, 1) both; }
+}
+@keyframes nvSlideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.nv-booking-confirm { margin: 0; padding: var(--nv-sp-sm); background: var(--nv-surface-muted); border-radius: var(--nv-r-md); color: var(--nv-text); }
+.nv-booking-confirm-group { display: grid; gap: var(--nv-sp-xs); }
+@media (prefers-reduced-motion: no-preference) {
+  /* Gentle acknowledgement when the reservation confirms. */
+  .nv-booking-confirm-group { animation: fadeUp 0.3s cubic-bezier(0.22, 1, 0.36, 1) both; }
+}
+.nv-booking-note { margin: 0; font-size: 0.8rem; color: var(--nv-text-muted); text-align: center; }
+/* The booking actions stretch to the card width (grid items), so the label
+   needs centering or it reads as left-justified inside a full-width button. */
+.nv-booking .nv-btn { justify-content: center; }
+
+/* ── TransitOptions ────────────────────────────────────────────── */
+/* Explicit equal columns spread the options evenly across the full width of
+   the map above (auto-fit left a phantom collapsed track that threw the
+   spacing off), and keep each option's icon/label/detail aligned in clean
+   rows when they drop to two columns at narrow widths. */
+.nv-transit { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--nv-sp-md); list-style: none; padding: 0; margin: 0; }
+.nv-transit-item { display: flex; flex-direction: column; align-items: center; gap: var(--nv-sp-2xs); text-align: center; }
+@media (max-width: 640px) {
+  .nv-transit { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--nv-sp-lg); }
+}
+.nv-transit-icon { display: inline-flex; align-items: center; color: var(--nv-action-strong); }
+.nv-transit-label { font-weight: 700; }
+.nv-transit-detail { color: var(--nv-text-muted); font-size: 0.85rem; }
+
+/* ── GalleryCarousel ────────────────────────────────────────────── */
+.nv-gallery-carousel {
+  display: grid;
+  gap: var(--nv-sp-sm);
+  margin: 0;
+}
+.nv-gallery-carousel-hero {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--nv-r-md);
+  overflow: hidden;
+  outline: none;
+}
+/* Fill the fixed-ratio box so photos of differing native sizes never resize the
+   hero (no layout shift on next/prev) and the pending fallback matches it. */
+.nv-gallery-carousel-hero img,
+.nv-gallery-carousel-hero .nv-photo-pending {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.nv-gallery-carousel-hero:focus-visible {
+  outline: 3px solid var(--nv-focus);
+  outline-offset: 2px;
+}
+.nv-gallery-carousel-arrows {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--nv-sp-sm);
+  pointer-events: none;
+}
+.nv-gallery-carousel-arrows .nv-carousel-arrow {
+  pointer-events: auto;
+}
+.nv-gallery-carousel-dots {
+  position: absolute;
+  left: 50%;
+  bottom: var(--nv-sp-sm);
+  transform: translateX(-50%);
+}
+.nv-gallery-carousel-thumbs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: var(--nv-sp-xs);
+}
+.nv-gallery-carousel-thumb {
+  display: block;
+  width: 100%;
+  /* Reserve the slot's shape before the lazy image loads. Without it the
+     off-screen thumb collapses to a few pixels and the strip reflows (CLS)
+     as each image arrives. Matches the hero's 16/10 crop. */
+  aspect-ratio: 16 / 10;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: var(--nv-r-sm);
+  background: none;
+  cursor: pointer;
+  overflow: hidden;
+}
+.nv-gallery-carousel-thumb img,
+.nv-gallery-carousel-thumb .nv-photo-pending {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.nv-gallery-carousel-thumb.is-active { border-color: var(--nv-action); }
+.nv-gallery-carousel-thumb:focus-visible {
+  outline: 2px solid var(--nv-focus);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .nv-gallery-carousel-hero img { transition: opacity 0.18s ease; }
+}
+
+/* ── Map (Leaflet + OSM, client-only) ──────────────────────────── */
+/* isolation: isolate makes .nv-map its own stacking context, so Leaflet's
+   internal z-indexes (panes up to ~700, controls/attribution 800-1000, plus our
+   own .nv-legend at 850) stay trapped inside the map. Without it those values
+   leak to the page root and can paint over fixed overlays like the date-time
+   modal (z 90), which surfaces as the map covering the calendar. */
+.nv-map { position: relative; isolation: isolate; height: 100%; min-height: 480px; border-radius: var(--nv-r-md); overflow: hidden; }
+.nv-map-canvas { width: 100%; height: 100%; }
+.nv-map-skeleton { width: 100%; height: 100%; background: var(--nv-surface-muted); }
+/* Empty-search feedback shown over the map so it stays above the fold on the
+   mobile map-first layout, where the list (and its message) sits below. */
+.nv-map-empty {
+  position: absolute; z-index: 2; top: var(--nv-sp-md); left: 50%; transform: translateX(-50%);
+  margin: 0; padding: var(--nv-sp-xs) var(--nv-sp-md); max-width: calc(100% - 2 * var(--nv-sp-md));
+  background: var(--nv-surface); color: var(--nv-text); font-weight: 700;
+  border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12); text-align: center;
+}
+.nv-pin-leaflet { background: none !important; border: none !important; }
+
+/* ── Legend (map legend control) ───────────────────────────────── */
+.nv-legend {
+  position: absolute;
+  bottom: var(--nv-sp-md);
+  right: var(--nv-sp-md);
+  padding: var(--nv-sp-sm) var(--nv-sp-md);
+  background: var(--nv-surface);
+  border: 1px solid var(--nv-border);
+  border-radius: var(--nv-r-md);
+  z-index: 850;
+  font-size: 0.82rem;
+}
+.nv-legend-title { font-weight: 700; margin: 0 0 var(--nv-sp-2xs); }
+.nv-legend ul { display: grid; gap: var(--nv-sp-2xs); list-style: none; padding: 0; margin: 0; }
+/* Fixed icon column so the labels left-align regardless of pin vs dot width. */
+.nv-legend li { display: grid; grid-template-columns: 40px 1fr; align-items: center; gap: var(--nv-sp-xs); }
+.nv-legend li > :first-child { justify-self: center; }
+
+/* ── Task 12: Feed page ────────────────────────────────────────────────────── */
+.nv-feed { max-width: 72rem; margin: 0 auto; padding: var(--nv-sp-xl) var(--nv-sp-lg); }
+.nv-feed-head { display: grid; gap: var(--nv-sp-md); margin-bottom: var(--nv-sp-xl); }
+.nv-feed-head h1 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 0; }
+/* Category rail: one horizontal scrollable row at all viewports, with
+   chevron buttons that appear only when there's actually content to scroll
+   to. Edge fades signal "more either side" without nagging. */
+.nv-feed-catwrap { position: relative; margin-bottom: var(--nv-sp-md); }
+.nv-feed-catwrap::before,
+.nv-feed-catwrap::after {
+  content: ""; position: absolute; top: 0; bottom: 0; width: 28px;
+  pointer-events: none; opacity: 0; transition: opacity 0.15s ease;
+  z-index: 1;
+}
+.nv-feed-catwrap::before { left: 0; background: linear-gradient(90deg, var(--nv-surface) 30%, transparent); }
+.nv-feed-catwrap::after { right: 0; background: linear-gradient(-90deg, var(--nv-surface) 30%, transparent); }
+.nv-feed-catwrap.is-prev::before { opacity: 1; }
+.nv-feed-catwrap.is-next::after { opacity: 1; }
+.nv-feed-categories {
+  display: flex; gap: var(--nv-sp-xs); flex-wrap: nowrap;
+  overflow-x: auto; scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; padding-bottom: 2px;
+}
+.nv-feed-categories::-webkit-scrollbar { display: none; }
+.nv-cat-nav {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid var(--nv-border); background: var(--nv-surface);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--nv-text); cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+.nv-cat-nav:hover { border-color: var(--nv-action); color: var(--nv-action-strong); }
+.nv-cat-nav:focus-visible { outline: 2px solid var(--nv-focus); outline-offset: 2px; }
+.nv-cat-nav--prev { left: -10px; }
+.nv-cat-nav--next { right: -10px; }
+/* On touch viewports the chevrons aren't useful (people swipe), so hide them
+   to reclaim space and avoid an extra tap target near the screen edge. */
+@media (max-width: 640px) { .nv-cat-nav { display: none; } }
+/* Feed controls: count + sort + filters */
+.nv-feed-controls {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--nv-sp-md); flex-wrap: wrap;
+  margin-bottom: var(--nv-sp-lg);
+}
+.nv-feed-count { margin: 0 0 var(--nv-sp-md); font-weight: 700; }
+.nv-feed-actions { display: flex; align-items: center; gap: var(--nv-sp-sm); flex-wrap: wrap; }
+.nv-feed-select { display: inline-flex; align-items: center; }
+.nv-feed-select select {
+  font: inherit; min-height: 36px;
+  /* Tight padding + short option labels keep this a quiet pill so the category
+     rail, not the sort control, reads as the row's primary surface. */
+  padding: var(--nv-sp-xs) 30px var(--nv-sp-xs) var(--nv-sp-sm);
+  border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill);
+  background-color: var(--nv-surface); color: var(--nv-text); cursor: pointer;
+  /* Custom caret so placement is consistent inside the pill (native arrow sat off-center). */
+  appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%232b2b2b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 11px center;
+}
+.nv-feed-select select:hover,
+.nv-feed-select select:focus-visible { border-color: var(--nv-action); }
+.nv-feed-filters {
+  display: inline-flex; align-items: center; gap: var(--nv-sp-xs);
+  min-height: 36px; padding: 0 var(--nv-sp-md);
+  border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill);
+  background: var(--nv-surface); color: var(--nv-text);
+  cursor: pointer; font: inherit; font-weight: 700;
+}
+.nv-feed-filters:hover { border-color: var(--nv-action); }
+.nv-feed-filters:focus-visible { outline: 2px solid var(--nv-focus); outline-offset: 2px; }
+.nv-feed-filters-badge {
+  display: inline-grid; place-items: center;
+  min-width: 20px; height: 20px; padding: 0 6px;
+  border-radius: var(--nv-r-pill); font-size: 0.75rem; font-weight: 700;
+  background: var(--nv-action); color: var(--nv-text-on-action);
+}
+.nv-feed-clear {
+  border: none; background: none; padding: var(--nv-sp-xs) var(--nv-sp-sm); min-height: 36px;
+  color: var(--nv-action-strong); font-weight: 700; cursor: pointer; text-decoration: underline;
+}
+@media (min-width: 768px) {
+  .nv-feed-row {
+    display: flex; align-items: center; gap: var(--nv-sp-md);
+    margin-bottom: var(--nv-sp-md);
+  }
+  .nv-feed-row .nv-feed-catwrap { flex: 1; min-width: 0; margin-bottom: 0; }
+  .nv-feed-row .nv-feed-divider {
+    width: 1px; height: 36px; background: var(--nv-border);
+  }
+  .nv-feed-row .nv-feed-actions { flex: 0 0 auto; }
+}
+@media (max-width: 767px) {
+  .nv-feed-divider { display: none; }
+  .nv-feed-row { margin-bottom: var(--nv-sp-md); }
+  .nv-feed-row .nv-feed-actions { margin-top: var(--nv-sp-sm); }
+  .nv-feed-select select,
+  .nv-feed-filters,
+  .nv-feed-clear {
+    min-height: 44px;
+  }
+}
+/* Card facts line */
+.nv-exp-card-facts { color: var(--nv-text-muted); font-size: 0.8rem; margin: 0; }
+.nv-feed-cat { display: inline-flex; align-items: center; gap: 8px; flex: 0 0 auto; scroll-snap-align: start; min-height: 44px; padding: var(--nv-sp-xs) var(--nv-sp-md); border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill); background: var(--nv-surface); cursor: pointer; font-weight: 700; color: var(--nv-text); }
+.nv-feed-cat svg { flex: 0 0 auto; }
+/* Active chip is filled (a shape cue, not color alone) for colorblind + at-a-glance clarity. */
+.nv-feed-cat--active { border-color: var(--nv-action); color: var(--nv-text-on-action); background: var(--nv-action); }
+/* auto-fill + capped max keeps cards their size when a category has only 2 items
+   (auto-fit would stretch the lonely cards to fill the row). */
+.nv-feed-grid { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 340px)); gap: var(--nv-sp-lg); justify-content: start; }
+/* Map-pin → card link feedback. When a user clicks a pin, the matching card
+   scrolls into view and gets [data-pulse="true"] for ~1.4s. The pulse confirms
+   which card the pin maps to so the scroll doesn't feel ambient. */
+.nv-search-result[data-pulse="true"],
+.nv-feed-grid > li[data-pulse="true"] {
+  animation: nvPickedPulse 1.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  border-radius: var(--nv-r-md);
+}
+@keyframes nvPickedPulse {
+  0%   { box-shadow: 0 0 0 0 color-mix(in oklch, var(--nv-action) 55%, transparent); }
+  35%  { box-shadow: 0 0 0 6px color-mix(in oklch, var(--nv-action) 28%, transparent); }
+  100% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--nv-action) 0%, transparent); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nv-search-result[data-pulse="true"],
+  .nv-feed-grid > li[data-pulse="true"] {
+    animation: none;
+    outline: 2px solid var(--nv-action);
+    outline-offset: 2px;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* Signature list rhythm: a short staggered rise, capped so the tail never drags. */
+  .nv-feed-grid > li { animation: fadeUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; animation-delay: calc(min(var(--i, 0), 8) * 45ms); }
+}
+/* Mobile: let the rail run to the screen edges so the first chip isn't
+   visually orphaned and there's room to actually swipe. */
+@media (max-width: 640px) {
+  /* scroll-padding matches the bleed padding so scroll-snap rests the first
+     chip at scrollLeft 0 instead of snapping its edge flush to the container
+     (which left ~16px scrolled and tripped the left scroll-fade over "All"). */
+  .nv-feed-categories { margin-inline: calc(-1 * var(--nv-sp-md)); padding-inline: var(--nv-sp-md); scroll-padding-inline: var(--nv-sp-md); padding-bottom: var(--nv-sp-2xs); }
+}
+.nv-feed-empty { color: var(--nv-text-muted); padding: var(--nv-sp-xl) 0; text-align: center; }
+
+/* ── Task 13: Search page ──────────────────────────────────────────────────── */
+.nv-search-page { display: grid; grid-template-columns: minmax(0, 1fr) 1.2fr; min-height: calc(100vh - 200px); }
+.nv-search-list { padding: var(--nv-sp-lg); overflow-y: auto; max-height: calc(100vh - 80px); }
+.nv-search-head { display: grid; gap: var(--nv-sp-md); margin-bottom: var(--nv-sp-md); }
+.nv-search-count { font-size: 1.4rem; margin: 0; }
+.nv-search-results { list-style: none; padding: 0; margin: 0; }
+.nv-search-empty { color: var(--nv-text-muted); padding: var(--nv-sp-xl) 0; }
+.nv-search-map { position: relative; }
+@media (max-width: 720px) {
+  .nv-search-page { display: flex; flex-direction: column; }
+  .nv-search-map { order: 0; height: 60vh; }
+  .nv-search-list { order: 1; max-height: none; padding-top: var(--nv-sp-md); }
+}
+
+/* ── Task 14: Experience detail page ──────────────────────────────────────── */
+.nv-detail { max-width: 72rem; margin: 0 auto; padding: var(--nv-sp-xl) var(--nv-sp-lg); }
+.nv-detail-head h1 { font-size: clamp(1.6rem, 3vw, 2rem); margin: var(--nv-sp-lg) 0 var(--nv-sp-md); }
+.nv-detail-body { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: var(--nv-sp-xl); align-items: start; }
+.nv-detail-main { min-width: 0; }
+/* scroll-margin-top keeps the heading clear of the sticky nav after click. */
+.nv-detail-section { display: grid; gap: var(--nv-sp-md); padding-top: var(--nv-sp-xl); scroll-margin-top: 72px; }
+.nv-detail-section + .nv-detail-section { border-top: 1px solid var(--nv-border); margin-top: var(--nv-sp-lg); }
+.nv-detail-section-heading { font-size: 1.4rem; font-weight: 700; margin: 0; letter-spacing: -0.01em; }
+.nv-detail-host { display: inline-flex; gap: var(--nv-sp-xs); align-items: center; color: var(--nv-text-muted); }
+.nv-detail-host-link {
+  color: var(--nv-action);
+  text-decoration: none;
+  font-weight: 600;
+}
+.nv-detail-host-link:hover { text-decoration: underline; }
+.nv-detail-host-link:focus-visible {
+  outline: 2px solid var(--nv-focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+.nv-detail-prose { max-width: 60ch; }
+
+/* Detail: at-a-glance facts strip */
+.nv-detail-facts {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--nv-sp-md);
+  list-style: none; padding: 0; margin: var(--nv-sp-xs) 0 0;
+  color: var(--nv-text-muted); font-size: 0.9rem;
+}
+.nv-detail-facts li:not(:first-child)::before { content: "·"; margin-right: var(--nv-sp-md); color: var(--nv-border); }
+
+/* Detail: what's included */
+.nv-included { margin-top: var(--nv-sp-md); }
+.nv-included-heading { font-size: 1.05rem; margin: 0 0 var(--nv-sp-xs); }
+.nv-included ul { margin: 0; padding-left: 1.2rem; list-style: disc; display: grid; gap: var(--nv-sp-2xs); }
+.nv-included li { color: var(--nv-text); }
+
+/* Booking scarcity */
+.nv-booking-spots { margin: 0; color: var(--nv-action-strong); font-weight: 700; font-size: 0.85rem; }
+
+/* Reviews */
+.nv-reviews { margin-top: var(--nv-sp-xl); border-top: 1px solid var(--nv-border); padding-top: var(--nv-sp-xl); }
+.nv-reviews-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--nv-sp-md); flex-wrap: wrap; margin-bottom: var(--nv-sp-lg); }
+.nv-reviews-head h2 { margin: 0; }
+.nv-reviews-summary { display: flex; align-items: baseline; gap: var(--nv-sp-xs); margin: 0; }
+.nv-reviews-score { font-family: var(--nv-font-display), sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--nv-text); }
+.nv-reviews-count { color: var(--nv-text-muted); font-size: 0.9rem; }
+.nv-reviews-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--nv-sp-xl); }
+.nv-review { display: grid; gap: var(--nv-sp-sm); align-content: start; }
+.nv-review-head { display: flex; align-items: center; gap: var(--nv-sp-sm); }
+.nv-review-author { margin: 0; font-weight: 700; }
+.nv-review-date { margin: 0; color: var(--nv-text-muted); font-size: 0.8rem; }
+.nv-review-quote { margin: 0; color: var(--nv-text); line-height: 1.55; max-width: 48ch; }
+.nv-review-rating { margin-left: auto; font-size: 0.8rem; font-weight: 700; color: var(--nv-action-strong); letter-spacing: 0.02em; white-space: nowrap; }
+.nv-detail-where-heading { font-size: 1.1rem; font-weight: 700; margin: 0 0 var(--nv-sp-xs); }
+.nv-detail-where-nb { margin: var(--nv-sp-xs) 0 0; }
+.nv-detail-nb-link {
+  color: var(--nv-action);
+  text-decoration: none;
+  font-weight: 600;
+}
+.nv-detail-nb-link:hover { text-decoration: underline; }
+.nv-detail-nb-link:focus-visible {
+  outline: 2px solid var(--nv-focus);
+  outline-offset: 2px;
+  border-radius: var(--nv-r-sm);
+}
+.nv-detail-where-map { height: 280px; border-radius: var(--nv-r-md); overflow: hidden; }
+.nv-detail-go-heading { font-size: 1.1rem; margin-top: var(--nv-sp-md); }
+@media (max-width: 720px) {
+  .nv-detail-body { grid-template-columns: 1fr; }
+}
+
+/* ── /system forward CTA ─────────────────────────────── */
+.nv-system-cta { padding: var(--nv-sp-2xl) 0; text-align: center; border-top: 1px solid var(--nv-border); }
+.nv-system-cta h2 { font-size: 1.6rem; margin: 0 0 var(--nv-sp-2xs); }
+.nv-system-cta p { color: var(--nv-text-muted); margin: 0 0 var(--nv-sp-lg); }
+
+/* ── /work/navi "See it in product" CTA link ──────────── */
+/* Lives on the case study (.nv-page), which does not carry the .nv-ui token
+   scale, so the action color and spacing are stated literally. White on
+   #c4541a is 4.54:1 (AA); the page's own --nv-accent (#f3722c) would fail. */
+.nv-system-cta-link {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 12px 24px;
+  background: #c4541a;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 999px;
+  font-weight: 700;
+}
+.nv-system-cta-link:hover { background: #9e3f0b; }
+
+/* ── Host empty state (in-product, keeps the demo frame) ─ */
+.nv-host-empty {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: var(--nv-sp-xl) var(--nv-sp-md);
+  text-align: center;
+}
+.nv-host-empty h1 { font-size: clamp(2rem, 5vw, 3rem); margin: 0 0 var(--nv-sp-md); }
+.nv-host-empty p {
+  color: var(--nv-text-muted);
+  max-width: 34rem;
+  margin: 0 auto var(--nv-sp-md);
+  line-height: 1.6;
+}
+.nv-host-empty .nv-btn { margin-top: var(--nv-sp-sm); }
+
+/* ── Detail page back-to-results ──────────────────────── */
+.nv-detail-back { margin: 0 0 var(--nv-sp-md); }
+.nv-detail-back a { color: var(--nv-text-muted); text-decoration: none; font-weight: 700; }
+.nv-detail-back a:hover { color: var(--nv-action); }
+
+/* ── Host page ──────────────────────────────────────────────── */
+.nv-host {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: var(--nv-sp-lg);
+  display: grid;
+  gap: var(--nv-sp-lg);
+}
+.nv-host-back { margin: 0; }
+.nv-host-back a { color: var(--nv-text-muted); text-decoration: none; }
+.nv-host-back a:hover { color: var(--nv-text); text-decoration: underline; }
+.nv-host-head {
+  display: flex;
+  align-items: center;
+  gap: var(--nv-sp-md);
+}
+.nv-host-headtext h1 {
+  margin: 0 0 var(--nv-sp-xs);
+  font-size: 2rem;
+}
+.nv-host-meta { margin: 0; color: var(--nv-text-muted); }
+.nv-host-bio {
+  margin: 0;
+  max-width: 60ch;
+  line-height: 1.6;
+  color: var(--nv-text);
+}
+.nv-host-rating {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--nv-sp-xs);
+}
+.nv-host-experiences { display: grid; gap: var(--nv-sp-md); }
+.nv-host-experiences h2 { margin: 0; font-size: 1.4rem; }
+.nv-host-experiences .nv-feed-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.nv-host-footer { margin: 0; }
+.nv-host-footer a {
+  color: var(--nv-action);
+  text-decoration: none;
+  font-weight: 700;
+}
+.nv-host-footer a:hover { text-decoration: underline; }
+.nv-host-footer a:focus-visible {
+  outline: 2px solid var(--nv-focus);
+  outline-offset: 2px;
+}
+
+/* ── Neighborhood page ──────────────────────────────────────── */
+.nv-neighborhood {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: var(--nv-sp-lg);
+  display: grid;
+  gap: var(--nv-sp-lg);
+}
+.nv-neighborhood-back { margin: 0; }
+.nv-neighborhood-back a { color: var(--nv-text-muted); text-decoration: none; }
+.nv-neighborhood-back a:hover { color: var(--nv-text); text-decoration: underline; }
+.nv-neighborhood-back a:focus-visible {
+  outline: 2px solid var(--nv-focus);
+  outline-offset: 2px;
+}
+.nv-neighborhood-head { display: grid; gap: var(--nv-sp-xs); }
+.nv-neighborhood-head h1 { margin: 0; font-size: 2.2rem; }
+.nv-neighborhood-borough { margin: 0; color: var(--nv-text-muted); }
+.nv-neighborhood-intro {
+  margin: 0;
+  max-width: 64ch;
+  line-height: 1.6;
+  color: var(--nv-text);
+}
+.nv-neighborhood-map { border-radius: var(--nv-r-lg); overflow: hidden; }
+.nv-neighborhood-experiences { display: grid; gap: var(--nv-sp-md); }
+.nv-neighborhood-experiences h2 { margin: 0; font-size: 1.4rem; }
+.nv-neighborhood-experiences .nv-feed-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.nv-neighborhood-hosts { display: grid; gap: var(--nv-sp-md); }
+.nv-neighborhood-hosts h2 { margin: 0; font-size: 1.4rem; }
+.nv-neighborhood-hosts-row {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nv-sp-md);
+}
+.nv-neighborhood-host {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--nv-sp-sm);
+  text-decoration: none;
+  color: var(--nv-text);
+  font-weight: 600;
+}
+.nv-neighborhood-host:hover span { text-decoration: underline; }
+.nv-neighborhood-host:focus-visible {
+  outline: 2px solid var(--nv-focus);
+  outline-offset: 2px;
+  border-radius: var(--nv-r-md);
+}
+
+/* Impact ledger page */
+.nv-impact-page {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: var(--nv-sp-lg);
+  display: grid;
+  gap: var(--nv-sp-2xl);
+}
+.nv-impact-intro { display: grid; gap: var(--nv-sp-sm); max-width: 70ch; }
+.nv-impact-intro h1 { margin: 0; font-size: 2.2rem; }
+.nv-impact-intro p { margin: 0; line-height: 1.6; color: var(--nv-text); }
+.nv-impact-theme { display: grid; gap: var(--nv-sp-md); }
+.nv-impact-theme-head {
+  margin: 0;
+  font-size: 1.5rem;
+  padding-bottom: var(--nv-sp-sm);
+  border-bottom: 1px solid var(--nv-border);
+}
+.nv-impact-count { margin: 0; color: var(--nv-text-muted); font-weight: 600; }
+.nv-impact-statements {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--nv-sp-xs);
+}
+.nv-impact-method {
+  display: grid;
+  gap: var(--nv-sp-sm);
+  max-width: 70ch;
+  padding-top: var(--nv-sp-lg);
+  border-top: 1px solid var(--nv-border);
+}
+.nv-impact-method h2 { margin: 0; font-size: 1.25rem; }
+.nv-impact-method p { margin: 0; line-height: 1.6; color: var(--nv-text-muted); }
+.nv-impact-back { margin: 0; }
+.nv-impact-back a { color: var(--nv-text-muted); text-decoration: none; font-weight: 700; }
+.nv-impact-back a:hover { color: var(--nv-action); }
+.nv-impact-cta { display: flex; flex-wrap: wrap; gap: var(--nv-sp-sm); }
+
+/* ── /system Navi context line ────────────────────────── */
+.nv-system-context {
+  font-size: 1.05rem;
+  color: var(--nv-text);
+  margin: 0 0 var(--nv-sp-sm);
+  font-weight: 700;
+}
+
+/* ── Filters slide-over ─────────────────────────────────────────── */
+.nv-slide-over-backdrop {
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(0, 0, 0, 0.35);
+  animation: nvSlideOverFade 0.15s ease-out both;
+}
+.nv-slide-over {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: min(420px, 100vw); z-index: 51;
+  background: var(--nv-surface);
+  display: grid; grid-template-rows: auto 1fr auto;
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.18);
+  animation: nvSlideOverIn 0.2s ease-out both;
+}
+.nv-slide-over-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--nv-sp-md) var(--nv-sp-lg);
+  border-bottom: 1px solid var(--nv-border);
+}
+.nv-slide-over-head h2 { margin: 0; font-size: 1.2rem; }
+.nv-slide-over-close {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid var(--nv-border); background: var(--nv-surface);
+  cursor: pointer; position: relative;
+}
+.nv-slide-over-close::before { content: ''; position: absolute; inset: -4px; border-radius: 50%; }
+.nv-slide-over-body {
+  padding: var(--nv-sp-lg);
+  overflow-y: auto;
+  display: grid; gap: var(--nv-sp-lg);
+}
+.nv-slide-over-group { border: 0; padding: 0; margin: 0; }
+.nv-slide-over-legend { font-weight: 700; margin-bottom: var(--nv-sp-sm); padding: 0; }
+.nv-slide-over-pills { display: flex; flex-wrap: wrap; gap: var(--nv-sp-xs); }
+.nv-slide-over-pill {
+  min-height: 44px; padding: 0 var(--nv-sp-md);
+  border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill);
+  background: var(--nv-surface); cursor: pointer; font: inherit;
+}
+.nv-slide-over-pill.is-active {
+  background: var(--nv-action); color: var(--nv-text-on-action);
+  border-color: var(--nv-action);
+}
+.nv-slide-over-pill:focus-visible {
+  outline: 2px solid var(--nv-focus); outline-offset: 2px;
+}
+.nv-slide-over-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--nv-sp-md); padding: var(--nv-sp-md) var(--nv-sp-lg);
+  border-top: 1px solid var(--nv-border);
+}
+.nv-slide-over-clear {
+  background: none; border: none; cursor: pointer; font: inherit;
+  color: var(--nv-text-muted); text-decoration: underline;
+}
+.nv-slide-over-apply {
+  flex: 1; min-height: 44px; padding: 0 var(--nv-sp-lg);
+  border: none; border-radius: var(--nv-r-pill);
+  background: var(--nv-action); color: var(--nv-text-on-action);
+  cursor: pointer; font: inherit; font-weight: 700;
+}
+.nv-slide-over-apply:focus-visible {
+  outline: 2px solid var(--nv-focus); outline-offset: 2px;
+}
+@keyframes nvSlideOverFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes nvSlideOverIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .nv-slide-over, .nv-slide-over-backdrop { animation: none; }
+}
+@media (max-width: 640px) {
+  .nv-slide-over {
+    top: auto; left: 0; right: 0;
+    width: 100%; max-height: min(640px, 85vh);
+    border-top-left-radius: var(--nv-r-lg);
+    border-top-right-radius: var(--nv-r-lg);
+    animation-name: nvSlideOverInBottom;
+  }
+  @keyframes nvSlideOverInBottom { from { transform: translateY(100%); } to { transform: translateY(0); } }
+}
+.nv-booking-state { display: grid; }
+.nv-booking-state > div {
+  grid-column: 1; grid-row: 1;
+  display: grid; gap: var(--nv-sp-sm);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.nv-booking-state .nv-booking-state-reserve { opacity: 1; transform: scale(1); }
+.nv-booking-state .nv-booking-state-confirmed { opacity: 0; transform: scale(0.97); pointer-events: none; }
+.nv-booking-state.is-reserved .nv-booking-state-reserve { opacity: 0; transform: scale(0.97); pointer-events: none; }
+.nv-booking-state.is-reserved .nv-booking-state-confirmed { opacity: 1; transform: scale(1); pointer-events: auto; }
+.nv-booking-confirm svg { vertical-align: -3px; margin-right: 6px; color: var(--nv-action); }
+@media (prefers-reduced-motion: reduce) {
+  .nv-booking-state > div { transition: none; }
+}

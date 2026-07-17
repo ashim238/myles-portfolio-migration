@@ -34,6 +34,8 @@ let weaveButtonEl;
 let clearButtonEl;
 let statusEl;
 
+// p5 discovers this callback by global name.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function setup() {
   const host = document.getElementById("loom-canvas");
   const canvasWidth = getCanvasWidth();
@@ -46,6 +48,8 @@ function setup() {
   updateStatus("No threads yet.");
 }
 
+// p5 discovers this callback by global name.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function draw() {
   background(...COLORS.background);
   drawPillars();
@@ -55,6 +59,8 @@ function draw() {
   drawLegend();
 }
 
+// p5 discovers this callback by global name.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function windowResized() {
   const canvasWidth = getCanvasWidth();
   const canvasHeight = getCanvasHeight(canvasWidth);

@@ -36,6 +36,8 @@ export function BookingPanel({
   onOpenModal,
   onReserveNow,
   onChangeReservation,
+  contacted,
+  onContactOrganizer,
 }: {
   idPrefix: string;
   priceFrom: number;
@@ -52,6 +54,8 @@ export function BookingPanel({
   onOpenModal: () => void;
   onReserveNow: () => void;
   onChangeReservation: () => void;
+  contacted: boolean;
+  onContactOrganizer: () => void;
 }) {
   return (
     <>
@@ -157,7 +161,12 @@ export function BookingPanel({
           </Button>
         </div>
       </div>
-      <Button variant="transparent">Contact organizer</Button>
+      <Button variant="transparent" onClick={onContactOrganizer}>
+        Contact organizer
+      </Button>
+      <p className="nv-booking-note" aria-live="polite" aria-atomic="true">
+        {contacted ? "Demo only. No message was sent." : ""}
+      </p>
     </>
   );
 }

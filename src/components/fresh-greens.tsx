@@ -116,14 +116,19 @@ export function HeroRouteIllustration() {
 export function ArchitectureDiagram() {
   return (
     <figure className="fg-arch">
-      <div className="fg-arch-scroll">
+      <div
+        className="fg-arch-scroll"
+        role="region"
+        tabIndex={0}
+        aria-label="Fresh Greens system architecture diagram"
+      >
       <DrawOnView>
       <svg
         viewBox="0 0 1250 420"
         xmlns="http://www.w3.org/2000/svg"
         className="fg-arch-svg"
         role="img"
-        aria-label="Three-layer architecture: eight public data sources feed an adapter layer, which feeds a deterministic scoring layer, which feeds the screen layer. Community reports are one of the eight sources, authenticated with an anonymous device UUID and stored in Postgres under row-level security, the same data routed to the moderation queue."
+        aria-label="Three-layer architecture: eight data inputs feed an adapter layer, which feeds a deterministic scoring layer, which feeds the screen layer. Community reports are one input: local-first in the prototype, with a Supabase and Postgres path behind configuration, row-level security, device UUID checks, and moderation views."
       >
         <defs>
           <marker
@@ -163,7 +168,7 @@ export function ArchitectureDiagram() {
           <text x="850" y="50" fontSize="10" opacity="0.62">weather + visibility</text>
 
           <text x="1000" y="32">Community reports</text>
-          <text x="1000" y="50" fontSize="10" opacity="0.62">anon device-UUID · Postgres + RLS</text>
+          <text x="1000" y="50" fontSize="10" opacity="0.62">local-first · Supabase when configured</text>
         </g>
 
         {/* Arrows from sources into the adapter layer */}
@@ -276,10 +281,10 @@ export function ArchitectureDiagram() {
       </DrawOnView>
       </div>
       <figcaption className="fg-arch-caption">
-        Eight public data sources feed an adapter, a deterministic scoring layer,
-        then the screen. Community reports are one source, authenticated with an
-        anonymous device UUID and held in Postgres under row-level security, the
-        same data routed to the moderation queue.
+        Eight data inputs feed an adapter, a deterministic scoring layer, then
+        the screen. Community reports are local-first in the prototype, with a
+        Supabase and Postgres path behind configuration, row-level security,
+        device UUID checks, and moderation views.
         <span className="fg-arch-scrollhint"> Scroll the diagram to read it all.</span>
       </figcaption>
     </figure>
@@ -481,9 +486,9 @@ export function ReservedPalette() {
   return (
     <div className="fg-palette">
       <p className="fg-palette-baseline">
-        <strong>Green</strong> carries every CTA, link, and affordance — the
-        only non-reserved color. Four colors are held to safety-signal work; the
-        documented carve-outs are below.
+        <strong>Green</strong>, the general interface color, carries every CTA,
+        link, and affordance. Four colors are held to safety-signal work, with
+        the documented carve-outs below.
       </p>
       <dl className="fg-palette-lanes">
         {solidLanes.map(renderLane)}

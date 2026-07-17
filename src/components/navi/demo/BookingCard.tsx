@@ -45,6 +45,7 @@ export function BookingCard({
   const [pickedDate, setPickedDate] = useState<Date | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [contacted, setContacted] = useState(false);
   // Earliest selectable day, set after mount so server and client agree on render.
   const [minDate, setMinDate] = useState<Date | undefined>(undefined);
 
@@ -97,6 +98,8 @@ export function BookingCard({
     onOpenModal: () => setModalOpen(true),
     onReserveNow: reserveNow,
     onChangeReservation: () => setReserved(false),
+    contacted,
+    onContactOrganizer: () => setContacted(true),
   };
 
   return (

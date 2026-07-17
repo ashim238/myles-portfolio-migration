@@ -1,15 +1,24 @@
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { notFound } from "next/navigation";
 import { naviDisplay, naviBody } from "@/lib/navi/fonts";
 import { NaviHeader } from "@/components/navi/chrome/NaviHeader";
 import { NaviFooter } from "@/components/navi/chrome/NaviFooter";
 import { ActiveTabBar } from "@/components/navi/chrome/ActiveTabBar";
+import { getProjectBySlug } from "@/lib/content";
 
-export default function NaviMinisiteLayout({ children }: { children: ReactNode }) {
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
+
+export default async function NaviMinisiteLayout({ children }: { children: ReactNode }) {
+  const project = await getProjectBySlug("navi");
+  if (!project || project.status !== "published") {
+    notFound();
+  }
+
   return (
     <div className={`nv-ui ${naviDisplay.variable} ${naviBody.variable}`}>
-      <a href="#main-content" className="skip-link">
-        Skip to content
-      </a>
       <NaviHeader />
       <main id="main-content">{children}</main>
       <NaviFooter />

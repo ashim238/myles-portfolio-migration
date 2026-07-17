@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { ColorPalette } from "@/components/color-palette";
 import { CountUp } from "@/components/count-up";
 import { LeadMedia } from "@/components/lead-media";
+import { ProjectChapter } from "@/components/project-chapter";
 import { RecruiterCut } from "@/components/recruiter-cut";
 import { TransitionLink } from "@/components/transition-link";
 import { SiteNav } from "@/components/site-nav";
@@ -11,14 +13,17 @@ import {
   BeforeAfterPhones,
   FigmaMailchimpPair,
   LockedSwappableView,
-  NewsletterComposer,
+  NewsletterComposerDemo,
   TemplateSwitcher,
 } from "@/components/understandingfafsa";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
+import { CASE_STUDY_CHAPTERS } from "@/lib/project-chapters";
+import { createRouteMetadata } from "@/lib/site-config";
 
 const UF_DESCRIPTION =
-  "Redesigned a newsletter system to match a fresh site rebrand. Modular templates, competitive research across 120+ examples, and a 75% lift in open rates.";
+  "Built a modular newsletter system for a site rebrand. The first redesigned send had an observed ~52.6% open rate with Mailchimp Privacy Protection excluded. This was not a controlled attribution test.";
+const chapters = CASE_STUDY_CHAPTERS.understandingfafsa;
 
 const UF_COLORS = [
   "#be5abf",
@@ -35,19 +40,20 @@ const UF_COLORS = [
   "#7100bf",
 ];
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createRouteMetadata({
   title: "UnderstandingFAFSA",
   description: UF_DESCRIPTION,
-  openGraph: {
-    title: "UnderstandingFAFSA",
-    description: UF_DESCRIPTION,
-    type: "article",
-    images: [{ url: "/projects/understandingfafsa/cover.png" }],
-  },
-};
+  path: "/work/understandingfafsa",
+  image: "/projects/understandingfafsa/cover.png",
+  type: "article",
+});
 
 export default async function UnderstandingFafsaPage() {
   const project = await getProjectBySlug("understandingfafsa");
+  if (!project || project.status !== "published") {
+    notFound();
+  }
+
   const allProjects = await getPublishedProjects();
 
   return (
@@ -65,18 +71,22 @@ export default async function UnderstandingFafsaPage() {
       </nav>
 
       <section className="hero project-hero uf-hero" aria-labelledby="uf-title">
-        <p className="uf-eyebrow">Product design · 2025</p>
+        <p className="uf-eyebrow">Product design · 2025–present</p>
         <h1 id="uf-title" className="project-hero-title uf-title">
-          UnderstandingFAFSA
+          Understanding<wbr />FAFSA
         </h1>
         <p className="project-hero-lede uf-lede">
           {project?.summary ?? UF_DESCRIPTION}
         </p>
       </section>
 
-      <LeadMedia cover="/projects/understandingfafsa/cover.png" alt="UnderstandingFAFSA cover" />
+      <LeadMedia
+        cover="/projects/understandingfafsa/cover.png"
+        alt="Two phone mockups showing blue and orange UnderstandingFAFSA newsletter templates."
+        width={4000}
+        height={3000}
+      />
       <RecruiterCut
-        problem="A freshly rebranded site left its newsletter looking dated and off-brand."
         role="Product Designer"
         timeline="February 2025 – Ongoing"
         stack="Figma, Mailchimp"
@@ -84,236 +94,219 @@ export default async function UnderstandingFafsaPage() {
         outcomeValue={project?.outcomeMetricValue}
         outcomeLabel={project?.outcomeMetricLabel}
         moves={[
-          "Researched 120+ newsletters against four criteria.",
+          "Compiled and evaluated 120+ newsletters with one collaborator.",
           "Built a modular template system with locked layers and swappable parts.",
-          "Matched the newsletter to the rebranded site so subscribers see one brand.",
+          "Matched the newsletter type and palette to the rebranded site.",
         ]}
       />
 
-      <ProjectToc
-        sections={[
-          { title: "Where it started: a rebranded site, a dated newsletter.", id: "uf-context" },
-          { title: "Why the old template lost readers.", id: "uf-problem" },
-          { title: "Auditing 120 newsletters against four criteria.", id: "uf-audit" },
-          { title: "Designing one skeleton for three kinds of sends.", id: "uf-templates" },
-          { title: "The core decision: locked layers, swappable parts.", id: "uf-locked" },
-          { title: "Rebuilding it in Mailchimp.", id: "uf-figma" },
-          { title: "The results: open rates after the first send.", id: "uf-results" },
-        ]}
-      />
+      <ProjectToc sections={chapters} />
 
-      <div className="case-tier-divider"><span>The full breakdown ↓</span></div>
-
-      <section className="project-section uf-section" aria-labelledby="uf-context">
-        <h2 id="uf-context">Where it started: a rebranded site, a dated newsletter.</h2>
-        <blockquote className="case-pullquote">Subscribers were seeing two different brands.</blockquote>
-        <div className="project-section-body">
-          <p>
-            UnderstandingFAFSA helps students, parents, and counselors navigate the Free Application
-            for Federal Student Aid (FAFSA). The newsletter is a primary touchpoint. The website had
-            already moved to a calmer, modern visual language (Saans typeface, refreshed palette),
-            but the newsletter still carried an older system. The scope was email-only. The founder assembles every issue, so{" "}
-            <mark className="case-highlight">
-              the system had to maintain the brand&apos;s identity regardless
-              of who was building it
-            </mark>
-            .
-          </p>
-        </div>
-      </section>
-
-      <section className="project-section uf-section" aria-labelledby="uf-problem">
-        <h2 id="uf-problem">Why the old template lost readers.</h2>
-        <p className="case-section-lead">
-          The old template lost busy readers on mobile, and open rates sat around 30%.
-        </p>
-        <div className="project-section-body">
-          <p>
-            The old template failed where busy readers notice first: uneven CTAs, a muted palette that
-            didn&apos;t carry the rebrand, long unscannable stretches of text, weak section breaks, and
-            a layout that wasn&apos;t optimized for mobile users.{" "}
-            Open rates sat around ~30%.
-          </p>
-          <p>
-            If email stayed weak, people would miss deadline-driven guidance at key checkpoints:
-            FAFSA filing windows, scholarship deadlines, policy changes. The channel needed the same
-            credibility the site had worked to develop.
-          </p>
-        </div>
-        <BeforeAfterPhones />
-      </section>
-
-      <section className="project-section uf-section" aria-labelledby="uf-audit">
-        <h2 id="uf-audit">Auditing 120 newsletters against four criteria.</h2>
-        <div className="project-section-body">
-          <p>
-            Before touching templates, we compiled over 120 newsletter
-            examples and evaluated them against four criteria: clarity,
-            personalization, tone of voice, and visual appeal and branding
-            consistency.
-          </p>
-          <p>
-            Five newsletters got the deepest treatment: Revenews, The 74, Next by Jeff Selingo,
-            Medium, and Folderly. Each newsletter adopted a different approach to the same problem:
-            making a recurring email feel worth opening.
-          </p>
-          <p>
-            The rest of the newsletter pool served as lighter references for layout, color, and
-            hierarchy patterns.
-          </p>
-          <p>The deep dive highlights:</p>
-          <ul>
-            <li>
-              <strong>Selective bolding</strong> created visual entry points without adding imagery.
-              Revenews paired this with emoji section headers and concise intros.
-            </li>
-            <li>
-              <strong>Bespoke bullet styles</strong> reinforced brand identity in the smallest
-              details, like Folderly&apos;s use of brand-colored accents.
-            </li>
-            <li>
-              <strong>Action-focused section titles</strong> turned bulk information into content
-              readers could parse in a single scroll.
-            </li>
-            <li>
-              <strong>Tone calibration by audience</strong>: student-facing emails could carry
-              emojis and GIFs, while counselor-facing emails needed the more earnest, formal
-              register we saw in The 74.
-            </li>
-            <li>
-              <strong>Personalization through structure</strong>: Next&apos;s if/then link framing
-              (&quot;if you&apos;re looking for help with X, then read this&quot;) gave readers
-              agency, and author photos with brief bios made the sender feel human.
-            </li>
-          </ul>
-          <p>
-            From there we put our own spin on it, adapting these patterns to UnderstandingFAFSA&apos;s
-            voice, the founder&apos;s preference for vibrancy, and the practical constraint that a
-            non-designer would assemble every issue.
-          </p>
-        </div>
-      </section>
-
-      <section
-        className="project-section uf-section project-section--wide uf-section--wide"
-        aria-labelledby="uf-templates"
+      <ProjectChapter
+        entry={chapters[0]}
+        index={1}
+        total={chapters.length}
+        variant="understandingfafsa"
       >
-        <h2 id="uf-templates">Designing one skeleton for three kinds of sends.</h2>
-        <p className="case-section-lead">
-          One modular framework covers the welcome email, the weekly newsletter, and lighter event sends.
-        </p>
-        <div className="project-section-body">
-          <p>
-            The system ships through a shared modular framework: a welcome
-            email that sets expectations, the core weekly
-            newsletter, and an event-specific variant with fewer blocks and
-            faster assembly for invites and recaps. A counselor-focused toolkit extends
-            the same vocabulary (duotone icons, formal register) and is in progress.
-          </p>
-          <p>
-            The welcome email follows a deliberate structure shaped by the audit. It includes a
-            banner, gratitude, what to expect, a brief history that transitions into the current
-            mission, a CTA, suggested reading, and social links. It&apos;s the subscriber&apos;s
-            first impression of the redesigned brand.
-          </p>
+        <div className="project-section uf-section">
+          <div className="project-section-body">
+            <p>
+              UnderstandingFAFSA helps students, parents, and counselors navigate
+              the Free Application for Federal Student Aid (FAFSA). The
+              newsletter carries guidance for all three groups. The website had
+              already adopted Saans and a refreshed palette. The scope was
+              email-only, and the founder assembles every issue.
+            </p>
+          </div>
         </div>
 
-        <TemplateSwitcher />
+        <section className="project-section uf-section" aria-labelledby="uf-problem">
+          <h3 className="project-evidence-heading" id="uf-problem">
+            Where the old template broke down
+          </h3>
+          <div className="project-section-body">
+            <p>
+              The newsletter covers deadline-driven guidance at key checkpoints:
+              FAFSA filing windows, scholarship deadlines, and policy changes.
+              The old template had uneven CTAs, long stretches of text, weak
+              section breaks, and a layout that wasn&apos;t optimized for mobile.
+              Its muted palette also came from the site&apos;s previous visual system.
+            </p>
+          </div>
+          <BeforeAfterPhones />
+        </section>
+      </ProjectChapter>
 
-        <NewsletterComposer />
-      </section>
-
-      <section
-        className="project-section uf-section project-section--wide uf-section--wide"
-        aria-labelledby="uf-locked"
+      <ProjectChapter
+        entry={chapters[1]}
+        index={2}
+        total={chapters.length}
+        variant="understandingfafsa"
       >
-        <h2 id="uf-locked">The core decision: locked layers, swappable parts.</h2>
-        <p className="case-section-lead">
-          Structure and type stay locked, so a non-designer can swap copy and images without breaking the brand.
-        </p>
-        <div className="project-section-body">
-          <p>
-            <mark className="case-highlight">
-              The locked-vs-swappable distinction was the core design
-              decision.
-            </mark>{" "}
-            Spacing, dividers, type, and the structural skeleton stay locked
-            so swaps don&apos;t quietly undo the brand.
-            Editors swap body copy and emoji-style section images. The founder drafts each
-            week&apos;s copy for editorial.
-          </p>
-          <p>
-            Color variants were chosen to stay in harmony with UnderstandingFAFSA&apos;s design
-            system. The founder can assemble an issue quickly without any single swap
-            pulling the send off-brand.
-          </p>
+        <div className="project-section uf-section">
+          <div className="project-section-body">
+            <p>
+              Before touching templates, I worked with one collaborator to
+              compile over 120 newsletter examples and evaluate them against four
+              criteria: clarity, personalization, tone of voice, and visual
+              appeal and branding consistency.
+            </p>
+            <p>
+              Five newsletters got the deepest treatment: Revenews, The 74, Next
+              by Jeff Selingo, Medium, and Folderly. Each used a different mix of
+              structure, tone, and branding.
+            </p>
+            <p>
+              The rest of the newsletter pool served as lighter references for
+              layout, color, and hierarchy patterns.
+            </p>
+            <p>The deep dive highlights:</p>
+            <ul>
+              <li>
+                Revenews used <strong>selective bolding</strong>, emoji section
+                headers, and concise intros.
+              </li>
+              <li>
+                Folderly carried <strong>brand color</strong> into its bullet
+                styles.
+              </li>
+              <li>
+                Several references used{" "}
+                <strong>action-focused section titles</strong> to divide long
+                sends.
+              </li>
+              <li>
+                The 74 used a <strong>more formal register</strong> than
+                student-facing references that used emojis and GIFs.
+              </li>
+              <li>
+                Next used <strong>if/then link framing</strong>, author photos,
+                and brief bios.
+              </li>
+            </ul>
+          </div>
         </div>
+      </ProjectChapter>
 
-        <LockedSwappableView />
+      <ProjectChapter
+        entry={chapters[2]}
+        index={3}
+        total={chapters.length}
+        variant="understandingfafsa"
+      >
+        <section
+          className="project-section uf-section project-section--wide uf-section--wide"
+          aria-labelledby="uf-templates"
+        >
+          <h3 className="project-evidence-heading" id="uf-templates">
+            Three send types from the audit
+          </h3>
+          <div className="project-section-body">
+            <p>
+              The shared framework includes a welcome email that sets
+              expectations, the core weekly newsletter, and an event-specific
+              variant with fewer blocks for invites and recaps. A
+              counselor-focused toolkit extends the same vocabulary (duotone
+              icons, formal register) and is in progress.
+            </p>
+            <p>
+              The welcome email follows a deliberate structure shaped by the
+              audit. It includes a banner, gratitude, what to expect, a brief
+              history that transitions into the current mission, a CTA, suggested
+              reading, and social links. The welcome email introduces the
+              redesigned type, palette, and content structure.
+            </p>
+          </div>
 
-        <ColorPalette colors={UF_COLORS} />
-      </section>
+          <TemplateSwitcher />
 
-      <section className="project-section uf-section" aria-labelledby="uf-figma">
-        <h2 id="uf-figma">Rebuilding it in Mailchimp.</h2>
-        <p className="case-section-lead">
-          Rebuilding the design in Mailchimp meant fighting Gmail&apos;s 102KB clip limit without losing the brand.
-        </p>
-        <div className="project-section-body">
-          <p>
-            The hierarchy, spacing, and modular rhythm all lived in Figma, but the live template had to be
-            rebuilt in Mailchimp so the founder could edit without touching HTML. Matching Figma
-            spacing inside the builder was a dead end. Every container and wrapper added bloat. I
-            reframed hierarchy so section headers and body read clearly in email, not on a static
-            artboard.
-          </p>
-          <p>
-            <mark className="case-highlight">
-              Gmail&apos;s 102KB HTML ceiling and clipping created a rigid
-              constraint.
-            </mark>
-            Early weight came from custom section icons and themed dividers exported from Figma. The
-            fix arrived through test sends, stripping redundant wrappers and dividers, merging sections
-            where it still scanned, and compressing PNGs through an external tool. For dark-mode-friendly
-            dividers, I removed backgrounds in Photoshop so assets stayed lighter without muddying on
-            phone.
-          </p>
-          <p>
-            Compression wasn&apos;t one recipe. The weekly kit leaned on fewer custom assets and more
-            Mailchimp-native structure. The counselor toolkit needed more image work and tighter file
-            discipline for its duotone icons. What I wouldn&apos;t trade for a few kilobytes:
-            typography tuned to the closest Mailchimp sans to the site&apos;s Saans typeface, and the
-            full brand palette, even when trying to maintain the founder&apos;s appetite for vibrancy.
-          </p>
+          <NewsletterComposerDemo />
+        </section>
+
+        <div className="project-section uf-section project-section--wide uf-section--wide">
+          <div className="project-section-body">
+            <p>
+              Spacing, dividers, type, and the structural skeleton stay locked.
+              Editors swap body copy and emoji-style section images. The founder
+              drafts each week&apos;s copy and works within those fixed rules.
+            </p>
+          </div>
+
+          <LockedSwappableView />
+
+          <ColorPalette colors={UF_COLORS} />
         </div>
-        <FigmaMailchimpPair />
-      </section>
+      </ProjectChapter>
 
-      <section className="project-section uf-section" aria-labelledby="uf-results">
-        <h2 id="uf-results">The results: open rates after the first send.</h2>
-        <p className="case-section-lead">
-          The first redesigned send moved open rates from around 30% to about 52.6%.
-        </p>
-        <div className="project-section-body">
-          <p>
-            <mark className="case-highlight">
-              This was my first time designing a system someone else
-              assembles every week.
-            </mark>{" "}
-            No designer looks at a send before it goes out. The founder swaps
-            copy and images herself, which means the locked layers carry the
-            review a designer would normally do.
-          </p>
-          <p>
-            The first redesigned send went out November 4, 2025. Open rates
-            moved from around 30% to <CountUp value="~52.6%" /> (Mailchimp
-            reporting with MPP excluded), with clicks, bounces, and
-            unsubscribes still in a healthy band. What shipped: a master
-            template, modular blocks, explicit locked-vs-swappable rules,
-            and three template variants on the same design vocabulary.
-          </p>
+      <ProjectChapter
+        entry={chapters[3]}
+        index={4}
+        total={chapters.length}
+        variant="understandingfafsa"
+      >
+        <div className="project-section uf-section">
+          <div className="project-section-body">
+            <p>
+              The hierarchy, spacing, and modular rhythm all lived in Figma, but
+              the live template had to be rebuilt in Mailchimp so the founder
+              could edit without touching HTML. Matching Figma spacing inside the
+              builder was a dead end. Every container and wrapper added bloat. I
+              simplified the section-header and body hierarchy for the Mailchimp
+              build.
+            </p>
+            <p>
+              <mark className="case-highlight">
+                Gmail&apos;s 102KB HTML ceiling and clipping created a rigid
+                constraint.
+              </mark>{" "}
+              Early weight came from custom section icons and themed dividers
+              exported from Figma. Test sends showed which wrappers and dividers
+              could go. I merged sections where they still scanned and compressed
+              PNGs through an external tool. For dark-mode-friendly dividers, I
+              removed backgrounds in Photoshop so assets stayed lighter without
+              muddying on phone.
+            </p>
+            <p>
+              Compression wasn&apos;t one recipe. The weekly kit leaned on fewer
+              custom assets and more Mailchimp-native structure. The counselor
+              toolkit needed more image work and tighter file discipline for its
+              duotone icons. What I wouldn&apos;t trade for a few kilobytes:
+              typography tuned to the closest Mailchimp sans to the site&apos;s
+              Saans typeface, and the full brand palette, even when trying to
+              maintain the founder&apos;s appetite for vibrancy.
+            </p>
+          </div>
+          <FigmaMailchimpPair />
         </div>
-      </section>
+      </ProjectChapter>
+
+      <ProjectChapter
+        entry={chapters[4]}
+        index={5}
+        total={chapters.length}
+        variant="understandingfafsa"
+      >
+        <div className="project-section uf-section">
+          <div className="project-section-body">
+            <p>
+              <mark className="case-highlight">
+                This was my first time designing a system someone else
+                assembles every week.
+              </mark>
+            </p>
+            <p>
+              I shipped a master template, modular blocks, explicit
+              locked-vs-swappable rules, and three template variants on the same
+              design vocabulary. The first redesigned send went out November 4, 2025.
+              Mailchimp reported an observed <CountUp value="~52.6%" /> open rate
+              with MPP excluded, compared with earlier sends around 30%. This was
+              not a controlled attribution test, so I treat the result as an
+              encouraging first observation rather than proof that the redesign
+              caused the change.
+            </p>
+          </div>
+        </div>
+      </ProjectChapter>
 
       <ProjectWorkJump currentSlug="understandingfafsa" projects={allProjects} />
       <CaseHighlightObserver />

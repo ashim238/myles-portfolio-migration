@@ -6,7 +6,7 @@ brand
 
 ## Users
 
-Hiring managers, design leads, and design collaborators evaluating Myles Ashitey for senior product / interaction roles. They're typically scanning on a phone first, then opening the portfolio on a laptop for the case study deep-dive. Often they have 60 seconds for the home page and 5 minutes for one case study. They want to see how Myles thinks, not just what he made.
+Hiring managers, design leads, and design collaborators evaluating Myles Ashitey for product design roles broadly, with associate roles as the near-term target. They're typically scanning on a phone first, then opening the portfolio on a laptop for the case study deep-dive. Often they have 60 seconds for the home page and 5 minutes for one case study. They want to see how Myles thinks, not just what he made.
 
 ## Product Purpose
 

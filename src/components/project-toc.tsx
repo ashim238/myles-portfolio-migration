@@ -1,9 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import type { ProjectChapterEntry } from "@/lib/project-chapters";
+
+type ProjectTocItem = Pick<ProjectChapterEntry, "id" | "title"> & {
+  stage?: string;
+};
 
 type ProjectTocProps = {
-  sections: { title: string; id: string }[];
+  sections: readonly ProjectTocItem[];
+  readingEndId?: string;
 };
 
 const WORDS_PER_MIN = 225;
@@ -16,7 +22,13 @@ function formatReadout(progress: number, totalMin: number): string {
   return `${pct}% · ${left} min left`;
 }
 
-export function ProjectToc({ sections }: ProjectTocProps) {
+function completeChapterTitle(chapter: ProjectTocItem) {
+  return chapter.stage
+    ? `${chapter.stage}: ${chapter.title}`
+    : chapter.title;
+}
+
+export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
   const [activeId, setActiveId] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
@@ -110,12 +122,15 @@ export function ProjectToc({ sections }: ProjectTocProps) {
       const pageY = window.scrollY;
       starts = anchors.map((el) => el.getBoundingClientRect().top + pageY);
 
-      // The reading region runs from the first section to the bottom of the
-      // last one (where the "More work" jump begins).
-      const lastSection =
-        anchors[anchors.length - 1].closest<HTMLElement>(".project-section") ??
-        anchors[anchors.length - 1].closest<HTMLElement>("section") ??
+      // The reading region can extend past the last visible TOC chapter when
+      // several later sections are intentionally grouped under one chapter.
+      const endAnchor =
+        (readingEndId ? document.getElementById(readingEndId) : null) ??
         anchors[anchors.length - 1];
+      const lastSection =
+        endAnchor.closest<HTMLElement>(".project-section") ??
+        endAnchor.closest<HTMLElement>("section") ??
+        endAnchor;
       const lastRect = lastSection.getBoundingClientRect();
       regionStart = starts[0];
       regionEnd = lastRect.bottom + pageY;
@@ -198,7 +213,7 @@ export function ProjectToc({ sections }: ProjectTocProps) {
       ro.disconnect();
       if (frame) cancelAnimationFrame(frame);
     };
-  }, [sections]);
+  }, [sections, readingEndId]);
 
   // Auto-scroll active item into view on desktop
   useEffect(() => {
@@ -221,6 +236,7 @@ export function ProjectToc({ sections }: ProjectTocProps) {
         });
         setActiveId(id);
         setIsOpen(false);
+        toggleRef.current?.focus();
       }
     },
     []
@@ -271,7 +287,10 @@ export function ProjectToc({ sections }: ProjectTocProps) {
   );
 
   const activeIndex = sections.findIndex((s) => s.id === activeId);
-  const activeTitle = activeIndex >= 0 ? sections[activeIndex].title : sections[0]?.title ?? "";
+  const activeChapter = sections[activeIndex >= 0 ? activeIndex : 0];
+  const activeTitle = activeChapter
+    ? completeChapterTitle(activeChapter)
+    : "";
   const activeNum = String(activeIndex >= 0 ? activeIndex + 1 : 1).padStart(2, "0");
 
   return (
@@ -283,7 +302,7 @@ export function ProjectToc({ sections }: ProjectTocProps) {
       <nav
         ref={tocRef}
         className={`project-toc${isSticky ? " project-toc--sticky" : ""}`}
-        aria-label="Case study sections"
+        aria-label="Case study chapters"
       >
         {/* Mobile: collapsed current-section bar. The overall progress fills
             the hairline beneath it. */}
@@ -302,7 +321,17 @@ export function ProjectToc({ sections }: ProjectTocProps) {
         >
           <span className="project-toc-toggle-label">
             <span className="project-toc-num">{activeNum}.</span>
-            {activeTitle}
+            <span className="project-toc-active-title">
+              {activeChapter?.stage ? (
+                <>
+                  <span className="project-toc-stage">{activeChapter.stage}</span>
+                  <span className="project-toc-separator" aria-hidden="true">
+                    :{" "}
+                  </span>
+                </>
+              ) : null}
+              <span className="project-toc-title">{activeChapter?.title ?? ""}</span>
+            </span>
           </span>
           <span className="project-toc-toggle-end">
             <span className="project-toc-readout-mobile js-toc-readout" aria-hidden="true" />
@@ -340,10 +369,21 @@ export function ProjectToc({ sections }: ProjectTocProps) {
                     onClick={() => handleClick(section.id)}
                     onKeyDown={(event) => handleKeyDown(event, i)}
                     aria-current={isActive ? "true" : undefined}
+                    aria-label={completeChapterTitle(section)}
                   >
                     <span className="project-toc-dot" aria-hidden="true" />
                     <span className="project-toc-num">{num}.</span>
-                    <span className="project-toc-text">{section.title}</span>
+                    <span className="project-toc-text">
+                      {section.stage ? (
+                        <>
+                          <span className="project-toc-stage">{section.stage}</span>
+                          <span className="project-toc-separator" aria-hidden="true">
+                            :{" "}
+                          </span>
+                        </>
+                      ) : null}
+                      <span className="project-toc-title">{section.title}</span>
+                    </span>
                     <span className="project-toc-rail" aria-hidden="true" />
                   </button>
                 </li>
@@ -363,7 +403,7 @@ export function ProjectToc({ sections }: ProjectTocProps) {
         <span className="project-toc-progress" aria-hidden="true" />
 
         <p id="project-toc-help" className="project-toc-help">
-          Arrow keys move between sections. Home and End jump to the ends.
+          Arrow keys move between chapters. Home and End jump to the ends.
         </p>
       </nav>
 

@@ -1,11 +1,68 @@
 import { useEffect, useRef, type RefObject } from "react";
 import { lockBackground, unlockBackground } from "@/lib/navi/overlay-lock";
 
+type ActiveOverlay = {
+  root: HTMLElement | null;
+  hadInert: boolean;
+  ariaHidden: string | null;
+};
+
+const activeOverlays: ActiveOverlay[] = [];
+
+function restoreOverlayRoot(overlay: ActiveOverlay) {
+  if (overlay.hadInert) {
+    overlay.root?.setAttribute("inert", "");
+  } else {
+    overlay.root?.removeAttribute("inert");
+  }
+  if (overlay.ariaHidden === null) {
+    overlay.root?.removeAttribute("aria-hidden");
+  } else {
+    overlay.root?.setAttribute("aria-hidden", overlay.ariaHidden);
+  }
+}
+
+function syncOverlayRoots() {
+  activeOverlays.forEach((overlay, index) => {
+    if (index === activeOverlays.length - 1) {
+      restoreOverlayRoot(overlay);
+      return;
+    }
+    overlay.root?.setAttribute("inert", "");
+    overlay.root?.setAttribute("aria-hidden", "true");
+  });
+}
+
+function registerOverlay(root: HTMLElement | null) {
+  const overlay: ActiveOverlay = {
+    root,
+    hadInert: root?.hasAttribute("inert") ?? false,
+    ariaHidden: root?.getAttribute("aria-hidden") ?? null,
+  };
+  activeOverlays.push(overlay);
+  syncOverlayRoots();
+  lockBackground();
+  return overlay;
+}
+
+function isTopOverlay(overlay: ActiveOverlay) {
+  return activeOverlays.at(-1) === overlay;
+}
+
+function unregisterOverlay(overlay: ActiveOverlay) {
+  const wasTop = isTopOverlay(overlay);
+  const index = activeOverlays.indexOf(overlay);
+  if (index !== -1) activeOverlays.splice(index, 1);
+  restoreOverlayRoot(overlay);
+  syncOverlayRoots();
+  unlockBackground();
+  return wasTop;
+}
+
 /**
- * Shared overlay behavior for the booking modals: focus trap, Escape to close,
- * body scroll lock with the minisite shell inert, and focus returned to the
- * trigger on close. The date picker modal and the mobile booking sheet both use
- * it so the two stay identical instead of drifting apart.
+ * Shared Navi overlay behavior: the topmost overlay owns Escape and the focus
+ * trap, underlying overlays are isolated, the minisite stays locked, and focus
+ * returns to the trigger as each layer closes.
  */
 export function useOverlayBehavior({
   open,
@@ -28,10 +85,13 @@ export function useOverlayBehavior({
   useEffect(() => {
     if (!open) return;
     const trigger = document.activeElement as HTMLElement | null;
+    const overlay = registerOverlay(
+      containerRef.current?.closest<HTMLElement>(".nv-overlay-root") ?? null,
+    );
     initialFocusRef?.current?.focus();
-    lockBackground();
 
     function onKey(e: KeyboardEvent) {
+      if (e.defaultPrevented || !isTopOverlay(overlay)) return;
       if (e.key === "Escape") {
         e.preventDefault();
         onCloseRef.current();
@@ -55,8 +115,8 @@ export function useOverlayBehavior({
     document.addEventListener("keydown", onKey);
     return () => {
       document.removeEventListener("keydown", onKey);
-      unlockBackground();
-      trigger?.focus?.();
+      const wasTop = unregisterOverlay(overlay);
+      if (wasTop) trigger?.focus?.();
     };
-  }, [open]);
+  }, [open, containerRef, initialFocusRef]);
 }

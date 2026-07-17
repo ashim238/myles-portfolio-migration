@@ -11,10 +11,20 @@ import {
 } from "react";
 import Image from "next/image";
 
-type LightboxState = { src: string; alt: string } | null;
+type LightboxState = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+} | null;
 
 type LightboxCtx = {
-  openLightbox: (src: string, alt: string) => void;
+  openLightbox: (
+    src: string,
+    alt: string,
+    width: number,
+    height: number,
+  ) => void;
 };
 
 const LightboxContext = createContext<LightboxCtx>({ openLightbox: () => {} });
@@ -25,22 +35,31 @@ export function useLightbox() {
 
 export function LightboxProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<LightboxState>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
 
-  const openLightbox = useCallback((src: string, alt: string) => {
+  const openLightbox = useCallback((
+    src: string,
+    alt: string,
+    width: number,
+    height: number,
+  ) => {
     // Remember what opened the dialog so focus can return there on close.
     triggerRef.current =
       document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    setState({ src, alt });
+    setState({ src, alt, width, height });
   }, []);
 
   const close = useCallback(() => setState(null), []);
 
   useEffect(() => {
     if (!state) return;
+    const content = contentRef.current;
     const closeBtn = frameRef.current?.querySelector<HTMLButtonElement>(".lb-close");
     closeBtn?.focus();
+    content?.setAttribute("inert", "");
+    content?.setAttribute("aria-hidden", "true");
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -61,6 +80,8 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
       delete document.body.dataset.lightboxOpen;
+      content?.removeAttribute("inert");
+      content?.removeAttribute("aria-hidden");
       triggerRef.current?.focus();
       triggerRef.current = null;
     };
@@ -68,7 +89,12 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
 
   return (
     <LightboxContext.Provider value={{ openLightbox }}>
-      {children}
+      <div
+        ref={contentRef}
+        className="lb-content"
+      >
+        {children}
+      </div>
 
       {state && (
         <>
@@ -96,9 +122,9 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
               className="lb-image"
               src={state.src}
               alt={state.alt}
-              width={1200}
-              height={2600}
-              unoptimized={state.src.startsWith("/")}
+              width={state.width}
+              height={state.height}
+              sizes="92vw"
             />
           </div>
         </>

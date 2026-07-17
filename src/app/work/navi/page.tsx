@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Jost, Lato } from "next/font/google";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { LeadMedia } from "@/components/lead-media";
 import { RecruiterCut } from "@/components/recruiter-cut";
 import { TransitionLink } from "@/components/transition-link";
 import { SiteNav } from "@/components/site-nav";
+import { ProjectChapter } from "@/components/project-chapter";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
 import {
@@ -15,9 +17,12 @@ import {
   SurveyStatRings,
 } from "@/components/navi";
 import { NaviDemoEmbed } from "@/components/navi-demo-embed";
+import { NaviResearchArtifacts } from "@/components/navi/research-artifacts";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
 import { NAVI_SURVEY_META } from "@/lib/navi-survey-data";
+import { CASE_STUDY_CHAPTERS } from "@/lib/project-chapters";
+import { createRouteMetadata } from "@/lib/site-config";
 
 const jost = Jost({
   subsets: ["latin"],
@@ -32,21 +37,25 @@ const lato = Lato({
   display: "swap",
 });
 
-const NAVI_DESCRIPTION =
-  "Connecting visitors to New York City's local heartbeat: a regenerative travel platform concept built on resident research.";
+const chapters = CASE_STUDY_CHAPTERS.navi;
 
-export const metadata: Metadata = {
+const NAVI_DESCRIPTION =
+  "A regenerative travel platform concept for NYC neighborhood experiences, developed in a graduate studio and rebuilt for this portfolio.";
+
+export const metadata: Metadata = createRouteMetadata({
   title: "Navi",
   description: NAVI_DESCRIPTION,
-  openGraph: {
-    title: "Navi",
-    description: NAVI_DESCRIPTION,
-    type: "article",
-  },
-};
+  path: "/work/navi",
+  image: "/projects/navi/cover.png",
+  type: "article",
+});
 
 export default async function NaviPage() {
   const project = await getProjectBySlug("navi");
+  if (!project || project.status !== "published") {
+    notFound();
+  }
+
   const allProjects = await getPublishedProjects();
 
   return (
@@ -70,13 +79,17 @@ export default async function NaviPage() {
         </h1>
         <p className="project-hero-lede nv-lede">
           {project?.summary ??
-            "Connecting visitors to New York City's local heartbeat."}
+            "A graduate-studio concept for neighborhood travel. I later rebuilt it as a working portfolio demo."}
         </p>
       </section>
 
-      <LeadMedia cover="/projects/navi/cover.png" alt="Navi cover" />
+      <LeadMedia
+        cover="/projects/navi/cover.png"
+        alt="Navi neighborhood experience search results and cards on a tablet on a wooden table."
+        width={2048}
+        height={1365}
+      />
       <RecruiterCut
-        problem="NYC tourism defaults to top-ten checklists that skip the neighborhoods and people who make the city."
         role="UI/UX Designer"
         timeline="January 2025 – June 2025"
         stack="Figma, research"
@@ -84,101 +97,100 @@ export default async function NaviPage() {
         outcomeValue={project?.outcomeMetricValue}
         outcomeLabel={project?.outcomeMetricLabel}
         moves={[
-          "Mapped tourist density across Manhattan to find where the checklists cluster.",
-          "Ran three user groups and six platforms through one heuristic evaluation.",
-          "Turned the research into a neighborhood-participation framework.",
+          "The team explored an early Manhattan redirection concept through a heatmap.",
+          "The team audited six travel platforms and evaluated Airbnb with Nielsen's heuristics.",
+          "The concept used a 14-response resident survey, three research-informed archetypes, and Learn, Plan, Go.",
         ]}
       />
 
-      <ProjectToc
-        sections={[
-          { title: "The concept: regenerative travel", id: "nv-intro" },
-          { title: "The first idea was a heatmap", id: "nv-heatmap" },
-          { title: "Surveying three user groups", id: "nv-research" },
-          { title: "What the data said", id: "nv-insights" },
-          { title: "From research to framework", id: "nv-framework" },
-          { title: "Building a system", id: "nv-system" },
-          { title: "See it in product", id: "nv-screens" },
-          { title: "What Navi proved", id: "nv-outcome" },
-        ]}
-      />
+      <ProjectToc sections={chapters} />
 
-      <div className="case-tier-divider"><span>The full breakdown ↓</span></div>
-
-      <section className="project-section nv-section" aria-labelledby="nv-intro">
-        <h2 id="nv-intro">The concept: a regenerative travel platform for New York City</h2>
+      <ProjectChapter
+        entry={chapters[0]}
+        index={1}
+        total={chapters.length}
+        variant="navi"
+      >
+      <div className="project-section nv-section">
         <p className="case-section-lead">
-          Connecting visitors to neighborhood-level experiences returns value to the communities they visit.
+          The early design premise treated concentrated tourism as a routing problem.
         </p>
         <div className="project-section-body">
           <p>
-            New York City sees over 60 million visitors each year. Most go to the same ten
-            places. Meanwhile, local businesses outside those corridors struggle for visibility,
-            and residents absorb the side effects of concentrated foot traffic.
+            That premise came before the resident survey and without a live tourist-density
+            dataset. The first concept explored how redirection might distribute attention across
+            more Manhattan neighborhoods.
           </p>
           <p>
-            Navi was designed to change that dynamic by connecting visitors
-            to neighborhood-level experiences that return value to the
-            communities they visit.
+            The next concept paired neighborhood-level experiences and local context with trip
+            planning.
           </p>
         </div>
-      </section>
+      </div>
 
       <section className="project-section nv-section" aria-labelledby="nv-heatmap">
-        <h2 id="nv-heatmap">The first idea was a Manhattan heatmap</h2>
+        <h3 className="project-evidence-heading" id="nv-heatmap">
+          The first prototype: a Manhattan heatmap
+        </h3>
         <p className="case-section-lead">
-          Mapping tourist density showed where the checklists cluster and where neighborhoods get skipped.
+          A Manhattan heatmap turned the routing premise into an exploratory artifact.
         </p>
         <div className="project-section-body">
           <p>
-            Before any of the user interviews, the first move was visual. Tourists overload a handful of spots, and the patterns are easy to picture: the swaths of people taking photos in front of the Brooklyn Bridge in Dumbo, the perpetual crush around Times Square. If a routing layer could see this imbalance in real time, the thinking went, it could steer visitors toward neighborhoods that get less attention.
+            Before the survey, the team sketched a routing layer that could redirect a visitor
+            from one Manhattan neighborhood to another. It did not claim to measure actual
+            tourist density.
           </p>
           <p>
-            Select a neighborhood to see how that early concept worked. Regions represent narrative emphasis, not live geo analytics. This is the prototype that would have shipped on day one.{" "}
-            <mark className="case-highlight">The research pushed back.</mark>
+            Select a neighborhood to see how that first artifact worked. Regions represent
+            narrative emphasis, not live geo analytics. The current interactive reconstruction
+            keeps that same constraint.
           </p>
           <p>
-            The instinct felt right, and also a little like a bandaid. Routing tourists somewhere quieter still lets them visit that place the same shallow way. So before committing to redirection as the lever, the next step was talking to the people who would actually use the thing.
+            Even within the premise, sending someone somewhere quieter left the visit itself
+            unchanged. Before committing to redirection as the lever, the next step was the
+            resident survey.
           </p>
         </div>
         <HeatmapExplorer />
       </section>
+      </ProjectChapter>
 
+      <ProjectChapter
+        entry={chapters[1]}
+        index={2}
+        total={chapters.length}
+        variant="navi"
+      >
       <section className="project-section nv-section" aria-labelledby="nv-research">
-        <h2 id="nv-research">Surveying three user groups, auditing six platforms</h2>
-        <blockquote className="case-pullquote">Residents did not want fewer tourists. They wanted visitors who engage more intentionally.</blockquote>
+        <h3 className="project-evidence-heading" id="nv-research">
+          Platform audits and resident research
+        </h3>
         <div className="project-section-body">
           <p>
-            We audited six travel platforms and ran a heuristic evaluation of Airbnb using
-            Nielsen&apos;s ten usability heuristics. Most tools were either transactional or
-            editorial, but few connected discovery to community impact.
+            The team audited six travel platforms. I evaluated Airbnb with Kaori Ogawa and Amy
+            Zhang against Nielsen&apos;s ten usability heuristics. The evaluation
+            surfaced issues with label consistency, family-facing filters, and visual clutter.
           </p>
           <p>
-            We then surveyed tourism professionals, local business owners, and long-time residents.
-            Residents provided the richest dataset and most strongly shaped the personas.
+            The resident survey produced 14 responses. That dataset is the source for the two
+            survey findings shown below.
           </p>
           <p>
-            Early on, the team considered a heatmap solution to reroute tourists away from
-            congestion. The research reframed the problem, and it wasn&apos;t about volume.
+            The next concept direction focused on neighborhood context and participation instead.
           </p>
         </div>
         <HeuristicInsightCards />
       </section>
 
-      <section className="project-section nv-section" aria-labelledby="nv-insights">
-        <h2 id="nv-insights">What the data said</h2>
+      <div className="project-section nv-section">
         <p className="case-section-lead">
-          The research pointed to intentional participation, not more destinations.
+          Two concerns appeared most often in the 14-response resident survey.
         </p>
         <div className="project-section-body">
           <p>
-            Residents consistently favored hidden gems over tourist traps and aligned with
-            community-driven travel models.
-          </p>
-          <p>
-            Major concerns included overcrowding, rising local costs, and the loss of neighborhood
-            authenticity. Participants were open to AI personalization only
-            when it remained subtle and transparent.
+            Of the 14 responses, 71% were concerned about overcrowding and over-tourism. Another
+            50% were concerned about a lack of authentic experiences.
           </p>
           <p className="nv-survey-note">
             Highlights from {NAVI_SURVEY_META.responseCount} survey responses:{" "}
@@ -186,21 +198,35 @@ export default async function NaviPage() {
           </p>
         </div>
         <SurveyStatRings />
-      </section>
+      </div>
+      </ProjectChapter>
 
-      <section className="project-section nv-section" aria-labelledby="nv-framework">
-        <h2 id="nv-framework">From research to framework</h2>
-        <p className="case-section-lead">
-          Three personas fed a Learn, Plan, Go structure that journey mapping validated.
-        </p>
+      <ProjectChapter
+        entry={chapters[2]}
+        index={3}
+        total={chapters.length}
+        variant="navi"
+      >
+      <div className="project-section nv-section project-section--wide nv-section--wide">
         <div className="project-section-body">
-          <p>
-            Three personas emerged: Cain (group planner), Ororo (newcomer needing context), and
-            Selina (commuter needing precision filters).
+          <p className="case-section-lead">
+            I created three research-informed archetypes from the survey findings, platform audits,
+            and secondary research.
           </p>
           <p>
-            Given semester time constraints and no engineering handoff, the team focused on a
-            coherent concept with real neighborhoods, realistic pricing, and clear user pathways.
+            Cain framed group planning, Ororo needed neighborhood context, and Selina needed
+            precise filters for shorter trips.
+          </p>
+          <p>
+            The graduate-studio project stopped at a concept without an engineering handoff. Its
+            journey maps and user flows were internal planning artifacts. They connected
+            neighborhood exploration to residents wanting nearby activity without repeatedly
+            concentrating visits in tourist-heavy areas.
+          </p>
+          <p>
+            For booking, the Airbnb audit and secondary research pointed to clear cost,
+            requirements, and timing. That transparency also mattered for trust when booking with
+            lesser-known vendors.
           </p>
           <p>
             The resulting framework was{" "}
@@ -217,78 +243,108 @@ export default async function NaviPage() {
               <strong>Go</strong> converts intent into bookings.
             </li>
           </ul>
-          <p>Journey mapping validated the structure across all three personas.</p>
         </div>
-      </section>
+        <NaviResearchArtifacts />
+      </div>
+      </ProjectChapter>
 
+      <ProjectChapter
+        entry={chapters[3]}
+        index={4}
+        total={chapters.length}
+        variant="navi"
+      >
       <section
         className="project-section nv-section project-section--wide nv-section--wide"
         aria-labelledby="nv-system"
       >
-        <h2 id="nv-system">Building a system that reflects the New York state of mind</h2>
+        <h3 className="project-evidence-heading" id="nv-system">
+          Rebuilding Navi as a working system
+        </h3>
         <div className="project-section-body">
           <p>
-            Every design decision linked back to research findings or
-            persona needs.
+            For this portfolio case study, I rebuilt the Navi visual system as live React
+            components.
           </p>
           <p>
             Jost was selected for display typography to echo urban wayfinding cues. Orange became
-            the primary accent to differentiate Navi from category defaults. Paired with Lato and a
-            4px spacing system, the UI remains readable and consistent across breakpoints.
+            the primary accent to distinguish Navi from the travel platforms in the audit. The
+            portfolio rebuild pairs it with Lato and a 4px spacing system.
           </p>
           <p>
-            The full system lives as a running component library, with the brand
-            primitives, the semantic aliases, every interactive variant, and a live
-            playground for flipping props. <Link href="/work/navi/system">See the Navi
-            design system</Link>. The components are also assembled into a working
-            booking flow. <Link href="/work/navi/demo">Open the demo</Link>.
+            The rebuild includes brand primitives, semantic aliases, interactive variants, and a
+            playground for changing component props. <Link href="/work/navi/system">See the Navi
+            design system</Link>. Those components are assembled into a working booking flow.{" "}
+            <Link href="/work/navi/demo">Open the demo</Link>.
           </p>
         </div>
         <CompositionStrip />
       </section>
 
-      <section className="project-section nv-section project-section--wide nv-section--wide" aria-labelledby="nv-screens">
-        <h2 id="nv-screens">See it in product</h2>
+      <section
+        className="project-section nv-section project-section--wide nv-section--wide"
+        aria-labelledby="nv-screens"
+      >
+        <h3 className="project-evidence-heading" id="nv-screens">
+          A working booking flow
+        </h3>
         <p className="case-section-lead">
-          Every screen in this section is pulled from the running build, not mocked up for the page.
+          The screens below come from the current React build.
         </p>
         <div className="project-section-body">
           <p>
-            The Navi system runs as a real, interactive product, not a
-            static screenshot. Browse the feed, search a neighborhood on the map, open
-            a host and try a booking. Everything is assembled from the components
-            catalogued on the system page, which means the system shows up in the
-            product the way it was meant to.
+            The graduate-studio concept did not ship. The current demo is a portfolio rebuild that
+            lets you browse the feed, search a neighborhood on the map, open a host, and try the
+            booking flow. It uses the same components catalogued on the system page.
           </p>
         </div>
         <NaviDemoEmbed />
       </section>
+      </ProjectChapter>
 
-      <section className="project-section nv-section" aria-labelledby="nv-outcome">
-        <h2 id="nv-outcome">What Navi proved and where it goes next</h2>
+      <ProjectChapter
+        entry={chapters[4]}
+        index={5}
+        total={chapters.length}
+        variant="navi"
+      >
+      <div className="project-section nv-section nv-closing">
         <p className="case-section-lead">
-          Spreading tourists out was never going to change how they visit. Concept testing backed the deeper move.
+          The portfolio rebuild makes the concept easier to inspect.
         </p>
         <div className="project-section-body">
           <p>
-            What started as a heatmap turned out to be solving the wrong problem. Spreading tourists out doesn&apos;t change how shallow the visit is. Navi came from designing for the connection between visitors and the neighborhoods they&apos;re in.
-          </p>
-          <p>Next opportunities include deeper neighborhood pages within Learn
-            (surfacing history, local voices, and seasonal rhythms), richer
-            collaborative planning tools for group travelers, and onboarding
-            paths for local hosts and businesses to list their own experiences.
-          </p>
-          <p>
-            In concept testing,{" "}
-            <mark className="case-highlight">
-              78% preferred neighborhood-led recommendations over generic
-              top-ten lists
-            </mark>
-            . That number is what Navi proved: community-centered travel
-            holds up when the recommendations carry local context.
+            I can now walk through the component system and individual booking flow in a browser,
+            which wasn&apos;t possible in the original studio project. I need to test the rebuilt flow
+            with residents, travelers, and local hosts before treating those decisions as settled.
           </p>
         </div>
-      </section>
+        <div className="nv-validation-ledger">
+          <section aria-labelledby="nv-current-rebuild">
+            <h3 id="nv-current-rebuild">Current rebuild</h3>
+            <ul>
+              <li>Live component system and editable variants</li>
+              <li>Neighborhood exploration and filters</li>
+              <li>Working individual booking flow</li>
+            </ul>
+          </section>
+          <section aria-labelledby="nv-next-research">
+            <h3 id="nv-next-research">Next research</h3>
+            <ul>
+              <li>Deeper Learn pages</li>
+              <li>Local host and business onboarding</li>
+              <li>
+                {"Group booking remains a future opportunity and is not wired into the current rebuild."}
+              </li>
+            </ul>
+          </section>
+        </div>
+        <div className="nv-closing-links" aria-label="Explore the Navi rebuild">
+          <Link href="/work/navi/demo">Open the demo</Link>
+          <Link href="/work/navi/system">View the design system</Link>
+        </div>
+      </div>
+      </ProjectChapter>
 
       <ProjectWorkJump currentSlug="navi" projects={allProjects} />
       <CaseHighlightObserver />

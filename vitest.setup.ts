@@ -7,6 +7,15 @@ import { afterEach, vi } from "vitest";
 // so any module that instantiates a font at import time (src/lib/navi/fonts.ts,
 // pulled in transitively by the overlay token scope) loads without throwing.
 vi.mock("next/font/google", () => ({
+  Geist_Mono: () => ({ variable: "--font-geist-mono", className: "geist-mono" }),
+  Instrument_Sans: () => ({
+    variable: "--font-family-sans",
+    className: "instrument-sans",
+  }),
+  Instrument_Serif: () => ({
+    variable: "--font-quote",
+    className: "instrument-serif",
+  }),
   Jost: () => ({ variable: "--nv-font-display", className: "navi-display" }),
   Lato: () => ({ variable: "--nv-font-body", className: "navi-body" }),
 }));

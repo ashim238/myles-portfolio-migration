@@ -1,18 +1,18 @@
 ---
 slug: fresh-greens
 title: Fresh Greens
-summary: A wayfinding app for Black travel in America. Routes that maximize daylight and weigh community safety observations alongside public data.
+summary: A working wayfinding prototype for Black drivers that brings community safety reports into route scoring alongside public map data.
 role: Product Designer · Solo build
-timeframe: 2025
+timeframe: 2025–2026
 status: published
-order: 2
+order: 1
 coverImage: /projects/fresh-greens/cover.png
-highlightQuote: A shipped wayfinding app that weights community safety knowledge alongside public data — every route traceable to an auditable source.
-outcomeLead: Shipped, solo.
-outcomeRest: 26+ screens in the running React Native build.
+highlightQuote: A working wayfinding prototype that brings community safety knowledge into route scoring alongside public data, then explains the evidence through route chips and source detail cards.
+outcomeLead: Built solo.
+outcomeRest: A working React Native prototype across 26+ screens.
 tags:
-  - Thesis
+  - Product Design
   - Mobile · React Native
-  - Public Data
+  - Research + Systems
 sections: []
 ---

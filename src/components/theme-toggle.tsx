@@ -1,41 +1,54 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 
 type Theme = "dark" | "light";
+const THEME_CHANGE_EVENT = "theme-change";
 
-function getStoredTheme(): Theme | null {
-  if (typeof window === "undefined") return null;
-  return localStorage.getItem("theme") as Theme | null;
+function isTheme(value: string | null): value is Theme {
+  return value === "dark" || value === "light";
 }
 
-function getSystemTheme(): Theme {
-  if (typeof window === "undefined") return "dark";
+function getThemeSnapshot(): Theme {
+  const storedTheme = localStorage.getItem("theme");
+  if (isTheme(storedTheme)) return storedTheme;
   return window.matchMedia("(prefers-color-scheme: light)").matches
     ? "light"
     : "dark";
 }
 
+function getThemeServerSnapshot(): Theme {
+  return "dark";
+}
+
+function subscribeTheme(callback: () => void) {
+  const query = window.matchMedia("(prefers-color-scheme: light)");
+  query.addEventListener("change", callback);
+  window.addEventListener("storage", callback);
+  window.addEventListener(THEME_CHANGE_EVENT, callback);
+  return () => {
+    query.removeEventListener("change", callback);
+    window.removeEventListener("storage", callback);
+    window.removeEventListener(THEME_CHANGE_EVENT, callback);
+  };
+}
+
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>("dark");
-  const [mounted, setMounted] = useState(false);
+  const theme = useSyncExternalStore(
+    subscribeTheme,
+    getThemeSnapshot,
+    getThemeServerSnapshot,
+  );
 
   useEffect(() => {
-    setMounted(true);
-    const stored = getStoredTheme();
-    const resolved = stored ?? getSystemTheme();
-    setTheme(resolved);
-    document.documentElement.setAttribute("data-theme", resolved);
-  }, []);
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [theme]);
 
   function toggle() {
     const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
-    document.documentElement.setAttribute("data-theme", next);
     localStorage.setItem("theme", next);
+    window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
   }
-
-  if (!mounted) return <div className="theme-toggle-placeholder" />;
 
   return (
     <button

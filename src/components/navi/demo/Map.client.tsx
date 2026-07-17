@@ -74,6 +74,7 @@ export default function MapClient({
     const raf = requestAnimationFrame(() => map.invalidateSize());
     const ro = new ResizeObserver(() => map.invalidateSize());
     ro.observe(containerRef.current);
+    const markersById = markerById.current;
 
     return () => {
       cancelAnimationFrame(raf);
@@ -82,7 +83,7 @@ export default function MapClient({
       mapRef.current = null;
       clusterRef.current = null;
       locLayerRef.current = null;
-      markerById.current.clear();
+      markersById.clear();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

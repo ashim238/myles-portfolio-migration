@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { ExpandableImage } from "@/components/expandable-image";
 import { LeadMedia } from "@/components/lead-media";
 import { LeadVideo } from "@/components/lead-video";
@@ -6,6 +7,7 @@ import { RecruiterCut } from "@/components/recruiter-cut";
 import { TransitionLink } from "@/components/transition-link";
 import { SiteNav } from "@/components/site-nav";
 import { ProjectToc } from "@/components/project-toc";
+import { ProjectChapter } from "@/components/project-chapter";
 import { ProjectWorkJump } from "@/components/project-work-jump";
 import {
   ArchitectureDiagram,
@@ -15,20 +17,23 @@ import {
 import { ResearchSynthesis } from "@/components/fresh-greens/research-synthesis";
 import { TokenExhibit } from "@/components/fresh-greens/token-exhibit";
 import { PivotJourney } from "@/components/fresh-greens/pivot-journey";
+import { PulledOverJourney } from "@/components/fresh-greens/pulled-over-journey";
+import { OnboardingIllustrationSequence } from "@/components/fresh-greens/onboarding-illustration-sequence";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
-import { getPublishedProjects } from "@/lib/content";
+import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
+import { CASE_STUDY_CHAPTERS } from "@/lib/project-chapters";
+import { createRouteMetadata } from "@/lib/site-config";
 
-export const metadata: Metadata = {
+const chapters = CASE_STUDY_CHAPTERS["fresh-greens"];
+
+export const metadata: Metadata = createRouteMetadata({
   title: "Fresh Greens",
   description:
-    "A wayfinding app for Black drivers in America, built solo for a grad thesis. It weighs what drivers know about a road's safety as seriously as the official map data.",
-  openGraph: {
-    title: "Fresh Greens",
-    description:
-      "A wayfinding app for Black drivers in America, weighing safety knowledge from drivers alongside the official map data.",
-    type: "article",
-  },
-};
+    "A wayfinding app for Black drivers that brings community safety knowledge into route planning alongside public map data.",
+  path: "/work/fresh-greens",
+  image: "/projects/fresh-greens/cover.png",
+  type: "article",
+});
 
 function Shot({ name, alt }: { name: string; alt: string }) {
   return (
@@ -44,6 +49,11 @@ function Shot({ name, alt }: { name: string; alt: string }) {
 }
 
 export default async function FreshGreensPage() {
+  const project = await getProjectBySlug("fresh-greens");
+  if (!project || project.status !== "published") {
+    notFound();
+  }
+
   const allProjects = await getPublishedProjects();
 
   return (
@@ -62,136 +72,175 @@ export default async function FreshGreensPage() {
 
       {/* ── Hero ─────────────────────────────────────── */}
       <section className="hero project-hero fg-hero" aria-labelledby="fg-title">
-        <p className="fg-eyebrow">Graduate thesis · 2026</p>
+        <p className="fg-eyebrow">Product design + engineering · 2025–2026</p>
         <h1 id="fg-title" className="project-hero-title fg-title">
           Fresh Greens
         </h1>
         <p className="project-hero-lede fg-lede">
-          A wayfinding app for Black drivers in America, built solo for my grad
-          thesis. Most navigation weighs time and distance. Fresh Greens weighs
-          safety too, and it treats{" "}
-          <mark className="case-highlight">what a driver knows about a road as seriously as the official map data</mark>.
-          Six interviews shaped what it looks for.
+          Fresh Greens brings community safety knowledge into route planning
+          for Black drivers. I designed and built a working React Native
+          prototype after six interviews, scoring{" "}
+          <mark className="case-highlight">daylight, police presence, wildlife, road conditions, and community reports alongside public map data</mark>.
         </p>
       </section>
 
       <LeadMedia
         cover="/projects/fresh-greens/cover.png"
-        alt="Fresh Greens cover"
+        alt="Fresh Greens welcome screen on a phone, with an illustrated Black driver at sunrise."
+        width={2560}
+        height={1862}
+        presentation="fresh-greens"
       />
       <RecruiterCut
-        problem="Navigation weighs time and distance, not what a driver knows about a road's safety."
         role="Solo, design and engineering"
         timeline="Sep 2025 – Jun 2026"
-        stack="React Native, Expo, TypeScript, Supabase"
-        outcomeValue="26+"
-        outcomeLabel="screens shipped, held to a reserved-color rule"
+        stackLabel="Tools"
+        stack="Figma, Illustrator, Claude, React Native, Expo, TypeScript, Supabase"
+        outcomeValue="Working"
+        outcomeLabel="React Native prototype across 26+ screens"
         moves={[
-          "Ran community safety reports through the same pipeline as OpenStreetMap, DOT-511, OSRM, and SunCalc, weighted the same way.",
+          "Brought community reports into the same route-scoring pipeline as public map and daylight data, then surfaced the evidence through safety chips and source detail cards.",
           "Built the en-route screen around one-thumb reach: turn card, 3D map, and a safety column.",
           "Shaped the routing signals from six driver interviews.",
         ]}
       />
 
       <ProjectToc
-        sections={[
-          { title: "The problem I set out to solve", id: "fg-problem" },
-          { title: "Listening to six drivers", id: "fg-research" },
-          { title: "Turning the interviews into a scoring system", id: "fg-scoring" },
-          { title: "Designing for the pulled-over moment", id: "fg-pulled-over" },
-          { title: "The direction I tried first", id: "fg-pivot" },
-          { title: "Choosing type and color", id: "fg-typecolor" },
-          { title: "Holding four colors in reserve", id: "fg-color" },
-          { title: "Keeping community reports trustworthy", id: "fg-trust" },
-          { title: "What shipped, and what didn't", id: "fg-scope" },
-        ]}
+        sections={chapters}
+        readingEndId="fg-scope"
       />
 
-      <div className="case-tier-divider"><span>The full breakdown ↓</span></div>
-
       {/* ── Section 1: The problem I set out to solve ── */}
-      <section className="project-section fg-section" aria-labelledby="fg-problem">
-        <h2 id="fg-problem">The problem I set out to solve.</h2>
-        <blockquote className="case-pullquote">The Green Book was a routing system built on community knowledge, because no institutional one existed.</blockquote>
-        <div className="project-section-body">
-          <p>
-            For a Black driver, a route isn&apos;t only time and distance.
-            It&apos;s whether the roads are lit, whether a town feels safe to
-            stop in, where police tend to sit. Nav apps don&apos;t weigh any of
-            that. Fresh Greens brings that kind of knowledge back into the
-            route.
-          </p>
+      <ProjectChapter
+        entry={chapters[0]}
+        index={1}
+        total={chapters.length}
+        variant="fresh-greens"
+      >
+        <div className="project-section fg-section">
+          <blockquote className="case-pullquote">
+            The Green Book collected community knowledge about where Black
+            travelers could safely stop.
+          </blockquote>
+          <div className="project-section-body">
+            <p>
+              In interviews, Black drivers described routes in terms of more than
+              time and distance: whether roads are lit, whether a town feels safe
+              to stop in, and where police tend to sit. Navigation apps don&apos;t
+              account for those signals. Fresh Greens brings them into route
+              selection.
+            </p>
+          </div>
         </div>
-      </section>
+      </ProjectChapter>
 
       {/* ── Section 2: Listening to six drivers ──────── */}
-      <section
-        className="project-section fg-section fg-section--wide"
-        aria-labelledby="fg-research"
+      <ProjectChapter
+        entry={chapters[1]}
+        index={2}
+        total={chapters.length}
+        variant="fresh-greens"
       >
-        <h2 id="fg-research">Listening to six drivers.</h2>
-        <p className="case-section-lead">
-          Six interviews with Black drivers across the Southern US, anonymized
-          in synthesis and led with joy and fear before any product questions.
-          The timeline was tight, so the synthesis stayed lean: I pulled the
-          recurring trends into four routing markers.
-        </p>
-
-        <figure className="fg-pullquote">
-          <blockquote>
-            Moments of joy and fear have a lasting effect on how Black drivers
-            interpret the spaces they inhabit. They stick.
-          </blockquote>
-          <figcaption>Thesis · Fresh Greens, 2026</figcaption>
-        </figure>
-
-        <ResearchSynthesis />
-
-        <figure className="fg-lofi">
-          <ExpandableImage
-            src="/projects/fresh-greens/process/thesis-zone-flow.png"
-            alt="Hand-drawn thesis storyboard of the zone flow across four panels: baseline navigation, one mile out from a zone, actively entering a zone, and in the zone, with annotations about tooltip timing and route stroke behavior."
-            width={2675}
-            height={1407}
-            sizes="(max-width: 768px) 92vw, 900px"
-            style={{ width: "100%", height: "auto", display: "block" }}
-          />
-          <figcaption className="fg-safety-visual-caption">
-            The zone-flow storyboard, done by hand. The layered route stroke
-            marking a wildlife zone in the last panel was too dense to read at
-            a glance, so it got simplified into the daylight gradient the app
-            uses now.
-          </figcaption>
-        </figure>
-
-        <div className="project-section-body">
-          <p>
-            My first instinct was to stack every safety layer onto the screen.
-            But the interviews also said driving already takes focus, so I
-            pulled most of it back. The safety toolkit stays hidden until a
-            driver reaches for it.
+        <div className="project-section fg-section fg-section--wide">
+          <p className="case-section-lead">
+            Six interviews with Black drivers across the Southern US, anonymized
+            in synthesis and led with joy and fear before any product questions.
+            The timeline was tight, so the synthesis stayed lean: I pulled the
+            recurring trends into four routing markers.
           </p>
+
+          <figure className="fg-pullquote">
+            <blockquote>
+              Moments of joy and fear have a lasting effect on how Black drivers
+              interpret the spaces they inhabit. They stick.
+            </blockquote>
+            <figcaption>Thesis · Fresh Greens, 2026</figcaption>
+          </figure>
+
+          <ResearchSynthesis />
+
+          <div
+            className="fg-evidence-boundaries"
+            aria-label="Fresh Greens evidence boundaries"
+          >
+            <div className="fg-evidence-boundary">
+              <p className="fg-evidence-label">Interview-supported</p>
+              <p>
+                Six Black drivers raised daylight, police presence, wildlife,
+                and road conditions as route-planning signals.
+              </p>
+            </div>
+            <div className="fg-evidence-boundary">
+              <p className="fg-evidence-label">Built in the prototype</p>
+              <p>
+                A working React Native build scores those four signals, shows
+                route chips, and uses detail cards to explain where a signal came
+                from.
+              </p>
+            </div>
+            <div className="fg-evidence-boundary">
+              <p className="fg-evidence-label">Not yet proven</p>
+              <p>
+                Whether the recommendations improve safety still needs broader
+                route testing and moderation data.
+              </p>
+            </div>
+          </div>
+
+          <figure className="fg-lofi">
+            <ExpandableImage
+              src="/projects/fresh-greens/process/thesis-zone-flow.png"
+              alt="Hand-drawn thesis storyboard of the zone flow across four panels: baseline navigation, one mile out from a zone, actively entering a zone, and in the zone, with annotations about tooltip timing and route stroke behavior."
+              width={2675}
+              height={1407}
+              sizes="(max-width: 768px) 92vw, 900px"
+              style={{ width: "100%", height: "auto", display: "block" }}
+            />
+            <figcaption className="fg-safety-visual-caption">
+              The zone-flow storyboard, done by hand. The layered route stroke
+              marking a wildlife zone in the last panel was too dense to read at
+              a glance, so it got simplified into the daylight gradient the app
+              uses now.
+            </figcaption>
+          </figure>
+
+          <div className="project-section-body">
+            <p>
+              My first instinct was to stack every safety layer onto the screen.
+              But the interviews also said driving already takes focus, so I
+              pulled most of it back. The safety toolkit stays hidden until a
+              driver reaches for it.
+            </p>
+          </div>
         </div>
-      </section>
+      </ProjectChapter>
 
       {/* ── Section 3: How routes get scored ─────────── */}
+      <ProjectChapter
+        entry={chapters[2]}
+        index={3}
+        total={chapters.length}
+        variant="fresh-greens"
+      >
       <section
         className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-scoring"
       >
-        <h2 id="fg-scoring">Turning the interviews into a scoring system.</h2>
-        <p className="case-section-lead">
-          Community reports and public data share one adapter and one scoring function, with a single audit trail behind both.
-        </p>
+        <h3 className="project-evidence-heading" id="fg-scoring">
+          How each route gets scored
+        </h3>
         <div className="project-section-body">
           <p>
             Every route is scored on four things the interviews kept raising:
             light, police presence, wildlife, and road conditions. A community
-            report feeds those same four markers. It&apos;s{" "}
-            <mark className="case-highlight">weighted exactly like the data from OpenStreetMap or SunCalc</mark>{" "}
-            and runs through the same pipeline as everything else. Each score
-            carries its source, so a driver can see whether a segment scored low
-            from the sun angle or from a report.
+            report feeds those same four markers through the same scoring
+            pipeline as public data. I treated community reports as a{" "}
+            <mark className="case-highlight">first-class route input</mark>.
+            The preview shows visible evidence as safety chips, while detail
+            cards explain whether a signal comes from public map data, daylight
+            calculations, traffic incidents, or community reports. That&apos;s
+            how the working prototype behaves, not evidence that its
+            recommendation is safer.
           </p>
         </div>
 
@@ -209,10 +258,13 @@ export default async function FreshGreensPage() {
           <LeadVideo
             clip="/projects/fresh-greens/process/active-nav.mp4"
             poster="/projects/fresh-greens/v2/en-route.png"
-            alt="Fresh Greens running turn-by-turn navigation: the 3D map drags with the car along the route, the turn card updates on each maneuver, and the safety column stays in thumb reach."
+            width={1290}
+            height={2796}
+            alt="Fresh Greens running turn-by-turn navigation on a simulated public route in Harlem: the turn card says to head out on West 127th Street now, the 3D map moves with the car, the speed reads 34 mph, and the bottom sheet shows a 4:24 daylight arrival for a 13.9 mi, 31 min trip."
           />
           <figcaption className="fg-safety-visual-caption">
-            The en-route screen in motion.
+            The current en-route prototype in motion on a simulated public
+            route through Harlem.
           </figcaption>
         </figure>
       </section>
@@ -222,10 +274,9 @@ export default async function FreshGreensPage() {
         className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-pulled-over"
       >
-        <h2 id="fg-pulled-over">Designing for the pulled-over moment.</h2>
-        <p className="case-section-lead">
-          The interface asks before it assumes, so a driver stays in control under pressure.
-        </p>
+        <h3 className="project-evidence-heading" id="fg-pulled-over">
+          A calmer interface for a traffic stop
+        </h3>
         <div className="project-section-body">
           <p>
             Every prompt in a safety moment is set in{" "}
@@ -243,64 +294,7 @@ export default async function FreshGreensPage() {
           </p>
         </div>
 
-        <div className="fg-safety-pair">
-          <figure className="fg-safety-visual">
-            <PhoneFrame variant="screenshot">
-              <Shot
-                name="safety-toolkit"
-                alt="The /safety toolkit modal opening with a navy safety Shield above the heading 'What's going on?' in Libre Franklin Regular, a 2x2 grid of Pulled-over, Roadside assistance, Unfamiliar area, and Share location, and a bottom Emergency panel that reaches a trusted contact or 911."
-              />
-            </PhoneFrame>
-            <figcaption className="fg-safety-visual-caption">
-              The Held-Question Rule in situ. <code>/safety</code>{" "}
-              opens on the driver&apos;s own question.
-            </figcaption>
-          </figure>
-
-          <figure className="fg-safety-visual">
-            <PhoneFrame variant="screenshot">
-              <Shot
-                name="pulled-over-guidance"
-                alt="The /pulled-over reassurance step: a discreet padlock at the top, 'We'll walk you through what to do' set in the reserved serif, then 'We've started recording for your safety' in muted body copy, a green Continue button, and a hint that a Trusted Contact is one step away."
-              />
-            </PhoneFrame>
-            <figcaption className="fg-safety-visual-caption">
-              <code>/pulled-over</code> opens on reassurance in the reserved
-              serif, one of the six emotional moments the app spends it on.
-              Recording has already started, quietly.
-            </figcaption>
-          </figure>
-        </div>
-
-        <div className="fg-safety-pair">
-          <figure className="fg-safety-visual">
-            <PhoneFrame variant="screenshot">
-              <Shot
-                name="pulled-over-armed"
-                alt="The /pulled-over armed question: 'Ok. Got it. Are you armed?' set in Libre Franklin Regular over three tap cards. Yes (I have a firearm, knife, or other weapon on me). No (I do not have a firearm, knife, or other weapon on me). Prefer not to answer."
-              />
-            </PhoneFrame>
-            <figcaption className="fg-safety-visual-caption">
-              The Held-Question in action. &quot;Are you armed?&quot; set in
-              Regular, with three composed options where a Bold prompt would
-              have read as an accusation.
-            </figcaption>
-          </figure>
-
-          <figure className="fg-safety-visual">
-            <PhoneFrame variant="screenshot">
-              <Shot
-                name="pulled-over-contact"
-                alt="The /pulled-over trusted contact screen: a red Recording indicator with a 00:01:07 timer, 'You're not alone.' in the reserved serif, body copy about trusted contacts being alerted and able to see current location, an initialed avatar for Brianna Agyemang, a green Call button, a Text button, and an underlined Review guidance link."
-              />
-            </PhoneFrame>
-            <figcaption className="fg-safety-visual-caption">
-              The one exception red is allowed to make: the recording indicator.
-              &quot;You&apos;re not alone.&quot; is another of the six serif
-              moments, and the trusted contact is one tap away.
-            </figcaption>
-          </figure>
-        </div>
+        <PulledOverJourney />
 
         <div className="project-section-body">
           <p>
@@ -311,16 +305,22 @@ export default async function FreshGreensPage() {
           </p>
         </div>
       </section>
+      </ProjectChapter>
 
       {/* ── Section 5: The design pivot ───────────────── */}
+      <ProjectChapter
+        entry={chapters[3]}
+        index={4}
+        total={chapters.length}
+        variant="fresh-greens"
+      >
       <section
         className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-pivot"
       >
-        <h2 id="fg-pivot">The direction I tried first.</h2>
-        <p className="case-section-lead">
-          The first pass was a Google Maps feature.
-        </p>
+        <h3 className="project-evidence-heading" id="fg-pivot">
+          The Google Maps feature I moved away from
+        </h3>
 
         <PivotJourney />
       </section>
@@ -330,32 +330,24 @@ export default async function FreshGreensPage() {
         className="project-section fg-section fg-section--wide"
         aria-labelledby="fg-typecolor"
       >
-        <h2 id="fg-typecolor">Choosing type and color.</h2>
-        <p className="case-section-lead">
-          Warm surfaces and a reserved serif give type and color a job at each phase of a trip.
-        </p>
+        <h3 className="project-evidence-heading" id="fg-typecolor">
+          Type and color across a trip
+        </h3>
 
-        <figure className="fg-illustrations">
-          <ExpandableImage
-            src="/projects/fresh-greens/process/onboarding-illustrations.svg"
-            alt="Four hand-drawn onboarding illustrations: a figure soaring as a map pin over green hills at sunrise, a pensive thinker, the navy safety shield, and a figure at ease with speech bubbles."
-            width={1920}
-            height={1080}
-            sizes="(max-width: 768px) 92vw, 640px"
-            style={{ width: "100%", height: "auto", display: "block" }}
-          />
-          <figcaption className="fg-safety-visual-caption">
-            The onboarding illustrations, drawn by hand. They set the warm,
-            human register the app opens on, before a single safety signal
-            appears.
-          </figcaption>
-        </figure>
+        <OnboardingIllustrationSequence />
 
         <div className="project-section-body">
           <p>
             I swapped iOS&apos;s cool grays for five warm surfaces, all built
             in OKLCH on the brand-green hue, so the whole app shares one tonal
             source.
+          </p>
+          <p>
+            I designed the initial flows in Figma, used Illustrator for the
+            onboarding art, and checked the system in the React Native build. I
+            also used Claude as a critique partner while tightening token names,
+            color roles, and copy rules, mostly to avoid second-guessing the
+            same decisions as the system grew.
           </p>
           <p>
             Type took three tries. Jost first, then Space Grotesk, then Libre
@@ -386,17 +378,16 @@ export default async function FreshGreensPage() {
         className="project-section fg-section fg-section--wide fg-craft"
         aria-labelledby="fg-color"
       >
-        <h2 id="fg-color">Holding four colors in reserve.</h2>
-        <p className="case-section-lead">
-          Four colors and the daylight gradient are held to safety signals, with documented carve-outs.
-        </p>
+        <h3 className="project-evidence-heading" id="fg-color">
+          Four colors stay reserved for safety
+        </h3>
 
         <div className="project-section-body">
           <p>
             Green carries every button and link. Red, orange, yellow, and navy
             are reserved for safety signals, each tied to one meaning, so a red
             dot always points to something specific. Across 26+ screens,{" "}
-            <mark className="case-highlight">the rule holds, with documented carve-outs</mark>.
+            <mark className="case-highlight">exceptions are documented as carve-outs</mark>.
           </p>
         </div>
 
@@ -407,23 +398,22 @@ export default async function FreshGreensPage() {
             <PhoneFrame variant="screenshot">
               <Shot
                 name="en-route"
-                alt="The Fresh Greens en-route screen: a green turn card reading 'Turn right onto Cyril Magnin Street in 160 m,' a 3D map, a posted speed sign next to a 25 mph readout, and a right-side column with a red alert, a navy safety Shield, an orange hazard marker, and a recenter control. The bottom sheet shows an 11:39 arrival marked with a moon glyph."
+                alt="The current Fresh Greens en-route screen on a simulated public route in Harlem: a green turn card says to head out on West 127th Street now, the map shows 34 mph, the right-side safety column uses red, navy, and orange controls, and the bottom sheet shows a 4:24 daylight arrival for a 13.9 mi, 31 min trip."
               />
             </PhoneFrame>
             <figcaption className="fg-safety-visual-caption">
-              The reserved palette holding on a real screen: navy for the
-              safety Shield, red on the alert dot, orange on the hazard, a
-              moon glyph carrying the daylight-arrival cue, and green
-              everywhere else.
+              The reserved palette on the current en-route screen: navy for
+              the safety Shield, red on the alert, orange on the hazard, a sun
+              glyph for the daylight arrival, and green everywhere else.
             </figcaption>
           </figure>
         </div>
 
         <div className="project-section-body">
           <p>
-            The daylight gradient is the one non-reserved color the system
-            allows itself. On <code>/route-preview</code>, a sun-to-moon dashed
-            band traces what the light will do along the route.
+            The daylight gradient sits outside those four reserved safety
+            colors. On <code>/route-preview</code>, a sun-to-moon dashed band
+            traces what the light will do along the route.
           </p>
         </div>
 
@@ -431,7 +421,7 @@ export default async function FreshGreensPage() {
           <PhoneFrame variant="screenshot">
             <Shot
               name="route-preview"
-              alt="The Fresh Greens route preview: a map at top with a recenter and an orange hazard control, a bottom sheet showing South Lake Tahoe, 4 hr 8 min, an 11:39 PM arrival at 189.2 mi, an orange 'road condition' chip and a green 'residential block' chip along the route, a sun-to-moon dashed daylight indicator, and a green Go button."
+              alt="The current Fresh Greens route preview for Weeksville Heritage Center: a map at top with recenter and hazard controls, a bottom sheet showing a 30 min trip arriving at 3:15 PM over 13.6 mi, an All clear chip, a daylight indicator, and a green Go button."
             />
           </PhoneFrame>
           <figcaption className="fg-safety-visual-caption">
@@ -449,39 +439,58 @@ export default async function FreshGreensPage() {
           </p>
         </div>
 
-        <figure className="fg-safety-visual">
-          <PhoneFrame variant="screenshot">
-            <Shot
-              name="report-detail"
-              alt="A report detail card showing severity chips for Threatened, Followed, Harassed, Uncomfortable, and Uneasy vibe, pairing a filled warning-diamond glyph with color"
-            />
-          </PhoneFrame>
-          <figcaption className="fg-safety-visual-caption">
-            Severity pairs color with the filled WarningDiamond glyph.
-          </figcaption>
-        </figure>
-
       </section>
+      </ProjectChapter>
 
       {/* ── Section 7: Where the argument gets tested ── */}
-      <section
-        className="project-section fg-section fg-section--wide"
-        aria-labelledby="fg-trust"
+      <ProjectChapter
+        entry={chapters[4]}
+        index={5}
+        total={chapters.length}
+        variant="fresh-greens"
       >
-        <h2 id="fg-trust">Keeping community reports trustworthy.</h2>
+        <div className="project-section fg-section fg-section--wide">
         <div className="project-section-body">
           <p>
-            The pipeline only works if community reports can be trusted like
-            public data. Bad-faith and mistaken reports have to be caught
-            without falling back to distrusting community data. That&apos;s
-            what <code>/moderation</code> is for.
+            Community reports have to earn trust without being treated as less
+            useful by default. Bad-faith and mistaken reports still need to be
+            caught. That&apos;s what <code>/moderation</code> is for.
           </p>
           <p>
-            Every report enters a queue with an investigation panel: the source
-            device, prior and nearby reports, and coordination checks for
-            duplicate IPs and devices. Nothing publishes without a human
-            decision, and every publish and unpublish is logged.
+            When the Supabase path is configured, reports flow into a
+            moderation view with an investigation panel: the source device,
+            prior and nearby reports, and coordination checks for duplicate IPs
+            and devices. Moderators can review, hide, restore, or remove
+            reports, and those actions are recorded in an audit log.
           </p>
+        </div>
+
+        <div className="fg-color-pair">
+          <figure className="fg-safety-visual">
+            <PhoneFrame variant="screenshot">
+              <Shot
+                name="report-picker"
+                alt="The Fresh Greens report picker over a muted map, showing six categories: Incident, Felt unsafe, Lighting, Hazard, Felt welcome, and Black-owned."
+              />
+            </PhoneFrame>
+            <figcaption className="fg-safety-visual-caption">
+              The report picker lets drivers contribute context without
+              pretending every report is already verified.
+            </figcaption>
+          </figure>
+
+          <figure className="fg-safety-visual">
+            <PhoneFrame variant="screenshot">
+              <Shot
+                name="report-detail"
+                alt="The Fresh Greens Felt welcome contribution form over the en-route map, with place-type chips, welcoming-reason chips, an optional experience field, and a green Share your experience button with black text."
+              />
+            </PhoneFrame>
+            <figcaption className="fg-safety-visual-caption">
+              The form separates structured place and welcome tags from the
+              driver&apos;s optional written experience.
+            </figcaption>
+          </figure>
         </div>
 
         <div
@@ -511,7 +520,7 @@ export default async function FreshGreensPage() {
             <div className="fg-mod-stage">
               <p className="fg-mod-stage-label">Human decision</p>
               <p className="fg-mod-stage-text">
-                Published or held, every action logged
+                Reviewed, hidden, restored, or removed
               </p>
             </div>
           </div>
@@ -519,28 +528,31 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body">
           <p>
-            It&apos;s where community reports and public data meet the same
-            review. A planned transparency page will publish the outcomes so
+            A planned transparency page will publish moderation outcomes so
             the queue is auditable from outside.
           </p>
         </div>
+        </div>
+      </ProjectChapter>
 
-      </section>
-
-      {/* ── Section 8: What shipped, and what didn't ─── */}
-      <section className="project-section fg-section fg-scope" aria-labelledby="fg-scope">
-        <h2 id="fg-scope">What shipped, and what didn't.</h2>
-        <p className="case-section-lead">
-          The honest split between what&apos;s in the build and what&apos;s still on the list.
-        </p>
+      {/* ── Section 8: What was built, and what still needs proof ─── */}
+      <ProjectChapter
+        entry={chapters[5]}
+        index={6}
+        total={chapters.length}
+        variant="fresh-greens"
+      >
+        <div className="project-section fg-section fg-scope">
 
         <div className="fg-scope-grid">
           <div className="fg-scope-col">
-            <p className="fg-scope-label">Shipped</p>
+            <p className="fg-scope-label">Built in the working prototype</p>
             <ul className="fg-scope-list" role="list">
               <li>
-                Equal-weighting routing pipeline across OpenStreetMap,
-                DOT-511, OSRM, SunCalc, and community reports
+                Route scoring that combines OpenStreetMap zones, DOT-511 where
+                available, Mapbox/OSRM route geometry, SunCalc daylight data,
+                and community reports, with route chips and source-detail
+                explanations
               </li>
               <li>
                 Six-surface safety toolkit, with <code>/pulled-over</code>{" "}
@@ -548,71 +560,49 @@ export default async function FreshGreensPage() {
                 the Held-Question voice
               </li>
               <li>
-                Warm surface ramp and reserved-color discipline holding
-                across 26+ screens and 300+ accessibility attributes
+                Reserved-color system and warm surface ramp across 26+ screens,
+                with 300+ accessibility attributes and 62 Figma variables
               </li>
               <li>
                 <code>/moderation</code> queue with per-report investigation
                 panels, coordination detection for IP and device duplicates,
-                and a hold-to-remove destructive gesture
-              </li>
-              <li>
-                Design system published as a Figma library: 62 variables at
-                1:1 parity with <code>theme/colors.ts</code>, scoped per
-                token role
-              </li>
-            </ul>
-            <p className="fg-scope-also-label">Also on the list:</p>
-            <ul className="fg-scope-also-list" role="list">
-              <li>Daylight-graded route polyline with a WCAG dash pattern</li>
-              <li>Six-category report picker</li>
-              <li>
-                Four-layer Mapbox fallback chain (Mapbox → OSRM → cache →
-                mock)
-              </li>
-              <li>
-                Two-font Franklin plus reserved DM Serif Display
-              </li>
-              <li>Departure-reminder local notifications</li>
-              <li>
-                Delight layer of arrival and community-confirmation moments
-              </li>
-              <li>
-                Supabase community cloud with anonymous device-UUID auth and
-                Postgres row-level security
+                Supabase-backed review actions when configured, and a
+                hold-to-remove destructive gesture
               </li>
             </ul>
           </div>
           <div className="fg-scope-col">
-            <p className="fg-scope-label">Next, v2</p>
+            <p className="fg-scope-label">Still needs proof</p>
             <ul className="fg-scope-list" role="list">
               <li>
-                Moderator-role bootstrap automation (currently a manual SQL
-                insert in prod)
+                Route-quality testing with more Black drivers across regions
               </li>
               <li>
-                Push notifications for new moderator-queue items (local
-                notifications ship today, remote push doesn&apos;t yet)
+                Live shared-report testing across configured Supabase builds,
+                plus failure-mode testing for mistaken reports, coordinated
+                abuse, and moderation outcomes
               </li>
               <li>
-                Public transparency page for <code>/moderation</code>{" "}
-                activity
+                A public transparency page for <code>/moderation</code>{" "}
+                activity and broader device testing beyond iPhone
               </li>
-              <li>Broader on-device test matrix beyond iPhone</li>
             </ul>
           </div>
         </div>
 
         <div className="project-section-body fg-scope-closer">
           <p>
-            What comes next is mostly about accountability. The transparency
-            page is the one I care about most.
-            It puts the <code>/moderation</code>{" "}
-            queue&apos;s decisions in public, so the trust the whole system
-            runs on can be checked from outside.
+            Building the working app made the gap between a plausible safety
+            feature and a trustworthy one much clearer. I&apos;m confident in
+            the interaction choices I could trace back to interviews,
+            especially the Held-Question rule, route chips, and source detail
+            cards. I&apos;d want broader route testing with Black drivers,
+            moderation outcomes, and failure cases before calling any route
+            safer.
           </p>
         </div>
-      </section>
+        </div>
+      </ProjectChapter>
 
       <ProjectWorkJump currentSlug="fresh-greens" projects={allProjects} />
       <CaseHighlightObserver />

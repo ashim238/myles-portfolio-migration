@@ -1,9 +1,5 @@
 import Link from "next/link";
-import { HomeBrowserIntro } from "@/components/home-browser-intro";
-import { HomeEntrance } from "@/components/home-entrance";
-import { HomeIntroFocusGuard } from "@/components/home-intro-focus-guard";
-import { HomeIntroGuard } from "@/components/home-intro-guard";
-import { HeroInterestTyper } from "@/components/hero-interest-typer";
+import { HeroStatementDecoder } from "@/components/hero-statement-decoder";
 import { SiteNav } from "@/components/site-nav";
 import { WorkGallery } from "@/components/work-gallery";
 import { getDraftProjects, getPublishedProjects } from "@/lib/content";
@@ -15,26 +11,26 @@ export default async function Home() {
 
   return (
     <>
-      <HomeIntroGuard />
-      <HomeBrowserIntro siteName={siteConfig.name} />
       <main className="page-shell home-page" id="main-content">
-        <HomeIntroFocusGuard />
-        <HomeEntrance />
         <SiteNav />
 
       <section className="hero" aria-labelledby="hero-name">
+        <p className="hero-role">Product Designer</p>
         <h1 id="hero-name" className="hero-name">{siteConfig.name}</h1>
-        <HeroInterestTyper awaitHomeEntrance />
-        <p className="hero-tagline">Product designer working where interaction craft meets social responsibility — and I build past the prototype.</p>
-        <p className="hero-credentials">Previously TikTok, UMG. MFA at Parsons.</p>
+        <HeroStatementDecoder />
+        <p className="hero-credentials">
+          Previously TikTok and UMG. My latest project is Fresh Greens.
+        </p>
+        <p className="hero-actions">
+          <Link className="about-action" href="/#work">
+            View selected work
+            <span aria-hidden="true"> ↓</span>
+          </Link>
+        </p>
       </section>
 
       <section className="work" id="work" aria-labelledby="work-title">
         <h2 id="work-title">Selected Work</h2>
-        <p className="work-lede">
-          Each of these starts from the same question — who does the product
-          leave out?
-        </p>
         <WorkGallery projects={projects} />
       </section>
 
@@ -58,9 +54,9 @@ export default async function Home() {
       <section className="about" id="about" aria-labelledby="about-title">
         <h2 id="about-title">About</h2>
         <p>
-          Strategy, design, and code, and I ship past the prototype. Ask me
-          how a nonprofit newsletter went from 30% to 52.6% open rates, or why
-          the Fresh Greens daylight cue is a WCAG dash pattern.
+          I came to product design through creative strategy at TikTok and UMG.
+          The longer version includes comics, hiking, and why I ended up building
+          my thesis in React Native.
         </p>
         <p className="about-actions">
           <Link className="about-action" href="/about">

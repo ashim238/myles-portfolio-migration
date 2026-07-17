@@ -47,20 +47,20 @@ describe("work/[slug] route hides hidden projects", () => {
     getPublishedProjects.mockResolvedValue([]);
   });
 
-  it("generateStaticParams emits published and draft slugs but not hidden ones", async () => {
+  it("generateStaticParams emits generic published and draft slugs only", async () => {
     getAllProjects.mockResolvedValue([
+      makeProject("fresh-greens", "published"),
       makeProject("navi", "published"),
+      makeProject("tiktok", "published"),
       makeProject("understandingfafsa", "published"),
+      makeProject("portfolio-archive", "published"),
       makeProject("work-in-progress", "draft"),
       makeProject("secret-case", "hidden"),
     ]);
 
     const slugs = (await generateStaticParams()).map((p) => p.slug);
 
-    expect(slugs).toEqual(
-      expect.arrayContaining(["navi", "understandingfafsa", "work-in-progress"]),
-    );
-    expect(slugs).not.toContain("secret-case");
+    expect(slugs).toEqual(["portfolio-archive", "work-in-progress"]);
   });
 
   it("404s a hidden project requested directly", async () => {

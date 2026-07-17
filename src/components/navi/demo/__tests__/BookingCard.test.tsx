@@ -19,6 +19,24 @@ describe("BookingCard", () => {
     expect(screen.getAllByRole("radio")).toHaveLength(dates.length);
   });
 
+  it("confirms that contacting the organizer stays inside the demo", async () => {
+    render(<BookingCard priceFrom={48} dates={dates} onReserve={() => {}} />);
+
+    await userEvent.click(screen.getByRole("button", { name: "Reserve now" }));
+    const reservationStatus = screen.getByRole("status");
+    expect(reservationStatus).toHaveTextContent(/reserved for/i);
+
+    await userEvent.click(
+      screen.getByRole("button", { name: /contact organizer/i }),
+    );
+
+    expect(screen.getByText("Demo only. No message was sent.")).toHaveAttribute(
+      "aria-live",
+      "polite",
+    );
+    expect(reservationStatus).toHaveTextContent(/reserved for/i);
+  });
+
   it("labels the preset dates as the next available slots", () => {
     // A first-timer can read the presets as examples rather than bookable
     // dates. A visible group label names them as the next available slots.
@@ -195,6 +213,55 @@ describe("BookingCard", () => {
     await userEvent.click(screen.getByRole("button", { name: "Reserve" }));
     const sheet = screen.getByRole("dialog", { name: /book this experience/i });
     expect(sheet.closest(".nv-overlay-root")).not.toBeNull();
+  });
+
+  it("closes nested booking overlays one at a time and restores each trigger", async () => {
+    render(
+      <main className="nv-ui">
+        <BookingCard priceFrom={48} dates={dates} onReserve={() => {}} />
+      </main>,
+    );
+    const shell = document.querySelector(".nv-ui");
+    const sheetTrigger = screen.getByRole("button", { name: "Reserve" });
+    await userEvent.click(sheetTrigger);
+
+    const sheet = screen.getByRole("dialog", { name: /book this experience/i });
+    const sheetRoot = sheet.closest(".nv-overlay-root");
+    const dateTrigger = within(sheet).getByRole("button", { name: /pick another date/i });
+    await userEvent.click(dateTrigger);
+
+    const dateDialog = screen.getByRole("dialog", { name: /choose a date and time/i });
+    const dateRoot = dateDialog.closest(".nv-overlay-root");
+    expect(sheetRoot).toHaveAttribute("inert");
+    expect(sheetRoot).toHaveAttribute("aria-hidden", "true");
+    expect(dateRoot).not.toHaveAttribute("inert");
+    expect(dateRoot).not.toHaveAttribute("aria-hidden");
+    expect(shell).toHaveAttribute("inert");
+    expect(shell).toHaveAttribute("aria-hidden", "true");
+    expect(document.body.style.overflow).toBe("hidden");
+
+    await userEvent.keyboard("{Escape}");
+    expect(
+      screen.queryByRole("dialog", { name: /choose a date and time/i }),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("dialog", { name: /book this experience/i }),
+    ).toBe(sheet);
+    expect(sheetRoot).not.toHaveAttribute("inert");
+    expect(sheetRoot).not.toHaveAttribute("aria-hidden");
+    expect(document.activeElement).toBe(dateTrigger);
+    expect(shell).toHaveAttribute("inert");
+    expect(shell).toHaveAttribute("aria-hidden", "true");
+    expect(document.body.style.overflow).toBe("hidden");
+
+    await userEvent.keyboard("{Escape}");
+    expect(
+      screen.queryByRole("dialog", { name: /book this experience/i }),
+    ).not.toBeInTheDocument();
+    expect(document.activeElement).toBe(sheetTrigger);
+    expect(shell).not.toHaveAttribute("inert");
+    expect(shell).not.toHaveAttribute("aria-hidden");
+    expect(document.body.style.overflow).toBe("");
   });
 
   it("reflects a reservation made in the sheet back on the mobile bar", async () => {
