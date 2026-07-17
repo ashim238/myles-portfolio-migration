@@ -1,30 +1,31 @@
 /* ───────────────────────────────────────────────────────────────
-   Motion-play: scroll-driven section reveals (native, progressive)
-   Case-study sections rise + fade as they scroll into view. Pure CSS
-   scroll-driven animation — no JS, no library. Double-gated so content
-   is always visible by default: only animates where the browser
-   supports view() timelines AND the user allows motion. Because view()
-   is scroll-position-based (not time-based), sections already on screen
-   render at their correct progress immediately — no above-the-fold flash.
+   Motion-play: non-gating section-heading emphasis
+   Sections and headings remain fully visible at every scroll position.
+   Supporting browsers draw a short underline as each heading enters view.
    ─────────────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
-    .project-page .project-section {
-      animation: sectionReveal linear both;
+    .project-section > h2 {
+      text-decoration-line: underline;
+      text-decoration-thickness: 0.08em;
+      text-underline-offset: 0.18em;
+      animation: sectionHeadingEmphasis linear both;
       animation-timeline: view();
-      animation-range: entry 2% cover 16%;
+      animation-range: entry 8% cover 22%;
     }
   }
 }
 
-@keyframes sectionReveal {
+@keyframes sectionHeadingEmphasis {
   from {
-    opacity: 0;
-    transform: translateY(20px);
+    text-decoration-color: transparent;
   }
   to {
-    opacity: 1;
-    transform: translateY(0);
+    text-decoration-color: color-mix(
+      in srgb,
+      var(--toc-accent, var(--foreground)) 42%,
+      transparent
+    );
   }
 }
 
@@ -129,13 +130,11 @@
 /* ── Scroll-reveal IntersectionObserver fallback (Firefox) ──────── */
 @supports not (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .project-page .project-section,
     .project-highlight,
     .project-work-jump > h2,
     .project-work-jump-list > li,
     .play-entry,
     .about-detail,
-    .resume-detail,
     .home-page .about,
     .footer,
     .fg-features-heading,
@@ -148,13 +147,11 @@
                   transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .project-page .project-section.sr-revealed,
     .project-highlight.sr-revealed,
     .project-work-jump > h2.sr-revealed,
     .project-work-jump-list > li.sr-revealed,
     .play-entry.sr-revealed,
     .about-detail.sr-revealed,
-    .resume-detail.sr-revealed,
     .home-page .about.sr-revealed,
     .footer.sr-revealed,
     .fg-features-heading.sr-revealed,
@@ -164,6 +161,26 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-page .project-section,
+  .project-section > h2 {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+}
+
+@media print {
+  .project-page .project-section,
+  .project-section > h2 {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
   }
 }
 
@@ -368,17 +385,74 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 .case-lead-media { margin: 1.6rem 0 2rem; border-radius: 0.7rem; overflow: hidden; border: 1px solid var(--line); }
 .case-lead-img, .case-lead-video { display: block; width: 100%; height: auto; }
 
+.case-video-frame {
+  position: relative;
+}
+
+.case-video-opt-in {
+  position: absolute;
+  left: 50%;
+  bottom: 1rem;
+  translate: -50% 0;
+  min-height: 44px;
+  padding: 0.65rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--foreground) 18%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--background) 90%, transparent);
+  color: var(--foreground);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 650;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+}
+
+.case-video-opt-in:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 3px;
+}
+
 .case-cut { margin: 0 0 2.2rem; display: grid; gap: 1.4rem; max-width: 70ch; }
 .case-cut-facts { margin: 0; display: grid; gap: 0.6rem; }
 .case-cut-row { display: grid; grid-template-columns: 120px 1fr; gap: 1rem; align-items: baseline; }
 @media (max-width: 560px) { .case-cut-row { grid-template-columns: 1fr; gap: 0.1rem; } }
-.case-cut-row dt { font-family: var(--font-geist-mono); font-size: 0.72rem; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--muted); margin: 0; }
+.case-cut-row dt { font-size: 0.84rem; font-weight: 600; letter-spacing: normal;
+  color: var(--muted); margin: 0; }
 .case-cut-row dd { margin: 0; color: var(--foreground); font-size: 1rem; line-height: 1.5; }
 .case-cut-metric { font-weight: 600; font-variant-numeric: tabular-nums; }
+.count-up-fact {
+  background-image: linear-gradient(
+    to top,
+    color-mix(in srgb, currentColor 22%, transparent) 0 0.22em,
+    transparent 0.22em
+  );
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .count-up-fact {
+    background-size: 0 100%;
+    transition: background-size 560ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .count-up-fact[data-count-up-emphasized="true"] {
+    background-size: 100% 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .count-up-fact {
+    background-size: 100% 100%;
+    transition: none;
+  }
+}
 .case-cut-outcome dd { font-size: 1.05rem; }
-.case-cut-moves-label { font-family: var(--font-geist-mono); font-size: 0.72rem; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--muted); margin: 0 0 0.5rem; }
+.case-cut-moves-label { font-size: 0.84rem; font-weight: 600; letter-spacing: normal;
+  color: var(--muted); margin: 0 0 0.5rem; }
 .case-cut-moves ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
 .case-cut-moves li { position: relative; padding-left: 1.7rem; color: var(--foreground);
   font-size: 1rem; line-height: 1.55; }
@@ -555,6 +629,7 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
     gap: 1rem;
   }
   .fg-synth-transform-arrow {
+    justify-self: center;
     transform: rotate(90deg);
   }
   .fg-synth-panel {
@@ -1012,16 +1087,16 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 
 /* ══════════════════════════════════════════════════════════════════
    Fresh Greens · Daylight-arc ToC (overdrive)
-   The ToC traces a dawn-to-night arc across the case's four chapters.
+   The ToC traces a dawn-to-night arc across the case's nine stages.
    No prior knowledge required — a first-time viewer scrolling the case
    just feels time passing as they read. When they reach the visual system
    and learn the app uses a daylight-graded route, the metaphor snaps into
    place retroactively: the reading was the drive.
 
-     §1 Problem                           → sunrise orange
-     §2 Research and route scoring        → daylight gold
-     §3 Safety interaction                → late-day alert warmth
-     §4 Visual system, trust, and scope   → night navy
+     §1–2 Problem and research             → sunrise orange
+     §3–4 Route scoring and safety         → daylight gold
+     §5–7 Pivot and visual system          → late-day alert warmth
+     §8–9 Trust and scope                  → night navy
 
    Reduced-motion safe; segment fills track scroll position with no
    easing.
@@ -1037,9 +1112,14 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 }
 
 .fg-page .project-toc-item:nth-child(1) { --seg-color: #F09456; } /* sunrise orange     */
-.fg-page .project-toc-item:nth-child(2) { --seg-color: #FDD350; } /* daylight gold      */
-.fg-page .project-toc-item:nth-child(3) { --seg-color: #C74757; } /* late-day alert     */
-.fg-page .project-toc-item:nth-child(4) { --seg-color: var(--fg-toc-night); } /* night navy */
+.fg-page .project-toc-item:nth-child(2) { --seg-color: #F09456; }
+.fg-page .project-toc-item:nth-child(3) { --seg-color: #FDD350; } /* daylight gold      */
+.fg-page .project-toc-item:nth-child(4) { --seg-color: #FDD350; }
+.fg-page .project-toc-item:nth-child(5) { --seg-color: #C74757; } /* late-day alert     */
+.fg-page .project-toc-item:nth-child(6) { --seg-color: #C74757; }
+.fg-page .project-toc-item:nth-child(7) { --seg-color: #C74757; }
+.fg-page .project-toc-item:nth-child(8) { --seg-color: var(--fg-toc-night); } /* night navy */
+.fg-page .project-toc-item:nth-child(9) { --seg-color: var(--fg-toc-night); }
 
 .fg-page .project-toc-rail::after {
   background: var(--seg-color, var(--toc-fill));
@@ -1058,17 +1138,118 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 /* Mobile / tablet progress hairline: paint the full daylight arc behind,
    then use a mask to reveal only the portion the reader has scrolled
    through. As they scroll the bar drifts from dawn orange through peak
-   alert warmth to night navy — the same four-stage journey the desktop
-   rails trace, drawn as a continuous horizon. */
+   alert warmth to night navy — the same nine-stage journey the desktop
+   rails trace, drawn as a continuous nine-stage horizon. */
 .fg-page .project-toc-progress {
   transform: none;
   width: 100%;
   background: linear-gradient(
     to right,
-    #F09456 0% 25%,
-    #FDD350 25% 50%,
-    #C74757 50% 75%,
-    var(--fg-toc-night) 75% 100%
+    #F09456 0% 11.11%,
+    #F09456 11.11% 22.22%,
+    #FDD350 22.22% 33.33%,
+    #FDD350 33.33% 44.44%,
+    #C74757 44.44% 55.56%,
+    #C74757 55.56% 66.67%,
+    #C74757 66.67% 77.78%,
+    var(--fg-toc-night) 77.78% 88.89%,
+    var(--fg-toc-night) 88.89% 100%
+  );
+  -webkit-mask: linear-gradient(
+    to right,
+    #000 0 calc(var(--toc-progress, 0) * 100%),
+    transparent calc(var(--toc-progress, 0) * 100%)
+  );
+  mask: linear-gradient(
+    to right,
+    #000 0 calc(var(--toc-progress, 0) * 100%),
+    transparent calc(var(--toc-progress, 0) * 100%)
+  );
+}
+
+/* TikTok · alternating cyan and magenta channels */
+.tt-page .project-toc-item:nth-child(odd) { --seg-color: var(--tt-cyan); }
+.tt-page .project-toc-item:nth-child(even) { --seg-color: var(--tt-magenta); }
+
+.tt-page .project-toc-rail::after,
+.tt-page .project-toc-link--active .project-toc-dot,
+.tt-page .project-toc-item--read .project-toc-dot {
+  background: var(--seg-color, var(--toc-fill));
+}
+
+.tt-page .project-toc-progress {
+  transform: none;
+  background: linear-gradient(
+    to right,
+    var(--tt-cyan) 0% 20%,
+    var(--tt-magenta) 20% 40%,
+    var(--tt-cyan) 40% 60%,
+    var(--tt-magenta) 60% 80%,
+    var(--tt-cyan) 80% 100%
+  );
+  -webkit-mask: linear-gradient(
+    to right,
+    #000 0 calc(var(--toc-progress, 0) * 100%),
+    transparent calc(var(--toc-progress, 0) * 100%)
+  );
+  mask: linear-gradient(
+    to right,
+    #000 0 calc(var(--toc-progress, 0) * 100%),
+    transparent calc(var(--toc-progress, 0) * 100%)
+  );
+}
+
+/* Navi · one continuous route with waypoint dots */
+.nv-page .project-toc-rail {
+  border-radius: 999px;
+}
+
+.nv-page .project-toc-rail::after {
+  background: var(--nv-accent);
+}
+
+.nv-page .project-toc-dot {
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--nv-accent);
+  background: var(--background);
+}
+
+.nv-page .project-toc-link--active .project-toc-dot,
+.nv-page .project-toc-item--read .project-toc-dot {
+  background: var(--nv-accent);
+}
+
+.nv-page .project-toc-progress {
+  background: var(--nv-accent);
+}
+
+/* Understanding FAFSA · modular palette blocks */
+.uf-page .project-toc-item:nth-child(1) { --seg-color: var(--uf-accent-warm); }
+.uf-page .project-toc-item:nth-child(2) { --seg-color: var(--uf-accent-highlight); }
+.uf-page .project-toc-item:nth-child(3) { --seg-color: var(--uf-accent-cool-text); }
+.uf-page .project-toc-item:nth-child(4) { --seg-color: var(--uf-accent-warm); }
+.uf-page .project-toc-item:nth-child(5) { --seg-color: var(--uf-accent-cool-text); }
+.uf-page .project-toc-item:nth-child(6) { --seg-color: var(--uf-accent-highlight); }
+.uf-page .project-toc-item:nth-child(7) { --seg-color: var(--uf-accent-warm); }
+
+.uf-page .project-toc-rail::after,
+.uf-page .project-toc-link--active .project-toc-dot,
+.uf-page .project-toc-item--read .project-toc-dot {
+  background: var(--seg-color, var(--toc-fill));
+}
+
+.uf-page .project-toc-progress {
+  transform: none;
+  background: linear-gradient(
+    to right,
+    var(--uf-accent-warm) 0% 14.285%,
+    var(--uf-accent-highlight) 14.285% 28.57%,
+    var(--uf-accent-cool-text) 28.57% 42.855%,
+    var(--uf-accent-warm) 42.855% 57.14%,
+    var(--uf-accent-cool-text) 57.14% 71.425%,
+    var(--uf-accent-highlight) 71.425% 85.71%,
+    var(--uf-accent-warm) 85.71% 100%
   );
   -webkit-mask: linear-gradient(
     to right,

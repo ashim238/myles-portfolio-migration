@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   type Filters,
   type PriceBand,
@@ -9,6 +10,8 @@ import {
   DEFAULT_FILTERS,
   activeCount,
 } from "@/components/navi/demo/filters";
+import { OverlayRoot } from "@/components/navi/demo/OverlayRoot";
+import { useOverlayBehavior } from "@/lib/navi/use-overlay-behavior";
 
 const PRICE_OPTIONS: { id: PriceBand; label: string }[] = [
   { id: "any", label: "Any" },
@@ -120,61 +123,25 @@ export function FiltersSlideOver({
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
   const dialogRef = useRef<HTMLDivElement | null>(null);
   const wasOpenRef = useRef(false);
-  const onCloseRef = useRef(onClose);
-
-  useEffect(() => {
-    onCloseRef.current = onClose;
-  }, [onClose]);
 
   useEffect(() => {
     if (open && !wasOpenRef.current) setDraft(initial);
     wasOpenRef.current = open;
   }, [open, initial]);
 
-  useEffect(() => {
-    if (!open) return;
-    // Remember what opened the panel so focus can return there on close, and
-    // lock body scroll so the page behind the modal stays put.
-    const trigger = document.activeElement as HTMLElement | null;
-    closeBtnRef.current?.focus();
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    function onKey(e: KeyboardEvent) {
-      if (e.key === "Escape") {
-        e.preventDefault();
-        onCloseRef.current();
-      }
-      if (e.key === "Tab" && dialogRef.current) {
-        const focusables = dialogRef.current.querySelectorAll<HTMLElement>(
-          "button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex='-1'])",
-        );
-        if (focusables.length === 0) return;
-        const first = focusables[0];
-        const last = focusables[focusables.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault();
-          last.focus();
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    }
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prevOverflow;
-      trigger?.focus?.();
-    };
-  }, [open]);
+  useOverlayBehavior({
+    open,
+    onClose,
+    containerRef: dialogRef,
+    initialFocusRef: closeBtnRef,
+  });
 
   if (!open) return null;
 
   const count = matchCountFor(draft);
 
-  return (
-    <>
+  return createPortal(
+    <OverlayRoot>
       <div className="nv-slide-over-backdrop" onClick={onClose} aria-hidden="true" />
       <div
         ref={dialogRef}
@@ -262,6 +229,7 @@ export function FiltersSlideOver({
           </button>
         </footer>
       </div>
-    </>
+    </OverlayRoot>,
+    document.body,
   );
 }

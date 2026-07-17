@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { SiteNav } from "@/components/site-nav";
-import { siteConfig } from "@/lib/site-config";
+import { createRouteMetadata, siteConfig } from "@/lib/site-config";
 
-export const metadata = {
+export const metadata = createRouteMetadata({
   title: "About",
   description: `About ${siteConfig.name}: product designer based in Brooklyn.`,
-};
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (
@@ -38,10 +39,11 @@ export default function AboutPage() {
               WCAG dash pattern for the daylight cue built in from the start.
               For a financial-aid nonprofit, I rebuilt the newsletter as
               modular templates a non-designer could run without breaking the
-              brand. The first redesigned send opened at 52.6%, compared with
-              prior sends around 30%. At TikTok I
-              designed catalog ad templates around the platform&apos;s
-              subcultures, and American Eagle adopted one.
+              brand. The first redesigned send had an observed 52.6% open rate
+              with Mailchimp Privacy Protection excluded. At
+              TikTok I designed catalog ad templates around the
+              platform&apos;s subcultures. I later learned through Global Creative
+              Lab that American Eagle selected one.
             </p>
             <p>
               Outside of work, I&apos;m a huge comic fan. The work Daniel

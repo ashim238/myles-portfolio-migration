@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -100,6 +100,9 @@ describe("Fresh Greens prose structure", () => {
     );
     expect(existsSync(resolve(processDir, "active-nav.mp4"))).toBe(true);
     expect(existsSync(resolve(processDir, "active-nav.mov"))).toBe(false);
+    expect(statSync(resolve(processDir, "active-nav.mp4")).size).toBeLessThan(
+      4_000_000,
+    );
   });
 
   it("keeps house punctuation out of composed reserved-palette copy", () => {

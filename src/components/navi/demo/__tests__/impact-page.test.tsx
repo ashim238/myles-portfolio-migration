@@ -1,6 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import { ImpactView } from "@/app/work/navi/(minisite)/demo/impact/page";
+import { ImpactView } from "@/app/work/navi/(minisite)/demo/impact/ImpactView";
 import { getImpactSummary } from "@/lib/navi/impact";
 import { EXPERIENCES } from "@/lib/navi/demo-data";
 

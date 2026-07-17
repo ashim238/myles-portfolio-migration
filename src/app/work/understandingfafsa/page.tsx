@@ -11,14 +11,15 @@ import {
   BeforeAfterPhones,
   FigmaMailchimpPair,
   LockedSwappableView,
-  NewsletterComposer,
+  NewsletterComposerDemo,
   TemplateSwitcher,
 } from "@/components/understandingfafsa";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
+import { createRouteMetadata } from "@/lib/site-config";
 
 const UF_DESCRIPTION =
-  "Redesigned a newsletter system to match a fresh site rebrand. The first redesigned send opened at ~52.6%, compared with prior sends around 30%.";
+  "Built a modular newsletter system for a site rebrand. The first redesigned send had an observed ~52.6% open rate with Mailchimp Privacy Protection excluded. This was not a controlled attribution test.";
 
 const UF_COLORS = [
   "#be5abf",
@@ -35,16 +36,13 @@ const UF_COLORS = [
   "#7100bf",
 ];
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createRouteMetadata({
   title: "UnderstandingFAFSA",
   description: UF_DESCRIPTION,
-  openGraph: {
-    title: "UnderstandingFAFSA",
-    description: UF_DESCRIPTION,
-    type: "article",
-    images: [{ url: "/projects/understandingfafsa/cover.png" }],
-  },
-};
+  path: "/work/understandingfafsa",
+  image: "/projects/understandingfafsa/cover.png",
+  type: "article",
+});
 
 export default async function UnderstandingFafsaPage() {
   const project = await getProjectBySlug("understandingfafsa");
@@ -65,7 +63,7 @@ export default async function UnderstandingFafsaPage() {
       </nav>
 
       <section className="hero project-hero uf-hero" aria-labelledby="uf-title">
-        <p className="uf-eyebrow">Product design · 2025</p>
+        <p className="uf-eyebrow">Product design · 2025–present</p>
         <h1 id="uf-title" className="project-hero-title uf-title">
           Understanding<wbr />FAFSA
         </h1>
@@ -74,9 +72,11 @@ export default async function UnderstandingFafsaPage() {
         </p>
       </section>
 
-      <LeadMedia cover="/projects/understandingfafsa/cover.png" alt="UnderstandingFAFSA cover" />
+      <LeadMedia
+        cover="/projects/understandingfafsa/cover.png"
+        alt="Two phone mockups showing blue and orange UnderstandingFAFSA newsletter templates."
+      />
       <RecruiterCut
-        problem="A freshly rebranded site left its newsletter looking dated and off-brand."
         role="Product Designer"
         timeline="February 2025 – Ongoing"
         stack="Figma, Mailchimp"
@@ -84,7 +84,7 @@ export default async function UnderstandingFafsaPage() {
         outcomeValue={project?.outcomeMetricValue}
         outcomeLabel={project?.outcomeMetricLabel}
         moves={[
-          "Researched 120+ newsletters against four criteria.",
+          "Compiled and evaluated 120+ newsletters with one collaborator.",
           "Built a modular template system with locked layers and swappable parts.",
           "Matched the newsletter type and palette to the rebranded site.",
         ]}
@@ -92,15 +92,18 @@ export default async function UnderstandingFafsaPage() {
 
       <ProjectToc
         sections={[
-          { title: "Context and problem", id: "uf-context" },
-          { title: "Newsletter audit", id: "uf-audit" },
-          { title: "Template system", id: "uf-templates" },
-          { title: "Mailchimp build and results", id: "uf-figma" },
+          { title: "A rebrand and a weekly workflow", id: "uf-context" },
+          { title: "Where the old template broke down", id: "uf-problem" },
+          { title: "What 120 newsletters revealed", id: "uf-audit" },
+          { title: "Three send types from the audit", id: "uf-templates" },
+          { title: "Rules for fixed and swappable parts", id: "uf-locked" },
+          { title: "Rebuilding the system in Mailchimp", id: "uf-figma" },
+          { title: "The first redesigned send", id: "uf-results" },
         ]}
       />
 
       <section className="project-section uf-section" aria-labelledby="uf-context">
-        <h2 id="uf-context">The newsletter still used the old visual system</h2>
+        <h2 id="uf-context">A rebrand and a weekly workflow</h2>
         <div className="project-section-body">
           <p>
             UnderstandingFAFSA helps students, parents, and counselors navigate the Free Application
@@ -125,12 +128,12 @@ export default async function UnderstandingFafsaPage() {
       </section>
 
       <section className="project-section uf-section" aria-labelledby="uf-audit">
-        <h2 id="uf-audit">A 120-newsletter audit</h2>
+        <h2 id="uf-audit">What 120 newsletters revealed</h2>
         <div className="project-section-body">
           <p>
-            Before touching templates, we compiled over 120 newsletter
-            examples and evaluated them against four criteria: clarity,
-            personalization, tone of voice, and visual appeal and branding
+            Before touching templates, I worked with one collaborator to compile
+            over 120 newsletter examples and evaluate them against four criteria:
+            clarity, personalization, tone of voice, and visual appeal and branding
             consistency.
           </p>
           <p>
@@ -169,7 +172,7 @@ export default async function UnderstandingFafsaPage() {
         className="project-section uf-section project-section--wide uf-section--wide"
         aria-labelledby="uf-templates"
       >
-        <h2 id="uf-templates">One skeleton for three send types</h2>
+        <h2 id="uf-templates">Three send types from the audit</h2>
         <div className="project-section-body">
           <p>
             The shared framework includes a welcome email that sets expectations, the core weekly
@@ -187,14 +190,14 @@ export default async function UnderstandingFafsaPage() {
 
         <TemplateSwitcher />
 
-        <NewsletterComposer />
+        <NewsletterComposerDemo />
       </section>
 
       <section
         className="project-section uf-section project-section--wide uf-section--wide"
         aria-labelledby="uf-locked"
       >
-        <h2 id="uf-locked">What stays locked and what changes</h2>
+        <h2 id="uf-locked">Rules for fixed and swappable parts</h2>
         <div className="project-section-body">
           <p>
             Spacing, dividers, type, and the structural skeleton stay locked. Editors swap body copy
@@ -221,12 +224,11 @@ export default async function UnderstandingFafsaPage() {
             <mark className="case-highlight">
               Gmail&apos;s 102KB HTML ceiling and clipping created a rigid
               constraint.
-            </mark>
-            Early weight came from custom section icons and themed dividers exported from Figma. The
-            fix arrived through test sends, stripping redundant wrappers and dividers, merging sections
-            where it still scanned, and compressing PNGs through an external tool. For dark-mode-friendly
-            dividers, I removed backgrounds in Photoshop so assets stayed lighter without muddying on
-            phone.
+            </mark>{" "}
+            Early weight came from custom section icons and themed dividers exported from Figma. Test
+            sends showed which wrappers and dividers could go. I merged sections where they still
+            scanned and compressed PNGs through an external tool. For dark-mode-friendly dividers, I
+            removed backgrounds in Photoshop so assets stayed lighter without muddying on phone.
           </p>
           <p>
             Compression wasn&apos;t one recipe. The weekly kit leaned on fewer custom assets and more
@@ -240,7 +242,7 @@ export default async function UnderstandingFafsaPage() {
       </section>
 
       <section className="project-section uf-section" aria-labelledby="uf-results">
-        <h2 id="uf-results">First send after the redesign</h2>
+        <h2 id="uf-results">The first redesigned send</h2>
         <div className="project-section-body">
           <p>
             <mark className="case-highlight">
@@ -249,10 +251,12 @@ export default async function UnderstandingFafsaPage() {
             </mark>
           </p>
           <p>
-            The first redesigned send went out November 4, 2025. Mailchimp reported{" "}
-            <CountUp value="~52.6%" /> for the first redesigned send with MPP excluded. Earlier sends
-            opened around 30%. What shipped: a master template, modular blocks, explicit
-            locked-vs-swappable rules, and three template variants on the same design vocabulary.
+            I shipped a master template, modular blocks, explicit locked-vs-swappable rules, and
+            three template variants on the same design vocabulary. The first redesigned send went
+            out November 4, 2025. Mailchimp reported an observed <CountUp value="~52.6%" /> open
+            rate with MPP excluded, compared with earlier sends around 30%. This was not a controlled
+            attribution test, so I treat the result as an encouraging first observation rather than
+            proof that the redesign caused the change.
           </p>
         </div>
       </section>

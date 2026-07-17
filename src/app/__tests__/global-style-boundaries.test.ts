@@ -15,7 +15,7 @@ const sections = [
   ["styles/base.css", ":root {"],
   ["styles/portfolio-surfaces.css", "Fresh Greens case study"],
   ["styles/navi-minisite.css", "Navi mini-site scope (.nv-ui)"],
-  ["styles/late-polish.css", "Motion-play: scroll-driven section reveals"],
+  ["styles/late-polish.css", "Motion-play: non-gating section-heading emphasis"],
 ] as const;
 
 describe("global stylesheet boundaries", () => {

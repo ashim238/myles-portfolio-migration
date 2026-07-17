@@ -40,4 +40,18 @@ describe("root layout first paint", () => {
     expect(markup).not.toContain("home-intro-wait");
     expect(markup).toContain("theme-init");
   });
+
+  it("applies the saved or operating-system theme before hydration", () => {
+    const markup = renderToStaticMarkup(
+      <RootLayout>
+        <main>Portfolio</main>
+      </RootLayout>,
+    );
+    const document = new DOMParser().parseFromString(markup, "text/html");
+    const themeScript = document.querySelector("#theme-init")?.textContent ?? "";
+
+    expect(themeScript).toContain('t==="dark"||t==="light"');
+    expect(themeScript).toContain('matchMedia("(prefers-color-scheme: light)")');
+    expect(themeScript).toContain('setAttribute("data-theme",v)');
+  });
 });

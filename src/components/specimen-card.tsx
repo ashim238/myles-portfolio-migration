@@ -15,6 +15,7 @@ type SpecimenCardProps = {
   material: string;
   status: string;
   images: SpecimenImage[];
+  priority?: boolean;
 };
 
 export function SpecimenCard({
@@ -23,6 +24,7 @@ export function SpecimenCard({
   material,
   status,
   images,
+  priority = false,
 }: SpecimenCardProps) {
   const { openLightbox } = useLightbox();
 
@@ -39,7 +41,7 @@ export function SpecimenCard({
             key={img.src}
             type="button"
             className="specimen-image-btn"
-            onClick={() => openLightbox(img.src, img.alt)}
+            onClick={() => openLightbox(img.src, img.alt, 1200, 1600)}
             aria-label={`Expand image: ${img.alt}`}
           >
             <Image
@@ -48,7 +50,8 @@ export function SpecimenCard({
               width={1200}
               height={1600}
               className="specimen-image"
-              unoptimized
+              priority={priority && i === 0}
+              loading={priority && i === 0 ? "eager" : "lazy"}
             />
             {img.label ? (
               <span className="specimen-image-label">{img.label}</span>

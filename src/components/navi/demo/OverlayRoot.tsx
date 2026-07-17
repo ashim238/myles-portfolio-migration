@@ -2,9 +2,9 @@ import { type ReactNode } from "react";
 import { naviDisplay, naviBody } from "@/lib/navi/fonts";
 
 /**
- * Token scope for body-portaled overlays (the date modal and the booking sheet).
+ * Token scope for body-portaled Navi overlays.
  *
- * Both overlays portal to document.body so they escape the sticky booking
+ * These overlays portal to document.body so they escape the sticky booking
  * container's stacking context and the .nv-ui inert background. But that also
  * lands them outside .nv-ui, the element that carries every --nv-* design token
  * and the Jost/Lato font variables. Rendered there raw they lose their surface,

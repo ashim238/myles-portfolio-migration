@@ -9,6 +9,8 @@
     "lint": "eslint",
     "new:project": "node scripts/new-project.mjs",
     "validate:content": "node scripts/validate-content.mjs",
+    "resume:pdf": "node scripts/export-resume-pdf.mjs",
+    "resume:pdf:verify": "node scripts/verify-resume-pdf.mjs public/myles-ashitey-resume.pdf",
     "test": "vitest run",
     "test:watch": "vitest"
   },

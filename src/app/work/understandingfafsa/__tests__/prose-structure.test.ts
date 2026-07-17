@@ -28,13 +28,13 @@ describe("UnderstandingFAFSA case-study structure", () => {
     );
 
     expect(headings).toEqual([
-      { id: "uf-context", title: "The newsletter still used the old visual system" },
+      { id: "uf-context", title: "A rebrand and a weekly workflow" },
       { id: "uf-problem", title: "Where the old template broke down" },
-      { id: "uf-audit", title: "A 120-newsletter audit" },
-      { id: "uf-templates", title: "One skeleton for three send types" },
-      { id: "uf-locked", title: "What stays locked and what changes" },
+      { id: "uf-audit", title: "What 120 newsletters revealed" },
+      { id: "uf-templates", title: "Three send types from the audit" },
+      { id: "uf-locked", title: "Rules for fixed and swappable parts" },
       { id: "uf-figma", title: "Rebuilding the system in Mailchimp" },
-      { id: "uf-results", title: "First send after the redesign" },
+      { id: "uf-results", title: "The first redesigned send" },
     ]);
   });
 
@@ -48,7 +48,7 @@ describe("UnderstandingFAFSA case-study structure", () => {
     for (const artifact of [
       "BeforeAfterPhones",
       "TemplateSwitcher",
-      "NewsletterComposer",
+      "NewsletterComposerDemo",
       "LockedSwappableView",
       "ColorPalette",
       "FigmaMailchimpPair",
@@ -60,6 +60,8 @@ describe("UnderstandingFAFSA case-study structure", () => {
 
   it("keeps the audited facts that support the case", () => {
     for (const fact of [
+      "I worked with one collaborator to compile",
+      "Compiled and evaluated 120+ newsletters with one collaborator.",
       "over 120 newsletter",
       "Revenews",
       "The 74",
@@ -79,5 +81,15 @@ describe("UnderstandingFAFSA case-study structure", () => {
     ]) {
       expect(prose).toContain(fact);
     }
+  });
+
+  it("describes the Mailchimp weight work as concrete actions", () => {
+    expect(prose).not.toContain("The fix arrived through test sends");
+    expect(prose).toContain(
+      "Test sends showed which wrappers and dividers could go.",
+    );
+    expect(prose).toContain(
+      "I merged sections where they still scanned and compressed PNGs through an external tool.",
+    );
   });
 });

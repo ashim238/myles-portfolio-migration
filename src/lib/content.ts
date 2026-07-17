@@ -277,9 +277,9 @@ export const playEntries: PlayEntry[] = [
   {
     slug: "loom",
     title: "Loom",
-    hook: "A generative weaving ritual shaped by a personal prompt.",
+    hook: "Each answer to “What brings you joy?” seeds five colored threads on a digital loom.",
     exploration:
-      "I explored how simple inputs can become evolving visual patterns, turning reflection into a textile-like composition.",
+      "A text hash sets each thread’s position, hue, weight, and opacity. The same answer produces the same five-thread pattern.",
     tags: ["p5.js", "Generative Art", "Interaction"],
     year: "2025",
     context: "Parsons - Narrative & Dynamic Systems",

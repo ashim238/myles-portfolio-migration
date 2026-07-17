@@ -84,12 +84,24 @@
 }
 
 .nv-header {
+  border-bottom: 1px solid var(--nv-border);
+}
+.nv-header-main {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--nv-sp-lg);
   padding: var(--nv-sp-md) var(--nv-sp-xl);
+}
+.nv-concept-disclosure {
+  margin: 0;
+  padding: 6px var(--nv-sp-xl);
   border-bottom: 1px solid var(--nv-border);
+  background: var(--nv-surface-muted);
+  color: var(--nv-text-muted);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  text-align: center;
 }
 .nv-header-lead {
   display: flex;
@@ -184,14 +196,6 @@
   color: var(--nv-text);
   margin: 0;
 }
-.nv-footer-email {
-  color: var(--nv-action-strong);
-  text-decoration: none;
-  font-weight: 700;
-}
-.nv-footer-email:hover {
-  color: var(--nv-text);
-}
 .nv-footer-cols {
   display: flex;
   gap: var(--nv-sp-2xl);
@@ -230,14 +234,24 @@
   }
 }
 @media (max-width: 640px) {
-  .nv-header {
+  .nv-header-main {
     padding: var(--nv-sp-sm) var(--nv-sp-md);
     gap: var(--nv-sp-xs);
+  }
+  .nv-concept-disclosure {
+    padding-right: var(--nv-sp-md);
+    padding-left: var(--nv-sp-md);
   }
   /* The bottom tab bar carries Explore/Impact/System on mobile, so the header
      keeps the wordmark, the "Host an event" action the tab bar lacks, and the
      "Case study" up-link (the tab bar has no route back out of the demo). */
   .nv-nav { min-width: 0; gap: var(--nv-sp-xs); }
+  .nv-wordmark,
+  .nv-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
   .nv-nav a:not(.nv-nav-host):not(.nv-nav-back) { display: none; }
   .nv-nav a.nv-nav-back { padding-right: 0; border-right: none; }
   .nv-nav-back-wide { display: none; }
@@ -1269,6 +1283,11 @@
   .nv-feed-divider { display: none; }
   .nv-feed-row { margin-bottom: var(--nv-sp-md); }
   .nv-feed-row .nv-feed-actions { margin-top: var(--nv-sp-sm); }
+  .nv-feed-select select,
+  .nv-feed-filters,
+  .nv-feed-clear {
+    min-height: 44px;
+  }
 }
 /* Card facts line */
 .nv-exp-card-facts { color: var(--nv-text-muted); font-size: 0.8rem; margin: 0; }
@@ -1693,4 +1712,3 @@
 @media (prefers-reduced-motion: reduce) {
   .nv-booking-state > div { transition: none; }
 }
-

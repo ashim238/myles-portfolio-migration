@@ -6,9 +6,8 @@ type LeadVideoProps = {
   clip: string;
   poster: string;
   alt: string;
-  /** MIME type of the clip. Defaults to video/mp4. Use video/quicktime for
-   *  screen recordings straight out of macOS QuickTime (they're .mov files
-   *  wrapped as .mp4). */
+  /** MIME type of the clip. Defaults to video/mp4. QuickTime clips use a
+   *  same-name MP4 derivative first and retain the .mov as a fallback. */
   type?: string;
 };
 
@@ -20,6 +19,17 @@ function subscribeReducedMotion(callback: () => void) {
 
 function getReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function subscribeSaveData() {
+  return () => {};
+}
+
+function getSaveData() {
+  return Boolean(
+    (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
+      ?.saveData,
+  );
 }
 
 /** Muted looping video that attaches its source only when it nears the
@@ -34,6 +44,11 @@ export function LeadVideo({ clip, poster, alt, type = "video/mp4" }: LeadVideoPr
     getReducedMotion,
     () => false,
   );
+  const saveData = useSyncExternalStore(subscribeSaveData, getSaveData, () => false);
+  const mp4Clip =
+    type === "video/quicktime"
+      ? clip.replace(/\.mov(?=([?#]|$))/i, ".mp4")
+      : clip;
 
   useEffect(() => {
     const v = ref.current;
@@ -41,7 +56,7 @@ export function LeadVideo({ clip, poster, alt, type = "video/mp4" }: LeadVideoPr
 
     if (!("IntersectionObserver" in window)) {
       const frame = requestAnimationFrame(() => {
-        setLoadVideo(true);
+        if (!saveData) setLoadVideo(true);
         setInView(true);
       });
       return () => cancelAnimationFrame(frame);
@@ -50,44 +65,53 @@ export function LeadVideo({ clip, poster, alt, type = "video/mp4" }: LeadVideoPr
     const observer = new IntersectionObserver(
       ([entry]) => {
         setInView(entry.isIntersecting);
-        if (entry.isIntersecting) setLoadVideo(true);
+        if (entry.isIntersecting && !saveData) setLoadVideo(true);
       },
       { rootMargin: "320px 0px" },
     );
     observer.observe(v);
     return () => observer.disconnect();
-  }, []);
+  }, [saveData]);
 
   useEffect(() => {
     const v = ref.current;
     if (!v) return;
-    if (!loadVideo || !inView || reducedMotion) {
+    if (!loadVideo || !inView || reducedMotion || saveData) {
       v.pause();
       return;
     }
     v.play().catch(() => {});
-  }, [inView, loadVideo, reducedMotion]);
+  }, [inView, loadVideo, reducedMotion, saveData]);
 
   return (
-    <video
-      ref={ref}
-      className="case-lead-video"
-      poster={poster}
-      muted
-      loop
-      playsInline
-      controls
-      preload={loadVideo ? "metadata" : "none"}
-      aria-label={alt}
-    >
-      {loadVideo ? (
-        <>
-          <source src={clip} type={type} />
-          {/* Fallback: some browsers reject the primary type; also declare mp4
-              so H.264 content plays even when the container is quirky. */}
-          {type !== "video/mp4" ? <source src={clip} type="video/mp4" /> : null}
-        </>
+    <div className="case-video-frame">
+      <video
+        ref={ref}
+        className="case-lead-video"
+        poster={poster}
+        muted
+        loop
+        playsInline
+        controls
+        preload={loadVideo ? "metadata" : "none"}
+        aria-label={alt}
+      >
+        {loadVideo ? (
+          <>
+            <source src={mp4Clip} type="video/mp4" />
+            {type !== "video/mp4" ? <source src={clip} type={type} /> : null}
+          </>
+        ) : null}
+      </video>
+      {saveData && !loadVideo ? (
+        <button
+          className="case-video-opt-in"
+          type="button"
+          onClick={() => setLoadVideo(true)}
+        >
+          Load {alt} video
+        </button>
       ) : null}
-    </video>
+    </div>
   );
 }

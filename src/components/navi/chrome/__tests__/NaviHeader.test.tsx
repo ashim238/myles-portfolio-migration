@@ -3,11 +3,13 @@ import { describe, it, expect } from "vitest";
 import { NaviHeader } from "@/components/navi/chrome/NaviHeader";
 
 describe("NaviHeader", () => {
-  it("renders a banner with the Navi wordmark and primary nav", () => {
+  it("renders a banner with a distinct Navi project navigation landmark", () => {
     render(<NaviHeader />);
     expect(screen.getByRole("banner")).toBeInTheDocument();
     expect(screen.getByText("Navi")).toBeInTheDocument();
-    expect(screen.getByRole("navigation", { name: /primary/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("navigation", { name: "Navi project navigation" }),
+    ).toBeInTheDocument();
   });
 
   it("offers a way out of the demo back to the case study", () => {
@@ -16,6 +18,14 @@ describe("NaviHeader", () => {
       "href",
       "/work/navi",
     );
+  });
+
+  it("identifies every Navi-owned route as sample portfolio content", () => {
+    render(<NaviHeader />);
+
+    expect(
+      screen.getByText("Portfolio concept · sample content"),
+    ).toBeInTheDocument();
   });
 
   it("provides a shorter visual exit label for narrow screens", () => {

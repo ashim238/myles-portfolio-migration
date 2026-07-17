@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useState } from "react";
 import { ExpandableImage } from "@/components/expandable-image";
 import { UF_ASSETS, type UfAsset } from "@/lib/understandingfafsa-assets";
 
@@ -24,12 +24,14 @@ type EmailPhoneFrameProps = {
   children: ReactNode;
   tilt?: number;
   scrollable?: boolean;
+  scrollLabel?: string;
 };
 
 export function EmailPhoneFrame({
   children,
   tilt = 0,
   scrollable = false,
+  scrollLabel,
 }: EmailPhoneFrameProps) {
   return (
     <div
@@ -38,7 +40,12 @@ export function EmailPhoneFrame({
     >
       <div className="uf-phone-bezel">
         <span className="uf-phone-notch" aria-hidden="true" />
-        <div className={`uf-phone-screen${scrollable ? " uf-phone-screen--scroll" : ""}`}>
+        <div
+          className={`uf-phone-screen${scrollable ? " uf-phone-screen--scroll" : ""}`}
+          role={scrollable ? "region" : undefined}
+          tabIndex={scrollable ? 0 : undefined}
+          aria-label={scrollable ? scrollLabel : undefined}
+        >
           {children}
         </div>
       </div>
@@ -62,54 +69,18 @@ const BEFORE_AFTER = [
 ] as const;
 
 export function BeforeAfterPhones() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const reduced = usePrefersReducedMotion();
-
-  useEffect(() => {
-    if (reduced) return;
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const screens = section.querySelectorAll<HTMLElement>(".uf-phone-screen--scroll");
-    if (screens.length === 0) return;
-
-    section.setAttribute("data-scroll-sync", "");
-
-    let raf = 0;
-    const sync = () => {
-      const rect = section.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const progress = Math.max(0, Math.min(1, (vh - rect.top) / (vh + rect.height)));
-
-      screens.forEach((screen) => {
-        const range = screen.scrollHeight - screen.clientHeight;
-        if (range > 0) screen.scrollTop = progress * range;
-      });
-    };
-
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(sync);
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    sync();
-
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, [reduced]);
-
   return (
     <div
-      ref={sectionRef}
       className="uf-before-after"
       aria-label="Newsletter mobile layouts and reported open rates"
     >
       {BEFORE_AFTER.map((item) => (
         <figure key={item.label} className="uf-before-after-item">
-          <EmailPhoneFrame tilt={item.tilt} scrollable>
+          <EmailPhoneFrame
+            tilt={item.tilt}
+            scrollable
+            scrollLabel={`${item.label}. Scrollable full newsletter.`}
+          >
             <ExpandableImage
               src={item.asset.src}
               alt={item.alt}
@@ -127,6 +98,9 @@ export function BeforeAfterPhones() {
           <p className="uf-before-after-hint">Scroll inside the frame to read the full send.</p>
         </figure>
       ))}
+      <p className="uf-before-after-evidence-note">
+        Reported open rates are shown for context. This was not a controlled attribution test.
+      </p>
     </div>
   );
 }
@@ -259,6 +233,7 @@ function seedRows(order: ComposerBlockId[]): ComposerRow[] {
 
 export function NewsletterComposer() {
   const [rows, setRows] = useState<ComposerRow[]>(() => seedRows(COMPOSER_DEFAULT));
+  const [announcement, setAnnouncement] = useState("");
   const [justAddedKey, setJustAddedKey] = useState<string | null>(null);
   const [dragKey, setDragKey] = useState<string | null>(null);
   const [dragOverKey, setDragOverKey] = useState<string | null>(null);
@@ -277,18 +252,30 @@ export function NewsletterComposer() {
   const overCeiling = totalKb > COMPOSER_KB_CEILING;
 
   const addBlock = useCallback((id: ComposerBlockId) => {
+    const block = COMPOSER_BLOCKS.find((candidate) => candidate.id === id);
+    setAnnouncement(
+      `Added ${block?.name ?? "newsletter"} block to the end of the send. ${totalBlockCount + 1} blocks total.`,
+    );
     setRows((prev) => {
       const row = { key: makeInstanceId(id), id };
       setJustAddedKey(row.key);
       return [...prev, row];
     });
-  }, []);
+  }, [totalBlockCount]);
 
-  const removeRow = useCallback((key: string) => {
+  const removeRow = useCallback((key: string, name: string) => {
+    setAnnouncement(
+      `Removed ${name} block. ${totalBlockCount - 1} blocks remain.`,
+    );
     setRows((prev) => prev.filter((r) => r.key !== key));
-  }, []);
+  }, [totalBlockCount]);
 
-  const moveRow = useCallback((key: string, delta: -1 | 1) => {
+  const moveRow = useCallback((key: string, delta: -1 | 1, name: string, index: number) => {
+    const direction = delta === -1 ? "up" : "down";
+    const nextPosition = index + delta + 2;
+    setAnnouncement(
+      `Moved ${name} ${direction}. Position ${nextPosition} of ${totalBlockCount}.`,
+    );
     setRows((prev) => {
       const idx = prev.findIndex((r) => r.key === key);
       const next = idx + delta;
@@ -298,9 +285,10 @@ export function NewsletterComposer() {
       copy.splice(next, 0, taken);
       return copy;
     });
-  }, []);
+  }, [totalBlockCount]);
 
   const randomize = useCallback(() => {
+    setAnnouncement(`Randomized ${rows.length} swappable blocks.`);
     setRows((prev) => {
       if (prev.length === 0) return prev;
       const copy = [...prev];
@@ -310,9 +298,10 @@ export function NewsletterComposer() {
       }
       return copy;
     });
-  }, []);
+  }, [rows.length]);
 
   const reset = useCallback(() => {
+    setAnnouncement(`Reset the send to ${COMPOSER_DEFAULT.length + 2} blocks.`);
     setRows(seedRows(COMPOSER_DEFAULT));
   }, []);
 
@@ -347,6 +336,14 @@ export function NewsletterComposer() {
       setDragOverKey(null);
       return;
     }
+    const draggedRow = rows.find((row) => row.key === dragKey);
+    const targetIndex = rows.findIndex((row) => row.key === targetKey);
+    const draggedBlock = draggedRow ? blockMap.get(draggedRow.id) : undefined;
+    if (draggedBlock && targetIndex >= 0) {
+      setAnnouncement(
+        `Moved ${draggedBlock.name}. Position ${targetIndex + 2} of ${totalBlockCount}.`,
+      );
+    }
     setRows((prev) => {
       const from = prev.findIndex((r) => r.key === dragKey);
       const to = prev.findIndex((r) => r.key === targetKey);
@@ -366,7 +363,11 @@ export function NewsletterComposer() {
   };
 
   return (
-    <div className="uf-composer" aria-label="Interactive newsletter composer">
+    <div
+      className="uf-composer"
+      role="region"
+      aria-label="Interactive newsletter composer"
+    >
       <header className="uf-composer-toolbar">
         <div className="uf-composer-toolbar-title">
           <p className="uf-composer-eyebrow">Try it: assemble a send</p>
@@ -376,7 +377,12 @@ export function NewsletterComposer() {
           </p>
         </div>
         <div className="uf-composer-toolbar-actions" role="group" aria-label="Composer actions">
-          <button type="button" className="uf-composer-btn" onClick={randomize} disabled={rows.length < 2}>
+          <button
+            type="button"
+            className="uf-composer-btn uf-composer-btn--randomize"
+            onClick={randomize}
+            disabled={rows.length < 2}
+          >
             Randomize
           </button>
           <button type="button" className="uf-composer-btn" onClick={reset}>
@@ -384,6 +390,10 @@ export function NewsletterComposer() {
           </button>
         </div>
       </header>
+
+      <span className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+        {announcement}
+      </span>
 
       <div className="uf-composer-layout">
         <section className="uf-composer-shelf" aria-label="Available blocks">
@@ -434,7 +444,7 @@ export function NewsletterComposer() {
             </p>
           </div>
 
-          <div className="uf-composer-canvas" role="list" aria-live="polite">
+          <div className="uf-composer-canvas">
             <div className="uf-composer-pinned" aria-label={`${pinnedTopBlock.name} (locked)`}>
               <div className="uf-composer-pinned-body">
                 <span className="uf-composer-pinned-lock" aria-hidden="true">
@@ -459,7 +469,11 @@ export function NewsletterComposer() {
               </div>
             </div>
 
-            <ol className="uf-composer-middle" role="list">
+            <ol
+              className="uf-composer-middle"
+              role="list"
+              aria-label="Swappable newsletter blocks"
+            >
               {rows.length === 0 ? (
                 <li className="uf-composer-empty">
                   <p>No middle blocks. Add some from the shelf.</p>
@@ -511,7 +525,7 @@ export function NewsletterComposer() {
                           <button
                             type="button"
                             className="uf-composer-mini"
-                            onClick={() => moveRow(row.key, -1)}
+                            onClick={() => moveRow(row.key, -1, block.name, index)}
                             disabled={index === 0}
                             aria-label={`Move ${block.name} up`}
                           >
@@ -522,7 +536,7 @@ export function NewsletterComposer() {
                           <button
                             type="button"
                             className="uf-composer-mini"
-                            onClick={() => moveRow(row.key, 1)}
+                            onClick={() => moveRow(row.key, 1, block.name, index)}
                             disabled={index === rows.length - 1}
                             aria-label={`Move ${block.name} down`}
                           >
@@ -533,7 +547,7 @@ export function NewsletterComposer() {
                           <button
                             type="button"
                             className="uf-composer-mini uf-composer-mini--remove"
-                            onClick={() => removeRow(row.key)}
+                            onClick={() => removeRow(row.key, block.name)}
                             aria-label={`Remove ${block.name}`}
                           >
                             <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
@@ -574,6 +588,30 @@ export function NewsletterComposer() {
           </div>
         </section>
       </div>
+    </div>
+  );
+}
+
+export function NewsletterComposerDemo() {
+  const [open, setOpen] = useState(false);
+  const contentId = useId();
+
+  return (
+    <div className="uf-composer-demo">
+      <button
+        type="button"
+        className="uf-composer-demo-trigger"
+        aria-expanded={open}
+        aria-controls={contentId}
+        onClick={() => setOpen((current) => !current)}
+      >
+        Try the system
+      </button>
+      {open ? (
+        <div id={contentId} className="uf-composer-demo-content">
+          <NewsletterComposer />
+        </div>
+      ) : null}
     </div>
   );
 }

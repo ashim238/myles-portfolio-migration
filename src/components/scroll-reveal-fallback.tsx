@@ -9,7 +9,6 @@ const SELECTORS = [
   ".project-work-jump-list > li",
   ".play-entry",
   ".about-detail",
-  ".resume-detail",
   ".home-page .about",
   ".footer",
   ".fg-features-heading",

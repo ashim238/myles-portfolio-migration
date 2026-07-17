@@ -79,7 +79,6 @@ export default async function FreshGreensPage() {
         alt="Fresh Greens welcome screen on a phone, with an illustrated Black driver at sunrise."
       />
       <RecruiterCut
-        problem="Navigation weighs time and distance, not what a driver knows about a road's safety."
         role="Solo, design and engineering"
         timeline="Sep 2025 – Jun 2026"
         stack="React Native, Expo, TypeScript, Supabase"
@@ -95,9 +94,14 @@ export default async function FreshGreensPage() {
       <ProjectToc
         sections={[
           { title: "Problem", id: "fg-problem" },
-          { title: "Research and route scoring", id: "fg-research" },
+          { title: "Research", id: "fg-research" },
+          { title: "Route scoring", id: "fg-scoring" },
           { title: "Safety interaction", id: "fg-pulled-over" },
-          { title: "Visual system, trust, and scope", id: "fg-pivot" },
+          { title: "Design pivot", id: "fg-pivot" },
+          { title: "Type and color", id: "fg-typecolor" },
+          { title: "Reserved color", id: "fg-color" },
+          { title: "Community trust", id: "fg-trust" },
+          { title: "Scope and proof", id: "fg-scope" },
         ]}
         readingEndId="fg-scope"
       />

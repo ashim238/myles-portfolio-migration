@@ -1,7 +1,7 @@
 ---
 slug: navi
 title: Navi
-summary: Connecting visitors to New York City's local heartbeat.
+summary: A graduate-studio concept for neighborhood travel. I later rebuilt it as a working portfolio demo.
 role: UI/UX Designer
 timeframe: January 2025 - June 2025
 status: published

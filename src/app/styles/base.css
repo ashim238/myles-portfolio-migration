@@ -894,7 +894,7 @@ button:focus-visible,
     box-shadow 420ms ease;
 }
 
-.work-thumb img {
+.work-thumb > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -908,9 +908,22 @@ button:focus-visible,
   box-shadow: 0 1.9rem 3rem -1.5rem color-mix(in srgb, #000 78%, transparent);
 }
 
-.work-card:hover .work-thumb img,
-.work-card:focus-visible .work-thumb img {
+.work-card:hover .work-thumb > img,
+.work-card:focus-visible .work-thumb > img {
   transform: scale(1.03);
+}
+
+.work-thumb--tiktok-logo {
+  background: #08080d;
+}
+
+.work-thumb--tiktok-logo .tt-cover-cluster {
+  transform: translate3d(-16%, 15%, 0) scale(1.2);
+  transform-origin: 50% 50%;
+}
+
+.work-thumb--tiktok-logo .work-tab {
+  z-index: 1;
 }
 
 /* The corner tab: role · year pinned to the cover like a label on a
@@ -1046,12 +1059,12 @@ button:focus-visible,
   }
 
   .work-thumb,
-  .work-thumb img,
+  .work-thumb > img,
   .work-tab {
     transition: none;
   }
 
-  .work-card:hover .work-thumb img {
+  .work-card:hover .work-thumb > img {
     transform: none;
   }
 }
@@ -1397,8 +1410,17 @@ button:focus-visible,
   text-wrap: balance;
 }
 
+.resume-summary-heading {
+  margin: 1.35rem 0 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
 .resume-body {
-  margin-top: 1rem;
+  margin-top: 0.45rem;
   color: var(--muted);
   max-width: 42ch;
   line-height: var(--lead-copy);
@@ -1498,6 +1520,16 @@ button:focus-visible,
   opacity: 0.72;
 }
 
+.resume-contact {
+  font-style: normal;
+}
+
+.resume-note {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
 .resume-section-heading {
   font-size: clamp(1.6rem, 2.4vw, 2rem);
   font-weight: 500;
@@ -1570,6 +1602,17 @@ button:focus-visible,
   max-width: 60ch;
 }
 
+.resume-role-bullets {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0.35rem 0 0;
+  padding-left: 1.15rem;
+  font-size: 0.95rem;
+  line-height: var(--lead-copy);
+  color: var(--foreground);
+  max-width: 60ch;
+}
+
 .resume-skills {
   margin-top: 3.2rem;
   border-top: 1px solid var(--rule);
@@ -1603,14 +1646,6 @@ button:focus-visible,
   color: var(--foreground);
 }
 
-.resume-footnote {
-  margin-top: 3.2rem;
-  padding-top: 1.6rem;
-  border-top: 1px solid var(--rule);
-  font-size: 0.88rem;
-  color: var(--muted);
-}
-
 @media (max-width: 640px) {
   .resume-experience,
   .resume-skills {
@@ -1632,6 +1667,252 @@ button:focus-visible,
     gap: 0.25rem;
   }
 }
+
+/* Resume PDF candidate */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 8mm 11mm 8mm;
+  }
+
+  :root,
+  :root[data-theme="dark"],
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --background: #fff;
+    --foreground: #171717;
+    --muted: #4f4f4f;
+    --line: #cfcfcf;
+    --rule: #d8d8d8;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #171717 !important;
+    font-size: 8.7pt;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  body::after {
+    display: none !important;
+  }
+
+  .site-header,
+  .project-topbar,
+  .resume-label,
+  .resume-actions,
+  .resume-note,
+  .mobile-nav,
+  .skip-link,
+  .dot-cursor {
+    display: none !important;
+  }
+
+  .page-shell.project-page {
+    width: auto;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .resume-layout,
+  .resume-primary,
+  .resume-aside,
+  .resume-details {
+    display: block;
+  }
+
+  .resume-layout,
+  .resume-heading,
+  .resume-summary-heading,
+  .resume-body,
+  .resume-detail,
+  .resume-role {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .resume-layout {
+    margin: 0;
+  }
+
+  .resume-heading {
+    font-size: 25pt;
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+
+  .resume-summary-heading {
+    margin-top: 4.5mm;
+    font-size: 7.6pt;
+    line-height: 1.1;
+    letter-spacing: 0.09em;
+    text-transform: none;
+  }
+
+  .resume-body {
+    max-width: none;
+    margin-top: 1.2mm;
+    font-size: 9pt;
+    line-height: 1.28;
+    color: #282828;
+  }
+
+  .resume-aside {
+    margin-top: 3mm;
+    padding: 2.3mm 0 0;
+    border: 0;
+    border-top: 0.5pt solid #bdbdbd;
+  }
+
+  .resume-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.4mm 5mm;
+  }
+
+  .resume-detail {
+    display: flex;
+    gap: 1.5mm;
+    padding: 0;
+    border: 0;
+  }
+
+  .resume-detail:first-child {
+    display: none;
+  }
+
+  .resume-detail dt,
+  .resume-detail dd {
+    margin: 0;
+    font-size: 8.5pt;
+    line-height: 1.25;
+  }
+
+  .resume-detail dt {
+    font-weight: 600;
+    color: #4f4f4f;
+  }
+
+  .resume-detail dd a {
+    color: #171717;
+    text-decoration: none;
+  }
+
+  .resume-experience,
+  .resume-skills {
+    margin-top: 4mm;
+    padding-top: 2.3mm;
+    border-top: 0.5pt solid #bdbdbd;
+  }
+
+  .resume-section-heading {
+    margin: 0 0 2mm;
+    font-size: 10.5pt;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  .resume-role-list {
+    display: block;
+  }
+
+  .resume-role {
+    display: block;
+    padding: 0 0 2.1mm;
+    margin: 0 0 2.1mm;
+    border-bottom: 0.35pt solid #e0e0e0;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .resume-role:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .resume-role-head {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 4mm;
+  }
+
+  .resume-role-title {
+    font-size: 8.8pt;
+    line-height: 1.15;
+  }
+
+  .resume-role-title a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 0.5pt;
+    text-underline-offset: 1.2pt;
+  }
+
+  .resume-role-org {
+    margin-top: 0.4mm;
+    font-size: 8.5pt;
+    line-height: 1.15;
+  }
+
+  .resume-role-dates {
+    flex: 0 0 auto;
+    font-size: 8.5pt;
+    line-height: 1.15;
+  }
+
+  .resume-role-summary {
+    max-width: none;
+    margin-top: 1.1mm;
+    font-size: 8.5pt;
+    line-height: 1.26;
+  }
+
+  .resume-role-bullets {
+    display: grid;
+    gap: 0.8mm;
+    max-width: none;
+    margin: 1.1mm 0 0;
+    padding-left: 3.5mm;
+    font-size: 8.5pt;
+    line-height: 1.26;
+  }
+
+  .resume-skill-list {
+    gap: 1mm;
+  }
+
+  .resume-skill-group {
+    grid-template-columns: 24mm 1fr;
+    gap: 2mm;
+  }
+
+  .resume-skill-group dt,
+  .resume-skill-group dd {
+    font-size: 8.5pt;
+    line-height: 1.22;
+  }
+
+  .resume-role,
+  .resume-experience,
+  .resume-skills,
+  .resume-skill-group {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  p,
+  li {
+    orphans: 2;
+    widows: 2;
+  }
+}
+/* End resume PDF candidate */
 
 /* ------------------------------------------------------------------ */
 
@@ -2578,6 +2859,22 @@ button:focus-visible,
     flex: 0 1 auto;
   }
 
+  .project-toc-toggle-label {
+    flex: 1 1 auto;
+    overflow: hidden;
+  }
+
+  .project-toc-active-title {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .project-toc-toggle-end {
+    flex: 0 0 auto;
+  }
+
   .project-toc-toggle .project-toc-num {
     opacity: 0.5;
   }
@@ -2622,6 +2919,9 @@ button:focus-visible,
 
   .project-toc-list--open {
     display: flex;
+    max-height: calc(100dvh - 7rem - env(safe-area-inset-bottom));
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
   .project-toc-link {
@@ -2640,7 +2940,7 @@ button:focus-visible,
    shell stays neutral by default (--toc-fill falls back to --foreground);
    these opt-ins let the spine carry the project's voice. */
 .fg-page { --toc-accent: var(--fg-accent); }
-.tt-page { --toc-accent: var(--tt-accent); }
+.tt-page { --toc-accent: var(--tt-cyan); }
 .uf-page { --toc-accent: var(--uf-accent-warm); }
 .nv-page { --toc-accent: var(--nv-accent); }
 
@@ -2839,8 +3139,12 @@ button:focus-visible,
 }
 
 /* Scroll offset for sticky header */
-.project-section[id] {
-  scroll-margin-top: 3.5rem;
+.project-page {
+  --project-heading-offset: 3.5rem;
+}
+
+.project-page h2[id] {
+  scroll-margin-top: var(--project-heading-offset);
 }
 
 .project-content h2,

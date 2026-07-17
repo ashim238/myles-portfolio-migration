@@ -1,6 +1,17 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { NaviResearchArtifacts } from "@/components/navi/research-artifacts";
+
+const naviSource = readFileSync(
+  resolve(process.cwd(), "src/components/navi.tsx"),
+  "utf8",
+);
+const naviAnimReadySource = naviSource.slice(
+  naviSource.indexOf("export function NaviAnimReady()"),
+  naviSource.indexOf("/* ── Heuristic insight cards"),
+);
 
 describe("NaviResearchArtifacts", () => {
   it("names the three research-informed archetypes and their scope", () => {
@@ -28,5 +39,14 @@ describe("NaviResearchArtifacts", () => {
     render(<NaviResearchArtifacts />);
     expect(screen.getByText("Internal planning artifact")).toBeInTheDocument();
     expect(screen.queryByText(/validated/i)).not.toBeInTheDocument();
+  });
+
+  it("makes only the research artifacts reveal one-shot", () => {
+    expect(naviAnimReadySource).toMatch(
+      /if \(entry\.isIntersecting\) \{[\s\S]*?classList\.add\("nv-reveal--visible"\);[\s\S]*?classList\.contains\("nv-research-artifacts"\)[\s\S]*?io\.unobserve\(entry\.target\);/,
+    );
+    expect(naviAnimReadySource).toMatch(
+      /\} else \{\s*entry\.target\.classList\.remove\("nv-reveal--visible"\);/,
+    );
   });
 });

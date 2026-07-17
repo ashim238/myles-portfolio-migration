@@ -3,29 +3,25 @@ export function NaviFooter() {
     {
       heading: "Explore Navi",
       links: [
+        { label: "Experiences", href: "/work/navi/demo" },
+        { label: "Where bookings go", href: "/work/navi/demo/impact" },
         { label: "Host an event", href: "/work/navi/demo/host" },
-        { label: "Trust and safety", href: "/work/navi" },
-        { label: "Partner resources", href: "/work/navi" },
+        { label: "Design system", href: "/work/navi/system" },
       ],
     },
     {
-      heading: "About",
+      heading: "Project",
       links: [
-        { label: "Where bookings go", href: "/work/navi/demo/impact" },
-        { label: "What's Navi?", href: "/work/navi" },
-        { label: "Careers", href: "/work/navi" },
-        { label: "Newsroom", href: "/work/navi" },
-        { label: "Privacy policy", href: "/work/navi" },
+        { label: "Read the case study", href: "/work/navi" },
       ],
     },
   ];
   return (
     <footer className="nv-footer" role="contentinfo">
       <div className="nv-footer-brand">
-        <p className="nv-footer-tagline">Neighborhood-led experiences in New York City.</p>
-        <a className="nv-footer-email" href="mailto:contact@navi.com">
-          contact@navi.com
-        </a>
+        <p className="nv-footer-tagline">
+          A working portfolio rebuild of a graduate-studio concept.
+        </p>
       </div>
       <div className="nv-footer-cols">
         {cols.map((c) => (

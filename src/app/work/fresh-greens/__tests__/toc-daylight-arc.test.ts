@@ -26,23 +26,28 @@ describe("Fresh Greens TOC daylight arc", () => {
     );
   });
 
-  it("maps the four chapters to four staged colors", () => {
+  it("maps the nine process stages across the daylight arc", () => {
     const colors = Array.from(
       getDaylightArc().matchAll(
         /\.project-toc-item:nth-child\((\d+)\)\s*\{\s*--seg-color:\s*(#[0-9A-F]{6}|var\(--fg-toc-night\));\s*\}/g,
       ),
-      ([, chapter, color]) => ({ chapter: Number(chapter), color }),
+      ([, stage, color]) => ({ stage: Number(stage), color }),
     );
 
     expect(colors).toEqual([
-      { chapter: 1, color: "#F09456" },
-      { chapter: 2, color: "#FDD350" },
-      { chapter: 3, color: "#C74757" },
-      { chapter: 4, color: "var(--fg-toc-night)" },
+      { stage: 1, color: "#F09456" },
+      { stage: 2, color: "#F09456" },
+      { stage: 3, color: "#FDD350" },
+      { stage: 4, color: "#FDD350" },
+      { stage: 5, color: "#C74757" },
+      { stage: 6, color: "#C74757" },
+      { stage: 7, color: "#C74757" },
+      { stage: 8, color: "var(--fg-toc-night)" },
+      { stage: 9, color: "var(--fg-toc-night)" },
     ]);
   });
 
-  it("uses four contiguous quarter-ranges in the mobile gradient", () => {
+  it("uses nine contiguous stage ranges in the mobile gradient", () => {
     const background = getDaylightArc().match(
       /\.project-toc-progress\s*\{[\s\S]*?background:\s*linear-gradient\(\s*to right,([\s\S]*?)\);/,
     );
@@ -56,12 +61,21 @@ describe("Fresh Greens TOC daylight arc", () => {
         ([, color, start, end]) => ({ color, start, end }),
       ),
     ).toEqual([
-      { color: "#F09456", start: "0%", end: "25%" },
-      { color: "#FDD350", start: "25%", end: "50%" },
-      { color: "#C74757", start: "50%", end: "75%" },
+      { color: "#F09456", start: "0%", end: "11.11%" },
+      { color: "#F09456", start: "11.11%", end: "22.22%" },
+      { color: "#FDD350", start: "22.22%", end: "33.33%" },
+      { color: "#FDD350", start: "33.33%", end: "44.44%" },
+      { color: "#C74757", start: "44.44%", end: "55.56%" },
+      { color: "#C74757", start: "55.56%", end: "66.67%" },
+      { color: "#C74757", start: "66.67%", end: "77.78%" },
       {
         color: "var(--fg-toc-night)",
-        start: "75%",
+        start: "77.78%",
+        end: "88.89%",
+      },
+      {
+        color: "var(--fg-toc-night)",
+        start: "88.89%",
         end: "100%",
       },
     ]);

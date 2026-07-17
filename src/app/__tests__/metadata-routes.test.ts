@@ -15,9 +15,9 @@ describe("metadata routes", () => {
   });
 
   it("uses one canonical production origin", () => {
-    expect(siteConfig.siteUrl).toBe("https://mylesdesignsthings.com");
+    expect(siteConfig.siteUrl).toBe("https://www.mylesdesignsthings.com");
     expect(robots().sitemap).toBe(
-      "https://mylesdesignsthings.com/sitemap.xml",
+      "https://www.mylesdesignsthings.com/sitemap.xml",
     );
   });
 
@@ -25,9 +25,9 @@ describe("metadata routes", () => {
     const entries = await sitemap();
     expect(entries.map((entry) => entry.url)).toEqual(
       expect.arrayContaining([
-        "https://mylesdesignsthings.com",
-        "https://mylesdesignsthings.com/about",
-        "https://mylesdesignsthings.com/work/sample-project",
+        "https://www.mylesdesignsthings.com",
+        "https://www.mylesdesignsthings.com/about",
+        "https://www.mylesdesignsthings.com/work/sample-project",
       ]),
     );
     expect(entries.every((entry) => entry.lastModified === undefined)).toBe(

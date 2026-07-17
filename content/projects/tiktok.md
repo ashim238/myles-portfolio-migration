@@ -1,12 +1,12 @@
 ---
 slug: tiktok
 title: TikTok Dynamic Showcase Ads
-summary: A template system built so brands could showcase product catalogs in-feed, designed around TikTok's subculture density. Adopted by American Eagle.
-role: Visual Designer · Brand Studio
+summary: Static catalog templates for TikTok's Dynamic Showcase Ads. Light Academia shipped in the launch library, and I later learned through Global Creative Lab that American Eagle selected it.
+role: Creative Strategist Intern · Global Creative Lab
 timeframe: May – August 2021
 status: published
 order: 4
-coverImage: /projects/tiktok/composite-flower.png
+coverImage: /projects/tiktok/lofi-dopamine.png
 tags:
   - Internship
   - Brand

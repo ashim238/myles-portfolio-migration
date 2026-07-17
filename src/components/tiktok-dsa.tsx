@@ -1,42 +1,171 @@
 "use client";
 
+import Image from "next/image";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type CSSProperties,
-} from "react";
-import { ExpandableImage } from "@/components/expandable-image";
+  TIKTOK_TEMPLATES,
+  type TikTokTemplate,
+  type TikTokTemplateRegion,
+} from "@/lib/tiktok-data";
 
-export { AESTHETICS } from "@/lib/tiktok-data";
+const TEMPLATE_REGIONS = [
+  {
+    key: "title",
+    label: "Title",
+    note: "Typography and placement change with the subculture. Some directions don't use a separate title treatment.",
+  },
+  {
+    key: "catalog",
+    label: "Catalog slot",
+    note: "Brands add product imagery and catalog details to the fixed slot shown here.",
+  },
+  {
+    key: "supporting",
+    label: "Supporting graphics",
+    note: "Original frame, texture, and ornament assets appear below when they were available in the source files.",
+  },
+] as const;
 
-/* ──────────────────────────────────────────
-   Copy-to-clipboard hook
-   Used on palette swatches. ~1.4s feedback window.
-   ────────────────────────────────────────── */
+type TemplateRegion = TikTokTemplateRegion;
 
-function useCopyToClipboard(timeout = 1400) {
-  const [copied, setCopied] = useState<string | null>(null);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const copy = useCallback(
-    (value: string) => {
-      if (typeof navigator === "undefined" || !navigator.clipboard) return;
-      navigator.clipboard.writeText(value).then(() => {
-        setCopied(value);
-        if (timerRef.current) clearTimeout(timerRef.current);
-        timerRef.current = setTimeout(() => setCopied(null), timeout);
-      });
-    },
-    [timeout],
+export function TikTokTemplateSystem() {
+  const [selectedKey, setSelectedKey] = useState<
+    (typeof TIKTOK_TEMPLATES)[number]["key"]
+  >(TIKTOK_TEMPLATES[0].key);
+  const [selectedRegion, setSelectedRegion] =
+    useState<TemplateRegion>("catalog");
+  const selected: TikTokTemplate =
+    TIKTOK_TEMPLATES.find((template) => template.key === selectedKey) ??
+    TIKTOK_TEMPLATES[0];
+  const availableRegions = TEMPLATE_REGIONS.filter(
+    ({ key }) =>
+      selected.regionOverlays[key] ||
+      selected.componentAssets.some((asset) => asset.region === key),
+  );
+  const activeRegion = availableRegions.some(({ key }) => key === selectedRegion)
+    ? selectedRegion
+    : "catalog";
+  const region =
+    TEMPLATE_REGIONS.find((item) => item.key === activeRegion) ??
+    TEMPLATE_REGIONS[1];
+  const regionOverlay = selected.regionOverlays[activeRegion];
+  const originalRegionAssets = selected.componentAssets.filter(
+    (asset) => asset.region === activeRegion,
   );
 
-  useEffect(() => () => {
-    if (timerRef.current) clearTimeout(timerRef.current);
-  }, []);
+  return (
+    <section className="tt-template-system" aria-label="TikTok template system">
+      <div
+        className="tt-template-contact-sheet"
+        role="group"
+        aria-label="Choose a template"
+      >
+        {TIKTOK_TEMPLATES.map((template) => (
+          <button
+            key={template.key}
+            type="button"
+            className={`tt-template-choice${
+              selected.key === template.key ? " tt-template-choice--selected" : ""
+            }`}
+            aria-label={`View ${template.name} template${
+              template.shipped ? ", shipped" : ""
+            }`}
+            aria-pressed={selected.key === template.key}
+            onClick={() => setSelectedKey(template.key)}
+          >
+            <span className="tt-template-choice-image" aria-hidden="true">
+              <Image
+                src={template.fullTemplate}
+                alt=""
+                width={1080}
+                height={1920}
+                sizes="(max-width: 720px) 9rem, 20rem"
+                loading={template.key === TIKTOK_TEMPLATES[0].key ? "eager" : "lazy"}
+              />
+            </span>
+            <span className="tt-template-choice-meta">
+              <span>{template.name}</span>
+              {template.shipped ? (
+                <span className="tt-template-shipped">Shipped</span>
+              ) : null}
+            </span>
+          </button>
+        ))}
+      </div>
 
-  return { copied, copy };
+      <div
+        className="tt-template-regions"
+        role="group"
+        aria-label="Inspect template parts"
+      >
+        {availableRegions.map((item) => (
+          <button
+            key={item.key}
+            type="button"
+            aria-pressed={activeRegion === item.key}
+            onClick={() => setSelectedRegion(item.key)}
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
+
+      <figure
+        key={selected.key}
+        className="tt-template-selected"
+        aria-label={`Selected template: ${selected.name}`}
+      >
+        <div className="tt-template-selected-image">
+          <Image
+            src={selected.fullTemplate}
+            alt={`${selected.name} static Dynamic Showcase Ad template`}
+            width={1080}
+            height={1920}
+            sizes="(max-width: 720px) 17rem, 20rem"
+            loading="eager"
+          />
+          {regionOverlay ? (
+            <span
+              className="tt-template-region-overlay"
+              data-template-region={`${selected.key}-${activeRegion}`}
+              style={{
+                left: `${regionOverlay.left}%`,
+                top: `${regionOverlay.top}%`,
+                width: `${regionOverlay.width}%`,
+                height: `${regionOverlay.height}%`,
+              }}
+              aria-hidden="true"
+            />
+          ) : null}
+        </div>
+        <figcaption className="tt-template-selected-caption">
+          <div>
+            <strong>{selected.name}</strong>
+            <span>{selected.iterationNote}</span>
+          </div>
+          <div className="tt-template-region-copy" aria-live="polite">
+            <span className="tt-template-region-label">{region.label}</span>
+            <p>{region.note}</p>
+            {originalRegionAssets.length > 0 ? (
+              <div className="tt-template-original-assets">
+                {originalRegionAssets.map((asset) => (
+                  <figure key={asset.src}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={asset.src} alt="" />
+                    <figcaption>{asset.label}</figcaption>
+                  </figure>
+                ))}
+              </div>
+            ) : (
+              <span className="tt-template-region-source">
+                Source-aligned region overlay
+              </span>
+            )}
+          </div>
+        </figcaption>
+      </figure>
+    </section>
+  );
 }
 
 /* ──────────────────────────────────────────
@@ -65,13 +194,6 @@ export function TikTokLogo() {
     </span>
   );
 }
-
-/* ──────────────────────────────────────────
-   Hero — photographic three-phones composite
-   Subtle cursor-following 3D tilt. The asset
-   already shows all three aesthetics at angled
-   perspective; we just give it gentle motion.
-   ────────────────────────────────────────── */
 
 /* ──────────────────────────────────────────
    Cover metaball field
@@ -104,225 +226,67 @@ const COVER_BLOBS = [
   { f: "b09", x: 63.08, y: 48.56, w: 0.79, a: 4, d: 9 },
 ] as const;
 
-export function TikTokCoverBlobs() {
-  return (
-    <div className="tt-cover-field" aria-hidden="true">
-      {COVER_BLOBS.map((b) => (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          key={b.f}
-          src={`/projects/tiktok/cover-blobs/${b.f}.png`}
-          alt=""
-          draggable={false}
-          className={`tt-cblob tt-cblob--a${b.a}`}
-          style={
-            {
-              left: `${b.x}%`,
-              top: `${b.y}%`,
-              width: `${b.w}%`,
-              animationDelay: `${-b.d * 0.5}s`,
-              "--d": `${b.d}s`,
-            } as CSSProperties
-          }
-        />
-      ))}
-    </div>
-  );
-}
-
-export function HeroThreePhones() {
-  const ref = useRef<HTMLDivElement | null>(null);
+export function TikTokCoverBlobs({
+  deferUntilVisible = false,
+}: {
+  deferUntilVisible?: boolean;
+}) {
+  const fieldRef = useRef<HTMLDivElement>(null);
+  const [hasLoaded, setHasLoaded] = useState(!deferUntilVisible);
+  const [isActive, setIsActive] = useState(!deferUntilVisible);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    let raf = 0;
-    function onMove(e: MouseEvent) {
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const nx = (e.clientX - cx) / rect.width;
-      const ny = (e.clientY - cy) / rect.height;
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        el.style.setProperty("--tt-tilt-x", String(nx));
-        el.style.setProperty("--tt-tilt-y", String(ny));
-      });
+    if (!deferUntilVisible) return;
+    const field = fieldRef.current;
+    if (!field || !("IntersectionObserver" in window)) {
+      setHasLoaded(true);
+      setIsActive(true);
+      return;
     }
-    window.addEventListener("mousemove", onMove);
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      cancelAnimationFrame(raf);
-    };
-  }, []);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsActive(entry.isIntersecting);
+        if (entry.isIntersecting) setHasLoaded(true);
+      },
+      { rootMargin: "600px 0px" },
+    );
+    observer.observe(field);
+    return () => observer.disconnect();
+  }, [deferUntilVisible]);
 
   return (
-    <div ref={ref} className="tt-hero-stage">
-      <div className="tt-hero-tilt">
-        <ExpandableImage
-          src="/projects/tiktok/hero-rolling-phones.png"
-          alt="Five iPhones tumbling through space. Dopamine Dressing 'FIT CHECK' centered in the foreground, Light Academia and E-Boy/E-Girl templates rolling around it."
-          width={2400}
-          height={1600}
-          priority
-          sizes="(max-width: 768px) 92vw, 880px"
-          style={{ width: "100%", height: "auto", display: "block" }}
-        />
+    <div
+      ref={fieldRef}
+      className={`tt-cover-field${isActive ? " tt-cover-field--active" : ""}`}
+      aria-hidden="true"
+    >
+      <div className="tt-cover-cluster">
+        {hasLoaded ? COVER_BLOBS.map((b, index) => (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            key={b.f}
+            src={`/projects/tiktok/cover-blobs/${b.f}.png`}
+            alt=""
+            draggable={false}
+            className={`tt-cblob tt-cblob--a${b.a}`}
+            style={
+              {
+                left: `${b.x}%`,
+                top: `${b.y}%`,
+                width: `${b.w}%`,
+                animationDelay: `${-b.d * 0.5}s`,
+                "--d": `${b.d}s`,
+                "--tt-preview-delay": `${-(b.d * (0.17 + (index % 7) * 0.11)).toFixed(2)}s`,
+                "--tt-preview-x": `${62 + (b.x - 50) * 0.74}%`,
+                "--tt-preview-y": `${26 + (b.y - 32) * 0.74}%`,
+                "--tt-preview-mobile-x": `${62 + (b.x - 50) * 0.68}%`,
+                "--tt-preview-mobile-y": `${24 + (b.y - 32) * 0.7}%`,
+              } as CSSProperties
+            }
+          />
+        )) : null}
       </div>
     </div>
-  );
-}
-
-/* ──────────────────────────────────────────
-   Template anatomy
-   The real grid Myles built against — preserved
-   as a photographic artifact with original
-   measurement annotations.
-   ────────────────────────────────────────── */
-
-export function TemplateAnatomy() {
-  const SLOTS = [
-    { label: "Title zone", note: "Display type, the aesthetic's signature register." },
-    { label: "Product catalog grid", note: "The hero image area. Frame treatment swaps per aesthetic." },
-    { label: "Supplementary graphics", note: "Ornament zone. Loud in Dopamine, restrained in Light Academia." },
-    { label: "CTA", note: "Standardized TikTok button, accented per aesthetic." },
-  ];
-
-  return (
-    <figure className="tt-anatomy">
-      <div className="tt-anatomy-grid">
-        <div className="tt-anatomy-image">
-          <ExpandableImage
-            src="/projects/tiktok/anatomy-grid-light-academia.png"
-            alt="The 540×960 template grid with pink and cyan measurement annotations. The shared skeleton all three aesthetic templates were built against."
-            width={864}
-            height={1537}
-            sizes="(max-width: 768px) 100vw, 420px"
-            style={{ width: "100%", height: "auto", display: "block" }}
-          />
-        </div>
-        <ol className="tt-anatomy-slots" role="list">
-          {SLOTS.map((s) => (
-            <li key={s.label}>
-              <p className="tt-anatomy-slot-label">{s.label}</p>
-              <p className="tt-anatomy-slot-note">{s.note}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
-      <figcaption>
-        540×960 frame. Pink markers in the original file are slot margins.
-        Cyan markers are the fixed outer boundaries.
-      </figcaption>
-    </figure>
-  );
-}
-
-/* ──────────────────────────────────────────
-   Aesthetic showcase card
-   One per aesthetic. Scoped accent color via
-   CSS custom property; rest of the rhythm shared.
-   ────────────────────────────────────────── */
-
-type Swatch = { hex: string; label: string };
-
-type AestheticShowcaseProps = {
-  name: string;
-  internalLabel: string;
-  accentHex: string;
-  palette: readonly Swatch[];
-  anchorText: string;
-  feedback: string;
-  process: { src: string; alt: string };
-  feature?: { src: string; alt: string; caption?: string };
-  reverse?: boolean;
-};
-
-export function AestheticShowcaseCard({
-  name, internalLabel, accentHex,
-  palette, anchorText, feedback, process, feature, reverse,
-}: AestheticShowcaseProps) {
-  const accentStyle = { "--tt-accent": accentHex } as React.CSSProperties;
-  const { copied, copy } = useCopyToClipboard();
-
-  return (
-    <article
-      className={`tt-aesthetic ${reverse ? "tt-aesthetic--reverse" : ""}`}
-      style={accentStyle}
-    >
-      <div className="tt-aesthetic-visual">
-        <ExpandableImage
-          src={process.src}
-          alt={process.alt}
-          width={1600}
-          height={900}
-          style={{
-            width: "100%",
-            height: "auto",
-            display: "block",
-            borderRadius: "0.45rem",
-            background: "var(--surface)",
-            filter: "contrast(1.15) saturate(1.25)",
-          }}
-        />
-        {feature ? (
-          <figure className="tt-aesthetic-feature">
-            <ExpandableImage
-              src={feature.src}
-              alt={feature.alt}
-              width={375}
-              height={812}
-              style={{
-                width: "100%",
-                height: "auto",
-                display: "block",
-                borderRadius: "0.45rem",
-              }}
-            />
-            {feature.caption ? <figcaption>{feature.caption}</figcaption> : null}
-          </figure>
-        ) : null}
-      </div>
-
-      <div className="tt-aesthetic-context">
-        <h3 className="tt-aesthetic-name">{name}</h3>
-        <p className="tt-aesthetic-internal">Working name: {internalLabel}</p>
-
-        <p className="tt-aesthetic-meta-label">Reference</p>
-        <p className="tt-aesthetic-anchor-text">{anchorText}</p>
-
-        <p className="tt-aesthetic-meta-label">Palette</p>
-        <span className="sr-only" aria-live="polite" aria-atomic="true">
-          {copied ? `Copied ${copied} to clipboard` : ""}
-        </span>
-        <ul className="tt-aesthetic-palette" role="list">
-          {palette.map((s) => (
-            <li key={s.hex}>
-              <button
-                type="button"
-                className={`tt-aesthetic-palette-button${copied === s.hex ? " tt-aesthetic-palette-button--copied" : ""}`}
-                onClick={() => copy(s.hex)}
-                title={`Copy ${s.hex}`}
-                aria-label={`Copy hex ${s.hex} for ${s.label}`}
-              >
-                <span style={{ background: s.hex }} aria-hidden="true" />
-                <span className="tt-aesthetic-palette-label">
-                  <span className="tt-aesthetic-palette-name">{s.label}</span>
-                  <span className="tt-aesthetic-palette-hex">
-                    {copied === s.hex ? "Copied" : s.hex}
-                  </span>
-                </span>
-              </button>
-            </li>
-          ))}
-        </ul>
-
-        <p className="tt-aesthetic-meta-label">Feedback I got</p>
-        <blockquote className="tt-aesthetic-feedback">{feedback}</blockquote>
-      </div>
-    </article>
   );
 }

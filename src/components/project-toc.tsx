@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 
 type ProjectTocProps = {
   sections: { title: string; id: string }[];
+  readingEndId?: string;
 };
 
 const WORDS_PER_MIN = 225;
@@ -16,7 +17,7 @@ function formatReadout(progress: number, totalMin: number): string {
   return `${pct}% · ${left} min left`;
 }
 
-export function ProjectToc({ sections }: ProjectTocProps) {
+export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
   const [activeId, setActiveId] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
@@ -110,12 +111,15 @@ export function ProjectToc({ sections }: ProjectTocProps) {
       const pageY = window.scrollY;
       starts = anchors.map((el) => el.getBoundingClientRect().top + pageY);
 
-      // The reading region runs from the first section to the bottom of the
-      // last one (where the "More work" jump begins).
-      const lastSection =
-        anchors[anchors.length - 1].closest<HTMLElement>(".project-section") ??
-        anchors[anchors.length - 1].closest<HTMLElement>("section") ??
+      // The reading region can extend past the last visible TOC chapter when
+      // several later sections are intentionally grouped under one chapter.
+      const endAnchor =
+        (readingEndId ? document.getElementById(readingEndId) : null) ??
         anchors[anchors.length - 1];
+      const lastSection =
+        endAnchor.closest<HTMLElement>(".project-section") ??
+        endAnchor.closest<HTMLElement>("section") ??
+        endAnchor;
       const lastRect = lastSection.getBoundingClientRect();
       regionStart = starts[0];
       regionEnd = lastRect.bottom + pageY;
@@ -198,7 +202,7 @@ export function ProjectToc({ sections }: ProjectTocProps) {
       ro.disconnect();
       if (frame) cancelAnimationFrame(frame);
     };
-  }, [sections]);
+  }, [sections, readingEndId]);
 
   // Auto-scroll active item into view on desktop
   useEffect(() => {
@@ -221,6 +225,7 @@ export function ProjectToc({ sections }: ProjectTocProps) {
         });
         setActiveId(id);
         setIsOpen(false);
+        toggleRef.current?.focus();
       }
     },
     []
@@ -302,7 +307,7 @@ export function ProjectToc({ sections }: ProjectTocProps) {
         >
           <span className="project-toc-toggle-label">
             <span className="project-toc-num">{activeNum}.</span>
-            {activeTitle}
+            <span className="project-toc-active-title">{activeTitle}</span>
           </span>
           <span className="project-toc-toggle-end">
             <span className="project-toc-readout-mobile js-toc-readout" aria-hidden="true" />

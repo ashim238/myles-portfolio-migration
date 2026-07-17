@@ -21,22 +21,25 @@ const retiredExports = [
   "LineageTimeline",
   "ConsoleHello",
   "SystemOverviewBand",
-] as const;
-
-const retainedExports = [
-  "TikTokLogo",
-  "TikTokCoverBlobs",
   "HeroThreePhones",
   "TemplateAnatomy",
   "AestheticShowcaseCard",
 ] as const;
 
+const retainedExports = [
+  "TikTokLogo",
+  "TikTokCoverBlobs",
+  "TikTokTemplateSystem",
+] as const;
+
 const retiredAssets = [
   "anatomy-grid-dark.png",
+  "anatomy-grid-light-academia.png",
   "asset-academia-barcode.svg",
   "asset-academia-text.svg",
   "asset-dopamine-title.svg",
   "composite-flat-lay.png",
+  "composite-flower.png",
   "dopamine-ornament-crescents.png",
   "dopamine-ornament-rings.png",
   "dopamine-ornament-star.png",
@@ -45,8 +48,12 @@ const retiredAssets = [
   "feed-ref-maximalism.png",
   "gradient-cover.png",
   "hero-three-phones.png",
+  "hero-rolling-phones.png",
   "mood-cottagecore.png",
   "shipped-light-academia-in-hand.png",
+  "template-dopamine.png",
+  "template-eboy.png",
+  "template-light-academia.png",
   "tpl-academia.svg",
   "tpl-dopamine.svg",
   "tpl-eboy.svg",
@@ -90,13 +97,13 @@ describe("TikTok retired implementation pruning", () => {
   it("preserves the retained component export surface", () => {
     const source = readFileSync(componentPath, "utf8");
 
-    expect(source).toContain('export { AESTHETICS } from "@/lib/tiktok-data";');
+    expect(source).not.toContain('export { AESTHETICS } from "@/lib/tiktok-data";');
     for (const name of retainedExports) {
       expect(source).toMatch(new RegExp(`export function ${name}\\b`));
     }
   });
 
-  it("removes only the retired CSS and keeps the compact outcome closer", () => {
+  it("removes only the retired CSS and keeps the semantic outcome section", () => {
     const stylesheet = readFileSync(stylesheetPath, "utf8");
     const page = readFileSync(pagePath, "utf8");
 
@@ -110,10 +117,14 @@ describe("TikTok retired implementation pruning", () => {
       ".tt-outcome-sub",
       ".tt-outcome-image",
       ".tt-timeline",
+      ".tt-anatomy",
+      ".tt-aesthetic",
     ]) {
       expect(stylesheet).not.toContain(selector);
     }
-    expect(page).toContain("tt-outcome-closer");
+    expect(page).toContain('aria-labelledby="tt-outcome"');
+    expect(page).toContain('<h2 id="tt-outcome">What shipped from the launch batch</h2>');
+    expect(page).not.toContain("tt-outcome-closer");
   });
 
   it("keeps only live top-level assets plus the published gallery cover", () => {

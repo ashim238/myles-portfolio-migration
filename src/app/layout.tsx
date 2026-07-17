@@ -71,21 +71,21 @@ export default function RootLayout({
           id="theme-init"
           suppressHydrationWarning
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`,
+            __html: `(function(){try{var t=localStorage.getItem("theme");var v=t==="dark"||t==="light"?t:matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";document.documentElement.setAttribute("data-theme",v)}catch(e){}})()`,
           }}
         />
       </head>
       <body className="min-h-full flex flex-col">
-        <a className="skip-link" href="#main-content">
-          Skip to main content
-        </a>
-        <ConsoleGreeting />
         <LightboxProvider>
+          <a className="skip-link" href="#main-content">
+            Skip to main content
+          </a>
+          <ConsoleGreeting />
           <ProjectEnterTransition>{children}</ProjectEnterTransition>
+          <DotCursor />
+          <MobileNav />
+          <ScrollRevealFallback />
         </LightboxProvider>
-        <DotCursor />
-        <MobileNav />
-        <ScrollRevealFallback />
       </body>
     </html>
   );

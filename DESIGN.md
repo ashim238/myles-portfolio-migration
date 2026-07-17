@@ -1,6 +1,6 @@
 ---
 name: Myles Ashitey Portfolio
-description: Portfolio for a senior product/interaction designer. Editorial long-form case studies, dark + light themes, per-project accent scoping.
+description: Portfolio for a product designer targeting broad roles, with associate roles as the near-term focus. Editorial long-form case studies, dark + light themes, per-project accent scoping.
 colors:
   background: "#050505"
   surface: "#0a0a0a"

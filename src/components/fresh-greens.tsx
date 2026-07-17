@@ -116,7 +116,12 @@ export function HeroRouteIllustration() {
 export function ArchitectureDiagram() {
   return (
     <figure className="fg-arch">
-      <div className="fg-arch-scroll">
+      <div
+        className="fg-arch-scroll"
+        role="region"
+        tabIndex={0}
+        aria-label="Fresh Greens system architecture diagram"
+      >
       <DrawOnView>
       <svg
         viewBox="0 0 1250 420"

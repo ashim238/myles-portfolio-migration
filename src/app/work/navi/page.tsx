@@ -79,7 +79,6 @@ export default async function NaviPage() {
         alt="Navi neighborhood experience search results and cards on a tablet on a wooden table."
       />
       <RecruiterCut
-        problem="NYC tourism defaults to top-ten checklists that skip the neighborhoods and people who make the city."
         role="UI/UX Designer"
         timeline="January 2025 – June 2025"
         stack="Figma, research"

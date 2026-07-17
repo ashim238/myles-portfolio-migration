@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 // Demo photography is exported from Figma in stages. Until an asset lands, a
@@ -11,11 +12,13 @@ export function DemoPhoto({
   alt,
   className,
   dataTestId,
+  sizes = "(max-width: 720px) calc(100vw - 32px), 50vw",
 }: {
   src: string;
   alt: string;
   className?: string;
   dataTestId?: string;
+  sizes?: string;
 }) {
   const [failed, setFailed] = useState(false);
   const ref = useRef<HTMLImageElement>(null);
@@ -45,11 +48,13 @@ export function DemoPhoto({
   }
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
+    <Image
       ref={ref}
       src={src}
       alt={alt}
+      width={1600}
+      height={1000}
+      sizes={sizes}
       className={className}
       data-testid={dataTestId}
       loading="lazy"

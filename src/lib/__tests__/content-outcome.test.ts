@@ -6,9 +6,15 @@ describe("outcome frontmatter fields", () => {
     const projects = await getPublishedProjects();
     const fafsa = projects.find((p) => p.slug === "understandingfafsa");
     expect(fafsa).toBeDefined();
+    expect(fafsa!.summary).toBe(
+      "Built a modular newsletter system for a site rebrand. The first redesigned send had an observed ~52.6% open rate with Mailchimp Privacy Protection excluded.",
+    );
+    expect(fafsa!.outcomeMetricLabel).toBe(
+      "observed open rate on the first redesigned send, with Mailchimp Privacy Protection excluded",
+    );
     expect(fafsa!.outcomeLead).toBe("~52.6%");
     expect(fafsa!.outcomeRest).toBe(
-      "open rate on the first redesigned send, compared with prior sends around 30%.",
+      "observed open rate on the first redesigned send, with Mailchimp Privacy Protection excluded.",
     );
   });
 

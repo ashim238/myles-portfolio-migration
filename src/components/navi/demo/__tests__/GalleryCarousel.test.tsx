@@ -13,7 +13,6 @@ describe("GalleryCarousel", () => {
   it("renders the first photo as the hero", () => {
     render(<GalleryCarousel photos={photos} />);
     const hero = screen.getByTestId("gallery-hero-img");
-    expect(hero).toHaveAttribute("src", "/a.jpg");
     expect(hero).toHaveAttribute("alt", "A");
   });
 
@@ -25,26 +24,26 @@ describe("GalleryCarousel", () => {
   it("advances the hero when the next arrow is clicked", async () => {
     render(<GalleryCarousel photos={photos} />);
     await userEvent.click(screen.getByRole("button", { name: "Next photo" }));
-    expect(screen.getByTestId("gallery-hero-img")).toHaveAttribute("src", "/b.jpg");
+    expect(screen.getByTestId("gallery-hero-img")).toHaveAttribute("alt", "B");
   });
 
   it("wraps to the last photo when previous is clicked from the first", async () => {
     render(<GalleryCarousel photos={photos} />);
     await userEvent.click(screen.getByRole("button", { name: "Previous photo" }));
-    expect(screen.getByTestId("gallery-hero-img")).toHaveAttribute("src", "/c.jpg");
+    expect(screen.getByTestId("gallery-hero-img")).toHaveAttribute("alt", "C");
   });
 
   it("jumps to a photo when its thumb is clicked", async () => {
     render(<GalleryCarousel photos={photos} />);
     await userEvent.click(screen.getAllByTestId("gallery-thumb")[2]);
-    expect(screen.getByTestId("gallery-hero-img")).toHaveAttribute("src", "/c.jpg");
+    expect(screen.getByTestId("gallery-hero-img")).toHaveAttribute("alt", "C");
   });
 
   it("jumps to a photo when its dot is clicked", async () => {
     render(<GalleryCarousel photos={photos} />);
     const dots = screen.getAllByRole("button", { name: /Go to photo/ });
     await userEvent.click(dots[1]);
-    expect(screen.getByTestId("gallery-hero-img")).toHaveAttribute("src", "/b.jpg");
+    expect(screen.getByTestId("gallery-hero-img")).toHaveAttribute("alt", "B");
   });
 
   it("advances with the ArrowRight key when the hero region is focused", async () => {
@@ -52,6 +51,6 @@ describe("GalleryCarousel", () => {
     const region = screen.getByRole("region", { name: "Experience photos" });
     region.focus();
     await userEvent.keyboard("{ArrowRight}");
-    expect(screen.getByTestId("gallery-hero-img")).toHaveAttribute("src", "/b.jpg");
+    expect(screen.getByTestId("gallery-hero-img")).toHaveAttribute("alt", "B");
   });
 });
