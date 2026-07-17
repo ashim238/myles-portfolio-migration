@@ -2996,6 +2996,7 @@ button:focus-visible,
     display: inline-flex;
     min-width: 0;
     overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
   }
 

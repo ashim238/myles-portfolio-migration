@@ -201,48 +201,34 @@ describe("portfolio artifact accessibility styles", () => {
   });
 
   it("scopes the FAFSA modular palette to segments, dots, and mobile progress", () => {
-    expect(
-      declarationBlock(
-        ".uf-page .project-toc-item:nth-child(1)",
-        polishStyles,
-      ),
-    ).toContain("--seg-color: var(--uf-accent-warm)");
-    expect(
-      declarationBlock(
-        ".uf-page .project-toc-item:nth-child(2)",
-        polishStyles,
-      ),
-    ).toContain("--seg-color: var(--uf-accent-highlight)");
-    expect(
-      declarationBlock(
-        ".uf-page .project-toc-item:nth-child(3)",
-        polishStyles,
-      ),
-    ).toContain("--seg-color: var(--uf-accent-cool-text)");
-    expect(
-      declarationBlock(
-        ".uf-page .project-toc-item:nth-child(4)",
-        polishStyles,
-      ),
-    ).toContain("--seg-color: var(--uf-accent-warm)");
-    expect(
-      declarationBlock(
-        ".uf-page .project-toc-item:nth-child(5)",
-        polishStyles,
-      ),
-    ).toContain("--seg-color: var(--uf-accent-cool-text)");
+    const expectedSegments = [
+      "var(--uf-accent-warm)",
+      "var(--uf-accent-highlight)",
+      "var(--uf-accent-cool-text)",
+      "var(--uf-accent-warm)",
+      "var(--uf-accent-highlight)",
+    ];
+
+    expectedSegments.forEach((segment, index) => {
+      expect(
+        declarationBlock(
+          `.uf-page .project-toc-item:nth-child(${index + 1})`,
+          polishStyles,
+        ),
+      ).toContain(`--seg-color: ${segment}`);
+    });
     expect(
       declarationBlock(
         ".uf-page .project-toc-item:nth-child(6)",
         polishStyles,
       ),
-    ).toContain("--seg-color: var(--uf-accent-highlight)");
+    ).toBe("");
     expect(
       declarationBlock(
         ".uf-page .project-toc-item:nth-child(7)",
         polishStyles,
       ),
-    ).toContain("--seg-color: var(--uf-accent-warm)");
+    ).toBe("");
     expect(
       declarationBlock(".uf-page .project-toc-rail::after", polishStyles),
     ).toContain("background: var(--seg-color, var(--toc-fill))");
@@ -256,9 +242,11 @@ describe("portfolio artifact accessibility styles", () => {
       ".uf-page .project-toc-progress",
       polishStyles,
     );
-    expect(mobileProgress).toContain("var(--uf-accent-warm)");
-    expect(mobileProgress).toContain("var(--uf-accent-highlight)");
-    expect(mobileProgress).toContain("var(--uf-accent-cool-text)");
+    for (const segment of expectedSegments) {
+      expect(mobileProgress).toContain(segment);
+    }
+    expect(mobileProgress).toContain("0% 20%");
+    expect(mobileProgress).toContain("80% 100%");
   });
 
   it("uses readable text colors instead of raw decorative accents", () => {

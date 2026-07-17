@@ -21,20 +21,25 @@ describe("UnderstandingFAFSA case-study structure", () => {
     );
   });
 
-  it("uses plain, mixed process headings in chronological order", () => {
-    const headings = Array.from(
-      page.matchAll(/<h2 id="([^"]+)">([^<]+)<\/h2>/g),
+  it("uses five process chapters with nested evidence headings", () => {
+    const chapterIndexes = Array.from(
+      page.matchAll(/entry=\{chapters\[(\d+)\]\}/g),
+      ([, index]) => index,
+    );
+    const evidenceHeadings = Array.from(
+      page.matchAll(
+        /<h3 className="project-evidence-heading" id="([^"]+)">\s*([^<]+)\s*<\/h3>/g,
+      ),
       ([, id, title]) => ({ id, title: title.trim() }),
     );
 
-    expect(headings).toEqual([
-      { id: "uf-context", title: "A rebrand and a weekly workflow" },
+    expect(page).toContain("const chapters = CASE_STUDY_CHAPTERS.understandingfafsa");
+    expect(page).toContain("<ProjectToc sections={chapters} />");
+    expect(page.match(/<ProjectChapter/g)).toHaveLength(5);
+    expect(chapterIndexes).toEqual(["0", "1", "2", "3", "4"]);
+    expect(evidenceHeadings).toEqual([
       { id: "uf-problem", title: "Where the old template broke down" },
-      { id: "uf-audit", title: "What 120 newsletters revealed" },
       { id: "uf-templates", title: "Three send types from the audit" },
-      { id: "uf-locked", title: "Rules for fixed and swappable parts" },
-      { id: "uf-figma", title: "Rebuilding the system in Mailchimp" },
-      { id: "uf-results", title: "The first redesigned send" },
     ]);
   });
 

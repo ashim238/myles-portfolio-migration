@@ -1307,9 +1307,17 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 .uf-page .project-toc-item:nth-child(2) { --seg-color: var(--uf-accent-highlight); }
 .uf-page .project-toc-item:nth-child(3) { --seg-color: var(--uf-accent-cool-text); }
 .uf-page .project-toc-item:nth-child(4) { --seg-color: var(--uf-accent-warm); }
-.uf-page .project-toc-item:nth-child(5) { --seg-color: var(--uf-accent-cool-text); }
-.uf-page .project-toc-item:nth-child(6) { --seg-color: var(--uf-accent-highlight); }
-.uf-page .project-toc-item:nth-child(7) { --seg-color: var(--uf-accent-warm); }
+.uf-page .project-toc-item:nth-child(5) { --seg-color: var(--uf-accent-highlight); }
+
+.uf-page .project-chapter[data-chapter-index="1"] { --chapter-motif-accent: var(--uf-accent-warm); }
+.uf-page .project-chapter[data-chapter-index="2"] { --chapter-motif-accent: var(--uf-accent-highlight); }
+.uf-page .project-chapter[data-chapter-index="3"] { --chapter-motif-accent: var(--uf-accent-cool-text); }
+.uf-page .project-chapter[data-chapter-index="4"] { --chapter-motif-accent: var(--uf-accent-warm); }
+.uf-page .project-chapter[data-chapter-index="5"] { --chapter-motif-accent: var(--uf-accent-highlight); }
+
+.uf-page .project-chapter-motif-point {
+  border-radius: 0.12rem;
+}
 
 .uf-page .project-toc-rail::after,
 .uf-page .project-toc-link--active .project-toc-dot,
@@ -1321,13 +1329,11 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
   transform: none;
   background: linear-gradient(
     to right,
-    var(--uf-accent-warm) 0% 14.285%,
-    var(--uf-accent-highlight) 14.285% 28.57%,
-    var(--uf-accent-cool-text) 28.57% 42.855%,
-    var(--uf-accent-warm) 42.855% 57.14%,
-    var(--uf-accent-cool-text) 57.14% 71.425%,
-    var(--uf-accent-highlight) 71.425% 85.71%,
-    var(--uf-accent-warm) 85.71% 100%
+    var(--uf-accent-warm) 0% 20%,
+    var(--uf-accent-highlight) 20% 40%,
+    var(--uf-accent-cool-text) 40% 60%,
+    var(--uf-accent-warm) 60% 80%,
+    var(--uf-accent-highlight) 80% 100%
   );
   -webkit-mask: linear-gradient(
     to right,
