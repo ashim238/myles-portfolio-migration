@@ -97,9 +97,8 @@ describe("Navi evidence claims", () => {
     expect(projectPage).toMatch(
       /The graduate-studio concept did not ship\. The current demo is a portfolio rebuild/,
     );
-    expect(projectPage).toMatch(
-      /Deeper neighborhood pages in Learn and onboarding for local hosts and businesses still/,
-    );
+    expect(projectPage).toContain("Deeper Learn pages");
+    expect(projectPage).toContain("Local host and business onboarding");
   });
 
   it("removes the metric frontmatter and gives the gallery a factual artifact outcome", () => {

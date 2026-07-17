@@ -1,5 +1,12 @@
 import { render, screen } from "@testing-library/react";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+
+const baseStyles = readFileSync(
+  resolve(process.cwd(), "src/app/styles/base.css"),
+  "utf8",
+);
 
 const route = vi.hoisted(() => ({ pathname: "/" }));
 
@@ -33,5 +40,11 @@ describe("MobileNav route ownership", () => {
     expect(
       screen.getByRole("navigation", { name: "Mobile navigation" }),
     ).toBeInTheDocument();
+  });
+
+  it("uses an opaque-enough surface to keep page content from bleeding through", () => {
+    expect(baseStyles).toContain(
+      "background: color-mix(in srgb, var(--background) 96%, transparent)",
+    );
   });
 });

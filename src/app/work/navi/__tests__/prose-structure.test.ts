@@ -68,7 +68,7 @@ describe("Navi case-study structure", () => {
       "I created three research-informed archetypes from the survey findings",
       "For this portfolio case study, I rebuilt the Navi visual system as live React",
       "The screens below come from the current React build.",
-      "Deeper neighborhood pages in Learn and onboarding for local hosts and businesses still",
+      "The portfolio rebuild makes the concept easier to inspect.",
     ]) {
       expect(prose).toContain(copy);
     }
@@ -79,10 +79,18 @@ describe("Navi case-study structure", () => {
   });
 
   it("keeps future validation framed as planned work", () => {
-    expect(prose).toContain("Deeper neighborhood pages in Learn");
-    expect(prose).toContain("onboarding for local hosts and businesses");
+    expect(prose).toContain("The portfolio rebuild makes the concept easier to inspect");
+    expect(prose).toContain("Current rebuild");
+    expect(prose).toContain("Next research");
+    expect(prose).toContain("Deeper Learn pages");
+    expect(prose).toContain("Local host and business onboarding");
     expect(prose).toMatch(/Group booking.{0,100}future opportunity/);
     expect(prose).toContain("not wired into the current rebuild");
+    expect(prose).toContain('href="/work/navi/demo"');
+    expect(prose).toContain('href="/work/navi/system"');
+    expect(page.indexOf("Current rebuild")).toBeLessThan(
+      page.indexOf("<ProjectWorkJump"),
+    );
   });
 
   it("uses Navi orange for the completed motif while retaining the neutral track", () => {

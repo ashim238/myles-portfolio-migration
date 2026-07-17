@@ -14,6 +14,20 @@ const naviAnimReadySource = naviSource.slice(
 );
 
 describe("NaviResearchArtifacts", () => {
+  it("presents one traceable research board with explicit provenance", () => {
+    render(<NaviResearchArtifacts />);
+
+    expect(
+      screen.getByRole("heading", { name: "From research to product scope" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("Resident survey, platform audits, and secondary research"),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("Airbnb audit and secondary research"),
+    ).toBeInTheDocument();
+  });
+
   it("names the three research-informed archetypes and their scope", () => {
     render(<NaviResearchArtifacts />);
     const archetypes = screen.getByLabelText("Research-informed archetypes");
@@ -21,6 +35,8 @@ describe("NaviResearchArtifacts", () => {
     expect(within(archetypes).getByText("Ororo")).toBeInTheDocument();
     expect(within(archetypes).getByText("Selina")).toBeInTheDocument();
     expect(within(archetypes).getByText("Future opportunity")).toBeInTheDocument();
+    expect(within(archetypes).getAllByText("Need")).toHaveLength(3);
+    expect(within(archetypes).getAllByText("Product area")).toHaveLength(3);
   });
 
   it("keeps the journey and individual booking sequence available as text", () => {
@@ -33,6 +49,9 @@ describe("NaviResearchArtifacts", () => {
     for (const step of ["Neighborhood discovery", "Activity detail", "Date and time", "Cost review", "Confirmation"]) {
       expect(within(booking).getByText(step)).toBeInTheDocument();
     }
+    expect(
+      booking.querySelector('[data-decision-point="cost-review"]'),
+    ).not.toBeNull();
   });
 
   it("labels the diagrams as internal planning rather than validation", () => {

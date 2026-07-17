@@ -202,12 +202,12 @@ export default async function NaviPage() {
         total={chapters.length}
         variant="navi"
       >
-      <div className="project-section nv-section">
-        <p className="case-section-lead">
-          I created three research-informed archetypes from the survey findings, platform audits,
-          and secondary research.
-        </p>
+      <div className="project-section nv-section project-section--wide nv-section--wide">
         <div className="project-section-body">
+          <p className="case-section-lead">
+            I created three research-informed archetypes from the survey findings, platform audits,
+            and secondary research.
+          </p>
           <p>
             Cain framed group planning, Ororo needed neighborhood context, and Selina needed
             precise filters for shorter trips.
@@ -303,13 +303,40 @@ export default async function NaviPage() {
         total={chapters.length}
         variant="navi"
       >
-      <div className="project-section nv-section">
+      <div className="project-section nv-section nv-closing">
+        <p className="case-section-lead">
+          The portfolio rebuild makes the concept easier to inspect.
+        </p>
         <div className="project-section-body">
           <p>
-            Deeper neighborhood pages in Learn and onboarding for local hosts and businesses still
-            need validation with users.{" "}
-            {"Group booking remains a future opportunity and is not wired into the current rebuild."}
+            I can now walk through the component system and individual booking flow in a browser,
+            which wasn&apos;t possible in the original studio project. I need to test the rebuilt flow
+            with residents, travelers, and local hosts before treating those decisions as settled.
           </p>
+        </div>
+        <div className="nv-validation-ledger">
+          <section aria-labelledby="nv-current-rebuild">
+            <h3 id="nv-current-rebuild">Current rebuild</h3>
+            <ul>
+              <li>Live component system and editable variants</li>
+              <li>Neighborhood exploration and filters</li>
+              <li>Working individual booking flow</li>
+            </ul>
+          </section>
+          <section aria-labelledby="nv-next-research">
+            <h3 id="nv-next-research">Next research</h3>
+            <ul>
+              <li>Deeper Learn pages</li>
+              <li>Local host and business onboarding</li>
+              <li>
+                {"Group booking remains a future opportunity and is not wired into the current rebuild."}
+              </li>
+            </ul>
+          </section>
+        </div>
+        <div className="nv-closing-links" aria-label="Explore the Navi rebuild">
+          <Link href="/work/navi/demo">Open the demo</Link>
+          <Link href="/work/navi/system">View the design system</Link>
         </div>
       </div>
       </ProjectChapter>

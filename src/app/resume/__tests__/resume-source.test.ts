@@ -55,6 +55,15 @@ describe("resume source", () => {
     expect(source).not.toMatch(/<p className="resume-role-title">/);
   });
 
+  it("records the full Pomona attendance dates", () => {
+    const page = readSource("src/app/resume/page.tsx");
+    const verifier = readSource("scripts/verify-resume-pdf.mjs");
+
+    expect(page).toContain("Aug 2018 – Dec 2022");
+    expect(verifier).toContain("Aug 2018 – Dec 2022");
+    expect(verifier).toContain('"2018 – 2022"');
+  });
+
   it("uses absolute production links for each independent project heading", () => {
     const source = readSource("src/app/resume/page.tsx");
 
@@ -139,6 +148,27 @@ describe("resume source", () => {
     expect(verifier).toContain("with Mailchimp Privacy Protection excluded");
     expect(page).not.toMatch(/Open rates went from/i);
     expect(verifier).toContain("open rates went from");
+    expect(page).not.toContain("compared with prior sends");
+    expect(verifier).toContain("compared with prior sends");
+    expect(verifier).toContain("prior sends around 30%");
+  });
+
+  it("credits Navi research synthesis and uses research-informed archetypes", () => {
+    const page = readSource("src/app/resume/page.tsx");
+    const verifier = readSource("scripts/verify-resume-pdf.mjs");
+
+    expect(page).toContain("I synthesized the findings and created three research-informed archetypes");
+    expect(page).toContain("survey responses, platform audits, and secondary research");
+    expect(page).not.toContain("three personas");
+    expect(verifier).toContain("research-informed archetypes");
+  });
+
+  it("keeps tool names and event claims supportable", () => {
+    const page = readSource("src/app/resume/page.tsx");
+
+    expect(page).toContain('"Claude"');
+    expect(page).not.toContain('"Claude Code"');
+    expect(page).not.toContain("400+ agencies");
   });
 
   it("credits the shared FAFSA audit work", () => {

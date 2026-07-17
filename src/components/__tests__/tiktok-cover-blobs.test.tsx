@@ -92,7 +92,7 @@ describe("TikTokCoverBlobs preview geometry", () => {
     expect(cluster).not.toBeNull();
     expect(cluster?.querySelectorAll(".tt-cblob")).toHaveLength(16);
     expect(styles).toMatch(
-      /\.tt-cover--preview \.tt-cblob\s*\{[\s\S]*?animation-duration: calc\(var\(--d\) \* 0\.6\)[\s\S]*?animation-direction: alternate/,
+      /\.tt-cover--preview \.tt-cblob\s*\{[\s\S]*?animation-duration: calc\(var\(--d\) \* 0\.45\)[\s\S]*?animation-direction: alternate/,
     );
     for (let variant = 1; variant <= 6; variant += 1) {
       expect(styles).toMatch(
@@ -103,8 +103,8 @@ describe("TikTokCoverBlobs preview geometry", () => {
       const motion = keyframesBlock(`tt-preview-piece-a${variant}`);
       expect(motion).toContain("translate3d(");
       expect(motion).not.toMatch(/rotate|scale|vw/);
-      expect(translateDistance(motion)).toBeGreaterThanOrEqual(3);
-      expect(translateDistance(motion)).toBeLessThanOrEqual(4);
+      expect(translateDistance(motion)).toBeGreaterThanOrEqual(5.5);
+      expect(translateDistance(motion)).toBeLessThanOrEqual(7.5);
     }
 
     const normalizedPhases = Array.from(

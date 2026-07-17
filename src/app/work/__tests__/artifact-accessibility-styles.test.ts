@@ -325,6 +325,13 @@ describe("portfolio artifact accessibility styles", () => {
   it("art-directs Navi research artifacts across mobile and reduced-motion states", () => {
     const route = declarationBlock(".nv-research-route");
     const artifacts = declarationBlock(".nv-research-artifacts");
+    const researchBoard = declarationBlock(".nv-research-board");
+    const archetypeSheet = declarationBlock(
+      ".nv-research-archetypes > li",
+    );
+    const costReview = declarationBlock(
+      '.nv-research-booking > li[data-decision-point="cost-review"]',
+    );
     const pendingArtifactReveal = declarationBlock(
       ".nv-page[data-nv-anim-ready] .nv-research-artifacts.nv-reveal:not(.nv-reveal--visible)",
     );
@@ -349,5 +356,16 @@ describe("portfolio artifact accessibility styles", () => {
     expect(pendingArtifactReveal).toContain("opacity: 1");
     expect(pendingArtifactReveal).toContain("transform: none");
     expect(artifacts).not.toMatch(/overflow-x:\s*(auto|scroll)/);
+    expect(researchBoard).toContain("border: 1px solid var(--line)");
+    expect(researchBoard).toContain("background: var(--surface)");
+    expect(researchBoard).toContain("border-radius: var(--rounded-md)");
+    expect(archetypeSheet).not.toContain("box-shadow");
+    expect(costReview).not.toContain("box-shadow");
+    expect(styles).toMatch(
+      /@media \(hover: hover\) and \(prefers-reduced-motion: no-preference\)[\s\S]*?\.nv-research-archetypes > li:hover\s*\{[\s\S]*?transform:\s*rotate\(0\) translateY\(-0\.18rem\)/,
+    );
+    expect(declarationBlock(".nv-research-board", mobileStyles)).toContain(
+      "padding:",
+    );
   });
 });

@@ -42,7 +42,7 @@ const INDEPENDENT_WORK: IndependentProject[] = [
     role: "UI/UX Designer",
     dates: "Jan – Jun 2025",
     summary:
-      "Graduate-studio concept for NYC neighborhood experiences. The team audited six travel platforms, evaluated Airbnb with Nielsen’s heuristics, and reviewed 14 resident-survey responses. The concept included three personas, a Learn/Plan/Go framework, and a visual system. I later rebuilt it as a live component library and working booking flow for this portfolio.",
+      "Graduate-studio concept for NYC neighborhood experiences. The team audited six travel platforms and reviewed 14 resident-survey responses. I synthesized the findings and created three research-informed archetypes using survey responses, platform audits, and secondary research. I later rebuilt the concept as a live component library and working booking flow.",
   },
 ];
 
@@ -61,7 +61,7 @@ const EXPERIENCE: ResumeRole[] = [
     org: "TikTok (ByteDance)",
     dates: "May – Aug 2022",
     bullets: [
-      "Pitched the “rabbit hole” creative concept for TikTok World 2022 (global product summit, 400+ agencies): an infinite-scroll-inspired immersive theme the team ran with, realized as a funhouse-style portal entry with interactive activations. Wrote Shopping Ads launch copy later reused across TikTok for Business e-commerce.",
+      "Pitched the “rabbit hole” creative concept for TikTok World 2022: an infinite-scroll-inspired immersive theme the team ran with, realized as a funhouse-style portal entry with interactive activations. Wrote Shopping Ads launch copy later reused across TikTok for Business e-commerce.",
     ],
   },
   {
@@ -100,7 +100,7 @@ const SKILLS: { label: string; items: string[] }[] = [
       "Expo",
       "HTML",
       "CSS",
-      "Claude Code",
+      "Claude",
     ],
   },
 ];
@@ -246,6 +246,7 @@ export default function ResumePage() {
                 <h3 className="resume-role-title">BA, Media Studies</h3>
                 <p className="resume-role-org">Pomona College</p>
               </div>
+              <p className="resume-role-dates">Aug 2018 – Dec 2022</p>
             </div>
           </li>
         </ol>

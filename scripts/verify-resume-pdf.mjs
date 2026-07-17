@@ -14,6 +14,10 @@ const STALE_CLAIMS = [
   "preferred neighborhood-led",
   "generic top-ten",
   "open rates went from",
+  "compared with prior sends",
+  "prior sends around 30%",
+  "400+ agencies",
+  "2018 – 2022",
 ];
 const ORDER_SENTINELS = [
   "Myles Ashitey",
@@ -39,12 +43,14 @@ const EXPECTED_COUNTS = new Map([
   ["With one collaborator, compiled and evaluated 120+ newsletter examples across four criteria", 1],
   ["Navi", 1],
   ["The team audited six travel platforms", 1],
+  ["research-informed archetypes", 1],
   ["Work Experience", 1],
   ["Creative Strategy Assistant", 1],
   ["custom-merch rollout for charlieonnafriday", 1],
   ["Creative Strategist Intern", 2],
   ["MFA, Design & Technology", 1],
   ["BA, Media Studies", 1],
+  ["Aug 2018 – Dec 2022", 1],
   ["Education", 1],
   ["Skills", 1],
 ]);
