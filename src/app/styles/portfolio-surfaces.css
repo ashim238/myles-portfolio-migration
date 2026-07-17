@@ -1825,15 +1825,7 @@
 }
 
 .tt-preview-process {
-  margin-top: 5rem;
-}
-
-.tt-preview-process > h2 {
-  margin: 0 0 0.55rem;
-  font-size: clamp(1.7rem, 3vw, 2.5rem);
-  font-weight: 500;
-  line-height: 1.16;
-  letter-spacing: var(--track-display);
+  margin-top: 0;
 }
 
 .tt-preview-process-lede {
@@ -2184,6 +2176,11 @@
   margin-top: 4.5rem;
 }
 
+.tt-page .project-chapter > .tt-section,
+.tt-page .project-chapter > .tt-preview-process {
+  margin-top: 0;
+}
+
 .tt-section--wide {
   max-width: none;
 }
@@ -2192,7 +2189,7 @@
   max-width: 65ch;
 }
 
-.tt-section h2 {
+.tt-page .project-chapter-title {
   margin: 0 0 1.25rem;
   font-size: clamp(1.6rem, 3vw, 2.2rem);
   font-weight: 500;

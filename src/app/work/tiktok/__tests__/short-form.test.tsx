@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import { render, screen, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Project } from "@/lib/content";
+import { CASE_STUDY_CHAPTERS } from "@/lib/project-chapters";
 
 const getProjectBySlug = vi.fn();
 const getPublishedProjects = vi.fn();
@@ -17,7 +18,19 @@ vi.mock("@/components/site-nav", () => ({
 }));
 
 vi.mock("@/components/project-toc", () => ({
-  ProjectToc: () => <nav data-testid="project-toc" />,
+  ProjectToc: ({
+    sections,
+  }: {
+    sections: typeof CASE_STUDY_CHAPTERS.tiktok;
+  }) => (
+    <nav data-testid="project-toc">
+      {sections.map((section) => (
+        <a key={section.id} href={`#${section.id}`}>
+          {section.stage}: {section.title}
+        </a>
+      ))}
+    </nav>
+  ),
 }));
 
 vi.mock("@/components/recruiter-cut", () => ({
@@ -84,7 +97,7 @@ describe("TikTok short-form case study", () => {
       screen.getByRole("heading", { name: "Fashion subcultures on TikTok" }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: "Defining the fixed catalog structure" }),
+      screen.getByRole("heading", { name: "The fixed catalog structure" }),
     ).toBeInTheDocument();
     expect(screen.getByTestId("template-system")).toBeInTheDocument();
     expect(
@@ -136,6 +149,52 @@ describe("TikTok short-form case study", () => {
     ).not.toBeInTheDocument();
     expect(
       screen.queryByRole("heading", { name: "What it actually taught me." }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("frames the route as five one-to-one process chapters", async () => {
+    render(await TikTokPage());
+
+    const chapterHeadings = CASE_STUDY_CHAPTERS.tiktok.map((chapter) =>
+      screen.getByRole("heading", { level: 2, name: chapter.title }),
+    );
+
+    expect(chapterHeadings.map((heading) => heading.id)).toEqual(
+      CASE_STUDY_CHAPTERS.tiktok.map((chapter) => chapter.id),
+    );
+    expect(document.querySelectorAll(".project-chapter")).toHaveLength(5);
+    expect(document.querySelectorAll(".project-chapter-title")).toHaveLength(5);
+    expect(document.querySelectorAll(".tt-section h2")).toHaveLength(0);
+    expect(document.querySelectorAll(".tt-preview-process > h2")).toHaveLength(0);
+
+    const toc = screen.getByTestId("project-toc");
+    for (const chapter of CASE_STUDY_CHAPTERS.tiktok) {
+      expect(toc).toHaveTextContent(`${chapter.stage}: ${chapter.title}`);
+    }
+  });
+
+  it("keeps the artifact cards and shipped claim intact inside chapters", async () => {
+    render(await TikTokPage());
+
+    for (const templateName of [
+      "#DopamineDressing",
+      "#e-Boy/#e-Girl",
+      "#LightAcademia",
+    ]) {
+      expect(
+        screen.getByRole("heading", { level: 3, name: templateName }),
+      ).toBeInTheDocument();
+    }
+
+    expect(screen.getAllByText("Static template")).toHaveLength(3);
+    expect(
+      screen.getByText("Light Academia entered the launch library."),
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText(/Dopamine Dressing entered the launch library/i),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/e-Boy\/e-Girl entered the launch library/i),
     ).not.toBeInTheDocument();
   });
 
