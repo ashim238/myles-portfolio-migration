@@ -121,15 +121,18 @@ describe("Fresh Greens prose structure", () => {
     const source = readPage();
     const normalized = normalizeCopy(source);
 
+    expect(source).toContain('stackLabel="Tools"');
     expect(source).toContain(
-      'stack="Figma, Illustrator, React Native, Expo, TypeScript, Supabase"',
+      'stack="Figma, Illustrator, Claude, React Native, Expo, TypeScript, Supabase"',
     );
+    expect(normalized).toContain("I designed the initial flows in Figma");
+    expect(normalized).toContain("used Illustrator for the onboarding art");
     expect(normalized).toContain(
-      "Most of the visual-system work started in Figma and then got checked in the React Native build.",
+      "I also used Claude as a critique partner while tightening token names, color roles, and copy rules",
     );
-    expect(normalized).toContain("I used Illustrator for the onboarding art");
     expect(source).not.toMatch(/validated safety through Figma/i);
     expect(source).not.toMatch(/proved safety through React Native/i);
+    expect(source).not.toMatch(/Claude designed/i);
   });
 
   it("retains the safety interaction and community-report evidence stack", () => {
