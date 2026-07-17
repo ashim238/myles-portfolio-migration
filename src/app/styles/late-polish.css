@@ -382,8 +382,41 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 
 
 /* ── Case-study readability: recruiter cut + landmarks ──────────── */
-.case-lead-media { margin: 1.6rem 0 2rem; border-radius: 0.7rem; overflow: hidden; border: 1px solid var(--line); }
-.case-lead-img, .case-lead-video { display: block; width: 100%; height: auto; }
+.case-lead-media {
+  margin: 1.6rem 0 2rem;
+  border: 1px solid var(--line);
+  border-radius: 0.7rem;
+  overflow: hidden;
+}
+
+.case-lead-img,
+.case-lead-video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.case-lead-media--fresh-greens {
+  --fg-cover-scale: 1.03;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 1.5rem;
+  background: #001301;
+}
+
+.case-lead-media--fresh-greens .case-lead-img {
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+  transform: scale(var(--fg-cover-scale));
+  transform-origin: center;
+}
+
+@media (max-width: 640px) {
+  .case-lead-media--fresh-greens {
+    --fg-cover-scale: 1.24;
+    aspect-ratio: 2560 / 1862;
+  }
+}
 
 .case-video-frame {
   position: relative;
