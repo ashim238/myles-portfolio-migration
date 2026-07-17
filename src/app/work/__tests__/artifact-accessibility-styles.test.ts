@@ -79,11 +79,37 @@ describe("portfolio artifact accessibility styles", () => {
       ".project-section > h2",
       polishStyles,
     );
+    const chapterReveal = declarationBlock(".project-chapter", polishStyles);
+    const chapterTitleReveal = declarationBlock(
+      ".project-chapter-title",
+      polishStyles,
+    );
+    const evidenceHeadingReveal = declarationBlock(
+      ".project-evidence-heading",
+      polishStyles,
+    );
+    const motifReveal = declarationBlock(".project-chapter-motif", polishStyles);
+    const motifLine = declarationBlock(".project-chapter-motif-line", baseStyles);
+    const motifAccent = declarationBlock(
+      ".project-chapter-motif-line::after",
+      baseStyles,
+    );
 
     expect(sectionReveal).not.toContain("opacity: 0");
     expect(sectionReveal).not.toMatch(/transform:\s*translate/);
     expect(headingReveal).not.toContain("opacity: 0");
     expect(headingReveal).not.toContain("clip-path: inset(0 100%");
+    for (const block of [
+      chapterReveal,
+      chapterTitleReveal,
+      evidenceHeadingReveal,
+      motifReveal,
+    ]) {
+      expect(block).not.toContain("opacity: 0");
+      expect(block).not.toContain("clip-path: inset(0 100%");
+    }
+    expect(motifLine).toContain("background: var(--line)");
+    expect(motifAccent).toContain("background: var(--chapter-motif-accent)");
     expect(polishStyles).toMatch(
       /@media print[\s\S]*?\.project-page \.project-section,[\s\S]*?\.project-section > h2[\s\S]*?opacity: 1 !important;[\s\S]*?transform: none !important;/,
     );

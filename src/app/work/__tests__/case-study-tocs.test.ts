@@ -1,134 +1,86 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
+import { CASE_STUDY_CHAPTERS } from "@/lib/project-chapters";
 
-type TocEntry = {
-  title: string;
-  id: string;
-};
-
-type TocContract = {
-  sections: TocEntry[];
+type CaseStudyContract = {
+  name: string;
+  path: string;
+  mapKey: keyof typeof CASE_STUDY_CHAPTERS;
   readingEndId?: string;
+  evidenceIds: readonly string[];
 };
 
 function readCaseStudy(path: string) {
   return readFileSync(resolve(process.cwd(), path), "utf8");
 }
 
-function getProjectToc(source: string): TocContract {
-  const toc = source.match(/<ProjectToc\s+([\s\S]*?)\/>/);
-
-  expect(toc, "ProjectToc props").not.toBeNull();
-
-  const sections = toc![1].match(/sections=\{\[([\s\S]*?)\]\}/);
-  const readingEndId = toc![1].match(/readingEndId="([^"]+)"/)?.[1];
-
-  expect(sections, "ProjectToc sections array").not.toBeNull();
-
-  return {
-    sections: Array.from(
-      sections![1].matchAll(
-        /\{\s*title:\s*"([^"]+)",\s*id:\s*"([^"]+)"\s*,?\s*\}/g,
-      ),
-      ([, title, id]) => ({ title, id }),
-    ),
-    readingEndId,
-  };
+function idOccurrences(source: string, id: string) {
+  return source.match(new RegExp(`id="${id}"`, "g"))?.length ?? 0;
 }
 
-function getStoryHeadings(source: string): TocEntry[] {
-  return Array.from(
-    source.matchAll(/<h2 id="([^"]+)">([\s\S]*?)<\/h2>/g),
-    ([, id, title]) => ({
-      id,
-      title: title.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim(),
-    }),
-  );
+function chapterMapIdOccurrences(source: string, id: string) {
+  return source.match(new RegExp(`id: "${id}"`, "g"))?.length ?? 0;
 }
 
-const cases = [
+function mapAccess(mapKey: keyof typeof CASE_STUDY_CHAPTERS) {
+  return mapKey.includes("-")
+    ? `CASE_STUDY_CHAPTERS["${mapKey}"]`
+    : `CASE_STUDY_CHAPTERS.${mapKey}`;
+}
+
+const chapterMapSource = readCaseStudy("src/lib/project-chapters.ts");
+
+const cases: readonly CaseStudyContract[] = [
   {
     name: "Fresh Greens",
     path: "src/app/work/fresh-greens/page.tsx",
-    toc: [
-      { title: "Problem", id: "fg-problem" },
-      { title: "Research", id: "fg-research" },
-      { title: "Route scoring", id: "fg-scoring" },
-      { title: "Safety interaction", id: "fg-pulled-over" },
-      { title: "Design pivot", id: "fg-pivot" },
-      { title: "Type and color", id: "fg-typecolor" },
-      { title: "Reserved color", id: "fg-color" },
-      { title: "Community trust", id: "fg-trust" },
-      { title: "Scope and proof", id: "fg-scope" },
-    ],
+    mapKey: "fresh-greens",
     readingEndId: "fg-scope",
+    evidenceIds: ["fg-scoring", "fg-pulled-over", "fg-pivot", "fg-typecolor", "fg-color"],
   },
   {
     name: "TikTok",
     path: "src/app/work/tiktok/page.tsx",
-    toc: [
-      { title: "Fashion subcultures on TikTok", id: "tt-research" },
-      { title: "Defining the fixed catalog structure", id: "tt-system" },
-      { title: "Templates as modular parts", id: "tt-modular" },
-      { title: "From sketches to layered files", id: "tt-templates" },
-      { title: "What shipped from the launch batch", id: "tt-outcome" },
-    ],
-    readingEndId: undefined,
+    mapKey: "tiktok",
+    evidenceIds: [],
   },
   {
     name: "Navi",
     path: "src/app/work/navi/page.tsx",
-    toc: [
-      { title: "Concentrated tourism as a routing problem", id: "nv-intro" },
-      { title: "The first prototype: a Manhattan heatmap", id: "nv-heatmap" },
-      {
-        title: "Platform audits and resident research",
-        id: "nv-research",
-      },
-      { title: "The resident survey redirected the concept", id: "nv-insights" },
-      { title: "Mapping the experience before the build", id: "nv-framework" },
-      { title: "Rebuilding Navi as a working system", id: "nv-system" },
-      { title: "A working booking flow", id: "nv-screens" },
-      { title: "What I would validate next", id: "nv-outcome" },
-    ],
-    readingEndId: undefined,
+    mapKey: "navi",
+    evidenceIds: ["nv-heatmap", "nv-research", "nv-system", "nv-screens"],
   },
   {
     name: "UnderstandingFAFSA",
     path: "src/app/work/understandingfafsa/page.tsx",
-    toc: [
-      { title: "A rebrand and a weekly workflow", id: "uf-context" },
-      { title: "Where the old template broke down", id: "uf-problem" },
-      { title: "What 120 newsletters revealed", id: "uf-audit" },
-      { title: "Three send types from the audit", id: "uf-templates" },
-      { title: "Rules for fixed and swappable parts", id: "uf-locked" },
-      { title: "Rebuilding the system in Mailchimp", id: "uf-figma" },
-      { title: "The first redesigned send", id: "uf-results" },
-    ],
-    readingEndId: undefined,
+    mapKey: "understandingfafsa",
+    evidenceIds: ["uf-problem", "uf-templates"],
   },
-] as const;
+];
 
-describe("case-study recruiter paths", () => {
+describe("case-study chapter navigation contracts", () => {
   for (const caseStudy of cases) {
-    it(`${caseStudy.name} exposes its complete chronological process`, () => {
+    it(`${caseStudy.name} uses the approved typed chapter map`, () => {
       const source = readCaseStudy(caseStudy.path);
-      const toc = getProjectToc(source);
+      const chapters = CASE_STUDY_CHAPTERS[caseStudy.mapKey];
 
-      expect(toc.sections).toEqual(caseStudy.toc);
-      expect(toc.readingEndId).toBe(caseStudy.readingEndId);
+      expect(chapters.length).toBeLessThanOrEqual(6);
+      expect(source).toContain(`const chapters = ${mapAccess(caseStudy.mapKey)}`);
+      expect(source).toMatch(/<ProjectToc[\s\S]*?sections=\{chapters\}/);
+      expect(source).toContain("<ProjectChapter");
 
-      if (caseStudy.name !== "Fresh Greens") {
-        expect(getStoryHeadings(source)).toEqual(caseStudy.toc);
-      }
-
-      for (const { id } of caseStudy.toc) {
-        expect(source).toContain(`id="${id}"`);
+      for (const [index, chapter] of chapters.entries()) {
+        expect(chapterMapIdOccurrences(chapterMapSource, chapter.id)).toBe(1);
+        expect(source).toContain(`entry={chapters[${index}]}`);
       }
 
       if (caseStudy.readingEndId) {
-        expect(source).toContain(`id="${caseStudy.readingEndId}"`);
+        expect(source).toContain(`readingEndId="${caseStudy.readingEndId}"`);
+      }
+
+      for (const evidenceId of caseStudy.evidenceIds) {
+        expect(idOccurrences(source, evidenceId)).toBe(1);
       }
     });
   }
