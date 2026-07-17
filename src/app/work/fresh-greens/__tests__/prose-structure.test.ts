@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -86,6 +86,20 @@ describe("Fresh Greens prose structure", () => {
     expect(source).toContain('name="report-picker"');
     expect(source).toContain('name="report-detail"');
     expect(source).toContain('className="fg-moderation"');
+  });
+
+  it("ships only the browser-ready active-navigation clip", () => {
+    const source = readPage();
+    const processDir = resolve(
+      process.cwd(),
+      "public/projects/fresh-greens/process",
+    );
+
+    expect(source).toContain(
+      'clip="/projects/fresh-greens/process/active-nav.mp4"',
+    );
+    expect(existsSync(resolve(processDir, "active-nav.mp4"))).toBe(true);
+    expect(existsSync(resolve(processDir, "active-nav.mov"))).toBe(false);
   });
 
   it("keeps house punctuation out of composed reserved-palette copy", () => {
