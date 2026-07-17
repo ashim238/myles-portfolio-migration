@@ -1,6 +1,6 @@
 import { render, screen, within } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import { NeighborhoodView } from "@/app/work/navi/(minisite)/demo/neighborhood/[slug]/page";
+import { NeighborhoodView } from "@/app/work/navi/(minisite)/demo/neighborhood/[slug]/NeighborhoodView";
 import {
   getNeighborhoodBySlug,
   experiencesByNeighborhood,

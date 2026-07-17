@@ -5,15 +5,32 @@ type LeadMediaProps = {
   cover: string;
   alt: string;
   clip?: string;
-  width?: number;
-  height?: number;
+  width: number;
+  height: number;
+  presentation?: "default" | "fresh-greens";
 };
 
-export function LeadMedia({ cover, alt, clip, width = 2000, height = 1200 }: LeadMediaProps) {
+export function LeadMedia({
+  cover,
+  alt,
+  clip,
+  width,
+  height,
+  presentation = "default",
+}: LeadMediaProps) {
+  const presentationClass =
+    presentation === "default" ? "" : ` case-lead-media--${presentation}`;
+
   return (
-    <figure className="case-lead-media">
+    <figure className={`case-lead-media${presentationClass}`}>
       {clip ? (
-        <LeadVideo clip={clip} poster={cover} alt={alt} />
+        <LeadVideo
+          clip={clip}
+          poster={cover}
+          alt={alt}
+          width={width}
+          height={height}
+        />
       ) : (
         <Image
           className="case-lead-img"

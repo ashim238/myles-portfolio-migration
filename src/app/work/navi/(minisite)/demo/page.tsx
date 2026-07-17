@@ -7,6 +7,7 @@ import { CategoryIcon } from "@/components/navi/demo/CategoryIcon";
 import { FiltersSlideOver } from "@/components/navi/demo/FiltersSlideOver";
 import { DEFAULT_FILTERS, activeCount, type Filters } from "@/components/navi/demo/filters";
 import { EXPERIENCES, CATEGORIES } from "@/lib/navi/demo-data";
+import { motionSafeScrollBehavior } from "@/lib/navi/motion";
 
 type SortKey = "recommended" | "rating" | "price-asc" | "price-desc";
 
@@ -139,7 +140,10 @@ export default function FeedPage() {
   const scrollRail = (dir: -1 | 1) => {
     const el = railRef.current;
     if (!el) return;
-    el.scrollBy({ left: dir * Math.max(240, el.clientWidth * 0.7), behavior: "smooth" });
+    el.scrollBy({
+      left: dir * Math.max(240, el.clientWidth * 0.7),
+      behavior: motionSafeScrollBehavior(),
+    });
   };
 
   return (

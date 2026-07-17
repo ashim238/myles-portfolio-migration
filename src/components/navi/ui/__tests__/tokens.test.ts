@@ -33,9 +33,15 @@ describe("navi tokens", () => {
     // The system page renders NAVI_SEMANTIC as live swatches and claims a single
     // source of truth, so the documented focus token must equal the --nv-focus
     // value the product paints on every focus-visible ring.
-    const css = readFileSync(resolve(process.cwd(), "src/app/globals.css"), "utf8");
+    const css = readFileSync(
+      resolve(process.cwd(), "src/app/styles/navi-minisite.css"),
+      "utf8",
+    );
     const match = css.match(/--nv-focus:\s*(#[0-9a-fA-F]{6})/);
-    expect(match, "--nv-focus must be defined in globals.css").not.toBeNull();
+    expect(
+      match,
+      "--nv-focus must be defined in navi-minisite.css",
+    ).not.toBeNull();
     expect(NAVI_SEMANTIC.focus.toLowerCase()).toBe(match![1].toLowerCase());
   });
 

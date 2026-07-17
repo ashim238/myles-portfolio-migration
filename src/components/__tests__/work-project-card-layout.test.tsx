@@ -1,0 +1,93 @@
+import { render, screen } from "@testing-library/react";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { describe, expect, it, vi } from "vitest";
+import type { Project } from "@/lib/content";
+import { WorkProjectCard } from "@/components/work-project-card";
+
+const baseStyles = readFileSync(
+  resolve(process.cwd(), "src/app/styles/base.css"),
+  "utf8",
+);
+
+function declarationBlock(selector: string): string {
+  const start = baseStyles.indexOf(`${selector} {`);
+  if (start < 0) return "";
+  const open = baseStyles.indexOf("{", start);
+  let depth = 0;
+  for (let index = open; index < baseStyles.length; index += 1) {
+    if (baseStyles[index] === "{") depth += 1;
+    if (baseStyles[index] === "}") depth -= 1;
+    if (depth === 0) return baseStyles.slice(start, index + 1);
+  }
+  return "";
+}
+
+vi.mock("next/image", () => ({
+  default: ({
+    priority,
+    alt = "",
+    ...props
+  }: React.ImgHTMLAttributes<HTMLImageElement> & { priority?: boolean }) => {
+    void priority;
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img {...props} alt={alt} />;
+  },
+}));
+
+vi.mock("next/link", () => ({
+  default: ({ children, ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
+    <a {...props}>{children}</a>
+  ),
+}));
+
+const project: Project = {
+  slug: "tiktok",
+  title: "TikTok",
+  summary: "TikTok summary",
+  role: "Creative Strategy",
+  timeframe: "2021",
+  status: "published",
+  order: 4,
+  tags: [],
+  coverImage: "/projects/tiktok/cover.jpg",
+  sections: [],
+  bodyHtml: "",
+};
+
+describe("WorkProjectCard layout variants", () => {
+  it("marks a closing card and describes its narrower desktop image slot", () => {
+    const imageProject = { ...project, slug: "navi", title: "Navi" };
+    const { container } = render(
+      <WorkProjectCard project={imageProject} index={3} closing />,
+    );
+
+    expect(container.firstElementChild).toHaveClass("work-gallery-closing");
+    expect(screen.getByRole("img", { name: "Navi preview" })).toHaveAttribute(
+      "sizes",
+      "(max-width: 760px) 100vw, min(72vw, 672px)",
+    );
+  });
+
+  it("uses the shared 3D TikTok mark instead of the static project cover", () => {
+    const { container } = render(
+      <WorkProjectCard project={project} index={3} closing />,
+    );
+
+    expect(container.querySelector(".work-thumb--tiktok-logo .tt-cover-field")).not.toBeNull();
+    expect(container.querySelectorAll(".tt-cover-field .tt-cblob")).toHaveLength(16);
+    expect(screen.queryByRole("img", { name: "TikTok preview" })).toBeNull();
+  });
+
+  it("centers only the homepage TikTok cluster inside its no-copy cover", () => {
+    const homeCluster = declarationBlock(
+      ".work-thumb--tiktok-logo .tt-cover-cluster",
+    );
+
+    expect(homeCluster).toContain("transform-origin: 50% 50%");
+    expect(homeCluster).toContain(
+      "transform: translate3d(-16%, 15%, 0) scale(1.2)",
+    );
+    expect(baseStyles).not.toContain(".tt-cover--preview .tt-cover-cluster");
+  });
+});

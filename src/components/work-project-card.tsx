@@ -3,6 +3,7 @@
 import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { TikTokCoverBlobs } from "@/components/tiktok-dsa";
 import type { Project } from "@/lib/content";
 import { prefersReducedMotion } from "@/lib/home-intro";
 import { dispatchProjectEnterRequest } from "@/lib/project-enter";
@@ -12,6 +13,7 @@ type WorkProjectCardProps = {
   project: Project;
   index: number; // 0-based; drives the mono index label
   featured?: boolean;
+  closing?: boolean;
 };
 
 function formatIndex(index: number): string {
@@ -39,9 +41,15 @@ function tabText(project: Project): string {
   return [project.role, year].filter(Boolean).join(" · ");
 }
 
-export function WorkProjectCard({ project, index, featured = false }: WorkProjectCardProps) {
+export function WorkProjectCard({
+  project,
+  index,
+  featured = false,
+  closing = false,
+}: WorkProjectCardProps) {
   const { lead, rest } = galleryOutcome(project);
   const tab = tabText(project);
+  const usesTikTokLogo = project.slug === "tiktok";
 
   const handleProjectEnter = (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (
@@ -51,6 +59,7 @@ export function WorkProjectCard({ project, index, featured = false }: WorkProjec
       event.shiftKey ||
       event.altKey ||
       prefersReducedMotion() ||
+      usesTikTokLogo ||
       !project.coverImage
     ) {
       return;
@@ -70,7 +79,15 @@ export function WorkProjectCard({ project, index, featured = false }: WorkProjec
   };
 
   return (
-    <div className={featured ? "work-gallery-feature" : "work-gallery-cell"}>
+    <div
+      className={
+        featured
+          ? "work-gallery-feature"
+          : closing
+            ? "work-gallery-closing"
+            : "work-gallery-cell"
+      }
+    >
       <span
         className="work-gallery-index wg-anim wg-tick"
         style={{ ["--d" as string]: featured ? ".32s" : ".78s" }}
@@ -83,21 +100,27 @@ export function WorkProjectCard({ project, index, featured = false }: WorkProjec
           <div className="work-media">
             {featured ? <div className="work-thumb-echo" aria-hidden="true" /> : null}
             <div
-              className="work-thumb wg-anim"
+              className={`work-thumb wg-anim${usesTikTokLogo ? " work-thumb--tiktok-logo tt-cover--preview" : ""}`}
               style={{ ["--d" as string]: featured ? ".38s" : ".82s" }}
             >
-              <Image
-                src={project.coverImage}
-                alt={`${project.title} preview`}
-                width={1400}
-                height={933}
-                sizes={
-                  featured
-                    ? "(max-width: 760px) 100vw, min(92vw, 1088px)"
-                    : "(max-width: 760px) 100vw, min(46vw, 524px)"
-                }
-                priority={featured}
-              />
+              {usesTikTokLogo ? (
+                <TikTokCoverBlobs deferUntilVisible />
+              ) : (
+                <Image
+                  src={project.coverImage}
+                  alt={`${project.title} preview`}
+                  width={1400}
+                  height={933}
+                  sizes={
+                    featured
+                      ? "(max-width: 760px) 100vw, min(92vw, 1088px)"
+                      : closing
+                        ? "(max-width: 760px) 100vw, min(72vw, 672px)"
+                        : "(max-width: 760px) 100vw, min(46vw, 524px)"
+                  }
+                  priority={featured}
+                />
+              )}
               {tab ? <span className="work-tab">{tab}</span> : null}
             </div>
           </div>

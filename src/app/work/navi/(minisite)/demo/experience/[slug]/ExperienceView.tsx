@@ -9,6 +9,7 @@ import { TransitOptions } from "@/components/navi/demo/TransitOptions";
 import { Reviews } from "@/components/navi/demo/Reviews";
 import { Map } from "@/components/navi/demo/Map";
 import { type Experience, type BookingDate } from "@/lib/navi/demo-data";
+import { motionSafeScrollBehavior } from "@/lib/navi/motion";
 import { neighborhoodSlug } from "@/lib/navi/neighborhoods";
 
 const SECTIONS = [
@@ -50,7 +51,10 @@ export function ExperienceView({
   }, [e.slug]);
 
   const goTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    document.getElementById(id)?.scrollIntoView({
+      behavior: motionSafeScrollBehavior(),
+      block: "start",
+    });
   };
 
   const reviews = e.reviewsList.map((r, i) => ({

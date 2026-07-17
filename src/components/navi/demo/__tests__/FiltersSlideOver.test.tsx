@@ -74,6 +74,49 @@ describe("FiltersSlideOver", () => {
     trigger.remove();
   });
 
+  it("portals the dialog outside the inert, assistive-tech-hidden minisite shell", () => {
+    render(
+      <main className="nv-ui">
+        <FiltersSlideOver {...baseProps} onApply={() => {}} onClose={() => {}} />
+      </main>,
+    );
+
+    const shell = document.querySelector<HTMLElement>(".nv-ui");
+    const dialog = screen.getByRole("dialog", { name: "Filters" });
+
+    expect(shell).toHaveAttribute("inert");
+    expect(shell).toHaveAttribute("aria-hidden", "true");
+    expect(shell).not.toContainElement(dialog);
+  });
+
+  it("restores focus to the trigger after the portaled dialog closes", () => {
+    const renderFilters = (open: boolean) => (
+      <main className="nv-ui">
+        <button type="button">Open filters</button>
+        <FiltersSlideOver
+          {...baseProps}
+          open={open}
+          onApply={() => {}}
+          onClose={() => {}}
+        />
+      </main>
+    );
+    const { rerender } = render(renderFilters(false));
+    const trigger = screen.getByRole("button", { name: "Open filters" });
+    trigger.focus();
+
+    rerender(renderFilters(true));
+    expect(document.activeElement).toHaveAccessibleName(/close filters/i);
+    expect(document.querySelector(".nv-ui")).not.toContainElement(
+      screen.getByRole("dialog", { name: "Filters" }),
+    );
+
+    rerender(renderFilters(false));
+    expect(document.activeElement).toBe(trigger);
+    expect(document.querySelector(".nv-ui")).not.toHaveAttribute("inert");
+    expect(document.querySelector(".nv-ui")).not.toHaveAttribute("aria-hidden");
+  });
+
   it("resets draft to defaults when Clear all is clicked", async () => {
     render(
       <FiltersSlideOver

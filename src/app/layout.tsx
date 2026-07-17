@@ -28,19 +28,17 @@ const serif = Instrument_Serif({
   style: ["normal", "italic"],
 });
 
-const BASE_URL = "https://mylesdesignsthings.com";
-
 export const metadata: Metadata = {
   title: {
     default: `${siteConfig.name} | ${siteConfig.title}`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  metadataBase: new URL(BASE_URL),
+  metadataBase: new URL(siteConfig.siteUrl),
   openGraph: {
     title: `${siteConfig.name} | ${siteConfig.title}`,
     description: siteConfig.description,
-    url: BASE_URL,
+    url: siteConfig.siteUrl,
     siteName: siteConfig.name,
     locale: "en_US",
     type: "website",
@@ -64,6 +62,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`${sans.variable} ${geistMono.variable} ${serif.variable} h-full antialiased`}
       suppressHydrationWarning
     >
@@ -72,31 +71,21 @@ export default function RootLayout({
           id="theme-init"
           suppressHydrationWarning
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`,
+            __html: `(function(){try{var t=localStorage.getItem("theme");var v=t==="dark"||t==="light"?t:matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";document.documentElement.setAttribute("data-theme",v)}catch(e){}})()`,
           }}
         />
-        <script
-          id="home-intro-guard"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var p=location.pathname;if(p!=="/"&&p!=="")return;var b=sessionStorage.getItem("home-browser-intro-seen")==="1";var e=sessionStorage.getItem("home-intro-seen")==="1";var r=window.matchMedia("(prefers-reduced-motion: reduce)").matches;if(!r&&(!b||!e)){document.documentElement.classList.add("home-intro-wait");setTimeout(function(){document.documentElement.classList.remove("home-intro-wait")},2600)}}catch(err){}})();`,
-          }}
-        />
-        <noscript>
-          <style>{`.home-intro-wait .home-page, .home-intro-wait .home-page * { opacity: 1 !important; }`}</style>
-        </noscript>
       </head>
       <body className="min-h-full flex flex-col">
-        <a className="skip-link" href="#main-content">
-          Skip to main content
-        </a>
-        <ConsoleGreeting />
         <LightboxProvider>
+          <a className="skip-link" href="#main-content">
+            Skip to main content
+          </a>
+          <ConsoleGreeting />
           <ProjectEnterTransition>{children}</ProjectEnterTransition>
+          <DotCursor />
+          <MobileNav />
+          <ScrollRevealFallback />
         </LightboxProvider>
-        <DotCursor />
-        <MobileNav />
-        <ScrollRevealFallback />
       </body>
     </html>
   );

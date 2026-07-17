@@ -6,6 +6,7 @@ import { ResultCard } from "@/components/navi/demo/ResultCard";
 import { Map } from "@/components/navi/demo/Map";
 import { Legend } from "@/components/navi/demo/Legend";
 import { EXPERIENCES } from "@/lib/navi/demo-data";
+import { motionSafeScrollBehavior } from "@/lib/navi/motion";
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
@@ -39,7 +40,7 @@ export default function SearchPage() {
     setPicked(id);
     const el = document.getElementById(`search-result-${id}`);
     if (!el) return;
-    el.scrollIntoView({ behavior: "smooth", block: "center" });
+    el.scrollIntoView({ behavior: motionSafeScrollBehavior(), block: "center" });
     el.dataset.pulse = "true";
     if (pulseTimer.current) clearTimeout(pulseTimer.current);
     pulseTimer.current = setTimeout(() => {

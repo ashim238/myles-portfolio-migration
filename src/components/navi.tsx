@@ -35,6 +35,9 @@ export function NaviAnimReady() {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             entry.target.classList.add("nv-reveal--visible");
+            if (entry.target.classList.contains("nv-research-artifacts")) {
+              io.unobserve(entry.target);
+            }
           } else {
             entry.target.classList.remove("nv-reveal--visible");
           }
@@ -198,7 +201,7 @@ export function CompositionStrip() {
 /* ── Heatmap explorer ────────────────────────────────── */
 
 const NAVI_LEARN_CONTEXT =
-  "Learn would open with its inclusive history and local rhythm, not the same ten default stops.";
+  "Learn would open with the neighborhood’s inclusive history and local rhythm.";
 
 export function HeatmapExplorer() {
   const [activeId, setActiveId] = useState("");
@@ -210,7 +213,8 @@ export function HeatmapExplorer() {
     setActiveId(id);
   }, []);
 
-  // The list is the sole control; arrow keys rove it like a real listbox.
+  // The named list is the sole control. Arrow keys are an optional shortcut
+  // alongside the native Tab order for its buttons.
   const handleListKey = useCallback(
     (e: React.KeyboardEvent<HTMLUListElement>) => {
       const ids = sorted.map((n) => n.id);
@@ -241,7 +245,6 @@ export function HeatmapExplorer() {
     <div className="nv-heatmap">
       <ul
         className="nv-heatmap-list"
-        role="listbox"
         aria-label="Manhattan neighborhoods"
         onKeyDown={handleListKey}
       >
@@ -249,8 +252,7 @@ export function HeatmapExplorer() {
           <li key={n.id}>
             <button
               type="button"
-              role="option"
-              aria-selected={activeId === n.id}
+              aria-pressed={activeId === n.id}
               ref={(el) => {
                 itemRefs.current[n.id] = el;
               }}

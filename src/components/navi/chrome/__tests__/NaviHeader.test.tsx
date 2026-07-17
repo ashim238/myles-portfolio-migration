@@ -3,11 +3,13 @@ import { describe, it, expect } from "vitest";
 import { NaviHeader } from "@/components/navi/chrome/NaviHeader";
 
 describe("NaviHeader", () => {
-  it("renders a banner with the Navi wordmark and primary nav", () => {
+  it("renders a banner with a distinct Navi project navigation landmark", () => {
     render(<NaviHeader />);
     expect(screen.getByRole("banner")).toBeInTheDocument();
     expect(screen.getByText("Navi")).toBeInTheDocument();
-    expect(screen.getByRole("navigation", { name: /primary/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("navigation", { name: "Navi project navigation" }),
+    ).toBeInTheDocument();
   });
 
   it("offers a way out of the demo back to the case study", () => {
@@ -16,6 +18,26 @@ describe("NaviHeader", () => {
       "href",
       "/work/navi",
     );
+  });
+
+  it("identifies every Navi-owned route as sample portfolio content", () => {
+    render(<NaviHeader />);
+
+    expect(
+      screen.getByText("Portfolio concept · sample content"),
+    ).toBeInTheDocument();
+  });
+
+  it("provides a shorter visual exit label for narrow screens", () => {
+    const { container } = render(<NaviHeader />);
+    const link = screen.getByRole("link", { name: "Return to case study" });
+    const wideLabel = container.querySelector(".nv-nav-back-wide");
+    const shortLabel = container.querySelector(".nv-nav-back-short");
+    expect(link).toHaveAttribute("href", "/work/navi");
+    expect(wideLabel).not.toBeNull();
+    expect(shortLabel).not.toBeNull();
+    expect(wideLabel!).toHaveTextContent("Return to case study");
+    expect(shortLabel!).toHaveTextContent("Case study");
   });
 
   it("links to the system and demo surfaces", () => {

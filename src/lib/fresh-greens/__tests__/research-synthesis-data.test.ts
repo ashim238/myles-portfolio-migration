@@ -21,6 +21,7 @@ describe("research synthesis data", () => {
       expect(s.raisedBy).toBeLessThanOrEqual(6);
       expect(s.snippets.length).toBeGreaterThanOrEqual(2);
       expect(s.insight.length).toBeGreaterThan(0);
+      expect(s.designResponse.length).toBeGreaterThan(0);
     }
   });
 

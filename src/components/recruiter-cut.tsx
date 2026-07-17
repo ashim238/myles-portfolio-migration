@@ -1,10 +1,11 @@
 import { CountUp } from "@/components/count-up";
 
 type RecruiterCutProps = {
-  problem: string;
   role: string;
+  contribution?: string;
+  team?: string;
   timeline: string;
-  stack: string;
+  stack?: string;
   stackLabel?: string;
   outcomeValue?: string;
   outcomeLabel?: string;
@@ -12,23 +13,46 @@ type RecruiterCutProps = {
 };
 
 export function RecruiterCut({
-  problem, role, timeline, stack, stackLabel = "Stack", outcomeValue, outcomeLabel, moves,
+  role, contribution, team, timeline, stack, stackLabel = "Stack", outcomeValue, outcomeLabel, moves,
 }: RecruiterCutProps) {
+  const supportingFact = team
+    ? { label: "Team", value: team }
+    : contribution
+      ? { label: "Contribution", value: contribution }
+      : stack
+        ? { label: stackLabel, value: stack }
+        : null;
+  const facts = [
+    { label: "Role", value: role },
+    supportingFact,
+    { label: "Timeline", value: timeline },
+    outcomeValue && outcomeLabel
+      ? {
+          label: "Outcome",
+          value: (
+            <>
+              <span className="case-cut-metric"><CountUp value={outcomeValue} /></span>{" "}
+              {outcomeLabel}
+            </>
+          ),
+        }
+      : supportingFact?.label !== stackLabel && stack
+        ? { label: stackLabel, value: stack }
+        : null,
+  ].filter((fact): fact is NonNullable<typeof fact> => fact !== null);
+
   return (
     <section className="case-cut" aria-label="At a glance">
       <dl className="case-cut-facts">
-        <div className="case-cut-row"><dt>Problem</dt><dd>{problem}</dd></div>
-        <div className="case-cut-row"><dt>Role</dt><dd>{role}</dd></div>
-        <div className="case-cut-row"><dt>Timeline</dt><dd>{timeline}</dd></div>
-        <div className="case-cut-row"><dt>{stackLabel}</dt><dd>{stack}</dd></div>
-        {outcomeValue && outcomeLabel ? (
-          <div className="case-cut-row case-cut-outcome">
-            <dt>Outcome</dt>
-            <dd>
-              <span className="case-cut-metric"><CountUp value={outcomeValue} /></span> {outcomeLabel}
-            </dd>
+        {facts.map((fact) => (
+          <div
+            className={`case-cut-row${fact.label === "Outcome" ? " case-cut-outcome" : ""}`}
+            key={fact.label}
+          >
+            <dt>{fact.label}</dt>
+            <dd>{fact.value}</dd>
           </div>
-        ) : null}
+        ))}
       </dl>
       {moves.length > 0 ? (
         <div className="case-cut-moves">

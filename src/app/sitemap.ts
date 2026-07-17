@@ -1,37 +1,35 @@
 import type { MetadataRoute } from "next";
 import { getPublishedProjects } from "@/lib/content";
-
-const BASE_URL = "https://mylesashitey.com";
+import { siteConfig } from "@/lib/site-config";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const projects = await getPublishedProjects();
-
-  const projectEntries: MetadataRoute.Sitemap = projects.map((project) => ({
-    url: `${BASE_URL}/work/${project.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly",
-    priority: 0.8,
-  }));
-
-  return [
+  const staticEntries: MetadataRoute.Sitemap = [
     {
-      url: BASE_URL,
-      lastModified: new Date(),
+      url: siteConfig.siteUrl,
       changeFrequency: "monthly",
       priority: 1,
     },
     {
-      url: `${BASE_URL}/play`,
-      lastModified: new Date(),
+      url: `${siteConfig.siteUrl}/about`,
       changeFrequency: "monthly",
       priority: 0.6,
     },
     {
-      url: `${BASE_URL}/resume`,
-      lastModified: new Date(),
+      url: `${siteConfig.siteUrl}/play`,
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
+    {
+      url: `${siteConfig.siteUrl}/resume`,
       changeFrequency: "monthly",
       priority: 0.5,
     },
-    ...projectEntries,
   ];
+  const projectEntries: MetadataRoute.Sitemap = projects.map((project) => ({
+    url: `${siteConfig.siteUrl}/work/${project.slug}`,
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }));
+  return [...staticEntries, ...projectEntries];
 }

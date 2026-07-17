@@ -3,12 +3,13 @@ import { SiteNav } from "@/components/site-nav";
 import { playEntries } from "@/lib/content";
 import { ExpandableImage } from "@/components/expandable-image";
 import { SpecimenCard } from "@/components/specimen-card";
-import { siteConfig } from "@/lib/site-config";
+import { createRouteMetadata } from "@/lib/site-config";
 
-export const metadata = {
+export const metadata = createRouteMetadata({
   title: "Play",
   description: "Recreational experiments: game sketches, generative studies, and the occasional sculpt.",
-};
+  path: "/play",
+});
 
 export default function PlayPage() {
   return (
@@ -82,6 +83,7 @@ export default function PlayPage() {
                     material={entry.specimen.material}
                     status={entry.specimen.status}
                     images={entry.images}
+                    priority={index === 0}
                   />
                 ) : entry.images && entry.images.length > 0 ? (
                   <div

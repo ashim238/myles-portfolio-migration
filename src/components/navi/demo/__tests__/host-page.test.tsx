@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import { HostView } from "@/app/work/navi/(minisite)/demo/host/[slug]/page";
+import { HostView } from "@/app/work/navi/(minisite)/demo/host/[slug]/HostView";
 import { getHostBySlug, experiencesByHost } from "@/lib/navi/hosts";
 
 describe("Host page", () => {

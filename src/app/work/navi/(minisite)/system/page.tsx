@@ -30,7 +30,6 @@ import {
   CarouselArrow,
   PaginationDots,
   Label,
-  Card,
   PillRow,
   Calendar,
 } from "@/components/navi/ui";

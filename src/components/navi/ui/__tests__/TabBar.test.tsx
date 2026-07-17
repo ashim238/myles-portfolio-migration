@@ -9,9 +9,11 @@ const items = [
 ];
 
 describe("TabBar", () => {
-  it("renders a labelled tab list with one item per link", () => {
+  it("renders a distinctly labelled demo navigation with one item per link", () => {
     render(<TabBar items={items} active="feed" />);
-    expect(screen.getByRole("navigation", { name: /primary/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("navigation", { name: "Navi demo sections" }),
+    ).toBeInTheDocument();
     expect(screen.getAllByRole("link")).toHaveLength(3);
   });
 

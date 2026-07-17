@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
+import { parseProjectStatus } from "../src/lib/project-status.mjs";
 
 const projectsDir = path.join(process.cwd(), "content", "projects");
 
@@ -45,8 +46,10 @@ async function run() {
       }
     }
 
-    if (!["draft", "published"].includes(String(data.status))) {
-      errors.push(`${fileName}: status must be draft or published`);
+    try {
+      parseProjectStatus(data.status);
+    } catch (error) {
+      errors.push(`${fileName}: ${error.message}`);
     }
 
     if (!Number.isFinite(Number(data.order))) {

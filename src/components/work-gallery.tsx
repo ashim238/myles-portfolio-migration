@@ -5,7 +5,8 @@ import { GalleryReveal } from "@/components/gallery-reveal";
 type WorkGalleryProps = { projects: Project[] };
 
 /**
- * Visual-first work gallery: one full-width featured cover, then a 2-up pair.
+ * Visual-first work gallery: one full-width featured cover, then a 2-up grid.
+ * An odd final item closes the sequence across both columns.
  * Carries the "working file" signature (mono head/foot, hairline rules,
  * entrance cascade). Content is visible by default; GalleryReveal only plays
  * keyframes over it.
@@ -15,6 +16,8 @@ export function WorkGallery({ projects }: WorkGalleryProps) {
     return <p className="work-out">No published projects yet.</p>;
   }
   const [featured, ...rest] = projects;
+  const closing = rest.length % 2 === 1 ? rest.at(-1) : undefined;
+  const gridProjects = closing ? rest.slice(0, -1) : rest;
 
   return (
     <div className="work-gallery" id="work-gallery">
@@ -33,10 +36,19 @@ export function WorkGallery({ projects }: WorkGalleryProps) {
       <div className="work-gallery-rule wg-anim" style={{ ["--d" as string]: ".66s" }} />
 
       {rest.length > 0 ? (
-        <div className="work-gallery-pair">
-          {rest.map((project, i) => (
+        <div className="work-gallery-grid">
+          {gridProjects.map((project, i) => (
             <WorkProjectCard key={project.slug} project={project} index={i + 1} />
           ))}
+          {closing ? (
+            <div className="work-gallery-closing-wrap">
+              <WorkProjectCard
+                project={closing}
+                index={rest.length}
+                closing
+              />
+            </div>
+          ) : null}
         </div>
       ) : null}
 

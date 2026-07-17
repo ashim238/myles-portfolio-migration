@@ -3,8 +3,9 @@ import path from "node:path";
 import matter from "gray-matter";
 import { marked } from "marked";
 import sharp from "sharp";
+import { parseProjectStatus } from "@/lib/project-status.mjs";
 
-export type ProjectStatus = "published" | "draft" | "hidden";
+export type ProjectStatus = ReturnType<typeof parseProjectStatus>;
 
 export type ProjectImage = {
   src: string;
@@ -154,9 +155,7 @@ async function parseProjectSections(
 async function parseProjectFrontmatter(
   data: Record<string, unknown>,
 ): Promise<ProjectFrontmatter> {
-  const rawStatus = String(data.status ?? "").toLowerCase();
-  const status: ProjectStatus =
-    rawStatus === "hidden" ? "hidden" : rawStatus === "draft" ? "draft" : "published";
+  const status = parseProjectStatus(data.status);
 
   const project = {
     slug: String(data.slug ?? ""),
@@ -278,9 +277,9 @@ export const playEntries: PlayEntry[] = [
   {
     slug: "loom",
     title: "Loom",
-    hook: "A generative weaving ritual shaped by a personal prompt.",
+    hook: "Each answer to “What brings you joy?” seeds five colored threads on a digital loom.",
     exploration:
-      "I explored how simple inputs can become evolving visual patterns, turning reflection into a textile-like composition.",
+      "A text hash sets each thread’s position, hue, weight, and opacity. The same answer produces the same five-thread pattern.",
     tags: ["p5.js", "Generative Art", "Interaction"],
     year: "2025",
     context: "Parsons - Narrative & Dynamic Systems",
