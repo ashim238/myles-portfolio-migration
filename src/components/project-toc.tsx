@@ -1,9 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import type { ProjectChapterEntry } from "@/lib/project-chapters";
+
+type ProjectTocItem = Pick<ProjectChapterEntry, "id" | "title"> & {
+  stage?: string;
+};
 
 type ProjectTocProps = {
-  sections: { title: string; id: string }[];
+  sections: readonly ProjectTocItem[];
   readingEndId?: string;
 };
 
@@ -15,6 +20,12 @@ function formatReadout(progress: number, totalMin: number): string {
   const left = Math.max(0, Math.ceil(totalMin * (1 - progress)));
   if (pct >= 100 || left === 0) return "Finished";
   return `${pct}% · ${left} min left`;
+}
+
+function completeChapterTitle(chapter: ProjectTocItem) {
+  return chapter.stage
+    ? `${chapter.stage}: ${chapter.title}`
+    : chapter.title;
 }
 
 export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
@@ -276,7 +287,10 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
   );
 
   const activeIndex = sections.findIndex((s) => s.id === activeId);
-  const activeTitle = activeIndex >= 0 ? sections[activeIndex].title : sections[0]?.title ?? "";
+  const activeChapter = sections[activeIndex >= 0 ? activeIndex : 0];
+  const activeTitle = activeChapter
+    ? completeChapterTitle(activeChapter)
+    : "";
   const activeNum = String(activeIndex >= 0 ? activeIndex + 1 : 1).padStart(2, "0");
 
   return (
@@ -288,7 +302,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
       <nav
         ref={tocRef}
         className={`project-toc${isSticky ? " project-toc--sticky" : ""}`}
-        aria-label="Case study sections"
+        aria-label="Case study chapters"
       >
         {/* Mobile: collapsed current-section bar. The overall progress fills
             the hairline beneath it. */}
@@ -307,7 +321,15 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
         >
           <span className="project-toc-toggle-label">
             <span className="project-toc-num">{activeNum}.</span>
-            <span className="project-toc-active-title">{activeTitle}</span>
+            <span className="project-toc-active-title">
+              {activeChapter?.stage ? (
+                <>
+                  <span className="project-toc-stage">{activeChapter.stage}</span>
+                  <span className="project-toc-separator" aria-hidden="true"> · </span>
+                </>
+              ) : null}
+              <span className="project-toc-title">{activeChapter?.title ?? ""}</span>
+            </span>
           </span>
           <span className="project-toc-toggle-end">
             <span className="project-toc-readout-mobile js-toc-readout" aria-hidden="true" />
@@ -345,10 +367,19 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
                     onClick={() => handleClick(section.id)}
                     onKeyDown={(event) => handleKeyDown(event, i)}
                     aria-current={isActive ? "true" : undefined}
+                    aria-label={completeChapterTitle(section)}
                   >
                     <span className="project-toc-dot" aria-hidden="true" />
                     <span className="project-toc-num">{num}.</span>
-                    <span className="project-toc-text">{section.title}</span>
+                    <span className="project-toc-text">
+                      {section.stage ? (
+                        <>
+                          <span className="project-toc-stage">{section.stage}</span>
+                          <span className="project-toc-separator" aria-hidden="true"> · </span>
+                        </>
+                      ) : null}
+                      <span className="project-toc-title">{section.title}</span>
+                    </span>
                     <span className="project-toc-rail" aria-hidden="true" />
                   </button>
                 </li>
@@ -368,7 +399,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
         <span className="project-toc-progress" aria-hidden="true" />
 
         <p id="project-toc-help" className="project-toc-help">
-          Arrow keys move between sections. Home and End jump to the ends.
+          Arrow keys move between chapters. Home and End jump to the ends.
         </p>
       </nav>
 

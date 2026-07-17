@@ -2845,7 +2845,27 @@ button:focus-visible,
 }
 
 .project-toc-text {
+  display: inline-flex;
+  min-width: 0;
   overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-toc-stage {
+  flex: 0 0 auto;
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.project-toc-separator {
+  flex: 0 0 auto;
+  color: var(--muted);
+}
+
+.project-toc-title {
+  min-width: 0;
+  overflow: hidden;
+  color: inherit;
   text-overflow: ellipsis;
 }
 
@@ -2972,6 +2992,18 @@ button:focus-visible,
   }
 
   .project-toc-active-title {
+    display: inline-flex;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .project-toc-active-title .project-toc-stage,
+  .project-toc-active-title .project-toc-separator {
+    flex: 0 0 auto;
+  }
+
+  .project-toc-active-title .project-toc-title {
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;

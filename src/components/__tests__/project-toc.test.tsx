@@ -21,6 +21,15 @@ const baseStylesheet = readFileSync(
   "utf8",
 );
 
+const chapters = [
+  { id: "frame", stage: "Frame", title: "The routing problem" },
+  { id: "research", stage: "Research", title: "What drivers changed" },
+  { id: "design", stage: "Design", title: "Safer route decisions" },
+  { id: "refine", stage: "Refine", title: "The interaction language" },
+  { id: "trust", stage: "Trust", title: "Community reports" },
+  { id: "validate", stage: "Validate", title: "What still needs proof" },
+];
+
 function getCssBlock(selector: string) {
   const escapedSelector = selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const ruleStart = baseStylesheet.match(
@@ -72,6 +81,70 @@ afterEach(() => {
 });
 
 describe("ProjectToc", () => {
+  it("renders and announces chapter-aware labels", () => {
+    vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
+    vi.stubGlobal("ResizeObserver", MockResizeObserver);
+
+    const { container } = render(
+      <main className="project-page">
+        {chapters.map((chapter) => (
+          <h2 key={chapter.id} id={chapter.id}>
+            {chapter.title}
+          </h2>
+        ))}
+        <ProjectToc sections={chapters} />
+      </main>,
+    );
+
+    expect(
+      screen.getByRole("navigation", { name: "Case study chapters" }),
+    ).toBeInTheDocument();
+
+    const research = screen.getByRole("button", {
+      name: "Research: What drivers changed",
+    });
+    expect(research).toBeInTheDocument();
+    expect(
+      research.querySelector(".project-toc-text > .project-toc-stage"),
+    ).toHaveTextContent("Research");
+    expect(
+      research.querySelector(".project-toc-text > .project-toc-title"),
+    ).toHaveTextContent("What drivers changed");
+
+    fireEvent.click(research);
+
+    expect(screen.getByRole("status")).toHaveTextContent(
+      "Now reading: Research: What drivers changed",
+    );
+    expect(
+      container.querySelector(
+        ".project-toc-active-title .project-toc-stage",
+      ),
+    ).toHaveTextContent("Research");
+    expect(
+      container.querySelector(
+        ".project-toc-active-title .project-toc-title",
+      ),
+    ).toHaveTextContent("What drivers changed");
+    expect(screen.getByText(/Arrow keys move between chapters/)).toBeInTheDocument();
+  });
+
+  it("keeps a legacy section title as its accessible name", () => {
+    vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
+    vi.stubGlobal("ResizeObserver", MockResizeObserver);
+
+    render(
+      <main className="project-page">
+        <h2 id="overview">Overview</h2>
+        <ProjectToc sections={[{ title: "Overview", id: "overview" }]} />
+      </main>,
+    );
+
+    expect(
+      screen.getAllByRole("button", { name: "Overview" }),
+    ).toHaveLength(1);
+  });
+
   it("uses the shared project heading offset for anchored headings", () => {
     expect(getCssBlock(".project-page")).toMatch(
       /--project-heading-offset:\s*3\.5rem;/,

@@ -9,12 +9,15 @@ const styles = readFileSync(
 
 function cssBlocks(header: string, source = styles) {
   const blocks: string[] = [];
-  let cursor = 0;
+  const escapedHeader = header.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const ruleStart = new RegExp(
+    `(?:^|\\n)\\s*${escapedHeader}\\s*(?:,|\\{)`,
+    "g",
+  );
+  let match: RegExpExecArray | null;
 
-  while (cursor < source.length) {
-    const start = source.indexOf(header, cursor);
-    if (start === -1) break;
-    const open = source.indexOf("{", start);
+  while ((match = ruleStart.exec(source)) !== null) {
+    const open = source.indexOf("{", match.index);
     let depth = 0;
 
     for (let index = open; index < source.length; index += 1) {
@@ -22,7 +25,7 @@ function cssBlocks(header: string, source = styles) {
       if (source[index] === "}") depth -= 1;
       if (depth === 0) {
         blocks.push(source.slice(open + 1, index));
-        cursor = index + 1;
+        ruleStart.lastIndex = index + 1;
         break;
       }
     }
@@ -37,15 +40,58 @@ function cssBlock(header: string, source = styles) {
 }
 
 describe("ProjectToc responsive layout", () => {
+  it("keeps stage and title inside the ellipsis boundary without shrinking targets", () => {
+    const link = cssBlock(".project-toc-link");
+    const label = cssBlock(".project-toc-text");
+    const stage = cssBlock(".project-toc-stage");
+    const separator = cssBlock(".project-toc-separator");
+    const title = cssBlock(".project-toc-title");
+
+    expect(link).toMatch(/min-height:\s*44px;/);
+    expect(label).toMatch(/display:\s*inline-flex;/);
+    expect(label).toMatch(/min-width:\s*0;/);
+    expect(label).toMatch(/overflow:\s*hidden;/);
+    expect(stage).toMatch(/flex:\s*0 0 auto;/);
+    expect(separator).toMatch(/flex:\s*0 0 auto;/);
+    expect(title).toMatch(/min-width:\s*0;/);
+    expect(title).toMatch(/overflow:\s*hidden;/);
+    expect(title).toMatch(/text-overflow:\s*ellipsis;/);
+  });
+
+  it("ellipsizes only the mobile title while keeping the stage readable", () => {
+    const mobile = cssBlocks("@media (max-width: 768px)").find((block) =>
+      block.includes(".project-toc-active-title"),
+    );
+    expect(mobile).toBeDefined();
+
+    const activeTitle = cssBlock(".project-toc-active-title", mobile!);
+    const stage = cssBlock(
+      ".project-toc-active-title .project-toc-stage",
+      mobile!,
+    );
+    const title = cssBlock(
+      ".project-toc-active-title .project-toc-title",
+      mobile!,
+    );
+
+    expect(activeTitle).toMatch(/display:\s*inline-flex;/);
+    expect(activeTitle).toMatch(/overflow:\s*hidden;/);
+    expect(stage).toMatch(/flex:\s*0 0 auto;/);
+    expect(title).toMatch(/min-width:\s*0;/);
+    expect(title).toMatch(/text-overflow:\s*ellipsis;/);
+  });
+
   it("starts the vertical spine at 1440px and keeps its active label visible", () => {
     expect(styles).not.toContain("@media (min-width: 1280px)");
     const wide = cssBlock("@media (min-width: 1440px)");
+    const toc = cssBlock(".project-toc", wide);
     const label = cssBlock(".project-toc-text", wide);
     const active = cssBlock(
       ".project-toc-link--active .project-toc-text",
       wide,
     );
 
+    expect(toc).toMatch(/width:\s*3\.6rem;/);
     expect(label).toMatch(/right:\s*2\.5rem;/);
     expect(label).toMatch(/left:\s*auto;/);
     expect(label).toMatch(/text-align:\s*right;/);
