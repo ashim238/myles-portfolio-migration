@@ -92,11 +92,12 @@ Desktop and tablet behavior:
 - Image behavior: centered cover crop inside an overflow-hidden frame.
 - Background: a sampled dark green from the source asset.
 - Bottom margin: `1.5rem`.
-- Scale: the smallest value that makes the phone occupy at least 28 percent of the frame width while keeping the complete device visible at `1024`, `1280`, and `1440` pixel viewport widths.
+- Scale: `1.03`, which keeps the complete device visible while making it occupy roughly 85 percent of the frame height at `1024`, `1280`, and `1440` pixel viewport widths.
 
 Mobile behavior:
 
 - The frame returns to the source ratio, `2560 / 1862`.
+- Image scale: `1.24`.
 - The phone must occupy 28 to 34 percent of the frame width at a `390` pixel viewport.
 - No part of the device may be clipped.
 - No horizontal overflow is allowed.
@@ -131,10 +132,12 @@ This keeps the page alive without making the initial experience depend on animat
 
 Desktop spine:
 
-- The active section title remains visible at widths of `1280px` and above.
+- The horizontal sticky TOC remains active from `1280px` through `1439px`, where its labels already stay visible.
+- The vertical spine begins at `1440px`.
+- The active section title remains visible in the vertical spine without hover.
 - Inactive labels keep their current hover and focus behavior.
 - The active label uses the existing surface, foreground, line, and project TOC accent tokens.
-- The active label must not cover the case-study text column at `1280`, `1440`, or `1600` pixel widths.
+- Vertical-spine labels open toward the outside left gutter and must stay on-screen without covering the case-study text column at `1440` and `1600` pixel widths.
 - Keyboard behavior and the live region remain unchanged.
 
 Mobile return control:
@@ -187,7 +190,7 @@ Capture fresh, section-specific screenshots after implementation.
 - Fresh Greens: `1440 × 900`, `1024 × 768`, and `390 × 844`.
 - One additional case-study hero at desktop and mobile sizes to confirm the shared dimension contract did not alter unrelated cover composition.
 - Homepage and About at desktop after the visible-first motion change.
-- One long case study at `1440px` with the desktop spine active.
+- One long case study at `1280px` with the horizontal TOC and at `1440px` with the desktop spine active.
 - One long case study at `390px` after the back-to-top control appears.
 - Light and dark themes for the Fresh Greens cover and navigation controls.
 
