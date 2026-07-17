@@ -88,7 +88,7 @@ export default async function FreshGreensPage() {
       <RecruiterCut
         role="Solo, design and engineering"
         timeline="Sep 2025 – Jun 2026"
-        stack="React Native, Expo, TypeScript, Supabase"
+        stack="Figma, Illustrator, React Native, Expo, TypeScript, Supabase"
         outcomeValue="Working"
         outcomeLabel="React Native prototype across 26+ screens"
         moves={[
@@ -334,6 +334,13 @@ export default async function FreshGreensPage() {
             I swapped iOS&apos;s cool grays for five warm surfaces, all built
             in OKLCH on the brand-green hue, so the whole app shares one tonal
             source.
+          </p>
+          <p>
+            Most of the visual-system work started in Figma and then got
+            checked in the React Native build. I used Illustrator for the
+            onboarding art, and kept the design tokens close to the app code so
+            palette, spacing, and type decisions could be tested across real
+            flows.
           </p>
           <p>
             Type took three tries. Jost first, then Space Grotesk, then Libre

@@ -117,6 +117,21 @@ describe("Fresh Greens prose structure", () => {
     expect(source).toContain('className="fg-moderation"');
   });
 
+  it("names the tools used without turning them into validation claims", () => {
+    const source = readPage();
+    const normalized = normalizeCopy(source);
+
+    expect(source).toContain(
+      'stack="Figma, Illustrator, React Native, Expo, TypeScript, Supabase"',
+    );
+    expect(normalized).toContain(
+      "Most of the visual-system work started in Figma and then got checked in the React Native build.",
+    );
+    expect(normalized).toContain("I used Illustrator for the onboarding art");
+    expect(source).not.toMatch(/validated safety through Figma/i);
+    expect(source).not.toMatch(/proved safety through React Native/i);
+  });
+
   it("retains the safety interaction and community-report evidence stack", () => {
     const source = readPage();
 
