@@ -31,8 +31,12 @@ vi.mock("@/components/home-intro-guard", () => ({
   HomeIntroGuard: () => <div data-testid="home-intro-guard" />,
 }));
 
-vi.mock("@/components/hero-interest-typer", () => ({
-  HeroInterestTyper: () => <p data-testid="finite-interest-decoder" />,
+vi.mock("@/components/hero-statement-decoder", () => ({
+  HeroStatementDecoder: () => (
+    <p data-testid="finite-statement-decoder">
+      I design digital products and stay close through the build.
+    </p>
+  ),
 }));
 
 describe("homepage first impression", () => {
@@ -40,15 +44,16 @@ describe("homepage first impression", () => {
     render(await Home());
 
     expect(screen.getByText("Product Designer")).toBeInTheDocument();
-    expect(
-      screen.getByText("I design digital products and stay close through the build."),
-    ).toBeInTheDocument();
+    const statement = screen.getByTestId("finite-statement-decoder");
+    expect(statement).toHaveTextContent(
+      "I design digital products and stay close through the build.",
+    );
+    expect(screen.queryByText(/^Also:/)).toBeNull();
     expect(
       screen.getByText(
         "Previously TikTok and UMG. My latest project is Fresh Greens.",
       ),
     ).toBeInTheDocument();
-    expect(screen.getByTestId("finite-interest-decoder")).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: "View selected work" }),
     ).toHaveAttribute("href", "/#work");

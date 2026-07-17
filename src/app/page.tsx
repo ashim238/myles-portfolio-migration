@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { HeroInterestTyper } from "@/components/hero-interest-typer";
+import { HeroStatementDecoder } from "@/components/hero-statement-decoder";
 import { SiteNav } from "@/components/site-nav";
 import { WorkGallery } from "@/components/work-gallery";
 import { getDraftProjects, getPublishedProjects } from "@/lib/content";
@@ -17,13 +17,10 @@ export default async function Home() {
       <section className="hero" aria-labelledby="hero-name">
         <p className="hero-role">Product Designer</p>
         <h1 id="hero-name" className="hero-name">{siteConfig.name}</h1>
-        <p className="hero-tagline">
-          I design digital products and stay close through the build.
-        </p>
+        <HeroStatementDecoder />
         <p className="hero-credentials">
           Previously TikTok and UMG. My latest project is Fresh Greens.
         </p>
-        <HeroInterestTyper />
         <p className="hero-actions">
           <Link className="about-action" href="/#work">
             View selected work

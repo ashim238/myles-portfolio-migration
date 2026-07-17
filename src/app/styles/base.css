@@ -701,13 +701,24 @@ button:focus-visible,
   color: var(--muted);
 }
 
-.hero-tagline {
+.hero-statement-decoder {
+  display: grid;
   margin-top: 1.2rem;
   max-width: 38ch;
   font-size: clamp(1.18rem, 2.5vw, 1.55rem);
   font-weight: 500;
   line-height: 1.38;
   text-wrap: pretty;
+}
+
+.hero-statement-decoder-sizer {
+  grid-area: 1 / 1;
+  visibility: hidden;
+}
+
+.hero-statement-decoder-visible {
+  grid-area: 1 / 1;
+  min-width: 0;
 }
 
 .hero-proof {
@@ -728,22 +739,7 @@ button:focus-visible,
   opacity: 0.8;
 }
 
-.hero-typer {
-  margin-top: 1rem;
-  min-height: 1.5em;
-  max-width: 40rem;
-  overflow: hidden;
-  color: var(--foreground);
-  font-family: var(--font-mono);
-  font-size: clamp(0.82rem, 1.7vw, 0.96rem);
-  line-height: 1.5;
-}
-
-.hero-typer-prefix {
-  white-space: pre-wrap;
-}
-
-.hero-typer-cursor {
+.hero-statement-decoder-cursor {
   margin-left: 1px;
   color: var(--muted);
   animation: hero-cursor-blink 760ms step-end infinite;
@@ -3474,9 +3470,8 @@ button:focus-visible,
   .footer,
   .project-topbar,
   .project-cover,
-  .hero-tagline,
   .hero-credentials,
-  .hero-typer-cursor,
+  .hero-statement-decoder-cursor,
   .not-found,
   .resume-layout,
   .resume-label,
