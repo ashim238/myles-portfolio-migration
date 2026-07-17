@@ -5,8 +5,6 @@ import { useEffect } from "react";
 const SELECTORS = [
   ".project-page .project-section",
   ".project-highlight",
-  ".project-work-jump > h2",
-  ".project-work-jump-list > li",
   ".play-entry",
   ".about-detail",
   ".home-page .about",

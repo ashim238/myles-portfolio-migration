@@ -4955,13 +4955,8 @@
 /* ── Project work jump: scroll-driven entrance ───────── */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .project-work-jump > h2 {
-      animation: od-card-rise linear both;
-      animation-timeline: view();
-      animation-range: entry 0% cover 30%;
-    }
-
-    .project-work-jump-list > li {
+    .project-work-jump-card,
+    .project-work-jump-view-all {
       animation: od-card-rise linear both;
       animation-timeline: view();
       animation-range: entry 0% cover 30%;

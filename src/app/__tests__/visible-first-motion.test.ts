@@ -78,8 +78,8 @@ describe("visible-first structural motion", () => {
       ".project-evidence-heading",
       ".project-chapter-motif",
       ".project-sections > .project-section",
-      ".project-work-jump > h2",
-      ".project-work-jump-list > li",
+      ".project-work-jump-card",
+      ".project-work-jump-view-all",
     ]) {
       for (const block of cssBlocks(selector, baseStyles)) {
         expect(block).not.toMatch(/opacity:\s*0;/);
