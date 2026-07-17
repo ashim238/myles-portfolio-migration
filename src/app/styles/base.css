@@ -3139,7 +3139,7 @@ button:focus-visible,
   }
 
   .project-toc-link {
-    min-height: 2.3rem;
+    min-height: 44px;
     padding: 0 0.5rem 0 0.9rem;
     gap: 0.6rem;
     border-radius: var(--rounded-sm);
@@ -3158,7 +3158,7 @@ button:focus-visible,
     right: auto;
     bottom: auto;
     width: 2px;
-    height: 2.3rem;
+    height: 44px;
   }
 
   .project-toc-item:last-child .project-toc-rail {

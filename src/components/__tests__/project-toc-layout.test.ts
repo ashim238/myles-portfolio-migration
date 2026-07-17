@@ -85,6 +85,8 @@ describe("ProjectToc responsive layout", () => {
     expect(styles).not.toContain("@media (min-width: 1280px)");
     const wide = cssBlock("@media (min-width: 1440px)");
     const toc = cssBlock(".project-toc", wide);
+    const link = cssBlock(".project-toc-link", wide);
+    const rail = cssBlock(".project-toc-rail", wide);
     const label = cssBlock(".project-toc-text", wide);
     const active = cssBlock(
       ".project-toc-link--active .project-toc-text",
@@ -92,6 +94,8 @@ describe("ProjectToc responsive layout", () => {
     );
 
     expect(toc).toMatch(/width:\s*3\.6rem;/);
+    expect(rail).toMatch(/height:\s*44px;/);
+    expect(link).toMatch(/min-height:\s*44px;/);
     expect(label).toMatch(/right:\s*2\.5rem;/);
     expect(label).toMatch(/left:\s*auto;/);
     expect(label).toMatch(/text-align:\s*right;/);

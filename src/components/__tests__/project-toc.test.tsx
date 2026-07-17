@@ -145,6 +145,59 @@ describe("ProjectToc", () => {
     ).toHaveLength(1);
   });
 
+  it("moves focus across six chapters and restores it after Escape", async () => {
+    vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
+    vi.stubGlobal("ResizeObserver", MockResizeObserver);
+
+    const { container } = render(
+      <main className="project-page">
+        {chapters.map((chapter) => (
+          <h2 key={chapter.id} id={chapter.id}>
+            {chapter.title}
+          </h2>
+        ))}
+        <ProjectToc sections={chapters} />
+      </main>,
+    );
+
+    const chapterButtons = chapters.map((chapter) =>
+      screen.getByRole("button", {
+        name: `${chapter.stage}: ${chapter.title}`,
+      }),
+    );
+    const toggle = container.querySelector<HTMLButtonElement>(
+      ".project-toc-toggle",
+    );
+
+    expect(toggle).not.toBeNull();
+    expect(chapterButtons).toHaveLength(6);
+
+    chapterButtons[0].focus();
+    fireEvent.keyDown(chapterButtons[0], { key: "ArrowDown" });
+    expect(chapterButtons[1]).toHaveFocus();
+    fireEvent.keyDown(chapterButtons[1], { key: "ArrowRight" });
+    expect(chapterButtons[2]).toHaveFocus();
+    fireEvent.keyDown(chapterButtons[2], { key: "ArrowUp" });
+    expect(chapterButtons[1]).toHaveFocus();
+    fireEvent.keyDown(chapterButtons[1], { key: "ArrowLeft" });
+    expect(chapterButtons[0]).toHaveFocus();
+
+    fireEvent.keyDown(chapterButtons[0], { key: "End" });
+    expect(chapterButtons[5]).toHaveFocus();
+    fireEvent.keyDown(chapterButtons[5], { key: "Home" });
+    expect(chapterButtons[0]).toHaveFocus();
+
+    fireEvent.click(toggle!);
+    expect(toggle).toHaveAttribute("aria-expanded", "true");
+    chapterButtons[3].focus();
+    fireEvent.keyDown(chapterButtons[3], { key: "Escape" });
+
+    await vi.waitFor(() => {
+      expect(toggle).toHaveAttribute("aria-expanded", "false");
+      expect(toggle).toHaveFocus();
+    });
+  });
+
   it("uses the shared project heading offset for anchored headings", () => {
     expect(getCssBlock(".project-page")).toMatch(
       /--project-heading-offset:\s*3\.5rem;/,
