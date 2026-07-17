@@ -3479,9 +3479,8 @@
 
 @keyframes nv-hero-in {
   0% {
-    opacity: 0;
+    opacity: 1;
     transform: translateY(18px) scale(0.972);
-    filter: blur(6px);
   }
   55% {
     opacity: 1;
@@ -4810,7 +4809,7 @@
 
 @keyframes od-card-rise {
   0% {
-    opacity: 0.35;
+    opacity: 1;
     transform: translateY(32px) scale(0.98);
   }
   100% {
@@ -4894,9 +4893,8 @@
 
 @keyframes od-highlight-in {
   0% {
-    opacity: 0;
+    opacity: 1;
     transform: translateY(20px) scale(0.975);
-    filter: blur(4px);
   }
   100% {
     opacity: 1;
@@ -4926,7 +4924,7 @@
 
 @keyframes od-footer-in {
   0% {
-    opacity: 0;
+    opacity: 1;
     transform: translateY(12px);
   }
   100% {

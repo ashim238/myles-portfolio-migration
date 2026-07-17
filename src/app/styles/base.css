@@ -123,7 +123,7 @@ body[data-lightbox-open="true"]::after {
 
 @keyframes fadeUp {
   from {
-    opacity: 0;
+    opacity: 1;
     transform: translateY(10px);
   }
   to {
@@ -144,7 +144,7 @@ body[data-lightbox-open="true"]::after {
 /* Scroll-linked project sections (Chromium + Safari 17.4+); others use staggered fadeUp */
 @keyframes sectionScrollIn {
   from {
-    opacity: 0;
+    opacity: 1;
     transform: translateY(12px);
   }
   to {
@@ -1081,17 +1081,14 @@ button:focus-visible,
 
 @media (prefers-reduced-motion: no-preference) {
   .work:not(.work-drafts) > h2 {
-    opacity: 0;
     animation: fadeUp 480ms ease-out 100ms both;
   }
 
   .work-drafts > h2 {
-    opacity: 0;
     animation: fadeUp 480ms ease-out 60ms both;
   }
 
   .work:not(.work-drafts) > .work-list > .work-item {
-    opacity: 0;
     animation: fadeUp 560ms ease-out both;
   }
 
@@ -1132,7 +1129,6 @@ button:focus-visible,
   }
 
   .work-drafts > .work-list > .work-item {
-    opacity: 0;
     animation: fadeUp 560ms ease-out both;
   }
 
@@ -1347,7 +1343,6 @@ button:focus-visible,
 /* Staggered entry animation */
 @media (prefers-reduced-motion: no-preference) {
   .play-entry {
-    opacity: 0;
     animation: fadeUp 560ms ease-out both;
   }
 
@@ -2238,7 +2233,6 @@ button:focus-visible,
 
 @media (prefers-reduced-motion: no-preference) {
   .project-sections > .project-section {
-    opacity: 0;
     animation: fadeUp 580ms ease-out both;
   }
 
@@ -3193,12 +3187,10 @@ button:focus-visible,
 
 @media (prefers-reduced-motion: no-preference) {
   .project-work-jump > h2 {
-    opacity: 0;
     animation: fadeUp 480ms ease-out 60ms both;
   }
 
   .project-work-jump-list > li {
-    opacity: 0;
     animation: fadeUp 520ms ease-out both;
   }
 
