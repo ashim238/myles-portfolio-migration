@@ -2951,13 +2951,12 @@ button:focus-visible,
 }
 
 /* ── Vertical reading spine (wide screens) ──
-   Above 1280px there's room in the left gutter for the table of contents to
+   Above 1440px there's room in the left gutter for the table of contents to
    stand up into a true vertical spine: section dots strung on a continuous
    rail that fills downward as you read each section. Same DOM, same keyboard
-   nav and active tracking — only the orientation changes. Labels stay out of
-   the way (numbers + dots) and fly out on hover/focus so they never collide
-   with the text column. */
-@media (min-width: 1280px) {
+   nav and active tracking — only the orientation changes. The active label
+   stays visible in the left gutter; other labels appear on hover or focus. */
+@media (min-width: 1440px) {
   .project-toc {
     position: fixed;
     /* Anchored just left of the centered text column, clamped on-screen. */
@@ -3035,10 +3034,12 @@ button:focus-visible,
      collides with body text until intentionally summoned. */
   .project-toc-text {
     position: absolute;
-    left: 2.5rem;
+    left: auto;
+    right: 2.5rem;
     top: 50%;
-    transform: translateY(-50%) translateX(-4px);
-    max-width: 14rem;
+    max-width: min(12rem, calc(50vw - 38rem));
+    text-align: right;
+    transform: translateY(-50%) translateX(4px);
     padding: 0.18rem 0.5rem;
     border-radius: var(--rounded-sm);
     background: var(--surface);
@@ -3049,6 +3050,7 @@ button:focus-visible,
     transition: opacity 200ms ease, transform 200ms ease;
   }
 
+  .project-toc-link--active .project-toc-text,
   .project-toc-link:hover .project-toc-text,
   .project-toc-link:focus-visible .project-toc-text {
     opacity: 1;
@@ -3062,7 +3064,7 @@ button:focus-visible,
   }
 }
 
-@media (min-width: 1280px) and (prefers-reduced-motion: reduce) {
+@media (min-width: 1440px) and (prefers-reduced-motion: reduce) {
   .project-toc-text {
     transition: opacity 200ms ease;
   }
@@ -3311,6 +3313,12 @@ button:focus-visible,
 }
 
 @media (max-width: 768px) {
+  .reading-top {
+    right: 0.75rem;
+    bottom: calc(3.6rem + env(safe-area-inset-bottom, 0px) + 0.75rem);
+    z-index: 110;
+  }
+
   .mobile-nav {
     display: flex;
     position: fixed;
