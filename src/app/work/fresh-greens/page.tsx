@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Fresh Greens",
     description:
-      "A wayfinding app for Black drivers in America, weighing safety knowledge from drivers alongside the official map data.",
+      "A wayfinding app for Black drivers that brings community safety knowledge into route planning alongside public map data.",
     type: "article",
   },
 };
@@ -70,25 +70,25 @@ export default async function FreshGreensPage() {
         </h1>
         <p className="project-hero-lede fg-lede">
           Fresh Greens brings community safety knowledge into route planning
-          for Black drivers. I designed and built the React Native app after six
-          interviews, scoring{" "}
-          <mark className="case-highlight">daylight, road conditions, and community reports alongside public map data</mark>.
+          for Black drivers. I designed and built a working React Native
+          prototype after six interviews, scoring{" "}
+          <mark className="case-highlight">daylight, police presence, wildlife, road conditions, and community reports alongside public map data</mark>.
         </p>
       </section>
 
       <LeadMedia
         cover="/projects/fresh-greens/cover.png"
-        alt="Fresh Greens cover"
+        alt="Fresh Greens welcome screen on a phone, with an illustrated Black driver at sunrise."
       />
       <RecruiterCut
         problem="Navigation weighs time and distance, not what a driver knows about a road's safety."
         role="Solo, design and engineering"
         timeline="Sep 2025 – Jun 2026"
         stack="React Native, Expo, TypeScript, Supabase"
-        outcomeValue="26+"
-        outcomeLabel="screens shipped, held to a reserved-color rule"
+        outcomeValue="Working"
+        outcomeLabel="React Native prototype across 26+ screens"
         moves={[
-          "Ran community safety reports through the same pipeline as OpenStreetMap, DOT-511, OSRM, and SunCalc, weighted the same way.",
+          "Brought community reports into the same route-scoring pipeline as public map and daylight data, then surfaced the evidence through safety chips and source detail cards.",
           "Built the en-route screen around one-thumb reach: turn card, 3D map, and a safety column.",
           "Shaped the routing signals from six driver interviews.",
         ]}
@@ -106,14 +106,17 @@ export default async function FreshGreensPage() {
       {/* ── Section 1: The problem I set out to solve ── */}
       <section className="project-section fg-section" aria-labelledby="fg-problem">
         <h2 id="fg-problem">Why time and distance were not enough</h2>
-        <blockquote className="case-pullquote">The Green Book was a routing system built on community knowledge, because no institutional one existed.</blockquote>
+        <blockquote className="case-pullquote">
+          The Green Book collected community knowledge about where Black
+          travelers could safely stop.
+        </blockquote>
         <div className="project-section-body">
           <p>
-            For a Black driver, a route isn&apos;t only time and distance.
-            It&apos;s whether the roads are lit, whether a town feels safe to
-            stop in, where police tend to sit. Nav apps don&apos;t weigh any of
-            that. Fresh Greens brings that kind of knowledge back into the
-            route.
+            In interviews, Black drivers described routes in terms of more than
+            time and distance: whether roads are lit, whether a town feels safe
+            to stop in, and where police tend to sit. Navigation apps don&apos;t
+            account for those signals. Fresh Greens brings them into route
+            selection.
           </p>
         </div>
       </section>
@@ -140,6 +143,34 @@ export default async function FreshGreensPage() {
         </figure>
 
         <ResearchSynthesis />
+
+        <div
+          className="fg-evidence-boundaries"
+          aria-label="Fresh Greens evidence boundaries"
+        >
+          <div className="fg-evidence-boundary">
+            <p className="fg-evidence-label">Interview-supported</p>
+            <p>
+              Six Black drivers raised daylight, police presence, wildlife,
+              and road conditions as route-planning signals.
+            </p>
+          </div>
+          <div className="fg-evidence-boundary">
+            <p className="fg-evidence-label">Built in the prototype</p>
+            <p>
+              A working React Native build scores those four signals, shows
+              route chips, and uses detail cards to explain where a signal came
+              from.
+            </p>
+          </div>
+          <div className="fg-evidence-boundary">
+            <p className="fg-evidence-label">Not yet proven</p>
+            <p>
+              Whether the recommendations improve safety still needs broader
+              route testing and moderation data.
+            </p>
+          </div>
+        </div>
 
         <figure className="fg-lofi">
           <ExpandableImage
@@ -178,11 +209,14 @@ export default async function FreshGreensPage() {
           <p>
             Every route is scored on four things the interviews kept raising:
             light, police presence, wildlife, and road conditions. A community
-            report feeds those same four markers. It&apos;s{" "}
-            <mark className="case-highlight">weighted exactly like the data from OpenStreetMap or SunCalc</mark>{" "}
-            and runs through the same pipeline as everything else. Each score
-            carries its source, so a driver can see whether a segment scored low
-            from the sun angle or from a report.
+            report feeds those same four markers through the same scoring
+            pipeline as public data. I treated community reports as a{" "}
+            <mark className="case-highlight">first-class route input</mark>.
+            The preview shows visible evidence as safety chips, while detail
+            cards explain whether a signal comes from public map data, daylight
+            calculations, traffic incidents, or community reports. That&apos;s
+            how the working prototype behaves, not evidence that its
+            recommendation is safer.
           </p>
         </div>
 
@@ -198,13 +232,13 @@ export default async function FreshGreensPage() {
 
         <figure className="fg-en-route-video">
           <LeadVideo
-            clip="/projects/fresh-greens/process/active-nav.mov"
+            clip="/projects/fresh-greens/process/active-nav.mp4"
             poster="/projects/fresh-greens/v2/en-route.png"
-            alt="Fresh Greens running turn-by-turn navigation: the 3D map drags with the car along the route, the turn card updates on each maneuver, and the safety column stays in thumb reach."
-            type="video/quicktime"
+            alt="Fresh Greens running turn-by-turn navigation on a simulated public route in Harlem: the turn card says to head out on West 127th Street now, the 3D map moves with the car, the speed reads 34 mph, and the bottom sheet shows a 4:24 daylight arrival for a 13.9 mi, 31 min trip."
           />
           <figcaption className="fg-safety-visual-caption">
-            The en-route screen in motion.
+            The current en-route prototype in motion on a simulated public
+            route through Harlem.
           </figcaption>
         </figure>
       </section>
@@ -305,7 +339,7 @@ export default async function FreshGreensPage() {
             Green carries every button and link. Red, orange, yellow, and navy
             are reserved for safety signals, each tied to one meaning, so a red
             dot always points to something specific. Across 26+ screens,{" "}
-            <mark className="case-highlight">the rule holds, with documented carve-outs</mark>.
+            <mark className="case-highlight">exceptions are documented as carve-outs</mark>.
           </p>
         </div>
 
@@ -316,23 +350,22 @@ export default async function FreshGreensPage() {
             <PhoneFrame variant="screenshot">
               <Shot
                 name="en-route"
-                alt="The Fresh Greens en-route screen: a green turn card reading 'Turn right onto Cyril Magnin Street in 160 m,' a 3D map, a posted speed sign next to a 25 mph readout, and a right-side column with a red alert, a navy safety Shield, an orange hazard marker, and a recenter control. The bottom sheet shows an 11:39 arrival marked with a moon glyph."
+                alt="The current Fresh Greens en-route screen on a simulated public route in Harlem: a green turn card says to head out on West 127th Street now, the map shows 34 mph, the right-side safety column uses red, navy, and orange controls, and the bottom sheet shows a 4:24 daylight arrival for a 13.9 mi, 31 min trip."
               />
             </PhoneFrame>
             <figcaption className="fg-safety-visual-caption">
-              The reserved palette holding on a real screen: navy for the
-              safety Shield, red on the alert dot, orange on the hazard, a
-              moon glyph carrying the daylight-arrival cue, and green
-              everywhere else.
+              The reserved palette on the current en-route screen: navy for
+              the safety Shield, red on the alert, orange on the hazard, a sun
+              glyph for the daylight arrival, and green everywhere else.
             </figcaption>
           </figure>
         </div>
 
         <div className="project-section-body">
           <p>
-            The daylight gradient is the one non-reserved color the system
-            allows itself. On <code>/route-preview</code>, a sun-to-moon dashed
-            band traces what the light will do along the route.
+            The daylight gradient sits outside those four reserved safety
+            colors. On <code>/route-preview</code>, a sun-to-moon dashed band
+            traces what the light will do along the route.
           </p>
         </div>
 
@@ -340,7 +373,7 @@ export default async function FreshGreensPage() {
           <PhoneFrame variant="screenshot">
             <Shot
               name="route-preview"
-              alt="The Fresh Greens route preview: a map at top with a recenter and an orange hazard control, a bottom sheet showing South Lake Tahoe, 4 hr 8 min, an 11:39 PM arrival at 189.2 mi, an orange 'road condition' chip and a green 'residential block' chip along the route, a sun-to-moon dashed daylight indicator, and a green Go button."
+              alt="The current Fresh Greens route preview for Weeksville Heritage Center: a map at top with recenter and hazard controls, a bottom sheet showing a 30 min trip arriving at 3:15 PM over 13.6 mi, an All clear chip, a daylight indicator, and a green Go button."
             />
           </PhoneFrame>
           <figcaption className="fg-safety-visual-caption">
@@ -358,18 +391,6 @@ export default async function FreshGreensPage() {
           </p>
         </div>
 
-        <figure className="fg-safety-visual">
-          <PhoneFrame variant="screenshot">
-            <Shot
-              name="report-detail"
-              alt="A report detail card showing severity chips for Threatened, Followed, Harassed, Uncomfortable, and Uneasy vibe, pairing a filled warning-diamond glyph with color"
-            />
-          </PhoneFrame>
-          <figcaption className="fg-safety-visual-caption">
-            Severity pairs color with the filled WarningDiamond glyph.
-          </figcaption>
-        </figure>
-
       </section>
 
       {/* ── Section 7: Where the argument gets tested ── */}
@@ -380,17 +401,45 @@ export default async function FreshGreensPage() {
         <h2 id="fg-trust">Moderating community reports</h2>
         <div className="project-section-body">
           <p>
-            The pipeline only works if community reports can be trusted like
-            public data. Bad-faith and mistaken reports have to be caught
-            without falling back to distrusting community data. That&apos;s
-            what <code>/moderation</code> is for.
+            Community reports have to earn trust without being treated as less
+            useful by default. Bad-faith and mistaken reports still need to be
+            caught. That&apos;s what <code>/moderation</code> is for.
           </p>
           <p>
-            Every report enters a queue with an investigation panel: the source
-            device, prior and nearby reports, and coordination checks for
-            duplicate IPs and devices. Nothing publishes without a human
-            decision, and every publish and unpublish is logged.
+            When the Supabase path is configured, reports flow into a
+            moderation view with an investigation panel: the source device,
+            prior and nearby reports, and coordination checks for duplicate IPs
+            and devices. Moderators can review, hide, restore, or remove
+            reports, and those actions are recorded in an audit log.
           </p>
+        </div>
+
+        <div className="fg-color-pair">
+          <figure className="fg-safety-visual">
+            <PhoneFrame variant="screenshot">
+              <Shot
+                name="report-picker"
+                alt="The Fresh Greens report picker over a muted map, showing six categories: Incident, Felt unsafe, Lighting, Hazard, Felt welcome, and Black-owned."
+              />
+            </PhoneFrame>
+            <figcaption className="fg-safety-visual-caption">
+              The report picker lets drivers contribute context without
+              pretending every report is already verified.
+            </figcaption>
+          </figure>
+
+          <figure className="fg-safety-visual">
+            <PhoneFrame variant="screenshot">
+              <Shot
+                name="report-detail"
+                alt="The Fresh Greens Felt welcome contribution form over the en-route map, with place-type chips, welcoming-reason chips, an optional experience field, and a green Share your experience button with black text."
+              />
+            </PhoneFrame>
+            <figcaption className="fg-safety-visual-caption">
+              The form separates structured place and welcome tags from the
+              driver&apos;s optional written experience.
+            </figcaption>
+          </figure>
         </div>
 
         <div
@@ -420,7 +469,7 @@ export default async function FreshGreensPage() {
             <div className="fg-mod-stage">
               <p className="fg-mod-stage-label">Human decision</p>
               <p className="fg-mod-stage-text">
-                Published or held, every action logged
+                Reviewed, hidden, restored, or removed
               </p>
             </div>
           </div>
@@ -428,25 +477,26 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body">
           <p>
-            It&apos;s where community reports and public data meet the same
-            review. A planned transparency page will publish the outcomes so
+            A planned transparency page will publish moderation outcomes so
             the queue is auditable from outside.
           </p>
         </div>
 
       </section>
 
-      {/* ── Section 8: What shipped, and what didn't ─── */}
+      {/* ── Section 8: What was built, and what still needs proof ─── */}
       <section className="project-section fg-section fg-scope" aria-labelledby="fg-scope">
-        <h2 id="fg-scope">What shipped and what comes next</h2>
+        <h2 id="fg-scope">What I built and what still needs proof</h2>
 
         <div className="fg-scope-grid">
           <div className="fg-scope-col">
-            <p className="fg-scope-label">Shipped</p>
+            <p className="fg-scope-label">Built in the working prototype</p>
             <ul className="fg-scope-list" role="list">
               <li>
-                Equal-weighting routing pipeline across OpenStreetMap,
-                DOT-511, OSRM, SunCalc, and community reports
+                Route scoring that combines OpenStreetMap zones, DOT-511 where
+                available, Mapbox/OSRM route geometry, SunCalc daylight data,
+                and community reports, with route chips and source-detail
+                explanations
               </li>
               <li>
                 Six-surface safety toolkit, with <code>/pulled-over</code>{" "}
@@ -454,68 +504,45 @@ export default async function FreshGreensPage() {
                 the Held-Question voice
               </li>
               <li>
-                Warm surface ramp and reserved-color discipline holding
-                across 26+ screens and 300+ accessibility attributes
+                Reserved-color system and warm surface ramp across 26+ screens,
+                with 300+ accessibility attributes and 62 Figma variables
               </li>
               <li>
                 <code>/moderation</code> queue with per-report investigation
                 panels, coordination detection for IP and device duplicates,
-                and a hold-to-remove destructive gesture
-              </li>
-              <li>
-                Design system published as a Figma library: 62 variables at
-                1:1 parity with <code>theme/colors.ts</code>, scoped per
-                token role
-              </li>
-            </ul>
-            <p className="fg-scope-also-label">Also on the list:</p>
-            <ul className="fg-scope-also-list" role="list">
-              <li>Daylight-graded route polyline with a WCAG dash pattern</li>
-              <li>Six-category report picker</li>
-              <li>
-                Four-layer Mapbox fallback chain (Mapbox → OSRM → cache →
-                mock)
-              </li>
-              <li>
-                Two-font Franklin plus reserved DM Serif Display
-              </li>
-              <li>Departure-reminder local notifications</li>
-              <li>
-                Delight layer of arrival and community-confirmation moments
-              </li>
-              <li>
-                Supabase community cloud with anonymous device-UUID auth and
-                Postgres row-level security
+                Supabase-backed review actions when configured, and a
+                hold-to-remove destructive gesture
               </li>
             </ul>
           </div>
           <div className="fg-scope-col">
-            <p className="fg-scope-label">Next, v2</p>
+            <p className="fg-scope-label">Still needs proof</p>
             <ul className="fg-scope-list" role="list">
               <li>
-                Moderator-role bootstrap automation (currently a manual SQL
-                insert in prod)
+                Route-quality testing with more Black drivers across regions
               </li>
               <li>
-                Push notifications for new moderator-queue items (local
-                notifications ship today, remote push doesn&apos;t yet)
+                Live shared-report testing across configured Supabase builds,
+                plus failure-mode testing for mistaken reports, coordinated
+                abuse, and moderation outcomes
               </li>
               <li>
-                Public transparency page for <code>/moderation</code>{" "}
-                activity
+                A public transparency page for <code>/moderation</code>{" "}
+                activity and broader device testing beyond iPhone
               </li>
-              <li>Broader on-device test matrix beyond iPhone</li>
             </ul>
           </div>
         </div>
 
         <div className="project-section-body fg-scope-closer">
           <p>
-            What comes next is mostly about accountability. The transparency
-            page is the one I care about most.
-            It puts the <code>/moderation</code>{" "}
-            queue&apos;s decisions in public, so the trust the whole system
-            runs on can be checked from outside.
+            Building the working app made the gap between a plausible safety
+            feature and a trustworthy one much clearer. I&apos;m confident in
+            the interaction choices I could trace back to interviews,
+            especially the Held-Question rule, route chips, and source detail
+            cards. I&apos;d want broader route testing with Black drivers,
+            moderation outcomes, and failure cases before calling any route
+            safer.
           </p>
         </div>
       </section>

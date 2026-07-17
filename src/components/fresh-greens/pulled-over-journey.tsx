@@ -36,10 +36,10 @@ const STEPS = [
     key: "contact",
     label: "Contact",
     image: "pulled-over-contact",
-    decision: "A trusted contact and the live recording stay one tap away.",
+    decision: "A trusted contact and the recording stay one tap away.",
     detail:
-      "The final state confirms that someone can see the driver's location without turning the screen into an alarm panel.",
-    alt: "The pulled-over contact screen showing a live recording timer, the message You're not alone, and Call and Text actions for a trusted contact.",
+      "The final state keeps Call and Text available while making it clear that no message or location has been sent.",
+    alt: "The pulled-over contact screen showing a live recording timer, the message You're not alone, a note that no message or location has been sent, and Call and Text actions for trusted contact Jordan Lee.",
   },
 ] as const;
 

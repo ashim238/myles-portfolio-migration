@@ -27,7 +27,17 @@ describe("Fresh Greens pulled-over journey", () => {
       "true",
     );
     expect(
-      screen.getByText("A trusted contact and the live recording stay one tap away."),
+      screen.getByText("A trusted contact and the recording stay one tap away."),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "The final state keeps Call and Text available while making it clear that no message or location has been sent.",
+      ),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("img", {
+        name: /no message or location has been sent.*Jordan Lee/i,
+      }),
     ).toBeInTheDocument();
   });
 
