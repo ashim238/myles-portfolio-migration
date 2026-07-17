@@ -108,6 +108,10 @@ describe("ProjectToc", () => {
       research.querySelector(".project-toc-text > .project-toc-stage"),
     ).toHaveTextContent("Research");
     expect(
+      research.querySelector(".project-toc-text > .project-toc-separator")
+        ?.textContent,
+    ).toBe(": ");
+    expect(
       research.querySelector(".project-toc-text > .project-toc-title"),
     ).toHaveTextContent("What drivers changed");
 
@@ -121,6 +125,11 @@ describe("ProjectToc", () => {
         ".project-toc-active-title .project-toc-stage",
       ),
     ).toHaveTextContent("Research");
+    expect(
+      container.querySelector(
+        ".project-toc-active-title .project-toc-separator",
+      )?.textContent,
+    ).toBe(": ");
     expect(
       container.querySelector(
         ".project-toc-active-title .project-toc-title",

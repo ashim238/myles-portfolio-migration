@@ -325,7 +325,9 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
               {activeChapter?.stage ? (
                 <>
                   <span className="project-toc-stage">{activeChapter.stage}</span>
-                  <span className="project-toc-separator" aria-hidden="true"> · </span>
+                  <span className="project-toc-separator" aria-hidden="true">
+                    :{" "}
+                  </span>
                 </>
               ) : null}
               <span className="project-toc-title">{activeChapter?.title ?? ""}</span>
@@ -375,7 +377,9 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
                       {section.stage ? (
                         <>
                           <span className="project-toc-stage">{section.stage}</span>
-                          <span className="project-toc-separator" aria-hidden="true"> · </span>
+                          <span className="project-toc-separator" aria-hidden="true">
+                            :{" "}
+                          </span>
                         </>
                       ) : null}
                       <span className="project-toc-title">{section.title}</span>
