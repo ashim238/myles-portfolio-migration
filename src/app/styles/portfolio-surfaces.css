@@ -3701,7 +3701,8 @@
   white-space: nowrap;
 }
 
-.nv-page h2[id^="nv-"] {
+.nv-page .project-chapter-title,
+.nv-page .project-evidence-heading {
   font-family: var(--font-navi-display), var(--font-sans), sans-serif;
 }
 

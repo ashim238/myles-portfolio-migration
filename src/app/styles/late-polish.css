@@ -327,6 +327,24 @@ main[data-project-slug="navi"] {
   --case-highlight-color: var(--nv-accent);
   --case-highlight-opacity: 14%;
 }
+
+.nv-page .project-chapter {
+  --chapter-motif-accent: var(--nv-accent);
+}
+
+.nv-page .project-chapter-motif-line {
+  background: var(--line);
+}
+
+.nv-page .project-chapter-motif-line::after {
+  background: var(--chapter-motif-accent);
+}
+
+.nv-page .project-chapter-motif-point {
+  border-color: var(--chapter-motif-accent);
+  background: var(--background);
+}
+
 main[data-project-slug="understandingfafsa"] {
   --case-highlight-color: var(--uf-accent-highlight, #f2b544);
   --case-highlight-opacity: 22%;

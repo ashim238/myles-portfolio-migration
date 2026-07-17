@@ -51,6 +51,38 @@ describe("Navi evidence claims", () => {
     expect(projectPage).toMatch(/14(?:-response resident survey| responses)/);
     expect(projectPage).toContain("71%");
     expect(projectPage).toContain("50%");
+    expect(projectPage).toMatch(
+      /That dataset is the source for the two\s+survey findings shown below\./,
+    );
+  });
+
+  it("retains the complete chapter artifact stack", () => {
+    const projectPage = readSource("src/app/work/navi/page.tsx");
+    const researchArtifacts = readSource(
+      "src/components/navi/research-artifacts.tsx",
+    );
+
+    for (const component of [
+      "LeadMedia",
+      "RecruiterCut",
+      "HeatmapExplorer",
+      "HeuristicInsightCards",
+      "SurveyStatRings",
+      "NaviResearchArtifacts",
+      "CompositionStrip",
+      "NaviDemoEmbed",
+      "ProjectWorkJump",
+      "CaseHighlightObserver",
+      "NaviAnimReady",
+    ]) {
+      expect(projectPage).toContain(`<${component}`);
+    }
+
+    expect(researchArtifacts).toContain('aria-label="Research-informed archetypes"');
+    expect(researchArtifacts).toContain('aria-label="Journey-map excerpt"');
+    expect(researchArtifacts).toContain(
+      'aria-label="Individual booking-flow excerpt"',
+    );
   });
 
   it("separates research evidence, planning artifacts, and future work", () => {
@@ -62,6 +94,12 @@ describe("Navi evidence claims", () => {
     expect(projectPage).toMatch(/not wired into the current rebuild/i);
     expect(projectPage).not.toMatch(/three personas/i);
     expect(projectPage).not.toContain("Those flows are present in the rebuild");
+    expect(projectPage).toMatch(
+      /The graduate-studio concept did not ship\. The current demo is a portfolio rebuild/,
+    );
+    expect(projectPage).toMatch(
+      /Deeper neighborhood pages in Learn and onboarding for local hosts and businesses still/,
+    );
   });
 
   it("removes the metric frontmatter and gives the gallery a factual artifact outcome", () => {
