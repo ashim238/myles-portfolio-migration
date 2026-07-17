@@ -77,6 +77,9 @@ export default async function FreshGreensPage() {
       <LeadMedia
         cover="/projects/fresh-greens/cover.png"
         alt="Fresh Greens welcome screen on a phone, with an illustrated Black driver at sunrise."
+        width={2560}
+        height={1862}
+        presentation="fresh-greens"
       />
       <RecruiterCut
         role="Solo, design and engineering"
@@ -237,6 +240,8 @@ export default async function FreshGreensPage() {
           <LeadVideo
             clip="/projects/fresh-greens/process/active-nav.mp4"
             poster="/projects/fresh-greens/v2/en-route.png"
+            width={1290}
+            height={2796}
             alt="Fresh Greens running turn-by-turn navigation on a simulated public route in Harlem: the turn card says to head out on West 127th Street now, the 3D map moves with the car, the speed reads 34 mph, and the bottom sheet shows a 4:24 daylight arrival for a 13.9 mi, 31 min trip."
           />
           <figcaption className="fg-safety-visual-caption">

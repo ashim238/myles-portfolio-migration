@@ -6,6 +6,8 @@ type LeadVideoProps = {
   clip: string;
   poster: string;
   alt: string;
+  width: number;
+  height: number;
   /** MIME type of the clip. Defaults to video/mp4. QuickTime clips use a
    *  same-name MP4 derivative first and retain the .mov as a fallback. */
   type?: string;
@@ -35,7 +37,14 @@ function getSaveData() {
 /** Muted looping video that attaches its source only when it nears the
  *  viewport. Reduced-motion readers get the poster and can opt in with the
  *  native controls. */
-export function LeadVideo({ clip, poster, alt, type = "video/mp4" }: LeadVideoProps) {
+export function LeadVideo({
+  clip,
+  poster,
+  alt,
+  width,
+  height,
+  type = "video/mp4",
+}: LeadVideoProps) {
   const ref = useRef<HTMLVideoElement>(null);
   const [loadVideo, setLoadVideo] = useState(false);
   const [inView, setInView] = useState(false);
@@ -89,6 +98,8 @@ export function LeadVideo({ clip, poster, alt, type = "video/mp4" }: LeadVideoPr
         ref={ref}
         className="case-lead-video"
         poster={poster}
+        width={width}
+        height={height}
         muted
         loop
         playsInline

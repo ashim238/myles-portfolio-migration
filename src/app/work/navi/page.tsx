@@ -77,6 +77,8 @@ export default async function NaviPage() {
       <LeadMedia
         cover="/projects/navi/cover.png"
         alt="Navi neighborhood experience search results and cards on a tablet on a wooden table."
+        width={2048}
+        height={1365}
       />
       <RecruiterCut
         role="UI/UX Designer"

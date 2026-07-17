@@ -75,6 +75,8 @@ export default async function UnderstandingFafsaPage() {
       <LeadMedia
         cover="/projects/understandingfafsa/cover.png"
         alt="Two phone mockups showing blue and orange UnderstandingFAFSA newsletter templates."
+        width={4000}
+        height={3000}
       />
       <RecruiterCut
         role="Product Designer"

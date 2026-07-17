@@ -44,6 +44,8 @@ describe("LeadVideo", () => {
         clip="/projects/fresh-greens/process/active-nav.mp4"
         poster="/projects/fresh-greens/v2/en-route.png"
         alt="Navigation in motion"
+        width={1290}
+        height={2796}
       />,
     );
     const video = container.querySelector("video")!;
@@ -51,6 +53,8 @@ describe("LeadVideo", () => {
     expect(container.querySelector("source")).toBeNull();
     expect(video).toHaveAttribute("preload", "none");
     expect(video).toHaveAttribute("controls");
+    expect(video).toHaveAttribute("width", "1290");
+    expect(video).toHaveAttribute("height", "2796");
 
     act(() => {
       intersectionCallback(
@@ -88,7 +92,13 @@ describe("LeadVideo", () => {
     }));
 
     const { container } = render(
-      <LeadVideo clip="/motion.mov" poster="/poster.png" alt="Motion demo" />,
+      <LeadVideo
+        clip="/motion.mov"
+        poster="/poster.png"
+        alt="Motion demo"
+        width={1280}
+        height={720}
+      />,
     );
     const video = container.querySelector("video")!;
 
@@ -111,7 +121,13 @@ describe("LeadVideo", () => {
     });
 
     const { container, getByRole } = render(
-      <LeadVideo clip="/motion.mp4" poster="/poster.png" alt="Motion demo" />,
+      <LeadVideo
+        clip="/motion.mp4"
+        poster="/poster.png"
+        alt="Motion demo"
+        width={1280}
+        height={720}
+      />,
     );
 
     act(() => {
@@ -136,6 +152,8 @@ describe("LeadVideo", () => {
         clip="/projects/fresh-greens/process/active-nav.mov"
         poster="/poster.png"
         alt="Motion demo"
+        width={1280}
+        height={720}
         type="video/quicktime"
       />,
     );
