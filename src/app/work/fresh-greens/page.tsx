@@ -19,18 +19,16 @@ import { PulledOverJourney } from "@/components/fresh-greens/pulled-over-journey
 import { OnboardingIllustrationSequence } from "@/components/fresh-greens/onboarding-illustration-sequence";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getPublishedProjects } from "@/lib/content";
+import { createRouteMetadata } from "@/lib/site-config";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createRouteMetadata({
   title: "Fresh Greens",
   description:
     "A wayfinding app for Black drivers that brings community safety knowledge into route planning alongside public map data.",
-  openGraph: {
-    title: "Fresh Greens",
-    description:
-      "A wayfinding app for Black drivers that brings community safety knowledge into route planning alongside public map data.",
-    type: "article",
-  },
-};
+  path: "/work/fresh-greens",
+  image: "/projects/fresh-greens/cover.png",
+  type: "article",
+});
 
 function Shot({ name, alt }: { name: string; alt: string }) {
   return (
@@ -101,6 +99,7 @@ export default async function FreshGreensPage() {
           { title: "Safety interaction", id: "fg-pulled-over" },
           { title: "Visual system, trust, and scope", id: "fg-pivot" },
         ]}
+        readingEndId="fg-scope"
       />
 
       {/* ── Section 1: The problem I set out to solve ── */}
