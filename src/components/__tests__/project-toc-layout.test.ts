@@ -53,6 +53,7 @@ describe("ProjectToc responsive layout", () => {
     expect(label).toMatch(/overflow:\s*hidden;/);
     expect(stage).toMatch(/flex:\s*0 0 auto;/);
     expect(separator).toMatch(/flex:\s*0 0 auto;/);
+    expect(separator).toMatch(/margin-right:\s*0\.28em;/);
     expect(title).toMatch(/min-width:\s*0;/);
     expect(title).toMatch(/overflow:\s*hidden;/);
     expect(title).toMatch(/text-overflow:\s*ellipsis;/);
