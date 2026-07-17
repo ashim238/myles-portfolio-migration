@@ -6,6 +6,8 @@ Make the design process legible within seconds without flattening the four case 
 
 This batch also replaces the generic end-of-page project grid with one authored next-project transition so each case study closes with a clear continuation rather than a repeated index.
 
+On the homepage, combine the professional tagline and separate `Also` decoder into one finite statement. The line leads with product-design positioning, then reveals personality without adding another block of hero copy.
+
 ## Quality bar
 
 The chapter system must help a product-design reviewer answer three questions while scanning:
@@ -209,6 +211,39 @@ Project treatments:
 
 These are variations on one shared layout, not four unrelated components.
 
+## Homepage statement decoder
+
+Remove the separate visible `Also` line. Replace the static tagline and `HeroInterestTyper` with one `HeroStatementDecoder` in the current tagline position.
+
+Visible sequence:
+
+1. `I design digital products and stay close through the build.`
+2. `I sweat the empty states and the error copy.`
+3. `I make my own roti from scratch.`
+4. `I count down to each Absolute Batman drop.`
+
+Behavior:
+
+- The professional statement is present in the server-rendered first frame.
+- It holds long enough to read before any characters change.
+- The line uses the existing finite glyph-decoding language to move through the three personality statements.
+- Transitions never clear the line to an empty string.
+- The sequence runs once and stops on the Absolute Batman statement.
+- The current credentials line and work action remain fixed beneath it.
+- A hidden sizing copy of the professional statement reserves the line's maximum expected height so shorter phrases do not move the credentials or call to action.
+- The visible decoder uses the homepage headline type rather than a separate monospace paragraph. Scrambled glyphs may use the existing glyph set, but the resolved statements retain the portfolio's primary type voice.
+- The cursor appears only while the finite sequence is running.
+- Reduced-motion users receive the static professional statement with no timed text changes.
+
+Accessibility:
+
+- The changing visual string is hidden from assistive technology and is not a live region.
+- One static screen-reader string contains the professional statement followed by the three personality statements.
+- The component produces one semantic paragraph rather than separate tagline and personality paragraphs.
+- Server and client initial text match to avoid a hydration flash.
+
+This decoder is the homepage's main personality moment. Additional Impeccable personality opportunities may be identified during implementation, but they remain recommendations until approved. They should reward close attention to the work rather than add constant ambient motion.
+
 ## Curated next-project endcap
 
 Replace the generic `More work` list with one large next-project card and a secondary `View all work` link.
@@ -305,6 +340,17 @@ All behavior changes begin with a failing test.
 - Renders one primary project destination and one work-index link.
 - Preserves accessible names, focus treatment, and reduced-motion behavior.
 
+### Homepage statement decoder
+
+- Renders the professional statement on the server and initial client frame.
+- Holds the initial statement before decoding the next phrase.
+- Moves through the approved first-person sequence without rendering a blank line.
+- Stops on the Absolute Batman statement and clears its timer.
+- Removes the visible `Also` prefix and separate personality paragraph.
+- Keeps the fixed credentials and work link in the homepage first-impression test.
+- Uses a static professional statement when reduced motion is active.
+- Exposes the complete static copy to assistive technology without announcing each frame.
+
 ### Content quality
 
 - Scan all changed candidate-facing source strings for em dashes, semicolons, and ellipses.
@@ -325,6 +371,9 @@ For each case study:
 
 Cross-site checks:
 
+- Homepage statement at `1440 × 900` and `390 × 844`, including the initial professional frame and final Absolute Batman frame.
+- Homepage reduced-motion state at desktop and mobile widths.
+- No vertical shift in the credentials or work action as the statement changes.
 - All four project timelines in light and dark themes.
 - Fresh Greens with six daylight segments.
 - TikTok with restrained split-color movement.
@@ -355,6 +404,7 @@ Keep the current development server available for browser QA. Run a production b
 - Project-specific timeline palettes and transition motifs remain recognizable.
 - Motion is visible-first, bounded, and reduced-motion safe.
 - Each case study ends with the approved curated next project and a `View all work` link.
+- The homepage has one finite statement decoder, no visible `Also` line, and no hero layout shift between phrases.
 - No new factual or outcome claims are introduced.
 - Focused and full automated verification pass.
 - Fresh responsive screenshots confirm the new hierarchy works at desktop and mobile sizes.
