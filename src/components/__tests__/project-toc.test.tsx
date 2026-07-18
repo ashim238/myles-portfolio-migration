@@ -30,23 +30,37 @@ const chapters = [
   { id: "validate", stage: "Validate", title: "What still needs proof" },
 ];
 
-function getCssBlock(selector: string) {
+function getCssBlock(selector: string, source = baseStylesheet) {
   const escapedSelector = selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const ruleStart = baseStylesheet.match(
-    new RegExp(`(?:^|\\n)${escapedSelector}\\s*\\{`),
+  const ruleStart = source.match(
+    new RegExp(`(?:^|\\n)\\s*${escapedSelector}\\s*\\{`),
   );
   expect(ruleStart, `${selector} CSS rule`).not.toBeNull();
 
   const blockStart = ruleStart!.index! + ruleStart![0].lastIndexOf("{");
 
   let depth = 0;
-  for (let index = blockStart; index < baseStylesheet.length; index += 1) {
-    if (baseStylesheet[index] === "{") depth += 1;
-    if (baseStylesheet[index] === "}") depth -= 1;
-    if (depth === 0) return baseStylesheet.slice(blockStart + 1, index);
+  for (let index = blockStart; index < source.length; index += 1) {
+    if (source[index] === "{") depth += 1;
+    if (source[index] === "}") depth -= 1;
+    if (depth === 0) return source.slice(blockStart + 1, index);
   }
 
   throw new Error(`Unclosed CSS rule for ${selector}`);
+}
+
+function getAtRuleContaining(atRule: string, needle: string) {
+  let cursor = 0;
+
+  while (cursor < baseStylesheet.length) {
+    const start = baseStylesheet.indexOf(`${atRule} {`, cursor);
+    if (start < 0) break;
+    const candidate = getCssBlock(atRule, baseStylesheet.slice(start));
+    if (candidate.includes(needle)) return candidate;
+    cursor = start + atRule.length;
+  }
+
+  throw new Error(`${atRule} block containing ${needle} was not found`);
 }
 
 function mockRect(top: number, bottom: number) {
@@ -81,6 +95,24 @@ afterEach(() => {
 });
 
 describe("ProjectToc", () => {
+  it("marks collapsed navigation ready only after hydration", async () => {
+    vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
+    vi.stubGlobal("ResizeObserver", MockResizeObserver);
+
+    render(
+      <main className="project-page">
+        <h2 id="overview">Overview</h2>
+        <ProjectToc sections={[{ title: "Overview", id: "overview" }]} />
+      </main>,
+    );
+
+    await vi.waitFor(() => {
+      expect(
+        screen.getByRole("navigation", { name: "Case study chapters" }),
+      ).toHaveAttribute("data-toc-ready", "true");
+    });
+  });
+
   it("renders and announces chapter-aware labels", () => {
     vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
     vi.stubGlobal("ResizeObserver", MockResizeObserver);
@@ -220,6 +252,38 @@ describe("ProjectToc", () => {
     expect(baseStylesheet).toMatch(
       /\.project-toc-list--open\s*\{[^}]*max-height:\s*calc\(100dvh - 7rem - env\(safe-area-inset-bottom\)\);[^}]*overflow-y:\s*auto;/,
     );
+  });
+
+  it("keeps the mobile chapter list visible until enhancement is ready", () => {
+    const mobile = getAtRuleContaining(
+      "@media (max-width: 767px)",
+      ".project-toc-toggle",
+    );
+
+    expect(getCssBlock(".project-toc-toggle", mobile)).toMatch(
+      /display:\s*none;/,
+    );
+    expect(getCssBlock(".project-toc-list", mobile)).toMatch(
+      /display:\s*flex;/,
+    );
+    expect(
+      getCssBlock(
+        '.project-toc[data-toc-ready="true"] .project-toc-toggle',
+        mobile,
+      ),
+    ).toMatch(/display:\s*flex;/);
+    expect(
+      getCssBlock(
+        '.project-toc[data-toc-ready="true"] .project-toc-list',
+        mobile,
+      ),
+    ).toMatch(/display:\s*none;/);
+    expect(
+      getCssBlock(
+        '.project-toc[data-toc-ready="true"] .project-toc-list--open',
+        mobile,
+      ),
+    ).toMatch(/display:\s*flex;/);
   });
 
   it("wraps the active mobile title for safe ellipsis", () => {

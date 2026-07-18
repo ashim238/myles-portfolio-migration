@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { isWorkPath } from "@/lib/navigation-state";
 import { navItems } from "@/lib/site-config";
 
 export function SiteNavList() {
@@ -14,7 +15,7 @@ export function SiteNavList() {
         const isActive = isExternal
           ? false
           : item.href === "/#work"
-            ? pathname === "/"
+            ? isWorkPath(pathname)
             : pathname === item.href;
 
         return (

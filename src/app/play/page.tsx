@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SiteNav } from "@/components/site-nav";
 import { playEntries } from "@/lib/content";
 import { ExpandableImage } from "@/components/expandable-image";
+import { PortfolioEndcap } from "@/components/portfolio-endcap";
 import { SpecimenCard } from "@/components/specimen-card";
 import { createRouteMetadata } from "@/lib/site-config";
 
@@ -104,7 +105,7 @@ export default function PlayPage() {
                 ) : null}
               </div>
 
-              <footer className="play-entry-footer">
+              <div className="play-entry-footer">
                 <p className="play-entry-meta">
                   {entry.context} &middot; {entry.year}
                 </p>
@@ -119,11 +120,12 @@ export default function PlayPage() {
                     </li>
                   ))}
                 </ul>
-              </footer>
+              </div>
             </li>
           ))}
         </ol>
       </section>
+      <PortfolioEndcap context="play" />
     </main>
   );
 }

@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -15,6 +15,7 @@ vi.mock("next/navigation", () => ({
 }));
 
 import { MobileNav } from "@/components/mobile-nav";
+import { SiteNavList } from "@/components/site-nav-list";
 
 describe("MobileNav route ownership", () => {
   beforeEach(() => {
@@ -47,4 +48,28 @@ describe("MobileNav route ownership", () => {
       "background: color-mix(in srgb, var(--background) 96%, transparent)",
     );
   });
+
+  it.each(["/work", "/work/fresh-greens"])(
+    "marks Work current in both navigation systems on %s",
+    (pathname) => {
+      route.pathname = pathname;
+      const { container } = render(
+        <>
+          <MobileNav />
+          <SiteNavList />
+        </>,
+      );
+
+      const mobile = screen.getByRole("navigation", {
+        name: "Mobile navigation",
+      });
+      expect(within(mobile).getByRole("link", { name: "Work" })).toHaveAttribute(
+        "aria-current",
+        "page",
+      );
+      expect(
+        container.querySelector('.site-nav-list a[href="/#work"]'),
+      ).toHaveAttribute("aria-current", "page");
+    },
+  );
 });

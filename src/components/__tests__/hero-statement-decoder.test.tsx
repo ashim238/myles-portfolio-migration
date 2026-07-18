@@ -5,6 +5,12 @@ import { HeroStatementDecoder } from "@/components/hero-statement-decoder";
 const PROFESSIONAL =
   "I design digital products and stay close through the build.";
 const FINAL = "I count down to each Absolute Batman drop.";
+const STATEMENTS = [
+  PROFESSIONAL,
+  "I sweat the empty states and the error copy.",
+  "I make my own roti from scratch.",
+  FINAL,
+] as const;
 
 function stubReducedMotion(matches: boolean) {
   vi.spyOn(window, "matchMedia").mockImplementation((query: string) => ({
@@ -41,6 +47,20 @@ describe("HeroStatementDecoder", () => {
     ).toHaveTextContent(PROFESSIONAL);
   });
 
+  it("reserves wrapped geometry for every statement", () => {
+    stubReducedMotion(false);
+    const { container } = render(<HeroStatementDecoder />);
+    const sizers = Array.from(
+      container.querySelectorAll(".hero-statement-decoder-sizer"),
+    );
+
+    expect(sizers).toHaveLength(STATEMENTS.length);
+    expect(sizers.map((sizer) => sizer.textContent)).toEqual(STATEMENTS);
+    sizers.forEach((sizer) => {
+      expect(sizer).toHaveAttribute("aria-hidden", "true");
+    });
+  });
+
   it("holds the professional statement before decoding", () => {
     stubReducedMotion(false);
     const { container } = render(<HeroStatementDecoder />);
@@ -51,6 +71,31 @@ describe("HeroStatementDecoder", () => {
     act(() => vi.advanceTimersByTime(1000));
 
     expect(visible).toHaveTextContent(PROFESSIONAL);
+  });
+
+  it("completes every scramble and decode transition in 500 to 700ms", () => {
+    stubReducedMotion(false);
+    vi.spyOn(Math, "random").mockReturnValue(0);
+    const { container } = render(<HeroStatementDecoder />);
+    const visible = container.querySelector(
+      ".hero-statement-decoder-visible",
+    );
+    const visibleText = () => visible?.textContent?.replace("|", "") ?? "";
+
+    for (let index = 1; index < STATEMENTS.length; index += 1) {
+      const previous = STATEMENTS[index - 1];
+      let ticks = 0;
+      while (visibleText() === previous && ticks < 100) {
+        act(() => vi.advanceTimersByTime(38));
+        ticks += 1;
+      }
+
+      expect(visibleText()).not.toBe(previous);
+      act(() => vi.advanceTimersByTime(494));
+      expect(visibleText()).not.toBe(STATEMENTS[index]);
+      act(() => vi.advanceTimersByTime(190));
+      expect(visibleText()).toBe(STATEMENTS[index]);
+    }
   });
 
   it("never blanks the line and stops on the Absolute Batman statement", () => {

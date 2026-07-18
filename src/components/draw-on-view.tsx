@@ -30,6 +30,7 @@ export function DrawOnView({
     const root = ref.current;
     if (!root) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!("IntersectionObserver" in window)) return;
 
     const svg = root.querySelector("svg");
     const strokes = Array.from(
@@ -52,7 +53,6 @@ export function DrawOnView({
       el.style.transition = "none";
       el.style.strokeDashoffset = `${lengths[i]}`;
     };
-    strokes.forEach((_, i) => park(i));
 
     let drawn = false;
     const draw = () => {
@@ -75,26 +75,42 @@ export function DrawOnView({
     // Re-arm on every entry: a fast scroller who flew past it still sees the
     // draw when they scroll back. Reset only once it has fully left the
     // viewport, so partial-scroll jitter doesn't restart it mid-draw.
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.intersectionRatio >= 0.5) draw();
-          else if (entry.intersectionRatio === 0) reset();
-        }
-      },
-      { threshold: [0, 0.5] },
-    );
-    io.observe(svg);
+    let io: IntersectionObserver;
+    try {
+      io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.intersectionRatio >= 0.5) draw();
+            else if (entry.intersectionRatio === 0) reset();
+          }
+        },
+        { threshold: [0, 0.5] },
+      );
+    } catch {
+      return;
+    }
+
+    const restore = () => {
+      strokes.forEach((el) => {
+        el.style.transition = "";
+        el.style.strokeDasharray = "";
+        el.style.strokeDashoffset = "";
+      });
+    };
+
+    strokes.forEach((_, i) => park(i));
+    try {
+      io.observe(svg);
+    } catch {
+      io.disconnect();
+      restore();
+      return;
+    }
 
     return () => {
       io.disconnect();
       // Clean up inline styles if the effect re-runs.
-      strokes.forEach((el, i) => {
-        el.style.transition = "";
-        el.style.strokeDasharray = "";
-        el.style.strokeDashoffset = "";
-        void lengths[i];
-      });
+      restore();
     };
   }, [durationMs, staggerMs]);
 

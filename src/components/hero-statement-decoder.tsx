@@ -15,6 +15,7 @@ const FRAME_MS = 38;
 const INITIAL_HOLD_TICKS = 30;
 const HOLD_TICKS = 24;
 const SCRAMBLE_TICKS = 4;
+const DECODE_TICKS = 12;
 
 function randomGlyph() {
   return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
@@ -90,7 +91,7 @@ export function HeroStatementDecoder() {
       }
 
       const nextStatement = STATEMENTS[statementIndex];
-      resolved += 1;
+      resolved += Math.ceil(nextStatement.length / DECODE_TICKS);
       setDisplay(decodeFrame(nextStatement, resolved));
 
       if (resolved >= nextStatement.length) {
@@ -112,9 +113,15 @@ export function HeroStatementDecoder() {
       data-testid="hero-statement-decoder"
       aria-live="off"
     >
-      <span className="hero-statement-decoder-sizer" aria-hidden="true">
-        {STATEMENTS[0]}
-      </span>
+      {STATEMENTS.map((statement) => (
+        <span
+          key={statement}
+          className="hero-statement-decoder-sizer"
+          aria-hidden="true"
+        >
+          {statement}
+        </span>
+      ))}
       <span className="hero-statement-decoder-visible" aria-hidden="true">
         {visibleDisplay}
         {!visibleComplete ? (

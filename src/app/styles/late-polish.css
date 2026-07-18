@@ -156,15 +156,17 @@
 /* ── Scroll-reveal IntersectionObserver fallback (Firefox) ──────── */
 @supports not (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .project-highlight,
-    .play-entry,
-    .about-detail,
-    .home-page .about,
-    .footer,
-    .fg-features-heading,
-    .fg-features-grid > *,
-    .nv-build-layer,
-    .nv-persona-grid > * {
+    html[data-reveal-ready="true"] :is(
+      .project-highlight,
+      .play-entry,
+      .about-detail,
+      .home-page .about,
+      .footer,
+      .fg-features-heading,
+      .fg-features-grid > *,
+      .nv-build-layer,
+      .nv-persona-grid > *
+    ) {
       opacity: 0;
       transform: translateY(1.2rem);
       transition: opacity 480ms cubic-bezier(0.22, 1, 0.36, 1),

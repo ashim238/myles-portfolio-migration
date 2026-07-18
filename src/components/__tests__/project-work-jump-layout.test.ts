@@ -30,6 +30,20 @@ function block(selector: string, source: string): string {
   return "";
 }
 
+function atRuleBlockContaining(atRule: string, needle: string): string {
+  let cursor = 0;
+
+  while (cursor < baseStyles.length) {
+    const start = baseStyles.indexOf(`${atRule} {`, cursor);
+    if (start < 0) break;
+    const candidate = block(atRule, baseStyles.slice(start));
+    if (candidate.includes(needle)) return candidate;
+    cursor = start + atRule.length;
+  }
+
+  return "";
+}
+
 describe("ProjectWorkJump editorial endcap layout", () => {
   it("uses one accessible editorial card with destination-specific media", () => {
     expect(block(".project-work-jump-card", baseStyles)).toContain(
@@ -97,6 +111,17 @@ describe("ProjectWorkJump editorial endcap layout", () => {
     );
     expect(fallbackStyles).not.toMatch(
       /\.project-work-jump-list|\.project-work-jump > h2/,
+    );
+  });
+
+  it("lets endcard media shrink safely at mobile zoom levels", () => {
+    const mobile = atRuleBlockContaining(
+      "@media (max-width: 767px)",
+      ".mobile-nav",
+    );
+
+    expect(block(".project-work-jump-media", mobile)).toContain(
+      "min-height: 0",
     );
   });
 });

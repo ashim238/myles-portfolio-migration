@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { isWorkPath } from "@/lib/navigation-state";
 import { siteConfig } from "@/lib/site-config";
 
 const items = [
@@ -75,7 +76,7 @@ export function MobileNav() {
       {items.map((item) => {
         const isActive =
           item.href === "/#work"
-            ? pathname === "/"
+            ? isWorkPath(pathname)
             : pathname === item.href;
         const isExternal = item.href.startsWith("mailto:");
         const Component = isExternal ? "a" : Link;

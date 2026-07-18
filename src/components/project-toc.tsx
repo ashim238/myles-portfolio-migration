@@ -40,6 +40,15 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
   const backTopRef = useRef<HTMLButtonElement>(null);
   const reducedRef = useRef(false);
 
+  useEffect(() => {
+    const toc = tocRef.current;
+    if (!toc) return;
+    toc.dataset.tocReady = "true";
+    return () => {
+      delete toc.dataset.tocReady;
+    };
+  }, []);
+
   // Track which section is in view (drives the active highlight only)
   useEffect(() => {
     const sectionEls = sections

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PortfolioEndcap } from "@/components/portfolio-endcap";
 import { SiteNav } from "@/components/site-nav";
 import { createRouteMetadata, siteConfig } from "@/lib/site-config";
 
@@ -265,6 +266,8 @@ export default function ResumePage() {
           ))}
         </dl>
       </section>
+
+      <PortfolioEndcap context="resume" />
 
     </main>
   );
