@@ -10,6 +10,10 @@ const surfaceStyles = readFileSync(
   resolve(process.cwd(), "src/app/styles/portfolio-surfaces.css"),
   "utf8",
 );
+const aboutPage = readFileSync(
+  resolve(process.cwd(), "src/app/about/page.tsx"),
+  "utf8",
+);
 
 function cssBlocks(header: string, source: string) {
   const blocks: string[] = [];
@@ -91,5 +95,36 @@ describe("visible-first structural motion", () => {
     expect(surfaceStyles).toContain("@keyframes tt-outcome-arrive");
     expect(surfaceStyles).toContain("@keyframes nv-persona-rise");
     expect(surfaceStyles).not.toContain("@keyframes uf-template-sweep");
+  });
+
+  it("uses a labelled section for About details instead of complementary content", () => {
+    expect(aboutPage).not.toContain("<aside");
+    expect(aboutPage).toMatch(
+      /<section className="about-aside" aria-labelledby="about-details-title">/,
+    );
+    expect(aboutPage).toContain('id="about-details-title"');
+  });
+
+  it("limits artifact transforms to motion-safe contexts and resets exact layers", () => {
+    const noPreference = cssBlocks(
+      "@media (prefers-reduced-motion: no-preference)",
+      surfaceStyles,
+    ).join("\n");
+    const reduced = cssBlocks(
+      "@media (prefers-reduced-motion: reduce)",
+      surfaceStyles,
+    ).join("\n");
+
+    expect(noPreference).toContain(".nv-reveal--visible .nv-heuristic-card");
+    for (const selector of [
+      ".fg-illustration-panel",
+      ".fg-synth-panel",
+      ".fg-pulled-panel",
+      ".nv-heuristic-card",
+    ]) {
+      expect(reduced).toContain(selector);
+    }
+    expect(reduced).toContain("animation: none !important");
+    expect(reduced).toContain("transform: none !important");
   });
 });

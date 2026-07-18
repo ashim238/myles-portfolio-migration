@@ -1,4 +1,4 @@
-import { act, fireEvent, render } from "@testing-library/react";
+import { act, fireEvent, render, waitFor } from "@testing-library/react";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -8,8 +8,8 @@ import {
   TikTokTemplateSystem,
 } from "@/components/tiktok-dsa";
 
-const styles = readFileSync(
-  resolve(process.cwd(), "src/app/styles/portfolio-surfaces.css"),
+const baseStyles = readFileSync(
+  resolve(process.cwd(), "src/app/styles/base.css"),
   "utf8",
 );
 
@@ -26,9 +26,9 @@ function numericCustomProperty(
 }
 
 function keyframesBlock(name: string): string {
-  const start = styles.indexOf(`@keyframes ${name}`);
-  const end = styles.indexOf("\n}\n", start);
-  return start >= 0 && end >= 0 ? styles.slice(start, end + 2) : "";
+  const start = baseStyles.indexOf(`@keyframes ${name}`);
+  const end = baseStyles.indexOf("\n}\n", start);
+  return start >= 0 && end >= 0 ? baseStyles.slice(start, end + 2) : "";
 }
 
 function translateDistance(block: string): number {
@@ -46,16 +46,22 @@ describe("TikTokCoverBlobs preview geometry", () => {
 
     expect(markup.match(/class="tt-cover-field(?:\s|")/g)).toHaveLength(1);
     expect(markup).toContain("tt-cover-cluster");
+    expect(markup).toContain("tt-cover-poster");
+    expect(markup).toContain("tt-logo");
     expect(markup).not.toContain("/projects/tiktok/cover-blobs/");
   });
 
-  it("defers homepage assets and pauses motion outside the nearby viewport", () => {
-    let notifyVisibility: IntersectionObserverCallback = () => {};
+  it("loads layers near the viewport but only animates while actually visible", () => {
+    const observers = new Map<string, IntersectionObserverCallback>();
     const observe = vi.fn();
     const disconnect = vi.fn();
     class MockIntersectionObserver {
-      constructor(callback: IntersectionObserverCallback) {
-        notifyVisibility = callback;
+      constructor(
+        callback: IntersectionObserverCallback,
+        options?: IntersectionObserverInit,
+      ) {
+        this.rootMargin = options?.rootMargin ?? "0px";
+        observers.set(this.rootMargin, callback);
       }
 
       observe = observe;
@@ -63,7 +69,7 @@ describe("TikTokCoverBlobs preview geometry", () => {
       unobserve = vi.fn();
       takeRecords = () => [];
       root = null;
-      rootMargin = "600px 0px";
+      rootMargin: string;
       thresholds = [0];
     }
 
@@ -79,18 +85,29 @@ describe("TikTokCoverBlobs preview geometry", () => {
     const { container } = render(<TikTokCoverBlobs />);
     const field = container.querySelector(".tt-cover-field");
 
-    expect(observe).toHaveBeenCalledOnce();
+    expect(observe).toHaveBeenCalledTimes(2);
+    expect(observers.has("600px 0px")).toBe(true);
+    expect(observers.has("0px")).toBe(true);
     expect(container.querySelectorAll(".tt-cblob")).toHaveLength(0);
     expect(field).not.toHaveClass("tt-cover-field--active");
 
     act(() => {
-      notifyVisibility(
+      observers.get("600px 0px")?.(
         [{ isIntersecting: true } as IntersectionObserverEntry],
         {} as IntersectionObserver,
       );
     });
 
     expect(container.querySelectorAll(".tt-cblob")).toHaveLength(16);
+    expect(field).not.toHaveClass("tt-cover-field--active");
+
+    act(() => {
+      observers.get("0px")?.(
+        [{ isIntersecting: true } as IntersectionObserverEntry],
+        {} as IntersectionObserver,
+      );
+    });
+
     expect(field).toHaveClass("tt-cover-field--active");
     for (const layer of container.querySelectorAll(".tt-cblob")) {
       expect(layer).toHaveAttribute("loading", "lazy");
@@ -118,7 +135,7 @@ describe("TikTokCoverBlobs preview geometry", () => {
     expect(field).toHaveClass("tt-cover-field--active");
 
     act(() => {
-      notifyVisibility(
+      observers.get("0px")?.(
         [{ isIntersecting: false } as IntersectionObserverEntry],
         {} as IntersectionObserver,
       );
@@ -126,7 +143,18 @@ describe("TikTokCoverBlobs preview geometry", () => {
 
     expect(container.querySelectorAll(".tt-cblob")).toHaveLength(16);
     expect(field).not.toHaveClass("tt-cover-field--active");
+  });
 
+  it("loads a static composition without running motion when observers are unavailable", async () => {
+    vi.stubGlobal("IntersectionObserver", undefined);
+
+    const { container } = render(<TikTokCoverBlobs />);
+    const field = container.querySelector(".tt-cover-field");
+
+    await waitFor(() => {
+      expect(container.querySelectorAll(".tt-cblob")).toHaveLength(16);
+    });
+    expect(field).not.toHaveClass("tt-cover-field--active");
   });
 
   it("keeps every below-fold template image lazy", () => {
@@ -145,11 +173,11 @@ describe("TikTokCoverBlobs preview geometry", () => {
 
     expect(cluster).not.toBeNull();
     expect(cluster?.querySelectorAll(".tt-cblob")).toHaveLength(16);
-    expect(styles).toMatch(
+    expect(baseStyles).toMatch(
       /\.tt-cover--preview \.tt-cblob\s*\{[\s\S]*?animation-duration: calc\(var\(--d\) \* 0\.45\)[\s\S]*?animation-direction: alternate/,
     );
     for (let variant = 1; variant <= 6; variant += 1) {
-      expect(styles).toMatch(
+      expect(baseStyles).toMatch(
         new RegExp(
           `\\.tt-cover--preview \\.tt-cblob--a${variant}\\s*\\{[\\s\\S]*?animation-name: tt-preview-piece-a${variant}`,
         ),

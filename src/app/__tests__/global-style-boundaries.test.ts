@@ -55,6 +55,34 @@ describe("global stylesheet boundaries", () => {
     expect(naviLayout).not.toContain('portfolio-surfaces.css"');
   });
 
+  it("keeps shared TikTok cover art available on the homepage", () => {
+    const baseStyles = readFileSync(
+      resolve(appDirectory, "styles/base.css"),
+      "utf8",
+    );
+
+    expect(baseStyles).toContain(".tt-cover-field {");
+    expect(baseStyles).toContain(".tt-cover-cluster {");
+    expect(baseStyles).toContain(".tt-cblob {");
+    expect(baseStyles).toContain(".tt-cover--preview .tt-cblob {");
+    expect(baseStyles).toContain("@keyframes tt-preview-piece-a1");
+  });
+
+  it("keeps shared site-logo sizing available on every route", () => {
+    const baseStyles = readFileSync(
+      resolve(appDirectory, "styles/base.css"),
+      "utf8",
+    );
+    const portfolioStyles = readFileSync(
+      resolve(appDirectory, "styles/portfolio-surfaces.css"),
+      "utf8",
+    );
+
+    expect(baseStyles).toContain(".site-logo {");
+    expect(baseStyles).toContain(".site-logo svg {");
+    expect(portfolioStyles).not.toContain(".site-logo {");
+  });
+
   it("loads Instrument Serif normal only within Fresh Greens", () => {
     const rootLayout = readFileSync(resolve(appDirectory, "layout.tsx"), "utf8");
     const freshGreensLayout = readFileSync(
@@ -85,6 +113,7 @@ describe("global stylesheet boundaries", () => {
     for (const dependency of ["@turf/turf", "@vitest/ui"]) {
       expect(manifest.devDependencies).not.toHaveProperty(dependency);
     }
+    expect(existsSync(resolve(process.cwd(), ".npmrc"))).toBe(false);
     for (const asset of [
       "file.svg",
       "globe.svg",

@@ -489,6 +489,36 @@ html.project-enter-settling .project-page {
   animation: fadeUp 420ms ease-out both;
 }
 
+/* The logo is shared shell chrome, so its sizing must not depend on a case
+   study stylesheet being present on the current route. */
+.site-logo {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.25rem 0;
+  text-decoration: none;
+  transition: opacity 200ms ease;
+}
+
+.site-logo:hover,
+.site-logo:focus-visible {
+  opacity: 0.72;
+}
+
+.site-logo svg {
+  display: block;
+  width: auto;
+  height: 2.4rem;
+  color: var(--foreground);
+  transition: color 240ms ease;
+}
+
+@media (max-width: 640px) {
+  .site-logo svg {
+    height: 2.1rem;
+  }
+}
+
 /* Logo + theme toggle on one baseline.
    Pairing the toggle with the logo (both shell-level controls) keeps it
    anchored at every width; the right column stays pure navigation. */
@@ -923,6 +953,172 @@ button:focus-visible,
 
 .work-thumb--tiktok-logo .work-tab {
   z-index: 1;
+}
+
+/* TikTok's assembled-logo cover appears on both the homepage and the case
+   study. Keep its shared field and motion here so route-level case-study CSS
+   is not a prerequisite for the homepage artwork. */
+.tt-cover-field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: radial-gradient(120% 105% at 50% 32%, #16161f 0%, #08080d 70%);
+}
+
+.tt-cover-cluster {
+  position: absolute;
+  inset: 0;
+}
+
+/* The initial HTML carries a recognizable note mark while the layered art is
+   deferred. It sits in the same cluster so every cover-specific alignment
+   also applies to the poster, then fades only after every layer settles. */
+.tt-cover-poster {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 62%;
+  width: clamp(4.5rem, 23%, 10rem);
+  opacity: 0.92;
+  transform: translate(-50%, -50%);
+  transition: opacity 180ms ease;
+}
+
+.tt-cover-poster--hidden {
+  opacity: 0;
+}
+
+.tt-cover-poster .tt-logo,
+.tt-cover-poster .tt-logo svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.tt-cover-poster .tt-logo-cyan {
+  fill: #25f4ee;
+  transform: translate(-1.4px, 0.8px);
+}
+
+.tt-cover-poster .tt-logo-magenta {
+  fill: #fe2c55;
+  transform: translate(1.4px, -0.8px);
+}
+
+.tt-cover-poster .tt-logo-ink {
+  fill: #fff;
+}
+
+.tt-cblob {
+  position: absolute;
+  z-index: 1;
+  height: auto;
+  animation-play-state: paused;
+  filter: drop-shadow(0 12px 38px rgba(0, 0, 0, 0.3));
+}
+
+.tt-cover-field--active .tt-cblob {
+  will-change: transform;
+  animation-play-state: running;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tt-cblob--a1 { animation: tt-bfloat1 var(--d) ease-in-out infinite alternate; }
+  .tt-cblob--a2 { animation: tt-bfloat2 var(--d) ease-in-out infinite alternate; }
+  .tt-cblob--a3 { animation: tt-bfloat3 var(--d) ease-in-out infinite alternate; }
+  .tt-cblob--a4 { animation: tt-bfloat4 var(--d) ease-in-out infinite alternate; }
+  .tt-cblob--a5 { animation: tt-bfloat5 var(--d) ease-in-out infinite alternate; }
+  .tt-cblob--a6 { animation: tt-bfloat6 var(--d) ease-in-out infinite alternate; }
+}
+
+@keyframes tt-bfloat1 {
+  from { transform: translate3d(0, 0, 0) rotate(-2deg) scale(1); }
+  to { transform: translate3d(2.2vw, -2.6vw, 0) rotate(4.5deg) scale(1.07); }
+}
+
+@keyframes tt-bfloat2 {
+  from { transform: translate3d(0, 0, 0) rotate(1.5deg) scale(1.03); }
+  to { transform: translate3d(-2.6vw, 2.2vw, 0) rotate(-4deg) scale(0.94); }
+}
+
+@keyframes tt-bfloat3 {
+  from { transform: translate3d(0, 0, 0) rotate(-1.5deg) scale(0.96); }
+  to { transform: translate3d(2.4vw, 2.8vw, 0) rotate(5deg) scale(1.08); }
+}
+
+@keyframes tt-bfloat4 {
+  from { transform: translate3d(0, 0, 0) rotate(2deg) scale(1); }
+  to { transform: translate3d(-2.8vw, -2.4vw, 0) rotate(-5deg) scale(1.06); }
+}
+
+@keyframes tt-bfloat5 {
+  from { transform: translate3d(0, 0, 0) rotate(-1deg) scale(1.04); }
+  to { transform: translate3d(2.8vw, 2.4vw, 0) rotate(4deg) scale(0.93); }
+}
+
+@keyframes tt-bfloat6 {
+  from { transform: translate3d(0, 0, 0) rotate(1deg) scale(0.95); }
+  to { transform: translate3d(-2.4vw, -2.8vw, 0) rotate(-4deg) scale(1.08); }
+}
+
+.tt-cover--preview .tt-cblob {
+  left: var(--tt-preview-x) !important;
+  top: var(--tt-preview-y) !important;
+}
+
+@media (max-width: 640px) {
+  .tt-cover--preview .tt-cblob {
+    left: var(--tt-preview-mobile-x) !important;
+    top: var(--tt-preview-mobile-y) !important;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tt-cover--preview .tt-cblob {
+    animation-duration: calc(var(--d) * 0.45);
+    animation-delay: var(--tt-preview-delay);
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+
+  .tt-cover--preview .tt-cblob--a1 { animation-name: tt-preview-piece-a1; }
+  .tt-cover--preview .tt-cblob--a2 { animation-name: tt-preview-piece-a2; }
+  .tt-cover--preview .tt-cblob--a3 { animation-name: tt-preview-piece-a3; }
+  .tt-cover--preview .tt-cblob--a4 { animation-name: tt-preview-piece-a4; }
+  .tt-cover--preview .tt-cblob--a5 { animation-name: tt-preview-piece-a5; }
+  .tt-cover--preview .tt-cblob--a6 { animation-name: tt-preview-piece-a6; }
+}
+
+@keyframes tt-preview-piece-a1 {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(6.4px, -2.4px, 0); }
+}
+
+@keyframes tt-preview-piece-a2 {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-5.8px, 2.7px, 0); }
+}
+
+@keyframes tt-preview-piece-a3 {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(3.3px, 5.4px, 0); }
+}
+
+@keyframes tt-preview-piece-a4 {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-4.5px, -4.1px, 0); }
+}
+
+@keyframes tt-preview-piece-a5 {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(6.7px, 1.8px, 0); }
+}
+
+@keyframes tt-preview-piece-a6 {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-6.1px, -2.6px, 0); }
 }
 
 /* The corner tab: role · year pinned to the cover like a label on a

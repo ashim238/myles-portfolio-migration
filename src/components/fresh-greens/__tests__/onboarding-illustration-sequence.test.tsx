@@ -12,6 +12,11 @@ describe("Fresh Greens onboarding illustration sequence", () => {
   it("presents the four individual illustrations in narrative order", () => {
     const { container } = render(<OnboardingIllustrationSequence />);
 
+    const scroller = screen.getByRole("region", {
+      name: "Fresh Greens onboarding illustration sequence",
+    });
+    expect(scroller).toHaveAttribute("tabindex", "0");
+
     const sequence = screen.getByRole("list", {
       name: "Fresh Greens onboarding illustration sequence",
     });

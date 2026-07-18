@@ -73,27 +73,34 @@ export function OnboardingIllustrationSequence() {
 
   return (
     <figure className="fg-illustrations" ref={figureRef}>
-      <ol
-        className="fg-illustration-track"
+      <div
+        className="fg-illustration-scroll"
+        role="region"
+        tabIndex={0}
         aria-label="Fresh Greens onboarding illustration sequence"
       >
-        {PANELS.map((panel, index) => (
-          <li
-            className="fg-illustration-panel"
-            key={panel.src}
-            style={{ "--fg-illustration-index": index } as CSSProperties}
-          >
-            <ExpandableImage
-              src={panel.src}
-              alt={panel.alt}
-              width={390}
-              height={panel.height}
-              sizes="(max-width: 620px) 84vw, (max-width: 899px) 42vw, 190px"
-              style={{ width: "100%", height: "auto", display: "block" }}
-            />
-          </li>
-        ))}
-      </ol>
+        <ol
+          className="fg-illustration-track"
+          aria-label="Fresh Greens onboarding illustration sequence"
+        >
+          {PANELS.map((panel, index) => (
+            <li
+              className="fg-illustration-panel"
+              key={panel.src}
+              style={{ "--fg-illustration-index": index } as CSSProperties}
+            >
+              <ExpandableImage
+                src={panel.src}
+                alt={panel.alt}
+                width={390}
+                height={panel.height}
+                sizes="(max-width: 620px) 84vw, (max-width: 899px) 42vw, 190px"
+                style={{ width: "100%", height: "auto", display: "block" }}
+              />
+            </li>
+          ))}
+        </ol>
+      </div>
       <figcaption className="fg-safety-visual-caption">
         The onboarding illustrations, drawn by hand. They set the warm, human
         register the app opens on, before a single safety signal appears.

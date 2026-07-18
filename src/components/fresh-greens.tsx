@@ -303,7 +303,12 @@ export function ArchitectureDiagram() {
 export function ProcessGraph() {
   return (
     <figure className="fg-arch fg-arch--process">
-      <div className="fg-arch-scroll">
+      <div
+        className="fg-arch-scroll"
+        role="region"
+        tabIndex={0}
+        aria-label="Fresh Greens design-process knowledge graph"
+      >
       <DrawOnView>
       <svg
         viewBox="0 0 720 280"

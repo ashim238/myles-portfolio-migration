@@ -60,19 +60,18 @@ export function NaviAnimReady() {
 
 export function HeuristicInsightCards() {
   return (
-    <div className="nv-heuristic nv-reveal" role="list">
+    <ul className="nv-heuristic nv-reveal">
       {NAVI_HEURISTIC_INSIGHTS.map((item, i) => (
-        <article
+        <li
           key={item.id}
           className="nv-heuristic-card"
           style={{ "--nv-stagger": `${i * 80}ms` } as React.CSSProperties}
-          role="listitem"
         >
           <h3>{item.headline}</h3>
           <p>{item.body}</p>
-        </article>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
 

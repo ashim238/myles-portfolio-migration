@@ -1,7 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type CSSProperties,
+} from "react";
 import {
   TIKTOK_TEMPLATES,
   type TikTokTemplate,
@@ -234,33 +240,48 @@ const COVER_BLOBS = [
   { f: "b09", x: 63.08, y: 48.56, w: 0.79, a: 4, d: 9 },
 ] as const;
 
+const subscribeToStaticCapability = () => () => {};
+
 export function TikTokCoverBlobs(
   _options: { deferUntilVisible?: boolean } = {},
 ) {
   // Existing cards pass the legacy option. Every instance now defers.
   void _options;
   const fieldRef = useRef<HTMLDivElement>(null);
+  const settledLayerCount = useRef(0);
   const [hasLoaded, setHasLoaded] = useState(false);
-  const [isNearViewport, setIsNearViewport] = useState(false);
+  const [hasPaintedComposition, setHasPaintedComposition] = useState(false);
+  const [isInViewport, setIsInViewport] = useState(false);
   const [isDocumentVisible, setIsDocumentVisible] = useState(true);
+  const shouldLoadStaticFallback = useSyncExternalStore(
+    subscribeToStaticCapability,
+    () => typeof window.IntersectionObserver !== "function",
+    () => false,
+  );
 
   useEffect(() => {
     const field = fieldRef.current;
-    if (!field || !("IntersectionObserver" in window)) {
-      setHasLoaded(true);
-      setIsNearViewport(true);
-      return;
-    }
+    if (!field) return;
 
-    const observer = new IntersectionObserver(
+    if (typeof window.IntersectionObserver !== "function") return;
+
+    const preloadObserver = new IntersectionObserver(
       ([entry]) => {
-        setIsNearViewport(entry.isIntersecting);
         if (entry.isIntersecting) setHasLoaded(true);
       },
       { rootMargin: "600px 0px" },
     );
-    observer.observe(field);
-    return () => observer.disconnect();
+    const activeObserver = new IntersectionObserver(
+      ([entry]) => setIsInViewport(entry.isIntersecting),
+      { rootMargin: "0px" },
+    );
+
+    preloadObserver.observe(field);
+    activeObserver.observe(field);
+    return () => {
+      preloadObserver.disconnect();
+      activeObserver.disconnect();
+    };
   }, []);
 
   useEffect(() => {
@@ -273,7 +294,15 @@ export function TikTokCoverBlobs(
       document.removeEventListener("visibilitychange", updateVisibility);
   }, []);
 
-  const isActive = hasLoaded && isNearViewport && isDocumentVisible;
+  const markLayerSettled = () => {
+    settledLayerCount.current += 1;
+    if (settledLayerCount.current >= COVER_BLOBS.length) {
+      setHasPaintedComposition(true);
+    }
+  };
+
+  const isActive = hasLoaded && isInViewport && isDocumentVisible;
+  const shouldRenderLayers = hasLoaded || shouldLoadStaticFallback;
 
   return (
     <div
@@ -282,7 +311,14 @@ export function TikTokCoverBlobs(
       aria-hidden="true"
     >
       <div className="tt-cover-cluster">
-        {hasLoaded ? COVER_BLOBS.map((b, index) => (
+        <span
+          className={`tt-cover-poster${
+            hasPaintedComposition ? " tt-cover-poster--hidden" : ""
+          }`}
+        >
+          <TikTokLogo />
+        </span>
+        {shouldRenderLayers ? COVER_BLOBS.map((b, index) => (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             key={b.f}
@@ -292,6 +328,8 @@ export function TikTokCoverBlobs(
             loading="lazy"
             decoding="async"
             fetchPriority="low"
+            onLoad={markLayerSettled}
+            onError={markLayerSettled}
             className={`tt-cblob tt-cblob--a${b.a}`}
             style={
               {

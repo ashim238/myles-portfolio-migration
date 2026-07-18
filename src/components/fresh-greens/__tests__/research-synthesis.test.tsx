@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { ResearchSynthesis } from "@/components/fresh-greens/research-synthesis";
 
@@ -23,6 +24,31 @@ function balancedBlock(source: string, marker: string) {
 }
 
 describe("Fresh Greens research synthesis", () => {
+  it("renders every stable evidence panel before hydration", () => {
+    const markup = renderToStaticMarkup(<ResearchSynthesis />);
+
+    expect(markup.match(/role="tabpanel"/g)).toHaveLength(4);
+    for (const key of ["light", "police", "wildlife", "road"]) {
+      expect(markup).toContain(`id="fg-synth-panel-${key}"`);
+      expect(markup).toContain(`aria-controls="fg-synth-panel-${key}"`);
+    }
+    expect(markup).not.toContain(" hidden=");
+  });
+
+  it("keeps every tab target mounted after progressive enhancement", () => {
+    const { container } = render(<ResearchSynthesis />);
+    const tabs = screen.getAllByRole("tab");
+    const panels = screen.getAllByRole("tabpanel", { hidden: true });
+
+    expect(panels).toHaveLength(4);
+    for (const tab of tabs) {
+      const panelId = tab.getAttribute("aria-controls");
+      expect(panelId).toBeTruthy();
+      expect(container.querySelector(`#${panelId}`)).not.toBeNull();
+    }
+    expect(panels.filter((panel) => panel.hasAttribute("hidden"))).toHaveLength(3);
+  });
+
   it("connects an interview signal to its product response", async () => {
     const user = userEvent.setup();
     render(<ResearchSynthesis />);
@@ -41,7 +67,7 @@ describe("Fresh Greens research synthesis", () => {
     expect(
       screen.getByText("Police presence in the route score"),
     ).toBeInTheDocument();
-    expect(screen.queryByText("The daylight-graded route")).toBeNull();
+    expect(screen.getByText("The daylight-graded route")).not.toBeVisible();
     expect(
       screen.getByText("Raised by 5 of 6 Black drivers"),
     ).toBeInTheDocument();

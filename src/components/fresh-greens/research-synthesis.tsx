@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import { SYNTHESIS } from "@/lib/fresh-greens/research-synthesis-data";
 
 const GLYPH: Record<string, string> = {
@@ -10,6 +10,8 @@ const GLYPH: Record<string, string> = {
   wildlife: "/projects/fresh-greens/process/glyph-wildlife.svg",
   road: "/projects/fresh-greens/process/glyph-road.svg",
 };
+
+const subscribeToHydration = () => () => {};
 
 /**
  * The honest synthesis: recurring trends pulled from six driver interviews,
@@ -21,7 +23,11 @@ export function ResearchSynthesis() {
   const community = SYNTHESIS.find((c) => c.key === "community")!;
   const [activeKey, setActiveKey] = useState(markers[0].key);
   const tabsRef = useRef<HTMLDivElement>(null);
-  const activeMarker = markers.find((marker) => marker.key === activeKey)!;
+  const enhanced = useSyncExternalStore(
+    subscribeToHydration,
+    () => true,
+    () => false,
+  );
 
   function moveTab(currentIndex: number, direction: 1 | -1) {
     const nextIndex = (currentIndex + direction + markers.length) % markers.length;
@@ -32,7 +38,11 @@ export function ResearchSynthesis() {
   }
 
   return (
-    <div className="fg-synth" aria-label="What the six interviews surfaced">
+    <div
+      className="fg-synth"
+      aria-label="What the six interviews surfaced"
+      data-enhanced={enhanced ? "true" : undefined}
+    >
       <div
         className="fg-synth-tabs"
         role="tablist"
@@ -82,28 +92,34 @@ export function ResearchSynthesis() {
         })}
       </div>
 
-      <div
-        className="fg-synth-panel"
-        role="tabpanel"
-        id={`fg-synth-panel-${activeMarker.key}`}
-        aria-labelledby={`fg-synth-tab-${activeMarker.key}`}
-        key={activeMarker.key}
-      >
-        <div className="fg-synth-evidence">
-          <p className="fg-synth-panel-label">What I heard</p>
-          <p className="fg-synth-insight">{activeMarker.insight}</p>
-          <ul className="fg-synth-snippets" role="list">
-            {activeMarker.snippets.map((snippet) => (
-              <li key={snippet}>{snippet}</li>
-            ))}
-          </ul>
-        </div>
-        <span className="fg-synth-transform-arrow" aria-hidden="true">→</span>
-        <div className="fg-synth-response">
-          <p className="fg-synth-panel-label">What I designed</p>
-          <p>{activeMarker.designResponse}</p>
-        </div>
-      </div>
+      {markers.map((marker) => {
+        const selected = marker.key === activeKey;
+        return (
+          <div
+            className="fg-synth-panel"
+            role="tabpanel"
+            id={`fg-synth-panel-${marker.key}`}
+            aria-labelledby={`fg-synth-tab-${marker.key}`}
+            hidden={enhanced && !selected}
+            key={marker.key}
+          >
+            <div className="fg-synth-evidence">
+              <p className="fg-synth-panel-label">What I heard</p>
+              <p className="fg-synth-insight">{marker.insight}</p>
+              <ul className="fg-synth-snippets" role="list">
+                {marker.snippets.map((snippet) => (
+                  <li key={snippet}>{snippet}</li>
+                ))}
+              </ul>
+            </div>
+            <span className="fg-synth-transform-arrow" aria-hidden="true">→</span>
+            <div className="fg-synth-response">
+              <p className="fg-synth-panel-label">What I designed</p>
+              <p>{marker.designResponse}</p>
+            </div>
+          </div>
+        );
+      })}
 
       <div className="fg-synth-community">
         <div>

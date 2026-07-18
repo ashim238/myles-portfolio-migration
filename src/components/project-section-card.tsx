@@ -50,6 +50,7 @@ export function ProjectSectionCard({ section, projectTitle, id }: ProjectSection
                 >
                   <div
                     className="project-section-image-scroll"
+                    role="region"
                     tabIndex={0}
                     aria-label={`Scrollable preview: ${image.alt ?? section.title}. Click image to expand.`}
                   >

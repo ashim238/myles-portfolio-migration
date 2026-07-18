@@ -135,6 +135,15 @@
   padding: 1.4rem 1.4rem 1.1rem;
 }
 
+.fg-illustration-scroll {
+  min-width: 0;
+}
+
+.fg-illustration-scroll:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
 .fg-illustration-track {
   margin: 0;
   padding: 0;
@@ -171,17 +180,20 @@
     padding: 1rem 0;
   }
 
+  .fg-illustration-scroll {
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-padding-inline: 1rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+  }
+
   .fg-illustration-track {
     grid-template-columns: none;
     grid-auto-flow: column;
     grid-auto-columns: 84%;
     gap: 0.9rem;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
     padding: 0.4rem 1rem 0.7rem;
-    scroll-padding-inline: 1rem;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: thin;
   }
 
   .fg-illustration-panel {
@@ -928,7 +940,7 @@
   font-size: 0.78rem;
   font-style: italic;
   color: var(--muted);
-  opacity: 0.75;
+  opacity: 1;
 }
 
 .fg-palette-carveouts {
@@ -1368,27 +1380,6 @@
   background: #0a0a0f;
   isolation: isolate;
 }
-.tt-cover-field {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  background: radial-gradient(120% 105% at 50% 32%, #16161f 0%, #08080d 70%);
-}
-.tt-cover-cluster {
-  position: absolute;
-  inset: 0;
-}
-.tt-cblob {
-  position: absolute;
-  height: auto;
-  animation-play-state: paused;
-  filter: drop-shadow(0 12px 38px rgba(0, 0, 0, 0.3));
-}
-.tt-cover-field--active .tt-cblob {
-  will-change: transform;
-  animation-play-state: running;
-}
 .tt-cover::after {
   content: "";
   position: absolute;
@@ -1422,170 +1413,11 @@
   margin-top: 1.1rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .tt-cblob--a1 {
-    animation: tt-bfloat1 var(--d) ease-in-out infinite alternate;
-  }
-  .tt-cblob--a2 {
-    animation: tt-bfloat2 var(--d) ease-in-out infinite alternate;
-  }
-  .tt-cblob--a3 {
-    animation: tt-bfloat3 var(--d) ease-in-out infinite alternate;
-  }
-  .tt-cblob--a4 {
-    animation: tt-bfloat4 var(--d) ease-in-out infinite alternate;
-  }
-  .tt-cblob--a5 {
-    animation: tt-bfloat5 var(--d) ease-in-out infinite alternate;
-  }
-  .tt-cblob--a6 {
-    animation: tt-bfloat6 var(--d) ease-in-out infinite alternate;
-  }
-}
-@keyframes tt-bfloat1 {
-  from {
-    transform: translate3d(0, 0, 0) rotate(-2deg) scale(1);
-  }
-  to {
-    transform: translate3d(2.2vw, -2.6vw, 0) rotate(4.5deg) scale(1.07);
-  }
-}
-@keyframes tt-bfloat2 {
-  from {
-    transform: translate3d(0, 0, 0) rotate(1.5deg) scale(1.03);
-  }
-  to {
-    transform: translate3d(-2.6vw, 2.2vw, 0) rotate(-4deg) scale(0.94);
-  }
-}
-@keyframes tt-bfloat3 {
-  from {
-    transform: translate3d(0, 0, 0) rotate(-1.5deg) scale(0.96);
-  }
-  to {
-    transform: translate3d(2.4vw, 2.8vw, 0) rotate(5deg) scale(1.08);
-  }
-}
-@keyframes tt-bfloat4 {
-  from {
-    transform: translate3d(0, 0, 0) rotate(2deg) scale(1);
-  }
-  to {
-    transform: translate3d(-2.8vw, -2.4vw, 0) rotate(-5deg) scale(1.06);
-  }
-}
-@keyframes tt-bfloat5 {
-  from {
-    transform: translate3d(0, 0, 0) rotate(-1deg) scale(1.04);
-  }
-  to {
-    transform: translate3d(2.8vw, 2.4vw, 0) rotate(4deg) scale(0.93);
-  }
-}
-@keyframes tt-bfloat6 {
-  from {
-    transform: translate3d(0, 0, 0) rotate(1deg) scale(0.95);
-  }
-  to {
-    transform: translate3d(-2.4vw, -2.8vw, 0) rotate(-4deg) scale(1.08);
-  }
-}
-
 /* ── Template-system preview ─────────────────────────── */
-
-.tt-cover--preview .tt-cblob {
-  left: var(--tt-preview-x) !important;
-  top: var(--tt-preview-y) !important;
-}
-
-@media (max-width: 640px) {
-  .tt-cover--preview .tt-cblob {
-    left: var(--tt-preview-mobile-x) !important;
-    top: var(--tt-preview-mobile-y) !important;
-  }
-}
 
 .tt-cover--preview .tt-title {
   max-width: 12ch;
   font-size: clamp(2.4rem, 6vw, 4.2rem);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .tt-cover--preview .tt-cblob {
-    animation-duration: calc(var(--d) * 0.45);
-    animation-delay: var(--tt-preview-delay);
-    animation-timing-function: ease-in-out;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-  }
-
-  .tt-cover--preview .tt-cblob--a1 {
-    animation-name: tt-preview-piece-a1;
-  }
-  .tt-cover--preview .tt-cblob--a2 {
-    animation-name: tt-preview-piece-a2;
-  }
-  .tt-cover--preview .tt-cblob--a3 {
-    animation-name: tt-preview-piece-a3;
-  }
-  .tt-cover--preview .tt-cblob--a4 {
-    animation-name: tt-preview-piece-a4;
-  }
-  .tt-cover--preview .tt-cblob--a5 {
-    animation-name: tt-preview-piece-a5;
-  }
-  .tt-cover--preview .tt-cblob--a6 {
-    animation-name: tt-preview-piece-a6;
-  }
-}
-
-@keyframes tt-preview-piece-a1 {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(6.4px, -2.4px, 0);
-  }
-}
-@keyframes tt-preview-piece-a2 {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-5.8px, 2.7px, 0);
-  }
-}
-@keyframes tt-preview-piece-a3 {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(3.3px, 5.4px, 0);
-  }
-}
-@keyframes tt-preview-piece-a4 {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-4.5px, -4.1px, 0);
-  }
-}
-@keyframes tt-preview-piece-a5 {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(6.7px, 1.8px, 0);
-  }
-}
-@keyframes tt-preview-piece-a6 {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-6.1px, -2.6px, 0);
-  }
 }
 
 .tt-template-system {
@@ -2264,10 +2096,11 @@
 }
 
 .fg-pullquote {
-  margin: 3rem 0;
-  padding-left: 1.25rem;
-  border-left: 1px solid var(--fg-accent);
-  max-width: 38rem;
+  margin: 3rem auto;
+  padding-left: 0;
+  border: 0;
+  max-width: 56ch;
+  text-align: center;
 }
 
 .fg-pullquote blockquote {
@@ -2282,10 +2115,10 @@
 
 .fg-pullquote figcaption {
   margin-top: 0.95rem;
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-family: inherit;
+  font-size: 0.85rem;
+  letter-spacing: normal;
+  text-transform: none;
   color: var(--muted);
 }
 
@@ -2345,39 +2178,8 @@
   scroll-margin-top: 3.5rem;
 }
 
-/* Site logo — replaces the kicker text in the nav header ───────── */
-
-.site-logo {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.25rem 0;
-  /* Keeps the tap target at least 44px tall without growing the visible logo */
-  min-height: 44px;
-  transition: opacity 200ms ease;
-  text-decoration: none;
-}
-
-.site-logo:hover,
-.site-logo:focus-visible {
-  opacity: 0.72;
-}
-
-.site-logo svg {
-  display: block;
-  height: 2.4rem;
-  width: auto;
-  color: var(--foreground);
-  transition: color 240ms ease;
-}
-
-@media (max-width: 640px) {
-  .site-logo svg {
-    height: 2.1rem;
-  }
-}
-
 /* ============================================================
-   /about page — primary copy + quick-details aside
+   /about page — primary copy + quick-details section
    Mirrors the /resume layout pattern for site-wide consistency.
    ============================================================ */
 
@@ -2792,7 +2594,9 @@
 /* ── Heuristic cards ─────────────────────────────────── */
 
 .nv-heuristic {
-  margin-top: 2rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
   display: grid;
   gap: 1rem;
 }
@@ -2813,14 +2617,18 @@
     border-color 220ms ease;
 }
 
-.nv-reveal--visible .nv-heuristic-card {
-  animation: nv-stagger-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  animation-delay: var(--nv-stagger, 0ms);
+@media (prefers-reduced-motion: no-preference) {
+  .nv-reveal--visible .nv-heuristic-card {
+    animation: nv-stagger-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--nv-stagger, 0ms);
+  }
 }
 
-.nv-heuristic-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--nv-accent-line);
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .nv-heuristic-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--nv-accent-line);
+  }
 }
 
 /* .nv-heuristic-index removed — numbered indices dropped from insight cards */
@@ -5460,5 +5268,44 @@
   .nv-research-journey > li::before,
   .nv-research-booking > li::before {
     animation: none;
+  }
+}
+
+/* ── Cross-surface interaction hardening ─────────────── */
+
+/* TOC numbers and palette roles are body-sized labels, so they keep the full
+   contrast of the documented muted token instead of blending with the page. */
+.project-page .project-toc-num {
+  opacity: 1;
+}
+
+/* Keep the fallback value selectable when clipboard access is denied. */
+.color-swatch-label {
+  user-select: text;
+}
+
+@media (pointer: coarse), (any-pointer: coarse) {
+  .color-swatch,
+  .fg-synth-tab,
+  .fg-pulled-tab,
+  .project-toc-link {
+    min-height: 44px;
+  }
+
+  .color-swatch {
+    min-width: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fg-illustration-panel,
+  .fg-synth-panel,
+  .fg-pulled-panel,
+  .nv-heuristic-card,
+  .color-swatch-circle,
+  .project-section-image {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
   }
 }

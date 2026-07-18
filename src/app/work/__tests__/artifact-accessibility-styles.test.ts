@@ -14,6 +14,10 @@ const polishStyles = readFileSync(
   resolve(process.cwd(), "src/app/styles/late-polish.css"),
   "utf8",
 );
+const freshGreensComponents = readFileSync(
+  resolve(process.cwd(), "src/components/fresh-greens.tsx"),
+  "utf8",
+);
 
 function declarationBlock(selector: string, source = styles) {
   const stack: { header: string; openBrace: number }[] = [];
@@ -137,7 +141,7 @@ describe("portfolio artifact accessibility styles", () => {
   });
 
   it("applies the dedicated mobile TikTok cover coordinates", () => {
-    expect(styles).toMatch(
+    expect(baseStyles).toMatch(
       /@media \(max-width: 640px\)[\s\S]*?\.tt-cover--preview \.tt-cblob\s*\{[\s\S]*?left: var\(--tt-preview-mobile-x\) !important;[\s\S]*?top: var\(--tt-preview-mobile-y\) !important;/,
     );
   });
@@ -311,6 +315,38 @@ describe("portfolio artifact accessibility styles", () => {
     expect(styles).toMatch(
       /@media \(max-width: 640px\)[\s\S]*?\.uf-composer-mini\s*\{[\s\S]*?width: 2\.75rem;[\s\S]*?height: 2\.75rem;/,
     );
+  });
+
+  it("gives coarse pointers 44px controls independent of viewport width", () => {
+    expect(styles).toMatch(
+      /@media \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.color-swatch,[\s\S]*?\.fg-synth-tab,[\s\S]*?\.fg-pulled-tab,[\s\S]*?\.project-toc-link\s*\{[\s\S]*?min-height: 44px;/,
+    );
+    expect(styles).toMatch(
+      /@media \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.color-swatch\s*\{[\s\S]*?min-width: 44px;/,
+    );
+  });
+
+  it("keeps pullquotes centered and contrast-critical labels fully opaque", () => {
+    const pullquote = declarationBlock(".fg-pullquote");
+    const pullquoteCaption = declarationBlock(".fg-pullquote figcaption");
+    const paletteRole = declarationBlock(".fg-palette-role");
+    const tocNumber = declarationBlock(".project-page .project-toc-num");
+
+    expect(pullquote).toContain("margin: 3rem auto");
+    expect(pullquote).toContain("padding-left: 0");
+    expect(pullquote).toContain("border: 0");
+    expect(pullquote).toContain("text-align: center");
+    expect(pullquoteCaption).toContain("text-transform: none");
+    expect(paletteRole).toContain("opacity: 1");
+    expect(tocNumber).toContain("opacity: 1");
+  });
+
+  it("names and focuses both Fresh Greens architecture scroll regions", () => {
+    const scrollRegions = freshGreensComponents.match(
+      /className="fg-arch-scroll"[\s\S]{0,180}?role="region"[\s\S]{0,100}?tabIndex=\{0\}[\s\S]{0,180}?aria-label=/g,
+    );
+
+    expect(scrollRegions).toHaveLength(2);
   });
 
   it("art-directs Navi research artifacts across mobile and reduced-motion states", () => {

@@ -73,7 +73,10 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <aside className="about-aside" aria-label="Quick details">
+        <section className="about-aside" aria-labelledby="about-details-title">
+          <h2 className="sr-only" id="about-details-title">
+            Quick details
+          </h2>
           <dl className="about-details">
             <div className="about-detail">
               <dt>Based in</dt>
@@ -96,7 +99,7 @@ export default function AboutPage() {
               </dd>
             </div>
           </dl>
-        </aside>
+        </section>
       </section>
     </main>
   );

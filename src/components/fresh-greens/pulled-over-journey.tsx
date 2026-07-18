@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import { ExpandableImage } from "@/components/expandable-image";
 import { PhoneFrame } from "@/components/fresh-greens";
 
@@ -43,10 +43,16 @@ const STEPS = [
   },
 ] as const;
 
+const subscribeToHydration = () => () => {};
+
 export function PulledOverJourney() {
   const [activeIndex, setActiveIndex] = useState(0);
   const tabsRef = useRef<HTMLDivElement>(null);
-  const step = STEPS[activeIndex];
+  const enhanced = useSyncExternalStore(
+    subscribeToHydration,
+    () => true,
+    () => false,
+  );
 
   function selectStep(nextIndex: number) {
     const normalized = (nextIndex + STEPS.length) % STEPS.length;
@@ -57,7 +63,11 @@ export function PulledOverJourney() {
   }
 
   return (
-    <div className="fg-pulled-journey" aria-label="The pulled-over safety sequence">
+    <div
+      className="fg-pulled-journey"
+      aria-label="The pulled-over safety sequence"
+      data-enhanced={enhanced ? "true" : undefined}
+    >
       <div
         className="fg-pulled-tabs"
         role="tablist"
@@ -97,34 +107,40 @@ export function PulledOverJourney() {
         })}
       </div>
 
-      <div
-        className="fg-pulled-panel"
-        role="tabpanel"
-        id={`fg-pulled-panel-${step.key}`}
-        aria-labelledby={`fg-pulled-tab-${step.key}`}
-        key={step.key}
-      >
-        <div className="fg-pulled-phone">
-          <PhoneFrame variant="screenshot">
-            <ExpandableImage
-              src={`/projects/fresh-greens/v2/${step.image}.png`}
-              alt={step.alt}
-              width={1290}
-              height={2796}
-              sizes="(max-width: 720px) 66vw, 300px"
-              className="fg-feature-shot"
-            />
-          </PhoneFrame>
-        </div>
-        <div className="fg-pulled-copy">
-          <p className="fg-pulled-state">{step.label}</p>
-          <p className="fg-pulled-decision">{step.decision}</p>
-          <p className="fg-pulled-detail">{step.detail}</p>
-          <p className="fg-pulled-progress" aria-hidden="true">
-            {String(activeIndex + 1).padStart(2, "0")} / {String(STEPS.length).padStart(2, "0")}
-          </p>
-        </div>
-      </div>
+      {STEPS.map((step, index) => {
+        const selected = index === activeIndex;
+        return (
+          <div
+            className="fg-pulled-panel"
+            role="tabpanel"
+            id={`fg-pulled-panel-${step.key}`}
+            aria-labelledby={`fg-pulled-tab-${step.key}`}
+            hidden={enhanced && !selected}
+            key={step.key}
+          >
+            <div className="fg-pulled-phone">
+              <PhoneFrame variant="screenshot">
+                <ExpandableImage
+                  src={`/projects/fresh-greens/v2/${step.image}.png`}
+                  alt={step.alt}
+                  width={1290}
+                  height={2796}
+                  sizes="(max-width: 720px) 66vw, 300px"
+                  className="fg-feature-shot"
+                />
+              </PhoneFrame>
+            </div>
+            <div className="fg-pulled-copy">
+              <p className="fg-pulled-state">{step.label}</p>
+              <p className="fg-pulled-decision">{step.decision}</p>
+              <p className="fg-pulled-detail">{step.detail}</p>
+              <p className="fg-pulled-progress" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")} / {String(STEPS.length).padStart(2, "0")}
+              </p>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
