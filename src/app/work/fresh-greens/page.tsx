@@ -100,7 +100,7 @@ export default async function FreshGreensPage() {
         outcomeLabel="React Native prototype across 26+ screens"
         moves={[
           "Brought community reports into the same route-scoring pipeline as public map and daylight data, then surfaced the evidence through safety chips and source detail cards.",
-          "Built the en-route screen around one-thumb reach: turn card, 3D map, and a safety column.",
+          "Built the en-route screen around one-thumb reach: turn card, top-down route map, and a safety column.",
           "Shaped the routing signals from six driver interviews.",
         ]}
       />
@@ -248,23 +248,23 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body">
           <p>
-            The en-route screen is where it all lands: a turn card, a 3D map
-            that drags with the drive, and a safety column within thumb&apos;s
-            reach.
+            The en-route screen is where it all lands: a turn card, a top-down
+            route map that follows the drive, and a safety column within
+            thumb&apos;s reach.
           </p>
         </div>
 
         <figure className="fg-en-route-video">
           <LeadVideo
-            clip="/projects/fresh-greens/process/active-nav.mp4"
+            clip="/projects/fresh-greens/process/active-nav-flat-route.mp4"
             poster="/projects/fresh-greens/v2/en-route.png"
             width={1290}
             height={2796}
-            alt="Fresh Greens running turn-by-turn navigation on a simulated public route in Harlem: the turn card says to head out on West 127th Street now, the 3D map moves with the car, the speed reads 34 mph, and the bottom sheet shows a 4:24 daylight arrival for a 13.9 mi, 31 min trip."
+            alt="Fresh Greens running turn-by-turn navigation on a simulated downtown San Francisco route: the green current-location marker follows the orange route line on a flat map, the turn card guides the next turn, the right-side safety column stays within thumb reach, and the bottom sheet keeps the daylight arrival in view."
           />
           <figcaption className="fg-safety-visual-caption">
-            The current en-route prototype in motion on a simulated public
-            route through Harlem.
+            The current en-route prototype in motion on a simulated downtown
+            San Francisco route.
           </figcaption>
         </figure>
       </section>
@@ -398,7 +398,7 @@ export default async function FreshGreensPage() {
             <PhoneFrame variant="screenshot">
               <Shot
                 name="en-route"
-                alt="The current Fresh Greens en-route screen on a simulated public route in Harlem: a green turn card says to head out on West 127th Street now, the map shows 34 mph, the right-side safety column uses red, navy, and orange controls, and the bottom sheet shows a 4:24 daylight arrival for a 13.9 mi, 31 min trip."
+                alt="The current Fresh Greens en-route screen on a simulated downtown San Francisco route, with a green turn card, a moving top-down route map, the right-side safety column, a posted speed card, and the daylight arrival kept together in the bottom sheet."
               />
             </PhoneFrame>
             <figcaption className="fg-safety-visual-caption">

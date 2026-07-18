@@ -14,7 +14,7 @@ describe("case-study lead-media geometry", () => {
       /<LeadMedia[\s\S]*?cover="\/projects\/fresh-greens\/cover\.png"[\s\S]*?width=\{2560\}[\s\S]*?height=\{1862\}[\s\S]*?presentation="fresh-greens"[\s\S]*?\/>/,
     );
     expect(source).toMatch(
-      /<LeadVideo[\s\S]*?clip="\/projects\/fresh-greens\/process\/active-nav\.mp4"[\s\S]*?width=\{1290\}[\s\S]*?height=\{2796\}[\s\S]*?\/>/,
+      /<LeadVideo[\s\S]*?clip="\/projects\/fresh-greens\/process\/active-nav-flat-route\.mp4"[\s\S]*?width=\{1290\}[\s\S]*?height=\{2796\}[\s\S]*?\/>/,
     );
   });
 
