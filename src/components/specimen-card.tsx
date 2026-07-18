@@ -50,6 +50,7 @@ export function SpecimenCard({
               width={1200}
               height={1600}
               className="specimen-image"
+              sizes="(max-width: 480px) 92vw, (max-width: 900px) 46vw, 36rem"
               priority={priority && i === 0}
               loading={priority && i === 0 ? "eager" : "lazy"}
             />

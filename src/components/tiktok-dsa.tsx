@@ -80,7 +80,8 @@ export function TikTokTemplateSystem() {
                 width={1080}
                 height={1920}
                 sizes="(max-width: 720px) 9rem, 20rem"
-                loading={template.key === TIKTOK_TEMPLATES[0].key ? "eager" : "lazy"}
+                loading="lazy"
+                fetchPriority="low"
               />
             </span>
             <span className="tt-template-choice-meta">
@@ -122,7 +123,8 @@ export function TikTokTemplateSystem() {
             width={1080}
             height={1920}
             sizes="(max-width: 720px) 17rem, 20rem"
-            loading="eager"
+            loading="lazy"
+            fetchPriority="low"
           />
           {regionOverlay ? (
             <span
@@ -151,7 +153,13 @@ export function TikTokTemplateSystem() {
                 {originalRegionAssets.map((asset) => (
                   <figure key={asset.src}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={asset.src} alt="" />
+                    <img
+                      src={asset.src}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      fetchPriority="low"
+                    />
                     <figcaption>{asset.label}</figcaption>
                   </figure>
                 ))}
@@ -226,34 +234,46 @@ const COVER_BLOBS = [
   { f: "b09", x: 63.08, y: 48.56, w: 0.79, a: 4, d: 9 },
 ] as const;
 
-export function TikTokCoverBlobs({
-  deferUntilVisible = false,
-}: {
-  deferUntilVisible?: boolean;
-}) {
+export function TikTokCoverBlobs(
+  _options: { deferUntilVisible?: boolean } = {},
+) {
+  // Existing cards pass the legacy option. Every instance now defers.
+  void _options;
   const fieldRef = useRef<HTMLDivElement>(null);
-  const [hasLoaded, setHasLoaded] = useState(!deferUntilVisible);
-  const [isActive, setIsActive] = useState(!deferUntilVisible);
+  const [hasLoaded, setHasLoaded] = useState(false);
+  const [isNearViewport, setIsNearViewport] = useState(false);
+  const [isDocumentVisible, setIsDocumentVisible] = useState(true);
 
   useEffect(() => {
-    if (!deferUntilVisible) return;
     const field = fieldRef.current;
     if (!field || !("IntersectionObserver" in window)) {
       setHasLoaded(true);
-      setIsActive(true);
+      setIsNearViewport(true);
       return;
     }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsActive(entry.isIntersecting);
+        setIsNearViewport(entry.isIntersecting);
         if (entry.isIntersecting) setHasLoaded(true);
       },
       { rootMargin: "600px 0px" },
     );
     observer.observe(field);
     return () => observer.disconnect();
-  }, [deferUntilVisible]);
+  }, []);
+
+  useEffect(() => {
+    const updateVisibility = () => {
+      setIsDocumentVisible(document.visibilityState !== "hidden");
+    };
+    updateVisibility();
+    document.addEventListener("visibilitychange", updateVisibility);
+    return () =>
+      document.removeEventListener("visibilitychange", updateVisibility);
+  }, []);
+
+  const isActive = hasLoaded && isNearViewport && isDocumentVisible;
 
   return (
     <div
@@ -269,6 +289,9 @@ export function TikTokCoverBlobs({
             src={`/projects/tiktok/cover-blobs/${b.f}.png`}
             alt=""
             draggable={false}
+            loading="lazy"
+            decoding="async"
+            fetchPriority="low"
             className={`tt-cblob tt-cblob--a${b.a}`}
             style={
               {

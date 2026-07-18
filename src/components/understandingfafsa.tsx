@@ -4,7 +4,11 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import { useCallback, useEffect, useId, useMemo, useState } from "react";
 import { ExpandableImage } from "@/components/expandable-image";
-import { UF_ASSETS, type UfAsset } from "@/lib/understandingfafsa-assets";
+import {
+  UF_ASSETS,
+  type UfAsset,
+  type UfTiledAsset,
+} from "@/lib/understandingfafsa-assets";
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -18,6 +22,61 @@ function usePrefersReducedMotion() {
   }, []);
 
   return reduced;
+}
+
+function isTiledAsset(asset: UfAsset | UfTiledAsset): asset is UfTiledAsset {
+  return "tiles" in asset;
+}
+
+function CaptureImage({
+  asset,
+  alt,
+  sizes,
+}: {
+  asset: UfAsset | UfTiledAsset;
+  alt: string;
+  sizes: string;
+}) {
+  if (!isTiledAsset(asset)) {
+    return (
+      <ExpandableImage
+        src={asset.src}
+        alt={alt}
+        width={asset.width}
+        height={asset.height}
+        sizes={sizes}
+        style={{
+          width: "100%",
+          height: "auto",
+          display: "block",
+          borderRadius: "0.35rem",
+        }}
+      />
+    );
+  }
+
+  return (
+    <div
+      className="uf-tiled-capture"
+      role="img"
+      aria-label={alt}
+      style={{ display: "flex", flexDirection: "column" }}
+    >
+      {asset.tiles.map((tile) => (
+        <Image
+          key={tile.src}
+          src={tile.src}
+          alt=""
+          width={tile.width}
+          height={tile.height}
+          sizes={sizes}
+          loading="lazy"
+          fetchPriority="low"
+          style={{ width: "100%", height: "auto", display: "block" }}
+        />
+      ))}
+    </div>
+  );
 }
 
 type EmailPhoneFrameProps = {
@@ -58,12 +117,14 @@ const BEFORE_AFTER = [
     asset: UF_ASSETS.mobileBefore,
     alt: "Old newsletter template on mobile before the redesign, full scroll.",
     label: "Prior sends · around 30% open rate",
+    originalLabel: "prior newsletter",
     tilt: -2,
   },
   {
     asset: UF_ASSETS.mobileAfter,
     alt: "Redesigned newsletter on mobile with updated hierarchy and brand system, full scroll.",
     label: "First redesigned send · ~52.6% open rate (MPP excluded)",
+    originalLabel: "redesigned newsletter",
     tilt: 2,
   },
 ] as const;
@@ -81,21 +142,22 @@ export function BeforeAfterPhones() {
             scrollable
             scrollLabel={`${item.label}. Scrollable full newsletter.`}
           >
-            <ExpandableImage
-              src={item.asset.src}
+            <CaptureImage
+              asset={item.asset}
               alt={item.alt}
-              width={item.asset.width}
-              height={item.asset.height}
               sizes="(max-width: 768px) 72vw, 240px"
-              style={{
-                width: "100%",
-                height: "auto",
-                display: "block",
-              }}
             />
           </EmailPhoneFrame>
           <figcaption className="uf-before-after-label">{item.label}</figcaption>
           <p className="uf-before-after-hint">Scroll inside the frame to read the full send.</p>
+          <a
+            href={item.asset.originalSrc}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Open original ${item.originalLabel} capture`}
+          >
+            Open original capture <span aria-hidden="true">↗</span>
+          </a>
         </figure>
       ))}
       <p className="uf-before-after-evidence-note">
@@ -620,7 +682,7 @@ type TemplateVariant = "weekly" | "event";
 
 type TemplateMeta = {
   label: string;
-  asset: typeof UF_ASSETS.templateWeekly | typeof UF_ASSETS.templateEvent;
+  asset: UfAsset | UfTiledAsset;
   alt: string;
   descriptor: string;
   note: string;
@@ -677,17 +739,24 @@ export function TemplateSwitcher() {
             : undefined
         }
       >
-        <ExpandableImage
-          src={active.asset.src}
+        <CaptureImage
+          asset={active.asset}
           alt={active.alt}
-          width={active.asset.width}
-          height={active.asset.height}
           sizes="(max-width: 768px) 92vw, 540px"
-          style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
         />
       </div>
       <p className="uf-switcher-descriptor">{active.descriptor}</p>
       <p className="uf-switcher-note">{active.note}</p>
+      {isTiledAsset(active.asset) ? (
+        <a
+          href={active.asset.originalSrc}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Open original ${active.label} capture`}
+        >
+          Open original capture <span aria-hidden="true">↗</span>
+        </a>
+      ) : null}
     </div>
   );
 }

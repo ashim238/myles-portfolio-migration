@@ -55,6 +55,10 @@ describe("LeadVideo", () => {
     expect(video).toHaveAttribute("controls");
     expect(video).toHaveAttribute("width", "1290");
     expect(video).toHaveAttribute("height", "2796");
+    expect(video).toHaveAttribute(
+      "poster",
+      "/projects/fresh-greens/v2/en-route.webp",
+    );
 
     act(() => {
       intersectionCallback(

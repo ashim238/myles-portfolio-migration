@@ -11,24 +11,56 @@ export type UfAsset = {
   height: number;
 };
 
+export type UfTiledAsset = {
+  originalSrc: string;
+  width: number;
+  height: number;
+  tiles: readonly UfAsset[];
+};
+
 export const UF_ASSETS = {
   /** §02 — full-scroll mobile captures (tall single-column screenshots) */
   mobileBefore: {
-    src: `${UF_ASSET_BASE}/mobile-before.jpg`,
+    originalSrc: `${UF_ASSET_BASE}/mobile-before.jpg`,
     width: 749,
     height: 14492,
+    tiles: [
+      { src: `${UF_ASSET_BASE}/display/mobile-before-01.webp`, width: 640, height: 2048 },
+      { src: `${UF_ASSET_BASE}/display/mobile-before-02.webp`, width: 640, height: 2048 },
+      { src: `${UF_ASSET_BASE}/display/mobile-before-03.webp`, width: 640, height: 2048 },
+      { src: `${UF_ASSET_BASE}/display/mobile-before-04.webp`, width: 640, height: 2048 },
+      { src: `${UF_ASSET_BASE}/display/mobile-before-05.webp`, width: 640, height: 2048 },
+      { src: `${UF_ASSET_BASE}/display/mobile-before-06.webp`, width: 640, height: 2048 },
+      { src: `${UF_ASSET_BASE}/display/mobile-before-07.webp`, width: 640, height: 95 },
+    ],
   },
   mobileAfter: {
-    src: `${UF_ASSET_BASE}/mobile-after.jpeg`,
+    originalSrc: `${UF_ASSET_BASE}/mobile-after.jpeg`,
     width: 684,
     height: 15638,
+    tiles: [
+      { src: `${UF_ASSET_BASE}/display/mobile-after-01.webp`, width: 640, height: 2048 },
+      { src: `${UF_ASSET_BASE}/display/mobile-after-02.webp`, width: 640, height: 2048 },
+      { src: `${UF_ASSET_BASE}/display/mobile-after-03.webp`, width: 640, height: 2048 },
+      { src: `${UF_ASSET_BASE}/display/mobile-after-04.webp`, width: 640, height: 2048 },
+      { src: `${UF_ASSET_BASE}/display/mobile-after-05.webp`, width: 640, height: 2048 },
+      { src: `${UF_ASSET_BASE}/display/mobile-after-06.webp`, width: 640, height: 2048 },
+      { src: `${UF_ASSET_BASE}/display/mobile-after-07.webp`, width: 640, height: 2048 },
+      { src: `${UF_ASSET_BASE}/display/mobile-after-08.webp`, width: 640, height: 296 },
+    ],
   },
 
   /** §04 — template variant switcher */
   templateWeekly: {
-    src: `${UF_ASSET_BASE}/template-weekly.jpeg`,
+    originalSrc: `${UF_ASSET_BASE}/template-weekly.jpeg`,
     width: 2188,
     height: 12807,
+    tiles: [
+      { src: `${UF_ASSET_BASE}/display/template-weekly-01.webp`, width: 1080, height: 2048 },
+      { src: `${UF_ASSET_BASE}/display/template-weekly-02.webp`, width: 1080, height: 2048 },
+      { src: `${UF_ASSET_BASE}/display/template-weekly-03.webp`, width: 1080, height: 2048 },
+      { src: `${UF_ASSET_BASE}/display/template-weekly-04.webp`, width: 1080, height: 178 },
+    ],
   },
   templateEvent: {
     src: `${UF_ASSET_BASE}/template-event.jpeg`,
@@ -64,4 +96,7 @@ export const UF_ASSETS = {
     guides: { src: `${UF_ASSET_BASE}/modular-guides.png`, width: 2400, height: 2425 },
     closer: { src: `${UF_ASSET_BASE}/modular-closer.png`, width: 2400, height: 2452 },
   },
-} as const satisfies Record<string, UfAsset | Record<string, UfAsset>>;
+} as const satisfies Record<
+  string,
+  UfAsset | UfTiledAsset | Record<string, UfAsset>
+>;

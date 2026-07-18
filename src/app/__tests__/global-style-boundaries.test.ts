@@ -6,8 +6,6 @@ const appDirectory = resolve(process.cwd(), "src/app");
 const expectedImports = [
   '@import "tailwindcss";',
   '@import "./styles/base.css";',
-  '@import "./styles/portfolio-surfaces.css";',
-  '@import "./styles/navi-minisite.css";',
   '@import "./styles/late-polish.css";',
 ];
 
@@ -35,6 +33,66 @@ describe("global stylesheet boundaries", () => {
       const stylesheet = readFileSync(path, "utf8");
       expect(stylesheet).toContain(marker);
       expect(stylesheet).not.toMatch(/^@import\b/m);
+    }
+  });
+
+  it("loads portfolio and Navi styles only from their route layouts", () => {
+    for (const relativePath of [
+      "about/layout.tsx",
+      "play/layout.tsx",
+      "work/layout.tsx",
+    ]) {
+      expect(
+        readFileSync(resolve(appDirectory, relativePath), "utf8"),
+      ).toContain('portfolio-surfaces.css"');
+    }
+
+    const naviLayout = readFileSync(
+      resolve(appDirectory, "work/navi/(minisite)/layout.tsx"),
+      "utf8",
+    );
+    expect(naviLayout).toContain('navi-minisite.css"');
+    expect(naviLayout).not.toContain('portfolio-surfaces.css"');
+  });
+
+  it("loads Instrument Serif normal only within Fresh Greens", () => {
+    const rootLayout = readFileSync(resolve(appDirectory, "layout.tsx"), "utf8");
+    const freshGreensLayout = readFileSync(
+      resolve(appDirectory, "work/fresh-greens/layout.tsx"),
+      "utf8",
+    );
+
+    expect(rootLayout).not.toContain("Instrument_Serif");
+    expect(rootLayout).not.toContain("serif.variable");
+    expect(freshGreensLayout).toContain("Instrument_Serif");
+    expect(freshGreensLayout).toContain(
+      'variable: "--font-instrument-serif"',
+    );
+    expect(freshGreensLayout).toContain('style: "normal"');
+    expect(freshGreensLayout).not.toContain("italic");
+  });
+
+  it("omits proven-unused packages and starter assets", () => {
+    const manifest = JSON.parse(
+      readFileSync(resolve(process.cwd(), "package.json"), "utf8"),
+    ) as {
+      dependencies: Record<string, string>;
+      devDependencies: Record<string, string>;
+    };
+    for (const dependency of ["animejs", "react-leaflet"]) {
+      expect(manifest.dependencies).not.toHaveProperty(dependency);
+    }
+    for (const dependency of ["@turf/turf", "@vitest/ui"]) {
+      expect(manifest.devDependencies).not.toHaveProperty(dependency);
+    }
+    for (const asset of [
+      "file.svg",
+      "globe.svg",
+      "next.svg",
+      "vercel.svg",
+      "window.svg",
+    ]) {
+      expect(existsSync(resolve(process.cwd(), "public", asset))).toBe(false);
     }
   });
 });

@@ -1,13 +1,22 @@
-import { act, render } from "@testing-library/react";
+import { act, fireEvent, render } from "@testing-library/react";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { describe, expect, it, vi } from "vitest";
-import { TikTokCoverBlobs } from "@/components/tiktok-dsa";
+import { renderToStaticMarkup } from "react-dom/server";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import {
+  TikTokCoverBlobs,
+  TikTokTemplateSystem,
+} from "@/components/tiktok-dsa";
 
 const styles = readFileSync(
   resolve(process.cwd(), "src/app/styles/portfolio-surfaces.css"),
   "utf8",
 );
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+  delete (document as unknown as { visibilityState?: string }).visibilityState;
+});
 
 function numericCustomProperty(
   node: HTMLElement,
@@ -32,12 +41,18 @@ function translateDistance(block: string): number {
 }
 
 describe("TikTokCoverBlobs preview geometry", () => {
+  it("server-renders one lightweight field without requesting blob layers", () => {
+    const markup = renderToStaticMarkup(<TikTokCoverBlobs />);
+
+    expect(markup.match(/class="tt-cover-field(?:\s|")/g)).toHaveLength(1);
+    expect(markup).toContain("tt-cover-cluster");
+    expect(markup).not.toContain("/projects/tiktok/cover-blobs/");
+  });
+
   it("defers homepage assets and pauses motion outside the nearby viewport", () => {
     let notifyVisibility: IntersectionObserverCallback = () => {};
     const observe = vi.fn();
     const disconnect = vi.fn();
-    const OriginalIntersectionObserver = window.IntersectionObserver;
-
     class MockIntersectionObserver {
       constructor(callback: IntersectionObserverCallback) {
         notifyVisibility = callback;
@@ -52,10 +67,16 @@ describe("TikTokCoverBlobs preview geometry", () => {
       thresholds = [0];
     }
 
-    window.IntersectionObserver =
-      MockIntersectionObserver as unknown as typeof IntersectionObserver;
+    vi.stubGlobal(
+      "IntersectionObserver",
+      MockIntersectionObserver as unknown as typeof IntersectionObserver,
+    );
+    Object.defineProperty(document, "visibilityState", {
+      configurable: true,
+      value: "visible",
+    });
 
-    const { container } = render(<TikTokCoverBlobs deferUntilVisible />);
+    const { container } = render(<TikTokCoverBlobs />);
     const field = container.querySelector(".tt-cover-field");
 
     expect(observe).toHaveBeenCalledOnce();
@@ -71,6 +92,30 @@ describe("TikTokCoverBlobs preview geometry", () => {
 
     expect(container.querySelectorAll(".tt-cblob")).toHaveLength(16);
     expect(field).toHaveClass("tt-cover-field--active");
+    for (const layer of container.querySelectorAll(".tt-cblob")) {
+      expect(layer).toHaveAttribute("loading", "lazy");
+      expect(layer).toHaveAttribute("fetchpriority", "low");
+    }
+
+    act(() => {
+      Object.defineProperty(document, "visibilityState", {
+        configurable: true,
+        value: "hidden",
+      });
+      fireEvent(document, new Event("visibilitychange"));
+    });
+
+    expect(field).not.toHaveClass("tt-cover-field--active");
+
+    act(() => {
+      Object.defineProperty(document, "visibilityState", {
+        configurable: true,
+        value: "visible",
+      });
+      fireEvent(document, new Event("visibilitychange"));
+    });
+
+    expect(field).toHaveClass("tt-cover-field--active");
 
     act(() => {
       notifyVisibility(
@@ -82,7 +127,16 @@ describe("TikTokCoverBlobs preview geometry", () => {
     expect(container.querySelectorAll(".tt-cblob")).toHaveLength(16);
     expect(field).not.toHaveClass("tt-cover-field--active");
 
-    window.IntersectionObserver = OriginalIntersectionObserver;
+  });
+
+  it("keeps every below-fold template image lazy", () => {
+    const { container } = render(<TikTokTemplateSystem />);
+
+    const images = container.querySelectorAll("img");
+    expect(images.length).toBeGreaterThan(0);
+    for (const image of images) {
+      expect(image).toHaveAttribute("loading", "lazy");
+    }
   });
 
   it("lets the pieces micro-drift independently without distorting the logo", () => {

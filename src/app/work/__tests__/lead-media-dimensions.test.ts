@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -16,6 +16,17 @@ describe("case-study lead-media geometry", () => {
     expect(source).toMatch(
       /<LeadVideo[\s\S]*?clip="\/projects\/fresh-greens\/process\/active-nav-flat-route\.mp4"[\s\S]*?width=\{1290\}[\s\S]*?height=\{2796\}[\s\S]*?\/>/,
     );
+
+    const original = resolve(
+      process.cwd(),
+      "public/projects/fresh-greens/v2/en-route.png",
+    );
+    const poster = resolve(
+      process.cwd(),
+      "public/projects/fresh-greens/v2/en-route.webp",
+    );
+    expect(existsSync(poster)).toBe(true);
+    expect(statSync(poster).size).toBeLessThan(statSync(original).size);
   });
 
   it("uses verified Navi dimensions", () => {

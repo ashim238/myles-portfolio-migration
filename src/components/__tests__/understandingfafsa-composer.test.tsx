@@ -1,4 +1,6 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
+import { existsSync } from "node:fs";
+import { resolve } from "node:path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
   BeforeAfterPhones,
@@ -6,6 +8,7 @@ import {
   NewsletterComposerDemo,
   TemplateSwitcher,
 } from "@/components/understandingfafsa";
+import { UF_ASSETS } from "@/lib/understandingfafsa-assets";
 
 beforeEach(() => {
   vi.stubGlobal(
@@ -19,6 +22,31 @@ beforeEach(() => {
 });
 
 describe("UnderstandingFAFSA newsletter composer accessibility", () => {
+  it("uses bounded WebP tiles while retaining links to every original tall capture", () => {
+    for (const capture of [
+      UF_ASSETS.mobileBefore,
+      UF_ASSETS.mobileAfter,
+      UF_ASSETS.templateWeekly,
+    ]) {
+      expect(capture).toHaveProperty("originalSrc");
+      expect(capture).toHaveProperty("tiles");
+      expect(capture.originalSrc).toMatch(/\.(?:jpe?g)$/u);
+      expect(capture.tiles.length).toBeGreaterThan(1);
+      expect(
+        existsSync(resolve(process.cwd(), "public", capture.originalSrc.slice(1))),
+      ).toBe(true);
+
+      for (const tile of capture.tiles) {
+        expect(tile.src).toMatch(/\.webp$/u);
+        expect(tile.width).toBeLessThanOrEqual(1080);
+        expect(tile.height).toBeLessThanOrEqual(2048);
+        expect(
+          existsSync(resolve(process.cwd(), "public", tile.src.slice(1))),
+        ).toBe(true);
+      }
+    }
+  });
+
   it("keeps the interaction optional until the reader opens it", () => {
     render(<NewsletterComposerDemo />);
 
@@ -65,6 +93,26 @@ describe("UnderstandingFAFSA newsletter composer accessibility", () => {
         "Reported open rates are shown for context. This was not a controlled attribution test.",
       ),
     ).toBeInTheDocument();
+    const originalLinks = screen.getAllByRole("link", {
+      name: /Open original .* capture/,
+    });
+    expect(originalLinks).toHaveLength(2);
+    for (const link of originalLinks) {
+      expect(link).toHaveAttribute("target", "_blank");
+      expect(link).toHaveAttribute("rel", "noopener noreferrer");
+    }
+
+    for (const region of regions) {
+      expect(within(region).getAllByRole("img")).toHaveLength(1);
+    }
+    const tiledImages = regions.flatMap((region) =>
+      Array.from(region.querySelectorAll("img")),
+    );
+    expect(tiledImages.length).toBeGreaterThan(2);
+    for (const image of tiledImages) {
+      expect(image).toHaveAttribute("loading", "lazy");
+      expect(image).toHaveAttribute("alt", "");
+    }
   });
 
   it("exposes the swappable blocks as a valid named list without treating the canvas as a list", () => {
@@ -101,6 +149,16 @@ describe("UnderstandingFAFSA newsletter composer accessibility", () => {
         "Scroll inside the frame to read the full send. Two of the three template types are shown here: weekly and event.",
       ),
     ).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "Open original Weekly capture" }),
+    ).toHaveAttribute("href", UF_ASSETS.templateWeekly.originalSrc);
+    expect(within(weekly).getAllByRole("img")).toHaveLength(1);
+    const weeklyTiles = weekly.querySelectorAll("img");
+    expect(weeklyTiles.length).toBeGreaterThan(1);
+    for (const image of weeklyTiles) {
+      expect(image).toHaveAttribute("loading", "lazy");
+      expect(image).toHaveAttribute("alt", "");
+    }
 
     fireEvent.click(screen.getByRole("button", { name: "Event" }));
 

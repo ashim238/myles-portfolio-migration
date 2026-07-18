@@ -49,8 +49,16 @@ describe("SpecimenCard", () => {
     expect(firstImage).toHaveAttribute("data-unoptimized", "false");
     expect(firstImage).toHaveAttribute("data-priority", "true");
     expect(firstImage).toHaveAttribute("loading", "eager");
+    expect(firstImage).toHaveAttribute(
+      "sizes",
+      "(max-width: 480px) 92vw, (max-width: 900px) 46vw, 36rem",
+    );
     expect(secondImage).toHaveAttribute("data-unoptimized", "false");
     expect(secondImage).toHaveAttribute("data-priority", "false");
     expect(secondImage).toHaveAttribute("loading", "lazy");
+    expect(secondImage).toHaveAttribute(
+      "sizes",
+      "(max-width: 480px) 92vw, (max-width: 900px) 46vw, 36rem",
+    );
   });
 });

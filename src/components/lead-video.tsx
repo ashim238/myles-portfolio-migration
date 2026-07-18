@@ -13,6 +13,11 @@ type LeadVideoProps = {
   type?: string;
 };
 
+const POSTER_DERIVATIVES: Readonly<Record<string, string>> = {
+  "/projects/fresh-greens/v2/en-route.png":
+    "/projects/fresh-greens/v2/en-route.webp",
+};
+
 function subscribeReducedMotion(callback: () => void) {
   const query = window.matchMedia("(prefers-reduced-motion: reduce)");
   query.addEventListener("change", callback);
@@ -58,6 +63,7 @@ export function LeadVideo({
     type === "video/quicktime"
       ? clip.replace(/\.mov(?=([?#]|$))/i, ".mp4")
       : clip;
+  const displayPoster = POSTER_DERIVATIVES[poster] ?? poster;
 
   useEffect(() => {
     const v = ref.current;
@@ -97,7 +103,7 @@ export function LeadVideo({
       <video
         ref={ref}
         className="case-lead-video"
-        poster={poster}
+        poster={displayPoster}
         width={width}
         height={height}
         muted

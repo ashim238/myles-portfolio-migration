@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
+import "../../../styles/navi-minisite.css";
 import { naviDisplay, naviBody } from "@/lib/navi/fonts";
 import { NaviHeader } from "@/components/navi/chrome/NaviHeader";
 import { NaviFooter } from "@/components/navi/chrome/NaviFooter";
