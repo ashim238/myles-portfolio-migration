@@ -268,7 +268,7 @@ export const playEntries: PlayEntry[] = [
       },
     ],
     specimen: {
-      designation: "Sukuna's Finger — Ryomen Sukuna",
+      designation: "Sukuna's Finger: Ryomen Sukuna",
       classification: "Special Grade Cursed Object",
       material: "PLA filament, acrylic paint, matte varnish",
       status: "SEALED",

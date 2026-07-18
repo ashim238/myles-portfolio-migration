@@ -62,6 +62,13 @@ describe("Experience page", () => {
     expect(screen.getByText(/q or r/i)).toBeVisible();
   });
 
+  it("labels reviews as sample content at the point of use", () => {
+    render(<ExperienceView {...viewProps(e)} />);
+    expect(
+      screen.getByText("Sample reviews for this portfolio demo."),
+    ).toBeInTheDocument();
+  });
+
   it("marks Learn as the initial active section", () => {
     render(<ExperienceView {...viewProps(e)} />);
     expect(screen.getByRole("button", { name: "Learn" })).toHaveAttribute("aria-current", "true");

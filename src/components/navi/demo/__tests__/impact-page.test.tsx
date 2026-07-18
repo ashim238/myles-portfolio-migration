@@ -11,6 +11,9 @@ describe("Impact ledger page", () => {
       screen.getByRole("heading", { level: 1, name: "Where bookings go" }),
     ).toBeInTheDocument();
     expect(screen.getByText(/experiences, not dollars/i)).toBeInTheDocument();
+    expect(screen.getByText(/This demo has no revenue figures/i)).toBeInTheDocument();
+    expect(screen.queryByText(/honest caveats/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/The point is/i)).not.toBeInTheDocument();
   });
 
   it("renders one section per theme with its label and anchor id", () => {
@@ -37,6 +40,14 @@ describe("Impact ledger page", () => {
     const { container } = render(<ImpactView />);
     const cards = container.querySelectorAll("a.nv-exp-card");
     expect(cards.length).toBe(EXPERIENCES.length);
+  });
+
+  it("uses concise impact labels in the full ledger instead of repeating every claim paragraph", () => {
+    render(<ImpactView />);
+    const first = EXPERIENCES[0];
+
+    expect(screen.getAllByText(first.impactPhrase).length).toBeGreaterThan(0);
+    expect(screen.queryByText(first.impactStatement)).not.toBeInTheDocument();
   });
 
   it("offers a way back to the feed and forward to booking, not a dead end", () => {

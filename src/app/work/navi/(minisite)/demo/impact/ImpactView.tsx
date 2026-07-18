@@ -15,10 +15,9 @@ export function ImpactView() {
         <p>
           Every Navi experience commits to one regenerative outcome. This ledger
           groups those commitments by theme so you can see where bookings
-          concentrate. A few honest caveats: the counts here are experiences, not
-          dollars, and there are no revenue figures in this view. Each theme
-          reflects what a host says a booking supports, not an audited result.
-          The point is to show the pattern, not to sell it.
+          concentrate. The counts here are experiences, not dollars. This demo
+          has no revenue figures. Each theme reflects the sample claim attached
+          to a listing, not an audited result.
         </p>
       </header>
       {summary.map((section) => (
@@ -27,9 +26,8 @@ export function ImpactView() {
       <footer className="nv-impact-method">
         <h2>How we count this</h2>
         <p>
-          Themes are assigned by reading each host&apos;s stated commitment and
-          matching it to the closest category. No experience appears in more than
-          one theme, and we don&apos;t invent themes to fill a section.
+          Each listing&apos;s sample commitment is assigned to the closest theme.
+          Each experience appears once.
         </p>
       </footer>
       <nav className="nv-impact-cta" aria-label="Keep exploring">

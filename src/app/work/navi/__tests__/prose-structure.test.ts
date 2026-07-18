@@ -66,9 +66,9 @@ describe("Navi case-study structure", () => {
       "The team audited six travel platforms.",
       "Two concerns appeared most often in the 14-response resident survey.",
       "I created three research-informed archetypes from the survey findings",
-      "For this portfolio case study, I rebuilt the Navi visual system as live React",
+      "For this portfolio case study, I translated the Navi visual system into live React",
       "The screens below come from the current React build.",
-      "The portfolio rebuild makes the concept easier to inspect.",
+      "I rebuilt the concept as live React components",
     ]) {
       expect(prose).toContain(copy);
     }
@@ -79,16 +79,19 @@ describe("Navi case-study structure", () => {
   });
 
   it("keeps future validation framed as planned work", () => {
-    expect(prose).toContain("The portfolio rebuild makes the concept easier to inspect");
-    expect(prose).toContain("Current rebuild");
+    expect(prose).toContain("I rebuilt the concept as live React components");
+    expect(prose).not.toContain("The portfolio rebuild makes the concept easier to inspect");
+    expect(prose).not.toContain("The graduate-studio concept did not ship");
+    expect(prose).toContain("Working now");
     expect(prose).toContain("Next research");
     expect(prose).toContain("Deeper Learn pages");
     expect(prose).toContain("Local host and business onboarding");
     expect(prose).toMatch(/Group booking.{0,100}future opportunity/);
-    expect(prose).toContain("not wired into the current rebuild");
+    expect(prose).toContain("not wired into this demo");
+    expect(prose).not.toContain("Current rebuild");
     expect(prose).toContain('href="/work/navi/demo"');
     expect(prose).toContain('href="/work/navi/system"');
-    expect(page.indexOf("Current rebuild")).toBeLessThan(
+    expect(page.indexOf("Working now")).toBeLessThan(
       page.indexOf("<ProjectWorkJump"),
     );
   });

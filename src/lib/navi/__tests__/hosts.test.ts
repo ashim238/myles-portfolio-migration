@@ -24,6 +24,19 @@ describe("HOSTS record", () => {
       expect(HOSTS[slug], `missing HOSTS["${slug}"]`).toBeDefined();
     }
   });
+
+  it("uses a distinct, listing-derived introduction for every host", () => {
+    const hosts = Object.values(HOSTS);
+    const bios = hosts.map((host) => host.bio);
+
+    expect(new Set(bios).size).toBe(hosts.length);
+    for (const host of hosts) {
+      const experience = EXPERIENCES.find((item) => item.host.slug === host.slug);
+      expect(experience).toBeDefined();
+      expect(host.bio).toContain(experience!.title);
+      expect(host.bio).toContain(host.neighborhood);
+    }
+  });
 });
 
 describe("getHostBySlug", () => {

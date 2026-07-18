@@ -2,8 +2,8 @@ import { describe, it, expect } from "vitest";
 import { EXPERIENCES, getExperienceBySlug, CATEGORIES } from "@/lib/navi/demo-data";
 
 describe("demo data", () => {
-  it("exports at least 8 experiences", () => {
-    expect(EXPERIENCES.length).toBeGreaterThanOrEqual(8);
+  it("keeps the full 37-experience catalog", () => {
+    expect(EXPERIENCES).toHaveLength(37);
   });
 
   it("every experience has a unique slug", () => {

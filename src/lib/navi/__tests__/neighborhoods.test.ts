@@ -32,6 +32,12 @@ describe("NEIGHBORHOODS record", () => {
       expect(n.borough.length).toBeGreaterThan(0);
     }
   });
+
+  it("does not end every neighborhood introduction with the same host pitch", () => {
+    for (const n of Object.values(NEIGHBORHOODS)) {
+      expect(n.intro).not.toMatch(/\bhosts?\b|people who host/i);
+    }
+  });
 });
 
 describe("getNeighborhoodBySlug", () => {

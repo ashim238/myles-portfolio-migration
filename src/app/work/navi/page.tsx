@@ -263,17 +263,17 @@ export default async function NaviPage() {
         </h3>
         <div className="project-section-body">
           <p>
-            For this portfolio case study, I rebuilt the Navi visual system as live React
+            For this portfolio case study, I translated the Navi visual system into live React
             components.
           </p>
           <p>
             Jost was selected for display typography to echo urban wayfinding cues. Orange became
             the primary accent to distinguish Navi from the travel platforms in the audit. The
-            portfolio rebuild pairs it with Lato and a 4px spacing system.
+            palette pairs it with Lato and a 4px spacing system.
           </p>
           <p>
-            The rebuild includes brand primitives, semantic aliases, interactive variants, and a
-            playground for changing component props. <Link href="/work/navi/system">See the Navi
+            The portfolio rebuild includes brand primitives, semantic aliases, interactive
+            variants, and a playground for changing component props. <Link href="/work/navi/system">See the Navi
             design system</Link>. Those components are assembled into a working booking flow.{" "}
             <Link href="/work/navi/demo">Open the demo</Link>.
           </p>
@@ -293,9 +293,9 @@ export default async function NaviPage() {
         </p>
         <div className="project-section-body">
           <p>
-            The graduate-studio concept did not ship. The current demo is a portfolio rebuild that
-            lets you browse the feed, search a neighborhood on the map, open a host, and try the
-            booking flow. It uses the same components catalogued on the system page.
+            I rebuilt the concept as live React components and connected them to an individual
+            booking flow. You can browse the feed, search by neighborhood, open a host, and
+            complete a sample reservation with the same components catalogued on the system page.
           </p>
         </div>
         <NaviDemoEmbed />
@@ -310,18 +310,18 @@ export default async function NaviPage() {
       >
       <div className="project-section nv-section nv-closing">
         <p className="case-section-lead">
-          The portfolio rebuild makes the concept easier to inspect.
+          The current demo makes the interaction model clickable.
         </p>
         <div className="project-section-body">
           <p>
-            I can now walk through the component system and individual booking flow in a browser,
-            which wasn&apos;t possible in the original studio project. I need to test the rebuilt flow
-            with residents, travelers, and local hosts before treating those decisions as settled.
+            I can now inspect the component states and individual booking flow in a browser. I
+            still need to test them with residents, travelers, and local hosts before treating
+            those choices as settled.
           </p>
         </div>
         <div className="nv-validation-ledger">
           <section aria-labelledby="nv-current-rebuild">
-            <h3 id="nv-current-rebuild">Current rebuild</h3>
+            <h3 id="nv-current-rebuild">Working now</h3>
             <ul>
               <li>Live component system and editable variants</li>
               <li>Neighborhood exploration and filters</li>
@@ -334,12 +334,12 @@ export default async function NaviPage() {
               <li>Deeper Learn pages</li>
               <li>Local host and business onboarding</li>
               <li>
-                {"Group booking remains a future opportunity and is not wired into the current rebuild."}
+                {"Group booking remains a future opportunity and is not wired into this demo."}
               </li>
             </ul>
           </section>
         </div>
-        <div className="nv-closing-links" aria-label="Explore the Navi rebuild">
+        <div className="nv-closing-links" aria-label="Explore the working Navi demo">
           <Link href="/work/navi/demo">Open the demo</Link>
           <Link href="/work/navi/system">View the design system</Link>
         </div>

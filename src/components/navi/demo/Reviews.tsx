@@ -28,6 +28,7 @@ export function Reviews({
           </span>
         </p>
       </header>
+      <p className="nv-reviews-note">Sample reviews for this portfolio demo.</p>
       <ul className="nv-reviews-list">
         {reviews.map((r) => (
           <li key={`${r.author}-${r.date}`} className="nv-review">

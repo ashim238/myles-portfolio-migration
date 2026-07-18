@@ -22,55 +22,55 @@ export function neighborhoodSlug(name: string): string {
 // data, so we only store the intro text here.
 const INTROS: Record<string, string> = {
   "astoria":
-    "Astoria runs on the smell of a dozen kitchens at once, Greek and Egyptian and Bangladeshi within the same block. The people who host here grew up on those corners, and they'll tell you which counter has stayed in the same family the longest.",
+    "Astoria runs on the smell of a dozen kitchens at once, with Greek, Egyptian, and Bangladeshi food on the same block.",
   "bedford-stuyvesant":
-    "Bed-Stuy wears its brownstone history out loud, on stoops and in the gardens that neighbors tend together. Local hosts here treat the block as the real attraction, not a backdrop.",
+    "Bed-Stuy wears its brownstone history out loud, on stoops and in the gardens that neighbors tend together.",
   "central-harlem":
-    "Harlem's music and its food carry a century of arrivals, and they're still being added to. Hosts who live here can point you past the famous addresses to the rooms where the work actually happens.",
+    "Harlem's music and food carry a century of arrivals, and new work keeps joining that history.",
   "chelsea":
-    "Chelsea folds galleries, the High Line, and old market halls into a few walkable avenues. The hosts here know which openings are worth your evening and which are just a crowd.",
+    "Chelsea folds galleries, the High Line, and old market halls into a few walkable avenues.",
   "chinatown":
-    "Chinatown moves at the pace of its produce stalls and its tea houses, and it rewards anyone who slows down to match it. Local hosts grew up running these errands, so they know the back rooms as well as the storefronts.",
+    "Chinatown moves at the pace of its produce stalls and tea houses. Slow down and the block opens up.",
   "coney-island":
-    "Coney Island is louder in summer and quieter in a way worth seeing the rest of the year. Hosts from here can walk you past the boardwalk's surface into the community that keeps it running.",
+    "Coney Island is loudest in summer, but the boardwalk has a different rhythm the rest of the year.",
   "dumbo":
-    "DUMBO packs cobblestones, bridge views, and converted warehouses into a tight grid by the water. The people who host here remember it before the photos, and they'll show you both versions.",
+    "DUMBO packs cobblestones, bridge views, and converted warehouses into a tight grid by the water.",
   "east-flatbush":
-    "East Flatbush carries the Caribbean across its bakeries, churches, and weekend markets. Hosts who live here can read the neighborhood's rhythms the way a regular reads a menu.",
+    "East Flatbush carries the Caribbean through its bakeries, churches, and weekend markets.",
   "east-village":
-    "The East Village keeps its punk and its poetry close to the surface, in record stores and community gardens that have outlasted every trend. Local hosts can trace which corners earned their reputation.",
+    "The East Village keeps its punk and poetry close to the surface, in record stores and community gardens that have outlasted many trends.",
   "flushing":
-    "Flushing's food halls are a city of their own, dense with regional cooking you won't find in a single guidebook. Hosts from here order in the languages the menus are written in.",
+    "Flushing's food halls are dense with regional cooking that no single guidebook could cover.",
   "greenpoint":
-    "Greenpoint holds onto its Polish bakeries while the waterfront fills in around them. The hosts here can tell you which traditions stayed and which ones are brand new.",
+    "Greenpoint holds onto its Polish bakeries while the waterfront fills in around them.",
   "hamilton-heights":
-    "Hamilton Heights climbs uptown with row houses, jazz history, and a college campus folded into the hills. Local hosts know the quiet blocks that the rest of the city skips.",
+    "Hamilton Heights climbs uptown through row houses, jazz history, and a college campus folded into the hills.",
   "hunts-point":
-    "Hunts Point feeds the city before dawn from its market, and it's home long after the trucks leave. Hosts here can show you the neighborhood the headlines usually miss.",
+    "Hunts Point feeds the city before dawn from its market, and it is home long after the trucks leave.",
   "inwood":
-    "Inwood keeps the island's last old forest and some of its steepest streets, far enough north to feel like a secret. The people who host here treat the parkland as a shared backyard.",
+    "Inwood keeps the island's last old forest and some of its steepest streets at Manhattan's northern edge.",
   "jackson-heights":
-    "Jackson Heights might be the most spoken-over square mile in the country, with a different country's cooking on every block. Local hosts move between those worlds the way the rest of us cross a street.",
+    "Jackson Heights fits an extraordinary range of languages and food into a compact grid of apartment blocks and storefronts.",
   "long-island-city":
-    "Long Island City trades its industrial past for towers and studios, all of it staring back at the Manhattan skyline. Hosts here remember the factories and can point to what they became.",
+    "Long Island City layers towers and studios over an industrial past, all of it facing the Manhattan skyline.",
   "lower-east-side":
-    "The Lower East Side stacked immigrant generations on top of each other, and you can still taste each layer. Local hosts know which tenement stories are stitched into which storefronts.",
+    "The Lower East Side carries generations of immigrant history through its tenements, storefronts, and food.",
   "mott-haven":
-    "Mott Haven is where hip-hop got its footing, and the murals still argue back. Hosts who live here can walk you through the history without flattening it.",
+    "Mott Haven's murals, industrial buildings, and waterfront parks sit within a few blocks of one another.",
   "park-slope":
-    "Park Slope lines its brownstones up against Prospect Park, and the food co-op runs on the same neighborly logic. The hosts here treat the block as an extension of their living room.",
+    "Park Slope lines its brownstones up against Prospect Park, with the food co-op a few blocks away.",
   "ridgewood":
-    "Ridgewood crosses the Brooklyn line quietly, all knish counters and new cafes sharing the same brick. Local hosts can tell you which spots have held the corner for fifty years.",
+    "Ridgewood crosses the Brooklyn line quietly, with knish counters and new cafes sharing the same brick blocks.",
   "south-street-seaport":
-    "The Seaport keeps the city's old harbor in its cobblestones and its tall ships. Hosts here can separate the maritime history from the mall that grew around it.",
+    "The Seaport keeps the city's old harbor visible in its cobblestones, piers, and tall ships.",
   "sugar-hill":
-    "Sugar Hill earned its name when Harlem's writers and musicians moved up the slope, and the elegance held. Local hosts know whose front steps the old photographs were taken on.",
+    "Sugar Hill's row houses and apartment buildings still carry the neighborhood's literary and musical history.",
   "sunset-park":
-    "Sunset Park stacks Brooklyn's Chinatown and its Little Latin America on one hill, with the harbor laid out below. The hosts here shop both main streets in the same afternoon.",
+    "Sunset Park brings Brooklyn's Chinatown and Little Latin America onto one hill, with the harbor laid out below.",
   "van-cortlandt-village":
-    "Van Cortlandt Village backs onto the borough's biggest park, with trails and ballfields a few steps from the apartments. Local hosts use that green space the way other neighborhoods use a town square.",
+    "Van Cortlandt Village backs onto the borough's biggest park, with trails and ballfields a few steps from the apartments.",
   "west-farms":
-    "West Farms grew up along the river and the old trolley lines, and the bones are still visible. Hosts here can show you where the Bronx's industrial story meets its quieter corners.",
+    "West Farms grew along the river and old trolley lines, with traces of that history still visible.",
 };
 
 export const NEIGHBORHOODS: Record<string, Neighborhood> = (() => {

@@ -91,11 +91,11 @@ describe("Navi evidence claims", () => {
     expect(projectPage).toContain("research-informed archetypes");
     expect(projectPage).toContain("internal planning artifacts");
     expect(projectPage).toMatch(/group booking.{0,100}future opportunity/i);
-    expect(projectPage).toMatch(/not wired into the current rebuild/i);
+    expect(projectPage).toMatch(/not wired into this demo/i);
     expect(projectPage).not.toMatch(/three personas/i);
     expect(projectPage).not.toContain("Those flows are present in the rebuild");
     expect(projectPage).toMatch(
-      /The graduate-studio concept did not ship\. The current demo is a portfolio rebuild/,
+      /I rebuilt the concept as live React components and connected them to an individual/,
     );
     expect(projectPage).toContain("Deeper Learn pages");
     expect(projectPage).toContain("Local host and business onboarding");

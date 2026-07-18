@@ -51,7 +51,7 @@ export const RESERVED_LANES: ReservedLane[] = [
       },
       {
         tag: "Report FAB",
-        note: "The same orange — the contribute-back affordance.",
+        note: "The same orange marks the contribute-back affordance.",
       },
       {
         tag: "Route-preview hazard chips",
@@ -99,7 +99,7 @@ export const RESERVED_LANES: ReservedLane[] = [
     carveOuts: [
       {
         tag: "Daylight polyline",
-        note: "Color IS the data — a per-segment daylight score. A solid → dashed → dotted cadence carries it for WCAG 1.4.1.",
+        note: "Color is the data: a per-segment daylight score. A solid → dashed → dotted cadence carries it for WCAG 1.4.1.",
       },
     ],
   },

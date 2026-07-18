@@ -33,21 +33,18 @@ function pickIn(seed: number, min: number, max: number): number {
   return min + (seed % range);
 }
 
-const BIO_TEMPLATES = [
-  "Lives a block from where the experience meets. Started hosting after friends kept asking for the inside route, and still treats every booking that way.",
-  "Has run this experience long enough to know which week of the year it's quietest, and which corner of the room catches the best afternoon light.",
-  "Trained as a teacher before going independent. Keeps groups small on purpose, because the conversation is the point.",
-  "Came to Brooklyn for one specific reason and stayed for ten others. Each is somewhere on the tour.",
-  "Was a regular at every place this experience visits, long before turning host. Knows the staff by name and brings receipts.",
-];
-
-function deterministicHost(slug: string, name: string, neighborhood: string): Host {
+function deterministicHost(
+  slug: string,
+  name: string,
+  neighborhood: string,
+  experienceTitle: string,
+): Host {
   const seed = hashSeed(slug);
   return {
     slug,
     name,
     neighborhood,
-    bio: BIO_TEMPLATES[seed % BIO_TEMPLATES.length],
+    bio: `${name} hosts ${experienceTitle} in ${neighborhood}.`,
     yearsHosting: pickIn(seed >>> 3, 2, 9),
     responseRate: pickIn(seed >>> 7, 88, 99),
   };
@@ -57,7 +54,12 @@ export const HOSTS: Record<string, Host> = (() => {
   const map: Record<string, Host> = {};
   for (const e of EXPERIENCES) {
     if (map[e.host.slug]) continue;
-    map[e.host.slug] = deterministicHost(e.host.slug, e.host.name, e.neighborhood);
+    map[e.host.slug] = deterministicHost(
+      e.host.slug,
+      e.host.name,
+      e.neighborhood,
+      e.title,
+    );
   }
   return map;
 })();

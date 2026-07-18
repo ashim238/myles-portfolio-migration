@@ -203,18 +203,15 @@ export default async function UnderstandingFafsaPage() {
           </h3>
           <div className="project-section-body">
             <p>
-              The shared framework includes a welcome email that sets
-              expectations, the core weekly newsletter, and an event-specific
-              variant with fewer blocks for invites and recaps. A
-              counselor-focused toolkit extends the same vocabulary (duotone
-              icons, formal register) and is in progress.
+              The audit led to three templates: a welcome email, the weekly
+              newsletter, and a shorter version for event invites and recaps.
+              A counselor toolkit is still in progress.
             </p>
             <p>
-              The welcome email follows a deliberate structure shaped by the
-              audit. It includes a banner, gratitude, what to expect, a brief
-              history that transitions into the current mission, a CTA, suggested
-              reading, and social links. The welcome email introduces the
-              redesigned type, palette, and content structure.
+              The welcome email sets expectations in a fixed order: a banner,
+              a thank-you, what to expect, a short history and current mission,
+              a CTA, suggested reading, and social links. It also introduces
+              the updated type and palette.
             </p>
           </div>
 
@@ -247,12 +244,12 @@ export default async function UnderstandingFafsaPage() {
         <div className="project-section uf-section">
           <div className="project-section-body">
             <p>
-              The hierarchy, spacing, and modular rhythm all lived in Figma, but
-              the live template had to be rebuilt in Mailchimp so the founder
-              could edit without touching HTML. Matching Figma spacing inside the
-              builder was a dead end. Every container and wrapper added bloat. I
-              simplified the section-header and body hierarchy for the Mailchimp
-              build.
+              The Figma file defined the spacing, type, and reusable sections.
+              The live template still had to be rebuilt in Mailchimp so the
+              founder could edit it without touching HTML. Matching the Figma
+              spacing inside the builder was a dead end. Every container and
+              wrapper added bloat, so I flattened the section-header and body
+              hierarchy for the Mailchimp build.
             </p>
             <p>
               <mark className="case-highlight">
@@ -296,8 +293,9 @@ export default async function UnderstandingFafsaPage() {
             </p>
             <p>
               I shipped a master template, modular blocks, explicit
-              locked-vs-swappable rules, and three template variants on the same
-              design vocabulary. The first redesigned send went out November 4, 2025.
+              locked-vs-swappable rules, and three template variants built from
+              the same locked sections and swappable blocks. The first redesigned
+              send went out November 4, 2025.
               Mailchimp reported an observed <CountUp value="~52.6%" /> open rate
               with MPP excluded, compared with earlier sends around 30%. This was
               not a controlled attribution test, so I treat the result as an

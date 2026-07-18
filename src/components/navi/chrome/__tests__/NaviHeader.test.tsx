@@ -24,7 +24,9 @@ describe("NaviHeader", () => {
     render(<NaviHeader />);
 
     expect(
-      screen.getByText("Portfolio concept · sample content"),
+      screen.getByText(
+        "Portfolio concept. Hosts, reviews, prices, and impact claims are sample content.",
+      ),
     ).toBeInTheDocument();
   });
 

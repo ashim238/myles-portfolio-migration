@@ -34,16 +34,13 @@ export default function AboutPage() {
               completed in 2026.
             </p>
             <p>
-              My thesis was a solo-built React Native wayfinding app for Black
-              travelers in America, with VoiceOver labels, dynamic type, and a
-              WCAG dash pattern for the daylight cue built in from the start.
-              For a financial-aid nonprofit, I rebuilt the newsletter as
-              modular templates a non-designer could run without breaking the
-              brand. The first redesigned send had an observed 52.6% open rate
-              with Mailchimp Privacy Protection excluded. At
-              TikTok I designed catalog ad templates around the
-              platform&apos;s subcultures. I later learned through Global Creative
-              Lab that American Eagle selected one.
+              My thesis became Fresh Greens, a React Native wayfinding
+              prototype for Black drivers. For UnderstandingFAFSA, I built
+              reusable newsletter templates. The first redesigned send had an observed 52.6% open rate
+              with Mailchimp Privacy Protection excluded. At TikTok, I designed
+              three catalog templates. One
+              entered the launch library and was later selected by American
+              Eagle.
             </p>
             <p>
               Outside of work, I&apos;m a huge comic fan. The work Daniel

@@ -97,4 +97,17 @@ describe("UnderstandingFAFSA case-study structure", () => {
       "I merged sections where they still scanned and compressed PNGs through an external tool.",
     );
   });
+
+  it("names the three templates and the Mailchimp tradeoff without abstract system language", () => {
+    expect(prose).toContain(
+      "The audit led to three templates: a welcome email, the weekly newsletter, and a shorter version for event invites and recaps.",
+    );
+    expect(prose).toContain(
+      "The Figma file defined the spacing, type, and reusable sections.",
+    );
+    expect(prose).not.toContain("The shared framework");
+    expect(prose).not.toContain("same vocabulary");
+    expect(prose).not.toContain("modular rhythm");
+    expect(prose).not.toContain("same design vocabulary");
+  });
 });

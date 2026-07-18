@@ -15,7 +15,7 @@ export function ImpactThemeSection({ section }: { section: ImpactSection }) {
       <ul className="nv-impact-statements" aria-label={`What ${section.label} bookings fund`}>
         {section.experiences.map((e) => (
           <li key={e.slug}>
-            <ImpactSignal as="div">{e.impactStatement}</ImpactSignal>
+            <ImpactSignal as="div">{e.impactPhrase}</ImpactSignal>
           </li>
         ))}
       </ul>

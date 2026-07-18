@@ -3,7 +3,9 @@ import Link from "next/link";
 export function NaviHeader() {
   return (
     <header className="nv-header" role="banner">
-      <p className="nv-concept-disclosure">Portfolio concept · sample content</p>
+      <p className="nv-concept-disclosure">
+        Portfolio concept. Hosts, reviews, prices, and impact claims are sample content.
+      </p>
       <div className="nv-header-main">
         <div className="nv-header-lead">
           <Link href="/work/navi/demo" className="nv-wordmark" aria-label="Navi home">

@@ -1394,6 +1394,7 @@
 .nv-reviews-summary { display: flex; align-items: baseline; gap: var(--nv-sp-xs); margin: 0; }
 .nv-reviews-score { font-family: var(--nv-font-display), sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--nv-text); }
 .nv-reviews-count { color: var(--nv-text-muted); font-size: 0.9rem; }
+.nv-reviews-note { margin: calc(var(--nv-sp-lg) * -0.55) 0 var(--nv-sp-lg); color: var(--nv-text-muted); font-size: 0.82rem; }
 .nv-reviews-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--nv-sp-xl); }
 .nv-review { display: grid; gap: var(--nv-sp-sm); align-content: start; }
 .nv-review-head { display: flex; align-items: center; gap: var(--nv-sp-sm); }

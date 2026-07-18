@@ -177,7 +177,7 @@ export default function SystemPage() {
         </p>
       </header>
 
-      <Hero title="Live" lede="Pick a variant. Watch it update.">
+      <Hero title="Live" lede="Try a variant and watch the component update.">
         <PropPlayground
           component="Button"
           controls={[
@@ -193,7 +193,7 @@ export default function SystemPage() {
         />
       </Hero>
 
-      <Chapter title="Foundations" intro="The canvas. Tokens, type, and spacing.">
+      <Chapter title="Foundations" intro="Tokens, type, and spacing.">
         <Specimen
           title="Color"
           note="Brand primitives → semantic aliases. Components reference semantic tokens, never raw hex."
