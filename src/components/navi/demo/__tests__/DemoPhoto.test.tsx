@@ -3,13 +3,19 @@ import { describe, it, expect } from "vitest";
 import { DemoPhoto } from "@/components/navi/demo/DemoPhoto";
 
 describe("DemoPhoto", () => {
-  it("serves a responsive optimized image by default", () => {
-    render(<DemoPhoto src="/x.jpg" alt="A harbor at dusk" />);
+  it("serves a responsive optimized image at the caller-provided slot size", () => {
+    render(
+      <DemoPhoto
+        src="/x.jpg"
+        alt="A harbor at dusk"
+        sizes="(max-width: 720px) calc(100vw - 32px), 340px"
+      />,
+    );
 
     const image = screen.getByRole("img", { name: "A harbor at dusk" });
     expect(image).toHaveAttribute(
       "sizes",
-      "(max-width: 720px) calc(100vw - 32px), 50vw",
+      "(max-width: 720px) calc(100vw - 32px), 340px",
     );
     expect(image).toHaveAttribute("srcset");
   });
@@ -34,6 +40,7 @@ describe("DemoPhoto", () => {
       <DemoPhoto
         src="/x.jpg"
         alt="A harbor at dusk"
+        sizes="100vw"
         className="photo-slot"
         dataTestId="demo-photo"
       />,
@@ -47,10 +54,26 @@ describe("DemoPhoto", () => {
   });
 
   it("falls back to a pending panel when the image fails to load", () => {
-    render(<DemoPhoto src="/missing.jpg" alt="A harbor at dusk" />);
+    render(<DemoPhoto src="/missing.jpg" alt="A harbor at dusk" sizes="100vw" />);
     fireEvent.error(screen.getByRole("img"));
     expect(screen.getByText(/photo coming soon/i)).toBeInTheDocument();
     // The panel keeps the alt text as its accessible name.
     expect(screen.getByRole("img", { name: "A harbor at dusk" })).toBeInTheDocument();
+  });
+
+  it("preloads a designated hero instead of marking it lazy", () => {
+    render(
+      <DemoPhoto
+        src="/hero.jpg"
+        alt="A workshop in progress"
+        sizes="(max-width: 720px) 100vw, min(70vw, 960px)"
+        preload
+      />,
+    );
+
+    expect(screen.getByRole("img", { name: "A workshop in progress" })).not.toHaveAttribute(
+      "loading",
+      "lazy",
+    );
   });
 });

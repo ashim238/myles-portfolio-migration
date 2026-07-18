@@ -1,4 +1,5 @@
 import { EXPERIENCES } from "@/lib/navi/demo-data";
+import { slugify } from "@/lib/navi/slug";
 
 export type Host = {
   slug: string;
@@ -11,12 +12,7 @@ export type Host = {
 };
 
 export function slugifyHostName(name: string): string {
-  return name
-    .normalize("NFD")
-    .replace(/\p{Diacritic}/gu, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
+  return slugify(name);
 }
 
 function hashSeed(input: string): number {

@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Tag, Rating, ImpactSignal } from "@/components/navi/ui";
 import { DemoPhoto } from "@/components/navi/demo/DemoPhoto";
-import type { Experience } from "@/lib/navi/demo-data";
+import type { ExperienceSummary } from "@/lib/navi/experience-summary";
 
-function statusBadge(tone: Experience["tone"]) {
+function statusBadge(tone: ExperienceSummary["tone"]) {
   if (tone === "popular") return "Popular";
   if (tone === "local") return "Locally-owned";
   return null;
@@ -13,7 +13,7 @@ export function ExperienceCard({
   experience: e,
   href,
 }: {
-  experience: Experience;
+  experience: ExperienceSummary;
   href: string;
 }) {
   const badge = statusBadge(e.tone);
@@ -21,7 +21,11 @@ export function ExperienceCard({
     <Link href={href} className="nv-exp-card">
       <div className="nv-exp-card-photo">
         {badge && <span className={`nv-card-badge nv-card-badge--${e.tone}`}>{badge}</span>}
-        <DemoPhoto src={e.photos[0].src} alt={e.photos[0].alt} />
+        <DemoPhoto
+          src={e.photos[0].src}
+          alt={e.photos[0].alt}
+          sizes="(max-width: 720px) calc(100vw - 32px), 340px"
+        />
       </div>
       <div className="nv-exp-card-body">
         <Tag tone="neutral">{e.category}</Tag>

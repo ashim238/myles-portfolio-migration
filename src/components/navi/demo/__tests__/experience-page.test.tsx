@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import type { ComponentType } from "react";
 
@@ -113,5 +113,33 @@ describe("Experience page", () => {
       "href",
       `/work/navi/demo/neighborhood/${neighborhoodSlug(e.neighborhood)}`,
     );
+  });
+
+  it("coalesces repeated scroll events into one animation-frame calculation", () => {
+    const frames: FrameRequestCallback[] = [];
+    const raf = vi.spyOn(window, "requestAnimationFrame").mockImplementation((callback) => {
+      frames.push(callback);
+      return frames.length;
+    });
+    const cancel = vi.spyOn(window, "cancelAnimationFrame").mockImplementation(() => undefined);
+
+    render(<ExperienceView {...viewProps(e)} />);
+    const learn = document.getElementById("learn");
+    const plan = document.getElementById("plan");
+    const go = document.getElementById("go");
+    if (!learn || !plan || !go) throw new Error("fixture: detail sections must render");
+    vi.spyOn(learn, "getBoundingClientRect").mockReturnValue({ top: -600 } as DOMRect);
+    vi.spyOn(plan, "getBoundingClientRect").mockReturnValue({ top: -300 } as DOMRect);
+    vi.spyOn(go, "getBoundingClientRect").mockReturnValue({ top: 20 } as DOMRect);
+
+    fireEvent.scroll(window);
+    fireEvent.scroll(window);
+    expect(raf).toHaveBeenCalledTimes(1);
+
+    act(() => frames[0](0));
+    expect(screen.getByRole("button", { name: "Go" })).toHaveAttribute("aria-current", "true");
+
+    raf.mockRestore();
+    cancel.mockRestore();
   });
 });

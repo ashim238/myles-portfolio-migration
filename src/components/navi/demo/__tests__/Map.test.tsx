@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import type React from "react";
 
@@ -76,5 +76,40 @@ describe("Map", () => {
     ];
     render(<Map center={[40.7, -73.9]} zoom={12} markers={markers} selectedId="b" />);
     expect(screen.getByTestId("map-mock").getAttribute("data-selected")).toBe("b");
+  });
+
+  it("reserves the map region but waits for a nearby intersection when deferred", async () => {
+    let intersect: ((entries: IntersectionObserverEntry[]) => void) | undefined;
+    const OriginalObserver = globalThis.IntersectionObserver;
+    globalThis.IntersectionObserver = class IntersectionObserverStub {
+      constructor(callback: IntersectionObserverCallback) {
+        intersect = (entries) => callback(entries, this as unknown as IntersectionObserver);
+      }
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+      takeRecords() { return []; }
+      root = null;
+      rootMargin = "300px";
+      thresholds = [0];
+    } as unknown as typeof IntersectionObserver;
+
+    const { container } = render(
+      <Map
+        center={[40.7, -73.9]}
+        zoom={12}
+        markers={[]}
+        deferUntilVisible
+      />,
+    );
+    expect(container.querySelector(".nv-map-skeleton")).toBeInTheDocument();
+    expect(screen.queryByTestId("map-mock")).not.toBeInTheDocument();
+
+    await act(async () => {
+      intersect?.([{ isIntersecting: true } as IntersectionObserverEntry]);
+      await Promise.resolve();
+    });
+    expect(screen.getByTestId("map-mock")).toBeInTheDocument();
+    globalThis.IntersectionObserver = OriginalObserver;
   });
 });

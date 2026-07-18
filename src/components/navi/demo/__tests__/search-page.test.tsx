@@ -1,5 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { describe, it, expect, vi } from "vitest";
 import type React from "react";
 
@@ -37,6 +39,21 @@ describe("Search page", () => {
     expect(
       screen.getByRole("heading", { name: new RegExp(`${EXPERIENCES.length} nearby`, "i") }),
     ).toBeInTheDocument();
+    expect(screen.getAllByRole("link")).toHaveLength(12);
+  });
+
+  it("reveals search results in batches of 12", async () => {
+    render(<SearchPage />);
+    await userEvent.click(screen.getByRole("button", { name: /load 12 more experiences/i }));
+    expect(screen.getAllByRole("link")).toHaveLength(24);
+  });
+
+  it("keeps the client search view independent of the full detail dataset", () => {
+    const source = readFileSync(
+      join(process.cwd(), "src/app/work/navi/(minisite)/demo/search/SearchView.tsx"),
+      "utf8",
+    );
+    expect(source).not.toMatch(/from ["']@\/lib\/navi\/demo-data["']/);
   });
 
   it("filters results by typed query and updates the count", async () => {

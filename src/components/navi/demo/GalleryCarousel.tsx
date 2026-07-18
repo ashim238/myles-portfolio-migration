@@ -42,7 +42,13 @@ export function GalleryCarousel({ photos }: { photos: Photo[] }) {
         tabIndex={0}
         onKeyDown={onKeyDown}
       >
-        <DemoPhoto src={hero.src} alt={hero.alt} dataTestId="gallery-hero-img" />
+        <DemoPhoto
+          src={hero.src}
+          alt={hero.alt}
+          dataTestId="gallery-hero-img"
+          sizes="(max-width: 720px) 100vw, min(70vw, 960px)"
+          preload
+        />
         {count > 1 && (
           <>
             <div className="nv-gallery-carousel-arrows">
@@ -80,7 +86,11 @@ export function GalleryCarousel({ photos }: { photos: Photo[] }) {
                 className={`nv-gallery-carousel-thumb${i === index ? " is-active" : ""}`}
                 onClick={() => goTo(i)}
               >
-                <DemoPhoto src={p.src} alt={p.alt} />
+                <DemoPhoto
+                  src={p.src}
+                  alt={p.alt}
+                  sizes="(max-width: 720px) 22vw, 220px"
+                />
               </button>
             </li>
           ))}

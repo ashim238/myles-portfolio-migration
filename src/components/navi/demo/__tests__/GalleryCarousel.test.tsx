@@ -14,11 +14,22 @@ describe("GalleryCarousel", () => {
     render(<GalleryCarousel photos={photos} />);
     const hero = screen.getByTestId("gallery-hero-img");
     expect(hero).toHaveAttribute("alt", "A");
+    expect(hero).toHaveAttribute(
+      "sizes",
+      "(max-width: 720px) 100vw, min(70vw, 960px)",
+    );
+    expect(hero).not.toHaveAttribute("loading", "lazy");
   });
 
   it("renders a thumb per non-hero photo", () => {
     render(<GalleryCarousel photos={photos} />);
     expect(screen.getAllByTestId("gallery-thumb")).toHaveLength(3);
+    for (const thumb of screen.getAllByTestId("gallery-thumb")) {
+      expect(thumb.querySelector("img")).toHaveAttribute(
+        "sizes",
+        "(max-width: 720px) 22vw, 220px",
+      );
+    }
   });
 
   it("advances the hero when the next arrow is clicked", async () => {

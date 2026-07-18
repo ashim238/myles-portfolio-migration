@@ -1,18 +1,27 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { describe, it, expect } from "vitest";
 import FeedPage from "@/app/work/navi/(minisite)/demo/page";
 import { EXPERIENCES } from "@/lib/navi/demo-data";
 
 describe("Feed page", () => {
-  it("renders a card for every experience", () => {
+  it("renders the first 12 experiences and reveals the next 12 on request", async () => {
     render(<FeedPage />);
-    // each card is a link to its slug
-    for (const e of EXPERIENCES) {
-      expect(
-        screen.getByRole("link", { name: new RegExp(e.title, "i") }),
-      ).toBeInTheDocument();
-    }
+    expect(screen.getAllByRole("link")).toHaveLength(12);
+    expect(screen.getByRole("status")).toHaveTextContent(`${EXPERIENCES.length} experiences`);
+
+    await userEvent.click(screen.getByRole("button", { name: /load 12 more experiences/i }));
+    expect(screen.getAllByRole("link")).toHaveLength(24);
+  });
+
+  it("keeps the client feed view independent of the full detail dataset", () => {
+    const source = readFileSync(
+      join(process.cwd(), "src/app/work/navi/(minisite)/demo/FeedView.tsx"),
+      "utf8",
+    );
+    expect(source).not.toMatch(/from ["']@\/lib\/navi\/demo-data["']/);
   });
 
   it("renders the category taskbar with all categories", () => {

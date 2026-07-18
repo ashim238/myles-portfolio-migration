@@ -1,5 +1,6 @@
 import { EXPERIENCES } from "@/lib/navi/demo-data";
 import { HOSTS, type Host } from "@/lib/navi/hosts";
+import { slugify } from "@/lib/navi/slug";
 
 export type Neighborhood = {
   slug: string;
@@ -9,12 +10,7 @@ export type Neighborhood = {
 };
 
 export function neighborhoodSlug(name: string): string {
-  return name
-    .normalize("NFD")
-    .replace(/\p{Diacritic}/gu, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
+  return slugify(name);
 }
 
 // Narrative intros keyed by slug. One source of truth for the prose so the

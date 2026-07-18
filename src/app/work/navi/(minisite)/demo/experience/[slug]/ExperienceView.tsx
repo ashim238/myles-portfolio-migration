@@ -10,7 +10,7 @@ import { Reviews } from "@/components/navi/demo/Reviews";
 import { Map } from "@/components/navi/demo/Map";
 import { type Experience, type BookingDate } from "@/lib/navi/demo-data";
 import { motionSafeScrollBehavior } from "@/lib/navi/motion";
-import { neighborhoodSlug } from "@/lib/navi/neighborhoods";
+import { slugify } from "@/lib/navi/slug";
 
 const SECTIONS = [
   { id: "learn", label: "Learn" },
@@ -37,17 +37,25 @@ export function ExperienceView({
   const [active, setActive] = useState<string>("learn");
   useEffect(() => {
     const offset = 90; // sticky nav height plus a few pixels of breathing room
+    let frame: number | null = null;
     const onScroll = () => {
-      let current: string = SECTIONS[0].id;
-      for (const s of SECTIONS) {
-        const el = document.getElementById(s.id);
-        if (el && el.getBoundingClientRect().top <= offset) current = s.id;
-      }
-      setActive(current);
+      if (frame !== null) return;
+      frame = requestAnimationFrame(() => {
+        frame = null;
+        let current: string = SECTIONS[0].id;
+        for (const s of SECTIONS) {
+          const el = document.getElementById(s.id);
+          if (el && el.getBoundingClientRect().top <= offset) current = s.id;
+        }
+        setActive((previous) => (previous === current ? previous : current));
+      });
     };
     if (window.scrollY > 0) onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame !== null) cancelAnimationFrame(frame);
+    };
   }, [e.slug]);
 
   const goTo = (id: string) => {
@@ -133,7 +141,7 @@ export function ExperienceView({
             <p>{e.go.addressLine2}</p>
             <p className="nv-detail-where-nb">
               <Link
-                href={`/work/navi/demo/neighborhood/${neighborhoodSlug(e.neighborhood)}`}
+                href={`/work/navi/demo/neighborhood/${slugify(e.neighborhood)}`}
                 className="nv-detail-nb-link"
               >
                 Explore {e.neighborhood}, {e.borough}
@@ -144,6 +152,7 @@ export function ExperienceView({
                 center={[e.lat, e.lng]}
                 zoom={15}
                 markers={[{ id: e.slug, lat: e.lat, lng: e.lng, label: "" }]}
+                deferUntilVisible
               />
             </div>
             <h3 className="nv-detail-go-heading">How to get there</h3>

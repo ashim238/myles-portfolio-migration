@@ -12,13 +12,15 @@ export function DemoPhoto({
   alt,
   className,
   dataTestId,
-  sizes = "(max-width: 720px) calc(100vw - 32px), 50vw",
+  sizes,
+  preload = false,
 }: {
   src: string;
   alt: string;
   className?: string;
   dataTestId?: string;
-  sizes?: string;
+  sizes: string;
+  preload?: boolean;
 }) {
   const [failed, setFailed] = useState(false);
   const ref = useRef<HTMLImageElement>(null);
@@ -57,7 +59,8 @@ export function DemoPhoto({
       sizes={sizes}
       className={className}
       data-testid={dataTestId}
-      loading="lazy"
+      preload={preload}
+      loading={preload ? undefined : "lazy"}
       decoding="async"
       onError={() => setFailed(true)}
     />
