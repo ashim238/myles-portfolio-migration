@@ -96,12 +96,14 @@ describe("Search page", () => {
     expect(afterHover.currentLocation).toBe(initial.currentLocation);
   });
 
-  it("announces the live result count to assistive tech", () => {
-    render(<SearchPage />);
+  it("uses one concise live result announcement instead of announcing both counts", () => {
+    const { container } = render(<SearchPage />);
     const heading = screen.getByRole("heading", {
       name: new RegExp(`${EXPERIENCES.length} nearby`, "i"),
     });
-    expect(heading).toHaveAttribute("aria-live", "polite");
+    expect(heading).not.toHaveAttribute("aria-live");
+    expect(screen.getAllByRole("status")).toHaveLength(1);
+    expect(container.querySelectorAll('[aria-live="polite"], [role="status"]')).toHaveLength(1);
   });
 
   it("announces the empty state when nothing matches", async () => {

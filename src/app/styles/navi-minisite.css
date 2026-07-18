@@ -166,6 +166,13 @@
 .nv-nav a:hover {
   color: var(--nv-action);
 }
+.nv-nav a[aria-current="page"] {
+  color: var(--nv-action);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.35em;
+}
 .nv-nav-host {
   padding: var(--nv-sp-xs) var(--nv-sp-md);
   border: 1px solid var(--nv-action);

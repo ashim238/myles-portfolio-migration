@@ -9,8 +9,8 @@ const styles = readFileSync(
 );
 
 const scrollCallsites = [
-  "src/app/work/navi/(minisite)/demo/page.tsx",
-  "src/app/work/navi/(minisite)/demo/search/page.tsx",
+  "src/app/work/navi/(minisite)/demo/FeedView.tsx",
+  "src/app/work/navi/(minisite)/demo/search/SearchView.tsx",
   "src/app/work/navi/(minisite)/demo/neighborhood/[slug]/NeighborhoodView.tsx",
   "src/app/work/navi/(minisite)/demo/experience/[slug]/ExperienceView.tsx",
 ];
@@ -63,7 +63,7 @@ describe("Navi motion accessibility", () => {
 
 describe("Navi mobile target sizing", () => {
   it("gives compact header and feed utility controls a 44px mobile target", () => {
-    expect(mediaBlocks("(max-width: 640px)")).toEqual(
+    expect(mediaBlocks("(max-width: 720px)")).toEqual(
       expect.arrayContaining([
         expect.stringMatching(/\.nv-nav a\s*\{[^}]*min-height:\s*44px;/),
       ]),

@@ -17,7 +17,14 @@ vi.mock("@/components/navi/demo/Map.client", () => ({
     zoom: number;
     selectedId?: string;
   }) => (
-    <div data-testid="map-mock" data-center={center.join(",")} data-zoom={zoom} data-selected={selectedId ?? ""}>
+    <div
+      role="region"
+      aria-label="Interactive map"
+      data-testid="map-mock"
+      data-center={center.join(",")}
+      data-zoom={zoom}
+      data-selected={selectedId ?? ""}
+    >
       {markers.map((m) => (
         <span key={m.id} data-marker={m.id}>
           {m.label}
@@ -58,13 +65,15 @@ vi.mock("next/dynamic", () => ({
 import { Map } from "@/components/navi/demo/Map";
 
 describe("Map", () => {
-  it("renders an accessible container with the marker list as the keyboard-equivalent", async () => {
+  it("exposes one accurately named map region without nesting another landmark around it", async () => {
     const markers = [
       { id: "a", lat: 40.7, lng: -73.9, label: "$48" },
       { id: "b", lat: 40.71, lng: -73.92, label: "$19" },
     ];
-    render(<Map center={[40.7, -73.9]} zoom={12} markers={markers} />);
-    expect(screen.getByRole("region", { name: /map/i })).toBeInTheDocument();
+    const { container } = render(<Map center={[40.7, -73.9]} zoom={12} markers={markers} />);
+    expect(screen.getAllByRole("region", { name: /map/i })).toHaveLength(1);
+    expect(screen.getByRole("region", { name: "Interactive map" })).toBeInTheDocument();
+    expect(container.querySelector(".nv-map")).not.toHaveAttribute("aria-label");
     // The mock renders markers so we can assert props flowed through.
     expect(screen.getByTestId("map-mock").getAttribute("data-center")).toBe("40.7,-73.9");
     expect(screen.getByTestId("map-mock").getAttribute("data-zoom")).toBe("12");

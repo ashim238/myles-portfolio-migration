@@ -57,12 +57,23 @@ export function Calendar({
   minDate?: Date;
   labelledBy?: string;
 }) {
-  const [view, setView] = useState<Date>(() =>
-    startOfMonth(value ?? minDate ?? new Date()),
-  );
-  const [focusedDate, setFocusedDate] = useState<Date>(() => value ?? minDate ?? new Date());
+  const [fallbackDate] = useState(() => new Date());
+  const controlledDate = value ?? minDate ?? fallbackDate;
+  const controlledDay = dayKey(controlledDate);
+  const [view, setView] = useState<Date>(() => startOfMonth(controlledDate));
+  const [focusedDate, setFocusedDate] = useState<Date>(() => controlledDate);
+  const [lastControlledDay, setLastControlledDay] = useState(controlledDay);
   const dateRefs = useRef(new Map<string, HTMLButtonElement>());
   const focusRequested = useRef(false);
+
+  // Reset internal navigation before rendering children when the controlled
+  // selection changes. React permits this guarded same-component adjustment;
+  // it avoids a stale-month frame and a cascading setState effect.
+  if (controlledDay !== lastControlledDay) {
+    setLastControlledDay(controlledDay);
+    setFocusedDate(controlledDate);
+    setView(startOfMonth(controlledDate));
+  }
 
   const weeks = buildMonthGrid(view.getFullYear(), view.getMonth());
   // Don't let the user page back into fully-past months.
@@ -134,7 +145,12 @@ export function Calendar({
         </button>
       </div>
       <div className="nv-cal-divider" aria-hidden="true" />
-      <div className="nv-cal-grid" role="grid" aria-labelledby={labelledBy}>
+      <div
+        className="nv-cal-grid"
+        role="grid"
+        aria-labelledby={labelledBy}
+        aria-label={labelledBy ? undefined : "Choose a date"}
+      >
         <div className="nv-cal-weekdays" role="row">
           {WEEKDAYS.map((w, i) => (
             <span key={i} className="nv-cal-weekday" role="columnheader">

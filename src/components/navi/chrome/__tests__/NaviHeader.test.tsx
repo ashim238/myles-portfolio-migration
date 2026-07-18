@@ -1,4 +1,6 @@
 import { render, screen } from "@testing-library/react";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { beforeEach, describe, it, expect, vi } from "vitest";
 import { NaviHeader } from "@/components/navi/chrome/NaviHeader";
 
@@ -84,5 +86,17 @@ describe("NaviHeader", () => {
       "page",
     );
     expect(screen.getByRole("link", { name: "Explore" })).not.toHaveAttribute("aria-current");
+  });
+
+  it("gives the desktop current link a visible non-color indicator", () => {
+    const styles = readFileSync(
+      join(process.cwd(), "src/app/styles/navi-minisite.css"),
+      "utf8",
+    );
+    const currentRule = styles.match(/\.nv-nav a\[aria-current="page"\]\s*\{([^}]*)\}/)?.[1];
+
+    expect(currentRule).toBeDefined();
+    expect(currentRule ?? "").toContain("color: var(--nv-action)");
+    expect(currentRule ?? "").toContain("text-decoration: underline");
   });
 });

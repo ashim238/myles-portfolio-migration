@@ -123,7 +123,7 @@ describe("BookingCard", () => {
       month: "long",
       day: "numeric",
     });
-    await userEvent.click(screen.getByRole("button", { name: longDate }));
+    await userEvent.click(screen.getByRole("gridcell", { name: longDate }));
     // The default time is the experience's first real slot.
     await userEvent.click(screen.getByRole("button", { name: /confirm date/i }));
 

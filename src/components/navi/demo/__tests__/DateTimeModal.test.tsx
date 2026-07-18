@@ -5,6 +5,14 @@ import { DateTimeModal } from "@/components/navi/demo/DateTimeModal";
 
 const times = ["10:00 AM", "1:00 PM", "4:30 PM"];
 
+function longDate(date: Date) {
+  return date.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  });
+}
+
 function nextMonthDay(day: number) {
   const today = new Date();
   const target = new Date(today.getFullYear(), today.getMonth() + 1, day);
@@ -97,6 +105,35 @@ describe("DateTimeModal", () => {
     );
     await userEvent.click(screen.getByRole("button", { name: /^cancel$/i }));
     expect(onClose).toHaveBeenCalledTimes(2);
+  });
+
+  it("discards a canceled draft month and restores the incoming date when reopened", async () => {
+    const initialDate = new Date(2027, 0, 15);
+    const onClose = vi.fn();
+    const props = {
+      times,
+      initialDate,
+      initialTime: "10:00 AM",
+      onConfirm: vi.fn(),
+      onClose,
+    };
+    const { rerender } = render(<DateTimeModal open {...props} />);
+
+    await userEvent.click(screen.getByRole("button", { name: /next month/i }));
+    await userEvent.click(
+      screen.getByRole("gridcell", { name: longDate(new Date(2027, 1, 16)) }),
+    );
+    await userEvent.click(screen.getByRole("button", { name: /^cancel$/i }));
+
+    rerender(<DateTimeModal open={false} {...props} />);
+    rerender(<DateTimeModal open {...props} />);
+
+    const restoredDate = await screen.findByRole("gridcell", {
+      name: longDate(initialDate),
+    });
+    expect(screen.getByText("January 2027")).toBeInTheDocument();
+    expect(restoredDate).toHaveAttribute("aria-selected", "true");
+    expect(restoredDate).toHaveAttribute("tabindex", "0");
   });
 
   it("pre-selects the incoming time", () => {

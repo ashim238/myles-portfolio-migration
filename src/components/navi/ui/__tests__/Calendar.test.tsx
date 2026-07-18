@@ -12,6 +12,12 @@ function longDate(date: Date) {
 }
 
 describe("Calendar keyboard grid", () => {
+  it("gives the standalone design-system calendar an accessible name", () => {
+    render(<Calendar value={new Date(2027, 0, 15)} onChange={() => {}} />);
+
+    expect(screen.getByRole("grid", { name: "Choose a date" })).toBeInTheDocument();
+  });
+
   it("exposes a labelled grid with exactly one date in the roving tab order", () => {
     const selected = new Date(2027, 0, 15);
     render(
@@ -47,5 +53,21 @@ describe("Calendar keyboard grid", () => {
     expect(screen.getByRole("gridcell", { name: longDate(new Date(2027, 1, 16)) })).toHaveFocus();
     await userEvent.keyboard("{PageUp}");
     expect(screen.getByRole("gridcell", { name: longDate(new Date(2027, 0, 16)) })).toHaveFocus();
+  });
+
+  it("synchronizes the displayed month and roving date when the controlled value resets", () => {
+    const february = new Date(2027, 1, 16);
+    const january = new Date(2027, 0, 15);
+    const { rerender } = render(<Calendar value={february} onChange={() => {}} />);
+
+    expect(screen.getByText("February 2027")).toBeInTheDocument();
+
+    rerender(<Calendar value={january} onChange={() => {}} />);
+
+    expect(screen.getByText("January 2027")).toBeInTheDocument();
+    expect(screen.getByRole("gridcell", { name: longDate(january) })).toHaveAttribute(
+      "tabindex",
+      "0",
+    );
   });
 });

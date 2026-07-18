@@ -65,8 +65,6 @@ export function SearchView({ experiences }: { experiences: ExperienceSummary[] }
           <h1
             id="nv-search-results-title"
             className="nv-search-count"
-            aria-live="polite"
-            aria-atomic="true"
           >
             {results.length} nearby experiences
           </h1>

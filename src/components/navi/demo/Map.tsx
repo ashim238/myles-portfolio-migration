@@ -38,7 +38,7 @@ export function Map({
   fitToMarkers?: boolean;
   deferUntilVisible?: boolean;
 }) {
-  const regionRef = useRef<HTMLElement>(null);
+  const regionRef = useRef<HTMLDivElement>(null);
   const [shouldRender, setShouldRender] = useState(!deferUntilVisible);
 
   useEffect(() => {
@@ -62,7 +62,7 @@ export function Map({
   }, [deferUntilVisible, shouldRender]);
 
   return (
-    <section ref={regionRef} className="nv-map" aria-label="Map of nearby results">
+    <div ref={regionRef} className="nv-map">
       {shouldRender ? (
         <MapClient
           center={center}
@@ -77,6 +77,6 @@ export function Map({
       ) : (
         <div className="nv-map-skeleton" aria-hidden="true" />
       )}
-    </section>
+    </div>
   );
 }

@@ -129,10 +129,19 @@ export default function MapClient({
             iconSize: [24, 24],
             iconAnchor: [12, 12],
           });
+      const accessibleLabel =
+        m.accessibleLabel ?? (m.label ? `${m.label}, select` : "Event location");
       const marker = L.marker([m.lat, m.lng], {
         icon,
         keyboard: true,
-        alt: m.accessibleLabel ?? (m.label ? `${m.label}, select` : "Event location"),
+        alt: accessibleLabel,
+      });
+      // Leaflet only applies Marker.options.alt to image icons. These markers
+      // use DivIcon, so label the focusable element after every add instead.
+      // MarkerCluster removes and re-adds markers as zoom/bounds change, making
+      // the lifecycle listener necessary rather than a one-time DOM mutation.
+      marker.on("add", () => {
+        marker.getElement()?.setAttribute("aria-label", accessibleLabel);
       });
       if (onSelect) marker.on("click", () => onSelect(m.id));
       cluster.addLayer(marker);
