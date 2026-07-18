@@ -8,6 +8,10 @@ const naviSource = readFileSync(
   resolve(process.cwd(), "src/components/navi.tsx"),
   "utf8",
 );
+const portfolioSurfacesCss = readFileSync(
+  resolve(process.cwd(), "src/app/styles/portfolio-surfaces.css"),
+  "utf8",
+);
 const naviAnimReadySource = naviSource.slice(
   naviSource.indexOf("export function NaviAnimReady()"),
   naviSource.indexOf("/* ── Heuristic insight cards"),
@@ -52,6 +56,35 @@ describe("NaviResearchArtifacts", () => {
     expect(
       booking.querySelector('[data-decision-point="cost-review"]'),
     ).not.toBeNull();
+  });
+
+  it("draws each research route as one continuous rail through its waypoints", () => {
+    render(<NaviResearchArtifacts />);
+
+    for (const [label, modifier] of [
+      ["Journey-map excerpt", "nv-research-route--journey"],
+      ["Individual booking-flow excerpt", "nv-research-route--booking"],
+    ]) {
+      const artifact = screen.getByLabelText(label);
+      const route = artifact.querySelector(".nv-research-route");
+      expect(route).not.toBeNull();
+      expect(route).toBeEmptyDOMElement();
+      expect(route).toHaveClass(modifier);
+    }
+
+    expect(portfolioSurfacesCss).toMatch(
+      /\.nv-research-route\s*\{[\s\S]*?margin:\s*0;[\s\S]*?background:\s*var\(--nv-accent\);/,
+    );
+    expect(portfolioSurfacesCss).not.toMatch(/\.nv-research-route span\s*\{/);
+    expect(portfolioSurfacesCss).toContain(
+      "margin-inline: calc((100% - 1.5rem) / 6);",
+    );
+    expect(portfolioSurfacesCss).toContain(
+      "margin-inline: calc((100% - 3rem) / 10);",
+    );
+    expect(portfolioSurfacesCss).toContain(
+      "margin: 1.6rem 0 1rem 1rem;",
+    );
   });
 
   it("labels the diagrams as internal planning rather than validation", () => {

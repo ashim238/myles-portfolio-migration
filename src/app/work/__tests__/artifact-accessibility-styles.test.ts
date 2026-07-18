@@ -115,7 +115,7 @@ describe("portfolio artifact accessibility styles", () => {
     );
   });
 
-  it("uses motion-safe overlays without clipping the TikTok or FAFSA artifacts", () => {
+  it("keeps the TikTok reveal without adding a decorative wash to the FAFSA preview", () => {
     const tiktokFinal = declarationBlock(".tt-preview-final");
     const fafsaPreview = declarationBlock(".uf-switcher-preview");
 
@@ -123,12 +123,6 @@ describe("portfolio artifact accessibility styles", () => {
     expect(tiktokFinal).not.toContain("clip-path: inset(0 100%");
     expect(fafsaPreview).not.toContain("opacity: 0");
     expect(fafsaPreview).not.toContain("clip-path: inset(0 100%");
-    expect(styles).toMatch(
-      /@media \(prefers-reduced-motion: no-preference\)[\s\S]*?\.tt-preview-final::after[\s\S]*?\.uf-switcher-preview::after/,
-    );
-    expect(styles).toMatch(
-      /\.tt-preview-final::after,[\s\S]*?\.uf-switcher-preview::after\s*\{[\s\S]*?pointer-events: none/,
-    );
     expect(styles).toMatch(
       /\.tt-preview-final::after[\s\S]*?background:[\s\S]*?animation:/,
     );
@@ -138,15 +132,8 @@ describe("portfolio artifact accessibility styles", () => {
     expect(styles).toMatch(
       /@supports not \(animation-timeline: view\(\)\)[\s\S]*?\.tt-preview-final::after[\s\S]*?display: none/,
     );
-    expect(styles).toMatch(
-      /\.uf-switcher-preview::after[\s\S]*?background:[\s\S]*?animation:/,
-    );
-    expect(styles).toMatch(
-      /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.tt-preview-final::after,[\s\S]*?\.uf-switcher-preview::after[\s\S]*?(?:display: none|animation: none)/,
-    );
-    expect(styles).toMatch(
-      /@media print[\s\S]*?\.tt-preview-final::after,[\s\S]*?\.uf-switcher-preview::after[\s\S]*?display: none !important/,
-    );
+    expect(styles).not.toContain(".uf-switcher-preview::after");
+    expect(styles).not.toContain("@keyframes uf-template-sweep");
   });
 
   it("applies the dedicated mobile TikTok cover coordinates", () => {
@@ -319,6 +306,10 @@ describe("portfolio artifact accessibility styles", () => {
     );
     expect(styles).toMatch(
       /@media \(max-width: 640px\)[\s\S]*?\.uf-lock-palette-swatch\s*\{\s*min-width: 44px;/,
+    );
+    expect(styles).not.toMatch(/\.uf-composer-mini::before/);
+    expect(styles).toMatch(
+      /@media \(max-width: 640px\)[\s\S]*?\.uf-composer-mini\s*\{[\s\S]*?width: 2\.75rem;[\s\S]*?height: 2\.75rem;/,
     );
   });
 

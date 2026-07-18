@@ -41,6 +41,9 @@ describe("ProjectWorkJump editorial endcap layout", () => {
     expect(block(".project-work-jump-view-all", baseStyles)).toContain(
       "min-height: 44px",
     );
+    expect(block(".project-work-jump-text", baseStyles)).toContain(
+      "padding: clamp(1.25rem, 3vw, 2.5rem)",
+    );
     expect(
       block(
         '.project-work-jump-card[data-next-project="fresh-greens"] .project-work-jump-media',
@@ -65,6 +68,15 @@ describe("ProjectWorkJump editorial endcap layout", () => {
         baseStyles,
       ),
     ).toContain("background:");
+  });
+
+  it("keeps the UnderstandingFAFSA title from breaking inside either word", () => {
+    const titleStyles = block(
+      '.project-work-jump-card[data-next-project="understandingfafsa"]\n  .project-work-jump-title',
+      baseStyles,
+    );
+    expect(titleStyles).toContain("font-size: clamp(2rem, 4vw, 3.5rem)");
+    expect(titleStyles).toContain("overflow-wrap: normal");
   });
 
   it("pairs hover polish with focus and honors reduced motion", () => {

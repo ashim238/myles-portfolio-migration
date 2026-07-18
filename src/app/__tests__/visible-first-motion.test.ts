@@ -87,9 +87,9 @@ describe("visible-first structural motion", () => {
     }
   });
 
-  it("retains project-specific artifact motion", () => {
+  it("retains meaningful artifact motion without a decorative FAFSA preview wash", () => {
     expect(surfaceStyles).toContain("@keyframes tt-outcome-arrive");
     expect(surfaceStyles).toContain("@keyframes nv-persona-rise");
-    expect(surfaceStyles).toContain("@keyframes uf-template-sweep");
+    expect(surfaceStyles).not.toContain("@keyframes uf-template-sweep");
   });
 });

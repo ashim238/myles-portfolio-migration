@@ -85,23 +85,25 @@ function SurveyRing({ value, label, caption }: { value: number; label: string; c
 
   return (
     <figure className="nv-ring nv-reveal">
-      <svg viewBox="0 0 140 140" className="nv-ring-svg" aria-hidden="true">
-        <circle className="nv-ring-track" cx="70" cy="70" r={radius} />
-        <circle
-          className="nv-ring-progress"
-          cx="70"
-          cy="70"
-          r={radius}
-          style={
-            {
-              strokeDasharray: circumference,
-              strokeDashoffset: offset,
-            } as React.CSSProperties
-          }
-        />
-      </svg>
-      <div className="nv-ring-center">
-        <span className="nv-ring-value">{label}</span>
+      <div className="nv-ring-plot">
+        <svg viewBox="0 0 140 140" className="nv-ring-svg" aria-hidden="true">
+          <circle className="nv-ring-track" cx="70" cy="70" r={radius} />
+          <circle
+            className="nv-ring-progress"
+            cx="70"
+            cy="70"
+            r={radius}
+            style={
+              {
+                strokeDasharray: circumference,
+                strokeDashoffset: offset,
+              } as React.CSSProperties
+            }
+          />
+        </svg>
+        <div className="nv-ring-center">
+          <span className="nv-ring-value">{label}</span>
+        </div>
       </div>
       <figcaption className="nv-ring-caption">{caption}</figcaption>
     </figure>

@@ -58,10 +58,10 @@ export function NaviResearchArtifacts(): React.JSX.Element {
             Journey-map excerpt
             <span>Internal planning artifact</span>
           </figcaption>
-          <div className="nv-research-route" aria-hidden="true">
-            <span />
-            <span />
-          </div>
+          <div
+            className="nv-research-route nv-research-route--journey"
+            aria-hidden="true"
+          />
           <ol className="nv-research-journey">
             {NAVI_JOURNEY_STAGES.map((stage) => (
               <li data-stage-id={stage.id} key={stage.id}>
@@ -89,12 +89,10 @@ export function NaviResearchArtifacts(): React.JSX.Element {
             Individual booking-flow excerpt
             <span>Airbnb audit and secondary research</span>
           </figcaption>
-          <div className="nv-research-route" aria-hidden="true">
-            <span />
-            <span />
-            <span />
-            <span />
-          </div>
+          <div
+            className="nv-research-route nv-research-route--booking"
+            aria-hidden="true"
+          />
           <ol className="nv-research-booking">
             {NAVI_BOOKING_STEPS.map((step, index) => (
               <li

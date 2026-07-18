@@ -4,6 +4,7 @@ import {
   BeforeAfterPhones,
   NewsletterComposer,
   NewsletterComposerDemo,
+  TemplateSwitcher,
 } from "@/components/understandingfafsa";
 
 beforeEach(() => {
@@ -86,6 +87,42 @@ describe("UnderstandingFAFSA newsletter composer accessibility", () => {
     expect(screen.getByRole("button", { name: "Randomize" })).toHaveClass(
       "uf-composer-btn--randomize",
     );
+  });
+
+  it("gives only the tall template a named keyboard-scroll region and accurate note", () => {
+    render(<TemplateSwitcher />);
+
+    const weekly = screen.getByRole("region", {
+      name: "Scrollable Weekly newsletter template",
+    });
+    expect(weekly).toHaveAttribute("tabindex", "0");
+    expect(
+      screen.getByText(
+        "Scroll inside the frame to read the full send. Two of the three template types are shown here: weekly and event.",
+      ),
+    ).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Event" }));
+
+    expect(
+      screen.queryByRole("region", {
+        name: "Scrollable Event newsletter template",
+      }),
+    ).toBeNull();
+    expect(
+      screen.getByText(
+        "Two of the three template types are shown here: weekly and event.",
+      ),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/Counselor toolkit ships/)).toBeNull();
+  });
+
+  it("renders each composer block name once", () => {
+    render(<NewsletterComposer />);
+
+    const preview = screen.getByRole("region", { name: "Assembled send" });
+    expect(within(preview).getAllByText("Lead story")).toHaveLength(1);
+    expect(within(preview).getAllByText("Guides")).toHaveLength(1);
   });
 
   it("announces an added block through one concise atomic status region", () => {

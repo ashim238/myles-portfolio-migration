@@ -34,11 +34,22 @@ describe("ArchitectureDiagram", () => {
 
     expect(scroller).toHaveClass("fg-arch-scroll");
     expect(scroller).toHaveAttribute("tabindex", "0");
+
+    const sourceLabels = scroller.querySelector(".fg-arch-sources");
+    expect(sourceLabels).toHaveAttribute("font-size", "12");
+    for (const subtitle of sourceLabels?.querySelectorAll(
+      'text[opacity="0.62"]',
+    ) ?? []) {
+      expect(subtitle).toHaveAttribute("font-size", "11");
+    }
   });
 
   it("draws a visible keyboard focus treatment around the scroller", () => {
     expect(styles).toMatch(
       /\.fg-arch-scroll:focus-visible\s*\{[^}]*outline: 2px solid var\(--focus-ring\);[^}]*outline-offset: 3px;/,
+    );
+    expect(styles).toMatch(
+      /\.fg-arch-svg\s*\{[^}]*min-width: 1200px;/,
     );
   });
 });

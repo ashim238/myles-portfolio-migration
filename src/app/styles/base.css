@@ -3341,6 +3341,7 @@ button:focus-visible,
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
 }
 
 .project-work-jump-label {
@@ -3358,6 +3359,12 @@ button:focus-visible,
   letter-spacing: var(--track-display);
   text-wrap: balance;
   overflow-wrap: anywhere;
+}
+
+.project-work-jump-card[data-next-project="understandingfafsa"]
+  .project-work-jump-title {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  overflow-wrap: normal;
 }
 
 .project-work-jump-bridge {

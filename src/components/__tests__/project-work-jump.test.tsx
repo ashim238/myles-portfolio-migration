@@ -104,6 +104,13 @@ describe("ProjectWorkJump", () => {
     expect(container.querySelector(".project-work-jump-media")).not.toBeNull();
   });
 
+  it("gives UnderstandingFAFSA a semantic wrap point between its two words", () => {
+    render(<ProjectWorkJump currentSlug="navi" projects={projects} />);
+
+    const title = screen.getByRole("heading", { name: "UnderstandingFAFSA" });
+    expect(title.querySelector("wbr")).not.toBeNull();
+  });
+
   it.each([
     ["unknown", projects],
     [

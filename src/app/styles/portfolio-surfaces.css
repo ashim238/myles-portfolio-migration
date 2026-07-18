@@ -446,7 +446,7 @@
 
 .fg-arch-svg {
   width: 100%;
-  min-width: 900px;
+  min-width: 1200px;
   height: auto;
   color: var(--foreground);
 }
@@ -2080,23 +2080,12 @@
     animation: tt-template-reveal 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
-  .tt-preview-final::after,
-  .uf-switcher-preview::after {
+  .tt-preview-final::after {
     content: "";
     position: absolute;
     inset: 0;
     z-index: 3;
     pointer-events: none;
-  }
-
-  .uf-switcher-preview::after {
-    background: linear-gradient(
-      180deg,
-      transparent 20%,
-      color-mix(in srgb, var(--uf-accent-highlight) 13%, transparent) 50%,
-      transparent 80%
-    );
-    animation: uf-template-sweep 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 }
 
@@ -2128,11 +2117,6 @@
   to { transform: translateY(76%); }
 }
 
-@keyframes uf-template-sweep {
-  from { transform: translateY(-76%); }
-  to { transform: translateY(76%); }
-}
-
 @keyframes tt-template-reveal {
   from {
     opacity: 0.72;
@@ -2156,16 +2140,14 @@
     transform: none;
   }
 
-  .tt-preview-final::after,
-  .uf-switcher-preview::after {
+  .tt-preview-final::after {
     display: none;
     animation: none;
   }
 }
 
 @media print {
-  .tt-preview-final::after,
-  .uf-switcher-preview::after {
+  .tt-preview-final::after {
     display: none !important;
   }
 }
@@ -2894,12 +2876,17 @@
 }
 
 .nv-ring {
-  position: relative;
   margin: 0;
   text-align: center;
 }
 
+.nv-ring-plot {
+  display: grid;
+  place-items: center;
+}
+
 .nv-ring-svg {
+  grid-area: 1 / 1;
   width: min(180px, 42vw);
   height: auto;
   display: block;
@@ -2926,12 +2913,10 @@
 }
 
 .nv-ring-center {
-  position: absolute;
-  inset: 0;
+  grid-area: 1 / 1;
   display: grid;
   place-items: center;
   pointer-events: none;
-  padding-bottom: 2.2rem;
 }
 
 .nv-ring-value {
@@ -3494,16 +3479,10 @@
 /* Shared heading emphasis is owned by late-polish.css so headings stay
    visible before a view timeline starts. */
 
-/* Composition strip cards: perspective tilt + accent shadow on hover */
-.nv-composition-cards {
-  perspective: 900px;
-  transform-style: preserve-3d;
-}
-
 .nv-composition-card {
   transition:
     transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 420ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 220ms ease,
     border-color 220ms ease;
 }
 
@@ -3512,15 +3491,9 @@
     will-change: transform;
   }
   .nv-composition-card:hover {
-    transform: translateY(-4px) rotateX(3deg) rotateY(-3deg);
+    transform: translateY(-2px);
     border-color: var(--nv-accent-line);
-    box-shadow: 0 22px 42px -24px color-mix(in srgb, var(--nv-accent) 55%, transparent);
-  }
-  .nv-composition-card:nth-child(2):hover {
-    transform: translateY(-4px) rotateX(3deg) rotateY(0deg);
-  }
-  .nv-composition-card:nth-child(3):hover {
-    transform: translateY(-4px) rotateX(3deg) rotateY(3deg);
+    background: color-mix(in srgb, var(--nv-accent) 7%, var(--surface));
   }
 }
 
@@ -4584,8 +4557,6 @@
     border-color 160ms ease,
     transform 160ms ease;
 }
-.uf-composer-mini::before { content: ''; position: absolute; inset: -0.5rem; }
-
 .uf-composer-mini:hover:not(:disabled) {
   background: var(--uf-accent-soft);
   border-color: var(--uf-accent-line);
@@ -4627,14 +4598,30 @@
   }
 
   .uf-composer-item-body {
-    grid-template-columns: 3.25rem 1fr auto;
+    grid-template-columns: 3.25rem minmax(0, 1fr);
+    grid-template-areas:
+      "thumb meta"
+      "controls controls";
   }
   .uf-composer-item-handle {
     display: none;
   }
   .uf-composer-item-thumb {
+    grid-area: thumb;
     width: 3.25rem;
     height: 3.25rem;
+  }
+  .uf-composer-item-meta {
+    grid-area: meta;
+  }
+  .uf-composer-item-controls {
+    grid-area: controls;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+  .uf-composer-mini {
+    width: 2.75rem;
+    height: 2.75rem;
   }
 }
 
@@ -5250,21 +5237,20 @@
 .nv-research-route {
   grid-area: diagram;
   align-self: start;
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 1fr;
-  gap: 0.75rem;
   height: 1px;
-  margin: 1.45rem 8% 0;
+  margin: 0;
+  background: var(--nv-accent);
   pointer-events: none;
   transform: scaleX(1);
   transform-origin: left center;
 }
 
-.nv-research-route span {
-  display: block;
-  height: 1px;
-  background: var(--nv-accent);
+.nv-research-route--journey {
+  margin-inline: calc((100% - 1.5rem) / 6);
+}
+
+.nv-research-route--booking {
+  margin-inline: calc((100% - 3rem) / 10);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -5374,19 +5360,11 @@
     z-index: 2;
     align-self: stretch;
     justify-self: start;
-    grid-auto-flow: row;
-    grid-template-columns: 1fr;
-    grid-auto-rows: 1fr;
     width: 1px;
     height: calc(100% - 2.6rem);
-    margin: 1.6rem 0 1rem 1.3rem;
+    margin: 1.6rem 0 1rem 1rem;
     transform: scaleY(1);
     transform-origin: center top;
-  }
-
-  .nv-research-route span {
-    width: 1px;
-    height: 100%;
   }
 
   .nv-research-artifacts.nv-reveal--visible .nv-research-route {

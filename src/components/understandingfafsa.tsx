@@ -623,6 +623,8 @@ type TemplateMeta = {
   asset: typeof UF_ASSETS.templateWeekly | typeof UF_ASSETS.templateEvent;
   alt: string;
   descriptor: string;
+  note: string;
+  scrollable: boolean;
 };
 
 const TEMPLATE_VARIANTS: Record<TemplateVariant, TemplateMeta> = {
@@ -631,12 +633,16 @@ const TEMPLATE_VARIANTS: Record<TemplateVariant, TemplateMeta> = {
     asset: UF_ASSETS.templateWeekly,
     alt: "Full weekly newsletter. Modular kit with emoji section headers and color theme variants.",
     descriptor: "Default send. Full modular kit assembled each week.",
+    note: "Scroll inside the frame to read the full send. Two of the three template types are shown here: weekly and event.",
+    scrollable: true,
   },
   event: {
     label: "Event",
     asset: UF_ASSETS.templateEvent,
     alt: "Event-specific newsletter with fewer blocks for invites and recaps.",
     descriptor: "Event-specific send. RSVP-focused layout on the same system.",
+    note: "Two of the three template types are shown here: weekly and event.",
+    scrollable: false,
   },
 };
 
@@ -644,7 +650,6 @@ export function TemplateSwitcher() {
   const [variant, setVariant] = useState<TemplateVariant>("weekly");
   const reducedMotion = usePrefersReducedMotion();
   const active = TEMPLATE_VARIANTS[variant];
-  const isTall = active.asset.height / active.asset.width >= 3;
 
   return (
     <div className="uf-switcher" aria-label="Newsletter template variants">
@@ -662,8 +667,15 @@ export function TemplateSwitcher() {
         ))}
       </div>
       <div
-        className={`uf-switcher-preview${reducedMotion ? " uf-switcher-preview--static" : ""}${isTall ? " uf-switcher-preview--scroll" : ""}`}
+        className={`uf-switcher-preview${reducedMotion ? " uf-switcher-preview--static" : ""}${active.scrollable ? " uf-switcher-preview--scroll" : ""}`}
         key={variant}
+        role={active.scrollable ? "region" : undefined}
+        tabIndex={active.scrollable ? 0 : undefined}
+        aria-label={
+          active.scrollable
+            ? `Scrollable ${active.label} newsletter template`
+            : undefined
+        }
       >
         <ExpandableImage
           src={active.asset.src}
@@ -675,11 +687,7 @@ export function TemplateSwitcher() {
         />
       </div>
       <p className="uf-switcher-descriptor">{active.descriptor}</p>
-      <p className="uf-switcher-note">
-        {isTall
-          ? "Scroll inside the frame to read the full send. Click to expand."
-          : "Counselor toolkit ships on the same framework. In progress, not live yet."}
-      </p>
+      <p className="uf-switcher-note">{active.note}</p>
     </div>
   );
 }

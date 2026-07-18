@@ -32,7 +32,13 @@ export function ProjectWorkJump({
               id="project-work-jump-heading"
               className="project-work-jump-title"
             >
-              {next.project.title}
+              {next.project.slug === "understandingfafsa" ? (
+                <>
+                  Understanding<wbr />FAFSA
+                </>
+              ) : (
+                next.project.title
+              )}
             </h2>
             <span className="project-work-jump-bridge">{next.bridge}</span>
             <span className="project-work-jump-cta">
