@@ -20,4 +20,13 @@ describe("Avatar", () => {
     render(<Avatar name="   " />);
     expect(screen.getByText("?")).toBeInTheDocument();
   });
+
+  it("can be decorative when the same name is adjacent in text", () => {
+    const { rerender } = render(<Avatar name="Janice Doeherty" decorative />);
+    expect(screen.queryByRole("img", { name: "Janice Doeherty" })).not.toBeInTheDocument();
+    expect(document.querySelector(".nv-avatar")).toHaveAttribute("aria-hidden", "true");
+
+    rerender(<Avatar name="Janice Doeherty" src="/janice.jpg" decorative />);
+    expect(document.querySelector(".nv-avatar img")).toHaveAttribute("alt", "");
+  });
 });

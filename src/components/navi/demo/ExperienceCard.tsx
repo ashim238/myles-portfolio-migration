@@ -12,11 +12,14 @@ function statusBadge(tone: ExperienceSummary["tone"]) {
 export function ExperienceCard({
   experience: e,
   href,
+  headingLevel = 3,
 }: {
   experience: ExperienceSummary;
   href: string;
+  headingLevel?: 2 | 3;
 }) {
   const badge = statusBadge(e.tone);
+  const Heading = headingLevel === 2 ? "h2" : "h3";
   return (
     <Link href={href} className="nv-exp-card">
       <div className="nv-exp-card-photo">
@@ -29,7 +32,7 @@ export function ExperienceCard({
       </div>
       <div className="nv-exp-card-body">
         <Tag tone="neutral">{e.category}</Tag>
-        <h3 className="nv-exp-card-title">{e.title}</h3>
+        <Heading className="nv-exp-card-title">{e.title}</Heading>
         <p className="nv-exp-card-loc">
           {e.neighborhood}, {e.borough}
         </p>

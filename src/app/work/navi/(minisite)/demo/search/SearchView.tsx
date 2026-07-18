@@ -9,6 +9,7 @@ import type { ExperienceSummary } from "@/lib/navi/experience-summary";
 import { motionSafeScrollBehavior } from "@/lib/navi/motion";
 
 const PAGE_SIZE = 12;
+const SEARCH_CENTER: [number, number] = [40.68, -73.95];
 
 export function SearchView({ experiences }: { experiences: ExperienceSummary[] }) {
   const [query, setQuery] = useState("");
@@ -28,7 +29,10 @@ export function SearchView({ experiences }: { experiences: ExperienceSummary[] }
     );
   }, [query, experiences]);
 
-  const visibleResults = results.slice(0, visibleCount);
+  const visibleResults = useMemo(
+    () => results.slice(0, visibleCount),
+    [results, visibleCount],
+  );
 
   const markers = useMemo(
     () =>
@@ -37,6 +41,7 @@ export function SearchView({ experiences }: { experiences: ExperienceSummary[] }
         lat: e.lat,
         lng: e.lng,
         label: e.price === 0 ? "Free" : `$${e.price}`,
+        accessibleLabel: `${e.title}, ${e.price === 0 ? "free" : `$${e.price}`}`,
       })),
     [visibleResults],
   );
@@ -55,9 +60,14 @@ export function SearchView({ experiences }: { experiences: ExperienceSummary[] }
 
   return (
     <div className="nv-search-page">
-      <aside className="nv-search-list">
+      <section className="nv-search-list" aria-labelledby="nv-search-results-title">
         <header className="nv-search-head">
-          <h1 className="nv-search-count" aria-live="polite" aria-atomic="true">
+          <h1
+            id="nv-search-results-title"
+            className="nv-search-count"
+            aria-live="polite"
+            aria-atomic="true"
+          >
             {results.length} nearby experiences
           </h1>
           <SearchInput
@@ -75,36 +85,47 @@ export function SearchView({ experiences }: { experiences: ExperienceSummary[] }
             No matches. Try a broader term.
           </p>
         ) : (
-          <ul className="nv-search-results">
-            {visibleResults.map((e) => (
-              <li key={e.slug} id={`search-result-${e.slug}`} className="nv-search-result">
-                <ResultCard
-                  experience={e}
-                  href={`/work/navi/demo/experience/${e.slug}`}
-                  onHover={setHovered}
-                />
-              </li>
-            ))}
-          </ul>
+          <>
+            <p className="nv-search-visible-count" role="status">
+              Showing {Math.min(visibleCount, results.length)} of {results.length} results
+            </p>
+            <ul className="nv-search-results">
+              {visibleResults.map((e) => (
+                <li key={e.slug} id={`search-result-${e.slug}`} className="nv-search-result">
+                  <ResultCard
+                    experience={e}
+                    href={`/work/navi/demo/experience/${e.slug}`}
+                    onHover={setHovered}
+                    headingLevel={2}
+                  />
+                </li>
+              ))}
+            </ul>
+          </>
         )}
-        {visibleCount < results.length && (
+        {results.length > PAGE_SIZE && (
           <Button
             variant="outline"
             className="nv-search-load-more"
+            disabled={visibleCount >= results.length}
             onClick={() => setVisibleCount((count) => Math.min(count + PAGE_SIZE, results.length))}
           >
-            Load {Math.min(PAGE_SIZE, results.length - visibleCount)} more experiences
+            {visibleCount >= results.length
+              ? `All ${results.length} experiences shown`
+              : `Load ${Math.min(PAGE_SIZE, results.length - visibleCount)} more ${
+                  results.length - visibleCount === 1 ? "experience" : "experiences"
+                }`}
           </Button>
         )}
-      </aside>
+      </section>
       <div className="nv-search-map">
         <Map
-          center={[40.68, -73.95]}
+          center={SEARCH_CENTER}
           zoom={12}
           markers={markers}
           selectedId={hovered ?? picked}
           onSelect={onPinSelect}
-          currentLocation={[40.68, -73.95]}
+          currentLocation={SEARCH_CENTER}
           fitToMarkers
         />
         {results.length === 0 && (

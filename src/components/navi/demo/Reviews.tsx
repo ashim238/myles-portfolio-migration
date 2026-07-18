@@ -33,13 +33,14 @@ export function Reviews({
         {reviews.map((r) => (
           <li key={`${r.author}-${r.date}`} className="nv-review">
             <div className="nv-review-head">
-              <Avatar name={r.author} size="sm" />
+              <Avatar name={r.author} size="sm" decorative />
               <div>
                 <p className="nv-review-author">{r.author}</p>
                 <p className="nv-review-date">{r.date}</p>
               </div>
-              <span className="nv-review-rating" aria-label={`Rated ${r.rating} out of 5`}>
+              <span className="nv-review-rating">
                 <span aria-hidden="true">★ {r.rating.toFixed(1)}</span>
+                <span className="nv-sr-only">Rated {r.rating} out of 5</span>
               </span>
             </div>
             <p className="nv-review-quote">{r.quote}</p>

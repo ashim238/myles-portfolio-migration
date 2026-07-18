@@ -103,7 +103,7 @@ export function ExperienceView({
           <section id="learn" aria-labelledby="learn-heading" className="nv-detail-section">
             <h2 id="learn-heading" className="nv-detail-section-heading">Learn</h2>
             <p className="nv-detail-host">
-              <Avatar name={e.host.name} size="sm" /> Hosted by{" "}
+              <Avatar name={e.host.name} size="sm" decorative /> Hosted by{" "}
               <Link href={`/work/navi/demo/host/${e.host.slug}`} className="nv-detail-host-link">
                 {e.host.name}
               </Link>
@@ -151,7 +151,15 @@ export function ExperienceView({
               <Map
                 center={[e.lat, e.lng]}
                 zoom={15}
-                markers={[{ id: e.slug, lat: e.lat, lng: e.lng, label: "" }]}
+                markers={[
+                  {
+                    id: e.slug,
+                    lat: e.lat,
+                    lng: e.lng,
+                    label: "",
+                    accessibleLabel: `${e.title} location`,
+                  },
+                ]}
                 deferUntilVisible
               />
             </div>

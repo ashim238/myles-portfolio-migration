@@ -1,6 +1,25 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const PRODUCT_LINKS = [
+  { href: "/work/navi/demo", label: "Explore" },
+  { href: "/work/navi/demo/impact", label: "Impact" },
+  { href: "/work/navi/system", label: "System" },
+  { href: "/work/navi/demo/host", label: "Host an event", className: "nv-nav-host" },
+] as const;
+
+function currentProductPath(pathname: string): string | undefined {
+  return [...PRODUCT_LINKS]
+    .sort((a, b) => b.href.length - a.href.length)
+    .find(({ href }) => pathname === href || pathname.startsWith(`${href}/`))?.href;
+}
 
 export function NaviHeader() {
+  const pathname = usePathname();
+  const currentPath = currentProductPath(pathname);
+
   return (
     <header className="nv-header" role="banner">
       <p className="nv-concept-disclosure">
@@ -25,12 +44,16 @@ export function NaviHeader() {
               Case study
             </span>
           </Link>
-          <Link href="/work/navi/demo">Explore</Link>
-          <Link href="/work/navi/demo/impact">Impact</Link>
-          <Link href="/work/navi/system">System</Link>
-          <Link href="/work/navi/demo/host" className="nv-nav-host">
-            Host an event
-          </Link>
+          {PRODUCT_LINKS.map(({ href, label, ...item }) => (
+            <Link
+              key={href}
+              href={href}
+              className={"className" in item ? item.className : undefined}
+              aria-current={currentPath === href ? "page" : undefined}
+            >
+              {label}
+            </Link>
+          ))}
         </nav>
       </div>
     </header>

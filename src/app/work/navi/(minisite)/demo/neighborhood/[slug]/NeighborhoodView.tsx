@@ -54,6 +54,7 @@ export function NeighborhoodView({ neighborhood: n }: { neighborhood: Neighborho
               lat: experience.lat,
               lng: experience.lng,
               label: experience.title,
+              accessibleLabel: `${experience.title} location`,
             }))}
             selectedId={picked}
             onSelect={onPinSelect}
@@ -83,9 +84,7 @@ export function NeighborhoodView({ neighborhood: n }: { neighborhood: Neighborho
                   href={`/work/navi/demo/host/${host.slug}`}
                   className="nv-neighborhood-host"
                 >
-                  <span aria-hidden="true">
-                    <Avatar name={host.name} size="md" src={host.avatarSrc} />
-                  </span>
+                  <Avatar name={host.name} size="md" src={host.avatarSrc} decorative />
                   <span>{host.name}</span>
                 </Link>
               </li>

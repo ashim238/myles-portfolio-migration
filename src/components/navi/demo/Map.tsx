@@ -9,7 +9,13 @@ const MapClient = dynamic(() => import("./Map.client"), {
   loading: () => <div className="nv-map-skeleton" aria-hidden="true" />,
 });
 
-export type MapMarker = { id: string; lat: number; lng: number; label: string };
+export type MapMarker = {
+  id: string;
+  lat: number;
+  lng: number;
+  label: string;
+  accessibleLabel?: string;
+};
 
 export function Map({
   center,

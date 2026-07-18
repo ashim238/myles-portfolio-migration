@@ -14,21 +14,31 @@ export function Avatar({
   name,
   src,
   size = "md",
+  decorative = false,
 }: {
   name: string;
   src?: string;
   size?: Size;
+  decorative?: boolean;
 }) {
   if (src) {
     return (
-      <span className={`nv-avatar nv-avatar--${size}`}>
+      <span
+        className={`nv-avatar nv-avatar--${size}`}
+        aria-hidden={decorative ? "true" : undefined}
+      >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt={name} />
+        <img src={src} alt={decorative ? "" : name} />
       </span>
     );
   }
   return (
-    <span className={`nv-avatar nv-avatar--${size}`} role="img" aria-label={name}>
+    <span
+      className={`nv-avatar nv-avatar--${size}`}
+      role={decorative ? undefined : "img"}
+      aria-label={decorative ? undefined : name}
+      aria-hidden={decorative ? "true" : undefined}
+    >
       <span aria-hidden="true">{initials(name)}</span>
     </span>
   );

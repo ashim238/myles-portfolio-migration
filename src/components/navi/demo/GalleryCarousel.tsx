@@ -43,6 +43,7 @@ export function GalleryCarousel({ photos }: { photos: Photo[] }) {
         onKeyDown={onKeyDown}
       >
         <DemoPhoto
+          key={hero.src}
           src={hero.src}
           alt={hero.alt}
           dataTestId="gallery-hero-img"

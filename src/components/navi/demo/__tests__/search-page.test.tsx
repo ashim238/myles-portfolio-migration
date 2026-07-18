@@ -2,38 +2,24 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { describe, it, expect, vi } from "vitest";
-import type React from "react";
+import { beforeEach, describe, it, expect, vi } from "vitest";
 
-vi.mock("next/dynamic", () => ({
-  default: (
-    factory: () => Promise<{ default: React.ComponentType<Record<string, unknown>> }>,
-    opts?: unknown,
-  ) => {
-    void opts;
-    let ResolvedComponent: React.ComponentType<Record<string, unknown>> | null = null;
-    factory().then((mod) => {
-      ResolvedComponent = mod.default;
-    });
-    const DynamicStub = (props: Record<string, unknown>) => {
-      if (!ResolvedComponent) return null;
-      return <ResolvedComponent {...props} />;
-    };
-    DynamicStub.displayName = "DynamicStub";
-    return DynamicStub;
+const mapProbe = vi.hoisted(() => ({ props: [] as Record<string, unknown>[] }));
+
+vi.mock("@/components/navi/demo/Map", () => ({
+  Map: (props: Record<string, unknown>) => {
+    mapProbe.props.push(props);
+    return <section aria-label="Map of nearby results" />;
   },
-}));
-
-vi.mock("@/components/navi/demo/Map.client", () => ({
-  default: ({ markers }: { markers: { id: string }[] }) => (
-    <div data-testid="map-mock">{markers.length} markers</div>
-  ),
 }));
 
 import SearchPage from "@/app/work/navi/(minisite)/demo/search/page";
 import { EXPERIENCES } from "@/lib/navi/demo-data";
 
 describe("Search page", () => {
+  beforeEach(() => {
+    mapProbe.props.length = 0;
+  });
   it("shows a result count header", () => {
     render(<SearchPage />);
     expect(
@@ -42,18 +28,40 @@ describe("Search page", () => {
     expect(screen.getAllByRole("link")).toHaveLength(12);
   });
 
+  it("uses a primary labelled section and level-two result headings", () => {
+    render(<SearchPage />);
+    expect(screen.queryByRole("complementary")).not.toBeInTheDocument();
+    expect(screen.getByRole("region", { name: /nearby experiences/i })).toBeInTheDocument();
+    expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(12);
+  });
+
   it("reveals search results in batches of 12", async () => {
     render(<SearchPage />);
     await userEvent.click(screen.getByRole("button", { name: /load 12 more experiences/i }));
     expect(screen.getAllByRole("link")).toHaveLength(24);
   });
 
+  it("announces the visible batch and preserves the final pagination control", async () => {
+    render(<SearchPage />);
+    const loadMore = screen.getByRole("button", { name: /load 12 more experiences/i });
+    expect(screen.getByRole("status")).toHaveTextContent("Showing 12 of 37 results");
+    await userEvent.click(loadMore);
+    await userEvent.click(loadMore);
+    await userEvent.click(screen.getByRole("button", { name: /load 1 more experience/i }));
+
+    expect(screen.getByRole("button", { name: /all 37 experiences shown/i })).toBeDisabled();
+    expect(screen.getByRole("status")).toHaveTextContent("Showing 37 of 37 results");
+  });
+
   it("keeps the client search view independent of the full detail dataset", () => {
-    const source = readFileSync(
-      join(process.cwd(), "src/app/work/navi/(minisite)/demo/search/SearchView.tsx"),
-      "utf8",
+    const sources = [
+      "src/app/work/navi/(minisite)/demo/search/SearchView.tsx",
+      "src/components/navi/demo/ResultCard.tsx",
+      "src/lib/navi/experience-summary.ts",
+    ].map((file) => readFileSync(join(process.cwd(), file), "utf8"));
+    expect(sources.join("\n")).not.toMatch(
+      /import\s+(?!type\b)[^;]*from ["']@\/lib\/navi\/demo-data["']/,
     );
-    expect(source).not.toMatch(/from ["']@\/lib\/navi\/demo-data["']/);
   });
 
   it("filters results by typed query and updates the count", async () => {
@@ -72,6 +80,20 @@ describe("Search page", () => {
     render(<SearchPage />);
     expect(screen.getByRole("region", { name: /map/i })).toBeInTheDocument();
     expect(screen.getByRole("group", { name: /legend/i })).toBeInTheDocument();
+  });
+
+  it("keeps map data references stable when only card hover state changes", async () => {
+    render(<SearchPage />);
+    const initial = mapProbe.props.at(-1);
+    if (!initial) throw new Error("fixture: map should render");
+
+    await userEvent.hover(screen.getAllByRole("link")[0]);
+    const afterHover = mapProbe.props.at(-1);
+    if (!afterHover) throw new Error("fixture: map should rerender on selection");
+
+    expect(afterHover.markers).toBe(initial.markers);
+    expect(afterHover.center).toBe(initial.center);
+    expect(afterHover.currentLocation).toBe(initial.currentLocation);
   });
 
   it("announces the live result count to assistive tech", () => {

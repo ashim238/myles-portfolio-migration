@@ -4,7 +4,7 @@ export function Rating({ value, reviews }: { value: number; reviews?: number }) 
       ? `Rated ${value} out of 5, ${reviews} reviews`
       : `Rated ${value} out of 5`;
   return (
-    <span className="nv-rating" aria-label={label}>
+    <span className="nv-rating">
       <span className="nv-rating-badge" aria-hidden="true">
         {value}
       </span>
@@ -13,6 +13,7 @@ export function Rating({ value, reviews }: { value: number; reviews?: number }) 
           {reviews} reviews
         </span>
       )}
+      <span className="nv-sr-only">{label}</span>
     </span>
   );
 }

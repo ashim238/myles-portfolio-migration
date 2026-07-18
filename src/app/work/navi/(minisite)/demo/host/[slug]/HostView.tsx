@@ -19,7 +19,7 @@ export function HostView({ host }: { host: Host }) {
         <Link href="/work/navi/demo/search">← Back to results</Link>
       </p>
       <header className="nv-host-head">
-        <Avatar name={host.name} size="lg" src={host.avatarSrc} />
+        <Avatar name={host.name} size="lg" src={host.avatarSrc} decorative />
         <div className="nv-host-headtext">
           <h1>{host.name}</h1>
           <p className="nv-host-meta">

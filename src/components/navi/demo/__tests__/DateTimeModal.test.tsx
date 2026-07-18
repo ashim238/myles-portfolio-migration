@@ -44,7 +44,7 @@ describe("DateTimeModal", () => {
     );
     await userEvent.click(screen.getByRole("button", { name: /next month/i }));
     const longDate = nextMonthDay(12);
-    await userEvent.click(screen.getByRole("button", { name: longDate }));
+    await userEvent.click(screen.getByRole("gridcell", { name: longDate }));
     await userEvent.click(screen.getByRole("button", { name: "1:00 PM" }));
     await userEvent.click(screen.getByRole("button", { name: /confirm date/i }));
     expect(onConfirm).toHaveBeenCalledTimes(1);
@@ -67,7 +67,7 @@ describe("DateTimeModal", () => {
     );
     expect(screen.getByRole("button", { name: /confirm date/i })).toBeDisabled();
     await userEvent.click(screen.getByRole("button", { name: /next month/i }));
-    await userEvent.click(screen.getByRole("button", { name: nextMonthDay(9) }));
+    await userEvent.click(screen.getByRole("gridcell", { name: nextMonthDay(9) }));
     expect(screen.getByRole("button", { name: /confirm date/i })).toBeEnabled();
   });
 
@@ -146,7 +146,7 @@ describe("DateTimeModal", () => {
       />,
     );
     await userEvent.click(screen.getByRole("button", { name: /next month/i }));
-    await userEvent.click(screen.getByRole("button", { name: nextMonthDay(12) }));
+    await userEvent.click(screen.getByRole("gridcell", { name: nextMonthDay(12) }));
     await userEvent.click(screen.getByRole("button", { name: /confirm date/i }));
     expect(onConfirm).toHaveBeenCalledWith(expect.objectContaining({ time: "12:00 pm" }));
   });

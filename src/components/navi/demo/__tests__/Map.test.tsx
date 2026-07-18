@@ -1,4 +1,6 @@
-import { act, render, screen } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { describe, it, expect, vi } from "vitest";
 import type React from "react";
 
@@ -78,12 +80,23 @@ describe("Map", () => {
     expect(screen.getByTestId("map-mock").getAttribute("data-selected")).toBe("b");
   });
 
+  it("does not hide the interactive Leaflet canvas from assistive technology", () => {
+    const source = readFileSync(
+      join(process.cwd(), "src/components/navi/demo/Map.client.tsx"),
+      "utf8",
+    );
+    expect(source).not.toContain('aria-hidden="true"');
+    expect(source).toMatch(/aria-label="Interactive map/);
+  });
+
   it("reserves the map region but waits for a nearby intersection when deferred", async () => {
     let intersect: ((entries: IntersectionObserverEntry[]) => void) | undefined;
+    let observerOptions: IntersectionObserverInit | undefined;
     const OriginalObserver = globalThis.IntersectionObserver;
     globalThis.IntersectionObserver = class IntersectionObserverStub {
-      constructor(callback: IntersectionObserverCallback) {
+      constructor(callback: IntersectionObserverCallback, options?: IntersectionObserverInit) {
         intersect = (entries) => callback(entries, this as unknown as IntersectionObserver);
+        observerOptions = options;
       }
       observe() {}
       unobserve() {}
@@ -104,12 +117,23 @@ describe("Map", () => {
     );
     expect(container.querySelector(".nv-map-skeleton")).toBeInTheDocument();
     expect(screen.queryByTestId("map-mock")).not.toBeInTheDocument();
+    expect(observerOptions?.rootMargin).toBe("300px");
 
     await act(async () => {
       intersect?.([{ isIntersecting: true } as IntersectionObserverEntry]);
       await Promise.resolve();
     });
     expect(screen.getByTestId("map-mock")).toBeInTheDocument();
+    globalThis.IntersectionObserver = OriginalObserver;
+  });
+
+  it("fails visible when IntersectionObserver is unavailable", async () => {
+    const OriginalObserver = globalThis.IntersectionObserver;
+    globalThis.IntersectionObserver = undefined as unknown as typeof IntersectionObserver;
+    render(
+      <Map center={[40.7, -73.9]} zoom={12} markers={[]} deferUntilVisible />,
+    );
+    await waitFor(() => expect(screen.getByTestId("map-mock")).toBeInTheDocument());
     globalThis.IntersectionObserver = OriginalObserver;
   });
 });

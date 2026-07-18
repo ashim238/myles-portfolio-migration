@@ -274,7 +274,8 @@ export function FeedView({
       </div>
 
       <p className="nv-feed-count" role="status">
-        {filtered.length} {filtered.length === 1 ? "experience" : "experiences"}
+        Showing {Math.min(visibleCount, filtered.length)} of {filtered.length}{" "}
+        {filtered.length === 1 ? "experience" : "experiences"}
         {activeCategory ? ` in ${activeCategory}` : ""}
       </p>
 
@@ -292,19 +293,25 @@ export function FeedView({
               <ExperienceCard
                 experience={e}
                 href={`/work/navi/demo/experience/${e.slug}`}
+                headingLevel={2}
               />
             </li>
           ))}
         </ul>
       )}
 
-      {visibleCount < filtered.length && (
+      {filtered.length > PAGE_SIZE && (
         <Button
           variant="outline"
           className="nv-feed-load-more"
+          disabled={visibleCount >= filtered.length}
           onClick={() => setVisibleCount((count) => Math.min(count + PAGE_SIZE, filtered.length))}
         >
-          Load {Math.min(PAGE_SIZE, filtered.length - visibleCount)} more experiences
+          {visibleCount >= filtered.length
+            ? `All ${filtered.length} experiences shown`
+            : `Load ${Math.min(PAGE_SIZE, filtered.length - visibleCount)} more ${
+                filtered.length - visibleCount === 1 ? "experience" : "experiences"
+              }`}
         </Button>
       )}
 

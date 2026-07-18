@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect } from "vitest";
 import { GalleryCarousel } from "@/components/navi/demo/GalleryCarousel";
@@ -62,6 +62,15 @@ describe("GalleryCarousel", () => {
     const region = screen.getByRole("region", { name: "Experience photos" });
     region.focus();
     await userEvent.keyboard("{ArrowRight}");
+    expect(screen.getByTestId("gallery-hero-img")).toHaveAttribute("alt", "B");
+  });
+
+  it("recovers when a failed slide is replaced by a valid one", async () => {
+    render(<GalleryCarousel photos={photos} />);
+    fireEvent.error(screen.getByTestId("gallery-hero-img"));
+    expect(screen.getByText(/photo coming soon/i)).toBeInTheDocument();
+
+    await userEvent.click(screen.getByRole("button", { name: "Next photo" }));
     expect(screen.getByTestId("gallery-hero-img")).toHaveAttribute("alt", "B");
   });
 });

@@ -20,7 +20,7 @@ export function BookingReassurance({
   return (
     <div className="nv-booking-reassure">
       <p className="nv-booking-reassure-host">
-        <Avatar name={host.name} size="sm" />
+        <Avatar name={host.name} size="sm" decorative />
         <span>
           Hosted by{" "}
           <Link

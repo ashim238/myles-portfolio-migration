@@ -11,7 +11,7 @@ describe("ExperienceCard", () => {
     expect(screen.getByRole("link", { name: new RegExp(e.title, "i") })).toBeInTheDocument();
     expect(screen.getByText(new RegExp(e.neighborhood))).toBeInTheDocument();
     expect(screen.getByText(`$${e.price} per person`)).toBeInTheDocument();
-    expect(screen.getByLabelText(/rated/i)).toBeInTheDocument();
+    expect(screen.getByText(/rated/i)).toHaveClass("nv-sr-only");
     expect(screen.getByText(e.impactPhrase)).toBeInTheDocument();
   });
 
@@ -19,5 +19,9 @@ describe("ExperienceCard", () => {
     render(<ExperienceCard experience={e} href="#" />);
     const img = screen.getByRole("img");
     expect(img.getAttribute("alt")).toBe(e.photos[0].alt);
+    expect(img).toHaveAttribute(
+      "sizes",
+      "(max-width: 720px) calc(100vw - 32px), 340px",
+    );
   });
 });

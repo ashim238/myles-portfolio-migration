@@ -132,7 +132,7 @@ export default function MapClient({
       const marker = L.marker([m.lat, m.lng], {
         icon,
         keyboard: true,
-        alt: m.label ? `${m.label}, select` : "Event location",
+        alt: m.accessibleLabel ?? (m.label ? `${m.label}, select` : "Event location"),
       });
       if (onSelect) marker.on("click", () => onSelect(m.id));
       cluster.addLayer(marker);
@@ -170,8 +170,13 @@ export default function MapClient({
     }
   }, [selectedId, markers]);
 
-  // The Leaflet canvas is a mouse-only visual aid, so it's hidden from assistive
-  // tech rather than mislabelled as "interactive". The accessible equivalents
-  // live in text: the result list on search, the address block on a detail page.
-  return <div ref={containerRef} className="nv-map-canvas" aria-hidden="true" />;
+  return (
+    <div
+      ref={containerRef}
+      className="nv-map-canvas"
+      role="region"
+      aria-label="Interactive map. Use the map controls or focus a marker for details."
+      tabIndex={0}
+    />
+  );
 }

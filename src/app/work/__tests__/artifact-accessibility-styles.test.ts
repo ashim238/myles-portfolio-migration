@@ -271,7 +271,7 @@ describe("portfolio artifact accessibility styles", () => {
     expect(
       declarationBlock(':root[data-theme="light"] .nv-trust-label'),
     ).toContain("color: #b04410");
-    expect(declarationBlock(".nv-specimen-label")).toContain("color: #281208");
+    expect(declarationBlock(".nv-page .nv-specimen-label")).toContain("color: #281208");
     expect(declarationBlock(".uf-chip--active")).toContain("color: #ff956e");
     expect(
       declarationBlock(':root[data-theme="light"] .uf-chip--active'),

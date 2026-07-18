@@ -15,12 +15,15 @@ export function ResultCard({
   experience: e,
   href,
   onHover,
+  headingLevel = 3,
 }: {
   experience: ExperienceSummary;
   href: string;
   onHover?: (slug: string | undefined) => void;
+  headingLevel?: 2 | 3;
 }) {
   const badge = statusBadge(e.tone);
+  const Heading = headingLevel === 2 ? "h2" : "h3";
   return (
     <Link
       href={href}
@@ -40,7 +43,7 @@ export function ResultCard({
       </div>
       <div className="nv-result-body">
         <Tag tone="neutral">{e.category}</Tag>
-        <h3 className="nv-result-title">{e.title}</h3>
+        <Heading className="nv-result-title">{e.title}</Heading>
         <p className="nv-result-loc">
           {e.neighborhood}, {e.borough}
         </p>

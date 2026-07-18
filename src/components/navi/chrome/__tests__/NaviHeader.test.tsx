@@ -1,8 +1,14 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
+import { beforeEach, describe, it, expect, vi } from "vitest";
 import { NaviHeader } from "@/components/navi/chrome/NaviHeader";
 
+const route = vi.hoisted(() => ({ pathname: "/work/navi/demo" }));
+vi.mock("next/navigation", () => ({ usePathname: () => route.pathname }));
+
 describe("NaviHeader", () => {
+  beforeEach(() => {
+    route.pathname = "/work/navi/demo";
+  });
   it("renders a banner with a distinct Navi project navigation landmark", () => {
     render(<NaviHeader />);
     expect(screen.getByRole("banner")).toBeInTheDocument();
@@ -68,5 +74,15 @@ describe("NaviHeader", () => {
       "href",
       "/work/navi/demo/host",
     );
+  });
+
+  it("marks the longest matching product route as current", () => {
+    route.pathname = "/work/navi/demo/impact/community-funding";
+    render(<NaviHeader />);
+    expect(screen.getByRole("link", { name: "Impact" })).toHaveAttribute(
+      "aria-current",
+      "page",
+    );
+    expect(screen.getByRole("link", { name: "Explore" })).not.toHaveAttribute("aria-current");
   });
 });
