@@ -3331,7 +3331,7 @@ button:focus-visible,
 .project-work-jump-card {
   display: grid;
   min-height: 44px;
-  gap: 1.4rem;
+  gap: 1.6rem;
   color: inherit;
   text-decoration: none;
 }
@@ -3341,7 +3341,7 @@ button:focus-visible,
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  padding: clamp(1.25rem, 3vw, 2.5rem);
+  padding: clamp(1.6rem, 3vw, 2.4rem);
 }
 
 .project-work-jump-label {

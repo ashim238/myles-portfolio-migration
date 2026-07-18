@@ -77,4 +77,13 @@ describe("homepage first impression", () => {
     expect(screen.queryByTestId("home-focus-guard")).toBeNull();
     expect(screen.queryByTestId("home-intro-guard")).toBeNull();
   });
+
+  it("keeps the global footer on the shared page grid", async () => {
+    render(await Home());
+
+    expect(screen.getByRole("contentinfo")).toHaveClass(
+      "footer",
+      "page-shell",
+    );
+  });
 });

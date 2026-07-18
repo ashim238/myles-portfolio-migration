@@ -38,11 +38,14 @@ describe("ProjectWorkJump editorial endcap layout", () => {
     expect(block(".project-work-jump-card", baseStyles)).toContain(
       "min-height: 44px",
     );
+    expect(block(".project-work-jump-card", baseStyles)).toContain(
+      "gap: 1.6rem",
+    );
     expect(block(".project-work-jump-view-all", baseStyles)).toContain(
       "min-height: 44px",
     );
     expect(block(".project-work-jump-text", baseStyles)).toContain(
-      "padding: clamp(1.25rem, 3vw, 2.5rem)",
+      "padding: clamp(1.6rem, 3vw, 2.4rem)",
     );
     expect(
       block(

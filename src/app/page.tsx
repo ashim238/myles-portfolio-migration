@@ -76,7 +76,7 @@ export default async function Home() {
 
       </main>
 
-      <footer className="footer">
+      <footer className="footer page-shell">
         <nav className="footer-nav" aria-label="Footer">
           <Link href="/#work">Work</Link>
           <Link href="/about">About</Link>
