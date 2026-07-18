@@ -152,13 +152,15 @@ describe("Fresh Greens prose structure", () => {
     );
 
     expect(source).toContain(
-      'clip="/projects/fresh-greens/process/active-nav.mp4"',
+      'clip="/projects/fresh-greens/process/active-nav-flat-route.mp4"',
     );
-    expect(existsSync(resolve(processDir, "active-nav.mp4"))).toBe(true);
+    expect(existsSync(resolve(processDir, "active-nav-flat-route.mp4"))).toBe(true);
+    expect(existsSync(resolve(processDir, "active-nav-flat.mp4"))).toBe(false);
+    expect(existsSync(resolve(processDir, "active-nav.mp4"))).toBe(false);
     expect(existsSync(resolve(processDir, "active-nav.mov"))).toBe(false);
-    expect(statSync(resolve(processDir, "active-nav.mp4")).size).toBeLessThan(
-      4_000_000,
-    );
+    expect(
+      statSync(resolve(processDir, "active-nav-flat-route.mp4")).size,
+    ).toBeLessThan(4_000_000);
   });
 
   it("keeps house punctuation out of composed reserved-palette copy", () => {
