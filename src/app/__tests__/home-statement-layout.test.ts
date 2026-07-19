@@ -26,6 +26,7 @@ describe("homepage statement decoder layout", () => {
   it("reserves one stable grid area with the primary hero typography", () => {
     const decoder = block(".hero-statement-decoder");
     const sizer = block(".hero-statement-decoder-sizer");
+    const cursorReserve = block(".hero-statement-decoder-sizer::after");
     const visible = block(".hero-statement-decoder-visible");
 
     expect(decoder).toMatch(/display:\s*grid/);
@@ -33,6 +34,9 @@ describe("homepage statement decoder layout", () => {
     expect(decoder).not.toMatch(/font-family:\s*var\(--font-mono\)/);
     expect(sizer).toMatch(/grid-area:\s*1\s*\/\s*1/);
     expect(sizer).toMatch(/visibility:\s*hidden/);
+    expect(cursorReserve).toMatch(/content:\s*"\|"/);
+    expect(cursorReserve).toMatch(/display:\s*inline-block/);
+    expect(cursorReserve).toMatch(/inline-size:\s*0\.5ch/);
     expect(visible).toMatch(/grid-area:\s*1\s*\/\s*1/);
     expect(visible).toMatch(/min-width:\s*0/);
   });

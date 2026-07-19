@@ -113,6 +113,92 @@ describe("ProjectToc", () => {
     });
   });
 
+  it("keeps the server-rendered chapter links usable without observer enhancement", () => {
+    render(
+      <main className="project-page">
+        <h2 id="overview">Overview</h2>
+        <ProjectToc sections={[{ title: "Overview", id: "overview" }]} />
+      </main>,
+    );
+
+    const nav = screen.getByRole("navigation", {
+      name: "Case study chapters",
+    });
+    expect(nav).not.toHaveAttribute("data-toc-ready");
+    expect(screen.getByRole("link", { name: "Overview" })).toHaveAttribute(
+      "href",
+      "#overview",
+    );
+  });
+
+  it("does not collapse the chapter links when observer setup fails", () => {
+    vi.stubGlobal(
+      "IntersectionObserver",
+      class ThrowingIntersectionObserver {
+        constructor() {
+          throw new Error("observer construction failed");
+        }
+      },
+    );
+    vi.stubGlobal("ResizeObserver", MockResizeObserver);
+
+    expect(() =>
+      render(
+        <main className="project-page">
+          <h2 id="overview">Overview</h2>
+          <ProjectToc sections={[{ title: "Overview", id: "overview" }]} />
+        </main>,
+      ),
+    ).not.toThrow();
+
+    expect(
+      screen.getByRole("navigation", { name: "Case study chapters" }),
+    ).not.toHaveAttribute("data-toc-ready");
+    expect(screen.getByRole("link", { name: "Overview" })).toHaveAttribute(
+      "href",
+      "#overview",
+    );
+  });
+
+  it("does not collapse the chapter links when resize observation is unavailable", () => {
+    vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
+
+    render(
+      <main className="project-page">
+        <h2 id="overview">Overview</h2>
+        <ProjectToc sections={[{ title: "Overview", id: "overview" }]} />
+      </main>,
+    );
+
+    expect(
+      screen.getByRole("navigation", { name: "Case study chapters" }),
+    ).not.toHaveAttribute("data-toc-ready");
+    expect(screen.getByRole("link", { name: "Overview" })).toBeInTheDocument();
+  });
+
+  it("reads reduced-motion preference even when resize enhancement is unavailable", async () => {
+    vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn(() => ({ matches: true })),
+    );
+
+    render(
+      <main className="project-page">
+        <h2 id="overview">Overview</h2>
+        <ProjectToc sections={[{ title: "Overview", id: "overview" }]} />
+      </main>,
+    );
+
+    fireEvent.click(screen.getByRole("link", { name: "Overview" }));
+
+    await vi.waitFor(() => {
+      expect(HTMLElement.prototype.scrollIntoView).toHaveBeenCalledWith(
+        expect.objectContaining({ behavior: "auto" }),
+      );
+    });
+  });
+
   it("renders and announces chapter-aware labels", () => {
     vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
     vi.stubGlobal("ResizeObserver", MockResizeObserver);
@@ -132,7 +218,7 @@ describe("ProjectToc", () => {
       screen.getByRole("navigation", { name: "Case study chapters" }),
     ).toBeInTheDocument();
 
-    const research = screen.getByRole("button", {
+    const research = screen.getByRole("link", {
       name: "Research: What drivers changed",
     });
     expect(research).toBeInTheDocument();
@@ -182,7 +268,7 @@ describe("ProjectToc", () => {
     );
 
     expect(
-      screen.getAllByRole("button", { name: "Overview" }),
+      screen.getAllByRole("link", { name: "Overview" }),
     ).toHaveLength(1);
   });
 
@@ -201,8 +287,8 @@ describe("ProjectToc", () => {
       </main>,
     );
 
-    const chapterButtons = chapters.map((chapter) =>
-      screen.getByRole("button", {
+    const chapterLinks = chapters.map((chapter) =>
+      screen.getByRole("link", {
         name: `${chapter.stage}: ${chapter.title}`,
       }),
     );
@@ -211,27 +297,27 @@ describe("ProjectToc", () => {
     );
 
     expect(toggle).not.toBeNull();
-    expect(chapterButtons).toHaveLength(6);
+    expect(chapterLinks).toHaveLength(6);
 
-    chapterButtons[0].focus();
-    fireEvent.keyDown(chapterButtons[0], { key: "ArrowDown" });
-    expect(chapterButtons[1]).toHaveFocus();
-    fireEvent.keyDown(chapterButtons[1], { key: "ArrowRight" });
-    expect(chapterButtons[2]).toHaveFocus();
-    fireEvent.keyDown(chapterButtons[2], { key: "ArrowUp" });
-    expect(chapterButtons[1]).toHaveFocus();
-    fireEvent.keyDown(chapterButtons[1], { key: "ArrowLeft" });
-    expect(chapterButtons[0]).toHaveFocus();
+    chapterLinks[0].focus();
+    fireEvent.keyDown(chapterLinks[0], { key: "ArrowDown" });
+    expect(chapterLinks[1]).toHaveFocus();
+    fireEvent.keyDown(chapterLinks[1], { key: "ArrowRight" });
+    expect(chapterLinks[2]).toHaveFocus();
+    fireEvent.keyDown(chapterLinks[2], { key: "ArrowUp" });
+    expect(chapterLinks[1]).toHaveFocus();
+    fireEvent.keyDown(chapterLinks[1], { key: "ArrowLeft" });
+    expect(chapterLinks[0]).toHaveFocus();
 
-    fireEvent.keyDown(chapterButtons[0], { key: "End" });
-    expect(chapterButtons[5]).toHaveFocus();
-    fireEvent.keyDown(chapterButtons[5], { key: "Home" });
-    expect(chapterButtons[0]).toHaveFocus();
+    fireEvent.keyDown(chapterLinks[0], { key: "End" });
+    expect(chapterLinks[5]).toHaveFocus();
+    fireEvent.keyDown(chapterLinks[5], { key: "Home" });
+    expect(chapterLinks[0]).toHaveFocus();
 
     fireEvent.click(toggle!);
     expect(toggle).toHaveAttribute("aria-expanded", "true");
-    chapterButtons[3].focus();
-    fireEvent.keyDown(chapterButtons[3], { key: "Escape" });
+    chapterLinks[3].focus();
+    fireEvent.keyDown(chapterLinks[3], { key: "Escape" });
 
     await vi.waitFor(() => {
       expect(toggle).toHaveAttribute("aria-expanded", "false");
@@ -320,12 +406,11 @@ describe("ProjectToc", () => {
       </main>,
     );
 
-    const buttons = screen.getAllByRole("button", { name: /Problem/ });
-    const toggle = buttons[0];
+    const toggle = screen.getByRole("button", { name: /Problem/ });
     fireEvent.click(toggle);
-    const sectionButton = buttons[1];
-    sectionButton.focus();
-    fireEvent.click(sectionButton);
+    const sectionLink = screen.getByRole("link", { name: "Problem" });
+    sectionLink.focus();
+    fireEvent.click(sectionLink);
 
     await vi.waitFor(() => expect(toggle).toHaveFocus());
   });

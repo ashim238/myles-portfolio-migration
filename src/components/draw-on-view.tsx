@@ -40,13 +40,12 @@ export function DrawOnView({
     );
     if (!svg || strokes.length === 0) return;
 
-    // Park each stroke at "undrawn" up front so there's no draw-then-reset flash.
-    const lengths = strokes.map((el) => {
-      const len = el.getTotalLength();
-      el.style.strokeDasharray = `${len}`;
-      el.style.strokeDashoffset = `${len}`;
-      return len;
-    });
+    let lengths: number[];
+    try {
+      lengths = strokes.map((el) => el.getTotalLength());
+    } catch {
+      return;
+    }
 
     const park = (i: number) => {
       const el = strokes[i];
@@ -98,14 +97,16 @@ export function DrawOnView({
       });
     };
 
-    strokes.forEach((_, i) => park(i));
     try {
       io.observe(svg);
     } catch {
       io.disconnect();
-      restore();
       return;
     }
+    strokes.forEach((el, i) => {
+      el.style.strokeDasharray = `${lengths[i]}`;
+      park(i);
+    });
 
     return () => {
       io.disconnect();

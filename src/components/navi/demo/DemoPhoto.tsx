@@ -14,6 +14,7 @@ export function DemoPhoto({
   dataTestId,
   sizes,
   preload = false,
+  loading = "lazy",
 }: {
   src: string;
   alt: string;
@@ -21,6 +22,7 @@ export function DemoPhoto({
   dataTestId?: string;
   sizes: string;
   preload?: boolean;
+  loading?: "eager" | "lazy";
 }) {
   const [failed, setFailed] = useState(false);
   const ref = useRef<HTMLImageElement>(null);
@@ -60,7 +62,7 @@ export function DemoPhoto({
       className={className}
       data-testid={dataTestId}
       preload={preload}
-      loading={preload ? undefined : "lazy"}
+      loading={preload ? "eager" : loading}
       decoding="async"
       onError={() => setFailed(true)}
     />

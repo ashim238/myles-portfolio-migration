@@ -60,7 +60,7 @@ describe("ProjectToc responsive layout", () => {
   });
 
   it("ellipsizes only the mobile title while keeping the stage readable", () => {
-    const mobile = cssBlocks("@media (max-width: 768px)").find((block) =>
+    const mobile = cssBlocks("@media (max-width: 767px)").find((block) =>
       block.includes(".project-toc-active-title"),
     );
     expect(mobile).toBeDefined();
@@ -80,6 +80,24 @@ describe("ProjectToc responsive layout", () => {
     expect(stage).toMatch(/flex:\s*0 0 auto;/);
     expect(title).toMatch(/min-width:\s*0;/);
     expect(title).toMatch(/text-overflow:\s*ellipsis;/);
+  });
+
+  it("keeps the mobile fallback in document flow until enhancement succeeds", () => {
+    const mobile = cssBlocks("@media (max-width: 767px)").find((block) =>
+      block.includes(".project-toc-toggle"),
+    );
+    expect(mobile).toBeDefined();
+
+    const fallback = cssBlock(".project-toc", mobile!);
+    const enhanced = cssBlock(
+      '.project-toc[data-toc-ready="true"]',
+      mobile!,
+    );
+
+    expect(fallback).toMatch(/position:\s*static;/);
+    expect(fallback).toMatch(/top:\s*auto;/);
+    expect(enhanced).toMatch(/position:\s*sticky;/);
+    expect(enhanced).toMatch(/top:\s*0;/);
   });
 
   it("starts the vertical spine at 1440px and keeps its active label visible", () => {
@@ -104,7 +122,7 @@ describe("ProjectToc responsive layout", () => {
   });
 
   it("raises the return control above mobile navigation and the safe area", () => {
-    const mobile = cssBlocks("@media (max-width: 768px)").find((block) =>
+    const mobile = cssBlocks("@media (max-width: 767px)").find((block) =>
       block.includes(".reading-top"),
     );
     expect(mobile).toBeDefined();

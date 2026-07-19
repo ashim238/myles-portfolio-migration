@@ -42,14 +42,14 @@ describe("TikTokTemplateSystem", () => {
       expect(image).toHaveAttribute("srcset");
       expect(image.getAttribute("src")).toContain(".webp");
     });
-    expect(chooserImages[0]).toHaveAttribute("loading", "eager");
-    expect(chooserImages[1]).toHaveAttribute("loading", "lazy");
-    expect(chooserImages[2]).toHaveAttribute("loading", "lazy");
+    chooserImages.forEach((image) => {
+      expect(image).toHaveAttribute("loading", "lazy");
+    });
     expect(selectedImage).toHaveAttribute(
       "sizes",
       "(max-width: 720px) 17rem, 20rem",
     );
-    expect(selectedImage).toHaveAttribute("loading", "eager");
+    expect(selectedImage).toHaveAttribute("loading", "lazy");
     expect(selectedImage).toHaveAttribute("srcset");
     expect(selectedImage.getAttribute("src")).toContain(".webp");
   });

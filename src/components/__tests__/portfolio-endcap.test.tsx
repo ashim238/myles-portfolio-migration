@@ -90,6 +90,11 @@ describe("PortfolioEndcap", () => {
     );
   });
 
+  it("stays out of printed resumes", () => {
+    const print = cssAtRuleContaining("@media print", ".portfolio-endcap");
+    expect(print).toMatch(/\.portfolio-endcap[\s\S]*?display:\s*none !important;/);
+  });
+
   it("continues both Play and Résumé into the rest of the portfolio", () => {
     expect(playPage).toContain('import { PortfolioEndcap } from "@/components/portfolio-endcap";');
     expect(playPage).toContain('<PortfolioEndcap context="play" />');

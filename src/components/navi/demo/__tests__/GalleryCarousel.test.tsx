@@ -18,18 +18,22 @@ describe("GalleryCarousel", () => {
       "sizes",
       "(max-width: 720px) 100vw, min(70vw, 960px)",
     );
-    expect(hero).not.toHaveAttribute("loading", "lazy");
+    expect(hero).toHaveAttribute("loading", "eager");
   });
 
-  it("renders a thumb per non-hero photo", () => {
+  it("keeps only the active thumbnail eager when it duplicates the hero source", () => {
     render(<GalleryCarousel photos={photos} />);
-    expect(screen.getAllByTestId("gallery-thumb")).toHaveLength(3);
-    for (const thumb of screen.getAllByTestId("gallery-thumb")) {
+    const thumbs = screen.getAllByTestId("gallery-thumb");
+    expect(thumbs).toHaveLength(3);
+    for (const thumb of thumbs) {
       expect(thumb.querySelector("img")).toHaveAttribute(
         "sizes",
         "(max-width: 720px) 22vw, 220px",
       );
     }
+    expect(thumbs[0].querySelector("img")).toHaveAttribute("loading", "eager");
+    expect(thumbs[1].querySelector("img")).toHaveAttribute("loading", "lazy");
+    expect(thumbs[2].querySelector("img")).toHaveAttribute("loading", "lazy");
   });
 
   it("advances the hero when the next arrow is clicked", async () => {
@@ -48,6 +52,9 @@ describe("GalleryCarousel", () => {
     render(<GalleryCarousel photos={photos} />);
     await userEvent.click(screen.getAllByTestId("gallery-thumb")[2]);
     expect(screen.getByTestId("gallery-hero-img")).toHaveAttribute("alt", "C");
+    const thumbs = screen.getAllByTestId("gallery-thumb");
+    expect(thumbs[0].querySelector("img")).toHaveAttribute("loading", "lazy");
+    expect(thumbs[2].querySelector("img")).toHaveAttribute("loading", "eager");
   });
 
   it("jumps to a photo when its dot is clicked", async () => {

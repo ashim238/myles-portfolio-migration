@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { describe, it, expect } from "vitest";
 import { DemoPhoto } from "@/components/navi/demo/DemoPhoto";
 
@@ -61,7 +62,7 @@ describe("DemoPhoto", () => {
     expect(screen.getByRole("img", { name: "A harbor at dusk" })).toBeInTheDocument();
   });
 
-  it("preloads a designated hero instead of marking it lazy", () => {
+  it("preloads a designated hero and marks the rendered image eager", () => {
     render(
       <DemoPhoto
         src="/hero.jpg"
@@ -71,9 +72,24 @@ describe("DemoPhoto", () => {
       />,
     );
 
-    expect(screen.getByRole("img", { name: "A workshop in progress" })).not.toHaveAttribute(
+    expect(screen.getByRole("img", { name: "A workshop in progress" })).toHaveAttribute(
       "loading",
-      "lazy",
+      "eager",
     );
+  });
+
+  it("forwards the hero preload resource hint through Next Image", () => {
+    const markup = renderToStaticMarkup(
+      <DemoPhoto
+        src="/hero.jpg"
+        alt="A workshop in progress"
+        sizes="(max-width: 720px) 100vw, min(70vw, 960px)"
+        preload
+      />,
+    );
+
+    expect(markup).toContain('rel="preload"');
+    expect(markup).toContain("%2Fhero.jpg");
+    expect(markup).toContain('loading="eager"');
   });
 });

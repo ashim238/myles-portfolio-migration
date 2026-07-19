@@ -70,8 +70,9 @@ export function PulledOverJourney() {
     >
       <div
         className="fg-pulled-tabs"
-        role="tablist"
+        role={enhanced ? "tablist" : undefined}
         aria-label="Pulled-over sequence"
+        hidden={!enhanced}
         ref={tabsRef}
       >
         {STEPS.map((item, index) => {
@@ -79,11 +80,13 @@ export function PulledOverJourney() {
           return (
             <button
               type="button"
-              role="tab"
+              role={enhanced ? "tab" : undefined}
               id={`fg-pulled-tab-${item.key}`}
-              aria-controls={`fg-pulled-panel-${item.key}`}
-              aria-selected={selected}
-              tabIndex={selected ? 0 : -1}
+              aria-controls={
+                enhanced ? `fg-pulled-panel-${item.key}` : undefined
+              }
+              aria-selected={enhanced ? selected : undefined}
+              tabIndex={enhanced && selected ? 0 : -1}
               className="fg-pulled-tab"
               key={item.key}
               onClick={() => setActiveIndex(index)}
@@ -112,9 +115,16 @@ export function PulledOverJourney() {
         return (
           <div
             className="fg-pulled-panel"
-            role="tabpanel"
+            role={enhanced ? "tabpanel" : "group"}
             id={`fg-pulled-panel-${step.key}`}
-            aria-labelledby={`fg-pulled-tab-${step.key}`}
+            aria-labelledby={
+              enhanced ? `fg-pulled-tab-${step.key}` : undefined
+            }
+            aria-label={
+              enhanced
+                ? undefined
+                : `${String(index + 1).padStart(2, "0")}. ${step.label}`
+            }
             hidden={enhanced && !selected}
             key={step.key}
           >

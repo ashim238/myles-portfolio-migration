@@ -51,4 +51,39 @@ describe("Navi responsive contract", () => {
     expect(portfolioCss).toContain(".nv-page .nv-specimen-label");
     expect(portfolioCss).not.toMatch(/\n\.nv-specimen-label\s*\{/);
   });
+
+  it("contains every playground layer without taking horizontal scrolling away from code", () => {
+    for (const selector of [
+      ".nv-playground",
+      ".nv-playground-stage",
+      ".nv-playground-controls",
+      ".nv-playground-control",
+      ".nv-playground-code",
+    ]) {
+      expect(minisiteCss).toMatch(
+        new RegExp(
+          `${selector.replace(".", "\\.")}\\s*\\{[^}]*box-sizing:\\s*border-box[^}]*min-width:\\s*0[^}]*max-width:\\s*100%`,
+        ),
+      );
+    }
+
+    expect(minisiteCss).toMatch(
+      /\.nv-playground-control\s*\{[^}]*min-inline-size:\s*0/,
+    );
+    expect(minisiteCss).toMatch(
+      /\.nv-playground-code\s*\{[^}]*overflow-x:\s*auto/,
+    );
+  });
+
+  it("reflows playground controls and gutters for phone-width canvases", () => {
+    expect(minisiteCss).toMatch(
+      /@media \(max-width: 640px\)[\s\S]*?\.nv-system\s*\{[^}]*padding-inline:\s*var\(--nv-sp-md\)[\s\S]*?\.nv-hero-stage\s*\{[^}]*padding:\s*var\(--nv-sp-md\)[\s\S]*?\.nv-playground\s*\{[^}]*padding:\s*var\(--nv-sp-md\)/,
+    );
+    expect(minisiteCss).toMatch(
+      /@media \(max-width: 640px\)[\s\S]*?\.nv-playground-controls\s*\{[^}]*display:\s*grid[^}]*grid-template-columns:\s*minmax\(0, 1fr\)/,
+    );
+    expect(minisiteCss).toMatch(
+      /@media \(max-width: 360px\)[\s\S]*?\.nv-playground-opt\s*\{[^}]*flex:/,
+    );
+  });
 });

@@ -749,6 +749,13 @@ button:focus-visible,
   visibility: hidden;
 }
 
+.hero-statement-decoder-sizer::after {
+  content: "|";
+  display: inline-block;
+  inline-size: 0.5ch;
+  margin-left: 1px;
+}
+
 .hero-statement-decoder-visible {
   grid-area: 1 / 1;
   min-width: 0;
@@ -773,6 +780,8 @@ button:focus-visible,
 }
 
 .hero-statement-decoder-cursor {
+  display: inline-block;
+  inline-size: 0.5ch;
   margin-left: 1px;
   color: var(--muted);
   animation: hero-cursor-blink 760ms step-end infinite;
@@ -1895,6 +1904,7 @@ button:focus-visible,
   .resume-actions,
   .resume-note,
   .mobile-nav,
+  .portfolio-endcap,
   .skip-link,
   .dot-cursor {
     display: none !important;
@@ -3024,6 +3034,7 @@ button:focus-visible,
   letter-spacing: var(--track-body);
   white-space: nowrap;
   cursor: pointer;
+  text-decoration: none;
   transition: color 200ms ease, background-color 200ms ease;
 }
 
@@ -3186,7 +3197,14 @@ button:focus-visible,
 /* ── Mobile ToC ── */
 @media (max-width: 767px) {
   .project-toc {
+    position: static;
+    top: auto;
     padding: 0;
+  }
+
+  .project-toc[data-toc-ready="true"] {
+    position: sticky;
+    top: 0;
   }
 
   .project-toc-toggle {
@@ -3729,8 +3747,9 @@ button:focus-visible,
     z-index: 100;
     justify-content: space-around;
     align-items: center;
-    height: 3.6rem;
-    padding-bottom: env(safe-area-inset-bottom, 0);
+    box-sizing: border-box;
+    height: calc(3.6rem + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
     background: color-mix(in srgb, var(--background) 96%, transparent);
     backdrop-filter: blur(16px) saturate(1.6);
     -webkit-backdrop-filter: blur(16px) saturate(1.6);

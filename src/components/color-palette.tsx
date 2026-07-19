@@ -47,7 +47,15 @@ export function ColorPalette({ colors }: ColorPaletteProps) {
           <span className="color-swatch-label">{hex}</span>
         </button>
       ))}
-      <p className="color-palette-status sr-only" role="status" aria-live="polite">
+      <p
+        className={`color-palette-status${
+          copyState.status === "error"
+            ? " color-palette-status--visible"
+            : " sr-only"
+        }`}
+        role="status"
+        aria-live="polite"
+      >
         {statusMessage}
       </p>
     </div>

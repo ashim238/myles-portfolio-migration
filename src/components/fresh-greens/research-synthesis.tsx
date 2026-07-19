@@ -45,8 +45,9 @@ export function ResearchSynthesis() {
     >
       <div
         className="fg-synth-tabs"
-        role="tablist"
+        role={enhanced ? "tablist" : undefined}
         aria-label="Interview signals"
+        hidden={!enhanced}
         ref={tabsRef}
       >
         {markers.map((marker, index) => {
@@ -54,11 +55,13 @@ export function ResearchSynthesis() {
           return (
             <button
               type="button"
-              role="tab"
+              role={enhanced ? "tab" : undefined}
               id={`fg-synth-tab-${marker.key}`}
-              aria-controls={`fg-synth-panel-${marker.key}`}
-              aria-selected={selected}
-              tabIndex={selected ? 0 : -1}
+              aria-controls={
+                enhanced ? `fg-synth-panel-${marker.key}` : undefined
+              }
+              aria-selected={enhanced ? selected : undefined}
+              tabIndex={enhanced && selected ? 0 : -1}
               className="fg-synth-tab"
               key={marker.key}
               onClick={() => setActiveKey(marker.key)}
@@ -97,9 +100,16 @@ export function ResearchSynthesis() {
         return (
           <div
             className="fg-synth-panel"
-            role="tabpanel"
+            role={enhanced ? "tabpanel" : "group"}
             id={`fg-synth-panel-${marker.key}`}
-            aria-labelledby={`fg-synth-tab-${marker.key}`}
+            aria-labelledby={
+              enhanced ? `fg-synth-tab-${marker.key}` : undefined
+            }
+            aria-label={
+              enhanced
+                ? undefined
+                : `${marker.label}, raised by ${marker.raisedBy} of 6 interviews`
+            }
             hidden={enhanced && !selected}
             key={marker.key}
           >

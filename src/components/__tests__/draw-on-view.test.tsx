@@ -48,11 +48,9 @@ describe("DrawOnView", () => {
     }).not.toThrow();
 
     const path = result!.container.querySelector("path");
-    expect(path).toHaveStyle({
-      strokeDasharray: "",
-      strokeDashoffset: "",
-      transition: "",
-    });
+    expect(path?.style.strokeDasharray).toBe("");
+    expect(path?.style.strokeDashoffset).toBe("");
+    expect(path?.style.transition).toBe("");
   });
 
   it("does not park strokes when the observer cannot be constructed", () => {
@@ -71,11 +69,9 @@ describe("DrawOnView", () => {
     }).not.toThrow();
 
     const path = result!.container.querySelector("path");
-    expect(path).toHaveStyle({
-      strokeDasharray: "",
-      strokeDashoffset: "",
-      transition: "",
-    });
+    expect(path?.style.strokeDasharray).toBe("");
+    expect(path?.style.strokeDashoffset).toBe("");
+    expect(path?.style.transition).toBe("");
   });
 
   it("restores strokes when observer attachment fails", () => {
@@ -96,12 +92,32 @@ describe("DrawOnView", () => {
     }).not.toThrow();
 
     const path = result!.container.querySelector("path");
-    expect(path).toHaveStyle({
-      strokeDasharray: "",
-      strokeDashoffset: "",
-      transition: "",
-    });
+    expect(path?.style.strokeDasharray).toBe("");
+    expect(path?.style.strokeDashoffset).toBe("");
+    expect(path?.style.transition).toBe("");
     expect(disconnect).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not park strokes until observer attachment succeeds", () => {
+    vi.stubGlobal(
+      "IntersectionObserver",
+      class InspectingIntersectionObserver {
+        observe(element: Element) {
+          const path = element.querySelector("path");
+          expect(path?.style.strokeDasharray).toBe("");
+          expect(path?.style.strokeDashoffset).toBe("");
+          expect(path?.style.transition).toBe("");
+        }
+        disconnect = vi.fn();
+      },
+    );
+
+    const { container } = render(<Drawing />);
+    const path = container.querySelector("path");
+
+    expect(path?.style.strokeDasharray).toBe("100");
+    expect(path?.style.strokeDashoffset).toBe("100");
+    expect(path?.style.transition).toBe("none");
   });
 
   it("leaves strokes fully drawn for reduced motion", () => {
@@ -118,10 +134,9 @@ describe("DrawOnView", () => {
 
     const { container } = render(<Drawing />);
 
-    expect(container.querySelector("path")).toHaveStyle({
-      strokeDasharray: "",
-      strokeDashoffset: "",
-      transition: "",
-    });
+    const path = container.querySelector("path");
+    expect(path?.style.strokeDasharray).toBe("");
+    expect(path?.style.strokeDashoffset).toBe("");
+    expect(path?.style.transition).toBe("");
   });
 });

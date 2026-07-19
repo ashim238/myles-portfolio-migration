@@ -5284,6 +5284,19 @@
   user-select: text;
 }
 
+.color-palette-status--visible {
+  grid-column: 1 / -1;
+  margin: -0.35rem 0 0;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 0.55rem;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.4;
+  text-align: center;
+}
+
 @media (pointer: coarse), (any-pointer: coarse) {
   .color-swatch,
   .fg-synth-tab,

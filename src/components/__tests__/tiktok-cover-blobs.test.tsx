@@ -157,6 +157,113 @@ describe("TikTokCoverBlobs preview geometry", () => {
     expect(field).not.toHaveClass("tt-cover-field--active");
   });
 
+  it("keeps the recognizable poster when even one required layer fails", async () => {
+    vi.stubGlobal("IntersectionObserver", undefined);
+
+    const { container } = render(<TikTokCoverBlobs />);
+    await waitFor(() => {
+      expect(
+        container.querySelectorAll<HTMLImageElement>(".tt-cblob"),
+      ).toHaveLength(16);
+    });
+
+    const layers = Array.from(
+      container.querySelectorAll<HTMLImageElement>(".tt-cblob"),
+    );
+    for (const layer of layers.slice(0, -1)) fireEvent.load(layer);
+    fireEvent.error(layers.at(-1)!);
+
+    expect(container.querySelector(".tt-cover-poster")).not.toHaveClass(
+      "tt-cover-poster--hidden",
+    );
+  });
+
+  it("keeps the recognizable poster when every required layer fails", async () => {
+    vi.stubGlobal("IntersectionObserver", undefined);
+
+    const { container } = render(<TikTokCoverBlobs />);
+    await waitFor(() => {
+      expect(
+        container.querySelectorAll<HTMLImageElement>(".tt-cblob"),
+      ).toHaveLength(16);
+    });
+
+    for (const layer of container.querySelectorAll<HTMLImageElement>(
+      ".tt-cblob",
+    )) {
+      fireEvent.error(layer);
+    }
+
+    expect(container.querySelector(".tt-cover-poster")).not.toHaveClass(
+      "tt-cover-poster--hidden",
+    );
+  });
+
+  it("hands off from the poster only after every required layer loads successfully", async () => {
+    vi.stubGlobal("IntersectionObserver", undefined);
+
+    const { container } = render(<TikTokCoverBlobs />);
+    await waitFor(() => {
+      expect(
+        container.querySelectorAll<HTMLImageElement>(".tt-cblob"),
+      ).toHaveLength(16);
+    });
+
+    const layers = Array.from(
+      container.querySelectorAll<HTMLImageElement>(".tt-cblob"),
+    );
+    for (const layer of layers.slice(0, -1)) fireEvent.load(layer);
+    expect(container.querySelector(".tt-cover-poster")).not.toHaveClass(
+      "tt-cover-poster--hidden",
+    );
+
+    fireEvent.load(layers.at(-1)!);
+    expect(container.querySelector(".tt-cover-poster")).toHaveClass(
+      "tt-cover-poster--hidden",
+    );
+  });
+
+  it("falls back to a loaded paused composition when observer construction fails", async () => {
+    vi.stubGlobal(
+      "IntersectionObserver",
+      class ThrowingIntersectionObserver {
+        constructor() {
+          throw new Error("observer construction failed");
+        }
+      } as unknown as typeof IntersectionObserver,
+    );
+
+    const { container } = render(<TikTokCoverBlobs />);
+
+    await waitFor(() => {
+      expect(container.querySelectorAll(".tt-cblob")).toHaveLength(16);
+    });
+    expect(container.querySelector(".tt-cover-field")).not.toHaveClass(
+      "tt-cover-field--active",
+    );
+  });
+
+  it("falls back to a loaded paused composition when observer registration fails", async () => {
+    vi.stubGlobal(
+      "IntersectionObserver",
+      class ThrowingObserveIntersectionObserver {
+        observe() {
+          throw new Error("observer registration failed");
+        }
+        disconnect() {}
+      } as unknown as typeof IntersectionObserver,
+    );
+
+    const { container } = render(<TikTokCoverBlobs />);
+
+    await waitFor(() => {
+      expect(container.querySelectorAll(".tt-cblob")).toHaveLength(16);
+    });
+    expect(container.querySelector(".tt-cover-field")).not.toHaveClass(
+      "tt-cover-field--active",
+    );
+  });
+
   it("keeps every below-fold template image lazy", () => {
     const { container } = render(<TikTokTemplateSystem />);
 

@@ -49,6 +49,7 @@ export function GalleryCarousel({ photos }: { photos: Photo[] }) {
           dataTestId="gallery-hero-img"
           sizes="(max-width: 720px) 100vw, min(70vw, 960px)"
           preload
+          loading="eager"
         />
         {count > 1 && (
           <>
@@ -91,6 +92,7 @@ export function GalleryCarousel({ photos }: { photos: Photo[] }) {
                   src={p.src}
                   alt={p.alt}
                   sizes="(max-width: 720px) 22vw, 220px"
+                  loading={i === index ? "eager" : "lazy"}
                 />
               </button>
             </li>

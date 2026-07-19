@@ -57,6 +57,10 @@ describe("ColorPalette", () => {
       "data-copy-state",
       "error",
     );
+    expect(screen.getByRole("status")).toHaveClass(
+      "color-palette-status--visible",
+    );
+    expect(screen.getByRole("status")).not.toHaveClass("sr-only");
     expect(screen.getByText("#abcdef")).toHaveClass("color-swatch-label");
   });
 

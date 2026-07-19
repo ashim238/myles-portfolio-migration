@@ -248,7 +248,7 @@ export function TikTokCoverBlobs(
   // Existing cards pass the legacy option. Every instance now defers.
   void _options;
   const fieldRef = useRef<HTMLDivElement>(null);
-  const settledLayerCount = useRef(0);
+  const successfullyLoadedLayers = useRef(new Set<string>());
   const [hasLoaded, setHasLoaded] = useState(false);
   const [hasPaintedComposition, setHasPaintedComposition] = useState(false);
   const [isInViewport, setIsInViewport] = useState(false);
@@ -265,22 +265,48 @@ export function TikTokCoverBlobs(
 
     if (typeof window.IntersectionObserver !== "function") return;
 
-    const preloadObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setHasLoaded(true);
-      },
-      { rootMargin: "600px 0px" },
-    );
-    const activeObserver = new IntersectionObserver(
-      ([entry]) => setIsInViewport(entry.isIntersecting),
-      { rootMargin: "0px" },
-    );
+    let preloadObserver: IntersectionObserver | undefined;
+    let activeObserver: IntersectionObserver | undefined;
+    let fallbackTimer: number | undefined;
 
-    preloadObserver.observe(field);
-    activeObserver.observe(field);
+    const disconnectObservers = () => {
+      try {
+        preloadObserver?.disconnect();
+      } catch {
+        // A broken observer must not block the static composition fallback.
+      }
+      try {
+        activeObserver?.disconnect();
+      } catch {
+        // A broken observer must not block the static composition fallback.
+      }
+    };
+
+    try {
+      preloadObserver = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setHasLoaded(true);
+        },
+        { rootMargin: "600px 0px" },
+      );
+      activeObserver = new IntersectionObserver(
+        ([entry]) => setIsInViewport(entry.isIntersecting),
+        { rootMargin: "0px" },
+      );
+
+      preloadObserver.observe(field);
+      activeObserver.observe(field);
+    } catch {
+      disconnectObservers();
+      fallbackTimer = window.setTimeout(() => {
+        setHasLoaded(true);
+        setIsInViewport(false);
+      }, 0);
+    }
+
     return () => {
-      preloadObserver.disconnect();
-      activeObserver.disconnect();
+      disconnectObservers();
+      if (fallbackTimer !== undefined) window.clearTimeout(fallbackTimer);
     };
   }, []);
 
@@ -294,10 +320,16 @@ export function TikTokCoverBlobs(
       document.removeEventListener("visibilitychange", updateVisibility);
   }, []);
 
-  const markLayerSettled = () => {
-    settledLayerCount.current += 1;
-    if (settledLayerCount.current >= COVER_BLOBS.length) {
+  const markLayerLoaded = (layer: string) => {
+    successfullyLoadedLayers.current.add(layer);
+    if (successfullyLoadedLayers.current.size === COVER_BLOBS.length) {
       setHasPaintedComposition(true);
+    }
+  };
+
+  const markLayerFailed = (layer: string) => {
+    if (successfullyLoadedLayers.current.delete(layer)) {
+      setHasPaintedComposition(false);
     }
   };
 
@@ -328,8 +360,8 @@ export function TikTokCoverBlobs(
             loading="lazy"
             decoding="async"
             fetchPriority="low"
-            onLoad={markLayerSettled}
-            onError={markLayerSettled}
+            onLoad={() => markLayerLoaded(b.f)}
+            onError={() => markLayerFailed(b.f)}
             className={`tt-cblob tt-cblob--a${b.a}`}
             style={
               {

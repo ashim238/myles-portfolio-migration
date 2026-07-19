@@ -75,6 +75,24 @@ describe("portfolio hardening style contract", () => {
     expect(item).toMatch(/min-width:\s*0;/);
   });
 
+  it("adds the safe area to mobile navigation without shrinking its controls", () => {
+    const mobile = cssBlockContaining(
+      "@media (max-width: 767px)",
+      ".mobile-nav-item",
+    );
+    const nav = cssBlock(".mobile-nav", mobile);
+    const item = cssBlock(".mobile-nav-item", mobile);
+
+    expect(nav).toMatch(
+      /height:\s*calc\(3\.6rem \+ env\(safe-area-inset-bottom, 0px\)\);/,
+    );
+    expect(nav).toMatch(
+      /padding-bottom:\s*env\(safe-area-inset-bottom, 0px\);/,
+    );
+    expect(nav).toMatch(/box-sizing:\s*border-box;/);
+    expect(item).toMatch(/min-height:\s*2\.75rem;/);
+  });
+
   it("clears the fixed mobile navigation and device safe area", () => {
     const mobile = cssBlockContaining(
       "@media (max-width: 767px)",

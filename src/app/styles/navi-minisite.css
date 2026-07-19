@@ -579,13 +579,63 @@
 .nv-specimen-stage .nv-feed-categories { margin-inline: 0; padding-inline: 0; scroll-padding-inline: 0; }
 
 /* ── Task 19: PropPlayground ───────────────────────────────────── */
-.nv-playground { display: grid; gap: var(--nv-sp-md); border: 1px solid var(--nv-border); border-radius: var(--nv-r-lg); padding: var(--nv-sp-lg); }
-.nv-playground-stage { display: flex; justify-content: center; padding: var(--nv-sp-lg); background: var(--nv-surface-muted); border-radius: var(--nv-r-md); }
-.nv-playground-controls { display: flex; flex-wrap: wrap; gap: var(--nv-sp-lg); }
-.nv-playground-control { border: none; padding: 0; display: flex; gap: var(--nv-sp-sm); align-items: center; }
+.nv-playground {
+  display: grid;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+  gap: var(--nv-sp-md);
+  border: 1px solid var(--nv-border);
+  border-radius: var(--nv-r-lg);
+  padding: var(--nv-sp-lg);
+}
+.nv-playground-stage {
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+  padding: var(--nv-sp-lg);
+  background: var(--nv-surface-muted);
+  border-radius: var(--nv-r-md);
+}
+.nv-playground-controls {
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+  gap: var(--nv-sp-lg);
+}
+.nv-playground-control {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  box-sizing: border-box;
+  min-width: 0;
+  min-inline-size: 0;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  gap: var(--nv-sp-sm);
+}
 .nv-playground-control legend { font-weight: 700; margin-right: var(--nv-sp-xs); }
 .nv-playground-opt { display: inline-flex; gap: var(--nv-sp-2xs); align-items: center; }
-.nv-playground-code { background: var(--nv-robinson); color: var(--nv-text-on-action); padding: var(--nv-sp-sm); border-radius: var(--nv-r-sm); font-size: 0.82rem; overflow-x: auto; }
+.nv-playground-code {
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+  margin: 0;
+  padding: var(--nv-sp-sm);
+  overflow-x: auto;
+  background: var(--nv-robinson);
+  color: var(--nv-text-on-action);
+  border-radius: var(--nv-r-sm);
+  font-size: 0.82rem;
+}
 
 /* ── Task 20: System page ──────────────────────────────────────── */
 .nv-system { max-width: 60rem; margin: 0 auto; padding: var(--nv-sp-xl) var(--nv-sp-lg); }
@@ -606,6 +656,31 @@
 .nv-hero-title { font-size: 1.6rem; margin: 0 0 var(--nv-sp-2xs); }
 .nv-hero-lede { color: var(--nv-text-muted); margin: 0; max-width: 60ch; }
 .nv-hero-stage { background: var(--nv-surface-muted); border-radius: var(--nv-r-lg); padding: var(--nv-sp-xl); }
+
+@media (max-width: 640px) {
+  .nv-system { padding-inline: var(--nv-sp-md); }
+  .nv-hero-stage { padding: var(--nv-sp-md); }
+  .nv-playground { padding: var(--nv-sp-md); }
+  .nv-playground-controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--nv-sp-md);
+  }
+  .nv-playground-control { width: 100%; gap: var(--nv-sp-xs) var(--nv-sp-sm); }
+  .nv-playground-control legend {
+    flex: 1 0 100%;
+    margin-right: 0;
+    padding: 0;
+  }
+  .nv-playground-opt { min-height: 44px; }
+}
+
+@media (max-width: 360px) {
+  .nv-playground-opt {
+    flex: 1 1 calc(50% - var(--nv-sp-xs));
+    min-width: 0;
+  }
+}
 
 .nv-tabpanel { padding-top: var(--nv-sp-md); }
 

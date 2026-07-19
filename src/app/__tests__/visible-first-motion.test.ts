@@ -10,6 +10,10 @@ const surfaceStyles = readFileSync(
   resolve(process.cwd(), "src/app/styles/portfolio-surfaces.css"),
   "utf8",
 );
+const lateStyles = readFileSync(
+  resolve(process.cwd(), "src/app/styles/late-polish.css"),
+  "utf8",
+);
 const aboutPage = readFileSync(
   resolve(process.cwd(), "src/app/about/page.tsx"),
   "utf8",
@@ -95,6 +99,22 @@ describe("visible-first structural motion", () => {
     expect(surfaceStyles).toContain("@keyframes tt-outcome-arrive");
     expect(surfaceStyles).toContain("@keyframes nv-persona-rise");
     expect(surfaceStyles).not.toContain("@keyframes uf-template-sweep");
+  });
+
+  it("only animates Fresh Greens panels after progressive enhancement", () => {
+    const noPreference = cssBlocks(
+      "@media (prefers-reduced-motion: no-preference)",
+      lateStyles,
+    ).join("\n");
+
+    expect(noPreference).toContain(
+      '.fg-synth[data-enhanced="true"] .fg-synth-panel',
+    );
+    expect(noPreference).toContain(
+      '.fg-pulled-journey[data-enhanced="true"] .fg-pulled-panel',
+    );
+    expect(noPreference).not.toMatch(/(?:^|\n)\s*\.fg-synth-panel\s*\{/);
+    expect(noPreference).not.toMatch(/(?:^|\n)\s*\.fg-pulled-panel\s*\{/);
   });
 
   it("uses a labelled section for About details instead of complementary content", () => {

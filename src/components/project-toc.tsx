@@ -34,19 +34,35 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
   const [isSticky, setIsSticky] = useState(false);
   const tocRef = useRef<HTMLElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
-  const activeItemRef = useRef<HTMLButtonElement>(null);
+  const activeItemRef = useRef<HTMLAnchorElement>(null);
   const listRef = useRef<HTMLOListElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const backTopRef = useRef<HTMLButtonElement>(null);
   const reducedRef = useRef(false);
+  const enhancementPartsRef = useRef({
+    sections: false,
+    sticky: false,
+    resize: false,
+  });
 
-  useEffect(() => {
+  const updateEnhancement = useCallback(
+    (part: keyof typeof enhancementPartsRef.current, ready: boolean) => {
+      enhancementPartsRef.current[part] = ready;
+      const toc = tocRef.current;
+      if (!toc) return;
+
+      if (Object.values(enhancementPartsRef.current).every(Boolean)) {
+        toc.dataset.tocReady = "true";
+      } else {
+        delete toc.dataset.tocReady;
+      }
+    },
+    [],
+  );
+
+  useEffect(() => () => {
     const toc = tocRef.current;
-    if (!toc) return;
-    toc.dataset.tocReady = "true";
-    return () => {
-      delete toc.dataset.tocReady;
-    };
+    if (toc) delete toc.dataset.tocReady;
   }, []);
 
   // Track which section is in view (drives the active highlight only)
@@ -55,44 +71,78 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
       .map((s) => document.getElementById(s.id))
       .filter(Boolean) as HTMLElement[];
 
-    if (sectionEls.length === 0) return;
+    if (
+      sectionEls.length === 0 ||
+      typeof window.IntersectionObserver !== "function"
+    ) {
+      updateEnhancement("sections", false);
+      return;
+    }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // Find the entry that is most visible
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+    let observer: IntersectionObserver | undefined;
+    try {
+      observer = new IntersectionObserver(
+        (entries) => {
+          // Find the entry that is most visible
+          const visible = entries
+            .filter((e) => e.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
 
-        if (visible.length > 0 && visible[0].target.id) {
-          setActiveId(visible[0].target.id);
-        }
-      },
-      {
-        rootMargin: "-10% 0px -60% 0px",
-        threshold: [0, 0.25, 0.5],
-      }
-    );
+          if (visible.length > 0 && visible[0].target.id) {
+            setActiveId(visible[0].target.id);
+          }
+        },
+        {
+          rootMargin: "-10% 0px -60% 0px",
+          threshold: [0, 0.25, 0.5],
+        },
+      );
+      sectionEls.forEach((el) => observer?.observe(el));
+    } catch {
+      observer?.disconnect();
+      updateEnhancement("sections", false);
+      return;
+    }
 
-    sectionEls.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [sections]);
+    updateEnhancement("sections", true);
+    return () => {
+      observer?.disconnect();
+      updateEnhancement("sections", false);
+    };
+  }, [sections, updateEnhancement]);
 
   // Track sticky state via sentinel element
   useEffect(() => {
     const sentinel = sentinelRef.current;
-    if (!sentinel) return;
+    if (
+      !sentinel ||
+      typeof window.IntersectionObserver !== "function"
+    ) {
+      updateEnhancement("sticky", false);
+      return;
+    }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsSticky(!entry.isIntersecting);
-      },
-      { threshold: 0 }
-    );
+    let observer: IntersectionObserver | undefined;
+    try {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          setIsSticky(!entry.isIntersecting);
+        },
+        { threshold: 0 },
+      );
+      observer.observe(sentinel);
+    } catch {
+      observer?.disconnect();
+      updateEnhancement("sticky", false);
+      return;
+    }
 
-    observer.observe(sentinel);
-    return () => observer.disconnect();
-  }, []);
+    updateEnhancement("sticky", true);
+    return () => {
+      observer?.disconnect();
+      updateEnhancement("sticky", false);
+    };
+  }, [updateEnhancement]);
 
   // ── The reading instrument ──────────────────────────────────────────────
   // A scroll-driven loop fills each section's rail as you read through it,
@@ -102,13 +152,17 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
   // never trigger a React re-render. activeId stays React state because it
   // changes at most once per section.
   useEffect(() => {
+    reducedRef.current =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     const nav = tocRef.current;
     const list = listRef.current;
     if (!nav || !list) return;
-
-    reducedRef.current = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    if (typeof window.ResizeObserver !== "function") {
+      updateEnhancement("resize", false);
+      return;
+    }
 
     const article = nav.closest<HTMLElement>(".project-page") ?? document.body;
 
@@ -205,24 +259,32 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
       frame = requestAnimationFrame(render);
     };
 
+    // Remeasure when the article's height changes (images, fonts, expands).
+    let ro: ResizeObserver | undefined;
+    try {
+      ro = new ResizeObserver(() => {
+        measure();
+        render();
+      });
+      ro.observe(article);
+    } catch {
+      ro?.disconnect();
+      updateEnhancement("resize", false);
+      return;
+    }
+
     measure();
     render();
-
     window.addEventListener("scroll", onScroll, { passive: true });
-
-    // Remeasure when the article's height changes (images, fonts, expands).
-    const ro = new ResizeObserver(() => {
-      measure();
-      render();
-    });
-    ro.observe(article);
+    updateEnhancement("resize", true);
 
     return () => {
       window.removeEventListener("scroll", onScroll);
-      ro.disconnect();
+      ro?.disconnect();
       if (frame) cancelAnimationFrame(frame);
+      updateEnhancement("resize", false);
     };
-  }, [sections, readingEndId]);
+  }, [sections, readingEndId, updateEnhancement]);
 
   // Auto-scroll active item into view on desktop
   useEffect(() => {
@@ -237,18 +299,11 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
 
   const handleClick = useCallback(
     (id: string) => {
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({
-          behavior: reducedRef.current ? "auto" : "smooth",
-          block: "start",
-        });
-        setActiveId(id);
-        setIsOpen(false);
-        toggleRef.current?.focus();
-      }
+      setActiveId(id);
+      setIsOpen(false);
+      if (isOpen) toggleRef.current?.focus();
     },
-    []
+    [isOpen],
   );
 
   const scrollToTop = useCallback(() => {
@@ -259,9 +314,9 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
   }, []);
 
   // Roving keyboard navigation: arrows/Home/End move focus between links;
-  // Enter/Space still activate via the native button.
+  // Enter follows each link's native fragment behavior.
   const handleKeyDown = useCallback(
-    (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+    (event: React.KeyboardEvent<HTMLAnchorElement>, index: number) => {
       const last = sections.length - 1;
       let target: number;
       switch (event.key) {
@@ -289,7 +344,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
           return;
       }
       event.preventDefault();
-      const links = listRef.current?.querySelectorAll<HTMLButtonElement>(".project-toc-link");
+      const links = listRef.current?.querySelectorAll<HTMLAnchorElement>(".project-toc-link");
       links?.[target]?.focus();
     },
     [sections.length, isOpen]
@@ -372,8 +427,9 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
 
               return (
                 <li key={section.id} className="project-toc-item" style={{ "--toc-i": i } as React.CSSProperties}>
-                  <button
+                  <a
                     ref={isActive ? activeItemRef : undefined}
+                    href={`#${section.id}`}
                     className={`project-toc-link${isActive ? " project-toc-link--active" : ""}`}
                     onClick={() => handleClick(section.id)}
                     onKeyDown={(event) => handleKeyDown(event, i)}
@@ -394,7 +450,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
                       <span className="project-toc-title">{section.title}</span>
                     </span>
                     <span className="project-toc-rail" aria-hidden="true" />
-                  </button>
+                  </a>
                 </li>
               );
             })}

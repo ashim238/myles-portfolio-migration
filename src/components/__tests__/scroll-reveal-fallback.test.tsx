@@ -75,6 +75,127 @@ describe("ScrollRevealFallback", () => {
     expect(document.documentElement).not.toHaveAttribute("data-reveal-ready");
   });
 
+  it("observes reveal targets added after client navigation", async () => {
+    const observe = vi.fn();
+    vi.stubGlobal(
+      "IntersectionObserver",
+      class MockIntersectionObserver {
+        observe = observe;
+        unobserve = vi.fn();
+        disconnect = vi.fn();
+      },
+    );
+
+    const { container } = render(<ScrollRevealFallback />);
+
+    const lateTarget = document.createElement("div");
+    lateTarget.className = "play-entry";
+    lateTarget.textContent = "Added by client navigation";
+    container.append(lateTarget);
+
+    await vi.waitFor(() => {
+      expect(observe).toHaveBeenCalledWith(lateTarget);
+    });
+
+    lateTarget.remove();
+  });
+
+  it("unobserves removed reveal targets and matching descendants", async () => {
+    const observe = vi.fn();
+    const unobserve = vi.fn();
+    vi.stubGlobal(
+      "IntersectionObserver",
+      class MockIntersectionObserver {
+        observe = observe;
+        unobserve = unobserve;
+        disconnect = vi.fn();
+      },
+    );
+
+    const { container } = render(<ScrollRevealFallback />);
+    const removedTree = document.createElement("article");
+    removedTree.className = "play-entry";
+    const removedDescendant = document.createElement("div");
+    removedDescendant.className = "project-highlight";
+    removedTree.append(removedDescendant);
+    container.append(removedTree);
+
+    await vi.waitFor(() => {
+      expect(observe).toHaveBeenCalledWith(removedTree);
+      expect(observe).toHaveBeenCalledWith(removedDescendant);
+    });
+
+    unobserve.mockClear();
+    removedTree.remove();
+
+    await vi.waitFor(() => {
+      expect(unobserve).toHaveBeenCalledWith(removedTree);
+      expect(unobserve).toHaveBeenCalledWith(removedDescendant);
+    });
+    expect(document.documentElement).toHaveAttribute(
+      "data-reveal-ready",
+      "true",
+    );
+  });
+
+  it("removes global hiding when a late target cannot be observed", async () => {
+    const disconnect = vi.fn();
+    vi.stubGlobal(
+      "IntersectionObserver",
+      class LateFailureIntersectionObserver {
+        observe(element: Element) {
+          if (element.classList.contains("play-entry")) {
+            throw new Error("late observation failed");
+          }
+        }
+        unobserve = vi.fn();
+        disconnect = disconnect;
+      },
+    );
+
+    const { container } = render(<ScrollRevealFallback />);
+    expect(document.documentElement).toHaveAttribute(
+      "data-reveal-ready",
+      "true",
+    );
+
+    const lateTarget = document.createElement("div");
+    lateTarget.className = "play-entry";
+    container.append(lateTarget);
+
+    await vi.waitFor(() => {
+      expect(document.documentElement).not.toHaveAttribute(
+        "data-reveal-ready",
+      );
+    });
+    expect(disconnect).toHaveBeenCalled();
+
+    lateTarget.remove();
+  });
+
+  it("does not globally hide targets without mutation discovery", () => {
+    const observe = vi.fn();
+    vi.stubGlobal(
+      "IntersectionObserver",
+      class MockIntersectionObserver {
+        observe = observe;
+        unobserve = vi.fn();
+        disconnect = vi.fn();
+      },
+    );
+    vi.stubGlobal("MutationObserver", undefined);
+
+    render(
+      <>
+        <div className="play-entry">Visible without mutation discovery</div>
+        <ScrollRevealFallback />
+      </>,
+    );
+
+    expect(document.documentElement).not.toHaveAttribute("data-reveal-ready");
+    expect(observe).not.toHaveBeenCalled();
+  });
+
   it("keeps reveal targets visible when the observer cannot be constructed", () => {
     vi.stubGlobal(
       "IntersectionObserver",
