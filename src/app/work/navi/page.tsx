@@ -309,9 +309,6 @@ export default async function NaviPage() {
         variant="navi"
       >
       <div className="project-section nv-section nv-closing">
-        <p className="case-section-lead">
-          The current demo makes the interaction model clickable.
-        </p>
         <div className="project-section-body">
           <p>
             I can now inspect the component states and individual booking flow in a browser. I

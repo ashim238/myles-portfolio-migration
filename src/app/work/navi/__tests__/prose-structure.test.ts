@@ -80,6 +80,12 @@ describe("Navi case-study structure", () => {
 
   it("keeps future validation framed as planned work", () => {
     expect(prose).toContain("I rebuilt the concept as live React components");
+    expect(prose).not.toContain(
+      "The current demo makes the interaction model clickable.",
+    );
+    expect(prose).toContain(
+      "I can now inspect the component states and individual booking flow in a browser.",
+    );
     expect(prose).not.toContain("The portfolio rebuild makes the concept easier to inspect");
     expect(prose).not.toContain("The graduate-studio concept did not ship");
     expect(prose).toContain("Working now");

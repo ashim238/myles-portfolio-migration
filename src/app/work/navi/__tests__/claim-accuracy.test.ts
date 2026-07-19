@@ -109,6 +109,12 @@ describe("Navi evidence claims", () => {
     expect(content).toContain(
       "outcomeRest: Portfolio rebuild with a live component system and working booking flow.",
     );
+    expect(content).toContain(
+      "highlightQuote: Navi pairs neighborhood experiences with local context and trip planning.",
+    );
+    expect(content).not.toContain(
+      "Navi reframes tourism from destination checklists to intentional neighborhood participation.",
+    );
   });
 
   it("describes the graduate-studio concept and later portfolio rebuild in condensed copy", () => {

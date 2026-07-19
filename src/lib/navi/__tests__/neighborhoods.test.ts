@@ -38,6 +38,29 @@ describe("NEIGHBORHOODS record", () => {
       expect(n.intro).not.toMatch(/\bhosts?\b|people who host/i);
     }
   });
+
+  it("avoids a repeated place-name-led opening template", () => {
+    const openingAliases: Record<string, string[]> = {
+      "bedford-stuyvesant": ["bed-stuy"],
+    };
+
+    const locationLedOpenings = Object.values(NEIGHBORHOODS).filter((neighborhood) => {
+      const opening = neighborhood.intro.toLowerCase();
+      const names = [
+        neighborhood.name.toLowerCase(),
+        ...(openingAliases[neighborhood.slug] ?? []),
+      ];
+
+      return names.some((name) => {
+        const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        return new RegExp(
+          `^(?:(?:in|across|around|through|within|at|from|along|near)\\s+)?(?:the\\s+)?${escapedName}(?:[’']s)?\\b`,
+        ).test(opening);
+      });
+    });
+
+    expect(locationLedOpenings.length).toBeLessThanOrEqual(2);
+  });
 });
 
 describe("getNeighborhoodBySlug", () => {

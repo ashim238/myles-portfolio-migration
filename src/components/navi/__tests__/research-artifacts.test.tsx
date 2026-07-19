@@ -22,7 +22,12 @@ describe("NaviResearchArtifacts", () => {
     render(<NaviResearchArtifacts />);
 
     expect(
-      screen.getByRole("heading", { name: "From research to product scope" }),
+      screen.getByRole("heading", { name: "Research and product scope" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "Each row connects a finding to the product area it affected.",
+      ),
     ).toBeInTheDocument();
     expect(
       screen.getByText("Resident survey, platform audits, and secondary research"),

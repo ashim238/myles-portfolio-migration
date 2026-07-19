@@ -198,6 +198,26 @@ describe("TikTok short-form case study", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("states the Light Academia critique and shipped outcome once", async () => {
+    render(await TikTokPage());
+
+    expect(
+      screen.getAllByText(
+        /Light Academia (?:entered|shipped) (?:in )?the launch library\./i,
+      ),
+    ).toHaveLength(1);
+
+    const source = readFileSync(
+      resolve(process.cwd(), "src/app/work/tiktok/page.tsx"),
+      "utf8",
+    );
+
+    expect(source).toContain("The simplicity was working.");
+    expect(source).not.toContain(
+      "GCL asked me to make it feel more upbeat and deliberate.",
+    );
+  });
+
   it("retires the duplicate preview route and phone-based hero implementation", () => {
     const page = readFileSync(
       resolve(process.cwd(), "src/app/work/tiktok/page.tsx"),

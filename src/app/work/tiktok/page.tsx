@@ -239,8 +239,7 @@ export default async function TikTokPage() {
                     style={{ width: "100%", height: "auto", display: "block" }}
                   />
                   <figcaption>
-                    The simplicity was working. GCL asked me to make it feel more
-                    upbeat and deliberate.
+                    The simplicity was working.
                   </figcaption>
                 </figure>
               </li>
@@ -281,7 +280,6 @@ export default async function TikTokPage() {
           ) : null}
           <div className="project-section-body">
             <p>
-              Light Academia shipped in the launch library.{" "}
               <mark className="case-highlight">
                 I later learned through Global Creative Lab that American Eagle
                 selected it.

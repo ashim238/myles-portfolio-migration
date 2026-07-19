@@ -265,7 +265,7 @@ describe("Fresh Greens prose structure", () => {
     );
     expect(qualifier, "Fresh Greens final proof qualifier").not.toBeNull();
     expect(normalizeCopy(qualifier![1])).toBe(
-      "Building the working app made the gap between a plausible safety feature and a trustworthy one much clearer. I'm confident in the interaction choices I could trace back to interviews, especially the Held-Question rule, route chips, and source detail cards. I'd want broader route testing with Black drivers, moderation outcomes, and failure cases before calling any route safer.",
+      "I can trace the Held-Question rule, route chips, and source detail cards back to interviews. I'd want broader route testing with Black drivers, moderation outcomes, and failure cases before calling any route safer.",
     );
     expect(source).toMatch(/before\s+calling\s+any\s+route\s+safer/);
     expect(source).toContain(

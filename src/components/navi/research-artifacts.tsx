@@ -12,8 +12,8 @@ export function NaviResearchArtifacts(): React.JSX.Element {
     >
       <div className="nv-research-board">
         <header className="nv-research-board-head">
-          <h3 id="nv-research-board-title">From research to product scope</h3>
-          <p>Each row tracks the evidence into a product decision.</p>
+          <h3 id="nv-research-board-title">Research and product scope</h3>
+          <p>Each row connects a finding to the product area it affected.</p>
         </header>
 
         <figure

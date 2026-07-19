@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
+import HostPage from "@/app/work/navi/(minisite)/demo/host/page";
 import { HostView } from "@/app/work/navi/(minisite)/demo/host/[slug]/HostView";
 import { getHostBySlug, experiencesByHost } from "@/lib/navi/hosts";
 
@@ -47,5 +48,16 @@ describe("Host page", () => {
     expect(
       screen.getByRole("link", { name: new RegExp(`Based in ${host.neighborhood}`) }),
     ).toHaveAttribute("href", `/work/navi/demo/neighborhood/${nbSlug}`);
+  });
+});
+
+describe("Host landing page", () => {
+  it("marks host tools as future demo work instead of implying an active rollout", () => {
+    render(<HostPage />);
+
+    expect(screen.getByText(/host tools are not part of this demo yet/i)).toBeInTheDocument();
+    expect(screen.getByText(/a future flow could let/i)).toBeInTheDocument();
+    expect(screen.queryByText(/onboarding neighborhood hosts/i)).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: /hosting opens soon/i })).not.toBeInTheDocument();
   });
 });

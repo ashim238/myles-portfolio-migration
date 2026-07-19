@@ -592,13 +592,10 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body fg-scope-closer">
           <p>
-            Building the working app made the gap between a plausible safety
-            feature and a trustworthy one much clearer. I&apos;m confident in
-            the interaction choices I could trace back to interviews,
-            especially the Held-Question rule, route chips, and source detail
-            cards. I&apos;d want broader route testing with Black drivers,
-            moderation outcomes, and failure cases before calling any route
-            safer.
+            I can trace the Held-Question rule, route chips, and source detail
+            cards back to interviews. I&apos;d want broader route testing with
+            Black drivers, moderation outcomes, and failure cases before
+            calling any route safer.
           </p>
         </div>
         </div>
