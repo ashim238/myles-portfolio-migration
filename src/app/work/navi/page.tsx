@@ -113,17 +113,18 @@ export default async function NaviPage() {
       >
       <div className="project-section nv-section">
         <p className="case-section-lead">
-          The early design premise treated concentrated tourism as a routing problem.
+          The first concept came before the resident survey and without a live tourist-density
+          dataset.
         </p>
         <div className="project-section-body">
           <p>
-            That premise came before the resident survey and without a live tourist-density
-            dataset. The first concept explored how redirection might distribute attention across
-            more Manhattan neighborhoods.
+            The team used a Manhattan heatmap to test whether redirecting visitors could distribute
+            attention across more neighborhoods.
           </p>
           <p>
-            The next concept paired neighborhood-level experiences and local context with trip
-            planning.
+            Changing the destination still left the visit itself unchanged. The survey became the
+            next step and later redirected the concept toward neighborhood experiences, with local
+            context built into trip planning.
           </p>
         </div>
       </div>
@@ -133,23 +134,13 @@ export default async function NaviPage() {
           The first prototype: a Manhattan heatmap
         </h3>
         <p className="case-section-lead">
-          A Manhattan heatmap turned the routing premise into an exploratory artifact.
+          Select a neighborhood to see how the first artifact worked.
         </p>
         <div className="project-section-body">
           <p>
-            Before the survey, the team sketched a routing layer that could redirect a visitor
-            from one Manhattan neighborhood to another. It did not claim to measure actual
-            tourist density.
-          </p>
-          <p>
-            Select a neighborhood to see how that first artifact worked. Regions represent
-            narrative emphasis, not live geo analytics. The current interactive reconstruction
-            keeps that same constraint.
-          </p>
-          <p>
-            Even within the premise, sending someone somewhere quieter left the visit itself
-            unchanged. Before committing to redirection as the lever, the next step was the
-            resident survey.
+            The colored regions show where the early concept placed emphasis. They do not
+            represent actual tourist density or live geo analytics, and this interactive
+            reconstruction keeps the same constraint.
           </p>
         </div>
         <HeatmapExplorer />
@@ -210,26 +201,24 @@ export default async function NaviPage() {
       <div className="project-section nv-section project-section--wide nv-section--wide">
         <div className="project-section-body">
           <p className="case-section-lead">
-            I created three research-informed archetypes from the survey findings, platform audits,
-            and secondary research.
+            I created three research-informed archetypes from the survey, platform audits, and
+            secondary research.
           </p>
           <p>
-            Cain framed group planning, Ororo needed neighborhood context, and Selina needed
-            precise filters for shorter trips.
+            The graduate-studio project ended as a concept without an engineering handoff, so the
+            journey maps and user flows remained internal planning artifacts.
           </p>
           <p>
-            The graduate-studio project stopped at a concept without an engineering handoff. Its
-            journey maps and user flows were internal planning artifacts. They connected
-            neighborhood exploration to residents wanting nearby activity without repeatedly
-            concentrating visits in tourist-heavy areas.
+            I used them to connect residents&apos; interest in nearby activity with neighborhood
+            exploration without repeatedly steering visitors toward the same tourist-heavy areas.
           </p>
           <p>
-            For booking, the Airbnb audit and secondary research pointed to clear cost,
-            requirements, and timing. That transparency also mattered for trust when booking with
-            lesser-known vendors.
+            The Airbnb audit and secondary research shaped the individual booking flow. Cost,
+            requirements, and timing stayed visible at key decisions, especially when a lesser-known
+            vendor needed to earn trust.
           </p>
           <p>
-            The resulting framework was{" "}
+            I organized the concept around{" "}
             <mark className="case-highlight">Learn, Plan, Go</mark>:
           </p>
           <ul>

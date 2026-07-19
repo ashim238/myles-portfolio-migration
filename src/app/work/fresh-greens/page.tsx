@@ -338,36 +338,33 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body">
           <p>
-            I swapped iOS&apos;s cool grays for five warm surfaces, all built
-            in OKLCH on the brand-green hue, so the whole app shares one tonal
-            source.
+            I replaced iOS&apos;s cool grays with five warm surfaces built in
+            OKLCH on the brand-green hue, giving the app one tonal source.
           </p>
           <p>
             I designed the initial flows in Figma, used Illustrator for the
             onboarding art, and checked the system in the React Native build. I
-            also used Claude as a critique partner while tightening token names,
-            color roles, and copy rules, mostly to avoid second-guessing the
-            same decisions as the system grew.
+            used Claude as a critique partner to tighten token names, color
+            roles, and copy rules, keeping me from second-guessing those
+            decisions as the system grew.
           </p>
           <p>
-            Type took three tries. Jost first, then Space Grotesk, then Libre
-            Franklin, which carries the whole hierarchy now. DM Serif Display
-            shows up in exactly six emotional moments, like the emergency
-            reassurance line and the &quot;Thanks for sharing&quot; on{" "}
-            <code>/trip-summary</code>. Reserving it for those six is what
-            keeps them landing. Type and color both shift across the session,
-            calm at entry, heightened en-route, resolved at the trip summary.
+            Type took three tries: Jost, Space Grotesk, then Libre Franklin for
+            the hierarchy. I limited DM Serif Display to exactly six emotional
+            moments, including the emergency reassurance and the &quot;Thanks
+            for sharing&quot; on <code>/trip-summary</code>. Keeping it to those
+            six helps them land. Type and color move with the trip: calm at
+            entry, heightened en-route, and resolved at the trip summary.
           </p>
         </div>
 
         <figure className="fg-token-figure">
           <TokenExhibit />
           <figcaption className="fg-safety-visual-caption">
-            The tokens themselves, pulled straight from{" "}
-            <code>theme/colors.ts</code> and <code>theme/spacing.ts</code>. The
-            spacing scale started implicit and drifted to stragglers at 5, 6,
-            13, and 18. Making the 4pt ramp explicit is what made that drift
-            easy to catch.
+            The color and spacing tokens come straight from{" "}
+            <code>theme/colors.ts</code> and <code>theme/spacing.ts</code>.
+            Before the spacing scale was explicit, it picked up stragglers at
+            5, 6, 13, and 18. A 4pt ramp made that drift easy to catch.
           </figcaption>
         </figure>
 
@@ -384,8 +381,7 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body">
           <p>
-            Green carries every button and link. Red, orange, yellow, and navy
-            are reserved for safety signals, each tied to one meaning, so a red
+            Red, orange, yellow, and navy each keep one safety meaning, so a red
             dot always points to something specific. Across 26+ screens,{" "}
             <mark className="case-highlight">exceptions are documented as carve-outs</mark>.
           </p>
@@ -402,19 +398,11 @@ export default async function FreshGreensPage() {
               />
             </PhoneFrame>
             <figcaption className="fg-safety-visual-caption">
-              The reserved palette on the current en-route screen: navy for
-              the safety Shield, red on the alert, orange on the hazard, a sun
-              glyph for the daylight arrival, and green everywhere else.
+              On the en-route screen, navy marks the safety Shield, red the
+              alert, orange the hazard, and a sun glyph the daylight arrival.
+              Green carries everything else.
             </figcaption>
           </figure>
-        </div>
-
-        <div className="project-section-body">
-          <p>
-            The daylight gradient sits outside those four reserved safety
-            colors. On <code>/route-preview</code>, a sun-to-moon dashed band
-            traces what the light will do along the route.
-          </p>
         </div>
 
         <figure className="fg-safety-visual">
@@ -425,17 +413,17 @@ export default async function FreshGreensPage() {
             />
           </PhoneFrame>
           <figcaption className="fg-safety-visual-caption">
-            The daylight indicator, held to one job: telling the driver what
-            light they can expect, from now until arrival.
+            Outside the four reserved colors, <code>/route-preview</code> uses
+            a dashed sun-to-moon daylight gradient to trace the light along the
+            route, from now until arrival.
           </figcaption>
         </figure>
 
         <div className="project-section-body">
           <p>
-            Where color is the signal, a second channel rides with it. On{" "}
-            <code>/report</code>, severity pairs a filled warning glyph with
-            the color, so the cue survives for anyone who can&apos;t rely on
-            hue (WCAG 1.4.1).
+            I pair every color signal with a second channel. On{" "}
+            <code>/report</code>, severity pairs color with a filled warning
+            glyph, so the cue doesn&apos;t depend on hue (WCAG 1.4.1).
           </p>
         </div>
 

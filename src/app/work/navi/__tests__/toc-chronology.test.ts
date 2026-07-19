@@ -24,7 +24,7 @@ describe("Navi chapter chronology", () => {
       {
         id: "nv-framework",
         stage: "Define",
-        title: "Mapping the experience",
+        title: "Research shaped exploration and booking",
       },
       {
         id: "nv-build",

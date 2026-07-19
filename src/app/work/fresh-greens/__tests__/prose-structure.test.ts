@@ -128,11 +128,32 @@ describe("Fresh Greens prose structure", () => {
     expect(normalized).toContain("I designed the initial flows in Figma");
     expect(normalized).toContain("used Illustrator for the onboarding art");
     expect(normalized).toContain(
-      "I also used Claude as a critique partner while tightening token names, color roles, and copy rules",
+      "I used Claude as a critique partner to tighten token names, color roles, and copy rules",
     );
+    expect(normalized).toContain("keeping me from second-guessing those decisions as the system grew");
     expect(source).not.toMatch(/validated safety through Figma/i);
     expect(source).not.toMatch(/proved safety through React Native/i);
     expect(source).not.toMatch(/Claude designed/i);
+  });
+
+  it("keeps the Refine chapter concise without dropping the craft decisions", () => {
+    const source = readPage();
+    const normalized = normalizeCopy(source);
+
+    expect(normalized).toContain(
+      "Type took three tries: Jost, Space Grotesk, then Libre Franklin for the hierarchy.",
+    );
+    expect(normalized).toContain("I limited DM Serif Display to exactly six emotional moments");
+    expect(normalized).toContain("Outside the four reserved colors");
+    expect(normalized).toContain(
+      "Red, orange, yellow, and navy each keep one safety meaning",
+    );
+    expect(normalized).toContain("WCAG 1.4.1");
+    expect(normalized).not.toContain("Reserving it for those six is what keeps them landing.");
+    expect(normalized).not.toContain(
+      "The daylight gradient sits outside those four reserved safety colors.",
+    );
+    expect(source).not.toContain("Green carries every button and link.");
   });
 
   it("retains the safety interaction and community-report evidence stack", () => {

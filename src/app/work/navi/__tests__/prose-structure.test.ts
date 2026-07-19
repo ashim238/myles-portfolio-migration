@@ -59,13 +59,13 @@ describe("Navi case-study structure", () => {
     expect(page).not.toMatch(/<h[23][^>]+id="nv-(?:intro|insights|framework|build|outcome)"/);
   });
 
-  it("preserves all eight story bodies and places resident research before survey findings", () => {
+  it("preserves the story arc and places resident research before survey findings", () => {
     for (const copy of [
-      "The early design premise treated concentrated tourism as a routing problem.",
-      "A Manhattan heatmap turned the routing premise into an exploratory artifact.",
+      "The first concept came before the resident survey and without a live tourist-density dataset.",
+      "Select a neighborhood to see how the first artifact worked.",
       "The team audited six travel platforms.",
       "Two concerns appeared most often in the 14-response resident survey.",
-      "I created three research-informed archetypes from the survey findings",
+      "I created three research-informed archetypes from the survey, platform audits, and secondary research.",
       "For this portfolio case study, I translated the Navi visual system into live React",
       "The screens below come from the current React build.",
       "I rebuilt the concept as live React components",
@@ -75,6 +75,24 @@ describe("Navi case-study structure", () => {
 
     expect(page.indexOf('id="nv-research"')).toBeLessThan(
       page.indexOf("Two concerns appeared most often"),
+    );
+  });
+
+  it("lets the heatmap and research board carry their details without losing boundaries", () => {
+    expect(prose).toContain("without a live tourist-density dataset");
+    expect(prose).toContain("do not represent actual tourist density or live geo analytics");
+    expect(prose).toContain("internal planning artifacts");
+    expect(prose).toContain("without an engineering handoff");
+    expect(prose).toContain("The Airbnb audit and secondary research");
+    expect(prose).toContain("Cost, requirements, and timing stayed visible at key decisions");
+    expect(prose).not.toContain(
+      "A Manhattan heatmap turned the routing premise into an exploratory artifact.",
+    );
+    expect(prose).not.toContain(
+      "The first Navi concept treated concentrated tourism as a routing problem.",
+    );
+    expect(prose).not.toContain(
+      "Before the survey, the team sketched a routing layer that could redirect a visitor",
     );
   });
 

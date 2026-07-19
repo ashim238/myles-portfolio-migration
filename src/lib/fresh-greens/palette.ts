@@ -83,7 +83,7 @@ export const RESERVED_LANES: ReservedLane[] = [
     carveOuts: [
       {
         tag: "En-route Shield",
-        note: "Safety mode itself; never data state or sync.",
+        note: "Marks safety mode itself and never describes data state or sync.",
       },
       {
         tag: "/emergency SOS disc",

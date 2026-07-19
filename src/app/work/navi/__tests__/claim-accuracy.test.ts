@@ -29,7 +29,7 @@ describe("Navi evidence claims", () => {
     expect(projectPage).not.toMatch(/three groups.{0,80}heuristic/i);
   });
 
-  it("keeps the intro and heatmap framed as an early concept premise", () => {
+  it("keeps the intro and heatmap framed as an unmeasured first concept", () => {
     const projectPage = readSource("src/app/work/navi/page.tsx");
 
     expect(projectPage).not.toMatch(/mapped tourist density/i);
@@ -38,8 +38,8 @@ describe("Navi evidence claims", () => {
     expect(projectPage).not.toMatch(/most go to the same ten\s+places/i);
     expect(projectPage).not.toMatch(/businesses[\s\S]{0,100}struggle for visibility/i);
     expect(projectPage).not.toMatch(/residents[\s\S]{0,100}absorb the side effects/i);
-    expect(projectPage).toMatch(/early (?:concept|design) premise/i);
-    expect(projectPage).toMatch(/exploratory artifact/i);
+    expect(projectPage).toMatch(/The first concept came before the resident survey/i);
+    expect(projectPage).toMatch(/first artifact worked/i);
   });
 
   it("keeps the checked research facts and team context", () => {
@@ -158,7 +158,7 @@ describe("Navi evidence claims", () => {
       /Navi&apos;s proposed alternative connected trip planning/,
     );
     expect(projectPage).toMatch(
-      /The next concept paired\s+neighborhood-level experiences and local context with trip\s+planning\./,
+      /redirected the concept toward\s+neighborhood experiences, with local\s+context built into trip planning\./,
     );
     expect(projectPage).toMatch(
       /The next concept direction focused on neighborhood context and\s+participation instead\./,

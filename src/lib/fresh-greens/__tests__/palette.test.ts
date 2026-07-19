@@ -28,4 +28,12 @@ describe("RESERVED_LANES", () => {
       }
     }
   });
+
+  it("keeps user-facing palette notes in the portfolio's house punctuation", () => {
+    for (const lane of RESERVED_LANES) {
+      for (const carveOut of lane.carveOuts) {
+        expect(carveOut.note).not.toContain(";");
+      }
+    }
+  });
 });

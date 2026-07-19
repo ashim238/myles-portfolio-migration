@@ -96,6 +96,7 @@ describe("UnderstandingFAFSA case-study structure", () => {
     expect(prose).toContain(
       "I merged sections where they still scanned and compressed PNGs through an external tool.",
     );
+    expect(prose).toContain("removed backgrounds in Photoshop");
   });
 
   it("names the three templates and the Mailchimp tradeoff without abstract system language", () => {
@@ -109,5 +110,29 @@ describe("UnderstandingFAFSA case-study structure", () => {
     expect(prose).not.toContain("same vocabulary");
     expect(prose).not.toContain("modular rhythm");
     expect(prose).not.toContain("same design vocabulary");
+  });
+
+  it("keeps the audit, build, and measured result specific after distillation", () => {
+    expect(prose).toContain(
+      "We evaluated them for clarity, personalization, and tone of voice.",
+    );
+    expect(prose).toContain(
+      "A fourth criterion paired visual appeal with branding consistency.",
+    );
+    expect(prose).toContain(
+      "I rebuilt the live template in Mailchimp so the founder could edit it without touching HTML.",
+    );
+    expect(prose).toContain("The first redesigned send went out November 4, 2025.");
+    expect(prose).toContain(
+      "That result is encouraging, but it&apos;s not a controlled attribution test. I don&apos;t claim the redesign caused the change.",
+    );
+    expect(prose).not.toContain(
+      "The rest of the newsletter pool served as lighter references",
+    );
+    expect(prose).not.toContain("Compression wasn&apos;t one recipe.");
+  });
+
+  it("keeps a visible space between the measured rate and its label", () => {
+    expect(page).toContain('<CountUp value="~52.6%" />{" "}open rate');
   });
 });

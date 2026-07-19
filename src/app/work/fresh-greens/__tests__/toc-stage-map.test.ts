@@ -25,7 +25,7 @@ describe("Fresh Greens TOC stage map", () => {
       {
         id: "fg-refine",
         stage: "Refine",
-        title: "From routing pivot to visual language",
+        title: "The visual system after the routing pivot",
       },
       {
         id: "fg-trust",

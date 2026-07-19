@@ -146,21 +146,18 @@ export default async function UnderstandingFafsaPage() {
         <div className="project-section uf-section">
           <div className="project-section-body">
             <p>
-              Before touching templates, I worked with one collaborator to
-              compile over 120 newsletter examples and evaluate them against four
-              criteria: clarity, personalization, tone of voice, and visual
-              appeal and branding consistency.
+              Before touching the templates, I worked with one collaborator to
+              compile over 120 newsletter examples. We evaluated them for
+              clarity, personalization, and tone of voice. A fourth criterion
+              paired visual appeal with branding consistency.
             </p>
             <p>
-              Five newsletters got the deepest treatment: Revenews, The 74, Next
-              by Jeff Selingo, Medium, and Folderly. Each used a different mix of
-              structure, tone, and branding.
+              We looked most closely at Revenews, The 74, Next by Jeff Selingo,
+              Medium, and Folderly. They used different mixes of structure,
+              tone, and branding. The rest helped me compare layout and
+              hierarchy, including how they used color.
             </p>
-            <p>
-              The rest of the newsletter pool served as lighter references for
-              layout, color, and hierarchy patterns.
-            </p>
-            <p>The deep dive highlights:</p>
+            <p>A few details stood out:</p>
             <ul>
               <li>
                 Revenews used <strong>selective bolding</strong>, emoji section
@@ -244,12 +241,11 @@ export default async function UnderstandingFafsaPage() {
         <div className="project-section uf-section">
           <div className="project-section-body">
             <p>
-              The Figma file defined the spacing, type, and reusable sections.
-              The live template still had to be rebuilt in Mailchimp so the
-              founder could edit it without touching HTML. Matching the Figma
-              spacing inside the builder was a dead end. Every container and
-              wrapper added bloat, so I flattened the section-header and body
-              hierarchy for the Mailchimp build.
+              The Figma file defined the spacing, type, and reusable sections. I
+              rebuilt the live template in Mailchimp so the founder could edit
+              it without touching HTML. Matching the Figma spacing in the builder
+              added too many containers and wrappers, so I flattened the
+              section-header and body hierarchy.
             </p>
             <p>
               <mark className="case-highlight">
@@ -260,17 +256,16 @@ export default async function UnderstandingFafsaPage() {
               exported from Figma. Test sends showed which wrappers and dividers
               could go. I merged sections where they still scanned and compressed
               PNGs through an external tool. For dark-mode-friendly dividers, I
-              removed backgrounds in Photoshop so assets stayed lighter without
-              muddying on phone.
+              removed backgrounds in Photoshop. That lowered their file weight
+              and kept them from looking muddy on phones.
             </p>
             <p>
-              Compression wasn&apos;t one recipe. The weekly kit leaned on fewer
-              custom assets and more Mailchimp-native structure. The counselor
-              toolkit needed more image work and tighter file discipline for its
-              duotone icons. What I wouldn&apos;t trade for a few kilobytes:
-              typography tuned to the closest Mailchimp sans to the site&apos;s
-              Saans typeface, and the full brand palette, even when trying to
-              maintain the founder&apos;s appetite for vibrancy.
+              The weekly kit used fewer custom assets and more Mailchimp-native
+              structure. The counselor toolkit needed more image work and tighter
+              file discipline for its duotone icons. I kept the closest Mailchimp
+              sans to Saans and the full brand palette. Those choices kept the
+              email close to the site and reflected the founder&apos;s preference
+              for vibrant color.
             </p>
           </div>
           <FigmaMailchimpPair />
@@ -296,11 +291,12 @@ export default async function UnderstandingFafsaPage() {
               locked-vs-swappable rules, and three template variants built from
               the same locked sections and swappable blocks. The first redesigned
               send went out November 4, 2025.
-              Mailchimp reported an observed <CountUp value="~52.6%" /> open rate
-              with MPP excluded, compared with earlier sends around 30%. This was
-              not a controlled attribution test, so I treat the result as an
-              encouraging first observation rather than proof that the redesign
-              caused the change.
+            </p>
+            <p>
+              Mailchimp reported an observed <CountUp value="~52.6%" />{" "}open rate
+              with MPP excluded, compared with earlier sends around 30%. That
+              result is encouraging, but it&apos;s not a controlled attribution
+              test. I don&apos;t claim the redesign caused the change.
             </p>
           </div>
         </div>
