@@ -16,6 +16,13 @@ type WorkProjectCardProps = {
   closing?: boolean;
 };
 
+const EVIDENCE_LABELS: Record<string, string> = {
+  "fresh-greens": "Working prototype",
+  navi: "Live demo available",
+  understandingfafsa: "Interactive case-study explanation",
+  tiktok: "Static launch templates",
+};
+
 function formatIndex(index: number): string {
   return String(index + 1).padStart(2, "0");
 }
@@ -50,6 +57,7 @@ export function WorkProjectCard({
   const { lead, rest } = galleryOutcome(project);
   const tab = tabText(project);
   const usesTikTokLogo = project.slug === "tiktok";
+  const evidenceLabel = EVIDENCE_LABELS[project.slug];
 
   const handleProjectEnter = (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (
@@ -140,6 +148,9 @@ export function WorkProjectCard({
             {lead ? " " : ""}
             {rest}
           </p>
+          {evidenceLabel ? (
+            <span className="work-card-evidence">{evidenceLabel}</span>
+          ) : null}
         </div>
       </Link>
     </div>

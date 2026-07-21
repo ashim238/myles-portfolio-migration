@@ -43,10 +43,13 @@ const STEPS = [
   },
 ] as const;
 
+const ANSWERS = ["Yes", "No", "Prefer not to answer"] as const;
+
 const subscribeToHydration = () => () => {};
 
 export function PulledOverJourney() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [answer, setAnswer] = useState<(typeof ANSWERS)[number] | null>(null);
   const tabsRef = useRef<HTMLDivElement>(null);
   const enhanced = useSyncExternalStore(
     subscribeToHydration,
@@ -62,12 +65,26 @@ export function PulledOverJourney() {
     setActiveIndex(normalized);
   }
 
+  function restartJourney() {
+    setAnswer(null);
+    selectStep(0);
+  }
+
   return (
     <div
       className="fg-pulled-journey"
       aria-label="The pulled-over safety sequence"
       data-enhanced={enhanced ? "true" : undefined}
     >
+      <div className="fg-pulled-reconstruction">
+        <h4 className="fg-pulled-reconstruction-title">
+          Interactive case-study reconstruction
+        </h4>
+        <p className="fg-pulled-reconstruction-note">
+          This web reconstruction shows one representative path. The native
+          prototype contains the full flow.
+        </p>
+      </div>
       <div
         className="fg-pulled-tabs"
         role={enhanced ? "tablist" : undefined}
@@ -147,6 +164,78 @@ export function PulledOverJourney() {
               <p className="fg-pulled-progress" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")} / {String(STEPS.length).padStart(2, "0")}
               </p>
+              <div className="fg-pulled-interaction" hidden={!enhanced}>
+                {step.key === "question" ? (
+                  <>
+                    <fieldset className="fg-pulled-answer-options">
+                      <legend className="fg-pulled-answer-legend">
+                        Are you armed?
+                      </legend>
+                      {ANSWERS.map((option) => (
+                        <label className="fg-pulled-answer-choice" key={option}>
+                          <input
+                            checked={answer === option}
+                            className="fg-pulled-answer-input"
+                            name="fg-pulled-answer"
+                            onChange={() => setAnswer(option)}
+                            type="radio"
+                            value={option}
+                          />
+                          <span className="fg-pulled-answer-label">{option}</span>
+                        </label>
+                      ))}
+                    </fieldset>
+                    <p
+                      aria-live="polite"
+                      className="fg-pulled-answer-status"
+                      role="status"
+                    >
+                      {answer
+                        ? `You selected ${answer}.`
+                        : "Choose an answer to continue."}
+                    </p>
+                  </>
+                ) : null}
+                {step.key === "contact" ? (
+                  <p className="fg-pulled-contact-note">
+                    This web reconstruction does not place a call, send a message,
+                    or share location.
+                  </p>
+                ) : null}
+                <div
+                  aria-label={`${step.label} controls`}
+                  className="fg-pulled-controls"
+                  role="group"
+                >
+                  {index > 0 ? (
+                    <button
+                      className="fg-pulled-control fg-pulled-control--back"
+                      onClick={() => selectStep(index - 1)}
+                      type="button"
+                    >
+                      Back
+                    </button>
+                  ) : null}
+                  {step.key === "contact" ? (
+                    <button
+                      className="fg-pulled-control fg-pulled-control--restart"
+                      onClick={restartJourney}
+                      type="button"
+                    >
+                      Restart
+                    </button>
+                  ) : (
+                    <button
+                      className="fg-pulled-control fg-pulled-control--continue"
+                      disabled={step.key === "question" && answer === null}
+                      onClick={() => selectStep(index + 1)}
+                      type="button"
+                    >
+                      Continue
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         );

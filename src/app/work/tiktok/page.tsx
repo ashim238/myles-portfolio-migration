@@ -88,6 +88,11 @@ export default async function TikTokPage() {
         role="Creative Strategist Intern"
         team="Global Creative Lab"
         timeline="May – August 2021"
+        evidence={{
+          type: "Static shipped deliverable with an interactive explanation",
+          cta: "Inspect the template system",
+          href: "#tt-system",
+        }}
         outcomeValue="1"
         outcomeLabel="of 3 templates shipped in the launch library"
         moves={[

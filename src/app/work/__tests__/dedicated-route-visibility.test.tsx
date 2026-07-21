@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { render, screen, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Project, ProjectStatus } from "@/lib/content";
 
@@ -14,6 +15,8 @@ vi.mock("next/navigation", () => ({
   notFound: () => {
     throw new Error("NEXT_NOT_FOUND");
   },
+  usePathname: () => "/",
+  useRouter: () => ({ push: () => {} }),
 }));
 
 vi.mock("next/font/google", () => ({
@@ -72,6 +75,14 @@ describe("dedicated project route visibility", () => {
     getProjectBySlug.mockReset();
     getPublishedProjects.mockReset();
     getPublishedProjects.mockResolvedValue([]);
+    vi.stubGlobal(
+      "IntersectionObserver",
+      class IntersectionObserverStub {
+        observe() {}
+        unobserve() {}
+        disconnect() {}
+      },
+    );
   });
 
   it.each(surfaces)("renders $name only when its project is published", async (surface) => {
@@ -98,6 +109,62 @@ describe("dedicated project route visibility", () => {
 
     await expect(Promise.resolve().then(() => surface.render())).rejects.toThrow(
       "NEXT_NOT_FOUND",
+    );
+  });
+
+  it.each([
+    {
+      name: "Fresh Greens",
+      slug: "fresh-greens",
+      render: FreshGreensPage,
+      type: "Working mobile prototype",
+      cta: "Try the safety-flow reconstruction",
+      href: "#fg-pulled-over",
+      artifactName: "Interactive case-study reconstruction",
+      artifactRole: "heading" as const,
+    },
+    {
+      name: "UnderstandingFAFSA",
+      slug: "understandingfafsa",
+      render: UnderstandingFafsaPage,
+      type: "Interactive case-study explanation",
+      cta: "Build a sample send",
+      href: "#uf-locked",
+      artifactName: "Try the system",
+      artifactRole: "button" as const,
+    },
+  ])(
+    "links the $name evidence trailhead to its rendered artifact",
+    async (surface) => {
+      getProjectBySlug.mockResolvedValue(makeProject(surface.slug, "published"));
+      const { container } = render(await surface.render());
+
+      expect(screen.getByText(surface.type)).toBeInTheDocument();
+      expect(screen.getByRole("link", { name: surface.cta })).toHaveAttribute(
+        "href",
+        surface.href,
+      );
+
+      const target = container.querySelector(surface.href);
+      expect(target).not.toBeNull();
+      const chapter = target?.closest(".project-chapter");
+      expect(chapter).not.toBeNull();
+      expect(
+        within(chapter as HTMLElement).getByRole(surface.artifactRole, {
+          name: surface.artifactName,
+        }),
+      ).toBeInTheDocument();
+    },
+  );
+
+  it("renders Navi's evidence trailhead as a direct product-demo link", async () => {
+    getProjectBySlug.mockResolvedValue(makeProject("navi", "published"));
+    render(await NaviPage());
+
+    expect(screen.getByText("Working product demo")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Try the booking flow" })).toHaveAttribute(
+      "href",
+      "/work/navi/demo",
     );
   });
 });

@@ -5,6 +5,33 @@ import { describe, expect, it } from "vitest";
 import { RecruiterCut } from "@/components/recruiter-cut";
 
 describe("RecruiterCut", () => {
+  it("renders an optional interaction-evidence trailhead", () => {
+    const { container } = render(
+      <RecruiterCut
+        role="Solo, design and engineering"
+        timeline="Sep 2025 – Jun 2026"
+        moves={[]}
+        evidence={{
+          type: "Working mobile prototype",
+          cta: "Try the safety-flow reconstruction",
+          href: "#fg-pulled-over",
+        }}
+      />,
+    );
+
+    const evidence = container.querySelector(".case-cut-evidence");
+    expect(evidence).not.toBeNull();
+    expect(screen.getByText("Working mobile prototype")).toHaveClass(
+      "case-cut-evidence-type",
+    );
+    expect(
+      screen.getByRole("link", { name: "Try the safety-flow reconstruction" }),
+    ).toHaveClass("case-cut-evidence-cta");
+    expect(
+      screen.getByRole("link", { name: "Try the safety-flow reconstruction" }),
+    ).toHaveAttribute("href", "#fg-pulled-over");
+  });
+
   it("uses sentence-case labels rather than tracked uppercase metadata", () => {
     const styles = readFileSync(
       resolve(process.cwd(), "src/app/styles/late-polish.css"),

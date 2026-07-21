@@ -94,6 +94,11 @@ export default async function NaviPage() {
         timeline="January 2025 – June 2025"
         stack="Figma, research"
         stackLabel="Tools"
+        evidence={{
+          type: "Working product demo",
+          cta: "Try the booking flow",
+          href: "/work/navi/demo",
+        }}
         outcomeValue={project?.outcomeMetricValue}
         outcomeLabel={project?.outcomeMetricLabel}
         moves={[

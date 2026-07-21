@@ -10,10 +10,15 @@ type RecruiterCutProps = {
   outcomeValue?: string;
   outcomeLabel?: string;
   moves: string[];
+  evidence?: {
+    type: string;
+    cta: string;
+    href: string;
+  };
 };
 
 export function RecruiterCut({
-  role, contribution, team, timeline, stack, stackLabel = "Stack", outcomeValue, outcomeLabel, moves,
+  role, contribution, team, timeline, stack, stackLabel = "Stack", outcomeValue, outcomeLabel, moves, evidence,
 }: RecruiterCutProps) {
   const supportingFact = team
     ? { label: "Team", value: team }
@@ -54,6 +59,14 @@ export function RecruiterCut({
           </div>
         ))}
       </dl>
+      {evidence ? (
+        <div className="case-cut-evidence">
+          <p className="case-cut-evidence-type">{evidence.type}</p>
+          <a className="case-cut-evidence-cta" href={evidence.href}>
+            {evidence.cta}
+          </a>
+        </div>
+      ) : null}
       {moves.length > 0 ? (
         <div className="case-cut-moves">
           <p className="case-cut-moves-label">Key moves</p>

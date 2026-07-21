@@ -569,6 +569,24 @@
 .nv-specimen-title { font-size: 1.25rem; margin-bottom: var(--nv-sp-2xs); }
 .nv-specimen-note { color: var(--nv-text-muted); margin-bottom: var(--nv-sp-md); max-width: 60ch; }
 .nv-specimen-stage { display: flex; flex-wrap: wrap; gap: var(--nv-sp-md); align-items: center; }
+.nv-copy-recovery { display: contents; }
+.nv-copy-recovery[data-active="true"] {
+  display: grid;
+  gap: var(--nv-sp-xs);
+}
+.nv-copy-recovery[data-active="true"] .nv-copy-feedback { margin: 0; }
+.nv-copy-fallback {
+  box-sizing: border-box;
+  width: min(100%, 18rem);
+  min-height: 44px;
+  padding: var(--nv-sp-xs) var(--nv-sp-md);
+  border: 1px solid var(--nv-border);
+  border-radius: var(--nv-r-md);
+  background: var(--nv-surface-muted);
+  color: var(--nv-text);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+}
 /* The category rail clips + scrolls on the feed because .nv-feed-row drops it to
    a block child on mobile and the page gutter absorbs its edge-bleed. The specimen
    stage is flex at every width and has no gutter, so the rail would otherwise

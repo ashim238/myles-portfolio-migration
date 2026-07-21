@@ -22,8 +22,20 @@ describe("Fresh Greens pulled-over journey", () => {
     );
 
     expect(controls).toHaveAttribute("hidden");
+    expect(
+      container.querySelector("h4.fg-pulled-reconstruction-title"),
+    ).toHaveTextContent("Interactive case-study reconstruction");
+    expect(markup).toContain(
+      "This web reconstruction shows one representative path. The native prototype contains the full flow.",
+    );
     expect(container.querySelectorAll('[role="tablist"], [role="tab"]')).toHaveLength(0);
     expect(container.querySelectorAll('[role="tabpanel"]')).toHaveLength(0);
+    expect(container.querySelectorAll(".fg-pulled-interaction")).toHaveLength(4);
+    for (const interaction of container.querySelectorAll(
+      ".fg-pulled-interaction",
+    )) {
+      expect(interaction).toHaveAttribute("hidden");
+    }
     expect(panels).toHaveLength(4);
     for (const key of ["toolkit", "reassurance", "question", "contact"]) {
       expect(markup).toContain(`id="fg-pulled-panel-${key}"`);
@@ -134,5 +146,63 @@ describe("Fresh Greens pulled-over journey", () => {
 
     expect(screen.getByRole("tab", { name: /Reassurance/i })).toHaveFocus();
     expect(screen.getByText("Recording starts quietly before the next decision.")).toBeInTheDocument();
+  });
+
+  it("walks a visitor through the representative path after an equal-weight answer", async () => {
+    const user = userEvent.setup();
+    render(<PulledOverJourney />);
+
+    expect(
+      screen.getByRole("group", { name: "Toolkit controls" }),
+    ).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+    const reassuranceTab = screen.getByRole("tab", { name: /Reassurance/i });
+    expect(reassuranceTab).toHaveAttribute(
+      "aria-selected",
+      "true",
+    );
+    expect(reassuranceTab).toHaveFocus();
+
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+    expect(screen.getByRole("tab", { name: /Question/i })).toHaveAttribute(
+      "aria-selected",
+      "true",
+    );
+    expect(screen.getByRole("status")).toHaveAttribute("aria-live", "polite");
+    expect(screen.getByRole("status")).toHaveTextContent("Choose an answer to continue.");
+    expect(screen.getByRole("button", { name: "Continue" })).toBeDisabled();
+
+    await user.click(screen.getByLabelText("Yes"));
+
+    expect(screen.getByRole("status")).toHaveTextContent("You selected Yes.");
+    expect(screen.getByRole("button", { name: "Continue" })).toBeEnabled();
+
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+
+    expect(screen.getByRole("tab", { name: /Contact/i })).toHaveAttribute(
+      "aria-selected",
+      "true",
+    );
+    expect(
+      screen.getByText(
+        "This web reconstruction does not place a call, send a message, or share location.",
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it("restarts at Toolkit and clears a selected answer", async () => {
+    const user = userEvent.setup();
+    render(<PulledOverJourney />);
+
+    await user.click(screen.getByRole("tab", { name: /Question/i }));
+    await user.click(screen.getByLabelText("Prefer not to answer"));
+    await user.click(screen.getByRole("tab", { name: /Contact/i }));
+    await user.click(screen.getByRole("button", { name: "Restart" }));
+
+    expect(screen.getByRole("tab", { name: /Toolkit/i })).toHaveAttribute(
+      "aria-selected",
+      "true",
+    );
+    expect(screen.getByLabelText("Prefer not to answer")).not.toBeChecked();
   });
 });

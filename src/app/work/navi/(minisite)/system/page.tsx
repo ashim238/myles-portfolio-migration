@@ -56,28 +56,202 @@ function PillRowDemo() {
         { id: "go", label: "Go" },
       ]}
       activeId={active}
+      ariaLabel="Journey stage"
+      extraAttrs={(_, isActive) => ({
+        "aria-pressed": isActive ? "true" : "false",
+      })}
       onSelect={setActive}
+      role="group"
+    />
+  );
+}
+
+function ActionButtonsDemo() {
+  const [feedback, setFeedback] = useState("Choose an action to see its feedback.");
+
+  return (
+    <>
+      <Button variant="primary" onClick={() => setFeedback("Primary action activated.")}>
+        Primary
+      </Button>
+      <Button
+        variant="transparent"
+        onClick={() => setFeedback("Transparent action activated.")}
+      >
+        Transparent
+      </Button>
+      <Button variant="outline" onClick={() => setFeedback("Outline action activated.")}>
+        Outline
+      </Button>
+      <Button disabled>Disabled</Button>
+      <p role="status" aria-live="polite" aria-label="Action feedback">
+        {feedback}
+      </p>
+    </>
+  );
+}
+
+function WishlistButtonDemo() {
+  const [saved, setSaved] = useState(false);
+  const [feedback, setFeedback] = useState("Not saved.");
+
+  function toggleSaved() {
+    const next = !saved;
+    setSaved(next);
+    setFeedback(next ? "Saved to wishlist." : "Removed from wishlist.");
+  }
+
+  return (
+    <>
+      <IconButton
+        label="Save to wishlist"
+        variant="outline"
+        aria-pressed={saved}
+        onClick={toggleSaved}
+        icon={
+          <svg
+            viewBox="0 0 24 24"
+            fill={saved ? "currentColor" : "none"}
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0 0-7.8z" />
+          </svg>
+        }
+      />
+      <p role="status" aria-live="polite" aria-label="Wishlist feedback">
+        {feedback}
+      </p>
+    </>
+  );
+}
+
+function TabsDemo() {
+  const [active, setActive] = useState("learn");
+
+  return (
+    <Tabs
+      items={[
+        {
+          id: "learn",
+          label: "Learn",
+          content: "Read the host story and neighborhood context.",
+        },
+        {
+          id: "plan",
+          label: "Plan",
+          content: "Choose a date, check access details, and review local impact.",
+        },
+        {
+          id: "go",
+          label: "Go",
+          content: "Use transit details and arrival guidance.",
+        },
+      ]}
+      value={active}
+      onChange={setActive}
     />
   );
 }
 
 function StickySectionNavDemo() {
-  const [active] = useState("plan");
+  const [active, setActive] = useState("plan");
+  const previews: Record<string, string> = {
+    learn: "Read the host story and neighborhood context.",
+    plan: "Choose a date, check access details, and review local impact.",
+    go: "Use transit details and arrival guidance.",
+  };
+
   return (
-    <PillRow
-      role="navigation"
-      ariaLabel="Sections (demo)"
-      items={[
-        { id: "learn", label: "Learn" },
-        { id: "plan", label: "Plan" },
-        { id: "go", label: "Go" },
-      ]}
-      activeId={active}
-      onSelect={() => {}}
-      extraAttrs={(_, isActive) => ({
-        "aria-current": isActive ? "true" : undefined,
-      })}
-    />
+    <>
+      <PillRow
+        role="navigation"
+        ariaLabel="Sections (demo)"
+        items={[
+          { id: "learn", label: "Learn" },
+          { id: "plan", label: "Plan" },
+          { id: "go", label: "Go" },
+        ]}
+        activeId={active}
+        onSelect={setActive}
+        extraAttrs={(_, isActive) => ({
+          "aria-current": isActive ? "true" : undefined,
+        })}
+      />
+      <p role="status" aria-live="polite" aria-label="Section preview">
+        {previews[active]}
+      </p>
+    </>
+  );
+}
+
+const CAROUSEL_SLIDES = [
+  "Street food tour",
+  "Pottery workshop",
+  "Neighborhood history walk",
+  "Garden walk",
+];
+
+function CarouselControlsDemo() {
+  const [active, setActive] = useState(0);
+  const last = CAROUSEL_SLIDES.length - 1;
+
+  return (
+    <>
+      <CarouselArrow
+        direction="prev"
+        label="Previous photo"
+        disabled={active === 0}
+        onClick={() => setActive((current) => Math.max(0, current - 1))}
+      />
+      <CarouselArrow
+        direction="next"
+        label="Next photo"
+        disabled={active === last}
+        onClick={() => setActive((current) => Math.min(last, current + 1))}
+      />
+      <PaginationDots
+        count={CAROUSEL_SLIDES.length}
+        active={active}
+        onSelect={setActive}
+        label="photo"
+      />
+      <p role="status" aria-live="polite" aria-label="Carousel status">
+        Slide {active + 1} of {CAROUSEL_SLIDES.length}: {CAROUSEL_SLIDES[active]}.
+      </p>
+    </>
+  );
+}
+
+function LiveButtonPlayground() {
+  const [feedback, setFeedback] = useState("Try the button to see its feedback.");
+
+  return (
+    <>
+      <PropPlayground
+        component="Button"
+        controls={[
+          { name: "variant", options: ["primary", "transparent", "outline"] },
+          { name: "size", options: ["sm", "md", "lg"] },
+        ]}
+        initial={{ variant: "primary", size: "md" }}
+        render={(p) => (
+          <Button
+            variant={p.variant as "primary"}
+            size={p.size as "md"}
+            onClick={() => setFeedback("Reservation started.")}
+          >
+            Reserve now
+          </Button>
+        )}
+      />
+      <p role="status" aria-live="polite" aria-label="Reservation feedback">
+        {feedback}
+      </p>
+    </>
   );
 }
 
@@ -178,19 +352,7 @@ export default function SystemPage() {
       </header>
 
       <Hero title="Live" lede="Try a variant and watch the component update.">
-        <PropPlayground
-          component="Button"
-          controls={[
-            { name: "variant", options: ["primary", "transparent", "outline"] },
-            { name: "size", options: ["sm", "md", "lg"] },
-          ]}
-          initial={{ variant: "primary", size: "md" }}
-          render={(p) => (
-            <Button variant={p.variant as "primary"} size={p.size as "md"}>
-              Reserve now
-            </Button>
-          )}
-        />
+        <LiveButtonPlayground />
       </Hero>
 
       <Chapter title="Foundations" intro="Tokens, type, and spacing.">
@@ -218,25 +380,14 @@ export default function SystemPage() {
 
       <Chapter
         title="Actions"
-        intro="Trigger something. Both variants use the contrast-corrected --nv-action token."
+        intro="Trigger something. Primary, transparent, and outline variants use the contrast-corrected --nv-action token."
       >
         <Specimen title="Button" note="Interactive surfaces use --nv-action (contrast-corrected).">
-          <Button variant="primary">Primary</Button>
-          <Button variant="transparent">Transparent</Button>
-          <Button variant="outline">Outline</Button>
-          <Button disabled>Disabled</Button>
+          <ActionButtonsDemo />
         </Specimen>
 
         <Specimen title="Icon button">
-          <IconButton
-            label="Save to wishlist"
-            variant="outline"
-            icon={
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 1 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0 0-7.8z" />
-              </svg>
-            }
-          />
+          <WishlistButtonDemo />
         </Specimen>
       </Chapter>
 
@@ -335,20 +486,12 @@ export default function SystemPage() {
           title="Tabs"
           note="Tablist composition: one panel visible at a time. Use for settings, billing, anywhere you want N panels under one selector. For stacked, scroll-jump sections, use the Sticky section nav specimen below instead."
         >
-          <Tabs
-            items={[
-              { id: "learn", label: "Learn" },
-              { id: "plan", label: "Plan" },
-              { id: "go", label: "Go" },
-            ]}
-            value="learn"
-            onChange={() => {}}
-          />
+          <TabsDemo />
         </Specimen>
 
         <Specimen
           title="Sticky section nav"
-          note="Anchor composition: all sections are visible and stacked. The nav jumps you to a section and tracks active state by scroll position. Used on the experience detail page."
+          note="This specimen previews selected state only. The product page owns anchors and scroll tracking."
         >
           <StickySectionNavDemo />
         </Specimen>
@@ -381,9 +524,7 @@ export default function SystemPage() {
         </Specimen>
 
         <Specimen title="Carousel controls">
-          <CarouselArrow direction="prev" label="Previous photo" />
-          <CarouselArrow direction="next" label="Next photo" />
-          <PaginationDots count={4} active={1} onSelect={() => {}} />
+          <CarouselControlsDemo />
         </Specimen>
       </Chapter>
 

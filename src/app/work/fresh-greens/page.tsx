@@ -96,6 +96,11 @@ export default async function FreshGreensPage() {
         timeline="Sep 2025 – Jun 2026"
         stackLabel="Tools"
         stack="Figma, Illustrator, Claude, React Native, Expo, TypeScript, Supabase"
+        evidence={{
+          type: "Working mobile prototype",
+          cta: "Try the safety-flow reconstruction",
+          href: "#fg-pulled-over",
+        }}
         outcomeValue="Working"
         outcomeLabel="React Native prototype across 26+ screens"
         moves={[

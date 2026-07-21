@@ -91,6 +91,11 @@ export default async function UnderstandingFafsaPage() {
         timeline="February 2025 – Ongoing"
         stack="Figma, Mailchimp"
         stackLabel="Tools"
+        evidence={{
+          type: "Interactive case-study explanation",
+          cta: "Build a sample send",
+          href: "#uf-locked",
+        }}
         outcomeValue={project?.outcomeMetricValue}
         outcomeLabel={project?.outcomeMetricLabel}
         moves={[

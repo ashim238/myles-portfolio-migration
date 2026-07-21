@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import {
   NAVI_PRIMITIVES,
   NAVI_SEMANTIC,
@@ -12,19 +12,36 @@ import {
 
 function useCopyToClipboard() {
   const [copied, setCopied] = useState<string | null>(null);
-  const copy = useCallback((value: string) => {
-    navigator.clipboard.writeText(value).then(() => {
+  const [feedback, setFeedback] = useState("");
+  const [failure, setFailure] = useState<{ value: string } | null>(null);
+  const copy = useCallback(async (value: string) => {
+    try {
+      await navigator.clipboard.writeText(value);
       setCopied(value);
+      setFailure(null);
+      setFeedback(`Copied ${value}.`);
       setTimeout(() => setCopied(null), 1400);
-    });
+    } catch {
+      setCopied(null);
+      setFailure({ value });
+      setFeedback(`Could not copy ${value}. The hex value is selected for manual copy.`);
+    }
   }, []);
-  return { copied, copy };
+  return { copied, failure, feedback, copy };
 }
 
 /* ── Color specimen ───────────────────────────────────── */
 
 export function NaviColorSpecimen() {
-  const { copied, copy } = useCopyToClipboard();
+  const { copied, failure, feedback, copy } = useCopyToClipboard();
+  const fallbackRef = useRef<HTMLInputElement>(null);
+  const feedbackId = useId();
+
+  useEffect(() => {
+    if (!failure) return;
+    fallbackRef.current?.focus();
+    fallbackRef.current?.select();
+  }, [failure]);
 
   const primitives = Object.entries(NAVI_PRIMITIVES) as [string, string][];
   const semantic = Object.entries(NAVI_SEMANTIC) as [string, string][];
@@ -92,6 +109,32 @@ export function NaviColorSpecimen() {
             </li>
           ))}
         </ul>
+      </div>
+      <div
+        className="nv-copy-recovery"
+        data-active={feedback ? "true" : undefined}
+      >
+        <p
+          className={`nv-specimen-note nv-copy-feedback${feedback ? "" : " nv-sr-only"}`}
+          id={feedbackId}
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+          aria-label="Clipboard feedback"
+        >
+          {feedback}
+        </p>
+        {failure ? (
+          <input
+            ref={fallbackRef}
+            type="text"
+            className="nv-copy-fallback"
+            aria-describedby={feedbackId}
+            aria-label="Manual hex value"
+            readOnly
+            value={failure.value}
+          />
+        ) : null}
       </div>
     </div>
   );

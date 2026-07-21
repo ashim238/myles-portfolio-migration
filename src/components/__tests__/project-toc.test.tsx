@@ -329,7 +329,11 @@ describe("ProjectToc", () => {
     expect(getCssBlock(".project-page")).toMatch(
       /--project-heading-offset:\s*3\.5rem;/,
     );
-    expect(getCssBlock(".project-page h2[id]")).toMatch(
+    expect(
+      getCssBlock(
+        ".project-page :is(h2[id], .project-evidence-heading[id])",
+      ),
+    ).toMatch(
       /scroll-margin-top:\s*var\(--project-heading-offset\);/,
     );
   });

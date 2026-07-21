@@ -56,6 +56,43 @@ const project: Project = {
 };
 
 describe("WorkProjectCard layout variants", () => {
+  it.each([
+    ["fresh-greens", "Fresh Greens", "Working prototype"],
+    ["navi", "Navi", "Live demo available"],
+    [
+      "understandingfafsa",
+      "UnderstandingFAFSA",
+      "Interactive case-study explanation",
+    ],
+    ["tiktok", "TikTok", "Static launch templates"],
+  ])(
+    "shows the %s evidence label without adding a second link",
+    (slug, title, evidenceLabel) => {
+      const { container } = render(
+        <WorkProjectCard project={{ ...project, slug, title }} index={0} />,
+      );
+
+      const evidence = screen.getByText(evidenceLabel);
+      expect(evidence).toHaveClass("work-card-evidence");
+      expect(evidence.tagName).not.toBe("A");
+      expect(container.querySelectorAll("a")).toHaveLength(1);
+      expect(screen.getByRole("link")).toHaveAttribute("href", `/work/${slug}`);
+
+      const caption = evidence.closest(".work-cap");
+      const titleElement = screen.getByRole("heading", { name: title });
+      const outcome = container.querySelector(".work-out");
+      expect(caption).not.toBeNull();
+      expect(outcome).not.toBeNull();
+      const captionChildren = Array.from(caption?.children ?? []);
+      expect(captionChildren.indexOf(titleElement)).toBeLessThan(
+        captionChildren.indexOf(evidence),
+      );
+      expect(captionChildren.indexOf(outcome as Element)).toBeLessThan(
+        captionChildren.indexOf(evidence),
+      );
+    },
+  );
+
   it("marks a closing card and describes its narrower desktop image slot", () => {
     const imageProject = { ...project, slug: "navi", title: "Navi" };
     const { container } = render(

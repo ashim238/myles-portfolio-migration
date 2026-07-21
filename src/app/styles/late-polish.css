@@ -495,6 +495,37 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
   color: var(--muted); margin: 0; }
 .case-cut-row dd { margin: 0; color: var(--foreground); font-size: 1rem; line-height: 1.5; }
 .case-cut-metric { font-weight: 600; font-variant-numeric: tabular-nums; }
+.case-cut-evidence {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.9rem;
+  padding-block: 0.9rem;
+  border-block: 1px solid var(--line);
+}
+.case-cut-evidence-type {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+.case-cut-evidence-cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--foreground);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 42%, transparent);
+  text-underline-offset: 0.22em;
+  transition: text-decoration-color 180ms ease;
+}
+.case-cut-evidence-cta:hover,
+.case-cut-evidence-cta:focus-visible {
+  text-decoration-color: currentColor;
+}
 .count-up-fact {
   background-image: linear-gradient(
     to top,
@@ -721,6 +752,26 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 .fg-pulled-journey {
   margin: 2.2rem 0 2.6rem;
 }
+.fg-pulled-reconstruction {
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--line);
+}
+.fg-pulled-reconstruction-title {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+.fg-pulled-reconstruction-note {
+  max-width: 58ch;
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
 .fg-pulled-tabs {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -808,6 +859,105 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
   color: var(--muted);
   font-size: 0.72rem;
 }
+.fg-pulled-interaction[hidden] {
+  display: none;
+}
+.fg-pulled-answer-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.45rem;
+  margin: 1.6rem 0 0;
+  padding: 0;
+  border: 0;
+}
+.fg-pulled-answer-legend {
+  width: 100%;
+  margin: 0 0 0.45rem;
+  color: var(--foreground);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.fg-pulled-answer-choice {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--rounded-md);
+  background: var(--background);
+  color: var(--foreground);
+  cursor: pointer;
+  font-size: 0.85rem;
+  line-height: 1.35;
+  transition: border-color 180ms ease, background 180ms ease;
+}
+.fg-pulled-answer-choice:hover {
+  border-color: var(--line-hover);
+}
+.fg-pulled-answer-choice:has(.fg-pulled-answer-input:checked) {
+  border-color: color-mix(in srgb, var(--fg-accent) 72%, var(--line));
+  background: color-mix(in srgb, var(--fg-accent) 10%, var(--background));
+}
+.fg-pulled-answer-input {
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  accent-color: var(--fg-accent);
+  flex: 0 0 auto;
+}
+.fg-pulled-answer-input:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+.fg-pulled-answer-status,
+.fg-pulled-contact-note {
+  margin: 0.9rem 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+.fg-pulled-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.9rem;
+}
+.fg-pulled-control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--foreground);
+  border-radius: var(--rounded-sm);
+  background: var(--foreground);
+  color: var(--background);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+.fg-pulled-control--back {
+  border-color: var(--line);
+  background: transparent;
+  color: var(--foreground);
+}
+.fg-pulled-control:hover:not(:disabled) {
+  opacity: 0.78;
+}
+.fg-pulled-control:active:not(:disabled) {
+  transform: scale(0.98);
+}
+.fg-pulled-control:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+.fg-pulled-control:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
 @media (prefers-reduced-motion: no-preference) {
   .fg-pulled-journey[data-enhanced="true"] .fg-pulled-panel {
     animation: fg-pulled-panel-in 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -833,6 +983,9 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
   }
   .fg-pulled-decision {
     max-width: 22ch;
+  }
+  .fg-pulled-answer-options {
+    grid-template-columns: 1fr;
   }
 }
 

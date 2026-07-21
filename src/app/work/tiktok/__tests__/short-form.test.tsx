@@ -33,10 +33,6 @@ vi.mock("@/components/project-toc", () => ({
   ),
 }));
 
-vi.mock("@/components/recruiter-cut", () => ({
-  RecruiterCut: () => <section data-testid="recruiter-cut" />,
-}));
-
 vi.mock("@/components/project-work-jump", () => ({
   ProjectWorkJump: () => <nav data-testid="project-work-jump" />,
 }));
@@ -84,6 +80,25 @@ describe("TikTok short-form case study", () => {
     getPublishedProjects.mockResolvedValue([project]);
   });
 
+  it("links the evidence trailhead to the rendered template-system explanation", async () => {
+    const { container } = render(await TikTokPage());
+
+    expect(
+      screen.getByText(
+        "Static shipped deliverable with an interactive explanation",
+      ),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "Inspect the template system" }),
+    ).toHaveAttribute("href", "#tt-system");
+
+    const target = container.querySelector("#tt-system");
+    expect(target).not.toBeNull();
+    const chapter = target?.closest(".project-chapter");
+    expect(chapter).not.toBeNull();
+    expect(within(chapter as HTMLElement).getByTestId("template-system")).toBeInTheDocument();
+  });
+
   it("publishes the approved artifact-led preview as the canonical case study", async () => {
     render(await TikTokPage());
 
@@ -92,7 +107,9 @@ describe("TikTok short-form case study", () => {
     expect(hero).toHaveClass("tt-cover--preview");
     expect(screen.queryByTestId("hero-three-phones")).not.toBeInTheDocument();
 
-    expect(screen.getByTestId("recruiter-cut")).toBeInTheDocument();
+    expect(
+      screen.getByRole("region", { name: "At a glance" }),
+    ).toBeInTheDocument();
     expect(
       screen.getByRole("heading", { name: "Fashion subcultures on TikTok" }),
     ).toBeInTheDocument();
