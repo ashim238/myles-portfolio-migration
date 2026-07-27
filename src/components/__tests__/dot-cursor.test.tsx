@@ -53,17 +53,24 @@ describe("DotCursor", () => {
     expect(document.documentElement).not.toHaveClass("dot-cursor-ready");
   });
 
-  it("uses a compact hollow ring over interactive targets", () => {
+  it("keeps a dual-contrast mark visible across open backgrounds and interactive targets", () => {
+    const cursorBoxStyles = declarationBlock(".dot-cursor");
     const cursorStyles = declarationBlock(".dot-cursor::before");
     const hoverStyles = declarationBlock(".dot-cursor--hover::before");
 
-    expect(baseStyles).toContain("--cursor-contrast-source: #f4f4f4");
-    expect(cursorStyles).toContain("background: var(--cursor-contrast-source)");
-    expect(cursorStyles).toContain("mix-blend-mode: difference");
-    expect(hoverStyles).toContain("background: transparent");
-    expect(hoverStyles).toContain(
-      "border: 1px solid var(--cursor-contrast-source)",
+    expect(baseStyles).toContain("--cursor-fill: #f4f4f4");
+    expect(baseStyles).toContain("--cursor-outline: #050505");
+    expect(baseStyles).toMatch(
+      /:root\[data-theme="light"\]\s*\{[\s\S]*?--cursor-fill:\s*#111111;[\s\S]*?--cursor-outline:\s*#fafafa;/,
     );
+    expect(cursorBoxStyles).toContain("width: 12px");
+    expect(cursorBoxStyles).toContain("height: 12px");
+    expect(cursorStyles).toContain("background: var(--cursor-fill)");
+    expect(cursorStyles).toContain("border: 1px solid var(--cursor-outline)");
+    expect(cursorStyles).toContain("mix-blend-mode: normal");
+    expect(hoverStyles).toContain("background: transparent");
+    expect(hoverStyles).toContain("border: 1px solid var(--cursor-fill)");
+    expect(hoverStyles).toContain("outline: 1px solid var(--cursor-outline)");
     expect(hoverStyles).toContain("scale(2)");
     expect(hoverStyles).not.toContain("scale(2.6)");
     expect(hoverStyles).not.toContain("var(--foreground)");
