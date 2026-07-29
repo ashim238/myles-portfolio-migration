@@ -12,26 +12,85 @@ export type ProjectChapterVariant =
 
 export const CASE_STUDY_CHAPTERS = {
   "fresh-greens": [
-    { id: "fg-problem", stage: "Frame", title: "Why time and distance were not enough" },
-    { id: "fg-research", stage: "Research", title: "What interviews with Black drivers changed" },
-    { id: "fg-design", stage: "Design", title: "Safer route decisions" },
-    { id: "fg-refine", stage: "Refine", title: "The visual system after the routing pivot" },
-    { id: "fg-trust", stage: "Trust", title: "Moderating community reports" },
-    { id: "fg-scope", stage: "Validate", title: "What I built and what still needs proof" },
+    {
+      id: "fg-problem",
+      stage: "Frame",
+      title: "Why route planning needs more than time and distance",
+    },
+    {
+      id: "fg-research",
+      stage: "Research",
+      title: "Three problems the interviews made clear",
+    },
+    {
+      id: "fg-design",
+      stage: "Plan",
+      title: "1. See what is on each route before choosing",
+    },
+    {
+      id: "fg-pulled-over",
+      stage: "Respond",
+      title: "2. Handle unexpected problems without adding stress",
+    },
+    {
+      id: "fg-trust",
+      stage: "Trust",
+      title: "3. Navigate with transparent community contributors",
+    },
+    {
+      id: "fg-scope",
+      stage: "Validate",
+      title: "What the prototype made possible and what still needs proof",
+    },
   ],
   navi: [
-    { id: "nv-intro", stage: "Frame", title: "Concentrated tourism as a routing problem" },
-    { id: "nv-insights", stage: "Research", title: "The resident survey redirected the concept" },
-    { id: "nv-framework", stage: "Define", title: "Research shaped exploration and booking" },
-    { id: "nv-build", stage: "Build", title: "From prototype to booking flow" },
-    { id: "nv-outcome", stage: "Validate", title: "What I would test next" },
+    {
+      id: "nv-intro",
+      stage: "Frame",
+      title: "The first idea moved visitors, not behavior",
+    },
+    {
+      id: "nv-insights",
+      stage: "Research",
+      title: "The survey changed the brief",
+    },
+    {
+      id: "nv-framework",
+      stage: "Define",
+      title: "From neighborhood context to Learn, Plan, Go",
+    },
+    {
+      id: "nv-build",
+      stage: "Build",
+      title: "From studio concept to working booking flow",
+    },
+    {
+      id: "nv-outcome",
+      stage: "Validate",
+      title: "What works now and what still needs testing",
+    },
   ],
   tiktok: [
-    { id: "tt-research", stage: "Research", title: "Fashion subcultures on TikTok" },
-    { id: "tt-system", stage: "Define", title: "The fixed catalog structure" },
-    { id: "tt-modular", stage: "Explore", title: "Templates as modular parts" },
-    { id: "tt-templates", stage: "Build", title: "From sketches to layered files" },
-    { id: "tt-outcome", stage: "Deliver", title: "What shipped from the launch batch" },
+    {
+      id: "tt-brief",
+      stage: "Brief",
+      title: "What Dynamic Showcase Ads needed",
+    },
+    {
+      id: "tt-research",
+      stage: "Choose",
+      title: "Why three directions moved forward",
+    },
+    {
+      id: "tt-system",
+      stage: "Build",
+      title: "One slot map, three visual systems",
+    },
+    {
+      id: "tt-outcome",
+      stage: "Deliver",
+      title: "Why Light Academia shipped",
+    },
   ],
   understandingfafsa: [
     { id: "uf-context", stage: "Frame", title: "A rebrand and a weekly workflow" },
