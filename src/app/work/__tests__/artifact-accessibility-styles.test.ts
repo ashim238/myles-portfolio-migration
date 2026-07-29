@@ -197,6 +197,14 @@ describe("portfolio artifact accessibility styles", () => {
     );
     expect(mobileProgress).toContain("var(--tt-cyan)");
     expect(mobileProgress).toContain("var(--tt-magenta)");
+    for (const segment of [
+      "var(--tt-cyan) 0% 25%",
+      "var(--tt-magenta) 25% 50%",
+      "var(--tt-cyan) 50% 75%",
+      "var(--tt-magenta) 75% 100%",
+    ]) {
+      expect(mobileProgress).toContain(segment);
+    }
   });
 
   it("scopes Navi route rails and waypoint dots to its accent", () => {

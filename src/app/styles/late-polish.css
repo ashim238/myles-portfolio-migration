@@ -1478,11 +1478,10 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
   transform: none;
   background: linear-gradient(
     to right,
-    var(--tt-cyan) 0% 20%,
-    var(--tt-magenta) 20% 40%,
-    var(--tt-cyan) 40% 60%,
-    var(--tt-magenta) 60% 80%,
-    var(--tt-cyan) 80% 100%
+    var(--tt-cyan) 0% 25%,
+    var(--tt-magenta) 25% 50%,
+    var(--tt-cyan) 50% 75%,
+    var(--tt-magenta) 75% 100%
   );
   -webkit-mask: linear-gradient(
     to right,
