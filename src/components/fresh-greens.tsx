@@ -241,7 +241,7 @@ export function ArchitectureDiagram() {
             Pure deterministic function.
           </text>
           <text x="48" y="282" fontSize="12" opacity="0.7">
-            Same inputs → same routing decision. Reproducible. Inspectable.
+            Same inputs → same routing decision.
           </text>
         </g>
 
@@ -274,17 +274,15 @@ export function ArchitectureDiagram() {
             Screen layer
           </text>
           <text x="48" y="381" fontSize="14" fontWeight="500">
-            Renders the result. Does not invent it.
+            Renders the result.
           </text>
         </g>
       </svg>
       </DrawOnView>
       </div>
       <figcaption className="fg-arch-caption">
-        Eight data inputs feed an adapter, a deterministic scoring layer, then
-        the screen. Community reports are local-first in the prototype, with a
-        Supabase and Postgres path behind configuration, row-level security,
-        device UUID checks, and moderation views.
+        Community reports are local-first. Supabase, row-level security, device
+        checks, and moderation activate only when configured.
         <span className="fg-arch-scrollhint"> Scroll the diagram to read it all.</span>
       </figcaption>
     </figure>
@@ -491,15 +489,14 @@ export function ReservedPalette() {
   return (
     <div className="fg-palette">
       <p className="fg-palette-baseline">
-        <strong>Green</strong>, the general interface color, carries every CTA,
-        link, and affordance. Four colors are held to safety-signal work, with
-        the documented carve-outs below.
+        <strong>Green</strong> carries general interface actions. The colors
+        below are reserved for safety, with documented exceptions.
       </p>
       <dl className="fg-palette-lanes">
         {solidLanes.map(renderLane)}
       </dl>
       <p className="fg-palette-gradient-intro">
-        And where color is the data:
+        Daylight as data:
       </p>
       <dl className="fg-palette-lanes">
         {renderLane(daylightLane)}

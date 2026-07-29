@@ -77,9 +77,9 @@ export default async function FreshGreensPage() {
           Fresh Greens
         </h1>
         <p className="project-hero-lede fg-lede">
-          Fresh Greens brings community safety knowledge into route planning
-          for Black drivers. I designed and built a working React Native
-          prototype after six interviews, scoring{" "}
+          Fresh Greens is a working React Native prototype that brings community
+          safety knowledge into route planning for Black drivers. After six
+          interviews, I combined{" "}
           <mark className="case-highlight">daylight, police presence, wildlife, road conditions, and community reports alongside public map data</mark>.
         </p>
       </section>
@@ -104,9 +104,9 @@ export default async function FreshGreensPage() {
         outcomeValue="Working"
         outcomeLabel="React Native prototype across 26+ screens"
         moves={[
-          "Brought community reports into the same route-scoring pipeline as public map and daylight data, then surfaced the evidence through safety chips and source detail cards.",
-          "Built the en-route screen around one-thumb reach: turn card, top-down route map, and a safety column.",
-          "Shaped the routing signals from six driver interviews.",
+          "Put community reports and public signals through one route-scoring pipeline, then explained results with safety chips and source cards.",
+          "Kept turn guidance, the top-down map, and safety controls within one-thumb reach.",
+          "Translated six driver interviews into four routing signals.",
         ]}
       />
 
@@ -129,11 +129,11 @@ export default async function FreshGreensPage() {
           </blockquote>
           <div className="project-section-body">
             <p>
-              In interviews, Black drivers described routes in terms of more than
-              time and distance: whether roads are lit, whether a town feels safe
-              to stop in, and where police tend to sit. Navigation apps don&apos;t
-              account for those signals. Fresh Greens brings them into route
-              selection.
+              I wanted to use modern navigation technology to help Black drivers
+              make more informed decisions on the road. Interviews showed that
+              time and distance were only part of that decision. Daylight, road
+              conditions, police presence, wildlife, and advice from people they
+              trusted mattered too.
             </p>
           </div>
         </div>
@@ -148,10 +148,9 @@ export default async function FreshGreensPage() {
       >
         <div className="project-section fg-section fg-section--wide">
           <p className="case-section-lead">
-            Six interviews with Black drivers across the Southern US, anonymized
-            in synthesis and led with joy and fear before any product questions.
-            The timeline was tight, so the synthesis stayed lean: I pulled the
-            recurring trends into four routing markers.
+            I interviewed six Black drivers across the Southern US, starting
+            with joy and fear before discussing products. Four recurring
+            signals shaped the route model.
           </p>
 
           <figure className="fg-pullquote">
@@ -171,23 +170,22 @@ export default async function FreshGreensPage() {
             <div className="fg-evidence-boundary">
               <p className="fg-evidence-label">Interview-supported</p>
               <p>
-                Six Black drivers raised daylight, police presence, wildlife,
-                and road conditions as route-planning signals.
+                The interviews surfaced daylight, police presence, wildlife,
+                and road conditions.
               </p>
             </div>
             <div className="fg-evidence-boundary">
               <p className="fg-evidence-label">Built in the prototype</p>
               <p>
-                A working React Native build scores those four signals, shows
-                route chips, and uses detail cards to explain where a signal came
-                from.
+                The React Native prototype scores those signals and explains
+                route chips through source cards.
               </p>
             </div>
             <div className="fg-evidence-boundary">
               <p className="fg-evidence-label">Not yet proven</p>
               <p>
-                Whether the recommendations improve safety still needs broader
-                route testing and moderation data.
+                Broader route testing and moderation data are still needed
+                before calling a recommendation safer.
               </p>
             </div>
           </div>
@@ -202,19 +200,16 @@ export default async function FreshGreensPage() {
               style={{ width: "100%", height: "auto", display: "block" }}
             />
             <figcaption className="fg-safety-visual-caption">
-              The zone-flow storyboard, done by hand. The layered route stroke
-              marking a wildlife zone in the last panel was too dense to read at
-              a glance, so it got simplified into the daylight gradient the app
-              uses now.
+              I dropped the storyboard&apos;s layered wildlife-zone stroke after
+              it proved too dense, replacing it with the current daylight
+              gradient.
             </figcaption>
           </figure>
 
           <div className="project-section-body">
             <p>
-              My first instinct was to stack every safety layer onto the screen.
-              But the interviews also said driving already takes focus, so I
-              pulled most of it back. The safety toolkit stays hidden until a
-              driver reaches for it.
+              Because driving already takes focus, most safety tools stay hidden
+              until requested.
             </p>
           </div>
         </div>
@@ -236,28 +231,17 @@ export default async function FreshGreensPage() {
         </h3>
         <div className="project-section-body">
           <p>
-            Every route is scored on four things the interviews kept raising:
-            light, police presence, wildlife, and road conditions. A community
-            report feeds those same four markers through the same scoring
-            pipeline as public data. I treated community reports as a{" "}
+            Public and community data enter the same four-signal scoring
+            pipeline. I treated community reports as a{" "}
             <mark className="case-highlight">first-class route input</mark>.
-            The preview shows visible evidence as safety chips, while detail
-            cards explain whether a signal comes from public map data, daylight
-            calculations, traffic incidents, or community reports. That&apos;s
-            how the working prototype behaves, not evidence that its
+            Safety chips show the result, while source cards identify public map
+            data, daylight calculations, traffic incidents, or community
+            reports. This describes prototype behavior, not proof that a
             recommendation is safer.
           </p>
         </div>
 
         <ArchitectureDiagram />
-
-        <div className="project-section-body">
-          <p>
-            The en-route screen is where it all lands: a turn card, a top-down
-            route map that follows the drive, and a safety column within
-            thumb&apos;s reach.
-          </p>
-        </div>
 
         <figure className="fg-en-route-video">
           <LeadVideo
@@ -284,18 +268,12 @@ export default async function FreshGreensPage() {
         </h3>
         <div className="project-section-body">
           <p>
-            Every prompt in a safety moment is set in{" "}
-            <mark className="case-highlight">Libre Franklin Regular, not Bold</mark>. The
-            safety modal asks &quot;What&apos;s going on?&quot; The share sheet
-            asks &quot;What&apos;s the situation?&quot; A driver who just got
-            pulled over doesn&apos;t need &quot;REPORT INCIDENT&quot; shouted at
-            them in a heavier weight than their own thoughts.
-          </p>
-          <p>
-            That came from the interviews too. People said the moments the app
-            matters most call for a companion. So
-            Bold appears only on facts the app is sure of, like ETA and the{" "}
-            <code>/emergency</code> countdown.
+            Safety prompts use{" "}
+            <mark className="case-highlight">Libre Franklin Regular</mark>.
+            Bold is reserved for known facts such as ETA and the{" "}
+            <code>/emergency</code> countdown, so questions like
+            &quot;What&apos;s going on?&quot; and &quot;Are you armed?&quot;
+            don&apos;t read as commands.
           </p>
         </div>
 
@@ -303,10 +281,9 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body">
           <p>
-            The other safety surfaces (<code>/roadside</code>,{" "}
-            <code>/unfamiliar</code>, <code>/share-location</code>,{" "}
-            <code>/emergency</code>) use the same voice, each a first-class
-            route that works with no signal.
+            The same voice carries across <code>/roadside</code>,{" "}
+            <code>/unfamiliar</code>, <code>/share-location</code>, and{" "}
+            <code>/emergency</code>, all available without signal.
           </p>
         </div>
       </section>
@@ -347,29 +324,24 @@ export default async function FreshGreensPage() {
             OKLCH on the brand-green hue, giving the app one tonal source.
           </p>
           <p>
-            I designed the initial flows in Figma, used Illustrator for the
-            onboarding art, and checked the system in the React Native build. I
-            used Claude as a critique partner to tighten token names, color
-            roles, and copy rules, keeping me from second-guessing those
-            decisions as the system grew.
+            I designed the flows in Figma, drew the onboarding art in
+            Illustrator, and checked the system in React Native. Claude helped
+            me critique token names, color roles, and copy rules.
           </p>
           <p>
-            Type took three tries: Jost, Space Grotesk, then Libre Franklin for
-            the hierarchy. I limited DM Serif Display to exactly six emotional
-            moments, including the emergency reassurance and the &quot;Thanks
-            for sharing&quot; on <code>/trip-summary</code>. Keeping it to those
-            six helps them land. Type and color move with the trip: calm at
-            entry, heightened en-route, and resolved at the trip summary.
+            After trying Jost and Space Grotesk, I chose Libre Franklin for the
+            hierarchy. DM Serif Display appears only in six emotional moments,
+            including emergency reassurance and the <code>/trip-summary</code>{" "}
+            thank-you.
           </p>
         </div>
 
         <figure className="fg-token-figure">
           <TokenExhibit />
           <figcaption className="fg-safety-visual-caption">
-            The color and spacing tokens come straight from{" "}
+            These tokens come from{" "}
             <code>theme/colors.ts</code> and <code>theme/spacing.ts</code>.
-            Before the spacing scale was explicit, it picked up stragglers at
-            5, 6, 13, and 18. A 4pt ramp made that drift easy to catch.
+            A 4pt ramp replaced spacing stragglers at 5, 6, 13, and 18.
           </figcaption>
         </figure>
 
@@ -386,8 +358,8 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body">
           <p>
-            Red, orange, yellow, and navy each keep one safety meaning, so a red
-            dot always points to something specific. Across 26+ screens,{" "}
+            Red, orange, yellow, and navy each keep one safety meaning.
+            Across 26+ screens,{" "}
             <mark className="case-highlight">exceptions are documented as carve-outs</mark>.
           </p>
         </div>
@@ -403,9 +375,8 @@ export default async function FreshGreensPage() {
               />
             </PhoneFrame>
             <figcaption className="fg-safety-visual-caption">
-              On the en-route screen, navy marks the safety Shield, red the
-              alert, orange the hazard, and a sun glyph the daylight arrival.
-              Green carries everything else.
+              Navy marks safety mode, red alerts, orange hazards, and the sun
+              glyph daylight. Green carries the rest.
             </figcaption>
           </figure>
         </div>
@@ -426,9 +397,8 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body">
           <p>
-            I pair every color signal with a second channel. On{" "}
-            <code>/report</code>, severity pairs color with a filled warning
-            glyph, so the cue doesn&apos;t depend on hue (WCAG 1.4.1).
+            Every color signal has a second channel. <code>/report</code> pairs
+            severity with a filled warning glyph (WCAG 1.4.1).
           </p>
         </div>
 
@@ -445,16 +415,10 @@ export default async function FreshGreensPage() {
         <div className="project-section fg-section fg-section--wide">
         <div className="project-section-body">
           <p>
-            Community reports have to earn trust without being treated as less
-            useful by default. Bad-faith and mistaken reports still need to be
-            caught. That&apos;s what <code>/moderation</code> is for.
-          </p>
-          <p>
-            When the Supabase path is configured, reports flow into a
-            moderation view with an investigation panel: the source device,
-            prior and nearby reports, and coordination checks for duplicate IPs
-            and devices. Moderators can review, hide, restore, or remove
-            reports, and those actions are recorded in an audit log.
+            Community reports can be useful without being verified. When
+            Supabase is configured, <code>/moderation</code> shows the source
+            device, prior and nearby reports, duplicate IP or device checks,
+            review actions, and an audit log.
           </p>
         </div>
 
@@ -467,8 +431,7 @@ export default async function FreshGreensPage() {
               />
             </PhoneFrame>
             <figcaption className="fg-safety-visual-caption">
-              The report picker lets drivers contribute context without
-              pretending every report is already verified.
+              Drivers contribute context without claiming verification.
             </figcaption>
           </figure>
 
@@ -480,8 +443,8 @@ export default async function FreshGreensPage() {
               />
             </PhoneFrame>
             <figcaption className="fg-safety-visual-caption">
-              The form separates structured place and welcome tags from the
-              driver&apos;s optional written experience.
+              Structured place and welcome tags sit beside an optional written
+              experience.
             </figcaption>
           </figure>
         </div>
@@ -495,9 +458,7 @@ export default async function FreshGreensPage() {
               <p className="fg-mod-stage-label">Enters</p>
               <p className="fg-mod-stage-text">A report joins the queue</p>
             </div>
-            <span className="fg-mod-arrow" aria-hidden="true">
-              →
-            </span>
+            <span className="fg-mod-arrow" aria-hidden="true" />
             <div className="fg-mod-stage fg-mod-stage--panel">
               <p className="fg-mod-stage-label">Investigation panel</p>
               <ul className="fg-mod-checks" role="list">
@@ -507,9 +468,7 @@ export default async function FreshGreensPage() {
                 <li>Coordination: duplicate IPs and devices</li>
               </ul>
             </div>
-            <span className="fg-mod-arrow" aria-hidden="true">
-              →
-            </span>
+            <span className="fg-mod-arrow" aria-hidden="true" />
             <div className="fg-mod-stage">
               <p className="fg-mod-stage-label">Human decision</p>
               <p className="fg-mod-stage-text">
@@ -519,12 +478,6 @@ export default async function FreshGreensPage() {
           </div>
         </div>
 
-        <div className="project-section-body">
-          <p>
-            A planned transparency page will publish moderation outcomes so
-            the queue is auditable from outside.
-          </p>
-        </div>
         </div>
       </ProjectChapter>
 
@@ -542,25 +495,21 @@ export default async function FreshGreensPage() {
             <p className="fg-scope-label">Built in the working prototype</p>
             <ul className="fg-scope-list" role="list">
               <li>
-                Route scoring that combines OpenStreetMap zones, DOT-511 where
-                available, Mapbox/OSRM route geometry, SunCalc daylight data,
-                and community reports, with route chips and source-detail
-                explanations
+                Route scoring from OpenStreetMap, DOT-511, Mapbox/OSRM,
+                SunCalc, and community reports, explained through chips and
+                source cards
               </li>
               <li>
-                Six-surface safety toolkit, with <code>/pulled-over</code>{" "}
-                carrying ACLU-sourced guidance, on-device audio capture, and
-                the Held-Question voice
+                Six offline safety surfaces, including ACLU-sourced guidance
+                and on-device audio capture in <code>/pulled-over</code>
               </li>
               <li>
                 Reserved-color system and warm surface ramp across 26+ screens,
                 with 300+ accessibility attributes and 62 Figma variables
               </li>
               <li>
-                <code>/moderation</code> queue with per-report investigation
-                panels, coordination detection for IP and device duplicates,
-                Supabase-backed review actions when configured, and a
-                hold-to-remove destructive gesture
+                <code>/moderation</code> investigation panels, coordination
+                checks, configured Supabase actions, and hold-to-remove
               </li>
             </ul>
           </div>
@@ -571,13 +520,12 @@ export default async function FreshGreensPage() {
                 Route-quality testing with more Black drivers across regions
               </li>
               <li>
-                Live shared-report testing across configured Supabase builds,
-                plus failure-mode testing for mistaken reports, coordinated
-                abuse, and moderation outcomes
+                Shared-report and failure-mode testing across configured
+                Supabase builds
               </li>
               <li>
-                A public transparency page for <code>/moderation</code>{" "}
-                activity and broader device testing beyond iPhone
+                A public moderation transparency page and device testing beyond
+                iPhone
               </li>
             </ul>
           </div>
@@ -585,10 +533,10 @@ export default async function FreshGreensPage() {
 
         <div className="project-section-body fg-scope-closer">
           <p>
-            I can trace the Held-Question rule, route chips, and source detail
-            cards back to interviews. I&apos;d want broader route testing with
-            Black drivers, moderation outcomes, and failure cases before
-            calling any route safer.
+            The Held-Question rule, route chips, and source cards trace back to
+            interviews. I&apos;d still test routes, moderation outcomes, and
+            failure cases with more Black drivers before calling any route
+            safer.
           </p>
         </div>
         </div>

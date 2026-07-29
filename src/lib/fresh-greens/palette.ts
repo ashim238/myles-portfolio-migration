@@ -23,7 +23,7 @@ export const RESERVED_LANES: ReservedLane[] = [
     carveOuts: [
       {
         tag: "Live audio-capture indicator",
-        note: "A pulsing dot for the active recording state on /pulled-over.",
+        note: "Active recording on /pulled-over.",
       },
       {
         tag: "Destructive-action labels",
@@ -31,11 +31,11 @@ export const RESERVED_LANES: ReservedLane[] = [
       },
       {
         tag: "Error copy on light",
-        note: "Swaps to the darker severityCritical token for AA (~5.6 : 1 vs red’s ~3.5 : 1).",
+        note: "Uses darker severityCritical for AA on light surfaces.",
       },
       {
         tag: "iOS red on dark auth",
-        note: "The contrast argument inverts, so default red passes there.",
+        note: "Default red passes on the dark auth surface.",
       },
     ],
   },
@@ -47,15 +47,15 @@ export const RESERVED_LANES: ReservedLane[] = [
     carveOuts: [
       {
         tag: "Community-report pin",
-        note: "Marks community observations apart from the institutional feeds.",
+        note: "Separates community observations from institutional feeds.",
       },
       {
         tag: "Report FAB",
-        note: "The same orange marks the contribute-back affordance.",
+        note: "Uses the same orange for contributing back.",
       },
       {
         tag: "Route-preview hazard chips",
-        note: "Police presence and low-light segments.",
+        note: "Police and low-light segments.",
       },
     ],
   },
@@ -99,7 +99,7 @@ export const RESERVED_LANES: ReservedLane[] = [
     carveOuts: [
       {
         tag: "Daylight polyline",
-        note: "Color is the data: a per-segment daylight score. A solid → dashed → dotted cadence carries it for WCAG 1.4.1.",
+        note: "A solid, dashed, and dotted cadence carries the daylight score for WCAG 1.4.1.",
       },
     ],
   },

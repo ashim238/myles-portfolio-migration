@@ -18,7 +18,7 @@ export const SYNTHESIS: Cluster[] = [
     label: "Light",
     raisedBy: 6,
     insight:
-      "People time trips around daylight and read lighting as safety. It came up in every interview.",
+      "Every interview connected trip timing and safety with daylight.",
     snippets: [
       "Always leaving in the morning.",
       "I wouldn't feel comfortable driving at night.",
@@ -31,7 +31,7 @@ export const SYNTHESIS: Cluster[] = [
     label: "Police presence",
     raisedBy: 5,
     insight:
-      "Police proximity is a live fear, managed with behaviors taught by family and community.",
+      "Five drivers treated police proximity as an active routing concern.",
     snippets: [
       "Biggest fear is interacting with police.",
       "If the app said there's cops here, we're going around that.",
@@ -43,7 +43,7 @@ export const SYNTHESIS: Cluster[] = [
     key: "wildlife",
     label: "Wildlife",
     raisedBy: 3,
-    insight: "Deer at dusk reroute people off certain roads after dark.",
+    insight: "Deer at dusk changed which roads felt usable.",
     snippets: [
       "Deer at night, so I'd avoid those roads once evening hit.",
       "Deer-heavy areas.",
@@ -55,7 +55,7 @@ export const SYNTHESIS: Cluster[] = [
     label: "Road conditions",
     raisedBy: 5,
     insight:
-      "Road size, quality, and flooding change the route people are willing to take.",
+      "Road size, quality, and flooding changed acceptable routes.",
     snippets: [
       "Narrow backroads that can't fit two cars.",
       "A lot of places get flooded.",
@@ -68,7 +68,7 @@ export const SYNTHESIS: Cluster[] = [
     label: "Community knowledge",
     raisedBy: 5,
     insight:
-      "Five of six Black drivers described asking family or friends about an unfamiliar place before trusting institutional data.",
+      "Five drivers asked family or friends before trusting an unfamiliar place.",
     snippets: [
       "I'd listen to family over the statistic. The powers that be aren't honest.",
       "For a new area, I'd ask friends who'd been there.",

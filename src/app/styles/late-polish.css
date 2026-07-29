@@ -1186,6 +1186,26 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
   background: var(--surface);
 }
 
+@media (min-width: 641px) {
+  .fg-en-route-video {
+    max-width: 338px;
+  }
+
+  .fg-en-route-video .case-video-frame {
+    overflow: hidden;
+    padding: 8px;
+    border: 1px solid color-mix(in srgb, var(--foreground) 26%, transparent);
+    border-radius: 2rem;
+    background: #111;
+    box-shadow: 0 1.25rem 3rem color-mix(in srgb, #000 20%, transparent);
+  }
+
+  .fg-en-route-video .case-lead-video {
+    border: 0;
+    border-radius: 1.5rem;
+  }
+}
+
 /* ── Pulled-over: emotional-peak evidence anchor ──────── */
 .project-evidence-heading#fg-pulled-over {
   font-size: clamp(2rem, 4vw, 3.2rem);
@@ -1303,18 +1323,54 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
   background: var(--fg-accent);
 }
 .fg-mod-arrow {
-  align-self: center;
+  position: relative;
+  flex: 0 0 1.5rem;
+  align-self: stretch;
   color: var(--fg-accent);
-  opacity: 0.65;
-  font-size: 1rem;
+  font-size: 0;
+}
+.fg-mod-arrow::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0.35rem;
+  left: 0;
+  height: 1px;
+  background: var(--line);
+}
+.fg-mod-arrow::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 0.38rem;
+  height: 0.38rem;
+  border: solid var(--fg-accent);
+  border-width: 0 1px 1px 0;
+  transform: translateY(-50%) rotate(-45deg);
 }
 @media (max-width: 620px) {
   .fg-mod-flow {
     flex-direction: column;
   }
   .fg-mod-arrow {
-    transform: rotate(90deg);
-    align-self: center;
+    flex: 0 0 1.4rem;
+    width: 100%;
+  }
+  .fg-mod-arrow::before {
+    top: 0;
+    right: auto;
+    bottom: 0.35rem;
+    left: 50%;
+    width: 1px;
+    height: auto;
+  }
+  .fg-mod-arrow::after {
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
   }
 }
 
