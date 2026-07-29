@@ -3395,12 +3395,12 @@ button:focus-visible,
 }
 
 /* ── Vertical reading spine (wide screens) ──
-   Above 1440px there's room in the left gutter for the table of contents to
+   From 1600px there's room in the left gutter for the table of contents to
    stand up into a true vertical spine: section dots strung on a continuous
    rail that fills downward as you read each section. Same DOM, same keyboard
    nav and active tracking — only the orientation changes. The active label
    stays visible in the left gutter; other labels appear on hover or focus. */
-@media (min-width: 1440px) {
+@media (min-width: 1600px) {
   .project-toc {
     position: fixed;
     /* Anchored just left of the centered text column, clamped on-screen. */
@@ -3508,7 +3508,7 @@ button:focus-visible,
   }
 }
 
-@media (min-width: 1440px) and (prefers-reduced-motion: reduce) {
+@media (min-width: 1600px) and (prefers-reduced-motion: reduce) {
   .project-toc-text {
     transition: opacity 200ms ease;
   }

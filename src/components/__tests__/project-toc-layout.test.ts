@@ -100,9 +100,10 @@ describe("ProjectToc responsive layout", () => {
     expect(enhanced).toMatch(/top:\s*0;/);
   });
 
-  it("starts the vertical spine at 1440px and keeps its active label visible", () => {
+  it("keeps 1440px horizontal and starts the vertical spine at 1600px", () => {
     expect(styles).not.toContain("@media (min-width: 1280px)");
-    const wide = cssBlock("@media (min-width: 1440px)");
+    expect(styles).not.toContain("@media (min-width: 1440px)");
+    const wide = cssBlock("@media (min-width: 1600px)");
     const toc = cssBlock(".project-toc", wide);
     const link = cssBlock(".project-toc-link", wide);
     const rail = cssBlock(".project-toc-rail", wide);
