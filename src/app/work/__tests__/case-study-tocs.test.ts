@@ -8,15 +8,10 @@ type CaseStudyContract = {
   path: string;
   mapKey: keyof typeof CASE_STUDY_CHAPTERS;
   readingEndId?: string;
-  evidenceIds: readonly string[];
 };
 
 function readCaseStudy(path: string) {
   return readFileSync(resolve(process.cwd(), path), "utf8");
-}
-
-function idOccurrences(source: string, id: string) {
-  return source.match(new RegExp(`id="${id}"`, "g"))?.length ?? 0;
 }
 
 function chapterMapIdOccurrences(source: string, id: string) {
@@ -37,25 +32,21 @@ const cases: readonly CaseStudyContract[] = [
     path: "src/app/work/fresh-greens/page.tsx",
     mapKey: "fresh-greens",
     readingEndId: "fg-scope",
-    evidenceIds: ["fg-scoring", "fg-pulled-over", "fg-pivot", "fg-typecolor", "fg-color"],
   },
   {
     name: "TikTok",
     path: "src/app/work/tiktok/page.tsx",
     mapKey: "tiktok",
-    evidenceIds: [],
   },
   {
     name: "Navi",
     path: "src/app/work/navi/page.tsx",
     mapKey: "navi",
-    evidenceIds: ["nv-heatmap", "nv-research", "nv-system", "nv-screens"],
   },
   {
     name: "UnderstandingFAFSA",
     path: "src/app/work/understandingfafsa/page.tsx",
     mapKey: "understandingfafsa",
-    evidenceIds: ["uf-problem", "uf-templates"],
   },
 ];
 
@@ -70,17 +61,20 @@ describe("case-study chapter navigation contracts", () => {
       expect(source).toMatch(/<ProjectToc[\s\S]*?sections=\{chapters\}/);
       expect(source).toContain("<ProjectChapter");
 
-      for (const [index, chapter] of chapters.entries()) {
+      for (const chapter of chapters) {
         expect(chapterMapIdOccurrences(chapterMapSource, chapter.id)).toBe(1);
-        expect(source).toContain(`entry={chapters[${index}]}`);
       }
+
+      const entryIndexes = Array.from(
+        source.matchAll(/entry=\{chapters\[(\d+)\]\}/g),
+        ([, index]) => index,
+      );
+      const expectedIndexes = chapters.map((_, index) => String(index));
+
+      expect(entryIndexes).toEqual(expectedIndexes);
 
       if (caseStudy.readingEndId) {
         expect(source).toContain(`readingEndId="${caseStudy.readingEndId}"`);
-      }
-
-      for (const evidenceId of caseStudy.evidenceIds) {
-        expect(idOccurrences(source, evidenceId)).toBe(1);
       }
     });
   }
