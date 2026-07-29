@@ -239,4 +239,22 @@ describe("Loom p5 behavior", () => {
     expect(contrastRatio("#ffffff", button!)).toBeGreaterThanOrEqual(4.5);
     expect(contrastRatio("#ffffff", hover!)).toBeGreaterThanOrEqual(4.5);
   });
+
+  it("keeps the dark-theme input boundary at non-text contrast", () => {
+    const css = readFileSync(
+      resolve(process.cwd(), "public/play/loom/style.css"),
+      "utf8",
+    );
+    const darkTheme =
+      css.match(/:root\[data-theme="dark"\]\s*\{([^}]*)\}/)?.[1] ?? "";
+    const panel = darkTheme.match(/--loom-panel:\s*(#[0-9a-f]{6})/i)?.[1];
+    const input = darkTheme.match(/--loom-input:\s*(#[0-9a-f]{6})/i)?.[1];
+    const border = darkTheme.match(/--loom-border:\s*(#[0-9a-f]{6})/i)?.[1];
+
+    expect(panel).toBeDefined();
+    expect(input).toBeDefined();
+    expect(border).toBeDefined();
+    expect(contrastRatio(border!, panel!)).toBeGreaterThanOrEqual(3);
+    expect(contrastRatio(border!, input!)).toBeGreaterThanOrEqual(3);
+  });
 });
