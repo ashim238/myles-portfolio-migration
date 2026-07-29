@@ -17,6 +17,7 @@ import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
 import { CASE_STUDY_CHAPTERS } from "@/lib/project-chapters";
 import { createRouteMetadata } from "@/lib/site-config";
 import { TIKTOK_TEMPLATES } from "@/lib/tiktok-data";
+import styles from "./tiktok-four-beat.module.css";
 
 const TIKTOK_DESCRIPTION =
   "Static catalog templates designed for TikTok's Dynamic Showcase Ads during a 2021 Global Creative Lab internship. Light Academia shipped in the launch library.";
@@ -113,13 +114,37 @@ export default async function TikTokPage() {
         <div className="project-section tt-section">
           <div className="project-section-body">
             <p>
-              Before I moved into mockups, I looked at Y2K, Maximalism, Dark
-              Academia, WitchTok, and Cottagecore. Those references helped me
-              compare how different parts of TikTok&apos;s fashion community used
-              type, color, texture, and imagery. I moved forward with Dopamine
-              Dressing, e-Boy/e-Girl, and Light Academia because the differences
-              were obvious at a glance.
+              Dynamic Showcase Ads (DSA) used reusable templates with fixed
+              product slots for brand catalog content.
             </p>
+            <dl className={styles.briefFacts}>
+              <div>
+                <dt>Role</dt>
+                <dd>Creative Strategist Intern</dd>
+              </div>
+              <div>
+                <dt>Team</dt>
+                <dd>Global Creative Lab</dd>
+              </div>
+              <div>
+                <dt>Intended use</dt>
+                <dd>Reusable templates for brand catalog content</dd>
+              </div>
+              <div>
+                <dt>Deliverable</dt>
+                <dd>
+                  Three static template directions as layered Photoshop files
+                </dd>
+              </div>
+              <div>
+                <dt>Fixed parts</dt>
+                <dd>Product slots and the shared slot map</dd>
+              </div>
+              <div>
+                <dt>Variable parts</dt>
+                <dd>Type, color, texture, and supporting graphics</dd>
+              </div>
+            </dl>
           </div>
         </div>
       </ProjectChapter>
@@ -130,15 +155,16 @@ export default async function TikTokPage() {
         total={chapters.length}
         variant="tiktok"
       >
-        <div className="project-section tt-section tt-section--wide">
+        <div className="project-section tt-section">
           <div className="project-section-body">
             <p>
-              Brands added their product catalog to a pre-made template. I
-              handed off layered Photoshop files with a slot map showing where
-              each asset would go.
+              I compared Y2K, Maximalism, Dark Academia, WitchTok, and Cottagecore
+              through their use of type, color, texture, and imagery. Three
+              directions moved forward because they created clearly different
+              visual systems inside the same slot map. Those directions were
+              Dopamine Dressing, e-Boy/e-Girl, and Light Academia.
             </p>
           </div>
-          <TikTokTemplateSystem />
         </div>
       </ProjectChapter>
 
@@ -148,21 +174,76 @@ export default async function TikTokPage() {
         total={chapters.length}
         variant="tiktok"
       >
-        <div className="project-section tt-section">
+        <div className="project-section tt-section tt-section--wide">
           <div className="project-section-body">
             <p>
-              I built each template in parts so the catalog content could drop
-              into a fixed structure. While working that way, I started to see
-              the individual pieces as a system brands could potentially
-              customize rather than a single locked composition.
+              Each direction used the same product slots and shared slot map. I
+              handed off three static directions as layered Photoshop files,
+              then separated type, color, texture, and supporting graphics so I
+              could test how much of each direction could move.
             </p>
+          </div>
+          <TikTokTemplateSystem />
+          <div className="project-section-body">
             <p>
-              I pitched that direction while I was constructing the files, and
-              GCL encouraged me to keep exploring it. Most combinations worked
-              best inside their own visual system. Light Academia and
-              #e-Boy/#e-Girl shared enough structure that I could borrow some
-              parts between them.
+              I proposed that limited modularity while building the files. Most
+              parts stayed within their own visual system. Light Academia and
+              e-Boy/e-Girl shared enough structure for a few parts to cross
+              between them.
             </p>
+          </div>
+          <div className="tt-preview-process">
+            <p className="tt-preview-process-lede">
+              I started with loose sketches, then built each direction as a
+              layered Photoshop file. The notes below paraphrase feedback from
+              Global Creative Lab.
+            </p>
+            <div className="tt-preview-process-list">
+              {TIKTOK_TEMPLATES.map((template) => (
+                <article key={template.key} className="tt-preview-process-card">
+                  <header>
+                    <h3>{template.name}</h3>
+                    {template.shipped ? <span>Shipped</span> : null}
+                  </header>
+                  <div className="tt-preview-process-media">
+                    <figure className="tt-preview-sketch">
+                      <ExpandableImage
+                        src={template.sketch}
+                        alt={`Original process sketch for ${template.name}`}
+                        width={1600}
+                        height={900}
+                        sizes="(max-width: 768px) 100vw, 640px"
+                        style={{
+                          width: "100%",
+                          height: "auto",
+                          display: "block",
+                        }}
+                      />
+                      <figcaption>Process sketch</figcaption>
+                    </figure>
+                    <figure className="tt-preview-final">
+                      <ExpandableImage
+                        src={template.fullTemplate}
+                        alt={`Finished static ${template.name} catalog template`}
+                        width={1080}
+                        height={1920}
+                        sizes="(max-width: 768px) 75vw, 320px"
+                        style={{
+                          width: "100%",
+                          height: "auto",
+                          display: "block",
+                        }}
+                      />
+                      <figcaption>Static template</figcaption>
+                    </figure>
+                  </div>
+                  <p className="tt-preview-iteration">
+                    <strong>Iteration note</strong>
+                    <span>{template.iterationNote}</span>
+                  </p>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       </ProjectChapter>
@@ -170,59 +251,6 @@ export default async function TikTokPage() {
       <ProjectChapter
         entry={chapters[3]}
         index={4}
-        total={chapters.length}
-        variant="tiktok"
-      >
-        <div className="tt-preview-process">
-          <p className="tt-preview-process-lede">
-            I started with loose sketches, then built each direction as a layered
-            Photoshop file. The notes below paraphrase feedback from Global
-            Creative Lab.
-          </p>
-          <div className="tt-preview-process-list">
-            {TIKTOK_TEMPLATES.map((template) => (
-              <article key={template.key} className="tt-preview-process-card">
-                <header>
-                  <h3>{template.name}</h3>
-                  {template.shipped ? <span>Shipped</span> : null}
-                </header>
-                <div className="tt-preview-process-media">
-                  <figure className="tt-preview-sketch">
-                    <ExpandableImage
-                      src={template.sketch}
-                      alt={`Original process sketch for ${template.name}`}
-                      width={1600}
-                      height={900}
-                      sizes="(max-width: 768px) 100vw, 640px"
-                      style={{ width: "100%", height: "auto", display: "block" }}
-                    />
-                    <figcaption>Process sketch</figcaption>
-                  </figure>
-                  <figure className="tt-preview-final">
-                    <ExpandableImage
-                      src={template.fullTemplate}
-                      alt={`Finished static ${template.name} catalog template`}
-                      width={1080}
-                      height={1920}
-                      sizes="(max-width: 768px) 75vw, 320px"
-                      style={{ width: "100%", height: "auto", display: "block" }}
-                    />
-                    <figcaption>Static template</figcaption>
-                  </figure>
-                </div>
-                <p className="tt-preview-iteration">
-                  <strong>Iteration note</strong>
-                  <span>{template.iterationNote}</span>
-                </p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </ProjectChapter>
-
-      <ProjectChapter
-        entry={chapters[4]}
-        index={5}
         total={chapters.length}
         variant="tiktok"
       >
@@ -244,12 +272,13 @@ export default async function TikTokPage() {
                     style={{ width: "100%", height: "auto", display: "block" }}
                   />
                   <figcaption>
-                    The simplicity was working.
+                    Global Creative Lab felt the simplicity was working and
+                    encouraged a more upbeat, deliberate direction.
                   </figcaption>
                 </figure>
               </li>
               <li className="tt-outcome-step">
-                <p className="tt-outcome-step-label">Design move</p>
+                <p className="tt-outcome-step-label">My response</p>
                 <figure>
                   <ExpandableImage
                     src="/projects/tiktok/system/academia-text.svg"
@@ -260,13 +289,13 @@ export default async function TikTokPage() {
                     style={{ width: "100%", height: "auto", display: "block" }}
                   />
                   <figcaption>
-                    I kept the fixed catalog slot and refined the editorial title
-                    and supporting details.
+                    I kept the fixed catalog slot and refined the editorial
+                    title, color, and supporting details.
                   </figcaption>
                 </figure>
               </li>
               <li className="tt-outcome-step tt-outcome-step--shipped">
-                <p className="tt-outcome-step-label">Shipped direction</p>
+                <p className="tt-outcome-step-label">Shipped result</p>
                 <figure>
                   <ExpandableImage
                     src={lightAcademia.fullTemplate}

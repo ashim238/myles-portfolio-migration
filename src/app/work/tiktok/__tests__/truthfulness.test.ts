@@ -43,17 +43,19 @@ describe("TikTok public truthfulness contract", () => {
     );
   });
 
-  it("does not present paraphrased review sentiment as a quotation", () => {
-    const component = read("src/components/tiktok-dsa.tsx");
-
-    expect(component).not.toContain("<blockquote");
-    expect(component).not.toContain("</blockquote>");
-  });
-
-  it("keeps uncertain production ownership out of the public case study", () => {
+  it("keeps review notes paraphrased and excludes unsupported outcome claims", () => {
     const page = read("src/app/work/tiktok/page.tsx");
+    const data = read("src/lib/tiktok-data.ts");
+    const publicCaseStudy = `${page}\n${data}`;
 
-    expect(page).not.toContain(
+    expect(publicCaseStudy).toContain("paraphrase");
+    expect(publicCaseStudy).not.toContain("<blockquote");
+    expect(publicCaseStudy).not.toMatch(/worked (?:with|for) American Eagle/i);
+    expect(publicCaseStudy).not.toMatch(/American Eagle client/i);
+    expect(publicCaseStudy).not.toMatch(
+      /\b(?:CTR|ROAS|conversion rate|click-through rate)\b/i,
+    );
+    expect(publicCaseStudy).not.toContain(
       "Global Creative Lab then took the static Light Academia design into production.",
     );
   });

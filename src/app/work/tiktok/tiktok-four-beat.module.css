@@ -1,0 +1,29 @@
+.briefFacts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 1.5rem;
+  margin: 1.5rem 0 0;
+}
+
+.briefFacts > div {
+  border-top: 1px solid var(--line);
+  padding: 0.75rem 0 0.9rem;
+}
+
+.briefFacts dt {
+  color: var(--muted);
+  font-size: 0.75rem;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+}
+
+.briefFacts dd {
+  margin: 0.3rem 0 0;
+  line-height: var(--lead-copy);
+}
+
+@media (max-width: 639px) {
+  .briefFacts {
+    grid-template-columns: 1fr;
+  }
+}

@@ -110,27 +110,22 @@ describe("TikTok short-form case study", () => {
     expect(
       screen.getByRole("region", { name: "At a glance" }),
     ).toBeInTheDocument();
-    expect(
-      screen.getByRole("heading", { name: "Fashion subcultures on TikTok" }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("heading", { name: "The fixed catalog structure" }),
-    ).toBeInTheDocument();
+    for (const chapter of CASE_STUDY_CHAPTERS.tiktok) {
+      expect(
+        screen.getByRole("heading", { name: chapter.title }),
+      ).toHaveAttribute("id", chapter.id);
+    }
     expect(screen.getByTestId("template-system")).toBeInTheDocument();
     expect(
-      screen.getByRole("heading", { name: "Templates as modular parts" }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("heading", { name: "From sketches to layered files" }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("heading", { name: "What shipped from the launch batch" }),
+      screen.getByRole("heading", {
+        name: CASE_STUDY_CHAPTERS.tiktok[3].title,
+      }),
     ).toHaveAttribute("id", "tt-outcome");
     const outcome = document.querySelector(".tt-preview-outcome");
     expect(outcome).not.toBeNull();
     expect(outcome).toHaveTextContent("Critique");
-    expect(outcome).toHaveTextContent("Design move");
-    expect(outcome).toHaveTextContent("Shipped direction");
+    expect(outcome).toHaveTextContent("My response");
+    expect(outcome).toHaveTextContent("Shipped result");
     expect(
       within(outcome as HTMLElement).getByRole("img", {
         name: "Light Academia process sketch",
@@ -169,25 +164,97 @@ describe("TikTok short-form case study", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("frames the route as five one-to-one process chapters", async () => {
-    render(await TikTokPage());
-
-    const chapterHeadings = CASE_STUDY_CHAPTERS.tiktok.map((chapter) =>
-      screen.getByRole("heading", { level: 2, name: chapter.title }),
+  it("defines DSA before research and renders the four approved beats", async () => {
+    const { container } = render(await TikTokPage());
+    const renderedChapters = Array.from(
+      container.querySelectorAll<HTMLElement>(".project-chapter"),
     );
 
-    expect(chapterHeadings.map((heading) => heading.id)).toEqual(
-      CASE_STUDY_CHAPTERS.tiktok.map((chapter) => chapter.id),
-    );
-    expect(document.querySelectorAll(".project-chapter")).toHaveLength(5);
-    expect(document.querySelectorAll(".project-chapter-title")).toHaveLength(5);
-    expect(document.querySelectorAll(".tt-section h2")).toHaveLength(0);
-    expect(document.querySelectorAll(".tt-preview-process > h2")).toHaveLength(0);
+    expect(
+      CASE_STUDY_CHAPTERS.tiktok.map(({ id, stage }) => ({ id, stage })),
+    ).toEqual([
+      { id: "tt-brief", stage: "Brief" },
+      { id: "tt-research", stage: "Choose" },
+      { id: "tt-system", stage: "Build" },
+      { id: "tt-outcome", stage: "Deliver" },
+    ]);
+    expect(renderedChapters).toHaveLength(4);
+    expect(
+      renderedChapters.map((chapter) => chapter.querySelector("h2")?.id),
+    ).toEqual(["tt-brief", "tt-research", "tt-system", "tt-outcome"]);
 
-    const toc = screen.getByTestId("project-toc");
-    for (const chapter of CASE_STUDY_CHAPTERS.tiktok) {
-      expect(toc).toHaveTextContent(`${chapter.stage}: ${chapter.title}`);
-    }
+    const brief = container.querySelector("#tt-brief")?.closest(".project-chapter");
+    const research = container
+      .querySelector("#tt-research")
+      ?.closest(".project-chapter");
+    expect(brief).not.toBeNull();
+    expect(research).not.toBeNull();
+    expect(brief?.compareDocumentPosition(research as Node)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+    expect(brief).toHaveTextContent(
+      "Dynamic Showcase Ads (DSA) used reusable templates with fixed product slots for brand catalog content.",
+    );
+
+    const facts = brief?.querySelector("dl");
+    expect(facts).not.toBeNull();
+    expect(
+      Array.from(facts!.querySelectorAll("dt"), (term) => term.textContent),
+    ).toEqual([
+      "Role",
+      "Team",
+      "Intended use",
+      "Deliverable",
+      "Fixed parts",
+      "Variable parts",
+    ]);
+    expect(
+      within(facts as HTMLElement).getByText("Creative Strategist Intern"),
+    ).toBeInTheDocument();
+    expect(
+      within(facts as HTMLElement).getByText("Global Creative Lab"),
+    ).toBeInTheDocument();
+  });
+
+  it("explains why five references became three directions inside one slot map", async () => {
+    const { container } = render(await TikTokPage());
+    const research = container
+      .querySelector("#tt-research")
+      ?.closest(".project-chapter") as HTMLElement;
+    const system = container
+      .querySelector("#tt-system")
+      ?.closest(".project-chapter") as HTMLElement;
+
+    expect(research).toHaveTextContent("Y2K");
+    expect(research).toHaveTextContent("Maximalism");
+    expect(research).toHaveTextContent("Dark Academia");
+    expect(research).toHaveTextContent("WitchTok");
+    expect(research).toHaveTextContent("Cottagecore");
+    expect(research).toHaveTextContent(
+      "Three directions moved forward because they created clearly different visual systems inside the same slot map.",
+    );
+    expect(research).toHaveTextContent("Dopamine Dressing");
+    expect(research).toHaveTextContent("e-Boy/e-Girl");
+    expect(research).toHaveTextContent("Light Academia");
+
+    expect(within(system).getByTestId("template-system")).toBeInTheDocument();
+    expect(
+      within(system)
+        .getAllByRole("heading", { level: 3 })
+        .map((heading) => heading.textContent),
+    ).toEqual(["#DopamineDressing", "#e-Boy/#e-Girl", "#LightAcademia"]);
+    expect(within(system).getAllByText("Static template")).toHaveLength(3);
+    expect(system).toHaveTextContent("layered Photoshop");
+    expect(system).toHaveTextContent(
+      /most parts stayed within their own visual system/i,
+    );
+
+    const disclosure = within(system).getByText(/notes below paraphrase/i);
+    const processCards = system.querySelector(".tt-preview-process-list");
+    expect(processCards).not.toBeNull();
+    expect(disclosure.compareDocumentPosition(processCards as Node)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
   });
 
   it("keeps the artifact cards and shipped claim intact inside chapters", async () => {
@@ -215,24 +282,48 @@ describe("TikTok short-form case study", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("states the Light Academia critique and shipped outcome once", async () => {
-    render(await TikTokPage());
+  it("orders the Light Academia critique, response, result, and relationship", async () => {
+    const { container } = render(await TikTokPage());
+    const outcome = container
+      .querySelector("#tt-outcome")
+      ?.closest(".project-chapter") as HTMLElement;
+    const labels = within(outcome)
+      .getAllByText(/^(Critique|My response|Shipped result)$/)
+      .map((node) => node.textContent);
+    const relationship = within(outcome).getByText(
+      "I later learned through Global Creative Lab that American Eagle selected it.",
+    );
 
-    expect(
-      screen.getAllByText(
-        /Light Academia (?:entered|shipped) (?:in )?the launch library\./i,
-      ),
-    ).toHaveLength(1);
+    expect(labels).toEqual(["Critique", "My response", "Shipped result"]);
+    expect(outcome).toHaveTextContent(
+      "Global Creative Lab felt the simplicity was working and encouraged a more upbeat, deliberate direction.",
+    );
+    expect(outcome).toHaveTextContent(
+      "I kept the fixed catalog slot and refined the editorial title, color, and supporting details.",
+    );
+    expect(outcome).toHaveTextContent(
+      "Light Academia entered the launch library.",
+    );
 
-    const source = readFileSync(
-      resolve(process.cwd(), "src/app/work/tiktok/page.tsx"),
+    const shippedStep = within(outcome).getByText("Shipped result").closest("li");
+    expect(shippedStep?.compareDocumentPosition(relationship)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+  });
+
+  it("keeps outcome cards inside the sequence flow", () => {
+    const css = readFileSync(
+      resolve(process.cwd(), "src/app/styles/portfolio-surfaces.css"),
       "utf8",
     );
+    const stepRule = css.match(/\.tt-outcome-step\s*\{([^}]*)\}/)?.[1] ?? "";
+    const figureRule =
+      css.match(/\.tt-outcome-step figure\s*\{([^}]*)\}/)?.[1] ?? "";
 
-    expect(source).toContain("The simplicity was working.");
-    expect(source).not.toContain(
-      "GCL asked me to make it feel more upbeat and deliberate.",
-    );
+    expect(stepRule).toMatch(/display:\s*grid/);
+    expect(stepRule).toMatch(/grid-template-rows:\s*auto 1fr/);
+    expect(figureRule).toMatch(/min-height:\s*0/);
+    expect(figureRule).not.toMatch(/min-height:\s*100%/);
   });
 
   it("retires the duplicate preview route and phone-based hero implementation", () => {

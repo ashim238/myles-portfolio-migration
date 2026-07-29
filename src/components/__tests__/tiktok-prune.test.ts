@@ -122,7 +122,8 @@ describe("TikTok retired implementation pruning", () => {
     ]) {
       expect(stylesheet).not.toContain(selector);
     }
-    expect(page).toContain("entry={chapters[4]}");
+    expect(page).toContain("entry={chapters[3]}");
+    expect(page).not.toContain("entry={chapters[4]}");
     expect(page).toContain("CASE_STUDY_CHAPTERS.tiktok");
     expect(page).not.toContain('aria-labelledby="tt-outcome"');
     expect(page).not.toContain('<h2 id="tt-outcome">What shipped from the launch batch</h2>');
