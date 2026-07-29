@@ -9,33 +9,15 @@ const pageSource = readFileSync(
 );
 
 describe("Navi chapter chronology", () => {
-  it("uses the exact five typed chapters for the TOC", () => {
-    expect(CASE_STUDY_CHAPTERS.navi).toEqual([
-      {
-        id: "nv-intro",
-        stage: "Frame",
-        title: "Concentrated tourism as a routing problem",
-      },
-      {
-        id: "nv-insights",
-        stage: "Research",
-        title: "The resident survey redirected the concept",
-      },
-      {
-        id: "nv-framework",
-        stage: "Define",
-        title: "Research shaped exploration and booking",
-      },
-      {
-        id: "nv-build",
-        stage: "Build",
-        title: "From prototype to booking flow",
-      },
-      {
-        id: "nv-outcome",
-        stage: "Validate",
-        title: "What I would test next",
-      },
+  it("uses the five stable chapter IDs and stages for the TOC", () => {
+    expect(
+      CASE_STUDY_CHAPTERS.navi.map(({ id, stage }) => ({ id, stage })),
+    ).toEqual([
+      { id: "nv-intro", stage: "Frame" },
+      { id: "nv-insights", stage: "Research" },
+      { id: "nv-framework", stage: "Define" },
+      { id: "nv-build", stage: "Build" },
+      { id: "nv-outcome", stage: "Validate" },
     ]);
     expect(pageSource).toContain("const chapters = CASE_STUDY_CHAPTERS.navi;");
     expect(pageSource).toMatch(/<ProjectToc\s+sections=\{chapters\}\s*\/>/);

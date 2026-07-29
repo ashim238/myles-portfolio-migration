@@ -20,7 +20,10 @@ import { NaviDemoEmbed } from "@/components/navi-demo-embed";
 import { NaviResearchArtifacts } from "@/components/navi/research-artifacts";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
-import { NAVI_SURVEY_META } from "@/lib/navi-survey-data";
+import {
+  NAVI_SURVEY_META,
+  NAVI_SURVEY_STATS,
+} from "@/lib/navi-survey-data";
 import { CASE_STUDY_CHAPTERS } from "@/lib/project-chapters";
 import { createRouteMetadata } from "@/lib/site-config";
 
@@ -38,6 +41,7 @@ const lato = Lato({
 });
 
 const chapters = CASE_STUDY_CHAPTERS.navi;
+const [overcrowdingStat, authenticExperienceStat] = NAVI_SURVEY_STATS;
 
 const NAVI_DESCRIPTION =
   "A regenerative travel platform concept for NYC neighborhood experiences, developed in a graduate studio and rebuilt for this portfolio.";
@@ -78,8 +82,11 @@ export default async function NaviPage() {
           Navi
         </h1>
         <p className="project-hero-lede nv-lede">
-          {project?.summary ??
-            "A graduate-studio concept for neighborhood travel. I later rebuilt it as a working portfolio demo."}
+          I collected 14 resident and stakeholder responses, including two local
+          businesses, for a graduate-studio travel concept. What I learned redirected
+          the team&apos;s early Manhattan heatmap toward neighborhood context.
+          The next concept focused on helping people learn, plan, and book after
+          choosing a place.
         </p>
       </section>
 
@@ -92,7 +99,7 @@ export default async function NaviPage() {
       <RecruiterCut
         role="UI/UX Designer"
         timeline="January 2025 – June 2025"
-        stack="Figma, research"
+        stack="Figma, FigJam, React, TypeScript"
         stackLabel="Tools"
         evidence={{
           type: "Working product demo",
@@ -102,9 +109,9 @@ export default async function NaviPage() {
         outcomeValue={project?.outcomeMetricValue}
         outcomeLabel={project?.outcomeMetricLabel}
         moves={[
-          "The team explored an early Manhattan redirection concept through a heatmap.",
-          "The team audited six travel platforms and evaluated Airbnb with Nielsen's heuristics.",
-          "The concept used a 14-response resident survey, three research-informed archetypes, and Learn, Plan, Go.",
+          "Graduate studio: the team tested an early Manhattan redirection concept and audited six travel platforms.",
+          "My contribution: I collected and synthesized 14 resident and stakeholder responses, including two local businesses, then created archetypes, journeys, opportunity areas, and flows.",
+          "Solo rebuild: I turned Learn, Plan, Go into a React component system and working individual booking flow.",
         ]}
       />
 
@@ -118,18 +125,18 @@ export default async function NaviPage() {
       >
       <div className="project-section nv-section">
         <p className="case-section-lead">
-          The first concept came before the resident survey and without a live tourist-density
-          dataset.
+          The early team concept could move a visitor to another neighborhood,
+          but it didn&apos;t change how they engaged after arriving.
         </p>
         <div className="project-section-body">
           <p>
-            The team used a Manhattan heatmap to test whether redirecting visitors could distribute
-            attention across more neighborhoods.
+            The team used a Manhattan heatmap as an exploratory hypothesis to
+            test whether redirecting visitors could distribute attention across
+            more neighborhoods.
           </p>
           <p>
-            Changing the destination still left the visit itself unchanged. The survey became the
-            next step and later redirected the concept toward neighborhood experiences, with local
-            context built into trip planning.
+            That first artifact made movement on the map the outcome. The survey
+            became the next step.
           </p>
         </div>
       </div>
@@ -164,16 +171,15 @@ export default async function NaviPage() {
         </h3>
         <div className="project-section-body">
           <p>
-            The team audited six travel platforms. I evaluated Airbnb with Kaori Ogawa and Amy
-            Zhang against Nielsen&apos;s ten usability heuristics. The evaluation
-            surfaced issues with label consistency, family-facing filters, and visual clutter.
+            I collected 14 resident and stakeholder responses, including two
+            local businesses. The sample informed this concept. It doesn&apos;t
+            stand in for all NYC residents.
           </p>
           <p>
-            The resident survey produced 14 responses. That dataset is the source for the two
-            survey findings shown below.
-          </p>
-          <p>
-            The next concept direction focused on neighborhood context and participation instead.
+            The team audited six travel platforms. I evaluated Airbnb with Kaori Ogawa and Amy Zhang
+            against Nielsen&apos;s ten usability heuristics.
+            The evaluation surfaced issues with label consistency, family-facing
+            filters, and visual clutter.
           </p>
         </div>
         <HeuristicInsightCards />
@@ -181,15 +187,20 @@ export default async function NaviPage() {
 
       <div className="project-section nv-section">
         <p className="case-section-lead">
-          Two concerns appeared most often in the 14-response resident survey.
+          Two concerns appeared most often in the resident and stakeholder
+          survey.
         </p>
         <div className="project-section-body">
           <p>
-            Of the 14 responses, 71% were concerned about overcrowding and over-tourism. Another
-            50% were concerned about a lack of authentic experiences.
+            {overcrowdingStat.count} of {NAVI_SURVEY_META.responseCount} responses (
+            {overcrowdingStat.label}) named overcrowding and over-tourism.{" "}
+            {authenticExperienceStat.count} of {NAVI_SURVEY_META.responseCount} (
+            {authenticExperienceStat.label}) named a lack of authentic
+            experiences.
           </p>
           <p className="nv-survey-note">
-            Highlights from {NAVI_SURVEY_META.responseCount} survey responses:{" "}
+            Highlights from {NAVI_SURVEY_META.responseCount} responses,
+            including {NAVI_SURVEY_META.localBusinessCount} local businesses:{" "}
             {NAVI_SURVEY_META.source}.
           </p>
         </div>
@@ -214,8 +225,8 @@ export default async function NaviPage() {
             journey maps and user flows remained internal planning artifacts.
           </p>
           <p>
-            I used them to connect residents&apos; interest in nearby activity with neighborhood
-            exploration without repeatedly steering visitors toward the same tourist-heavy areas.
+            I used the archetypes, journey map, opportunity areas, and flows to
+            connect the survey findings with neighborhood exploration.
           </p>
           <p>
             The Airbnb audit and secondary research shaped the individual booking flow. Cost,
@@ -223,7 +234,9 @@ export default async function NaviPage() {
             vendor needed to earn trust.
           </p>
           <p>
-            I organized the concept around{" "}
+            The research changed the product question. Instead of treating
+            movement on the map as the outcome, I organized the next concept
+            around{" "}
             <mark className="case-highlight">Learn, Plan, Go</mark>:
           </p>
           <ul>
@@ -257,8 +270,10 @@ export default async function NaviPage() {
         </h3>
         <div className="project-section-body">
           <p>
-            For this portfolio case study, I translated the Navi visual system into live React
-            components.
+            The graduate-studio project ended as a Figma concept. Later, working alone,
+            I rebuilt the concept by turning Learn, Plan, Go into a React
+            and TypeScript component system and a working individual booking
+            flow.
           </p>
           <p>
             Jost was selected for display typography to echo urban wayfinding cues. Orange became
@@ -287,9 +302,9 @@ export default async function NaviPage() {
         </p>
         <div className="project-section-body">
           <p>
-            I rebuilt the concept as live React components and connected them to an individual
-            booking flow. You can browse the feed, search by neighborhood, open a host, and
-            complete a sample reservation with the same components catalogued on the system page.
+            In the current build, you can browse the feed, search by
+            neighborhood, open a host, and complete a sample individual
+            reservation with the same components catalogued on the system page.
           </p>
         </div>
         <NaviDemoEmbed />

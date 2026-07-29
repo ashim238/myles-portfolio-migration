@@ -1,8 +1,14 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
+import {
+  NAVI_SURVEY_META,
+  NAVI_SURVEY_STATS,
+} from "@/lib/navi-survey-data";
 
-const page = readFileSync(resolve(process.cwd(), "src/app/work/navi/page.tsx"), "utf8");
+const pagePath = "src/app/work/navi/page.tsx";
+const page = readFileSync(resolve(process.cwd(), pagePath), "utf8");
 const prose = page.replace(/\s+/g, " ");
 const lateStyles = readFileSync(
   resolve(process.cwd(), "src/app/styles/late-polish.css"),
@@ -12,6 +18,113 @@ const portfolioStyles = readFileSync(
   resolve(process.cwd(), "src/app/styles/portfolio-surfaces.css"),
   "utf8",
 );
+const readerFacingProperties = new Set([
+  "description",
+  "role",
+  "timeline",
+  "stackLabel",
+  "stack",
+  "outcomeValue",
+  "outcomeLabel",
+  "moves",
+  "label",
+  "decision",
+  "detail",
+  "insight",
+  "snippets",
+  "designResponse",
+  "asked",
+  "became",
+  "name",
+  "note",
+]);
+
+function readerFacingWordCount(
+  paths: string[],
+  importedDisplayChunks: readonly string[] = [],
+) {
+  const chunks: string[] = [];
+
+  const add = (value: string) => {
+    const normalized = value.replace(/\s+/g, " ").trim();
+    if (normalized) chunks.push(normalized);
+  };
+
+  for (const path of paths) {
+    const source = readFileSync(path, "utf8");
+    const sourceFile = ts.createSourceFile(
+      path,
+      source,
+      ts.ScriptTarget.Latest,
+      true,
+      ts.ScriptKind.TSX,
+    );
+
+    const visit = (node: ts.Node) => {
+      if (ts.isJsxText(node)) {
+        add(node.text);
+      }
+
+      if (
+        ts.isJsxExpression(node) &&
+        !ts.isJsxAttribute(node.parent) &&
+        node.expression &&
+        ts.isStringLiteralLike(node.expression)
+      ) {
+        add(node.expression.text);
+      }
+
+      if (ts.isPropertyAssignment(node)) {
+        const property = node.name.getText(sourceFile).replace(/["']/g, "");
+        if (readerFacingProperties.has(property)) {
+          if (ts.isStringLiteralLike(node.initializer)) {
+            add(node.initializer.text);
+          } else if (ts.isArrayLiteralExpression(node.initializer)) {
+            node.initializer.elements.forEach((element) => {
+              if (ts.isStringLiteralLike(element)) add(element.text);
+            });
+          }
+        }
+      }
+
+      if (ts.isJsxAttribute(node)) {
+        const property = node.name.getText(sourceFile);
+        if (readerFacingProperties.has(property)) {
+          const initializer = node.initializer;
+          if (initializer && ts.isStringLiteral(initializer)) {
+            add(initializer.text);
+          } else if (
+            initializer &&
+            ts.isJsxExpression(initializer) &&
+            initializer.expression
+          ) {
+            if (ts.isStringLiteralLike(initializer.expression)) {
+              add(initializer.expression.text);
+            } else if (ts.isArrayLiteralExpression(initializer.expression)) {
+              initializer.expression.elements.forEach((element) => {
+                if (ts.isStringLiteralLike(element)) add(element.text);
+              });
+            }
+          }
+        }
+      }
+
+      ts.forEachChild(node, visit);
+    };
+
+    visit(sourceFile);
+  }
+
+  importedDisplayChunks.forEach(add);
+
+  return (
+    chunks
+      .join(" ")
+      .replace(/&apos;|&#39;/g, "'")
+      .replace(/&quot;/g, '"')
+      .match(/[A-Za-z0-9]+(?:['’][A-Za-z0-9]+)*/g) ?? []
+  ).length;
+}
 
 function getRuleBody(styles: string, selector: string) {
   const selectorStart = styles.indexOf(selector);
@@ -59,27 +172,33 @@ describe("Navi case-study structure", () => {
     expect(page).not.toMatch(/<h[23][^>]+id="nv-(?:intro|insights|framework|build|outcome)"/);
   });
 
-  it("preserves the story arc and places resident research before survey findings", () => {
-    for (const copy of [
-      "The first concept came before the resident survey and without a live tourist-density dataset.",
-      "Select a neighborhood to see how the first artifact worked.",
-      "The team audited six travel platforms.",
-      "Two concerns appeared most often in the 14-response resident survey.",
-      "I created three research-informed archetypes from the survey, platform audits, and secondary research.",
-      "For this portfolio case study, I translated the Navi visual system into live React",
-      "The screens below come from the current React build.",
-      "I rebuilt the concept as live React components",
-    ]) {
-      expect(prose).toContain(copy);
+  it("orders the primary story from resident evidence through future validation", () => {
+    const primaryStory = page.slice(page.indexOf("<ProjectToc"));
+    const storyMarkers = [
+      "The team used a Manhattan heatmap",
+      "resident and stakeholder responses",
+      "overcrowdingStat.count",
+      "Learn, Plan, Go",
+      "working alone",
+      "Next research",
+    ];
+
+    for (const [current, next] of storyMarkers
+      .slice(0, -1)
+      .map((marker, index) => [marker, storyMarkers[index + 1]] as const)) {
+      expect(primaryStory.indexOf(current)).toBeGreaterThan(-1);
+      expect(primaryStory.indexOf(current)).toBeLessThan(
+        primaryStory.indexOf(next),
+      );
     }
 
-    expect(page.indexOf('id="nv-research"')).toBeLessThan(
-      page.indexOf("Two concerns appeared most often"),
-    );
+    expect(page.match(/rebuilt the concept/gi) ?? []).toHaveLength(1);
+    expect(page).toContain('href="/work/navi/demo"');
+    expect(page).toContain('href="/work/navi/system"');
   });
 
   it("lets the heatmap and research board carry their details without losing boundaries", () => {
-    expect(prose).toContain("without a live tourist-density dataset");
+    expect(prose).toContain("exploratory hypothesis");
     expect(prose).toContain("do not represent actual tourist density or live geo analytics");
     expect(prose).toContain("internal planning artifacts");
     expect(prose).toContain("without an engineering handoff");
@@ -97,7 +216,6 @@ describe("Navi case-study structure", () => {
   });
 
   it("keeps future validation framed as planned work", () => {
-    expect(prose).toContain("I rebuilt the concept as live React components");
     expect(prose).not.toContain(
       "The current demo makes the interaction model clickable.",
     );
@@ -118,6 +236,29 @@ describe("Navi case-study structure", () => {
     expect(page.indexOf("Working now")).toBeLessThan(
       page.indexOf("<ProjectWorkJump"),
     );
+  });
+
+  it("counts imported survey display data inside the prose budget", () => {
+    const [overcrowdingStat, authenticExperienceStat] = NAVI_SURVEY_STATS;
+    const importedSurveyDisplay = [
+      String(overcrowdingStat.count),
+      String(NAVI_SURVEY_META.responseCount),
+      overcrowdingStat.label,
+      String(authenticExperienceStat.count),
+      String(NAVI_SURVEY_META.responseCount),
+      authenticExperienceStat.label,
+      String(NAVI_SURVEY_META.responseCount),
+      String(NAVI_SURVEY_META.localBusinessCount),
+      NAVI_SURVEY_META.source,
+    ];
+    const sourceOnlyCount = readerFacingWordCount([pagePath]);
+    const completeCount = readerFacingWordCount(
+      [pagePath],
+      importedSurveyDisplay,
+    );
+
+    expect(completeCount - sourceOnlyCount).toBe(20);
+    expect(completeCount).toBeLessThanOrEqual(800);
   });
 
   it("uses Navi orange for the completed motif while retaining the neutral track", () => {

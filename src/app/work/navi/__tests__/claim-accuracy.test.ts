@@ -1,6 +1,10 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
+import {
+  NAVI_SURVEY_META,
+  NAVI_SURVEY_STATS,
+} from "@/lib/navi-survey-data";
 
 const applicantFacingFiles = [
   "content/projects/navi.md",
@@ -29,6 +33,20 @@ describe("Navi evidence claims", () => {
     expect(projectPage).not.toMatch(/three groups.{0,80}heuristic/i);
   });
 
+  it("stores exact survey counts and participant scope with the percentages", () => {
+    expect(NAVI_SURVEY_META).toMatchObject({
+      responseCount: 14,
+      localBusinessCount: 2,
+    });
+    expect(NAVI_SURVEY_META.source).toMatch(/resident and stakeholder/i);
+    expect(
+      NAVI_SURVEY_STATS.map(({ id, count, value }) => ({ id, count, value })),
+    ).toEqual([
+      { id: "overcrowding", count: 10, value: 71 },
+      { id: "authentic", count: 7, value: 50 },
+    ]);
+  });
+
   it("keeps the intro and heatmap framed as an unmeasured first concept", () => {
     const projectPage = readSource("src/app/work/navi/page.tsx");
 
@@ -38,22 +56,51 @@ describe("Navi evidence claims", () => {
     expect(projectPage).not.toMatch(/most go to the same ten\s+places/i);
     expect(projectPage).not.toMatch(/businesses[\s\S]{0,100}struggle for visibility/i);
     expect(projectPage).not.toMatch(/residents[\s\S]{0,100}absorb the side effects/i);
-    expect(projectPage).toMatch(/The first concept came before the resident survey/i);
+    expect(projectPage).toMatch(/early team concept could move a visitor/i);
     expect(projectPage).toMatch(/first artifact worked/i);
   });
 
-  it("keeps the checked research facts and team context", () => {
+  it("keeps participant scope, ownership, and exact findings connected", () => {
     const projectPage = readSource("src/app/work/navi/page.tsx");
 
-    expect(projectPage).toContain("six travel platforms");
-    expect(projectPage).toContain("Kaori Ogawa");
-    expect(projectPage).toMatch(/Amy\s+Zhang/);
-    expect(projectPage).toMatch(/14(?:-response resident survey| responses)/);
-    expect(projectPage).toContain("71%");
-    expect(projectPage).toContain("50%");
+    expect(projectPage).not.toMatch(/14(?:-response)? resident survey/i);
+    expect(
+      projectPage.indexOf("resident and stakeholder responses"),
+    ).toBeLessThan(projectPage.indexOf("<HeatmapExplorer"));
+    expect(projectPage).toMatch(/including two local businesses/i);
     expect(projectPage).toMatch(
-      /That dataset is the source for the two\s+survey findings shown below\./,
+      /I collected[\s\S]{0,120}resident and stakeholder responses/i,
     );
+    expect(projectPage).toMatch(
+      /It doesn&apos;t\s+stand in for all NYC residents\./,
+    );
+    expect(projectPage).not.toContain(
+      "It does not stand in for all NYC residents.",
+    );
+    expect(projectPage).toMatch(/The team[\s\S]{0,100}six travel platforms/i);
+    expect(projectPage).toMatch(
+      /I evaluated Airbnb with Kaori Ogawa and Amy\s+Zhang/i,
+    );
+    expect(projectPage).toMatch(
+      /\{overcrowdingStat\.count\} of \{NAVI_SURVEY_META\.responseCount\} responses \([\s\S]{0,40}\{overcrowdingStat\.label\}\)/,
+    );
+    expect(projectPage).toMatch(
+      /\{authenticExperienceStat\.count\} of \{NAVI_SURVEY_META\.responseCount\} \([\s\S]{0,40}\{authenticExperienceStat\.label\}\)/,
+    );
+    expect(projectPage).not.toMatch(
+      /NYC residents (?:wanted|needed|preferred|said)/i,
+    );
+  });
+
+  it("separates graduate-studio ownership from the solo rebuild", () => {
+    const projectPage = readSource("src/app/work/navi/page.tsx");
+
+    expect(projectPage).toContain(
+      'stack="Figma, FigJam, React, TypeScript"',
+    );
+    expect(projectPage).toMatch(/Graduate studio:[\s\S]{0,180}The team/i);
+    expect(projectPage).toMatch(/My contribution:[\s\S]{0,220}I collected/i);
+    expect(projectPage).toMatch(/Solo rebuild:[\s\S]{0,180}React/i);
   });
 
   it("retains the complete chapter artifact stack", () => {
@@ -94,9 +141,6 @@ describe("Navi evidence claims", () => {
     expect(projectPage).toMatch(/not wired into this demo/i);
     expect(projectPage).not.toMatch(/three personas/i);
     expect(projectPage).not.toContain("Those flows are present in the rebuild");
-    expect(projectPage).toMatch(
-      /I rebuilt the concept as live React components and connected them to an individual/,
-    );
     expect(projectPage).toContain("Deeper Learn pages");
     expect(projectPage).toContain("Local host and business onboarding");
   });
@@ -117,14 +161,17 @@ describe("Navi evidence claims", () => {
     );
   });
 
-  it("describes the graduate-studio concept and later portfolio rebuild in condensed copy", () => {
+  it("keeps condensed gallery copy separate from the evidence-led page lede", () => {
     const content = readSource("content/projects/navi.md");
     const projectPage = readSource("src/app/work/navi/page.tsx");
     const summary =
       "A graduate-studio concept for neighborhood travel. I later rebuilt it as a working portfolio demo.";
 
     expect(content).toContain(`summary: ${summary}`);
-    expect(projectPage).toContain(`"${summary}"`);
+    expect(projectPage).toMatch(
+      /I collected 14 resident and stakeholder responses/i,
+    );
+    expect(projectPage).not.toContain("{project?.summary ??");
     expect(content).not.toMatch(/local heartbeat/i);
     expect(projectPage).not.toMatch(/local heartbeat/i);
   });
@@ -158,10 +205,10 @@ describe("Navi evidence claims", () => {
       /Navi&apos;s proposed alternative connected trip planning/,
     );
     expect(projectPage).toMatch(
-      /redirected the concept toward\s+neighborhood experiences, with local\s+context built into trip planning\./,
+      /What I learned redirected[\s\S]{0,160}neighborhood context/i,
     );
     expect(projectPage).toMatch(
-      /The next concept direction focused on neighborhood context and\s+participation instead\./,
+      /The research changed the product question/i,
     );
     expect(artifactCopy).not.toContain("not the same ten default stops");
     expect(artifactCopy).toContain(

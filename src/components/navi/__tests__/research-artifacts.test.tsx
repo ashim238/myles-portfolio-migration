@@ -30,7 +30,9 @@ describe("NaviResearchArtifacts", () => {
       ),
     ).toBeInTheDocument();
     expect(
-      screen.getByText("Resident survey, platform audits, and secondary research"),
+      screen.getByText(
+        "Resident and stakeholder survey, platform audits, and secondary research",
+      ),
     ).toBeInTheDocument();
     expect(
       screen.getByText("Airbnb audit and secondary research"),

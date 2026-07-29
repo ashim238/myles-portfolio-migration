@@ -22,7 +22,10 @@ export function NaviResearchArtifacts(): React.JSX.Element {
         >
           <figcaption>
             Research-informed archetypes
-            <span>Resident survey, platform audits, and secondary research</span>
+            <span>
+              Resident and stakeholder survey, platform audits, and secondary
+              research
+            </span>
           </figcaption>
           <ol className="nv-research-archetypes">
             {NAVI_ARCHETYPES.map((archetype) => (
