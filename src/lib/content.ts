@@ -224,12 +224,21 @@ export async function getProjectBySlug(slug: string): Promise<Project | null> {
   return projects.find((project) => project.slug === slug) ?? null;
 }
 
+export type PlayState = "live" | "testing" | "complete" | "archived";
+
 export type PlayEntry = {
   slug: string;
   title: string;
   hook: string;
   /** Optional longer paragraph. Some entries only need the hook. */
   exploration?: string;
+  question: string;
+  medium: string;
+  state: PlayState;
+  whatChanged: string;
+  next?: string;
+  updated: string;
+  process?: readonly string[];
   tags: string[];
   year: string;
   context: string;
@@ -252,6 +261,20 @@ export const playEntries: PlayEntry[] = [
     title: "Sukuna's finger",
     hook:
       "A Jujutsu Kaisen fan sculpt, 3D sculpted, printed, and hand-painted. Made for the love of the manga and as an excuse to test how far I could push painting techniques on polylactic acid filament.",
+    question:
+      "How much surface detail could survive a PLA print and hand-painted finish?",
+    medium: "Digital sculpt, PLA, acrylic paint, matte varnish",
+    state: "complete",
+    whatChanged:
+      "A digital model became a printable form, then paint carried the skin, wounds, and color variation.",
+    next: "Add the original 3D model once the source file is ready for the web.",
+    updated: "July 2026",
+    process: [
+      "Digital sculpt",
+      "fabrication constraints",
+      "printed object",
+      "painted surface",
+    ],
     tags: ["3D Sculpt", "3D Print", "Hand Painted", "Fan Craft", "Jujutsu Kaisen"],
     year: "2024",
     context: "Parsons - xFab",
@@ -280,9 +303,16 @@ export const playEntries: PlayEntry[] = [
     hook: "Each answer to “What brings you joy?” seeds five colored threads on a digital loom.",
     exploration:
       "A text hash sets each thread’s position, hue, weight, and opacity. The same answer produces the same five-thread pattern.",
+    question: "Can the same short answer always produce the same woven pattern?",
+    medium: "p5.js, text hashing, generative drawing",
+    state: "testing",
+    whatChanged:
+      "A static study became a text input where the same answer produces the same five threads.",
+    next: "Test whether a shared weave stays readable as more people add responses.",
+    updated: "July 2026",
     tags: ["p5.js", "Generative Art", "Interaction"],
     year: "2025",
     context: "Parsons - Narrative & Dynamic Systems",
     embedPath: "/play/loom/index.html",
-  }
+  },
 ];

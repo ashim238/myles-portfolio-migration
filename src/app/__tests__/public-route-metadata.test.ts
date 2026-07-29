@@ -92,7 +92,7 @@ describe("public route metadata", () => {
       metadata: playMetadata,
       title: "Play",
       description:
-        "Recreational experiments: game sketches, generative studies, and the occasional sculpt.",
+        "A running lab for interaction studies, material tests, and small builds.",
     },
     {
       path: "/resume",

@@ -33,19 +33,23 @@ let inputEl;
 let weaveButtonEl;
 let clearButtonEl;
 let statusEl;
+let artworkEl;
 
 // p5 discovers this callback by global name.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function setup() {
   const host = document.getElementById("loom-canvas");
+  artworkEl = host;
   const canvasWidth = getCanvasWidth();
   const canvasHeight = getCanvasHeight(canvasWidth);
   const canvas = createCanvas(canvasWidth, canvasHeight);
   canvas.parent(host);
 
+  noLoop();
   bindControls();
   recalculateLoomPoints();
-  updateStatus("No threads yet.");
+  updateThreadFeedback("No threads yet.");
+  redraw();
 }
 
 // p5 discovers this callback by global name.
@@ -66,6 +70,7 @@ function windowResized() {
   const canvasHeight = getCanvasHeight(canvasWidth);
   resizeCanvas(canvasWidth, canvasHeight);
   recalculateLoomPoints();
+  redraw();
 }
 
 function getCanvasWidth() {
@@ -101,18 +106,22 @@ function addThreadFromInput() {
 
   const answer = inputEl.value.trim();
   if (!answer) {
-    updateStatus("Please enter a response before weaving.");
+    updateThreadFeedback("Please enter a response before weaving.");
     return;
   }
 
   weaveAnswer(answer);
   inputEl.value = "";
-  updateStatus(`Woven ${strings.length} thread${strings.length === 1 ? "" : "s"} so far.`);
+  updateThreadFeedback(
+    `Woven ${strings.length} thread${strings.length === 1 ? "" : "s"} so far.`,
+  );
+  redraw();
 }
 
 function clearThreads() {
   strings = [];
-  updateStatus("Cleared. Start weaving a new composition.");
+  updateThreadFeedback("Cleared. Start weaving a new composition.");
+  redraw();
 }
 
 function weaveAnswer(answer) {
@@ -268,8 +277,17 @@ function drawLegend() {
   text("Each response adds a new set of woven threads.", width * 0.06, height * 0.06);
 }
 
-function updateStatus(message) {
+function updateThreadFeedback(statusMessage) {
   if (statusEl) {
-    statusEl.textContent = message;
+    statusEl.textContent = statusMessage;
+  }
+  if (artworkEl) {
+    const count = strings.length;
+    artworkEl.setAttribute(
+      "aria-label",
+      count === 0
+        ? "Generative loom artwork with no woven threads."
+        : `Generative loom artwork with ${count} woven thread${count === 1 ? "" : "s"}.`,
+    );
   }
 }

@@ -1,0 +1,42 @@
+.group {
+  width: 100%;
+}
+
+.frameWrap {
+  margin-top: 0.45rem;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 0.65rem;
+  background: var(--surface);
+}
+
+.frame {
+  display: block;
+  width: 100%;
+  border: 0;
+}
+
+.fallback {
+  margin: 0.55rem 0 0;
+  font-size: 0.85rem;
+}
+
+.fallback a {
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition:
+    color 180ms ease,
+    border-color 180ms ease;
+}
+
+.fallback a:hover,
+.fallback a:focus-visible {
+  color: var(--foreground);
+  border-color: var(--line);
+}
+
+.fallback a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}

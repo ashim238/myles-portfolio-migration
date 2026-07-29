@@ -1,14 +1,24 @@
 import Link from "next/link";
 import { SiteNav } from "@/components/site-nav";
-import { playEntries } from "@/lib/content";
 import { ExpandableImage } from "@/components/expandable-image";
+import { LoomEmbed } from "@/components/loom-embed";
 import { PortfolioEndcap } from "@/components/portfolio-endcap";
 import { SpecimenCard } from "@/components/specimen-card";
+import { playEntries, type PlayState } from "@/lib/content";
 import { createRouteMetadata } from "@/lib/site-config";
+import styles from "./play.module.css";
+
+const PLAY_STATE_LABELS: Record<PlayState, string> = {
+  live: "Live",
+  testing: "Testing",
+  complete: "Complete",
+  archived: "Archived",
+};
 
 export const metadata = createRouteMetadata({
   title: "Play",
-  description: "Recreational experiments: game sketches, generative studies, and the occasional sculpt.",
+  description:
+    "A running lab for interaction studies, material tests, and small builds.",
   path: "/play",
 });
 
@@ -34,12 +44,13 @@ export default function PlayPage() {
           <span className="sr-only">Play</span>
         </h1>
         <p className="project-hero-lede play-lede">
-          Recreational experiments: game sketches, generative studies, and the occasional sculpt.
+          I use this page as a running lab for interaction studies, material
+          tests, and small builds. I&apos;ll keep adding work as I test it.
         </p>
       </section>
 
-      <section className="play-section" aria-label="Experiments">
-        <p className="play-section-label">Experiments</p>
+      <section className="play-section" aria-label="In the lab">
+        <p className="play-section-label">In the lab</p>
 
         <ol className="play-entries" role="list">
           {playEntries.map((entry, index) => (
@@ -58,23 +69,48 @@ export default function PlayPage() {
                   <p className="play-entry-exploration">{entry.exploration}</p>
                 ) : null}
 
-                {entry.embedPath ? (
-                  <div className="play-embed-group">
-                    <div className="play-embed-wrap">
-                      <iframe
-                        className="play-embed"
-                        src={entry.embedPath}
-                        title={`${entry.title} interactive preview`}
-                        loading="lazy"
-                      />
-                    </div>
-                    <p className="play-embed-fallback">
-                      <a href={entry.embedPath} target="_blank" rel="noopener noreferrer">
-                        Open {entry.title} in a new tab
-                        <span aria-hidden="true"> ↗</span>
-                      </a>
-                    </p>
+                <dl className={styles.experimentNotes}>
+                  <div>
+                    <dt>Question</dt>
+                    <dd>{entry.question}</dd>
                   </div>
+                  <div>
+                    <dt>Medium</dt>
+                    <dd>{entry.medium}</dd>
+                  </div>
+                  <div>
+                    <dt>State</dt>
+                    <dd>{PLAY_STATE_LABELS[entry.state]}</dd>
+                  </div>
+                  <div>
+                    <dt>What changed</dt>
+                    <dd>{entry.whatChanged}</dd>
+                  </div>
+                  {entry.next ? (
+                    <div>
+                      <dt>Next if real</dt>
+                      <dd>{entry.next}</dd>
+                    </div>
+                  ) : null}
+                  <div>
+                    <dt>Updated</dt>
+                    <dd>{entry.updated}</dd>
+                  </div>
+                </dl>
+
+                {entry.process ? (
+                  <ol
+                    className={styles.process}
+                    aria-label={`${entry.title} process`}
+                  >
+                    {entry.process.map((step) => (
+                      <li key={step}>{step}</li>
+                    ))}
+                  </ol>
+                ) : null}
+
+                {entry.embedPath ? (
+                  <LoomEmbed src={entry.embedPath} title={entry.title} />
                 ) : null}
 
                 {entry.specimen && entry.images ? (

@@ -2,13 +2,36 @@
   box-sizing: border-box;
 }
 
+:root {
+  color-scheme: light;
+  --loom-page: #f4f1ea;
+  --loom-panel: #fffdf9;
+  --loom-text: #2f2923;
+  --loom-border: #dbd3c7;
+  --loom-input: #ffffff;
+  --loom-button: #8f6d48;
+  --loom-button-hover: #7f603e;
+  --loom-focus: #1f6feb;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --loom-page: #171411;
+  --loom-panel: #211d19;
+  --loom-text: #f3ede5;
+  --loom-border: #514940;
+  --loom-input: #2a241f;
+  --loom-button: #8f6d48;
+  --loom-button-hover: #7f603e;
+  --loom-focus: #8ab4f8;
+}
+
 html,
 body {
   margin: 0;
-  min-height: 100%;
   font-family: "Inter", "Segoe UI", Arial, sans-serif;
-  background: #f4f1ea;
-  color: #2f2923;
+  background: var(--loom-page);
+  color: var(--loom-text);
 }
 
 .app-shell {
@@ -20,8 +43,8 @@ body {
 }
 
 .panel {
-  background: #fffdf9;
-  border: 1px solid #dbd3c7;
+  background: var(--loom-panel);
+  border: 1px solid var(--loom-border);
   border-radius: 0.6rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
@@ -58,35 +81,37 @@ label {
 input,
 button {
   font: inherit;
+  min-height: 44px;
 }
 
 input {
   min-width: 260px;
   flex: 1 1 380px;
-  border: 1px solid #b5ac9f;
+  border: 1px solid var(--loom-border);
   border-radius: 0.45rem;
   padding: 0.55rem 0.7rem;
-  background: #fff;
+  background: var(--loom-input);
+  color: var(--loom-text);
   margin-right: 0.25rem;
 }
 
 button {
-  border: 1px solid #7d5f3f;
+  border: 1px solid var(--loom-button);
   border-radius: 0.45rem;
   padding: 0.52rem 0.85rem;
   min-width: 5.9rem;
-  background: #8f6d48;
+  background: var(--loom-button);
   color: #fff;
   cursor: pointer;
 }
 
 button:hover {
-  background: #7f603e;
+  background: var(--loom-button-hover);
 }
 
 button:focus-visible,
 input:focus-visible {
-  outline: 2px solid #1f6feb;
+  outline: 2px solid var(--loom-focus);
   outline-offset: 2px;
 }
 
@@ -104,4 +129,20 @@ canvas {
   width: 100% !important;
   height: auto !important;
   border-radius: 0.45rem;
+}
+
+@media (max-width: 600px) {
+  input {
+    min-width: 0;
+    flex-basis: 100%;
+    margin-right: 0;
+  }
+
+  button {
+    flex: 1 1 calc(50% - 0.325rem);
+  }
+
+  #loom-canvas {
+    min-height: 0;
+  }
 }
