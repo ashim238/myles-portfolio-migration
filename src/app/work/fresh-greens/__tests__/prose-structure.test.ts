@@ -1,8 +1,7 @@
-import { existsSync, readFileSync, statSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
-import { CASE_STUDY_CHAPTERS } from "@/lib/project-chapters";
 
 const pagePath = resolve(
   process.cwd(),
@@ -25,39 +24,21 @@ const latePolishStylesPath = resolve(
   "src/app/styles/late-polish.css",
 );
 const baseStylesPath = resolve(process.cwd(), "src/app/styles/base.css");
-const readerFacingFiles = [
+const pivotPath = resolve(
+  process.cwd(),
+  "src/components/fresh-greens/pivot-journey.tsx",
+);
+const pulledOverPath = resolve(
+  process.cwd(),
+  "src/components/fresh-greens/pulled-over-journey.tsx",
+);
+const primaryPathFiles = [
   pagePath,
-  composedCopyPath,
-  resolve(
-    process.cwd(),
-    "src/components/fresh-greens/onboarding-illustration-sequence.tsx",
-  ),
-  resolve(
-    process.cwd(),
-    "src/components/fresh-greens/pivot-journey.tsx",
-  ),
-  resolve(
-    process.cwd(),
-    "src/components/fresh-greens/pulled-over-journey.tsx",
-  ),
-  resolve(
-    process.cwd(),
-    "src/components/fresh-greens/research-synthesis.tsx",
-  ),
-  resolve(
-    process.cwd(),
-    "src/components/fresh-greens/token-exhibit.tsx",
-  ),
-  resolve(
-    process.cwd(),
-    "src/lib/fresh-greens/research-synthesis-data.ts",
-  ),
-  resolve(process.cwd(), "src/lib/fresh-greens/palette.ts"),
-  resolve(process.cwd(), "src/lib/fresh-greens/design-tokens.ts"),
+  pivotPath,
+  pulledOverPath,
 ];
 
-const readerFacingProperties = new Set([
-  "description",
+const recruiterCutAttributes = new Set([
   "role",
   "timeline",
   "stackLabel",
@@ -65,29 +46,16 @@ const readerFacingProperties = new Set([
   "outcomeValue",
   "outcomeLabel",
   "moves",
+]);
+const recruiterCutEvidenceProperties = new Set(["type", "cta"]);
+const pulledOverDisplayProperties = new Set([
   "label",
   "decision",
   "detail",
-  "insight",
-  "snippets",
-  "designResponse",
-  "asked",
-  "became",
-  "name",
-  "note",
 ]);
 
 function readPage() {
   return readFileSync(pagePath, "utf8");
-}
-
-function getSectionHeadings(source: string) {
-  return Array.from(
-    source.matchAll(
-      /<h3 className="project-evidence-heading" id="([^"]+)">\s*([^<]+?)\s*<\/h3>/g,
-    ),
-    ([, id, title]) => ({ id, title: title.trim() }),
-  );
 }
 
 function normalizeCopy(copy: string) {
@@ -98,7 +66,30 @@ function normalizeCopy(copy: string) {
     .trim();
 }
 
-function readerFacingWordCount(paths: string[]) {
+function enclosingJsxAttribute(node: ts.Node) {
+  let current: ts.Node | undefined = node.parent;
+  while (current) {
+    if (ts.isJsxAttribute(current)) return current;
+    current = current.parent;
+  }
+  return undefined;
+}
+
+function jsxAttributeOwner(
+  attribute: ts.JsxAttribute,
+  sourceFile: ts.SourceFile,
+) {
+  const owner = attribute.parent.parent;
+  if (ts.isJsxOpeningElement(owner) || ts.isJsxSelfClosingElement(owner)) {
+    return owner.tagName.getText(sourceFile);
+  }
+  return undefined;
+}
+
+function primaryPathWordCount(
+  paths: string[],
+  readSource: (path: string) => string = (path) => readFileSync(path, "utf8"),
+) {
   const chunks: string[] = [];
 
   const add = (value: string) => {
@@ -107,7 +98,7 @@ function readerFacingWordCount(paths: string[]) {
   };
 
   for (const path of paths) {
-    const source = readFileSync(path, "utf8");
+    const source = readSource(path);
     const sourceFile = ts.createSourceFile(
       path,
       source,
@@ -123,7 +114,16 @@ function readerFacingWordCount(paths: string[]) {
 
       if (ts.isPropertyAssignment(node)) {
         const property = node.name.getText(sourceFile).replace(/["']/g, "");
-        if (readerFacingProperties.has(property)) {
+        const attribute = enclosingJsxAttribute(node);
+        const isRecruiterEvidence =
+          path === pagePath &&
+          attribute?.name.getText(sourceFile) === "evidence" &&
+          jsxAttributeOwner(attribute, sourceFile) === "RecruiterCut" &&
+          recruiterCutEvidenceProperties.has(property);
+        const isPulledOverDisplayCopy =
+          path === pulledOverPath && pulledOverDisplayProperties.has(property);
+
+        if (isRecruiterEvidence || isPulledOverDisplayCopy) {
           if (ts.isStringLiteralLike(node.initializer)) {
             add(node.initializer.text);
           } else if (ts.isArrayLiteralExpression(node.initializer)) {
@@ -134,9 +134,25 @@ function readerFacingWordCount(paths: string[]) {
         }
       }
 
+      if (
+        path === pulledOverPath &&
+        ts.isVariableDeclaration(node) &&
+        node.name.getText(sourceFile) === "ANSWERS" &&
+        node.initializer &&
+        ts.isArrayLiteralExpression(node.initializer)
+      ) {
+        node.initializer.elements.forEach((element) => {
+          if (ts.isStringLiteralLike(element)) add(element.text);
+        });
+      }
+
       if (ts.isJsxAttribute(node)) {
         const property = node.name.getText(sourceFile);
-        if (readerFacingProperties.has(property)) {
+        if (
+          path === pagePath &&
+          jsxAttributeOwner(node, sourceFile) === "RecruiterCut" &&
+          recruiterCutAttributes.has(property)
+        ) {
           const initializer = node.initializer;
           if (initializer && ts.isStringLiteral(initializer)) {
             add(initializer.text);
@@ -172,11 +188,32 @@ function readerFacingWordCount(paths: string[]) {
 }
 
 describe("Fresh Greens prose structure", () => {
-  it("keeps the complete interactive case study within its reader-facing word budget", () => {
-    const wordCount = readerFacingWordCount(readerFacingFiles);
+  it("keeps the complete primary path within the 950-word ceiling", () => {
+    const wordCount = primaryPathWordCount(primaryPathFiles);
 
-    expect(wordCount).toBeGreaterThanOrEqual(1_400);
-    expect(wordCount).toBeLessThanOrEqual(1_750);
+    expect(
+      wordCount,
+      `Fresh Greens primary path is ${wordCount} words; target is 800 to 950`,
+    ).toBeLessThanOrEqual(950);
+  });
+
+  it("counts display props without counting metadata or internal identifiers", () => {
+    const fixture = `
+      const metadata = { description: "Hidden metadata" };
+      const page = (
+        <>
+          <RecruiterCut
+            role="Solo"
+            evidence={{ type: "Working prototype", cta: "Try flow" }}
+          />
+          <ul role="list">
+            <Shot name="report-detail" />
+          </ul>
+        </>
+      );
+    `;
+
+    expect(primaryPathWordCount([pagePath], () => fixture)).toBe(5);
   });
 
   it("keeps chapter metadata spaced, separated, and mobile-wrappable", () => {
@@ -195,26 +232,9 @@ describe("Fresh Greens prose structure", () => {
     expect(titleRule).toMatch(/padding-top:\s*0\.85rem;/);
   });
 
-  it("keeps the five evidence headings beneath the six typed chapters", () => {
-    expect(CASE_STUDY_CHAPTERS["fresh-greens"][1]).toEqual({
-      id: "fg-research",
-      stage: "Research",
-      title: "What interviews with Black drivers changed",
-    });
-    expect(getSectionHeadings(readPage())).toEqual([
-      { id: "fg-scoring", title: "How each route gets scored" },
-      { id: "fg-pulled-over", title: "A calmer interface for a traffic stop" },
-      {
-        id: "fg-pivot",
-        title: "The Google Maps feature I moved away from",
-      },
-      { id: "fg-typecolor", title: "Type and color across a trip" },
-      { id: "fg-color", title: "Four colors stay reserved for safety" },
-    ]);
-  });
-
   it("removes redundant scaffolding while keeping the evidence-bearing lead", () => {
     const source = readPage();
+    const copy = normalizeCopy(source);
 
     expect(source).not.toContain("case-tier-divider");
     expect(source).not.toContain("The full breakdown");
@@ -226,88 +246,52 @@ describe("Fresh Greens prose structure", () => {
     expect(source).not.toContain("Warm surfaces and a reserved serif");
     expect(source).not.toContain("Four colors and the daylight gradient");
     expect(source).not.toContain("The honest split between");
-    expect(source).toContain("I interviewed six Black drivers");
+    expect(copy).toContain("I interviewed six Black drivers");
   });
 
-  it("preserves every story-bearing artifact", () => {
+  it("keeps only decision-bearing artifacts in the five-minute path", () => {
     const source = readPage();
 
     for (const component of [
-      "ResearchSynthesis",
-      "ArchitectureDiagram",
-      "LeadVideo",
-      "PulledOverJourney",
       "PivotJourney",
+      "ArchitectureDiagram",
+      "PulledOverJourney",
+    ]) {
+      expect(source).toContain(`<${component}`);
+    }
+    for (const retired of [
+      "ResearchSynthesis",
+      "LeadVideo",
       "OnboardingIllustrationSequence",
       "TokenExhibit",
       "ReservedPalette",
     ]) {
-      expect(source).toContain(`<${component}`);
+      expect(source).not.toContain(`<${retired}`);
     }
-
-    expect(source).toContain("thesis-zone-flow.png");
-    expect(source).toContain('name="en-route"');
-    expect(source).toContain('name="route-preview"');
-    expect(source).toContain('name="report-picker"');
     expect(source).toContain('name="report-detail"');
-    expect(source).toContain('className="fg-moderation"');
+    expect(source).not.toContain('name="report-picker"');
+    expect(source).not.toContain('name="en-route"');
+    expect(source).not.toContain('name="route-preview"');
+    expect(source).not.toContain("thesis-zone-flow.png");
   });
 
   it("names the tools used without turning them into validation claims", () => {
     const source = readPage();
-    const normalized = normalizeCopy(source);
 
     expect(source).toContain('stackLabel="Tools"');
     expect(source).toContain(
       'stack="Figma, Illustrator, Claude, React Native, Expo, TypeScript, Supabase"',
-    );
-    expect(normalized).toContain("I designed the flows in Figma");
-    expect(normalized).toContain("drew the onboarding art in Illustrator");
-    expect(normalized).toContain(
-      "Claude helped me critique token names, color roles, and copy rules",
     );
     expect(source).not.toMatch(/validated safety through Figma/i);
     expect(source).not.toMatch(/proved safety through React Native/i);
     expect(source).not.toMatch(/Claude designed/i);
   });
 
-  it("keeps the Refine chapter concise without dropping the craft decisions", () => {
-    const source = readPage();
-    const normalized = normalizeCopy(source);
-
-    expect(normalized).toContain(
-      "After trying Jost and Space Grotesk, I chose Libre Franklin for the hierarchy.",
-    );
-    expect(normalized).toContain("DM Serif Display appears only in six emotional moments");
-    expect(normalized).toContain("Outside the four reserved colors");
-    expect(normalized).toContain(
-      "Red, orange, yellow, and navy each keep one safety meaning",
-    );
-    expect(normalized).toContain("WCAG 1.4.1");
-    expect(normalized).not.toContain("Reserving it for those six is what keeps them landing.");
-    expect(normalized).not.toContain(
-      "The daylight gradient sits outside those four reserved safety colors.",
-    );
-    expect(source).not.toContain("Green carries every button and link.");
-  });
-
-  it("retains the safety interaction and community-report evidence stack", () => {
-    const source = readPage();
-
-    expect(source).toContain("<PulledOverJourney />");
-    expect(source).toContain('name="report-picker"');
-    expect(source).toContain('name="report-detail"');
-    expect(source).toContain('className="fg-moderation"');
-  });
-
   it("connects moderation stages without rotated text glyphs", () => {
     const source = readPage();
     const styles = readFileSync(latePolishStylesPath, "utf8");
     const moderationStart = source.indexOf('className="fg-moderation"');
-    const moderationEnd = source.indexOf(
-      "{/* ── Section 8: What was built",
-      moderationStart,
-    );
+    const moderationEnd = source.indexOf("</ProjectChapter>", moderationStart);
     const moderationMarkup =
       moderationStart >= 0 && moderationEnd > moderationStart
         ? source.slice(moderationStart, moderationEnd)
@@ -329,25 +313,6 @@ describe("Fresh Greens prose structure", () => {
     expect(styles).not.toMatch(
       /\.fg-mod-arrow\s*\{[^}]*transform:\s*rotate\(90deg\)/,
     );
-  });
-
-  it("ships only the browser-ready active-navigation clip", () => {
-    const source = readPage();
-    const processDir = resolve(
-      process.cwd(),
-      "public/projects/fresh-greens/process",
-    );
-
-    expect(source).toContain(
-      'clip="/projects/fresh-greens/process/active-nav-flat-route.mp4"',
-    );
-    expect(existsSync(resolve(processDir, "active-nav-flat-route.mp4"))).toBe(true);
-    expect(existsSync(resolve(processDir, "active-nav-flat.mp4"))).toBe(false);
-    expect(existsSync(resolve(processDir, "active-nav.mp4"))).toBe(false);
-    expect(existsSync(resolve(processDir, "active-nav.mov"))).toBe(false);
-    expect(
-      statSync(resolve(processDir, "active-nav-flat-route.mp4")).size,
-    ).toBeLessThan(4_000_000);
   });
 
   it("keeps house punctuation out of composed reserved-palette copy", () => {
@@ -373,27 +338,53 @@ describe("Fresh Greens prose structure", () => {
     expect(component).toContain("general interface actions");
   });
 
-  it("separates interview evidence, implemented behavior, and unproven outcomes", () => {
+  it("moves from Myles's experience to a research-backed three-problem brief", () => {
     const source = readPage();
+    const copy = normalizeCopy(source);
 
-    expect(source).toContain("Interview-supported");
-    expect(source).toContain("Built in the prototype");
-    expect(source).toContain("Not yet proven");
-    expect(source).toContain('aria-label="Fresh Greens evidence boundaries"');
-  });
-
-  it("anchors the opener to the informed-driving goal and interview evidence", () => {
-    const source = readPage();
+    expect(copy).toContain(
+      "Fresh Greens brings the safety knowledge Black drivers already use into route planning.",
+    );
+    expect(copy).toContain("I grew up in Brooklyn");
+    expect(copy).toContain("moved to rural South Jersey around age ten");
+    expect(copy).toContain("Confederate flags on front lawns");
+    expect(copy).toContain("a police stop or car trouble");
+    expect(copy).toContain("Google Maps or Apple Maps");
+    expect(copy).toContain("drove comfortably below the speed limit");
+    expect(copy).toContain("That experience gave me a hypothesis, not proof.");
+    expect(copy).toContain("I interviewed six Black drivers");
 
     expect(source).toContain(
-      "I wanted to use modern navigation technology to help Black drivers",
+      'href="https://nmaahc.si.edu/explore/stories/traveling-through-jim-crow-america"',
     );
-    expect(source).toMatch(/make more informed decisions\s+on the road/);
-    expect(source).toMatch(/Interviews showed that\s+time and distance/);
-    expect(source).toMatch(/advice from people they\s+trusted/);
-    expect(source).not.toContain("For a Black driver");
-    expect(source).not.toContain("The Green Book was a routing system");
-    expect(source).not.toContain("no institutional one existed");
+    expect(copy).toContain("Plan");
+    expect(copy).toContain("Respond");
+    expect(copy).toContain("Trust");
+    expect(copy).toContain("6 of 6 connected trip timing to daylight");
+    expect(copy).toContain("5 of 6 raised road conditions");
+    expect(copy).toContain("5 of 6 raised police presence");
+    expect(copy).toContain("3 of 6 raised wildlife");
+    expect(copy).toContain(
+      "5 of 6 asked family or friends before trusting an unfamiliar place",
+    );
+    expect(copy).toContain(
+      "Drivers couldn't inspect conditions on each route before choosing.",
+    );
+    expect(copy).toContain(
+      "Useful community knowledge lived outside navigation",
+    );
+    expect(copy).toContain(
+      "These interviews widened my hypothesis. They don't represent every Black driver.",
+    );
+  });
+
+  it("retires the four-tab taxonomy from the primary research path", () => {
+    const source = readPage();
+
+    expect(source).not.toContain("<ResearchSynthesis");
+    expect(source).not.toContain("Four recurring signals shaped the route model");
+    expect(source.match(/className="fg-evidence-boundary"/g)).toHaveLength(3);
+    expect(source).toContain("moves={[]}");
   });
 
   it("keeps the evidence labels in the portfolio's sentence-case type system", () => {
@@ -425,41 +416,5 @@ describe("Fresh Greens prose structure", () => {
       "A working wayfinding prototype for Black drivers that brings community safety reports into route scoring alongside public map data.",
     );
     expect(summary).not.toMatch(/\bapp\b|maximi[sz]/i);
-  });
-
-  it("states the moderation transparency plan without empty transitions", () => {
-    const source = readPage();
-
-    expect(source).not.toMatch(/the rule holds/i);
-    expect(source).not.toContain(
-      "It&apos;s where community reports and public data meet the same",
-    );
-    expect(source).toContain("A public moderation transparency page");
-    expect(source).toContain(
-      "exceptions are documented as carve-outs",
-    );
-    expect(source).toMatch(/When\s+Supabase is configured/);
-    expect(source).toContain("Reviewed, hidden, restored, or removed");
-    expect(source).not.toContain("Nothing publishes without a human");
-    expect(source).not.toContain("Published or held");
-  });
-
-  it("closes on demonstrated judgment before describing future validation", () => {
-    const source = readPage();
-    const qualifier = source.match(
-      /<div className="project-section-body fg-scope-closer">\s*<p>([\s\S]*?)<\/p>/,
-    );
-
-    expect(source).not.toContain(
-      "What comes next is mostly about accountability",
-    );
-    expect(qualifier, "Fresh Greens final proof qualifier").not.toBeNull();
-    expect(normalizeCopy(qualifier![1])).toBe(
-      "The Held-Question rule, route chips, and source cards trace back to interviews. I'd still test routes, moderation outcomes, and failure cases with more Black drivers before calling any route safer.",
-    );
-    expect(source).toMatch(/before\s+calling\s+any\s+route\s+safer/);
-    expect(source).toContain(
-      "The Held-Question rule, route chips, and source cards",
-    );
   });
 });

@@ -5,13 +5,10 @@ import { PhoneFrame } from "@/components/fresh-greens";
 import { ExpandableImage } from "@/components/expandable-image";
 
 /**
- * The design-direction pivot: v1 was Fresh Greens as a feature inside Google
- * Maps (Google's chrome, safety controls bolted on), then rebuilt as a
- * standalone app with its own identity. Two phone shots, the Google-Maps
- * feature against the distinct result, each with a one-line rationale. On
- * scroll into view the two steps stagger-fade in — matches the token
- * exhibit's motion craft. Visible by default (no-JS / reduced-motion
- * untouched) with a timeout fallback so a headless render never ships blank.
+ * The problem-led Plan comparison: v1 put safety controls inside Google Maps,
+ * while the standalone preview gives route comparison its own structure. The
+ * two steps stagger-fade on scroll and stay visible by default for no-JS,
+ * reduced-motion, and headless rendering.
  */
 export function PivotJourney() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -70,9 +67,9 @@ export function PivotJourney() {
             </PhoneFrame>
           </div>
           <p className="fg-pivot-caption">
-            Fresh Greens began as a Google Maps feature, with my safety controls
-            added to Google&apos;s turn banner and map chrome. That kept the
-            concept dependent on someone else&apos;s interface.
+            I first added the safety layer to Google Maps. It put controls on the
+            map, but those signals still felt secondary and route comparison had
+            no structure of its own.
           </p>
         </li>
 
@@ -91,9 +88,10 @@ export function PivotJourney() {
             </PhoneFrame>
           </div>
           <p className="fg-pivot-caption">
-            A standalone app let safety signals shape the interface: daylight
-            along the route, at-a-glance status, trusted places, and a distinct
-            visual language.
+            The standalone preview puts daylight, route status, and trusted
+            places at the choice point. Reserved safety colors keep warnings
+            distinct, while the sun-to-moon route shows how light changes before
+            arrival.
           </p>
         </li>
       </ol>
