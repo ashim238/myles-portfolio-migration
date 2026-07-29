@@ -61,7 +61,7 @@ export default async function TikTokPage() {
       <SiteNav />
       <nav className="project-topbar" aria-label="Breadcrumb">
         <Link href="/#work">
-          <span aria-hidden="true">← </span>
+          <span aria-hidden="true">←</span>
           Selected work
         </Link>
       </nav>

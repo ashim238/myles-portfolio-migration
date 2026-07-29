@@ -118,7 +118,7 @@ export default function ResumePage() {
       <SiteNav />
       <nav className="project-topbar" aria-label="Breadcrumb">
         <Link href="/">
-          <span aria-hidden="true">← </span>
+          <span aria-hidden="true">←</span>
           Home
         </Link>
       </nav>

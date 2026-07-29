@@ -49,7 +49,7 @@ describe("ArchitectureDiagram", () => {
       /\.fg-arch-scroll:focus-visible\s*\{[^}]*outline: 2px solid var\(--focus-ring\);[^}]*outline-offset: 3px;/,
     );
     expect(styles).toMatch(
-      /\.fg-arch-svg\s*\{[^}]*min-width: 1200px;/,
+      /\.fg-arch-svg\s*\{[^}]*min-width: 0;/,
     );
   });
 });

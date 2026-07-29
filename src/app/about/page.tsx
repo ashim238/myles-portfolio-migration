@@ -14,7 +14,7 @@ export default function AboutPage() {
       <SiteNav />
       <nav className="project-topbar" aria-label="Breadcrumb">
         <Link href="/">
-          <span aria-hidden="true">← </span>
+          <span aria-hidden="true">←</span>
           Home
         </Link>
       </nav>
@@ -57,18 +57,18 @@ export default function AboutPage() {
               href="/#work"
             >
               See the work
-              <span aria-hidden="true"> →</span>
+              <span aria-hidden="true">→</span>
             </Link>
             <Link className="about-action" href="/resume">
               Read the résumé
-              <span aria-hidden="true"> →</span>
+              <span aria-hidden="true">→</span>
             </Link>
             <a
               className="about-action"
               href={`mailto:${siteConfig.email}`}
             >
               Get in touch
-              <span aria-hidden="true"> ↗</span>
+              <span aria-hidden="true">↗</span>
             </a>
           </div>
         </div>

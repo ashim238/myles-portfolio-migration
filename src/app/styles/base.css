@@ -2343,6 +2343,32 @@ button:focus-visible,
   transition: opacity 160ms ease, transform 200ms ease;
 }
 
+:where(
+  .about-action,
+  .project-work-jump-cta,
+  .project-work-jump-view-all,
+  .case-cut-evidence-cta,
+  .nv-demo-embed-mobile-cta,
+  .nv-system-cta-link,
+  .uf-before-after-item a,
+  .uf-switcher-preview a,
+  .play-embed-fallback a
+) > span[aria-hidden="true"]:last-child {
+  display: inline-block;
+  flex: none;
+  margin-inline-start: 0.32em;
+  line-height: 1;
+  transform: translateY(-0.04em);
+}
+
+.project-topbar a > span[aria-hidden="true"]:first-child {
+  display: inline-block;
+  flex: none;
+  margin-inline-end: 0.34em;
+  line-height: 1;
+  transform: translateY(-0.03em);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .project-topbar a:hover,
   .project-topbar a:focus-visible {

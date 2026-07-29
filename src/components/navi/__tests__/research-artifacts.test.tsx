@@ -92,6 +92,12 @@ describe("NaviResearchArtifacts", () => {
     expect(portfolioSurfacesCss).toContain(
       "margin: 1.6rem 0 1rem 1rem;",
     );
+    expect(portfolioSurfacesCss).toContain(
+      "@media (max-width: 1040px) and (min-width: 701px)",
+    );
+    expect(portfolioSurfacesCss).toContain(
+      ".nv-research-route--booking {\n    display: none;",
+    );
   });
 
   it("labels the diagrams as internal planning rather than validation", () => {

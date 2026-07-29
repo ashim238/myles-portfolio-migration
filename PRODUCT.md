@@ -1,41 +1,65 @@
 # Product
 
-## Register
+<!-- impeccable:product-schema 1 -->
 
-brand
+## Platform
+
+web
 
 ## Users
 
-Hiring managers, design leads, and design collaborators evaluating Myles Ashitey for product design roles broadly, with associate roles as the near-term target. They're typically scanning on a phone first, then opening the portfolio on a laptop for the case study deep-dive. Often they have 60 seconds for the home page and 5 minutes for one case study. They want to see how Myles thinks, not just what he made.
+Hiring managers, design leads, and design collaborators evaluating Myles Ashitey for product design roles broadly, with associate roles as the near-term target. They are usually scanning quickly on a phone first, then opening the portfolio on a laptop for a deeper case-study read. They want to understand how Myles thinks, what constraints he notices, and how the work moves from context into product decisions.
 
 ## Product Purpose
 
-The portfolio is Myles Ashitey's primary professional surface. It needs to demonstrate range (UX, product, content, systems, code-adjacent craft), articulate a point of view about design's social responsibility, and showcase a small number of case studies with depth. Success looks like: a recruiter shares the link with a hiring committee, an interview gets scheduled, and the writing carries the conversation into the room.
+The portfolio is Myles Ashitey's primary professional surface. It demonstrates range across product design, research, content systems, interactive prototyping, and code-adjacent craft. Success looks like a recruiter sharing the link with a hiring committee, a design lead understanding the quality of the thinking within a few minutes, and the writing carrying the conversation into an interview.
 
-## Brand Personality
+## Positioning
 
-Calm, considered, editorial. Reads like a designer who writes carefully and ships intentionally. Three-word personality: precise, grounded, generous. Voice avoids buzzwords, marketing cadence, and "look how clever I am" tone. Quietly confident. The work argues for itself; the framing makes the argument legible.
+The portfolio presents case studies as editorial product arguments rather than as image galleries. It pairs narrative, artifacts, implemented interactions, and evidence-scoped claims so the work can be evaluated through decisions made, constraints handled, and outcomes shown.
 
-## Anti-references
+## Operating Context
 
-- Generic dev-portfolio templates (Cassidoo / Brittany Chiang clones, neon accent, terminal aesthetic, "type-it-out" hero).
-- SaaS-marketing landing-page tropes: tiny uppercase tracked eyebrows above every section, numbered section markers (01 / 02 / 03), gradient text, glassmorphic cards, identical 3-up icon-heading-body card grids.
-- Loud "design studio" portfolios with aggressive scroll-jacking, oversized hero type that overflows on mobile, and decorative motion that delays content.
-- Aphoristic / cryptic landing copy ("Design at the edge." "Crafting tomorrow."). The voice should read like a person talking, not a brand manifesto.
-- Cream / sand / "warm minimal" body backgrounds — the 2026 AI default. The dark + light system here is deliberate; neither defaults to warm-neutral.
+Visitors arrive through job applications, referrals, recruiter screens, and direct portfolio reviews. The homepage needs to orient a scanner quickly, while case-study routes support longer reading with section navigation, product imagery, and focused interactive artifacts. The site is a Next.js app with public routes for Home, About, Play, Resume, and dedicated case studies including Fresh Greens, Navi, TikTok, and Understanding FAFSA.
 
-## Design Principles
+## Capabilities and Constraints
 
-1. **The writing carries the work.** Case studies are essays with images, not image galleries with captions. Long-form reading is the primary mode.
-2. **Quiet beats loud.** Generous space, restrained color, one-strong-thing-per-screen. Where competitors shout, this surface measures.
-3. **The system shows.** Spacing rhythm, type scale, and reused components are the brand. Consistency screen-to-screen is the craft signal.
-4. **Mobile is not a courtesy.** Recruiters open links on phones. The phone version is the first impression, not a degraded fallback.
-5. **Show range without flattening it.** Tags, role labels, and case-study structure differentiate product work from content/email work from research work — not all projects are the same shape.
+- Published work is routed through project metadata and dedicated case-study pages.
+- Case studies use shared navigation, section tables of contents, motion/reveal behavior, lightbox media, and project-to-project jumps.
+- The site supports dark and light themes, reduced-motion paths, keyboard-visible focus states, and mobile-safe navigation.
+- Portfolio copy should stay evidence-scoped. Implemented behavior, prototype behavior, interview findings, and proposed future behavior should not be blurred together.
+- Production releases go through direct verification when the user asks to make updates live.
+
+## Brand Commitments
+
+The voice is calm, considered, editorial, and human. It should read like a designer who writes carefully and ships intentionally. Avoid buzzwords, hype cadence, cryptic slogans, and generic template language. The visual shell is neutral and restrained, with per-project accents belonging to the case study rather than the global chrome.
+
+Durable anti-references:
+
+- Generic dev-portfolio templates, neon terminal aesthetics, and type-it-out hero tropes.
+- SaaS-marketing scaffolding such as repeated uppercase eyebrows, decorative section numbering, gradient text, glassmorphic cards, and identical icon-card grids.
+- Loud scroll-jacking, oversized mobile-breaking hero type, and decorative motion that delays content.
+- Warm cream, sand, or beige defaults. The existing dark and light system is deliberate.
+
+## Evidence on Hand
+
+- Existing source routes under `src/app` and components under `src/components`.
+- Public project assets under `public/projects`, including Fresh Greens, Navi, TikTok, and Understanding FAFSA imagery.
+- `DESIGN.md` records the incumbent visual system, tokens, component rules, and anti-patterns.
+- Tests cover content validation, route metadata, project interactions, accessibility-related style contracts, and case-study-specific prose/layout behavior.
+
+## Product Principles
+
+1. **The writing carries the work.** Case studies are essays with artifacts, not image galleries with captions.
+2. **Quiet beats loud.** Generous space, restrained color, and one strong thing per screen should do more work than decoration.
+3. **The system shows.** Spacing rhythm, type scale, reused components, and consistent interaction rules are part of the craft signal.
+4. **Mobile is not a courtesy.** Phone review is a primary first impression, not a degraded fallback.
+5. **Show range without flattening it.** Product work, content systems, research, and experiments should keep their own shapes while still belonging to one portfolio.
 
 ## Accessibility & Inclusion
 
-- WCAG 2.2 AA target across body text contrast, focus states, and tap targets.
-- Light + dark themes already shipped; both must meet contrast on their own (not just one).
-- Reduced-motion path exists for entrance animations and the typer; honor it everywhere.
-- Section anchors on case studies must be keyboard-navigable; the ToC component is interactive and needs proper aria states.
-- Image alt text must describe the work, not just label it ("airbnb-audit.png" → "Airbnb heuristic audit highlights").
+- Target WCAG 2.2 AA for body text contrast, focus states, and tap targets.
+- Light and dark themes must both remain first-class and independently legible.
+- Reduced-motion behavior should preserve access to content without relying on animation.
+- Section navigation and interactive case-study artifacts should remain keyboard-operable.
+- Alt text should describe the work shown, not only label filenames or asset categories.

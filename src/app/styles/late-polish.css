@@ -871,7 +871,7 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 }
 .fg-pulled-answer-options {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(7.25rem, 1fr));
   gap: 0.45rem;
   margin: 1.6rem 0 0;
   padding: 0;
@@ -887,6 +887,7 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 .fg-pulled-answer-choice {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 0.45rem;
   min-height: 44px;
   padding: 0.45rem 0.9rem;
@@ -912,6 +913,10 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
   margin: 0;
   accent-color: var(--fg-accent);
   flex: 0 0 auto;
+}
+.fg-pulled-answer-label {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 .fg-pulled-answer-input:focus-visible {
   outline: 2px solid var(--focus-ring);
@@ -1389,35 +1394,37 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
    and learn the app uses a daylight-graded route, the metaphor snaps into
    place retroactively: the reading was the drive.
 
-     §1–2 Frame and research               → sunrise orange
-     §3   Design                           → daylight gold
-     §4   Refine                           → late-day alert warmth
-     §5–6 Trust and validate               → night navy
+     §1–2 Frame and research               → daylight dawn
+     §3–4 Plan and respond                 → daylight dusk
+     §5–6 Trust and validate               → daylight night
 
    Reduced-motion safe; segment fills track scroll position with no
    easing.
    ══════════════════════════════════════════════════════════════════ */
 
-/* ── Section colors, arranged as a dawn → night arc ──────────────── */
+/* ── Section colors, arranged as the app's dawn → dusk → night arc ─── */
 .fg-page {
+  --fg-toc-dawn: #FFB347;
+  --fg-toc-dusk: #C4785A;
+  /* Accessible dark-theme stand-in for app night #2D1B69. */
   --fg-toc-night: #5559A8;
 }
 
 :root[data-theme="light"] .fg-page {
-  --fg-toc-night: #1B1E4B;
+  --fg-toc-night: #2D1B69;
 }
 
-.fg-page .project-toc-item:nth-child(1) { --seg-color: #F09456; } /* sunrise orange     */
-.fg-page .project-toc-item:nth-child(2) { --seg-color: #F09456; }
-.fg-page .project-toc-item:nth-child(3) { --seg-color: #FDD350; } /* daylight gold      */
-.fg-page .project-toc-item:nth-child(4) { --seg-color: #C74757; } /* late-day alert     */
-.fg-page .project-toc-item:nth-child(5) { --seg-color: var(--fg-toc-night); } /* night navy */
+.fg-page .project-toc-item:nth-child(1) { --seg-color: var(--fg-toc-dawn); }
+.fg-page .project-toc-item:nth-child(2) { --seg-color: var(--fg-toc-dawn); }
+.fg-page .project-toc-item:nth-child(3) { --seg-color: var(--fg-toc-dusk); }
+.fg-page .project-toc-item:nth-child(4) { --seg-color: var(--fg-toc-dusk); }
+.fg-page .project-toc-item:nth-child(5) { --seg-color: var(--fg-toc-night); }
 .fg-page .project-toc-item:nth-child(6) { --seg-color: var(--fg-toc-night); }
 
-.fg-page .project-chapter[data-chapter-index="1"] { --chapter-motif-accent: #F09456; }
-.fg-page .project-chapter[data-chapter-index="2"] { --chapter-motif-accent: #F09456; }
-.fg-page .project-chapter[data-chapter-index="3"] { --chapter-motif-accent: #FDD350; }
-.fg-page .project-chapter[data-chapter-index="4"] { --chapter-motif-accent: #C74757; }
+.fg-page .project-chapter[data-chapter-index="1"] { --chapter-motif-accent: var(--fg-toc-dawn); }
+.fg-page .project-chapter[data-chapter-index="2"] { --chapter-motif-accent: var(--fg-toc-dawn); }
+.fg-page .project-chapter[data-chapter-index="3"] { --chapter-motif-accent: var(--fg-toc-dusk); }
+.fg-page .project-chapter[data-chapter-index="4"] { --chapter-motif-accent: var(--fg-toc-dusk); }
 .fg-page .project-chapter[data-chapter-index="5"] { --chapter-motif-accent: var(--fg-toc-night); }
 .fg-page .project-chapter[data-chapter-index="6"] { --chapter-motif-accent: var(--fg-toc-night); }
 
@@ -1437,18 +1444,18 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 
 /* Mobile / tablet progress hairline: paint the full daylight arc behind,
    then use a mask to reveal only the portion the reader has scrolled
-   through. As they scroll the bar drifts from dawn orange through peak
-   alert warmth to night navy — the same six-chapter journey the desktop
+   through. As they scroll the bar drifts through the app's dawn, dusk,
+   and night anchors — the same six-chapter journey the desktop
    rails trace, drawn as a continuous six-chapter horizon. */
 .fg-page .project-toc-progress {
   transform: none;
   width: 100%;
   background: linear-gradient(
     to right,
-    #F09456 0% 16.667%,
-    #F09456 16.667% 33.333%,
-    #FDD350 33.333% 50%,
-    #C74757 50% 66.667%,
+    var(--fg-toc-dawn) 0% 16.667%,
+    var(--fg-toc-dawn) 16.667% 33.333%,
+    var(--fg-toc-dusk) 33.333% 50%,
+    var(--fg-toc-dusk) 50% 66.667%,
     var(--fg-toc-night) 66.667% 83.333%,
     var(--fg-toc-night) 83.333% 100%
   );

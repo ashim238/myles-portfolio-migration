@@ -72,7 +72,7 @@
 .fg-evidence-boundaries {
   display: grid;
   margin: 2.2rem 0 2.6rem;
-  max-width: min(52rem, 100%);
+  max-width: min(68rem, 100%);
   border: 1px solid var(--line);
   border-radius: 0.7rem;
   overflow: hidden;
@@ -81,7 +81,7 @@
 
 .fg-evidence-boundary {
   position: relative;
-  padding: 1.15rem 1.2rem 1.25rem;
+  padding: 1.25rem 1.35rem 1.35rem;
 }
 
 .fg-evidence-boundary + .fg-evidence-boundary {
@@ -107,8 +107,8 @@
 
 .fg-evidence-boundary p:last-child {
   margin: 0;
-  font-size: 1rem;
-  line-height: 1.5;
+  font-size: 0.96rem;
+  line-height: 1.58;
   color: var(--foreground);
   text-wrap: pretty;
 }
@@ -412,8 +412,6 @@
   background: var(--surface);
 }
 
-/* The diagram is wide; it scrolls inside this wrapper so the caption below
-   stays put. A right-edge fade cues there's more to scroll on mobile. */
 .fg-arch-scroll {
   overflow-x: auto;
   overscroll-behavior-x: contain;
@@ -458,7 +456,7 @@
 
 .fg-arch-svg {
   width: 100%;
-  min-width: 1200px;
+  min-width: 0;
   height: auto;
   color: var(--foreground);
 }
@@ -3459,18 +3457,34 @@
 }
 
 .nv-heatmap-map-label {
+  display: grid;
+  justify-items: center;
+  gap: 0.45rem;
   margin: 0.85rem auto 0;
-  max-width: 34ch;
+  max-width: 30rem;
   font-size: 0.95rem;
   line-height: 1.45;
   color: var(--muted);
   text-wrap: pretty;
 }
 
+.nv-heatmap-map-selection {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.35rem 0.55rem;
+}
+
 .nv-heatmap-map-name {
   font-family: var(--font-navi-display), var(--font-sans), sans-serif;
   color: var(--nv-accent-text);
   font-weight: 700;
+}
+
+.nv-heatmap-map-context {
+  display: block;
+  max-width: 28ch;
 }
 
 .nv-heatmap-map-pos {
@@ -4808,8 +4822,8 @@
 
 .nv-research-board {
   display: grid;
-  gap: clamp(2.5rem, 5vw, 4rem);
-  padding: clamp(1.25rem, 3vw, 2.25rem);
+  gap: clamp(2rem, 4vw, 3.25rem);
+  padding: clamp(1.35rem, 3vw, 2.35rem);
   border: 1px solid var(--line);
   border-radius: var(--rounded-md);
   background: var(--surface);
@@ -4831,11 +4845,11 @@
 }
 
 .nv-research-board-head p {
-  max-width: 40ch;
+  max-width: 42ch;
   margin: 0;
   color: var(--muted);
-  font-size: 0.85rem;
-  line-height: 1.5;
+  font-size: 0.9rem;
+  line-height: 1.62;
   text-wrap: pretty;
 }
 
@@ -4862,9 +4876,9 @@
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 0.4rem 1rem;
+  gap: 0.45rem 1rem;
   max-width: 72ch;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.35rem;
   color: var(--foreground);
   font-weight: 600;
 }
@@ -4894,7 +4908,7 @@
 
 .nv-research-archetypes > li {
   min-width: 0;
-  padding: 1.15rem 1.2rem;
+  padding: 1.25rem 1.25rem 1.3rem;
   border: 1px solid var(--nv-ui-border);
   border-radius: var(--rounded-sm);
   background: var(--background);
@@ -4935,10 +4949,10 @@
 .nv-research-archetypes h4,
 .nv-research-journey h4,
 .nv-research-booking h4 {
-  margin: 0 0 0.55rem;
+  margin: 0 0 0.6rem;
   font-family: var(--font-navi-display), var(--font-sans), sans-serif;
-  font-size: 1rem;
-  line-height: 1.3;
+  font-size: 1.05rem;
+  line-height: 1.28;
 }
 
 .nv-research-archetypes dd,
@@ -4946,15 +4960,15 @@
 .nv-research-booking p {
   margin: 0;
   overflow-wrap: anywhere;
-  font-size: 0.88rem;
-  line-height: 1.5;
+  font-size: 0.9rem;
+  line-height: 1.62;
   color: var(--muted);
 }
 
 .nv-research-archetype-details,
 .nv-research-lane-details {
   display: grid;
-  gap: 0.7rem;
+  gap: 0.82rem;
   margin: 0;
 }
 
@@ -4993,8 +5007,8 @@
   position: relative;
   z-index: 1;
   display: grid;
-  gap: 0.75rem;
-  padding-top: 1.15rem;
+  gap: 1rem;
+  padding-top: 1.25rem;
 }
 
 .nv-research-journey {
@@ -5002,14 +5016,14 @@
 }
 
 .nv-research-booking {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(8.5rem, 1fr));
 }
 
 .nv-research-journey > li,
 .nv-research-booking > li {
   position: relative;
   min-width: 0;
-  padding: 1rem;
+  padding: 1.05rem 1.05rem 1.1rem;
   border: 1px solid var(--nv-ui-border);
   border-radius: 0.45rem;
   background: color-mix(in srgb, var(--nv-accent) 5%, var(--surface));
@@ -5061,6 +5075,26 @@
 
 .nv-research-route--booking {
   margin-inline: calc((100% - 3rem) / 10);
+}
+
+@media (max-width: 1040px) and (min-width: 701px) {
+  .nv-research-booking {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding-top: 0;
+  }
+
+  .nv-research-booking > li {
+    padding: 1.05rem 1.05rem 1.1rem 3rem;
+  }
+
+  .nv-research-booking > li::before {
+    top: 1.35rem;
+    left: 1.05rem;
+  }
+
+  .nv-research-route--booking {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {

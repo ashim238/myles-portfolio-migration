@@ -283,7 +283,6 @@ export function ArchitectureDiagram() {
       <figcaption className="fg-arch-caption">
         Community reports are local-first. Supabase, row-level security, device
         checks, and moderation activate only when configured.
-        <span className="fg-arch-scrollhint"> Scroll the diagram to read it all.</span>
       </figcaption>
     </figure>
   );

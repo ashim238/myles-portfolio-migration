@@ -40,7 +40,7 @@ export function NaviDemoEmbed() {
       />
       <Link href="/work/navi/demo" className="nv-demo-embed-mobile-cta">
         Open the demo
-        <span aria-hidden="true"> ↗</span>
+        <span aria-hidden="true">↗</span>
       </Link>
     </div>
   );
@@ -93,7 +93,7 @@ export function NaviDemoEmbed() {
           rel="noopener noreferrer"
         >
           Open full demo in a new tab
-          <span aria-hidden="true"> ↗</span>
+          <span aria-hidden="true">↗</span>
         </Link>
       </div>
     </div>

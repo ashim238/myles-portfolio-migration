@@ -29,7 +29,7 @@ export function ColorPalette({ colors }: ColorPaletteProps) {
     copyState.status === "copied"
       ? `Copied ${copyState.value}.`
       : copyState.status === "error"
-        ? `Clipboard unavailable. Select ${copyState.value} and copy it manually.`
+        ? `Copy blocked in this browser. Select ${copyState.value} to copy it manually.`
         : "";
 
   return (

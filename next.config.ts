@@ -2,14 +2,16 @@ import type { NextConfig } from "next";
 
 const developmentEvalSource =
   process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : "";
+const impeccableLiveDevSource =
+  process.env.NODE_ENV === "development" ? " http://localhost:8400" : "";
 
 const contentSecurityPolicy = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${developmentEvalSource} https://cdnjs.cloudflare.com`,
+  `script-src 'self' 'unsafe-inline'${developmentEvalSource}${impeccableLiveDevSource} https://cdnjs.cloudflare.com`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://cdn.prod.website-files.com https://placehold.co https://*.basemaps.cartocdn.com",
   "font-src 'self' data:",
-  "connect-src 'self'",
+  `connect-src 'self'${impeccableLiveDevSource}`,
   "media-src 'self' blob:",
   "worker-src 'self' blob:",
   "frame-src 'self'",

@@ -118,7 +118,7 @@ export function LoomEmbed({ src, title }: LoomEmbedProps) {
       <p className={styles.fallback}>
         <a href={src} target="_blank" rel="noopener noreferrer">
           Open {title} in a new tab
-          <span aria-hidden="true"> ↗</span>
+          <span aria-hidden="true">↗</span>
         </a>
       </p>
     </div>

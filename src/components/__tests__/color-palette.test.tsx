@@ -41,7 +41,7 @@ describe("ColorPalette", () => {
     );
   });
 
-  it("announces clipboard failure and leaves the value selectable", async () => {
+  it("announces clipboard fallback and leaves the value selectable", async () => {
     const user = userEvent.setup();
     setClipboard(undefined);
     const { container } = render(<ColorPalette colors={["#abcdef"]} />);
@@ -50,7 +50,7 @@ describe("ColorPalette", () => {
 
     await waitFor(() => {
       expect(screen.getByRole("status")).toHaveTextContent(
-        "Clipboard unavailable. Select #abcdef and copy it manually.",
+        "Copy blocked in this browser. Select #abcdef to copy it manually.",
       );
     });
     expect(container.querySelector(".color-palette")).toHaveAttribute(
@@ -72,7 +72,7 @@ describe("ColorPalette", () => {
     await user.click(screen.getByRole("button", { name: "Copy color #fedcba" }));
 
     expect(await screen.findByRole("status")).toHaveTextContent(
-      "Clipboard unavailable. Select #fedcba and copy it manually.",
+      "Copy blocked in this browser. Select #fedcba to copy it manually.",
     );
   });
 });

@@ -214,5 +214,8 @@ describe("Navi evidence claims", () => {
     expect(artifactCopy).toContain(
       "Learn would open with the neighborhood’s inclusive history and local rhythm.",
     );
+    expect(artifactCopy).toContain('className="nv-heatmap-map-selection"');
+    expect(artifactCopy).toContain('className="nv-heatmap-map-context"');
+    expect(artifactCopy).not.toContain('className="nv-heatmap-map-name">{activeName}.</strong>');
   });
 });

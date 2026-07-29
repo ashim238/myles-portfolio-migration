@@ -396,6 +396,16 @@ describe("Fresh Greens prose structure", () => {
     expect(labelRule).not.toMatch(/font-family:\s*var\(--font-mono\)/);
   });
 
+  it("gives the three research problems enough horizontal measure", () => {
+    const styles = readFileSync(portfolioStylesPath, "utf8");
+    const gridRule = styles.match(/\.fg-evidence-boundaries\s*\{([^}]+)\}/)?.[1];
+    const bodyRule = styles.match(/\.fg-evidence-boundary p:last-child\s*\{([^}]+)\}/)?.[1];
+
+    expect(gridRule).toContain("max-width: min(68rem, 100%)");
+    expect(bodyRule).toContain("font-size: 0.96rem");
+    expect(bodyRule).toContain("line-height: 1.58");
+  });
+
   it("does not present prototype mechanics or output volume as validated safety outcomes", () => {
     const source = `${readPage()}\n${readFileSync(projectContentPath, "utf8")}`;
 

@@ -75,6 +75,39 @@ describe("portfolio hardening style contract", () => {
     expect(item).toMatch(/min-width:\s*0;/);
   });
 
+  it("normalizes inline arrow spacing without baked-in text spaces", () => {
+    const forwardArrowRule = cssBlock(
+      ':where(\n  .about-action,\n  .project-work-jump-cta,\n  .project-work-jump-view-all,\n  .case-cut-evidence-cta,\n  .nv-demo-embed-mobile-cta,\n  .nv-system-cta-link,\n  .uf-before-after-item a,\n  .uf-switcher-preview a,\n  .play-embed-fallback a\n) > span[aria-hidden="true"]:last-child',
+    );
+    const backArrowRule = cssBlock(
+      '.project-topbar a > span[aria-hidden="true"]:first-child',
+    );
+
+    expect(forwardArrowRule).toMatch(/margin-inline-start:\s*0\.32em;/);
+    expect(forwardArrowRule).toMatch(/transform:\s*translateY\(-0\.04em\);/);
+    const arrowSources = [
+      "src/app/page.tsx",
+      "src/app/about/page.tsx",
+      "src/app/play/page.tsx",
+      "src/app/resume/page.tsx",
+      "src/app/work/[slug]/page.tsx",
+      "src/app/work/fresh-greens/page.tsx",
+      "src/app/work/navi/page.tsx",
+      "src/app/work/tiktok/page.tsx",
+      "src/app/work/understandingfafsa/page.tsx",
+      "src/components/loom-embed.tsx",
+      "src/components/navi-demo-embed.tsx",
+      "src/components/project-work-jump.tsx",
+      "src/components/understandingfafsa.tsx",
+    ]
+      .map((path) => readFileSync(resolve(process.cwd(), path), "utf8"))
+      .join("\n");
+
+    expect(backArrowRule).toMatch(/margin-inline-end:\s*0\.34em;/);
+    expect(arrowSources).not.toMatch(/<span aria-hidden="true"> [↓→↗]/);
+    expect(arrowSources).not.toMatch(/<span aria-hidden="true">← /);
+  });
+
   it("adds the safe area to mobile navigation without shrinking its controls", () => {
     const mobile = cssBlockContaining(
       "@media (max-width: 767px)",

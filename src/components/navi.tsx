@@ -291,11 +291,15 @@ export function HeatmapExplorer() {
         <p className="nv-heatmap-map-label" aria-live="polite">
           {activeName ? (
             <>
-              <strong className="nv-heatmap-map-name">{activeName}.</strong>{" "}
-              <span className="nv-heatmap-map-pos">
-                {sorted.findIndex((n) => n.id === activeId) + 1} of {sorted.length}
-              </span>{" "}
-              {NAVI_LEARN_CONTEXT}
+              <span className="nv-heatmap-map-selection">
+                <strong className="nv-heatmap-map-name">{activeName}</strong>
+                <span className="nv-heatmap-map-pos">
+                  {sorted.findIndex((n) => n.id === activeId) + 1} of {sorted.length}
+                </span>
+              </span>
+              <span className="nv-heatmap-map-context">
+                {NAVI_LEARN_CONTEXT}
+              </span>
             </>
           ) : (
             `Select from the list to preview how Learn would frame each of ${sorted.length} neighborhoods.`

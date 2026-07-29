@@ -53,15 +53,21 @@ describe("release security headers", () => {
     );
   });
 
-  it("allows React evaluation only in development", async () => {
-    expect(await getContentSecurityPolicy("development")).toContain(
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com",
+  it("allows React evaluation and Impeccable live only in development", async () => {
+    const developmentPolicy = await getContentSecurityPolicy("development");
+
+    expect(developmentPolicy).toContain(
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:8400 https://cdnjs.cloudflare.com",
+    );
+    expect(developmentPolicy).toContain(
+      "connect-src 'self' http://localhost:8400",
     );
 
     for (const nodeEnv of ["production", "test"]) {
-      expect(await getContentSecurityPolicy(nodeEnv)).not.toContain(
-        "'unsafe-eval'",
-      );
+      const policy = await getContentSecurityPolicy(nodeEnv);
+
+      expect(policy).not.toContain("'unsafe-eval'");
+      expect(policy).not.toContain("localhost:8400");
     }
   });
 });

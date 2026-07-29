@@ -73,7 +73,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
       <SiteNav />
       <nav className="project-topbar" aria-label="Breadcrumb">
         <TransitionLink href="/#work">
-          <span aria-hidden="true">← </span>
+          <span aria-hidden="true">←</span>
           Selected work
         </TransitionLink>
       </nav>

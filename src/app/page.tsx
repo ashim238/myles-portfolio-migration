@@ -24,7 +24,7 @@ export default async function Home() {
         <p className="hero-actions">
           <Link className="about-action" href="/#work">
             View selected work
-            <span aria-hidden="true"> ↓</span>
+            <span aria-hidden="true">↓</span>
           </Link>
         </p>
       </section>
@@ -61,15 +61,15 @@ export default async function Home() {
         <p className="about-actions">
           <Link className="about-action" href="/about">
             More about
-            <span aria-hidden="true"> →</span>
+            <span aria-hidden="true">→</span>
           </Link>
           <Link className="about-action" href="/resume">
             Read the résumé
-            <span aria-hidden="true"> →</span>
+            <span aria-hidden="true">→</span>
           </Link>
           <a className="about-action" href={`mailto:${siteConfig.email}`}>
             Get in touch
-            <span aria-hidden="true"> ↗</span>
+            <span aria-hidden="true">↗</span>
           </a>
         </p>
       </section>

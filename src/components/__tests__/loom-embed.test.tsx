@@ -1,6 +1,13 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { LoomEmbed } from "@/components/loom-embed";
+
+const loomStyles = readFileSync(
+  resolve(process.cwd(), "src/components/loom-embed.module.css"),
+  "utf8",
+);
 
 describe("LoomEmbed", () => {
   afterEach(() => {
@@ -130,6 +137,12 @@ describe("LoomEmbed", () => {
       fireEvent(window, event);
       expect(frame).toHaveStyle({ height: "812px" });
     }
+  });
+
+  it("gives the fallback arrow the same optical spacing as portfolio links", () => {
+    expect(loomStyles).toMatch(/\.fallback a > span\[aria-hidden="true"\]\s*\{/);
+    expect(loomStyles).toMatch(/margin-inline-start:\s*0\.32em;/);
+    expect(loomStyles).toMatch(/transform:\s*translateY\(-0\.04em\);/);
   });
 
   it("keeps a direct protected path when the embed is unavailable", () => {

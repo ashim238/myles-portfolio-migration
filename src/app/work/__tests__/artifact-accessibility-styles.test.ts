@@ -391,6 +391,11 @@ describe("portfolio artifact accessibility styles", () => {
     expect(pendingArtifactReveal).toContain("opacity: 1");
     expect(pendingArtifactReveal).toContain("transform: none");
     expect(artifacts).not.toMatch(/overflow-x:\s*(auto|scroll)/);
+    expect(researchBoard).toContain("gap: clamp(2rem, 4vw, 3.25rem)");
+    expect(styles).toContain(
+      "grid-template-columns: repeat(5, minmax(8.5rem, 1fr))",
+    );
+    expect(styles).toContain("@media (max-width: 1040px) and (min-width: 701px)");
     expect(researchBoard).toContain("border: 1px solid var(--line)");
     expect(researchBoard).toContain("background: var(--surface)");
     expect(researchBoard).toContain("border-radius: var(--rounded-md)");
