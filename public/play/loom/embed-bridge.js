@@ -1,6 +1,7 @@
 (() => {
   const origin = window.location.origin;
   const systemQuery = window.matchMedia("(prefers-color-scheme: light)");
+  const contentRoot = document.querySelector("[data-embed-content]");
   let parentThemeReceived = false;
 
   function isTheme(value) {
@@ -13,12 +14,11 @@
 
   function reportHeight() {
     if (window.parent === window) return;
-    const height = Math.ceil(
-      Math.max(
-        document.body.scrollHeight,
-        document.documentElement.getBoundingClientRect().height,
-      ),
-    );
+    const bodyTop = document.body.getBoundingClientRect().top;
+    const contentBottom = (
+      contentRoot ?? document.body
+    ).getBoundingClientRect().bottom;
+    const height = Math.ceil(Math.max(1, contentBottom - bodyTop));
     window.parent.postMessage({ type: "loom:resize", height }, origin);
   }
 
@@ -37,7 +37,7 @@
   });
 
   const resizeObserver = new ResizeObserver(reportHeight);
-  resizeObserver.observe(document.documentElement);
+  if (contentRoot) resizeObserver.observe(contentRoot);
   resizeObserver.observe(document.body);
   window.addEventListener("load", reportHeight);
 })();

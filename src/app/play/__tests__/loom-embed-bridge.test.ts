@@ -12,12 +12,23 @@ function executeBridge() {
   const postMessage = vi.fn();
   const parentWindow = { postMessage };
   let rootRectHeight = 640;
+  let contentRectHeight = 640;
   const root = {
     dataset: {} as Record<string, string>,
     scrollHeight: 640,
     getBoundingClientRect: () => ({ height: rootRectHeight }),
   };
-  const body = { scrollHeight: 620 };
+  const body = {
+    scrollHeight: 620,
+    getBoundingClientRect: () => ({ top: 0 }),
+  };
+  const contentRoot = {
+    getBoundingClientRect: () => ({
+      bottom: contentRectHeight,
+      height: contentRectHeight,
+      top: 0,
+    }),
+  };
   const observedTargets: unknown[] = [];
   let resizeCallback: ResizeObserverCallback | undefined;
 
@@ -36,6 +47,8 @@ function executeBridge() {
     document: {
       documentElement: root,
       body,
+      querySelector: (selector: string) =>
+        selector === "[data-embed-content]" ? contentRoot : null,
     },
     ResizeObserver: class {
       constructor(callback: ResizeObserverCallback) {
@@ -53,13 +66,19 @@ function executeBridge() {
     listeners,
     parentWindow,
     postMessage,
-    resize: (documentHeight: number, contentHeight = documentHeight) => {
+    resize: (
+      contentHeight: number,
+      documentHeight = contentHeight,
+      viewportHeight = documentHeight,
+    ) => {
       root.scrollHeight = documentHeight;
-      rootRectHeight = contentHeight;
-      body.scrollHeight = contentHeight;
+      rootRectHeight = viewportHeight;
+      body.scrollHeight = documentHeight;
+      contentRectHeight = contentHeight;
       resizeCallback?.([], {} as ResizeObserver);
     },
     body,
+    contentRoot,
     observedTargets,
     root,
   };
@@ -69,6 +88,7 @@ describe("Loom child embed bridge", () => {
   it("reports height and accepts themes only from its same-origin parent", () => {
     const {
       body,
+      contentRoot,
       listeners,
       observedTargets,
       parentWindow,
@@ -78,7 +98,7 @@ describe("Loom child embed bridge", () => {
     } =
       executeBridge();
 
-    expect(observedTargets).toEqual([root, body]);
+    expect(observedTargets).toEqual([contentRoot, body]);
 
     listeners.get("load")?.({} as Event);
     expect(postMessage).toHaveBeenCalledWith(
@@ -126,9 +146,15 @@ describe("Loom child embed bridge", () => {
       "https://portfolio.test",
     );
 
-    resize(932, 821);
+    resize(821, 932, 932);
     expect(postMessage).toHaveBeenLastCalledWith(
       { type: "loom:resize", height: 821 },
+      "https://portfolio.test",
+    );
+
+    resize(670, 932, 932);
+    expect(postMessage).toHaveBeenLastCalledWith(
+      { type: "loom:resize", height: 670 },
       "https://portfolio.test",
     );
   });
