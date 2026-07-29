@@ -265,11 +265,12 @@ export default async function FreshGreensPage() {
             </p>
             <p>
               The intended trust model keeps every firsthand account visible as
-              one person&apos;s account. Similar reports from separate community
-              contributors across time gain more influence in ranking. A
-              time-sensitive hazard can surface sooner when waiting would make it
-              useless. Sparse coverage stays labeled as uncertainty, never as a
-              positive safety signal.
+              one person&apos;s account unless human review hides or removes it
+              for violating contribution rules. Similar reports from separate
+              community contributors across time gain more influence in ranking.
+              A time-sensitive hazard can surface sooner when waiting would make
+              it useless. Sparse coverage stays labeled as uncertainty, never as
+              a positive safety signal.
             </p>
             <p>
               <strong>Current prototype limit:</strong> the prototype maps one
@@ -343,7 +344,7 @@ export default async function FreshGreensPage() {
 
           <div className="fg-scope-grid">
             <div className="fg-scope-col">
-              <p className="fg-scope-label">Impact now</p>
+              <p className="fg-scope-label">Built now</p>
               <ul className="fg-scope-list" role="list">
                 <li>
                   Plan: route comparison explained through chips and source cards

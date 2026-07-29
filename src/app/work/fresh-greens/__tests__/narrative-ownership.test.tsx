@@ -132,7 +132,7 @@ describe("Fresh Greens rendered narrative ownership", () => {
     expect(trust).toHaveTextContent("one report to one scored zone");
     expect(trust).toHaveTextContent("Corroboration-weighted ranking");
     expect(
-      within(chapter(container, "fg-scope")).getByText("Impact now"),
+      within(chapter(container, "fg-scope")).getByText("Built now"),
     ).toBeInTheDocument();
     expect(
       within(chapter(container, "fg-scope")).getByText("What remains"),
@@ -187,7 +187,7 @@ describe("Fresh Greens rendered narrative ownership", () => {
     expect(trust).toHaveTextContent("community contributors");
     expect(`${respond.textContent} ${trustCopy}`).not.toMatch(/trusted agents/i);
     expect(trust).toHaveTextContent(
-      "The intended trust model keeps every firsthand account visible as one person's account",
+      "The intended trust model keeps every firsthand account visible as one person's account unless human review hides or removes it for violating contribution rules",
     );
     expect(
       trustCopy.indexOf("The intended trust model"),
@@ -218,9 +218,9 @@ describe("Fresh Greens rendered narrative ownership", () => {
     const scope = chapter(container, "fg-scope");
     const scopeCopy = scope.textContent ?? "";
 
-    expect(scope).toHaveTextContent("Impact now");
+    expect(scope).toHaveTextContent("Built now");
     expect(scope).toHaveTextContent("What remains");
-    expect(scopeCopy.indexOf("Impact now")).toBeLessThan(
+    expect(scopeCopy.indexOf("Built now")).toBeLessThan(
       scopeCopy.indexOf("What remains"),
     );
     expect(scope).toHaveTextContent(
