@@ -34,13 +34,24 @@ describe("UnderstandingFAFSA outcome claims", () => {
       resolve(process.cwd(), "src/app/work/understandingfafsa/page.tsx"),
       "utf8",
     );
+    const visibleMetricParagraph = Array.from(
+      projectPage.matchAll(/<p(?:\s[^>]*)?>([\s\S]*?)<\/p>/g),
+      ([, paragraph]) => paragraph,
+    ).find((paragraph) =>
+      paragraph.includes('<CountUp value="~52.6%" />'),
+    );
+    const visibleMetricCopy = visibleMetricParagraph?.replace(/\s+/g, " ");
 
-    expect(projectPage).toContain("November 4, 2025");
-    expect(projectPage).toContain("~52.6%");
-    expect(projectPage).toContain("around 30%");
-    expect(projectPage).toContain("MPP excluded");
-    expect(projectPage).toMatch(/observed/i);
-    expect(projectPage).toContain("not a controlled attribution test");
+    expect(visibleMetricCopy).toBeDefined();
+    expect(visibleMetricCopy).toMatch(
+      /November 4, 2025[\s\S]{0,100}observed[\s\S]{0,100}52\.6%[\s\S]{0,100}MPP excluded/i,
+    );
+    expect(visibleMetricCopy).toMatch(
+      /earlier sends[\s\S]{0,50}around 30%/i,
+    );
+    expect(visibleMetricCopy).toMatch(
+      /not a controlled attribution test[\s\S]{0,120}(?:don&apos;t|do not) claim/i,
+    );
   });
 
   it("leads the condensed project summary with the shipped system", () => {
@@ -95,6 +106,14 @@ describe("UnderstandingFAFSA outcome claims", () => {
     );
     expect(projectPage).not.toMatch(/subscriber&apos;s\s+first impression/);
     expect(projectPage).not.toMatch(/read clearly in email/);
+    for (const unsupported of [
+      /saved (?:the founder )?time/i,
+      /faster (?:assembly|workflow|production)/i,
+      /improved efficiency/i,
+      /reduced errors/i,
+    ]) {
+      expect(projectPage).not.toMatch(unsupported);
+    }
     expect(comparisonComponent).not.toContain("stays on-brand no matter the order");
     expect(comparisonComponent).not.toContain("faster assembly");
     expect(comparisonComponent).not.toContain(
@@ -154,7 +173,7 @@ describe("UnderstandingFAFSA outcome claims", () => {
     );
 
     expect(projectPage).toMatch(
-      /constraint\.\s*<\/mark>\s*\{" "\}\s*Early weight/,
+      /constraint\.\s*<\/mark>\s*\{" "\}\s*To reduce/,
     );
   });
 });

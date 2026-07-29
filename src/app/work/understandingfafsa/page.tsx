@@ -20,6 +20,7 @@ import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
 import { CASE_STUDY_CHAPTERS } from "@/lib/project-chapters";
 import { createRouteMetadata } from "@/lib/site-config";
+import { UNDERSTANDING_FAFSA_AUDIT_RULES } from "@/lib/understandingfafsa-audit-rules";
 
 const UF_DESCRIPTION =
   "Built a modular newsletter system for a site rebrand. The first redesigned send had an observed ~52.6% open rate with Mailchimp Privacy Protection excluded. This was not a controlled attribution test.";
@@ -99,9 +100,9 @@ export default async function UnderstandingFafsaPage() {
         outcomeValue={project?.outcomeMetricValue}
         outcomeLabel={project?.outcomeMetricLabel}
         moves={[
-          "Compiled and evaluated 120+ newsletters with one collaborator.",
-          "Built a modular template system with locked layers and swappable parts.",
-          "Matched the newsletter type and palette to the rebranded site.",
+          "Research: one collaborator and I compiled and evaluated more than 120 newsletters.",
+          "System: I designed the modular rules and rebuilt the live template in Mailchimp.",
+          "Workflow: the founder assembles each send from the kit without editing HTML.",
         ]}
       />
 
@@ -151,41 +152,27 @@ export default async function UnderstandingFafsaPage() {
         <div className="project-section uf-section">
           <div className="project-section-body">
             <p>
-              Before touching the templates, I worked with one collaborator to
-              compile over 120 newsletter examples. We evaluated them for
-              clarity, personalization, and tone of voice. A fourth criterion
-              paired visual appeal with branding consistency.
+              One collaborator and I worked together to compile and evaluate more than 120 newsletter examples.
+              We compared clarity, personalization, tone of voice, visual appeal,
+              and branding consistency.
             </p>
             <p>
               We looked most closely at Revenews, The 74, Next by Jeff Selingo,
-              Medium, and Folderly. They used different mixes of structure,
-              tone, and branding. The rest helped me compare layout and
-              hierarchy, including how they used color.
+              Medium, and Folderly as references for scanning, hierarchy, tone,
+              and brand structure.
             </p>
-            <p>A few details stood out:</p>
-            <ul>
-              <li>
-                Revenews used <strong>selective bolding</strong>, emoji section
-                headers, and concise intros.
-              </li>
-              <li>
-                Folderly carried <strong>brand color</strong> into its bullet
-                styles.
-              </li>
-              <li>
-                Several references used{" "}
-                <strong>action-focused section titles</strong> to divide long
-                sends.
-              </li>
-              <li>
-                The 74 used a <strong>more formal register</strong> than
-                student-facing references that used emojis and GIFs.
-              </li>
-              <li>
-                Next used <strong>if/then link framing</strong>, author photos,
-                and brief bios.
-              </li>
-            </ul>
+            <ol aria-label="Audit findings and system rules">
+              {UNDERSTANDING_FAFSA_AUDIT_RULES.map((rule) => (
+                <li key={rule.id}>
+                  <p>
+                    <strong>Finding:</strong> {rule.finding}.
+                  </p>
+                  <p>
+                    <strong>System rule:</strong> {rule.response}.
+                  </p>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </ProjectChapter>
@@ -225,9 +212,9 @@ export default async function UnderstandingFafsaPage() {
         <div className="project-section uf-section project-section--wide uf-section--wide">
           <div className="project-section-body">
             <p>
-              Spacing, dividers, type, and the structural skeleton stay locked.
-              Editors swap body copy and emoji-style section images. The founder
-              drafts each week&apos;s copy and works within those fixed rules.
+              I designed the modular rules around a fixed section order, spacing,
+              type, and dividers. The founder can swap weekly copy and imagery
+              without changing that structure.
             </p>
           </div>
 
@@ -246,23 +233,25 @@ export default async function UnderstandingFafsaPage() {
         <div className="project-section uf-section">
           <div className="project-section-body">
             <p>
-              The Figma file defined the spacing, type, and reusable sections. I
-              rebuilt the live template in Mailchimp so the founder could edit
-              it without touching HTML. Matching the Figma spacing in the builder
-              added too many containers and wrappers, so I flattened the
-              section-header and body hierarchy.
+              I rebuilt the live system in Mailchimp so the founder could edit it
+              without touching HTML. Matching the Figma spacing in the builder
+              added too many containers and wrappers. Test sends showed which
+              wrappers and dividers could go.
             </p>
             <p>
               <mark className="case-highlight">
-                Gmail&apos;s 102KB HTML ceiling and clipping created a rigid
-                constraint.
+                Gmail&apos;s 102 KB HTML clipping threshold set a rigid constraint.
               </mark>{" "}
-              Early weight came from custom section icons and themed dividers
-              exported from Figma. Test sends showed which wrappers and dividers
-              could go. I merged sections where they still scanned and compressed
-              PNGs through an external tool. For dark-mode-friendly dividers, I
-              removed backgrounds in Photoshop. That lowered their file weight
-              and kept them from looking muddy on phones.
+              To reduce the HTML Gmail measures, I flattened the hierarchy,
+              removed wrappers and blocks that didn&apos;t need to ship, and used
+              Mailchimp-native structure where it replaced custom markup.
+            </p>
+            <p>
+              I handled the image files separately. Compressing the PNGs through
+              an external tool lowered their download weight. It didn&apos;t
+              reduce the HTML source Gmail measures. For dark-mode-friendly
+              dividers, I removed backgrounds in Photoshop so they wouldn&apos;t
+              look muddy on phones.
             </p>
             <p>
               The weekly kit used fewer custom assets and more Mailchimp-native
@@ -286,22 +275,19 @@ export default async function UnderstandingFafsaPage() {
         <div className="project-section uf-section">
           <div className="project-section-body">
             <p>
-              <mark className="case-highlight">
-                This was my first time designing a system someone else
-                assembles every week.
-              </mark>
+              I shipped a master template, modular blocks,
+              locked-versus-swappable rules, and three template variants.
             </p>
             <p>
-              I shipped a master template, modular blocks, explicit
-              locked-vs-swappable rules, and three template variants built from
-              the same locked sections and swappable blocks. The first redesigned
-              send went out November 4, 2025.
+              The founder now assembles each send from the Mailchimp-native kit
+              without editing HTML.
             </p>
             <p>
-              Mailchimp reported an observed <CountUp value="~52.6%" />{" "}open rate
-              with MPP excluded, compared with earlier sends around 30%. That
-              result is encouraging, but it&apos;s not a controlled attribution
-              test. I don&apos;t claim the redesign caused the change.
+              The first redesigned send went out November 4, 2025. Mailchimp
+              reported an observed <CountUp value="~52.6%" />{" "}open rate with
+              MPP excluded, while earlier sends were around 30%. That result is
+              supporting context, not a controlled attribution test. I don&apos;t
+              claim the redesign caused the change.
             </p>
           </div>
         </div>
