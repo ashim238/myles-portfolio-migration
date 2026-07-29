@@ -70,10 +70,9 @@ export function PivotJourney() {
             </PhoneFrame>
           </div>
           <p className="fg-pivot-caption">
-            At first I imagined Fresh Greens as a feature inside Google Maps, so
-            v1 wore Google&apos;s turn banner and map chrome, with my safety
-            controls down the side. That moved fast, and it capped the whole
-            idea at Google Maps with a safety layer bolted on.
+            Fresh Greens began as a Google Maps feature, with my safety controls
+            added to Google&apos;s turn banner and map chrome. That kept the
+            concept dependent on someone else&apos;s interface.
           </p>
         </li>
 
@@ -92,10 +91,9 @@ export function PivotJourney() {
             </PhoneFrame>
           </div>
           <p className="fg-pivot-caption">
-            Rebuilding it as its own app is what let the safety signals become
-            the interface. The route preview grades the road by daylight, reads
-            safety at a glance, flags a station you trust, and carries its own
-            glyphs on the warm surfaces.
+            A standalone app let safety signals shape the interface: daylight
+            along the route, at-a-glance status, trusted places, and a distinct
+            visual language.
           </p>
         </li>
       </ol>

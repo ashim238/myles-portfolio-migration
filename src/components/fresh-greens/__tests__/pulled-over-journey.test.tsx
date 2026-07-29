@@ -122,12 +122,10 @@ describe("Fresh Greens pulled-over journey", () => {
       "true",
     );
     expect(
-      screen.getByText("A trusted contact and the recording stay one tap away."),
+      screen.getByText("Recording and trusted-contact actions remain visible."),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(
-        "The final state keeps Call and Text available while making it clear that no message or location has been sent.",
-      ),
+      screen.getByText("The screen confirms that nothing has been sent."),
     ).toBeInTheDocument();
     expect(
       screen.getByRole("img", {
@@ -145,7 +143,9 @@ describe("Fresh Greens pulled-over journey", () => {
     await user.keyboard("{ArrowRight}");
 
     expect(screen.getByRole("tab", { name: /Reassurance/i })).toHaveFocus();
-    expect(screen.getByText("Recording starts quietly before the next decision.")).toBeInTheDocument();
+    expect(
+      screen.getByText("Recording begins before the next decision."),
+    ).toBeInTheDocument();
   });
 
   it("walks a visitor through the representative path after an equal-weight answer", async () => {

@@ -11,16 +11,16 @@ const STEPS = [
     image: "safety-toolkit",
     decision: "Starts with the driver's question.",
     detail:
-      "Four safety paths stay behind one thumb-reachable control, so navigation remains the default state.",
+      "Four paths stay behind one thumb-reachable control.",
     alt: "The Fresh Greens safety toolkit asking What's going on? above Pulled-over, Roadside assistance, Unfamiliar area, and Share location options.",
   },
   {
     key: "reassurance",
     label: "Reassurance",
     image: "pulled-over-guidance",
-    decision: "Recording starts quietly before the next decision.",
+    decision: "Recording begins before the next decision.",
     detail:
-      "The first response is reassurance, not a form. A trusted contact remains one step away.",
+      "Reassurance comes first, with a trusted contact one step away.",
     alt: "The pulled-over guidance screen saying We'll walk you through what to do and confirming that recording has started.",
   },
   {
@@ -29,16 +29,16 @@ const STEPS = [
     image: "pulled-over-armed",
     decision: "Regular weight keeps a necessary question from reading like an accusation.",
     detail:
-      "Yes, No, and Prefer not to answer are given equal visual weight under the Held-Question rule.",
+      "All three answers carry equal visual weight.",
     alt: "The pulled-over flow asking Are you armed? in regular weight with Yes, No, and Prefer not to answer options.",
   },
   {
     key: "contact",
     label: "Contact",
     image: "pulled-over-contact",
-    decision: "A trusted contact and the recording stay one tap away.",
+    decision: "Recording and trusted-contact actions remain visible.",
     detail:
-      "The final state keeps Call and Text available while making it clear that no message or location has been sent.",
+      "The screen confirms that nothing has been sent.",
     alt: "The pulled-over contact screen showing a live recording timer, the message You're not alone, a note that no message or location has been sent, and Call and Text actions for trusted contact Jordan Lee.",
   },
 ] as const;
