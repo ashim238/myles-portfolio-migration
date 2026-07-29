@@ -17,12 +17,12 @@ function getDaylightArc() {
 }
 
 describe("Fresh Greens TOC daylight arc", () => {
-  it("keeps the traffic-stop emphasis on its evidence heading", () => {
+  it("keeps the traffic-stop emphasis on its chapter title", () => {
     expect(stylesheet).toMatch(
-      /\.project-evidence-heading#fg-pulled-over\s*\{/,
+      /\.project-chapter-title#fg-pulled-over\s*\{/,
     );
     expect(stylesheet).not.toMatch(
-      /\.project-section\s*>\s*h2#fg-pulled-over\s*\{/,
+      /\.project-evidence-heading#fg-pulled-over\s*\{/,
     );
   });
 

@@ -147,4 +147,15 @@ describe("visible-first structural motion", () => {
     expect(reduced).toContain("animation: none !important");
     expect(reduced).toContain("transform: none !important");
   });
+
+  it("stops the Navi demo skeleton pulse for reduced motion", () => {
+    const reduced = cssBlocks(
+      "@media (prefers-reduced-motion: reduce)",
+      lateStyles,
+    ).join("\n");
+
+    expect(reduced).toMatch(
+      /\.nv-demo-embed-skeleton-bar\s*\{[^}]*animation:\s*none;[^}]*opacity:\s*0\.7;/,
+    );
+  });
 });
