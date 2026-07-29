@@ -26,7 +26,7 @@ const STEPS = [
   {
     key: "question",
     label: "Question",
-    image: "pulled-over-armed",
+    image: "pulled-over-armed-organic",
     decision: "Regular weight keeps a necessary question from reading like an accusation.",
     detail:
       "All three answers carry equal visual weight.",
