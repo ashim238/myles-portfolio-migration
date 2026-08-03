@@ -22,7 +22,10 @@ export function LeadMedia({
     presentation === "default" ? "" : ` case-lead-media--${presentation}`;
 
   return (
-    <figure className={`case-lead-media${presentationClass}`}>
+    <figure
+      className={`case-lead-media${presentationClass}`}
+      data-project-enter-cover
+    >
       {clip ? (
         <LeadVideo
           clip={clip}

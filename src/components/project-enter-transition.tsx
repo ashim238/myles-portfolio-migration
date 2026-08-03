@@ -3,29 +3,28 @@
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { TikTokCoverBlobs } from "@/components/tiktok-dsa";
 import { prefersReducedMotion } from "@/lib/home-intro";
 import {
   PROJECT_ENTER_COMPLETE,
   PROJECT_ENTER_REQUEST,
   PROJECT_ENTER_SETTLE_MS,
-  PROJECT_ENTER_ZOOM_IN_MS,
-  computeCenterOffset,
-  computeCoverScale,
   waitForProjectCover,
   type ProjectEnterRequestDetail,
   type ProjectEnterRect,
+  type ProjectEnterVisual,
 } from "@/lib/project-enter";
 
 const EASE_OUT_CUBIC = "cubic-bezier(0.33, 1, 0.68, 1)";
 
-type OverlayPhase = "zoom-in" | "navigating" | "settling";
+type OverlayPhase = "holding" | "navigating" | "settling";
 
 type OverlayState = {
+  id: number;
   phase: OverlayPhase;
   slug: string;
   href: string;
-  imageSrc: string;
-  imageAlt: string;
+  visual: ProjectEnterVisual;
   borderRadius: string;
   startRect: ProjectEnterRect;
 };
@@ -49,72 +48,78 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
   const pathname = usePathname();
   const [overlay, setOverlay] = useState<OverlayState | null>(null);
   const shellRef = useRef<HTMLDivElement>(null);
+  const backdropRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const pendingSlugRef = useRef<string | null>(null);
   const navigatingRef = useRef(false);
-  const zoomRanRef = useRef(false);
   const settleRanRef = useRef(false);
   const failsafeRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const pageAnimRef = useRef<Animation | null>(null);
+  const settleTimeoutRef = useRef<number | null>(null);
+  const animationsRef = useRef<Animation[]>([]);
+  const transitionSequenceRef = useRef(0);
+  const activeTransitionIdRef = useRef<number | null>(null);
 
-  const finishTransition = useCallback(() => {
+  const finishTransition = useCallback((transitionId: number | null) => {
+    if (
+      transitionId === null ||
+      activeTransitionIdRef.current !== transitionId
+    ) {
+      return;
+    }
+    activeTransitionIdRef.current = null;
     if (failsafeRef.current) {
       clearTimeout(failsafeRef.current);
       failsafeRef.current = null;
     }
+    if (settleTimeoutRef.current) {
+      clearTimeout(settleTimeoutRef.current);
+      settleTimeoutRef.current = null;
+    }
+    for (const animation of animationsRef.current) animation.cancel();
+    animationsRef.current = [];
     pendingSlugRef.current = null;
     navigatingRef.current = false;
-    zoomRanRef.current = false;
     settleRanRef.current = false;
     unlockProjectEnter();
-    // Release the page fade-in only after the settling class is gone, so the
-    // page hands back to its natural opacity in the same frame — no flash.
-    if (pageAnimRef.current) {
-      pageAnimRef.current.cancel();
-      pageAnimRef.current = null;
-    }
     setOverlay(null);
   }, []);
 
   const runSettle = useCallback(
     async (state: OverlayState) => {
-      document.documentElement.classList.add("project-enter-settling");
-
       const cover = await waitForProjectCover(state.slug);
+      if (activeTransitionIdRef.current !== state.id) return;
       const shell = shellRef.current;
+      const backdrop = backdropRef.current;
       const frame = frameRef.current;
 
-      if (!shell || !frame) {
-        finishTransition();
+      if (!shell || !backdrop || !frame) {
+        finishTransition(state.id);
         return;
       }
 
       if (!cover) {
         shell.style.opacity = "0";
-        finishTransition();
+        finishTransition(state.id);
         return;
       }
 
       const targetRect = cover.getBoundingClientRect();
-      const coverScale = computeCoverScale(state.startRect);
-      const zoomOffset = computeCenterOffset(state.startRect);
-      const startCenterX = state.startRect.left + state.startRect.width / 2;
-      const startCenterY = state.startRect.top + state.startRect.height / 2;
-      const targetCenterX = targetRect.left + targetRect.width / 2;
-      const targetCenterY = targetRect.top + targetRect.height / 2;
-      const endScale = targetRect.width / state.startRect.width;
-      const endX = targetCenterX - startCenterX;
-      const endY = targetCenterY - startCenterY;
       const targetRadius = getComputedStyle(cover).borderRadius || "0.65rem";
 
       const frameAnim = frame.animate(
         [
           {
-            transform: `translate(${zoomOffset.x}px, ${zoomOffset.y}px) scale(${coverScale})`,
+            top: `${state.startRect.top}px`,
+            left: `${state.startRect.left}px`,
+            width: `${state.startRect.width}px`,
+            height: `${state.startRect.height}px`,
             borderRadius: state.borderRadius,
           },
           {
-            transform: `translate(${endX}px, ${endY}px) scale(${endScale})`,
+            top: `${targetRect.top}px`,
+            left: `${targetRect.left}px`,
+            width: `${targetRect.width}px`,
+            height: `${targetRect.height}px`,
             borderRadius: targetRadius,
           },
         ],
@@ -125,19 +130,26 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
         },
       );
 
-      // Crossfade, not a cut. The overlay (holding the zoom frame) fades out
-      // while the real case-study page fades in underneath it. The frame image
-      // and the cover are the same picture in the same spot by this point, so
-      // the cover reads as continuous while the title, lede and meta dissolve
-      // in instead of snapping to full opacity when the overlay is torn down.
-      const CROSSFADE_MS = 380;
-      const crossfadeDelay = PROJECT_ENTER_SETTLE_MS - 200;
+      // Fade only the neutral backdrop first. This lets the case-study title,
+      // lede and destination hero appear around the still-solid shared cover
+      // instead of holding the visitor on an empty canvas until the very end.
+      const backdropAnim = backdrop.animate(
+        [{ opacity: 1 }, { opacity: 0 }],
+        {
+          duration: 280,
+          easing: EASE_OUT_CUBIC,
+          fill: "forwards",
+        },
+      );
+
+      const FRAME_FADE_MS = 220;
+      const frameFadeDelay = PROJECT_ENTER_SETTLE_MS - 140;
 
       const shellAnim = shell.animate(
         [{ opacity: 1 }, { opacity: 0 }],
         {
-          duration: CROSSFADE_MS,
-          delay: crossfadeDelay,
+          duration: FRAME_FADE_MS,
+          delay: frameFadeDelay,
           easing: EASE_OUT_CUBIC,
           fill: "forwards",
         },
@@ -149,54 +161,69 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
       const pageAnim = page?.animate(
         [{ opacity: 0 }, { opacity: 1 }],
         {
-          duration: CROSSFADE_MS,
-          delay: crossfadeDelay,
+          duration: 380,
+          delay: 60,
           easing: EASE_OUT_CUBIC,
           fill: "forwards",
         },
       );
-      pageAnimRef.current = pageAnim ?? null;
+      animationsRef.current = [
+        frameAnim,
+        backdropAnim,
+        shellAnim,
+        ...(pageAnim ? [pageAnim] : []),
+      ];
 
-      // Same guarantee as the zoom-in phase: settle on real completion when
-      // the timeline runs, but fall back to a timer so a frozen timeline can
-      // never leave the overlay and scroll lock hanging.
-      const settleTimeout = crossfadeDelay + CROSSFADE_MS + 120;
+      // Settle on real completion when the timeline runs, but fall back to a
+      // timer so a frozen timeline can never leave the overlay and scroll lock
+      // hanging.
+      const settleTimeout = frameFadeDelay + FRAME_FADE_MS + 120;
       await Promise.race([
         Promise.all([
           frameAnim.finished,
+          backdropAnim.finished,
           shellAnim.finished,
           ...(pageAnim ? [pageAnim.finished] : []),
         ]).catch(() => undefined),
-        new Promise((resolve) => window.setTimeout(resolve, settleTimeout)),
+        new Promise((resolve) => {
+          settleTimeoutRef.current = window.setTimeout(resolve, settleTimeout);
+        }),
       ]);
-      finishTransition();
+      finishTransition(state.id);
     },
     [finishTransition],
   );
 
   const startTransition = useCallback(
     (detail: ProjectEnterRequestDetail) => {
-      if (navigatingRef.current || prefersReducedMotion()) {
+      if (prefersReducedMotion()) {
         router.push(detail.href);
         return;
       }
+      if (navigatingRef.current) return;
 
+      const transitionId = ++transitionSequenceRef.current;
+      activeTransitionIdRef.current = transitionId;
       navigatingRef.current = true;
       pendingSlugRef.current = detail.slug;
       lockProjectEnter();
+      document.documentElement.classList.add("project-enter-settling");
 
       // Failsafe: never hold the scroll lock / overlay longer than this,
       // even if the destination route is slow to load or the cover never
       // resolves. The navigation itself still completes in the background.
       if (failsafeRef.current) clearTimeout(failsafeRef.current);
-      failsafeRef.current = setTimeout(() => finishTransition(), 4500);
+      failsafeRef.current = setTimeout(
+        () => finishTransition(transitionId),
+        4500,
+      );
 
       setOverlay({
-        phase: "zoom-in",
+        id: transitionId,
+        phase: "holding",
         slug: detail.slug,
         href: detail.href,
-        imageSrc: detail.imageSrc,
-        imageAlt: detail.imageAlt,
+        visual: detail.visual,
         borderRadius: detail.borderRadius,
         startRect: detail.rect,
       });
@@ -206,6 +233,10 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
 
   useEffect(() => {
     return () => {
+      activeTransitionIdRef.current = null;
+      if (failsafeRef.current) clearTimeout(failsafeRef.current);
+      if (settleTimeoutRef.current) clearTimeout(settleTimeoutRef.current);
+      for (const animation of animationsRef.current) animation.cancel();
       unlockProjectEnter();
     };
   }, []);
@@ -215,7 +246,7 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
   useEffect(() => {
     if (!overlay) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") finishTransition();
+      if (e.key === "Escape") finishTransition(overlay.id);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -233,51 +264,15 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
   }, [startTransition]);
 
   useEffect(() => {
-    if (!overlay || overlay.phase !== "zoom-in") return;
-    if (zoomRanRef.current) return;
+    if (!overlay || overlay.phase !== "holding") return;
     if (!shellRef.current || !frameRef.current) return;
 
-    zoomRanRef.current = true;
-
-    const frame = frameRef.current;
-    const { startRect } = overlay;
-    const coverScale = computeCoverScale(startRect);
-    const offset = computeCenterOffset(startRect);
-
-    frame.style.transform = "translate(0px, 0px) scale(1)";
-
-    const zoomAnim = frame.animate(
-      [
-        { transform: "translate(0px, 0px) scale(1)" },
-        {
-          transform: `translate(${offset.x}px, ${offset.y}px) scale(${coverScale})`,
-        },
-      ],
-      {
-        duration: PROJECT_ENTER_ZOOM_IN_MS,
-        easing: EASE_OUT_CUBIC,
-        fill: "forwards",
-      },
+    // This effect runs only after the overlay has committed, so the source
+    // cover is already painted before the route begins changing underneath it.
+    setOverlay((current) =>
+      current ? { ...current, phase: "navigating" } : current,
     );
-
-    // Navigate when the zoom finishes, but never depend on the animation
-    // timeline alone. A backgrounded or throttled tab freezes
-    // document.timeline, so finished() would stay pending forever, and the
-    // card's native link was already preventDefault()-ed. The timeout
-    // backstop guarantees the push always fires and the user is never stranded.
-    let navigated = false;
-    const advance = () => {
-      if (navigated) return;
-      navigated = true;
-      setOverlay((current) =>
-        current ? { ...current, phase: "navigating" } : current,
-      );
-      router.push(overlay.href);
-    };
-    zoomAnim.finished.then(advance, advance);
-    const navBackstop = window.setTimeout(advance, PROJECT_ENTER_ZOOM_IN_MS + 150);
-
-    return () => window.clearTimeout(navBackstop);
+    router.push(overlay.href);
   }, [overlay, router]);
 
   useEffect(() => {
@@ -309,6 +304,7 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
           aria-hidden="true"
           data-phase={overlay.phase}
         >
+          <div ref={backdropRef} className="project-enter-backdrop" />
           <div
             ref={frameRef}
             className="project-enter-frame"
@@ -320,15 +316,21 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
               borderRadius: overlay.borderRadius,
             }}
           >
-            <Image
-              className="project-enter-image"
-              src={overlay.imageSrc}
-              alt=""
-              width={1400}
-              height={900}
-              priority
-              draggable={false}
-            />
+            {overlay.visual.type === "tiktok" ? (
+              <div className="project-enter-tiktok work-thumb--tiktok-logo tt-cover--preview">
+                <TikTokCoverBlobs deferUntilVisible={false} />
+              </div>
+            ) : (
+              <Image
+                className="project-enter-image"
+                src={overlay.visual.src}
+                alt=""
+                width={1400}
+                height={900}
+                priority
+                draggable={false}
+              />
+            )}
           </div>
         </div>
       ) : null}

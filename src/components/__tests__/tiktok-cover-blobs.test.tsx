@@ -145,6 +145,21 @@ describe("TikTokCoverBlobs preview geometry", () => {
     expect(field).not.toHaveClass("tt-cover-field--active");
   });
 
+  it("renders an eager active composition for the route-transition overlay", () => {
+    const { container } = render(
+      <TikTokCoverBlobs deferUntilVisible={false} />,
+    );
+
+    expect(container.querySelectorAll(".tt-cblob")).toHaveLength(16);
+    expect(container.querySelector(".tt-cover-field")).toHaveClass(
+      "tt-cover-field--active",
+    );
+    for (const layer of container.querySelectorAll(".tt-cblob")) {
+      expect(layer).toHaveAttribute("loading", "eager");
+      expect(layer).toHaveAttribute("fetchpriority", "high");
+    }
+  });
+
   it("loads a static composition without running motion when observers are unavailable", async () => {
     vi.stubGlobal("IntersectionObserver", undefined);
 
