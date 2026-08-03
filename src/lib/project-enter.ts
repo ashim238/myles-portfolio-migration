@@ -8,12 +8,15 @@ export type ProjectEnterRect = {
   height: number;
 };
 
+export type ProjectEnterVisual =
+  | { type: "image"; src: string }
+  | { type: "tiktok" };
+
 export type ProjectEnterRequestDetail = {
   slug: string;
   href: string;
   rect: ProjectEnterRect;
-  imageSrc: string;
-  imageAlt: string;
+  visual: ProjectEnterVisual;
   borderRadius: string;
 };
 
@@ -23,20 +26,6 @@ export function dispatchProjectEnterRequest(detail: ProjectEnterRequestDetail): 
   );
 }
 
-export function computeCoverScale(rect: ProjectEnterRect): number {
-  return Math.max(window.innerWidth / rect.width, window.innerHeight / rect.height) * 1.04;
-}
-
-export function computeCenterOffset(rect: ProjectEnterRect): { x: number; y: number } {
-  const centerX = rect.left + rect.width / 2;
-  const centerY = rect.top + rect.height / 2;
-  return {
-    x: window.innerWidth / 2 - centerX,
-    y: window.innerHeight / 2 - centerY,
-  };
-}
-
-export const PROJECT_ENTER_ZOOM_IN_MS = 680;
 export const PROJECT_ENTER_SETTLE_MS = 560;
 
 export function queryProjectCover(slug: string): HTMLElement | null {

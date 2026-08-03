@@ -7,19 +7,13 @@ vi.mock("@/components/work-project-card", () => ({
   WorkProjectCard: ({
     project,
     index,
-    featured,
-    closing,
   }: {
     project: Project;
     index: number;
-    featured?: boolean;
-    closing?: boolean;
   }) => (
     <article
       data-testid={`project-${project.slug}`}
       data-index={index}
-      data-featured={featured ? "true" : "false"}
-      data-closing={closing ? "true" : "false"}
     >
       {project.title}
     </article>
@@ -46,7 +40,7 @@ function project(slug: string): Project {
 }
 
 describe("WorkGallery", () => {
-  it("keeps four projects in order with a featured lead, paired middle, and closing card", () => {
+  it("keeps all four projects in one equal ordered grid", () => {
     const projects = ["fresh-greens", "understandingfafsa", "navi", "tiktok"].map(project);
     const { container } = render(<WorkGallery projects={projects} />);
 
@@ -57,44 +51,37 @@ describe("WorkGallery", () => {
       "navi",
       "tiktok",
     ]);
-    expect(screen.getByTestId("project-fresh-greens")).toHaveAttribute(
-      "data-featured",
-      "true",
-    );
+    expect(cards.map((card) => card.dataset.index)).toEqual(["0", "1", "2", "3"]);
 
     const grid = container.querySelector(".work-gallery-grid");
     expect(grid).not.toBeNull();
-    expect(within(grid as HTMLElement).getAllByRole("article")).toHaveLength(3);
-    expect(screen.getByTestId("project-tiktok")).toHaveAttribute(
-      "data-closing",
-      "true",
-    );
-    expect(screen.getByTestId("project-tiktok").parentElement).toHaveClass(
-      "work-gallery-closing-wrap",
-    );
-    expect(screen.getByTestId("project-tiktok").parentElement?.parentElement).toBe(grid);
+    expect(within(grid as HTMLElement).getAllByRole("article")).toHaveLength(4);
+    expect(container.querySelector(".work-gallery-feature")).toBeNull();
+    expect(container.querySelector(".work-gallery-closing")).toBeNull();
+    expect(container.querySelector(".work-gallery-closing-wrap")).toBeNull();
   });
 
-  it("keeps an even remainder entirely in the two-column grid", () => {
-    const projects = ["featured", "second", "third"].map(project);
+  it("keeps smaller project sets in the same shared grid", () => {
+    const projects = ["first", "second", "third"].map(project);
     const { container } = render(<WorkGallery projects={projects} />);
 
     expect(
       within(container.querySelector(".work-gallery-grid") as HTMLElement).getAllByRole(
         "article",
       ),
-    ).toHaveLength(2);
-    expect(container.querySelector(".work-gallery-closing-wrap")).toBeNull();
-    expect(screen.getAllByRole("article").every((card) => card.dataset.closing === "false"))
-      .toBe(true);
+    ).toHaveLength(3);
+    expect(screen.getAllByRole("article").map((card) => card.dataset.index)).toEqual([
+      "0",
+      "1",
+      "2",
+    ]);
   });
 
-  it("promotes a one-card odd remainder into the closing position", () => {
-    const projects = ["featured", "closer"].map(project);
+  it("renders the empty-state message without an empty grid", () => {
+    const projects: Project[] = [];
     const { container } = render(<WorkGallery projects={projects} />);
 
-    expect(container.querySelector(".work-gallery-grid")).not.toBeNull();
-    expect(screen.getByTestId("project-closer")).toHaveAttribute("data-index", "1");
-    expect(screen.getByTestId("project-closer")).toHaveAttribute("data-closing", "true");
+    expect(screen.getByText("No published projects yet.")).toBeInTheDocument();
+    expect(container.querySelector(".work-gallery-grid")).toBeNull();
   });
 });

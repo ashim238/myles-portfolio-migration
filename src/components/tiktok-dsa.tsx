@@ -243,15 +243,13 @@ const COVER_BLOBS = [
 const subscribeToStaticCapability = () => () => {};
 
 export function TikTokCoverBlobs(
-  _options: { deferUntilVisible?: boolean } = {},
+  { deferUntilVisible = true }: { deferUntilVisible?: boolean } = {},
 ) {
-  // Existing cards pass the legacy option. Every instance now defers.
-  void _options;
   const fieldRef = useRef<HTMLDivElement>(null);
   const successfullyLoadedLayers = useRef(new Set<string>());
-  const [hasLoaded, setHasLoaded] = useState(false);
+  const [hasLoaded, setHasLoaded] = useState(!deferUntilVisible);
   const [hasPaintedComposition, setHasPaintedComposition] = useState(false);
-  const [isInViewport, setIsInViewport] = useState(false);
+  const [isInViewport, setIsInViewport] = useState(!deferUntilVisible);
   const [isDocumentVisible, setIsDocumentVisible] = useState(true);
   const shouldLoadStaticFallback = useSyncExternalStore(
     subscribeToStaticCapability,
@@ -262,6 +260,7 @@ export function TikTokCoverBlobs(
   useEffect(() => {
     const field = fieldRef.current;
     if (!field) return;
+    if (!deferUntilVisible) return;
 
     if (typeof window.IntersectionObserver !== "function") return;
 
@@ -308,7 +307,7 @@ export function TikTokCoverBlobs(
       disconnectObservers();
       if (fallbackTimer !== undefined) window.clearTimeout(fallbackTimer);
     };
-  }, []);
+  }, [deferUntilVisible]);
 
   useEffect(() => {
     const updateVisibility = () => {
@@ -357,9 +356,9 @@ export function TikTokCoverBlobs(
             src={`/projects/tiktok/cover-blobs/${b.f}.png`}
             alt=""
             draggable={false}
-            loading="lazy"
+            loading={deferUntilVisible ? "lazy" : "eager"}
             decoding="async"
-            fetchPriority="low"
+            fetchPriority={deferUntilVisible ? "low" : "high"}
             onLoad={() => markLayerLoaded(b.f)}
             onError={() => markLayerFailed(b.f)}
             className={`tt-cblob tt-cblob--a${b.a}`}

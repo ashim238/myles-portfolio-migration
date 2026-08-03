@@ -1,9 +1,13 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it, vi } from "vitest";
 import type { Project } from "@/lib/content";
 import { WorkProjectCard } from "@/components/work-project-card";
+import {
+  PROJECT_ENTER_REQUEST,
+  type ProjectEnterRequestDetail,
+} from "@/lib/project-enter";
 
 const baseStyles = readFileSync(
   resolve(process.cwd(), "src/app/styles/base.css"),
@@ -93,28 +97,57 @@ describe("WorkProjectCard layout variants", () => {
     },
   );
 
-  it("marks a closing card and describes its narrower desktop image slot", () => {
+  it("uses the shared equal-grid image slot for every image-backed card", () => {
     const imageProject = { ...project, slug: "navi", title: "Navi" };
-    const { container } = render(
-      <WorkProjectCard project={imageProject} index={3} closing />,
-    );
+    const { container } = render(<WorkProjectCard project={imageProject} index={3} />);
 
-    expect(container.firstElementChild).toHaveClass("work-gallery-closing");
+    expect(container.firstElementChild).toHaveClass("work-gallery-cell");
     expect(screen.getByRole("img", { name: "Navi preview" })).toHaveAttribute(
       "sizes",
-      "(max-width: 760px) 100vw, min(72vw, 672px)",
+      "(max-width: 767px) 100vw, min(46vw, 524px)",
     );
   });
 
   it("uses the shared 3D TikTok mark instead of the static project cover", () => {
     const { container } = render(
-      <WorkProjectCard project={project} index={3} closing />,
+      <WorkProjectCard project={project} index={3} />,
     );
 
     expect(container.querySelector(".work-thumb--tiktok-logo .tt-cover-field")).not.toBeNull();
     expect(container.querySelectorAll(".tt-cover-field .tt-cblob")).toHaveLength(16);
     expect(screen.queryByRole("img", { name: "TikTok preview" })).toBeNull();
   });
+
+  it.each([
+    [
+      { ...project, slug: "navi", title: "Navi" },
+      { type: "image", src: "/projects/tiktok/cover.jpg" },
+    ],
+    [project, { type: "tiktok" }],
+  ] as const)(
+    "requests the matching shared visual when opening %s",
+    (projectUnderTest, expectedVisual) => {
+      const requests: ProjectEnterRequestDetail[] = [];
+      const onRequest = (event: Event) => {
+        requests.push((event as CustomEvent<ProjectEnterRequestDetail>).detail);
+      };
+      window.addEventListener(PROJECT_ENTER_REQUEST, onRequest);
+
+      try {
+        render(<WorkProjectCard project={projectUnderTest} index={0} />);
+        fireEvent.click(screen.getByRole("link"));
+
+        expect(requests).toHaveLength(1);
+        expect(requests[0]).toMatchObject({
+          slug: projectUnderTest.slug,
+          href: `/work/${projectUnderTest.slug}`,
+          visual: expectedVisual,
+        });
+      } finally {
+        window.removeEventListener(PROJECT_ENTER_REQUEST, onRequest);
+      }
+    },
+  );
 
   it("centers only the homepage TikTok cluster inside its no-copy cover", () => {
     const homeCluster = declarationBlock(

@@ -22,10 +22,12 @@ describe("LeadMedia", () => {
       "height",
       "1862",
     );
-    expect(container.querySelector("figure")).toHaveClass(
+    const figure = container.querySelector("figure");
+    expect(figure).toHaveClass(
       "case-lead-media",
       "case-lead-media--fresh-greens",
     );
+    expect(figure).toHaveAttribute("data-project-enter-cover");
   });
 
   it("reserves the verified poster geometry before attaching the clip", () => {
@@ -45,5 +47,8 @@ describe("LeadMedia", () => {
     expect(video).toHaveAttribute("preload", "none");
     expect(video).toHaveAttribute("controls");
     expect(container.querySelector("source")).toBeNull();
+    expect(container.querySelector("figure")).toHaveAttribute(
+      "data-project-enter-cover",
+    );
   });
 });

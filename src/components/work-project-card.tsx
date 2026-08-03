@@ -12,8 +12,6 @@ import { galleryOutcome } from "@/lib/work-gallery-data";
 type WorkProjectCardProps = {
   project: Project;
   index: number; // 0-based; drives the mono index label
-  featured?: boolean;
-  closing?: boolean;
 };
 
 const EVIDENCE_LABELS: Record<string, string> = {
@@ -51,13 +49,14 @@ function tabText(project: Project): string {
 export function WorkProjectCard({
   project,
   index,
-  featured = false,
-  closing = false,
 }: WorkProjectCardProps) {
   const { lead, rest } = galleryOutcome(project);
   const tab = tabText(project);
   const usesTikTokLogo = project.slug === "tiktok";
   const evidenceLabel = EVIDENCE_LABELS[project.slug];
+  const imageDelay = `${(0.32 + index * 0.08).toFixed(2)}s`;
+  const titleDelay = `${(0.42 + index * 0.08).toFixed(2)}s`;
+  const copyDelay = `${(0.46 + index * 0.08).toFixed(2)}s`;
 
   const handleProjectEnter = (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (
@@ -67,7 +66,6 @@ export function WorkProjectCard({
       event.shiftKey ||
       event.altKey ||
       prefersReducedMotion() ||
-      usesTikTokLogo ||
       !project.coverImage
     ) {
       return;
@@ -80,25 +78,18 @@ export function WorkProjectCard({
       slug: project.slug,
       href: `/work/${project.slug}`,
       rect: { top: rect.top, left: rect.left, width: rect.width, height: rect.height },
-      imageSrc: project.coverImage,
-      imageAlt: `${project.title} preview`,
+      visual: usesTikTokLogo
+        ? { type: "tiktok" }
+        : { type: "image", src: project.coverImage },
       borderRadius: getComputedStyle(frame).borderRadius,
     });
   };
 
   return (
-    <div
-      className={
-        featured
-          ? "work-gallery-feature"
-          : closing
-            ? "work-gallery-closing"
-            : "work-gallery-cell"
-      }
-    >
+    <div className="work-gallery-cell">
       <span
         className="work-gallery-index wg-anim wg-tick"
-        style={{ ["--d" as string]: featured ? ".32s" : ".78s" }}
+        style={{ ["--d" as string]: imageDelay }}
         aria-hidden="true"
       >
         {formatIndex(index)}
@@ -106,10 +97,9 @@ export function WorkProjectCard({
       <Link className="work-card" href={`/work/${project.slug}`} onClick={handleProjectEnter}>
         {project.coverImage ? (
           <div className="work-media">
-            {featured ? <div className="work-thumb-echo" aria-hidden="true" /> : null}
             <div
               className={`work-thumb wg-anim${usesTikTokLogo ? " work-thumb--tiktok-logo tt-cover--preview" : ""}`}
-              style={{ ["--d" as string]: featured ? ".38s" : ".82s" }}
+              style={{ ["--d" as string]: imageDelay }}
             >
               {usesTikTokLogo ? (
                 <TikTokCoverBlobs deferUntilVisible />
@@ -119,14 +109,8 @@ export function WorkProjectCard({
                   alt={`${project.title} preview`}
                   width={1400}
                   height={933}
-                  sizes={
-                    featured
-                      ? "(max-width: 760px) 100vw, min(92vw, 1088px)"
-                      : closing
-                        ? "(max-width: 760px) 100vw, min(72vw, 672px)"
-                        : "(max-width: 760px) 100vw, min(46vw, 524px)"
-                  }
-                  priority={featured}
+                  sizes="(max-width: 767px) 100vw, min(46vw, 524px)"
+                  priority={index === 0}
                 />
               )}
               {tab ? <span className="work-tab">{tab}</span> : null}
@@ -136,13 +120,13 @@ export function WorkProjectCard({
         <div className="work-cap">
           <h3
             className="work-title wg-anim wg-rise"
-            style={{ ["--d" as string]: featured ? ".50s" : ".90s" }}
+            style={{ ["--d" as string]: titleDelay }}
           >
             {titleWithSoftBreaks(project.title)}
           </h3>
           <p
             className="work-out wg-anim wg-rise"
-            style={{ ["--d" as string]: featured ? ".56s" : ".94s" }}
+            style={{ ["--d" as string]: copyDelay }}
           >
             {lead ? <strong>{lead}</strong> : null}
             {lead ? " " : ""}
