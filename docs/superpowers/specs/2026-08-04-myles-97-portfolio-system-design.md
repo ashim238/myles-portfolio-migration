@@ -194,9 +194,11 @@ Visible at first load:
 - Welcome window with the approved hero line
 - Selected Work Explorer open behind the focused Welcome window on a clean first visit
 - Real system clock
-- One rotating or session-selected personal signal, such as a current design note or artifact
+- A small Trini roti recipe note as the fixed personal signal
 
-Personal folders such as comics, hikes, and food notes live inside Start or Loose Parts rather than crowding the initial desktop.
+The recipe note sits outside the primary work path and never overlaps the Welcome window or Selected Work Explorer. It uses a warm paper tone distinct from the brighter system yellow, a restrained one-to-two-degree rotation, a Tahoma label, and readable Georgia text. The collapsed note shows only a short title and recipe fragment. Opening it reveals an accessible Notepad-style view with the complete recipe and a close control.
+
+Recipe language must come from Myles or be explicitly approved by him. Do not invent a family recipe or use culturally generic filler. Personal folders such as comics, hikes, and other food notes live inside Start or Loose Parts rather than crowding the initial desktop.
 
 ### 6.2 Accumulation
 
@@ -324,7 +326,7 @@ Rules:
 2. Welcome window with name, approved line, credentials, and primary work action
 3. Selected Work Explorer with four project programs
 4. Clean desktop icons for secondary surfaces
-5. One personal note or artifact
+5. Trini roti recipe note
 6. Real clock and active-program state
 
 The homepage must make the four projects visible or reachable in one obvious action. Window movement is optional exploration, never a prerequisite for access.
@@ -341,7 +343,7 @@ Required entries:
 - Display Properties
 - Reset desktop
 
-Personal folders such as comics, hikes, and food notes are deferred. The first implementation includes the Loose Parts container and existing Play content without inventing new personal material.
+Personal folders such as comics, hikes, and other food notes are deferred. The Trini roti recipe note is the one approved personal homepage artifact. The first implementation also includes the Loose Parts container and existing Play content without inventing additional personal material.
 
 ### 9.3 Loose Parts
 
@@ -449,7 +451,7 @@ Initial implementation does not rewrite case-study prose or restructure evidence
 
 - Full-width, vertically stacked program cards
 - Portrait mark, name, and approved line at the top
-- Clean initial stack with one personal note or artifact
+- Clean initial stack with the Trini roti recipe note after the primary work programs
 - Open programs accumulate in the stack and app switcher
 - Bottom dock provides Start, Work, Loose Parts, and Open Apps
 - Project cards remain immediately reachable without dragging or horizontal desktop panning
@@ -677,6 +679,7 @@ Each slice must leave existing public routes usable. Do not hold the complete po
 - Mobile: Pocket 97 single-app model
 - Boot: portrait mark, first eligible visit only, skippable, no sound
 - Evidence model: built, shipped, observed, proposed, and still needs proof
+- Personal homepage artifact: Trini roti recipe note with Myles-approved wording
 
 ## 23. Acceptance statement
 
