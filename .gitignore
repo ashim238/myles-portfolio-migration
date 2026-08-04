@@ -48,6 +48,9 @@ next-env.d.ts
 # Brainstorming visual companion (superpowers)
 .superpowers/
 
+# Local isolated implementation worktrees
+.worktrees/
+
 # Local tooling (per project convention — not shared)
 .impeccable/
 skill-observations/
