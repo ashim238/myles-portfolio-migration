@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 export const MYLES97_BOOT_MAX_MS = 1450;
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
 type BootSequenceProps = {
   eligible: boolean;
@@ -11,42 +12,57 @@ type BootSequenceProps = {
   onComplete: () => void;
 };
 
+function subscribeReducedMotion(onChange: () => void) {
+  const media = window.matchMedia(REDUCED_MOTION_QUERY);
+  media.addEventListener("change", onChange);
+  return () => media.removeEventListener("change", onChange);
+}
+
+function getReducedMotionSnapshot() {
+  return window.matchMedia(REDUCED_MOTION_QUERY).matches;
+}
+
+function getReducedMotionServerSnapshot() {
+  return false;
+}
+
 export function BootSequence({
   eligible,
   reduceMotion = false,
   onComplete,
 }: BootSequenceProps) {
-  const [visible, setVisible] = useState(eligible);
+  const [dismissed, setDismissed] = useState(false);
   const completed = useRef(false);
+  const systemReducedMotion = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    getReducedMotionServerSnapshot,
+  );
+  const shouldBypass = reduceMotion || systemReducedMotion;
 
   useEffect(() => {
-    if (!eligible) {
-      completed.current = false;
-      setVisible(false);
+    if (!eligible || dismissed) return;
+
+    if (shouldBypass) {
+      if (!completed.current) {
+        completed.current = true;
+        onComplete();
+      }
       return;
     }
 
     completed.current = false;
-    setVisible(true);
-    let timer: number | undefined;
 
     const finish = () => {
       if (completed.current) return;
       completed.current = true;
-      if (timer !== undefined) window.clearTimeout(timer);
+      window.clearTimeout(timer);
       window.removeEventListener("pointerdown", finish, true);
       window.removeEventListener("keydown", finish, true);
-      setVisible(false);
+      setDismissed(true);
       onComplete();
     };
-
-    if (
-      reduceMotion ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      finish();
-      return;
-    }
+    const timer = window.setTimeout(finish, MYLES97_BOOT_MAX_MS);
 
     window.addEventListener("pointerdown", finish, {
       once: true,
@@ -56,16 +72,15 @@ export function BootSequence({
       once: true,
       capture: true,
     });
-    timer = window.setTimeout(finish, MYLES97_BOOT_MAX_MS);
 
     return () => {
-      if (timer !== undefined) window.clearTimeout(timer);
+      window.clearTimeout(timer);
       window.removeEventListener("pointerdown", finish, true);
       window.removeEventListener("keydown", finish, true);
     };
-  }, [eligible, onComplete, reduceMotion]);
+  }, [dismissed, eligible, onComplete, shouldBypass]);
 
-  if (!eligible || !visible) return null;
+  if (!eligible || dismissed || shouldBypass) return null;
 
   return (
     <div className="myles97-boot" role="status" aria-label="Starting Myles 98">
