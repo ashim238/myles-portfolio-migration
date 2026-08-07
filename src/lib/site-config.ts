@@ -55,9 +55,9 @@ export function createRouteMetadata({
 }
 
 export const navItems: NavItem[] = [
-  { label: "01. Work", href: "/#work" },
+  { label: "01. Selected Work", href: "/#selected-work" },
   { label: "02. About", href: "/about" },
-  { label: "03. Play", href: "/play" },
+  { label: "03. Loose Parts", href: "/play" },
   { label: "04. Resume", href: siteConfig.resumeUrl },
   { label: "05. E-mail", href: `mailto:${siteConfig.email}` },
 ];
