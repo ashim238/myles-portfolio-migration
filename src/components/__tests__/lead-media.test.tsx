@@ -28,6 +28,33 @@ describe("LeadMedia", () => {
       "case-lead-media--fresh-greens",
     );
     expect(figure).toHaveAttribute("data-project-enter-cover");
+    expect(figure).toHaveAttribute("data-reader-surface", "lead-media");
+    expect(figure).toHaveAttribute("data-evidence-role", "orientation");
+    expect(figure).not.toHaveAttribute("data-evidence-proof");
+  });
+
+  it("can explicitly claim image evidence without changing its visual treatment", () => {
+    const { container } = render(
+      <LeadMedia
+        cover="/projects/fresh-greens/cover.png"
+        alt="Fresh Greens cover"
+        width={2560}
+        height={1862}
+        evidence={{
+          proofId: "fg-report-detail",
+          role: "supporting",
+          kind: "image",
+          chapterId: "fg-trust",
+        }}
+      />,
+    );
+
+    const figure = container.querySelector("figure");
+    expect(figure).toHaveAttribute("data-reader-surface", "lead-media");
+    expect(figure).toHaveAttribute("data-evidence-proof", "fg-report-detail");
+    expect(figure).toHaveAttribute("data-evidence-role", "supporting");
+    expect(figure).toHaveAttribute("data-evidence-kind", "image");
+    expect(figure).toHaveAttribute("data-evidence-chapter", "fg-trust");
   });
 
   it("reserves the verified poster geometry before attaching the clip", () => {
