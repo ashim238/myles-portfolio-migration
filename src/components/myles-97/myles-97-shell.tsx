@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useReducer, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef } from "react";
 import { BootSequence } from "@/components/myles-97/boot-sequence";
 import type { LoosePartSummary } from "@/components/myles-97/loose-parts-program";
 import { Pocket97Shell } from "@/components/myles-97/pocket-97-shell";
@@ -15,11 +15,17 @@ import {
 import {
   createInitialWorkstationState,
   workstationReducer,
+  type WorkstationState,
 } from "@/lib/myles-97/state";
 
 export type Myles97ShellProps = {
   programs: readonly ProgramDefinition[];
   looseParts: readonly LoosePartSummary[];
+};
+
+type HydrationSnapshot = {
+  complete: boolean;
+  state: WorkstationState | null;
 };
 
 export function Myles97Shell({ programs, looseParts }: Myles97ShellProps) {
@@ -28,23 +34,37 @@ export function Myles97Shell({ programs, looseParts }: Myles97ShellProps) {
     undefined,
     createInitialWorkstationState,
   );
-  const [hydrated, setHydrated] = useState(false);
+  const hydration = useRef<HydrationSnapshot>({
+    complete: false,
+    state: null,
+  });
+  const persistenceReady = useRef(false);
   const pocket = usePocket97();
 
   useEffect(() => {
-    dispatch({ type: "hydrate", state: loadPersistedWorkstation() });
-    setHydrated(true);
+    const loaded = loadPersistedWorkstation();
+    hydration.current = { complete: true, state: loaded };
+    dispatch({ type: "hydrate", state: loaded });
   }, []);
 
   useEffect(() => {
-    if (!hydrated) return;
+    const loaded = hydration.current.state;
+    if (!hydration.current.complete || !loaded) return;
+
+    if (!persistenceReady.current) {
+      if (state !== loaded) return;
+      persistenceReady.current = true;
+    }
+
     saveLocalWorkstation(state);
     saveSessionWorkstation(state);
-  }, [hydrated, state]);
+  }, [state]);
 
   const completeBoot = useCallback(() => {
     dispatch({ type: "boot-complete" });
   }, []);
+
+  const hydrated = hydration.current.complete;
 
   return (
     <main
