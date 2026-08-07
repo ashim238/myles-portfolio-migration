@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export type LoosePartSummary = {
   slug: string;
   title: string;
@@ -22,9 +24,9 @@ export function LoosePartsProgram({
       <div className="myles97-secondary-empty">
         <h2>Loose Parts</h2>
         <p>No experiments are in the lab right now.</p>
-        <a className="myles97-primary-button" href="/#work">
-          Return to work
-        </a>
+        <Link className="myles97-primary-button" href="/#selected-work">
+          Return to Selected Work
+        </Link>
       </div>
     );
   }
@@ -34,7 +36,7 @@ export function LoosePartsProgram({
       <header>
         <p className="myles97-eyebrow">Running lab</p>
         <h2>Loose Parts</h2>
-        <p>Small builds, material tests, and interaction studies already living on the Play page.</p>
+        <p>Small builds, material tests, and interaction studies collected in the full Loose Parts lab.</p>
       </header>
       <ol className="myles97-loose-parts-list" role="list">
         {entries.map((entry, index) => (
@@ -49,9 +51,9 @@ export function LoosePartsProgram({
                 {PLAY_STATE_LABELS[entry.state]}
               </span>
             </div>
-            <a href={`/play#${entry.slug}`} aria-label={`Open ${entry.title} in Loose Parts`}>
+            <Link href={`/play#${entry.slug}`} aria-label={`Open ${entry.title} in Loose Parts`}>
               Open <span aria-hidden="true">↗</span>
-            </a>
+            </Link>
           </li>
         ))}
       </ol>
