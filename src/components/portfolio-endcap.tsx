@@ -8,7 +8,7 @@ export function PortfolioEndcap({ context }: PortfolioEndcapProps) {
   const secondary =
     context === "play"
       ? { href: "/resume", label: "Résumé" }
-      : { href: "/play", label: "Play" };
+      : { href: "/play", label: "Loose Parts" };
 
   return (
     <nav
@@ -18,7 +18,7 @@ export function PortfolioEndcap({ context }: PortfolioEndcapProps) {
     >
       <p className="portfolio-endcap-label">Continue</p>
       <div className="portfolio-endcap-links">
-        <Link href="/#work">Selected work</Link>
+        <Link href="/#selected-work">Selected Work</Link>
         <Link href={secondary.href}>{secondary.label}</Link>
       </div>
     </nav>
