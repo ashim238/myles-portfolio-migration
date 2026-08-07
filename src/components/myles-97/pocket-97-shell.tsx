@@ -161,7 +161,7 @@ export function Pocket97Shell({
               </div>
             </header>
 
-            <section className="pocket97-work" aria-labelledby="pocket97-work-title">
+            <section id="selected-work" className="pocket97-work" aria-labelledby="pocket97-work-title">
               <div className="pocket97-section-heading">
                 <h2 id="pocket97-work-title">Selected Work</h2>
                 <span>{programs.length} programs</span>
