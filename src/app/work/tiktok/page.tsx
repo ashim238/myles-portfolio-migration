@@ -3,11 +3,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { ExpandableImage } from "@/components/expandable-image";
+import { ReaderShell } from "@/components/myles-97/reader-shell";
 import { ProjectChapter } from "@/components/project-chapter";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
 import { RecruiterCut } from "@/components/recruiter-cut";
-import { SiteNav } from "@/components/site-nav";
 import {
   TikTokCoverBlobs,
   TikTokLogo,
@@ -53,12 +53,11 @@ export default async function TikTokPage() {
   );
 
   return (
-    <main
-      className="page-shell project-page tt-page tt-preview-page"
-      id="main-content"
-      data-project-slug="tiktok"
+    <ReaderShell
+      slug="tiktok"
+      title="TikTok Dynamic Showcase Ads"
+      className="tt-page tt-preview-page"
     >
-      <SiteNav />
       <nav className="project-topbar" aria-label="Breadcrumb">
         <Link href="/#work">
           <span aria-hidden="true">←</span>
@@ -325,6 +324,6 @@ export default async function TikTokPage() {
 
       <ProjectWorkJump currentSlug="tiktok" projects={allProjects} />
       <CaseHighlightObserver />
-    </main>
+    </ReaderShell>
   );
 }

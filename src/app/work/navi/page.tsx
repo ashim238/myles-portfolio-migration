@@ -3,9 +3,9 @@ import { Jost, Lato } from "next/font/google";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { LeadMedia } from "@/components/lead-media";
+import { ReaderShell } from "@/components/myles-97/reader-shell";
 import { RecruiterCut } from "@/components/recruiter-cut";
 import { TransitionLink } from "@/components/transition-link";
-import { SiteNav } from "@/components/site-nav";
 import { ProjectChapter } from "@/components/project-chapter";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
@@ -63,12 +63,11 @@ export default async function NaviPage() {
   const allProjects = await getPublishedProjects();
 
   return (
-    <main
-      className={`page-shell project-page nv-page ${jost.variable} ${lato.variable}`}
-      id="main-content"
-      data-project-slug="navi"
+    <ReaderShell
+      slug="navi"
+      title="Navi"
+      className={`nv-page ${jost.variable} ${lato.variable}`}
     >
-      <SiteNav />
       <nav className="project-topbar" aria-label="Breadcrumb">
         <TransitionLink href="/#work">
           <span aria-hidden="true">←</span>
@@ -78,9 +77,7 @@ export default async function NaviPage() {
 
       <section className="hero project-hero nv-hero" aria-labelledby="nv-title">
         <p className="nv-eyebrow">Graduate studio · 2025</p>
-        <h1 id="nv-title" className="project-hero-title nv-title">
-          Navi
-        </h1>
+        <h1 id="nv-title" className="project-hero-title nv-title">Navi</h1>
         <p className="project-hero-lede nv-lede">
           I collected 14 resident and stakeholder responses, including two local
           businesses, for a graduate-studio travel concept. What I learned redirected
@@ -117,244 +114,197 @@ export default async function NaviPage() {
 
       <ProjectToc sections={chapters} />
 
-      <ProjectChapter
-        entry={chapters[0]}
-        index={1}
-        total={chapters.length}
-        variant="navi"
-      >
-      <div className="project-section nv-section">
-        <p className="case-section-lead">
-          The early team concept could move a visitor to another neighborhood,
-          but it didn&apos;t change how they engaged after arriving.
-        </p>
-        <div className="project-section-body">
-          <p>
-            The team used a Manhattan heatmap as an exploratory hypothesis to
-            test whether redirecting visitors could distribute attention across
-            more neighborhoods.
-          </p>
-          <p>
-            That first artifact made movement on the map the outcome. The survey
-            became the next step.
-          </p>
-        </div>
-      </div>
-
-      <section className="project-section nv-section" aria-labelledby="nv-heatmap">
-        <h3 className="project-evidence-heading" id="nv-heatmap">
-          The first prototype: a Manhattan heatmap
-        </h3>
-        <p className="case-section-lead">
-          Select a neighborhood to see how the first artifact worked.
-        </p>
-        <div className="project-section-body">
-          <p>
-            The colored regions show where the early concept placed emphasis. They do not
-            represent actual tourist density or live geo analytics, and this interactive
-            reconstruction keeps the same constraint.
-          </p>
-        </div>
-        <HeatmapExplorer />
-      </section>
-      </ProjectChapter>
-
-      <ProjectChapter
-        entry={chapters[1]}
-        index={2}
-        total={chapters.length}
-        variant="navi"
-      >
-      <section className="project-section nv-section" aria-labelledby="nv-research">
-        <h3 className="project-evidence-heading" id="nv-research">
-          Platform audits and resident research
-        </h3>
-        <div className="project-section-body">
-          <p>
-            I collected 14 resident and stakeholder responses, including two
-            local businesses. The sample informed this concept. It doesn&apos;t
-            stand in for all NYC residents.
-          </p>
-          <p>
-            The team audited six travel platforms. I evaluated Airbnb with Kaori Ogawa and Amy Zhang
-            against Nielsen&apos;s ten usability heuristics.
-            The evaluation surfaced issues with label consistency, family-facing
-            filters, and visual clutter.
-          </p>
-        </div>
-        <HeuristicInsightCards />
-      </section>
-
-      <div className="project-section nv-section">
-        <p className="case-section-lead">
-          Two concerns appeared most often in the resident and stakeholder
-          survey.
-        </p>
-        <div className="project-section-body">
-          <p>
-            {overcrowdingStat.count} of {NAVI_SURVEY_META.responseCount} responses (
-            {overcrowdingStat.label}) named overcrowding and over-tourism.{" "}
-            {authenticExperienceStat.count} of {NAVI_SURVEY_META.responseCount} (
-            {authenticExperienceStat.label}) named a lack of authentic
-            experiences.
-          </p>
-          <p className="nv-survey-note">
-            Highlights from {NAVI_SURVEY_META.responseCount} responses,
-            including {NAVI_SURVEY_META.localBusinessCount} local businesses:{" "}
-            {NAVI_SURVEY_META.source}.
-          </p>
-        </div>
-        <SurveyStatRings />
-      </div>
-      </ProjectChapter>
-
-      <ProjectChapter
-        entry={chapters[2]}
-        index={3}
-        total={chapters.length}
-        variant="navi"
-      >
-      <div className="project-section nv-section project-section--wide nv-section--wide">
-        <div className="project-section-body">
+      <ProjectChapter entry={chapters[0]} index={1} total={chapters.length} variant="navi">
+        <div className="project-section nv-section">
           <p className="case-section-lead">
-            I created three research-informed archetypes from the survey, platform audits, and
-            secondary research.
+            The early team concept could move a visitor to another neighborhood,
+            but it didn&apos;t change how they engaged after arriving.
           </p>
-          <p>
-            The graduate-studio project ended as a concept without an engineering handoff, so the
-            journey maps and user flows remained internal planning artifacts.
-          </p>
-          <p>
-            I used the archetypes, journey map, opportunity areas, and flows to
-            connect the survey findings with neighborhood exploration.
-          </p>
-          <p>
-            The Airbnb audit and secondary research shaped the individual booking flow. Cost,
-            requirements, and timing stayed visible at key decisions, especially when a lesser-known
-            vendor needed to earn trust.
-          </p>
-          <p>
-            The research changed the product question. Instead of treating
-            movement on the map as the outcome, I organized the next concept
-            around{" "}
-            <mark className="case-highlight">Learn, Plan, Go</mark>:
-          </p>
-          <ul>
-            <li>
-              <strong>Learn</strong> surfaces local context.
-            </li>
-            <li>
-              <strong>Plan</strong> helps users compare and organize.
-            </li>
-            <li>
-              <strong>Go</strong> converts intent into bookings.
-            </li>
-          </ul>
+          <div className="project-section-body">
+            <p>
+              The team used a Manhattan heatmap as an exploratory hypothesis to
+              test whether redirecting visitors could distribute attention across
+              more neighborhoods.
+            </p>
+            <p>
+              That first artifact made movement on the map the outcome. The survey
+              became the next step.
+            </p>
+          </div>
         </div>
-        <NaviResearchArtifacts />
-      </div>
+
+        <section className="project-section nv-section" aria-labelledby="nv-heatmap">
+          <h3 className="project-evidence-heading" id="nv-heatmap">
+            The first prototype: a Manhattan heatmap
+          </h3>
+          <p className="case-section-lead">Select a neighborhood to see how the first artifact worked.</p>
+          <div className="project-section-body">
+            <p>
+              The colored regions show where the early concept placed emphasis. They do not
+              represent actual tourist density or live geo analytics, and this interactive
+              reconstruction keeps the same constraint.
+            </p>
+          </div>
+          <HeatmapExplorer />
+        </section>
       </ProjectChapter>
 
-      <ProjectChapter
-        entry={chapters[3]}
-        index={4}
-        total={chapters.length}
-        variant="navi"
-      >
-      <section
-        className="project-section nv-section project-section--wide nv-section--wide"
-        aria-labelledby="nv-system"
-      >
-        <h3 className="project-evidence-heading" id="nv-system">
-          Rebuilding Navi as a working system
-        </h3>
-        <div className="project-section-body">
-          <p>
-            The graduate-studio project ended as a Figma concept. Later, working alone,
-            I rebuilt the concept by turning Learn, Plan, Go into a React
-            and TypeScript component system and a working individual booking
-            flow.
-          </p>
-          <p>
-            Jost was selected for display typography to echo urban wayfinding cues. Orange became
-            the primary accent to distinguish Navi from the travel platforms in the audit. The
-            palette pairs it with Lato and a 4px spacing system.
-          </p>
-          <p>
-            The portfolio rebuild includes brand primitives, semantic aliases, interactive
-            variants, and a playground for changing component props. <Link href="/work/navi/system">See the Navi
-            design system</Link>. Those components are assembled into a working booking flow.{" "}
-            <Link href="/work/navi/demo">Open the demo</Link>.
-          </p>
-        </div>
-        <CompositionStrip />
-      </section>
+      <ProjectChapter entry={chapters[1]} index={2} total={chapters.length} variant="navi">
+        <section className="project-section nv-section" aria-labelledby="nv-research">
+          <h3 className="project-evidence-heading" id="nv-research">Platform audits and resident research</h3>
+          <div className="project-section-body">
+            <p>
+              I collected 14 resident and stakeholder responses, including two
+              local businesses. The sample informed this concept. It doesn&apos;t
+              stand in for all NYC residents.
+            </p>
+            <p>
+              The team audited six travel platforms. I evaluated Airbnb with Kaori Ogawa and Amy Zhang
+              against Nielsen&apos;s ten usability heuristics.
+              The evaluation surfaced issues with label consistency, family-facing
+              filters, and visual clutter.
+            </p>
+          </div>
+          <HeuristicInsightCards />
+        </section>
 
-      <section
-        className="project-section nv-section project-section--wide nv-section--wide"
-        aria-labelledby="nv-screens"
-      >
-        <h3 className="project-evidence-heading" id="nv-screens">
-          A working booking flow
-        </h3>
-        <p className="case-section-lead">
-          The screens below come from the current React build.
-        </p>
-        <div className="project-section-body">
-          <p>
-            In the current build, you can browse the feed, search by
-            neighborhood, open a host, and complete a sample individual
-            reservation with the same components catalogued on the system page.
-          </p>
+        <div className="project-section nv-section">
+          <p className="case-section-lead">Two concerns appeared most often in the resident and stakeholder survey.</p>
+          <div className="project-section-body">
+            <p>
+              {overcrowdingStat.count} of {NAVI_SURVEY_META.responseCount} responses (
+              {overcrowdingStat.label}) named overcrowding and over-tourism.{" "}
+              {authenticExperienceStat.count} of {NAVI_SURVEY_META.responseCount} (
+              {authenticExperienceStat.label}) named a lack of authentic
+              experiences.
+            </p>
+            <p className="nv-survey-note">
+              Highlights from {NAVI_SURVEY_META.responseCount} responses,
+              including {NAVI_SURVEY_META.localBusinessCount} local businesses:{" "}
+              {NAVI_SURVEY_META.source}.
+            </p>
+          </div>
+          <SurveyStatRings />
         </div>
-        <NaviDemoEmbed />
-      </section>
       </ProjectChapter>
 
-      <ProjectChapter
-        entry={chapters[4]}
-        index={5}
-        total={chapters.length}
-        variant="navi"
-      >
-      <div className="project-section nv-section nv-closing">
-        <div className="project-section-body">
-          <p>
-            I can now inspect the component states and individual booking flow in a browser. I
-            still need to test them with residents, travelers, and local hosts before treating
-            those choices as settled.
-          </p>
-        </div>
-        <div className="nv-validation-ledger">
-          <section aria-labelledby="nv-current-rebuild">
-            <h3 id="nv-current-rebuild">Working now</h3>
+      <ProjectChapter entry={chapters[2]} index={3} total={chapters.length} variant="navi">
+        <div className="project-section nv-section project-section--wide nv-section--wide">
+          <div className="project-section-body">
+            <p className="case-section-lead">
+              I created three research-informed archetypes from the survey, platform audits, and
+              secondary research.
+            </p>
+            <p>
+              The graduate-studio project ended as a concept without an engineering handoff, so the
+              journey maps and user flows remained internal planning artifacts.
+            </p>
+            <p>
+              I used the archetypes, journey map, opportunity areas, and flows to
+              connect the survey findings with neighborhood exploration.
+            </p>
+            <p>
+              The Airbnb audit and secondary research shaped the individual booking flow. Cost,
+              requirements, and timing stayed visible at key decisions, especially when a lesser-known
+              vendor needed to earn trust.
+            </p>
+            <p>
+              The research changed the product question. Instead of treating
+              movement on the map as the outcome, I organized the next concept
+              around <mark className="case-highlight">Learn, Plan, Go</mark>:
+            </p>
             <ul>
-              <li>Live component system and editable variants</li>
-              <li>Neighborhood exploration and filters</li>
-              <li>Working individual booking flow</li>
+              <li><strong>Learn</strong> surfaces local context.</li>
+              <li><strong>Plan</strong> helps users compare and organize.</li>
+              <li><strong>Go</strong> converts intent into bookings.</li>
             </ul>
-          </section>
-          <section aria-labelledby="nv-next-research">
-            <h3 id="nv-next-research">Next research</h3>
-            <ul>
-              <li>Deeper Learn pages</li>
-              <li>Local host and business onboarding</li>
-              <li>
-                {"Group booking remains a future opportunity and is not wired into this demo."}
-              </li>
-            </ul>
-          </section>
+          </div>
+          <NaviResearchArtifacts />
         </div>
-        <div className="nv-closing-links" aria-label="Explore the working Navi demo">
-          <Link href="/work/navi/demo">Open the demo</Link>
-          <Link href="/work/navi/system">View the design system</Link>
+      </ProjectChapter>
+
+      <ProjectChapter entry={chapters[3]} index={4} total={chapters.length} variant="navi">
+        <section
+          className="project-section nv-section project-section--wide nv-section--wide"
+          aria-labelledby="nv-system"
+        >
+          <h3 className="project-evidence-heading" id="nv-system">Rebuilding Navi as a working system</h3>
+          <div className="project-section-body">
+            <p>
+              The graduate-studio project ended as a Figma concept. Later, working alone,
+              I rebuilt the concept by turning Learn, Plan, Go into a React
+              and TypeScript component system and a working individual booking
+              flow.
+            </p>
+            <p>
+              Jost was selected for display typography to echo urban wayfinding cues. Orange became
+              the primary accent to distinguish Navi from the travel platforms in the audit. The
+              palette pairs it with Lato and a 4px spacing system.
+            </p>
+            <p>
+              The portfolio rebuild includes brand primitives, semantic aliases, interactive
+              variants, and a playground for changing component props. <Link href="/work/navi/system">See the Navi
+              design system</Link>. Those components are assembled into a working booking flow.{" "}
+              <Link href="/work/navi/demo">Open the demo</Link>.
+            </p>
+          </div>
+          <CompositionStrip />
+        </section>
+
+        <section
+          className="project-section nv-section project-section--wide nv-section--wide"
+          aria-labelledby="nv-screens"
+        >
+          <h3 className="project-evidence-heading" id="nv-screens">A working booking flow</h3>
+          <p className="case-section-lead">The screens below come from the current React build.</p>
+          <div className="project-section-body">
+            <p>
+              In the current build, you can browse the feed, search by
+              neighborhood, open a host, and complete a sample individual
+              reservation with the same components catalogued on the system page.
+            </p>
+          </div>
+          <NaviDemoEmbed />
+        </section>
+      </ProjectChapter>
+
+      <ProjectChapter entry={chapters[4]} index={5} total={chapters.length} variant="navi">
+        <div className="project-section nv-section nv-closing">
+          <div className="project-section-body">
+            <p>
+              I can now inspect the component states and individual booking flow in a browser. I
+              still need to test them with residents, travelers, and local hosts before treating
+              those choices as settled.
+            </p>
+          </div>
+          <div className="nv-validation-ledger">
+            <section aria-labelledby="nv-current-rebuild">
+              <h3 id="nv-current-rebuild">Working now</h3>
+              <ul>
+                <li>Live component system and editable variants</li>
+                <li>Neighborhood exploration and filters</li>
+                <li>Working individual booking flow</li>
+              </ul>
+            </section>
+            <section aria-labelledby="nv-next-research">
+              <h3 id="nv-next-research">Next research</h3>
+              <ul>
+                <li>Deeper Learn pages</li>
+                <li>Local host and business onboarding</li>
+                <li>{"Group booking remains a future opportunity and is not wired into this demo."}</li>
+              </ul>
+            </section>
+          </div>
+          <div className="nv-closing-links" aria-label="Explore the working Navi demo">
+            <Link href="/work/navi/demo">Open the demo</Link>
+            <Link href="/work/navi/system">View the design system</Link>
+          </div>
         </div>
-      </div>
       </ProjectChapter>
 
       <ProjectWorkJump currentSlug="navi" projects={allProjects} />
       <CaseHighlightObserver />
       <NaviAnimReady />
-    </main>
+    </ReaderShell>
   );
 }

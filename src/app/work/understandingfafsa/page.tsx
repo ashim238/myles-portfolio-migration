@@ -3,10 +3,10 @@ import { notFound } from "next/navigation";
 import { ColorPalette } from "@/components/color-palette";
 import { CountUp } from "@/components/count-up";
 import { LeadMedia } from "@/components/lead-media";
+import { ReaderShell } from "@/components/myles-97/reader-shell";
 import { ProjectChapter } from "@/components/project-chapter";
 import { RecruiterCut } from "@/components/recruiter-cut";
 import { TransitionLink } from "@/components/transition-link";
-import { SiteNav } from "@/components/site-nav";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
 import {
@@ -58,12 +58,11 @@ export default async function UnderstandingFafsaPage() {
   const allProjects = await getPublishedProjects();
 
   return (
-    <main
-      className="page-shell project-page uf-page"
-      id="main-content"
-      data-project-slug="understandingfafsa"
+    <ReaderShell
+      slug="understandingfafsa"
+      title="UnderstandingFAFSA"
+      className="uf-page"
     >
-      <SiteNav />
       <nav className="project-topbar" aria-label="Breadcrumb">
         <TransitionLink href="/#work">
           <span aria-hidden="true">←</span>
@@ -164,12 +163,8 @@ export default async function UnderstandingFafsaPage() {
             <ol aria-label="Audit findings and system rules">
               {UNDERSTANDING_FAFSA_AUDIT_RULES.map((rule) => (
                 <li key={rule.id}>
-                  <p>
-                    <strong>Finding:</strong> {rule.finding}.
-                  </p>
-                  <p>
-                    <strong>System rule:</strong> {rule.response}.
-                  </p>
+                  <p><strong>Finding:</strong> {rule.finding}.</p>
+                  <p><strong>System rule:</strong> {rule.response}.</p>
                 </li>
               ))}
             </ol>
@@ -203,9 +198,7 @@ export default async function UnderstandingFafsaPage() {
               the updated type and palette.
             </p>
           </div>
-
           <TemplateSwitcher />
-
           <NewsletterComposerDemo />
         </section>
 
@@ -217,9 +210,7 @@ export default async function UnderstandingFafsaPage() {
               without changing that structure.
             </p>
           </div>
-
           <LockedSwappableView />
-
           <ColorPalette colors={UF_COLORS} />
         </div>
       </ProjectChapter>
@@ -295,6 +286,6 @@ export default async function UnderstandingFafsaPage() {
 
       <ProjectWorkJump currentSlug="understandingfafsa" projects={allProjects} />
       <CaseHighlightObserver />
-    </main>
+    </ReaderShell>
   );
 }

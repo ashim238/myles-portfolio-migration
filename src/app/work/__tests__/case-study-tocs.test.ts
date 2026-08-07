@@ -50,6 +50,14 @@ const cases: readonly CaseStudyContract[] = [
   },
 ];
 
+const readerPages = [
+  "src/app/work/[slug]/page.tsx",
+  "src/app/work/fresh-greens/page.tsx",
+  "src/app/work/understandingfafsa/page.tsx",
+  "src/app/work/navi/page.tsx",
+  "src/app/work/tiktok/page.tsx",
+] as const;
+
 describe("case-study chapter navigation contracts", () => {
   for (const caseStudy of cases) {
     it(`${caseStudy.name} uses the approved typed chapter map`, () => {
@@ -78,4 +86,23 @@ describe("case-study chapter navigation contracts", () => {
       }
     });
   }
+
+  it("wraps the five case-study page sources in ReaderShell without legacy SiteNav chrome", () => {
+    for (const path of readerPages) {
+      const source = readCaseStudy(path);
+      expect(source, path).toContain('from "@/components/myles-97/reader-shell"');
+      expect(source, path).toContain("<ReaderShell");
+      expect(source, path).not.toContain("<SiteNav");
+      expect(source, path).not.toContain('from "@/components/site-nav"');
+    }
+  });
+
+  it("keeps the nested Navi demo and system outside Reader Mode", () => {
+    for (const path of [
+      "src/app/work/navi/(minisite)/demo/page.tsx",
+      "src/app/work/navi/(minisite)/system/page.tsx",
+    ]) {
+      expect(readCaseStudy(path), path).not.toContain("ReaderShell");
+    }
+  });
 });

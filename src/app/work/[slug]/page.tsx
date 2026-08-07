@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { ReaderShell } from "@/components/myles-97/reader-shell";
 import { ProjectCover } from "@/components/project-cover";
 import { TransitionLink } from "@/components/transition-link";
-import { SiteNav } from "@/components/site-nav";
 import { ProjectHighlight } from "@/components/project-highlight";
 import { ProjectSectionCard } from "@/components/project-section-card";
 import { ProjectToc } from "@/components/project-toc";
@@ -27,7 +27,6 @@ const dedicatedProjectSlugs = new Set<string>([
 
 export async function generateStaticParams(): Promise<Params[]> {
   const projects = await getAllProjects();
-  // Dedicated routes own their output; hidden projects get no prerendered route.
   return projects
     .filter(
       (project) =>
@@ -59,18 +58,17 @@ export async function generateMetadata({
 
 export default async function ProjectPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
-  const [project, allProjects] = await Promise.all([getProjectBySlug(slug), getPublishedProjects()]);
+  const [project, allProjects] = await Promise.all([
+    getProjectBySlug(slug),
+    getPublishedProjects(),
+  ]);
 
-  // Excluding hidden projects from generateStaticParams stops them being
-  // prerendered, but dynamicParams still lets a direct request render one on
-  // demand. 404 it here so a hidden project is unreachable, not just unlisted.
   if (!project || project.status === "hidden") {
     notFound();
   }
 
   return (
-    <main className="page-shell project-page" id="main-content" data-project-slug={slug}>
-      <SiteNav />
+    <ReaderShell slug={slug} title={project.title}>
       <nav className="project-topbar" aria-label="Breadcrumb">
         <TransitionLink href="/#work">
           <span aria-hidden="true">←</span>
@@ -145,6 +143,6 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
       ) : null}
 
       <ProjectWorkJump currentSlug={project.slug} projects={allProjects} />
-    </main>
+    </ReaderShell>
   );
 }

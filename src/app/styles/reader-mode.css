@@ -1,0 +1,210 @@
+/* Myles 97 Reader Mode */
+.reader-header {
+  position: sticky;
+  z-index: 120;
+  top: 0;
+  display: flex;
+  min-height: 52px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 4px clamp(12px, 2.5vw, 32px);
+  border-bottom: 2px solid var(--m97-ink);
+  background: var(--m97-chrome);
+  color: var(--m97-ink);
+  font: 700 12px/1.2 var(--m97-ui-font);
+}
+
+.reader-header-project {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+}
+
+.reader-header-project > span {
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+.reader-header-project strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reader-return {
+  display: inline-flex;
+  min-height: 44px;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 10px;
+  border: 1px solid var(--m97-ink);
+  background: #e2e2e2;
+  color: var(--m97-ink);
+  text-decoration: none;
+  box-shadow: 1px 1px 0 var(--m97-ink);
+}
+
+.reader-return:hover {
+  background: var(--m97-active);
+  color: #fff;
+}
+
+.reader-header :is(a, button):focus-visible,
+.reader-mode :is(a, button, input, select, textarea):focus-visible {
+  outline: 3px solid var(--m97-signal);
+  outline-offset: 2px;
+}
+
+.reader-mode.reader-mode {
+  --project-heading-offset: 7rem;
+  width: 100%;
+  max-width: none;
+  min-height: calc(100svh - 52px);
+  margin: 0;
+  padding-bottom: clamp(72px, 10vw, 128px);
+  background: var(--m97-paper);
+  color: var(--m97-reader-ink);
+}
+
+.reader-mode.reader-mode .project-topbar,
+.reader-mode.reader-mode .project-hero,
+.reader-mode.reader-mode .project-meta,
+.reader-mode.reader-mode .project-highlight,
+.reader-mode.reader-mode .project-content {
+  width: min(100% - 32px, 72ch);
+  margin-inline: auto;
+}
+
+.reader-mode.reader-mode .project-topbar {
+  padding-top: 16px;
+  font-family: var(--m97-ui-font);
+  font-size: 12px;
+}
+
+.reader-mode.reader-mode .project-topbar a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 6px;
+}
+
+.reader-mode.reader-mode :is(
+  .project-section-body,
+  .project-content,
+  .project-hero-lede,
+  .case-section-lead
+) {
+  font-family: var(--m97-reader-font);
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.reader-mode.reader-mode :is(.project-section-body, .project-content) {
+  max-width: 68ch;
+}
+
+.reader-mode.reader-mode .project-section-body :is(p, li),
+.reader-mode.reader-mode .project-content :is(p, li) {
+  hanging-punctuation: first last;
+}
+
+.reader-mode.reader-mode .project-toc {
+  top: 52px;
+  z-index: 115;
+  border-color: color-mix(in srgb, var(--m97-reader-ink) 28%, transparent);
+  background: color-mix(in srgb, var(--m97-paper) 94%, transparent);
+  color: var(--m97-reader-ink);
+  font-family: var(--m97-ui-font);
+  backdrop-filter: blur(10px);
+}
+
+.reader-mode.reader-mode .project-toc-progress {
+  background: var(--m97-active);
+}
+
+.reader-mode.reader-mode .project-toc-link--active,
+.reader-mode.reader-mode .project-toc-toggle[aria-expanded="true"] {
+  color: var(--m97-active);
+}
+
+.reader-mode.reader-mode .project-toc-dot {
+  border-color: currentColor;
+}
+
+.reader-mode.reader-mode .project-toc-link--active .project-toc-dot {
+  background: var(--m97-active);
+}
+
+.reader-mode.reader-mode .project-work-jump,
+.reader-mode.reader-mode .next-project {
+  font-family: var(--m97-ui-font);
+}
+
+.reader-mode.reader-mode :is(.fg-section, .uf-section, .nv-section, .tt-section) {
+  color: inherit;
+}
+
+@media (max-width: 767px) {
+  .reader-header {
+    min-height: 52px;
+    padding-inline: 10px;
+  }
+
+  .reader-header-project strong {
+    max-width: 48vw;
+  }
+
+  .reader-return {
+    padding-inline: 8px;
+    font-size: 11px;
+  }
+
+  .reader-mode.reader-mode {
+    --project-heading-offset: 7rem;
+  }
+
+  .reader-mode.reader-mode :is(
+    .project-section-body,
+    .project-content,
+    .project-hero-lede,
+    .case-section-lead
+  ) {
+    font-size: 16.5px;
+    line-height: 1.68;
+  }
+
+  .reader-mode.reader-mode .project-toc {
+    top: 52px;
+  }
+}
+
+@media (forced-colors: active) {
+  .reader-header,
+  .reader-return,
+  .reader-mode.reader-mode,
+  .reader-mode.reader-mode .project-toc {
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  .reader-return:hover,
+  .reader-mode.reader-mode .project-toc-link--active {
+    background: Highlight;
+    color: HighlightText;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reader-header,
+  .reader-return,
+  .reader-mode.reader-mode .project-toc {
+    transition: none !important;
+  }
+}
