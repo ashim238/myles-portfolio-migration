@@ -10,8 +10,173 @@
   white-space: nowrap;
 }
 
+.myles98-document-header {
+  position: sticky;
+  z-index: 130;
+  top: 0;
+  display: grid;
+  min-height: 52px;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 4px max(6px, env(safe-area-inset-right, 0px)) 4px max(2px, env(safe-area-inset-left, 0px));
+  border-bottom: 2px solid var(--m97-ink);
+  background: var(--m97-chrome);
+  color: var(--m97-ink);
+  font: 700 12px/1.2 var(--m97-ui-font);
+}
+
+.myles98-document-back {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px 5px 6px;
+  border: 1px solid var(--m97-ink);
+  background: #e2e2e2;
+  color: var(--m97-ink);
+  text-decoration: none;
+  box-shadow: 1px 1px 0 var(--m97-ink);
+}
+
+.myles98-document-back > span[aria-hidden="true"] {
+  font-size: 17px;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+
+.myles98-document-back:hover {
+  background: var(--m97-active);
+  color: #fff;
+}
+
+.myles98-document-identity {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 7px;
+}
+
+.myles98-document-identity strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.myles98-system-document.myles98-system-document {
+  width: 100%;
+  max-width: none;
+  min-height: calc(100svh - 52px);
+  margin: 0;
+  padding-top: clamp(24px, 4vw, 56px);
+  padding-bottom: clamp(72px, 10vw, 128px);
+  background: var(--m97-paper);
+  color: var(--m97-reader-ink);
+}
+
+.myles98-system-document :is(
+  .about-body,
+  .resume-body,
+  .resume-role-summary,
+  .resume-role-bullets,
+  .play-entry-hook,
+  .play-entry-exploration
+) {
+  font-family: var(--m97-reader-font);
+}
+
+.myles98-system-document :is(
+  .about-kicker,
+  .about-actions,
+  .about-details,
+  .resume-label,
+  .resume-summary-heading,
+  .resume-section-heading,
+  .resume-details,
+  .resume-note,
+  .play-section-label,
+  .play-entry-index,
+  .play-entry-meta,
+  .play-entry-tags,
+  .portfolio-endcap
+) {
+  font-family: var(--m97-ui-font);
+}
+
+.myles98-system-document--loose-parts .play-title {
+  font-family: var(--m97-ui-font);
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+}
+
+.myles98-system-document .portfolio-endcap {
+  border: 2px solid var(--m97-ink);
+  background: var(--m97-chrome);
+  color: var(--m97-ink);
+  box-shadow: 3px 4px 0 rgb(17 17 17 / 18%);
+}
+
+.myles98-system-document .portfolio-endcap a {
+  color: inherit;
+}
+
+.myles98-document-header :is(a, button):focus-visible,
+.myles98-system-document :is(a, button, input, select, textarea):focus-visible {
+  outline: 3px solid var(--m97-signal);
+  outline-offset: 2px;
+}
+
+@media (max-width: 767px) {
+  .myles98-document-header {
+    gap: 8px;
+    padding-left: max(2px, env(safe-area-inset-left, 0px));
+  }
+
+  .myles98-document-back {
+    padding-left: 5px;
+    padding-right: 7px;
+    font-size: 11px;
+  }
+
+  .myles98-document-identity {
+    font-size: 11px;
+  }
+
+  .myles98-system-document.myles98-system-document {
+    padding-top: 20px;
+  }
+}
+
 @media (min-width: 768px) and (pointer: fine) {
   .myles97-window[data-m97-program-window="loose-parts"] {
     max-height: 400px;
+  }
+}
+
+@media (forced-colors: active) {
+  .myles98-document-header,
+  .myles98-document-back,
+  .myles98-system-document.myles98-system-document,
+  .myles98-system-document .portfolio-endcap {
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+    box-shadow: none;
+  }
+
+  .myles98-document-back:hover {
+    background: Highlight;
+    color: HighlightText;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .myles98-document-header,
+  .myles98-document-back {
+    transition: none !important;
   }
 }
