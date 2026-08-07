@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
 const css = readFileSync(
-  resolve(process.cwd(), "src/app/styles/base.css"),
+  resolve(process.cwd(), "src/app/styles/myles-97.css"),
   "utf8",
 );
 
@@ -22,26 +22,22 @@ function block(selector: string) {
   throw new Error(`Unclosed rule for ${selector}`);
 }
 
-describe("homepage statement decoder layout", () => {
-  it("reserves one stable grid area with the primary hero typography", () => {
-    const decoder = block(".hero-statement-decoder");
-    const sizer = block(".hero-statement-decoder-sizer");
-    const cursorReserve = block(".hero-statement-decoder-sizer::after");
-    const visible = block(".hero-statement-decoder-visible");
+describe("Myles 97 homepage layout", () => {
+  it("uses the workstation field as the full first-impression surface", () => {
+    const shell = block(".myles97-shell");
+    const desktop = block(".myles97-desktop");
 
-    expect(decoder).toMatch(/display:\s*grid/);
-    expect(decoder).toMatch(/font-size:\s*clamp\(1\.18rem, 2\.5vw, 1\.55rem\)/);
-    expect(decoder).not.toMatch(/font-family:\s*var\(--font-mono\)/);
-    expect(sizer).toMatch(/grid-area:\s*1\s*\/\s*1/);
-    expect(sizer).toMatch(/visibility:\s*hidden/);
-    expect(cursorReserve).toMatch(/content:\s*"\|"/);
-    expect(cursorReserve).toMatch(/display:\s*inline-block/);
-    expect(cursorReserve).toMatch(/inline-size:\s*0\.5ch/);
-    expect(visible).toMatch(/grid-area:\s*1\s*\/\s*1/);
-    expect(visible).toMatch(/min-width:\s*0/);
+    expect(shell).toMatch(/min-height:\s*100svh/);
+    expect(shell).toMatch(/background:\s*var\(--m97-desktop\)/);
+    expect(desktop).toMatch(/position:\s*relative/);
   });
 
-  it("removes the superseded typer selectors", () => {
-    expect(css).not.toMatch(/\.hero-typer(?:-|\s|\{)/);
+  it("keeps the approved welcome line prominent without overpowering program discovery", () => {
+    const statement = block(".myles97-welcome-statement");
+    const explorer = block(".myles97-selected-work-list");
+
+    expect(statement).toMatch(/max-width:\s*19ch/);
+    expect(statement).toMatch(/clamp\(1\.25rem, 2\.5vw, 1\.75rem\)/);
+    expect(explorer).toMatch(/grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/);
   });
 });

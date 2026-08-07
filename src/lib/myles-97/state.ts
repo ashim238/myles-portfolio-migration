@@ -32,6 +32,7 @@ export type WorkstationState = {
 export type WorkstationAction =
   | { type: "open" | "focus" | "minimize" | "restore" | "close"; id: ProgramId }
   | { type: "move"; id: ProgramId; geometry: WindowGeometry; viewport?: ViewportBounds }
+  | { type: "hydrate"; state: WorkstationState }
   | { type: "boot-complete" }
   | { type: "display"; preferences: DisplayPreferences }
   | { type: "desktop-scroll"; y: number }
@@ -61,6 +62,13 @@ export function createInitialWorkstationState(): WorkstationState {
 
 function uniquePrograms(programs: readonly ProgramId[]): ProgramId[] {
   return Array.from(new Set(programs));
+}
+
+function bringToFront(
+  openPrograms: readonly ProgramId[],
+  id: ProgramId,
+): ProgramId[] {
+  return [...openPrograms.filter((programId) => programId !== id), id];
 }
 
 function appendRecent(
@@ -114,7 +122,7 @@ export function workstationReducer(
 ): WorkstationState {
   switch (action.type) {
     case "open": {
-      const openPrograms = uniquePrograms([...state.openPrograms, action.id]);
+      const openPrograms = bringToFront(state.openPrograms, action.id);
       return {
         ...state,
         openPrograms,
@@ -127,6 +135,7 @@ export function workstationReducer(
       if (!state.openPrograms.includes(action.id)) return state;
       return {
         ...state,
+        openPrograms: bringToFront(state.openPrograms, action.id),
         minimizedPrograms: state.minimizedPrograms.filter((id) => id !== action.id),
         focusedProgram: action.id,
         recentPrograms: appendRecent(state.recentPrograms, action.id),
@@ -150,6 +159,7 @@ export function workstationReducer(
       }
       return {
         ...state,
+        openPrograms: bringToFront(state.openPrograms, action.id),
         minimizedPrograms: state.minimizedPrograms.filter((id) => id !== action.id),
         focusedProgram: action.id,
         recentPrograms: appendRecent(state.recentPrograms, action.id),
@@ -186,6 +196,8 @@ export function workstationReducer(
           [action.id]: clampWindowGeometry(action.geometry, action.viewport),
         },
       };
+    case "hydrate":
+      return action.state.version === 1 ? action.state : createInitialWorkstationState();
     case "boot-complete":
       return { ...state, bootCompleted: true };
     case "display":

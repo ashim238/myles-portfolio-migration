@@ -11,6 +11,7 @@ type ProgramWindowProps = PropsWithChildren<{
   title: string;
   geometry: WindowGeometry;
   focused: boolean;
+  stackIndex?: number;
   status?: ReactNode;
   onFocus: (id: ProgramId) => void;
   onMove: (id: ProgramId, geometry: WindowGeometry) => void;
@@ -28,6 +29,7 @@ export function ProgramWindow({
   title,
   geometry,
   focused,
+  stackIndex,
   status,
   onFocus,
   onMove,
@@ -47,6 +49,7 @@ export function ProgramWindow({
     width: geometry.width,
     height: geometry.height,
     transform: previewTransform,
+    zIndex: stackIndex,
   };
 
   return (

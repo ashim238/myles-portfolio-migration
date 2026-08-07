@@ -34,6 +34,32 @@ describe("workstationReducer", () => {
     expect(workstationReducer(state, { type: "reset" })).toEqual(createInitialWorkstationState());
   });
 
+  it("keeps the focused program at the front of the persisted stack", () => {
+    let state = createInitialWorkstationState();
+    state = workstationReducer(state, { type: "open", id: "fresh-greens" });
+    state = workstationReducer(state, { type: "open", id: "navi" });
+    expect(state.openPrograms.at(-1)).toBe("navi");
+
+    state = workstationReducer(state, { type: "focus", id: "welcome" });
+    expect(state.focusedProgram).toBe("welcome");
+    expect(state.openPrograms.at(-1)).toBe("welcome");
+
+    state = workstationReducer(state, { type: "minimize", id: "selected-work" });
+    state = workstationReducer(state, { type: "restore", id: "selected-work" });
+    expect(state.focusedProgram).toBe("selected-work");
+    expect(state.openPrograms.at(-1)).toBe("selected-work");
+  });
+
+  it("hydrates a validated version-one snapshot", () => {
+    const initial = createInitialWorkstationState();
+    const hydrated = {
+      ...initial,
+      bootCompleted: true,
+      focusedProgram: "selected-work" as const,
+    };
+    expect(workstationReducer(initial, { type: "hydrate", state: hydrated })).toEqual(hydrated);
+  });
+
   it("clamps a window so its title bar remains recoverable", () => {
     expect(
       clampWindowGeometry(
