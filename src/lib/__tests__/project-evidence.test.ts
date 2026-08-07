@@ -60,7 +60,7 @@ describe("case-study evidence maps", () => {
     }
   });
 
-  it("keeps proof surfaces inside the project and labels cross-chapter placement", () => {
+  it("keeps every proof adjacent to the chapter claim it supports", () => {
     for (const [project, chapters] of Object.entries(PROJECT_EVIDENCE_MAP)) {
       const chapterIds = new Set<string>(
         CASE_STUDY_CHAPTERS[
@@ -71,16 +71,14 @@ describe("case-study evidence maps", () => {
       for (const chapter of chapters) {
         for (const proof of chapter.proofs) {
           expect(chapterIds.has(proof.surfaceChapterId)).toBe(true);
+          expect(proof.surfaceChapterId).toBe(chapter.chapterId);
+          expect(proof.placementNote).toBeUndefined();
           expect(proof.label).not.toBe("");
           expect(proof.surface).not.toBe("");
           expect(proof.job).not.toBe("");
           expect(proof.proves).not.toBe("");
           expect(proof.limitation).not.toBe("");
           expect(proof.job).not.toBe(proof.limitation);
-
-          if (proof.surfaceChapterId !== chapter.chapterId) {
-            expect(proof.placementNote).toBeTruthy();
-          }
         }
       }
     }
