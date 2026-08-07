@@ -1,0 +1,68 @@
+- generic [active] [ref=f2e1]:
+  - generic [ref=f2e2]:
+    - link "Skip to main content" [ref=f2e3] [cursor=pointer]:
+      - /url: "#main-content"
+    - main [ref=f2e4]:
+      - generic "Myles '98 desktop" [ref=f2e5]:
+        - navigation "Desktop project objects" [ref=f2e6]:
+          - list [ref=f2e7]:
+            - listitem [ref=f2e8]:
+              - link "Fresh Greens.exe" [ref=f2e9] [cursor=pointer]:
+                - /url: /work/fresh-greens
+                - generic [ref=f2e23]: Fresh Greens
+                - generic [ref=f2e24]: ▶
+            - listitem [ref=f2e25]:
+              - link "FAFSA Mail.app" [ref=f2e26] [cursor=pointer]:
+                - /url: /work/understandingfafsa
+                - generic [ref=f2e40]: Understanding FAFSA
+            - listitem [ref=f2e41]:
+              - link "Navi Places.exe" [ref=f2e42] [cursor=pointer]:
+                - /url: /work/navi
+                - generic [ref=f2e53]: Navi
+            - listitem [ref=f2e54]:
+              - link "TikTok Catalog.studio" [ref=f2e55] [cursor=pointer]:
+                - /url: /work/tiktok
+                - generic [ref=f2e72]: TikTok
+        - region "Welcome to Myles '98" [ref=f2e73]:
+          - generic [ref=f2e74]:
+            - paragraph [ref=f2e75]: Welcome
+            - generic [ref=f2e76]: ×
+          - generic [ref=f2e78]:
+            - generic [ref=f2e79]:
+              - img "Portrait mark of Myles Ashitey with locs" [ref=f2e80]
+              - generic [ref=f2e81]:
+                - paragraph [ref=f2e82]: Product designer and builder
+                - heading "Myles Ashitey" [level=1] [ref=f2e83]
+            - paragraph [ref=f2e84]: Design, code, whatever you need.
+            - paragraph [ref=f2e85]: Single-click a project on the desktop, or launch Projects to see everything in one place.
+            - button "Launch “Projects”" [ref=f2e86]
+            - paragraph [ref=f2e87]: 4 projects ready · Résumé and contact stay one click away
+        - 'complementary "Quick Look: Fresh Greens" [ref=f2e88]':
+          - heading "Fresh Greens" [level=2] [ref=f2e103]
+          - generic [ref=f2e104]:
+            - generic [ref=f2e105]:
+              - term [ref=f2e106]: Type
+              - definition [ref=f2e107]: Route-planning application
+            - generic [ref=f2e108]:
+              - term [ref=f2e109]: Contribution
+              - definition [ref=f2e110]: Solo product design and engineering
+            - generic [ref=f2e111]:
+              - term [ref=f2e112]: Proof
+              - definition [ref=f2e113]: Working React Native prototype across 26+ screens.
+          - img "Fresh Greens route preview shown in a phone mockup." [ref=f2e115]
+          - link "Open case study" [ref=f2e116] [cursor=pointer]:
+            - /url: /work/fresh-greens
+      - toolbar "Taskbar" [ref=f2e117]:
+        - button "Start" [ref=f2e118]
+        - group "Fixed shortcuts" [ref=f2e152]:
+          - button "Projects fixed shortcut" [ref=f2e153]: Projects
+          - button "Documents fixed shortcut" [ref=f2e154]: Documents
+          - button "Résumé fixed shortcut" [ref=f2e155]: Résumé
+          - link "Contact fixed shortcut" [ref=f2e156] [cursor=pointer]:
+            - /url: mailto:mylesashitey@gmail.com
+            - text: Contact
+        - separator [ref=f2e157]
+        - group "Currently open windows" [ref=f2e158]:
+          - button "Welcome taskbar button" [pressed] [ref=f2e159]: Welcome
+        - time [ref=f2e160]: "--:--"
+  - button "Open Next.js Dev Tools" [ref=f2e166] [cursor=pointer]

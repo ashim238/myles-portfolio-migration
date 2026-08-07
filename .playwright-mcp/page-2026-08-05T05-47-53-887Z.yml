@@ -1,0 +1,26 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - link "Skip to main content" [ref=e3]:
+      - /url: "#main-content"
+    - main [ref=e152]:
+      - region "Start" [ref=e286]:
+        - generic [ref=e287]:
+          - button "Back" [active] [ref=e288]:
+            - generic [ref=e289]: ←
+            - text: Back
+          - heading "Start" [level=1] [ref=e290]
+        - navigation "Start menu" [ref=e292]:
+          - button "Selected Work" [ref=e293]
+          - button "About Myles" [ref=e297]
+          - button "Loose Parts" [ref=e301]
+          - button "Résumé" [ref=e307]
+          - link "E-mail" [ref=e311]:
+            - /url: mailto:mylesashitey@gmail.com
+          - button "Display Properties" [ref=e316]
+      - navigation "Pocket 97 dock" [ref=e200]:
+        - button "Start" [ref=e201]
+        - button "Work" [ref=e202]
+        - button "Loose Parts" [ref=e203]
+        - button "Open Apps" [ref=e204]
+  - button "Open Next.js Dev Tools" [ref=e112] [cursor=pointer]
+  - alert [ref=e116]

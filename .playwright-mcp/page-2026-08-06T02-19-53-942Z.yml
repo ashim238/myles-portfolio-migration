@@ -1,0 +1,292 @@
+- generic [active] [ref=f7e1]:
+  - generic [ref=f7e2]:
+    - link "Skip to main content" [ref=f7e3] [cursor=pointer]:
+      - /url: "#main-content"
+    - generic [ref=f7e4]:
+      - banner [ref=f7e5]:
+        - link "Return to Projects" [ref=f7e6] [cursor=pointer]:
+          - /url: /#projects
+          - generic [ref=f7e7]: ←
+          - text: Return to Projects
+        - paragraph [ref=f7e8]: Fresh Greens.exe
+      - main [ref=f7e9]:
+        - region [ref=f7e10]:
+          - paragraph [ref=f7e11]: Product design + engineering · 2025–2026
+          - heading "Fresh Greens" [level=1] [ref=f7e12]
+          - paragraph [ref=f7e13]: Fresh Greens brings the safety knowledge Black drivers already use into route planning.
+        - figure [ref=f7e14]:
+          - img "Fresh Greens welcome screen on a phone, with an illustrated Black driver at sunrise." [ref=f7e15]
+        - region "At a glance" [ref=f7e16]:
+          - generic [ref=f7e17]:
+            - generic [ref=f7e18]:
+              - term [ref=f7e19]: Role
+              - definition [ref=f7e20]: Solo, design and engineering
+            - generic [ref=f7e21]:
+              - term [ref=f7e22]: Tools
+              - definition [ref=f7e23]: Figma, Illustrator, Claude, React Native, Expo, TypeScript, Supabase
+            - generic [ref=f7e24]:
+              - term [ref=f7e25]: Timeline
+              - definition [ref=f7e26]: Sep 2025 – Jun 2026
+            - generic [ref=f7e27]:
+              - term [ref=f7e28]: Outcome
+              - definition [ref=f7e29]:
+                - generic [ref=f7e30]: Working
+                - text: React Native prototype across 26+ screens
+          - generic [ref=f7e31]:
+            - paragraph [ref=f7e32]: Working mobile prototype
+            - link "Try the safety-flow reconstruction" [ref=f7e33] [cursor=pointer]:
+              - /url: "#fg-pulled-over"
+        - navigation "Case study chapters" [ref=f7e34]:
+          - list [ref=f7e36]:
+            - listitem [ref=f7e37]:
+              - 'link "Frame: Why route planning needs more than time and distance" [ref=f7e38] [cursor=pointer]':
+                - /url: "#fg-problem"
+                - generic [ref=f7e40]: "01."
+                - generic [ref=f7e41]:
+                  - generic [ref=f7e42]: Frame
+                  - generic [ref=f7e43]: ":"
+                  - generic [ref=f7e44]: Why route planning needs more than time and distance
+            - listitem [ref=f7e46]:
+              - 'link "Research: Three problems the interviews made clear" [ref=f7e47] [cursor=pointer]':
+                - /url: "#fg-research"
+                - generic [ref=f7e49]: "02."
+                - generic [ref=f7e50]:
+                  - generic [ref=f7e51]: Research
+                  - generic [ref=f7e52]: ":"
+                  - generic [ref=f7e53]: Three problems the interviews made clear
+            - listitem [ref=f7e55]:
+              - 'link "Plan: 1. See what is on each route before choosing" [ref=f7e56] [cursor=pointer]':
+                - /url: "#fg-design"
+                - generic [ref=f7e58]: "03."
+                - generic [ref=f7e59]:
+                  - generic [ref=f7e60]: Plan
+                  - generic [ref=f7e61]: ":"
+                  - generic [ref=f7e62]: 1. See what is on each route before choosing
+            - listitem [ref=f7e64]:
+              - 'link "Respond: 2. Handle unexpected problems without adding stress" [ref=f7e65] [cursor=pointer]':
+                - /url: "#fg-pulled-over"
+                - generic [ref=f7e67]: "04."
+                - generic [ref=f7e68]:
+                  - generic [ref=f7e69]: Respond
+                  - generic [ref=f7e70]: ":"
+                  - generic [ref=f7e71]: 2. Handle unexpected problems without adding stress
+            - listitem [ref=f7e73]:
+              - 'link "Trust: 3. Navigate with transparent community contributors" [ref=f7e74] [cursor=pointer]':
+                - /url: "#fg-trust"
+                - generic [ref=f7e76]: "05."
+                - generic [ref=f7e77]:
+                  - generic [ref=f7e78]: Trust
+                  - generic [ref=f7e79]: ":"
+                  - generic [ref=f7e80]: 3. Navigate with transparent community contributors
+            - listitem [ref=f7e82]:
+              - 'link "Validate: What the prototype made possible and what still needs proof" [ref=f7e83] [cursor=pointer]':
+                - /url: "#fg-scope"
+                - generic [ref=f7e85]: "06."
+                - generic [ref=f7e86]:
+                  - generic [ref=f7e87]: Validate
+                  - generic [ref=f7e88]: ":"
+                  - generic [ref=f7e89]: What the prototype made possible and what still needs proof
+          - paragraph [ref=f7e91]: Arrow keys move between chapters. Home and End jump to the ends.
+        - status [ref=f7e92]
+        - button
+        - region [ref=f7e93]:
+          - paragraph [ref=f7e94]:
+            - generic [ref=f7e95]: Frame
+            - generic [ref=f7e96]: 1 of 6
+          - heading "Why route planning needs more than time and distance" [level=2] [ref=f7e97]
+          - generic [ref=f7e103]:
+            - paragraph [ref=f7e104]: I grew up in Brooklyn and moved to rural South Jersey around age ten. Confederate flags on front lawns made night driving feel exposing. I worried about a police stop or car trouble in a place where asking for help might not feel safe.
+            - paragraph [ref=f7e105]: I still used Google Maps or Apple Maps, then carried the rest myself. At night, I avoided backroads, drove comfortably below the speed limit, kept my wallet within reach, and watched the road around me. That experience gave me a hypothesis, not proof. I interviewed six Black drivers to see what carried beyond my own route.
+            - paragraph [ref=f7e106]:
+              - text: The Green Book used print to help Black travelers find places that would serve them. I use that history as design lineage, not evidence that Fresh Greens is its digital successor. I wanted to see what that principle could mean inside navigation.
+              - 'link "Source: Smithsonian National Museum of African American History and Culture (opens in a new tab)" [ref=f7e107] [cursor=pointer]':
+                - /url: https://nmaahc.si.edu/explore/stories/traveling-through-jim-crow-america
+                - text: "Source: Smithsonian National Museum of African American History and Culture"
+                - generic [ref=f7e108]: (opens in a new tab)
+              - text: .
+        - region [ref=f7e109]:
+          - paragraph [ref=f7e110]:
+            - generic [ref=f7e111]: Research
+            - generic [ref=f7e112]: 2 of 6
+          - heading "Three problems the interviews made clear" [level=2] [ref=f7e113]
+          - generic [ref=f7e118]:
+            - paragraph [ref=f7e119]: Participants already knew how to plan, prepare, and decide whom to trust. Their answers widened my hypothesis into three problems.
+            - generic "Three Fresh Greens product problems" [ref=f7e120]:
+              - generic [ref=f7e121]:
+                - paragraph [ref=f7e122]: Plan
+                - paragraph [ref=f7e123]: Drivers couldn't inspect conditions on each route before choosing. 6 of 6 connected trip timing to daylight, 5 of 6 raised road conditions, 5 of 6 raised police presence, and 3 of 6 raised wildlife.
+              - generic [ref=f7e124]:
+                - paragraph [ref=f7e125]: Respond
+                - paragraph [ref=f7e126]: Participants described preparing for police encounters and keeping help close when unexpected problems raised stress.
+              - generic [ref=f7e127]:
+                - paragraph [ref=f7e128]: Trust
+                - paragraph [ref=f7e129]: Useful community knowledge lived outside navigation and depended on reaching the right person. 5 of 6 asked family or friends before trusting an unfamiliar place.
+            - paragraph [ref=f7e131]: These interviews widened my hypothesis. They don't represent every Black driver.
+        - region [ref=f7e132]:
+          - paragraph [ref=f7e133]:
+            - generic [ref=f7e134]: Plan
+            - generic [ref=f7e135]: 3 of 6
+          - heading "1. See what is on each route before choosing" [level=2] [ref=f7e136]
+          - generic [ref=f7e141]:
+            - generic [ref=f7e142]:
+              - paragraph [ref=f7e143]: Participants timed trips around daylight, avoided roads, and compared clues outside maps that only optimized time and distance.
+              - paragraph [ref=f7e144]: I moved from a Google Maps feature to a standalone route preview, then turned public and community inputs into route chips and source cards. The prototype can explain why it prefers one route. It doesn't prove that route is safer.
+            - generic "From a Google Maps feature to a standalone app" [ref=f7e145]:
+              - list [ref=f7e146]:
+                - listitem [ref=f7e147]:
+                  - paragraph [ref=f7e148]: First pass
+                  - group [ref=f7e150]:
+                    - 'button "Expand image: An early Fresh Greens screen from when it was a Google Maps feature: Google''s own green turn banner, blue route line, and 3D map chrome, with Fresh Greens'' Safety button and a hazard marker added down the side." [ref=f7e153]':
+                      - 'img "An early Fresh Greens screen from when it was a Google Maps feature: Google''s own green turn banner, blue route line, and 3D map chrome, with Fresh Greens'' Safety button and a hazard marker added down the side." [ref=f7e154]'
+                  - paragraph [ref=f7e155]: I first added the safety layer to Google Maps. It put controls on the map, but those signals still felt secondary and route comparison had no structure of its own.
+                - listitem [ref=f7e156]:
+                  - paragraph [ref=f7e157]: The break
+                  - group [ref=f7e159]:
+                    - 'button "Expand image: The distinct Fresh Greens route preview: a daylight-graded route line with a sun-to-moon legend, an All clear safety chip, a note that a station you trust is on the route, and a green Go button on a warm surface." [ref=f7e162]':
+                      - 'img "The distinct Fresh Greens route preview: a daylight-graded route line with a sun-to-moon legend, an All clear safety chip, a note that a station you trust is on the route, and a green Go button on a warm surface." [ref=f7e163]'
+                  - paragraph [ref=f7e164]: The standalone preview puts daylight, route status, and trusted places at the choice point. Reserved safety colors keep warnings distinct, while the sun-to-moon route shows how light changes before arrival.
+            - figure "Community reports are local-first. Supabase, row-level security, device checks, and moderation activate only when configured." [ref=f7e165]:
+              - region "Fresh Greens system architecture diagram" [ref=f7e166]:
+                - 'img "Three-layer architecture: eight data inputs feed an adapter layer, which feeds a deterministic scoring layer, which feeds the screen layer. Community reports are one input: local-first in the prototype, with a Supabase and Postgres path behind configuration, row-level security, device UUID checks, and moderation views." [ref=f7e168]':
+                  - generic [ref=f7e169]:
+                    - generic [ref=f7e170]: OpenStreetMap
+                    - generic [ref=f7e171]: lighting · landuse · parks
+                    - generic [ref=f7e172]: OSRM
+                    - generic [ref=f7e173]: route geometry
+                    - generic [ref=f7e174]: SunCalc
+                    - generic [ref=f7e175]: solar geometry
+                    - generic [ref=f7e176]: Mapbox Search
+                    - generic [ref=f7e177]: destinations
+                    - generic [ref=f7e178]: DOT-511
+                    - generic [ref=f7e179]: state traffic feeds
+                    - generic [ref=f7e180]: Mapbox incidents
+                    - generic [ref=f7e181]: driving-traffic events
+                    - generic [ref=f7e182]: Open-Meteo
+                    - generic [ref=f7e183]: weather + visibility
+                    - generic [ref=f7e184]: Community reports
+                    - generic [ref=f7e185]: local-first · Supabase when configured
+                  - generic [ref=f7e187]:
+                    - generic [ref=f7e189]: Adapter layer
+                    - generic [ref=f7e190]: Typed contracts. Each source speaks one shape.
+                  - generic [ref=f7e191]:
+                    - generic [ref=f7e193]: Scoring layer
+                    - generic [ref=f7e194]: Pure deterministic function.
+                    - generic [ref=f7e195]: Same inputs → same routing decision.
+                  - generic [ref=f7e196]:
+                    - generic [ref=f7e198]: Screen layer
+                    - generic [ref=f7e199]: Renders the result.
+        - region [ref=f7e201]:
+          - paragraph [ref=f7e202]:
+            - generic [ref=f7e203]: Respond
+            - generic [ref=f7e204]: 4 of 6
+          - heading "2. Handle unexpected problems without adding stress" [level=2] [ref=f7e205]
+          - generic [ref=f7e210]:
+            - paragraph [ref=f7e212]: Once stress is high, a driver shouldn't have to search navigation controls or forceful copy. I hid four support paths behind one thumb-reachable control until requested.
+            - generic "The pulled-over safety sequence" [ref=f7e213]:
+              - generic [ref=f7e214]:
+                - heading "Interactive case-study reconstruction" [level=3] [ref=f7e215]
+                - paragraph [ref=f7e216]: This web reconstruction shows one representative path. The native prototype contains the full flow.
+              - group "01. Toolkit" [ref=f7e217]:
+                - group [ref=f7e219]:
+                  - 'button "Expand image: The Fresh Greens safety toolkit asking What''s going on? above Pulled-over, Roadside assistance, Unfamiliar area, and Share location options." [ref=f7e222]':
+                    - img "The Fresh Greens safety toolkit asking What's going on? above Pulled-over, Roadside assistance, Unfamiliar area, and Share location options." [ref=f7e223]
+                - generic [ref=f7e224]:
+                  - paragraph [ref=f7e225]: Toolkit
+                  - paragraph [ref=f7e226]: Starts with the driver's question.
+                  - paragraph [ref=f7e227]: Four paths stay behind one thumb-reachable control.
+                  - paragraph [ref=f7e228]: 01 / 04
+              - group "02. Reassurance" [ref=f7e229]:
+                - group [ref=f7e231]:
+                  - 'button "Expand image: The pulled-over guidance screen saying We''ll walk you through what to do and confirming that recording has started." [ref=f7e234]':
+                    - img "The pulled-over guidance screen saying We'll walk you through what to do and confirming that recording has started." [ref=f7e235]
+                - generic [ref=f7e236]:
+                  - paragraph [ref=f7e237]: Reassurance
+                  - paragraph [ref=f7e238]: Recording begins before the next decision.
+                  - paragraph [ref=f7e239]: Reassurance comes first, with a trusted contact one step away.
+                  - paragraph [ref=f7e240]: 02 / 04
+              - group "03. Question" [ref=f7e241]:
+                - group [ref=f7e243]:
+                  - 'button "Expand image: The pulled-over flow asking Are you armed? in regular weight with Yes, No, and Prefer not to answer options." [ref=f7e246]':
+                    - img "The pulled-over flow asking Are you armed? in regular weight with Yes, No, and Prefer not to answer options." [ref=f7e247]
+                - generic [ref=f7e248]:
+                  - paragraph [ref=f7e249]: Question
+                  - paragraph [ref=f7e250]: Regular weight keeps a necessary question from reading like an accusation.
+                  - paragraph [ref=f7e251]: All three answers carry equal visual weight.
+                  - paragraph [ref=f7e252]: 03 / 04
+              - group "04. Contact" [ref=f7e253]:
+                - group [ref=f7e255]:
+                  - 'button "Expand image: The pulled-over contact screen showing a live recording timer, the message You''re not alone, a note that no message or location has been sent, and Call and Text actions for trusted contact Jordan Lee." [ref=f7e258]':
+                    - img "The pulled-over contact screen showing a live recording timer, the message You're not alone, a note that no message or location has been sent, and Call and Text actions for trusted contact Jordan Lee." [ref=f7e259]
+                - generic [ref=f7e260]:
+                  - paragraph [ref=f7e261]: Contact
+                  - paragraph [ref=f7e262]: Recording and trusted-contact actions remain visible.
+                  - paragraph [ref=f7e263]: The screen confirms that nothing has been sent.
+                  - paragraph [ref=f7e264]: 04 / 04
+            - paragraph [ref=f7e266]: Pulled-over guidance starts recording, puts reassurance first, keeps questions in regular weight, and leaves trusted-contact actions visible. Roadside help, unfamiliar-area guidance, location sharing, and emergency steps work offline. This is prototype behavior, not evidence that it improves an encounter.
+        - region [ref=f7e267]:
+          - paragraph [ref=f7e268]:
+            - generic [ref=f7e269]: Trust
+            - generic [ref=f7e270]: 5 of 6
+          - heading "3. Navigate with transparent community contributors" [level=2] [ref=f7e271]
+          - generic [ref=f7e276]:
+            - generic [ref=f7e277]:
+              - paragraph [ref=f7e278]: Public datasets still matter because their source and scope can be inspected, but they can't describe how a place felt to someone who moved through it. I kept each firsthand account specific instead of treating it as fact.
+              - paragraph [ref=f7e279]: The intended trust model keeps every firsthand account visible as one person's account unless human review hides or removes it for violating contribution rules. Similar reports from separate community contributors across time gain more influence in ranking. A time-sensitive hazard can surface sooner when waiting would make it useless. Sparse coverage stays labeled as uncertainty, never as a positive safety signal.
+              - paragraph [ref=f7e280]:
+                - strong [ref=f7e281]: "Current prototype limit:"
+                - text: the prototype maps one report to one scored zone, so a single report can affect route ranking now. Corroboration-weighted ranking is an intended safeguard, not a built feature. The screens don't yet show visible contributor provenance or differentiated trust levels.
+            - figure "Structured tags keep each account specific while leaving room for context." [ref=f7e282]:
+              - group [ref=f7e283]:
+                - 'button "Expand image: The Fresh Greens Felt welcome contribution form over the en-route map, with place-type chips, welcoming-reason chips, an optional experience field, and a green Share your experience button with black text." [ref=f7e286]':
+                  - img "The Fresh Greens Felt welcome contribution form over the en-route map, with place-type chips, welcoming-reason chips, an optional experience field, and a green Share your experience button with black text." [ref=f7e287]
+            - generic "How a report moves through moderation" [ref=f7e289]:
+              - generic [ref=f7e290]:
+                - generic [ref=f7e291]:
+                  - paragraph [ref=f7e292]: Enters
+                  - paragraph [ref=f7e293]: A report joins the queue
+                - generic [ref=f7e295]:
+                  - paragraph [ref=f7e296]: Investigation panel
+                  - list [ref=f7e297]:
+                    - listitem [ref=f7e298]: Source device
+                    - listitem [ref=f7e299]: Prior reports at the same spot
+                    - listitem [ref=f7e300]: Nearby reports
+                    - listitem [ref=f7e301]: "Coordination: duplicate IPs and devices"
+                - generic [ref=f7e303]:
+                  - paragraph [ref=f7e304]: Human decision
+                  - paragraph [ref=f7e305]: Reviewed, hidden, restored, or removed
+        - region [ref=f7e306]:
+          - paragraph [ref=f7e307]:
+            - generic [ref=f7e308]: Validate
+            - generic [ref=f7e309]: 6 of 6
+          - heading "What the prototype made possible and what still needs proof" [level=2] [ref=f7e310]
+          - generic [ref=f7e315]:
+            - paragraph [ref=f7e317]: Six interviews became a working React Native prototype spanning route comparison, en-route guidance, stress-state support, community reporting, and moderation. It can explain why it prefers one route without proving it safer.
+            - generic [ref=f7e318]:
+              - generic [ref=f7e319]:
+                - paragraph [ref=f7e320]: Built now
+                - list [ref=f7e321]:
+                  - listitem [ref=f7e322]: "Plan: route comparison explained through chips and source cards"
+                  - listitem [ref=f7e323]: "Respond: one-thumb, offline support across five stress states"
+                  - listitem [ref=f7e324]: "Trust: contribution and moderation flows that keep reports reviewable"
+              - generic [ref=f7e325]:
+                - paragraph [ref=f7e326]: What remains
+                - list [ref=f7e327]:
+                  - listitem [ref=f7e328]: "Plan: route-quality testing with more Black drivers across regions before making any claim that a preferred route is safer"
+                  - listitem [ref=f7e329]: "Respond: stress-state and failure-mode testing on real devices and configured builds"
+                  - listitem [ref=f7e330]: "Trust: weighted ranking, visible provenance, trust levels, and public moderation transparency"
+            - paragraph [ref=f7e332]: I can show where each interview theme changed the product, then test those decisions with more drivers instead of treating the prototype as the answer.
+        - region [ref=f7e333]:
+          - link "Next project Navi I also explored routing through neighborhood discovery and local booking. Read case study" [ref=f7e334] [cursor=pointer]:
+            - /url: /work/navi
+            - generic [ref=f7e335]:
+              - generic [ref=f7e336]: Next project
+              - heading "Navi" [level=2] [ref=f7e337]
+              - generic [ref=f7e338]: I also explored routing through neighborhood discovery and local booking.
+              - generic [ref=f7e339]:
+                - text: Read case study
+                - generic [ref=f7e340]: →
+          - link "View all work" [ref=f7e342] [cursor=pointer]:
+            - /url: /#projects
+            - text: View all work
+            - generic [ref=f7e343]: →
+  - button "Open Next.js Dev Tools" [ref=f7e349] [cursor=pointer]

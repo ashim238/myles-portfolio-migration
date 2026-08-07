@@ -1,0 +1,685 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e2]:
+    - link "Skip to main content" [ref=f3e3]:
+      - /url: "#main-content"
+    - banner [ref=f3e4]:
+      - link "Return to Projects" [ref=f3e5]:
+        - /url: /#projects
+        - generic [ref=f3e6]: ←
+        - text: Return to Projects
+      - paragraph [ref=f3e7]: Navi Places.exe
+    - main [ref=f3e8]:
+      - generic [ref=f3e9]:
+        - region [ref=f3e10]:
+          - paragraph [ref=f3e11]: Graduate studio · 2025
+          - heading "Navi" [level=1] [ref=f3e12]
+          - paragraph [ref=f3e13]: I collected 14 resident and stakeholder responses, including two local businesses, for a graduate-studio travel concept. What I learned redirected the team's early Manhattan heatmap toward neighborhood context. The next concept focused on helping people learn, plan, and book after choosing a place.
+        - figure [ref=f3e14]:
+          - img "Navi neighborhood experience search results and cards on a tablet on a wooden table." [ref=f3e15]
+        - region "At a glance" [ref=f3e16]:
+          - generic [ref=f3e17]:
+            - generic [ref=f3e18]:
+              - term [ref=f3e19]: Role
+              - definition [ref=f3e20]: UI/UX Designer
+            - generic [ref=f3e21]:
+              - term [ref=f3e22]: Tools
+              - definition [ref=f3e23]: Figma, FigJam, React, TypeScript
+            - generic [ref=f3e24]:
+              - term [ref=f3e25]: Timeline
+              - definition [ref=f3e26]: January 2025 – June 2025
+          - generic [ref=f3e27]:
+            - paragraph [ref=f3e28]: Working product demo
+            - link "Try the booking flow" [ref=f3e29]:
+              - /url: /work/navi/demo
+          - generic [ref=f3e30]:
+            - paragraph [ref=f3e31]: Key moves
+            - list [ref=f3e32]:
+              - listitem [ref=f3e33]: "→ Graduate studio: the team tested an early Manhattan redirection concept and audited six travel platforms."
+              - listitem [ref=f3e34]: "→ My contribution: I collected and synthesized 14 resident and stakeholder responses, including two local businesses, then created archetypes, journeys, opportunity areas, and flows."
+              - listitem [ref=f3e35]: "→ Solo rebuild: I turned Learn, Plan, Go into a React component system and working individual booking flow."
+        - navigation "Case study chapters" [ref=f3e36]:
+          - generic [ref=f3e37]:
+            - list [ref=f3e38]:
+              - listitem [ref=f3e39]:
+                - 'link "Frame: The first idea moved visitors, not behavior" [ref=f3e40]':
+                  - /url: "#nv-intro"
+                  - generic [ref=f3e42]: "01."
+                  - generic [ref=f3e43]:
+                    - generic [ref=f3e44]: Frame
+                    - generic [ref=f3e45]: ":"
+                    - generic [ref=f3e46]: The first idea moved visitors, not behavior
+              - listitem [ref=f3e48]:
+                - 'link "Research: The survey changed the brief" [ref=f3e49]':
+                  - /url: "#nv-insights"
+                  - generic [ref=f3e51]: "02."
+                  - generic [ref=f3e52]:
+                    - generic [ref=f3e53]: Research
+                    - generic [ref=f3e54]: ":"
+                    - generic [ref=f3e55]: The survey changed the brief
+              - listitem [ref=f3e57]:
+                - 'link "Define: From neighborhood context to Learn, Plan, Go" [ref=f3e58]':
+                  - /url: "#nv-framework"
+                  - generic [ref=f3e60]: "03."
+                  - generic [ref=f3e61]:
+                    - generic [ref=f3e62]: Define
+                    - generic [ref=f3e63]: ":"
+                    - generic [ref=f3e64]: From neighborhood context to Learn, Plan, Go
+              - listitem [ref=f3e66]:
+                - 'link "Build: From studio concept to working booking flow" [ref=f3e67]':
+                  - /url: "#nv-build"
+                  - generic [ref=f3e69]: "04."
+                  - generic [ref=f3e70]:
+                    - generic [ref=f3e71]: Build
+                    - generic [ref=f3e72]: ":"
+                    - generic [ref=f3e73]: From studio concept to working booking flow
+              - listitem [ref=f3e75]:
+                - 'link "Validate: What works now and what still needs testing" [ref=f3e76]':
+                  - /url: "#nv-outcome"
+                  - generic [ref=f3e78]: "05."
+                  - generic [ref=f3e79]:
+                    - generic [ref=f3e80]: Validate
+                    - generic [ref=f3e81]: ":"
+                    - generic [ref=f3e82]: What works now and what still needs testing
+            - generic [ref=f3e412]: ›
+            - generic [ref=f3e413]: 47% · 3 min left
+          - paragraph [ref=f3e84]: Arrow keys move between chapters. Home and End jump to the ends.
+        - status [ref=f3e85]
+        - button "Back to top" [ref=f3e420]
+        - region [ref=f3e86]:
+          - paragraph [ref=f3e87]:
+            - generic [ref=f3e88]: Frame
+            - generic [ref=f3e89]: 1 of 5
+          - heading "The first idea moved visitors, not behavior" [level=2] [ref=f3e90]
+          - generic [ref=f3e95]:
+            - paragraph [ref=f3e96]: The early team concept could move a visitor to another neighborhood, but it didn't change how they engaged after arriving.
+            - generic [ref=f3e97]:
+              - paragraph [ref=f3e98]: The team used a Manhattan heatmap as an exploratory hypothesis to test whether redirecting visitors could distribute attention across more neighborhoods.
+              - paragraph [ref=f3e99]: That first artifact made movement on the map the outcome. The survey became the next step.
+          - region [ref=f3e100]:
+            - 'heading "The first prototype: a Manhattan heatmap" [level=3] [ref=f3e101]'
+            - paragraph [ref=f3e102]: Select a neighborhood to see how the first artifact worked.
+            - paragraph [ref=f3e104]: The colored regions show where the early concept placed emphasis. They do not represent actual tourist density or live geo analytics, and this interactive reconstruction keeps the same constraint.
+            - generic [ref=f3e105]:
+              - list "Manhattan neighborhoods" [ref=f3e106]:
+                - listitem [ref=f3e107]:
+                  - button "Chelsea" [ref=f3e108]
+                - listitem [ref=f3e109]:
+                  - button "Chinatown" [ref=f3e110]
+                - listitem [ref=f3e111]:
+                  - button "Financial District" [ref=f3e112]
+                - listitem [ref=f3e113]:
+                  - button "Greenwich Village" [ref=f3e114]
+                - listitem [ref=f3e115]:
+                  - button "Harlem" [ref=f3e116]
+                - listitem [ref=f3e117]:
+                  - button "Inwood" [ref=f3e118]
+                - listitem [ref=f3e119]:
+                  - button "Lower East Side" [ref=f3e120]
+                - listitem [ref=f3e121]:
+                  - button "Midtown" [ref=f3e122]
+                - listitem [ref=f3e123]:
+                  - button "SoHo" [ref=f3e124]
+                - listitem [ref=f3e125]:
+                  - button "Tribeca" [ref=f3e126]
+                - listitem [ref=f3e127]:
+                  - button "Upper East Side" [ref=f3e128]
+                - listitem [ref=f3e129]:
+                  - button "Upper West Side" [ref=f3e130]
+              - paragraph [ref=f3e134]: Select from the list to preview how Learn would frame each of 12 neighborhoods.
+        - region [ref=f3e135]:
+          - paragraph [ref=f3e136]:
+            - generic [ref=f3e137]: Research
+            - generic [ref=f3e138]: 2 of 5
+          - heading "The survey changed the brief" [level=2] [ref=f3e139]
+          - region [ref=f3e144]:
+            - heading "Platform audits and resident research" [level=3] [ref=f3e145]
+            - generic [ref=f3e146]:
+              - paragraph [ref=f3e147]: I collected 14 resident and stakeholder responses, including two local businesses. The sample informed this concept. It doesn't stand in for all NYC residents.
+              - paragraph [ref=f3e148]: The team audited six travel platforms. I evaluated Airbnb with Kaori Ogawa and Amy Zhang against Nielsen's ten usability heuristics. The evaluation surfaced issues with label consistency, family-facing filters, and visual clutter.
+            - list [ref=f3e149]:
+              - listitem [ref=f3e150]:
+                - heading "Guest Favorite label overuse" [level=3] [ref=f3e151]
+                - paragraph [ref=f3e152]: The designation appeared on nearly every listing we reviewed, with no consistent criteria visible to the evaluator, eroding trust in a signal meant to shortcut decisions.
+              - listitem [ref=f3e153]:
+                - heading "Minimal family & accessibility filters" [level=3] [ref=f3e154]
+                - paragraph [ref=f3e155]: Kid-friendly and accessibility-specific filters were thin. A crib amenity was often the only family-facing signal, leaving group planners without meaningful constraints.
+              - listitem [ref=f3e156]:
+                - heading "Visual clutter and repetitive listings" [level=3] [ref=f3e157]
+                - paragraph [ref=f3e158]: Grid layouts offered minimal differentiation between stays. Similar photography and copy patterns created decision fatigue before a traveler could compare neighborhood context.
+          - generic [ref=f3e159]:
+            - paragraph [ref=f3e160]: Two concerns appeared most often in the resident and stakeholder survey.
+            - generic [ref=f3e161]:
+              - paragraph [ref=f3e162]: 10 of 14 responses (71%) named overcrowding and over-tourism. 7 of 14 (50%) named a lack of authentic experiences.
+              - paragraph [ref=f3e163]: "Highlights from 14 responses, including 2 local businesses: Reimagining NYC Tourism: A More Meaningful & Sustainable Experience (resident and stakeholder survey)."
+            - generic "Survey response highlights" [ref=f3e164]:
+              - figure "concerned about overcrowding and over-tourism" [ref=f3e165]:
+                - generic [ref=f3e166]: 71%
+              - figure "concerned about lack of authentic experiences" [ref=f3e171]:
+                - generic [ref=f3e172]: 50%
+        - region [ref=f3e177]:
+          - paragraph [ref=f3e178]:
+            - generic [ref=f3e179]: Define
+            - generic [ref=f3e180]: 3 of 5
+          - heading "From neighborhood context to Learn, Plan, Go" [level=2] [ref=f3e181]
+          - generic [ref=f3e186]:
+            - generic [ref=f3e187]:
+              - paragraph [ref=f3e188]: I created three research-informed archetypes from the survey, platform audits, and secondary research.
+              - paragraph [ref=f3e189]: The graduate-studio project ended as a concept without an engineering handoff, so the journey maps and user flows remained internal planning artifacts.
+              - paragraph [ref=f3e190]: I used the archetypes, journey map, opportunity areas, and flows to connect the survey findings with neighborhood exploration.
+              - paragraph [ref=f3e191]: The Airbnb audit and secondary research shaped the individual booking flow. Cost, requirements, and timing stayed visible at key decisions, especially when a lesser-known vendor needed to earn trust.
+              - paragraph [ref=f3e192]:
+                - text: The research changed the product question. Instead of treating movement on the map as the outcome, I organized the next concept around
+                - mark [ref=f3e193]: Learn, Plan, Go
+                - text: ":"
+              - list [ref=f3e194]:
+                - listitem [ref=f3e195]:
+                  - strong [ref=f3e196]: Learn
+                  - text: surfaces local context.
+                - listitem [ref=f3e197]:
+                  - strong [ref=f3e198]: Plan
+                  - text: helps users compare and organize.
+                - listitem [ref=f3e199]:
+                  - strong [ref=f3e200]: Go
+                  - text: converts intent into bookings.
+            - region [ref=f3e201]:
+              - generic [ref=f3e202]:
+                - generic [ref=f3e203]:
+                  - heading "Research and product scope" [level=3] [ref=f3e204]
+                  - paragraph [ref=f3e205]: Each row connects a finding to the product area it affected.
+                - figure "Research-informed archetypes" [ref=f3e206]:
+                  - generic [ref=f3e207]:
+                    - text: Research-informed archetypes
+                    - generic [ref=f3e208]: Resident and stakeholder survey, platform audits, and secondary research
+                  - list [ref=f3e209]:
+                    - listitem [ref=f3e210]:
+                      - heading "Cain" [level=4] [ref=f3e211]
+                      - generic [ref=f3e212]:
+                        - generic [ref=f3e213]:
+                          - term [ref=f3e214]: Need
+                          - definition [ref=f3e215]: Coordinate an activity around a group's needs.
+                        - generic [ref=f3e216]:
+                          - term [ref=f3e217]: Product area
+                          - definition [ref=f3e218]: Group planning
+                        - generic [ref=f3e219]:
+                          - term [ref=f3e220]: Scope
+                          - definition [ref=f3e221]:
+                            - generic [ref=f3e222]: Future opportunity
+                    - listitem [ref=f3e223]:
+                      - heading "Ororo" [level=4] [ref=f3e224]
+                      - generic [ref=f3e225]:
+                        - generic [ref=f3e226]:
+                          - term [ref=f3e227]: Need
+                          - definition [ref=f3e228]: See what is happening in neighborhoods nearby.
+                        - generic [ref=f3e229]:
+                          - term [ref=f3e230]: Product area
+                          - definition [ref=f3e231]: Neighborhood exploration
+                        - generic [ref=f3e232]:
+                          - term [ref=f3e233]: Scope
+                          - definition [ref=f3e234]:
+                            - generic [ref=f3e235]: Implemented
+                    - listitem [ref=f3e236]:
+                      - heading "Selina" [level=4] [ref=f3e237]
+                      - generic [ref=f3e238]:
+                        - generic [ref=f3e239]:
+                          - term [ref=f3e240]: Need
+                          - definition [ref=f3e241]: Compare a shorter trip with precise filters.
+                        - generic [ref=f3e242]:
+                          - term [ref=f3e243]: Product area
+                          - definition [ref=f3e244]: Search and filters
+                        - generic [ref=f3e245]:
+                          - term [ref=f3e246]: Scope
+                          - definition [ref=f3e247]:
+                            - generic [ref=f3e248]: Implemented
+                - figure "Journey-map excerpt" [ref=f3e249]:
+                  - generic [ref=f3e250]:
+                    - text: Journey-map excerpt
+                    - generic [ref=f3e251]: Internal planning artifact
+                  - list [ref=f3e252]:
+                    - listitem [ref=f3e253]:
+                      - heading "Awareness" [level=4] [ref=f3e254]
+                      - generic [ref=f3e255]:
+                        - generic [ref=f3e256]:
+                          - term [ref=f3e257]: Traveler moment
+                          - definition [ref=f3e258]: Look beyond the same tourist-heavy areas.
+                        - generic [ref=f3e259]:
+                          - term [ref=f3e260]: Product need
+                          - definition [ref=f3e261]: Nearby neighborhood context
+                    - listitem [ref=f3e262]:
+                      - heading "Consideration" [level=4] [ref=f3e263]
+                      - generic [ref=f3e264]:
+                        - generic [ref=f3e265]:
+                          - term [ref=f3e266]: Traveler moment
+                          - definition [ref=f3e267]: Compare an activity, its host, timing, and requirements.
+                        - generic [ref=f3e268]:
+                          - term [ref=f3e269]: Product need
+                          - definition [ref=f3e270]: Details repeated at decision points
+                    - listitem [ref=f3e271]:
+                      - heading "Decision" [level=4] [ref=f3e272]
+                      - generic [ref=f3e273]:
+                        - generic [ref=f3e274]:
+                          - term [ref=f3e275]: Traveler moment
+                          - definition [ref=f3e276]: Review the full cost before confirming.
+                        - generic [ref=f3e277]:
+                          - term [ref=f3e278]: Product need
+                          - definition [ref=f3e279]: Transparent booking summary
+                - figure "Individual booking-flow excerpt" [ref=f3e280]:
+                  - generic [ref=f3e281]:
+                    - text: Individual booking-flow excerpt
+                    - generic [ref=f3e282]: Airbnb audit and secondary research
+                  - list [ref=f3e283]:
+                    - listitem [ref=f3e284]:
+                      - generic [ref=f3e285]: "01"
+                      - heading "Neighborhood discovery" [level=4] [ref=f3e286]
+                      - paragraph [ref=f3e287]: Start with a local area.
+                    - listitem [ref=f3e288]:
+                      - generic [ref=f3e289]: "02"
+                      - heading "Activity detail" [level=4] [ref=f3e290]
+                      - paragraph [ref=f3e291]: Review the host, activity, and requirements.
+                    - listitem [ref=f3e292]:
+                      - generic [ref=f3e293]: "03"
+                      - heading "Date and time" [level=4] [ref=f3e294]
+                      - paragraph [ref=f3e295]: Choose an available session.
+                    - listitem [ref=f3e296]:
+                      - generic [ref=f3e297]: "04"
+                      - heading "Cost review" [level=4] [ref=f3e298]
+                      - paragraph [ref=f3e299]: See the total before committing.
+                    - listitem [ref=f3e300]:
+                      - generic [ref=f3e301]: "05"
+                      - heading "Confirmation" [level=4] [ref=f3e302]
+                      - paragraph [ref=f3e303]: Keep the activity details and schedule together.
+        - region [ref=f3e304]:
+          - paragraph [ref=f3e305]:
+            - generic [ref=f3e306]: Build
+            - generic [ref=f3e307]: 4 of 5
+          - heading "From studio concept to working booking flow" [level=2] [ref=f3e308]
+          - region [ref=f3e313]:
+            - heading "Rebuilding Navi as a working system" [level=3] [ref=f3e314]
+            - generic [ref=f3e315]:
+              - paragraph [ref=f3e316]: The graduate-studio project ended as a Figma concept. Later, working alone, I rebuilt the concept by turning Learn, Plan, Go into a React and TypeScript component system and a working individual booking flow.
+              - paragraph [ref=f3e317]: Jost was selected for display typography to echo urban wayfinding cues. Orange became the primary accent to distinguish Navi from the travel platforms in the audit. The palette pairs it with Lato and a 4px spacing system.
+              - paragraph [ref=f3e318]:
+                - text: The portfolio rebuild includes brand primitives, semantic aliases, interactive variants, and a playground for changing component props.
+                - link "See the Navi design system" [ref=f3e319]:
+                  - /url: /work/navi/system
+                - text: . Those components are assembled into a working booking flow.
+                - link "Open the demo" [ref=f3e320]:
+                  - /url: /work/navi/demo
+                - text: .
+            - generic [ref=f3e321]:
+              - paragraph [ref=f3e322]: Editorial homepage slice
+              - generic [ref=f3e323]:
+                - generic [ref=f3e324]:
+                  - heading "Plan a trip that gives back" [level=3] [ref=f3e325]
+                  - generic [ref=f3e326]:
+                    - generic [ref=f3e327]: Locally owned
+                    - generic [ref=f3e328]: Nature first
+                  - generic: Start exploring
+                - generic [ref=f3e329]:
+                  - article [ref=f3e330]:
+                    - heading "Weekend in Harlem" [level=4] [ref=f3e331]
+                    - paragraph [ref=f3e332]: Jazz history, local bakeries, and a sunset walk through St. Nicholas Park.
+                  - article [ref=f3e333]:
+                    - heading "Chinatown food crawl" [level=4] [ref=f3e334]
+                    - paragraph [ref=f3e335]: Dim sum counters and tea shops curated by residents, not star ratings.
+                  - article [ref=f3e336]:
+                    - heading "LES art walk" [level=4] [ref=f3e337]
+                    - paragraph [ref=f3e338]: Gallery openings and community murals, timed for quieter weekday mornings.
+          - region [ref=f3e339]:
+            - heading "A working booking flow" [level=3] [ref=f3e340]
+            - paragraph [ref=f3e341]: The screens below come from the current React build.
+            - paragraph [ref=f3e343]: In the current build, you can browse the feed, search by neighborhood, open a host, and complete a sample individual reservation with the same components catalogued on the system page.
+            - generic [ref=f3e344]:
+              - paragraph [ref=f3e350]: mylesdesignsthings.com/work/navi/demo
+              - generic [ref=f3e351]:
+                - status [ref=f3e414]:
+                  - generic [ref=f3e415]: Loading interactive demo
+                - iframe [ref=f3e418]:
+                  - generic [ref=f4e2]:
+                    - link "Skip to main content" [ref=f4e3] [cursor=pointer]:
+                      - /url: "#main-content"
+                    - generic [ref=f4e4]:
+                      - banner [ref=f4e5]:
+                        - paragraph [ref=f4e6]: Portfolio concept. Hosts, reviews, prices, and impact claims are sample content.
+                        - generic [ref=f4e7]:
+                          - link "Navi home" [ref=f4e9] [cursor=pointer]:
+                            - /url: /work/navi/demo
+                            - text: Navi
+                          - navigation "Navi project navigation" [ref=f4e10]:
+                            - link "Return to case study" [ref=f4e11] [cursor=pointer]:
+                              - /url: /work/navi
+                            - link "Explore" [ref=f4e12] [cursor=pointer]:
+                              - /url: /work/navi/demo
+                            - link "Impact" [ref=f4e13] [cursor=pointer]:
+                              - /url: /work/navi/demo/impact
+                            - link "System" [ref=f4e14] [cursor=pointer]:
+                              - /url: /work/navi/system
+                            - link "Host an event" [ref=f4e15] [cursor=pointer]:
+                              - /url: /work/navi/demo/host
+                      - main [ref=f4e16]:
+                        - generic [ref=f4e17]:
+                          - generic [ref=f4e18]:
+                            - heading "Find your next neighborhood-led experience" [level=1] [ref=f4e19]
+                            - generic [ref=f4e20]:
+                              - generic [ref=f4e21]: Search experiences
+                              - searchbox "Search experiences" [ref=f4e26]
+                          - generic [ref=f4e27]:
+                            - region "Categories" [ref=f4e29]:
+                              - button "All" [pressed] [ref=f4e30] [cursor=pointer]
+                              - button "Architecture & design" [ref=f4e37] [cursor=pointer]
+                              - button "Arts & culture" [ref=f4e42] [cursor=pointer]
+                              - button "Community engagement" [ref=f4e50] [cursor=pointer]
+                              - button "Cooking" [ref=f4e57] [cursor=pointer]
+                              - button "Educational" [ref=f4e62] [cursor=pointer]
+                              - button "Entertainment" [ref=f4e67] [cursor=pointer]
+                              - button "Food tours" [ref=f4e73] [cursor=pointer]
+                              - button "Galleries" [ref=f4e79] [cursor=pointer]
+                              - button "Wellness & movement" [ref=f4e85] [cursor=pointer]
+                              - button "Outdoors & nature" [ref=f4e89] [cursor=pointer]
+                              - button "Markets & makers" [ref=f4e93] [cursor=pointer]
+                              - button "Sports & recreation" [ref=f4e98] [cursor=pointer]
+                              - button "Family & kids" [ref=f4e104] [cursor=pointer]
+                              - button "Photography & film" [ref=f4e111] [cursor=pointer]
+                              - button "Water & boating" [ref=f4e116] [cursor=pointer]
+                              - button "Fashion & vintage" [ref=f4e122] [cursor=pointer]
+                            - generic [ref=f4e128]:
+                              - generic [ref=f4e129]:
+                                - generic [ref=f4e130]: Sort experiences
+                                - combobox "Sort experiences" [ref=f4e131] [cursor=pointer]:
+                                  - option "Recommended" [selected]
+                                  - option "Top rated"
+                                  - option "Lowest price"
+                                  - option "Highest price"
+                              - button "Filters" [ref=f4e132] [cursor=pointer]
+                          - status [ref=f4e138]: Showing 12 of 37 experiences
+                          - list [ref=f4e139]:
+                            - listitem [ref=f4e140]:
+                              - link "Locally-owned Sunlit tunnel in Prospect Park Community engagement Discover Prospect Park by horse-drawn carriage Park Slope, Brooklyn 2 hours · Up to 4 people Rated 4.9 out of 5, 213 reviews Regenerative impact $48 per person" [ref=f4e141] [cursor=pointer]:
+                                - /url: /work/navi/demo/experience/prospect-park-carriage
+                                - generic [ref=f4e142]:
+                                  - generic [ref=f4e143]: Locally-owned
+                                  - img "Sunlit tunnel in Prospect Park" [ref=f4e144]
+                                - generic [ref=f4e145]:
+                                  - generic [ref=f4e146]: Community engagement
+                                  - heading "Discover Prospect Park by horse-drawn carriage" [level=2] [ref=f4e147]
+                                  - paragraph [ref=f4e148]: Park Slope, Brooklyn
+                                  - paragraph [ref=f4e149]: 2 hours · Up to 4 people
+                                  - generic [ref=f4e150]:
+                                    - generic [ref=f4e151]: "4.9"
+                                    - generic [ref=f4e152]: 213 reviews
+                                    - generic [ref=f4e153]: Rated 4.9 out of 5, 213 reviews
+                                  - note "Regenerative impact" [ref=f4e154]:
+                                    - generic [ref=f4e158]: Funds Prospect Park tree care
+                                  - paragraph [ref=f4e159]: $48 per person
+                            - listitem [ref=f4e160]:
+                              - link "Popular Dancers at a Brooklyn day party Entertainment Dancehall Day Party in Brooklyn Junction East Flatbush, Brooklyn 4 hours · Up to 60 people Rated 4.7 out of 5, 138 reviews Regenerative impact $19 per person" [ref=f4e161] [cursor=pointer]:
+                                - /url: /work/navi/demo/experience/dancehall-brooklyn-junction
+                                - generic [ref=f4e162]:
+                                  - generic [ref=f4e163]: Popular
+                                  - img "Dancers at a Brooklyn day party" [ref=f4e164]
+                                - generic [ref=f4e165]:
+                                  - generic [ref=f4e166]: Entertainment
+                                  - heading "Dancehall Day Party in Brooklyn Junction" [level=2] [ref=f4e167]
+                                  - paragraph [ref=f4e168]: East Flatbush, Brooklyn
+                                  - paragraph [ref=f4e169]: 4 hours · Up to 60 people
+                                  - generic [ref=f4e170]:
+                                    - generic [ref=f4e171]: "4.7"
+                                    - generic [ref=f4e172]: 138 reviews
+                                    - generic [ref=f4e173]: Rated 4.7 out of 5, 138 reviews
+                                  - note "Regenerative impact" [ref=f4e174]:
+                                    - generic [ref=f4e178]: Pays Caribbean-owned venues directly
+                                  - paragraph [ref=f4e179]: $19 per person
+                            - listitem [ref=f4e180]:
+                              - link "Hands shaping a metal bracelet Arts & culture Hand-forged bracelet-making experience Bedford-Stuyvesant, Brooklyn 2 hours · Up to 6 people Rated 4.95 out of 5, 87 reviews Regenerative impact $65 per person" [ref=f4e181] [cursor=pointer]:
+                                - /url: /work/navi/demo/experience/bedstuy-bracelet-making
+                                - img "Hands shaping a metal bracelet" [ref=f4e183]
+                                - generic [ref=f4e184]:
+                                  - generic [ref=f4e185]: Arts & culture
+                                  - heading "Hand-forged bracelet-making experience" [level=2] [ref=f4e186]
+                                  - paragraph [ref=f4e187]: Bedford-Stuyvesant, Brooklyn
+                                  - paragraph [ref=f4e188]: 2 hours · Up to 6 people
+                                  - generic [ref=f4e189]:
+                                    - generic [ref=f4e190]: "4.95"
+                                    - generic [ref=f4e191]: 87 reviews
+                                    - generic [ref=f4e192]: Rated 4.95 out of 5, 87 reviews
+                                  - note "Regenerative impact" [ref=f4e193]:
+                                    - generic [ref=f4e197]: Supports a Black-owned Bed-Stuy workshop
+                                  - paragraph [ref=f4e198]: $65 per person
+                            - listitem [ref=f4e199]:
+                              - link "Locally-owned Manhattan Bridge framed by cobblestone streets Architecture & design DUMBO Industrial Architecture Walking Tour DUMBO, Brooklyn 90 minutes · Up to 12 people Rated 4.8 out of 5, 162 reviews Regenerative impact $35 per person" [ref=f4e200] [cursor=pointer]:
+                                - /url: /work/navi/demo/experience/dumbo-industrial-architecture-walk
+                                - generic [ref=f4e201]:
+                                  - generic [ref=f4e202]: Locally-owned
+                                  - img "Manhattan Bridge framed by cobblestone streets" [ref=f4e203]
+                                - generic [ref=f4e204]:
+                                  - generic [ref=f4e205]: Architecture & design
+                                  - heading "DUMBO Industrial Architecture Walking Tour" [level=2] [ref=f4e206]
+                                  - paragraph [ref=f4e207]: DUMBO, Brooklyn
+                                  - paragraph [ref=f4e208]: 90 minutes · Up to 12 people
+                                  - generic [ref=f4e209]:
+                                    - generic [ref=f4e210]: "4.8"
+                                    - generic [ref=f4e211]: 162 reviews
+                                    - generic [ref=f4e212]: Rated 4.8 out of 5, 162 reviews
+                                  - note "Regenerative impact" [ref=f4e213]:
+                                    - generic [ref=f4e217]: Preserves DUMBO's industrial heritage
+                                  - paragraph [ref=f4e218]: $35 per person
+                            - listitem [ref=f4e219]:
+                              - link "Popular Street food stalls lit up at night in Sunset Park Food tours Sunset Park Night Market Sunset Park, Brooklyn 3 hours · Drop in anytime Rated 4.6 out of 5, 291 reviews Regenerative impact $12 per person" [ref=f4e220] [cursor=pointer]:
+                                - /url: /work/navi/demo/experience/sunset-park-night-market
+                                - generic [ref=f4e221]:
+                                  - generic [ref=f4e222]: Popular
+                                  - img "Street food stalls lit up at night in Sunset Park" [ref=f4e223]
+                                - generic [ref=f4e224]:
+                                  - generic [ref=f4e225]: Food tours
+                                  - heading "Sunset Park Night Market" [level=2] [ref=f4e226]
+                                  - paragraph [ref=f4e227]: Sunset Park, Brooklyn
+                                  - paragraph [ref=f4e228]: 3 hours · Drop in anytime
+                                  - generic [ref=f4e229]:
+                                    - generic [ref=f4e230]: "4.6"
+                                    - generic [ref=f4e231]: 291 reviews
+                                    - generic [ref=f4e232]: Rated 4.6 out of 5, 291 reviews
+                                  - note "Regenerative impact" [ref=f4e233]:
+                                    - generic [ref=f4e237]: Pays vendors full stall revenue
+                                  - paragraph [ref=f4e238]: $12 per person
+                            - listitem [ref=f4e239]:
+                              - link "Locally-owned Cast iron pans on a home stove Cooking Bed-Stuy Soul Food Cooking Class Bedford-Stuyvesant, Brooklyn 3 hours · Up to 6 people Rated 4.9 out of 5, 54 reviews Regenerative impact $75 per person" [ref=f4e240] [cursor=pointer]:
+                                - /url: /work/navi/demo/experience/bedstuy-soul-food-cooking
+                                - generic [ref=f4e241]:
+                                  - generic [ref=f4e242]: Locally-owned
+                                  - img "Cast iron pans on a home stove" [ref=f4e243]
+                                - generic [ref=f4e244]:
+                                  - generic [ref=f4e245]: Cooking
+                                  - heading "Bed-Stuy Soul Food Cooking Class" [level=2] [ref=f4e246]
+                                  - paragraph [ref=f4e247]: Bedford-Stuyvesant, Brooklyn
+                                  - paragraph [ref=f4e248]: 3 hours · Up to 6 people
+                                  - generic [ref=f4e249]:
+                                    - generic [ref=f4e250]: "4.9"
+                                    - generic [ref=f4e251]: 54 reviews
+                                    - generic [ref=f4e252]: Rated 4.9 out of 5, 54 reviews
+                                  - note "Regenerative impact" [ref=f4e253]:
+                                    - generic [ref=f4e257]: Preserves a three-generation family recipe archive
+                                  - paragraph [ref=f4e258]: $75 per person
+                            - listitem [ref=f4e259]:
+                              - link "Popular Large-scale mural on a warehouse wall in Greenpoint Arts & culture Greenpoint Mural Walk Greenpoint, Brooklyn 2 hours · Up to 10 people Rated 4.75 out of 5, 109 reviews Regenerative impact $22 per person" [ref=f4e260] [cursor=pointer]:
+                                - /url: /work/navi/demo/experience/greenpoint-mural-walk
+                                - generic [ref=f4e261]:
+                                  - generic [ref=f4e262]: Popular
+                                  - img "Large-scale mural on a warehouse wall in Greenpoint" [ref=f4e263]
+                                - generic [ref=f4e264]:
+                                  - generic [ref=f4e265]: Arts & culture
+                                  - heading "Greenpoint Mural Walk" [level=2] [ref=f4e266]
+                                  - paragraph [ref=f4e267]: Greenpoint, Brooklyn
+                                  - paragraph [ref=f4e268]: 2 hours · Up to 10 people
+                                  - generic [ref=f4e269]:
+                                    - generic [ref=f4e270]: "4.75"
+                                    - generic [ref=f4e271]: 109 reviews
+                                    - generic [ref=f4e272]: Rated 4.75 out of 5, 109 reviews
+                                  - note "Regenerative impact" [ref=f4e273]:
+                                    - generic [ref=f4e277]: Pays muralists a fair commission
+                                  - paragraph [ref=f4e278]: $22 per person
+                            - listitem [ref=f4e279]:
+                              - link "Row of brownstone stoops in Harlem Architecture & design Harlem Brownstone Architecture Tour Central Harlem, Manhattan 90 minutes · Up to 12 people Rated 4.85 out of 5, 77 reviews Regenerative impact $40 per person" [ref=f4e280] [cursor=pointer]:
+                                - /url: /work/navi/demo/experience/harlem-brownstone-walking-tour
+                                - img "Row of brownstone stoops in Harlem" [ref=f4e282]
+                                - generic [ref=f4e283]:
+                                  - generic [ref=f4e284]: Architecture & design
+                                  - heading "Harlem Brownstone Architecture Tour" [level=2] [ref=f4e285]
+                                  - paragraph [ref=f4e286]: Central Harlem, Manhattan
+                                  - paragraph [ref=f4e287]: 90 minutes · Up to 12 people
+                                  - generic [ref=f4e288]:
+                                    - generic [ref=f4e289]: "4.85"
+                                    - generic [ref=f4e290]: 77 reviews
+                                    - generic [ref=f4e291]: Rated 4.85 out of 5, 77 reviews
+                                  - note "Regenerative impact" [ref=f4e292]:
+                                    - generic [ref=f4e296]: Supports the Harlem Brownstone Conservancy
+                                  - paragraph [ref=f4e297]: $40 per person
+                            - listitem [ref=f4e298]:
+                              - link "Popular Hands rolling phyllo dough Cooking Greek Pastry Baking Class in Astoria Astoria, Queens 3 hours · Up to 8 people Rated 4.88 out of 5, 134 reviews Regenerative impact $68 per person" [ref=f4e299] [cursor=pointer]:
+                                - /url: /work/navi/demo/experience/astoria-greek-baking
+                                - generic [ref=f4e300]:
+                                  - generic [ref=f4e301]: Popular
+                                  - img "Hands rolling phyllo dough" [ref=f4e302]
+                                - generic [ref=f4e303]:
+                                  - generic [ref=f4e304]: Cooking
+                                  - heading "Greek Pastry Baking Class in Astoria" [level=2] [ref=f4e305]
+                                  - paragraph [ref=f4e306]: Astoria, Queens
+                                  - paragraph [ref=f4e307]: 3 hours · Up to 8 people
+                                  - generic [ref=f4e308]:
+                                    - generic [ref=f4e309]: "4.88"
+                                    - generic [ref=f4e310]: 134 reviews
+                                    - generic [ref=f4e311]: Rated 4.88 out of 5, 134 reviews
+                                  - note "Regenerative impact" [ref=f4e312]:
+                                    - generic [ref=f4e316]: Keeps an Astoria family bakery running
+                                  - paragraph [ref=f4e317]: $68 per person
+                            - listitem [ref=f4e318]:
+                              - link "Locally-owned Colorful bodega storefront in Mott Haven Educational South Bronx Bodega Heritage Tour Mott Haven, Bronx 2 hours · Up to 10 people Rated 4.72 out of 5, 66 reviews Regenerative impact $25 per person" [ref=f4e319] [cursor=pointer]:
+                                - /url: /work/navi/demo/experience/bronx-bodega-heritage-tour
+                                - generic [ref=f4e320]:
+                                  - generic [ref=f4e321]: Locally-owned
+                                  - img "Colorful bodega storefront in Mott Haven" [ref=f4e322]
+                                - generic [ref=f4e323]:
+                                  - generic [ref=f4e324]: Educational
+                                  - heading "South Bronx Bodega Heritage Tour" [level=2] [ref=f4e325]
+                                  - paragraph [ref=f4e326]: Mott Haven, Bronx
+                                  - paragraph [ref=f4e327]: 2 hours · Up to 10 people
+                                  - generic [ref=f4e328]:
+                                    - generic [ref=f4e329]: "4.72"
+                                    - generic [ref=f4e330]: 66 reviews
+                                    - generic [ref=f4e331]: Rated 4.72 out of 5, 66 reviews
+                                  - note "Regenerative impact" [ref=f4e332]:
+                                    - generic [ref=f4e336]: Connects visitors directly to bodega owners
+                                  - paragraph [ref=f4e337]: $25 per person
+                            - listitem [ref=f4e338]:
+                              - link "Locally-owned Raised vegetable beds in a fenced city garden Community engagement Community Garden Volunteer Afternoon Lower East Side, Manhattan 3 hours · Up to 15 people Rated 4.92 out of 5, 48 reviews Regenerative impact Free" [ref=f4e339] [cursor=pointer]:
+                                - /url: /work/navi/demo/experience/lower-east-side-community-garden
+                                - generic [ref=f4e340]:
+                                  - generic [ref=f4e341]: Locally-owned
+                                  - img "Raised vegetable beds in a fenced city garden" [ref=f4e342]
+                                - generic [ref=f4e343]:
+                                  - generic [ref=f4e344]: Community engagement
+                                  - heading "Community Garden Volunteer Afternoon" [level=2] [ref=f4e345]
+                                  - paragraph [ref=f4e346]: Lower East Side, Manhattan
+                                  - paragraph [ref=f4e347]: 3 hours · Up to 15 people
+                                  - generic [ref=f4e348]:
+                                    - generic [ref=f4e349]: "4.92"
+                                    - generic [ref=f4e350]: 48 reviews
+                                    - generic [ref=f4e351]: Rated 4.92 out of 5, 48 reviews
+                                  - note "Regenerative impact" [ref=f4e352]:
+                                    - generic [ref=f4e356]: Keeps a 40-year-old garden in neighborhood hands
+                                  - paragraph [ref=f4e357]: Free
+                            - listitem [ref=f4e358]:
+                              - link "Locally-owned Long table covered with homemade dishes Community engagement Queens Cultural Center Potluck Flushing, Queens 2 hours · Up to 40 people Rated 4.84 out of 5, 61 reviews Regenerative impact $8 per person" [ref=f4e359] [cursor=pointer]:
+                                - /url: /work/navi/demo/experience/flushing-cultural-center-potluck
+                                - generic [ref=f4e360]:
+                                  - generic [ref=f4e361]: Locally-owned
+                                  - img "Long table covered with homemade dishes" [ref=f4e362]
+                                - generic [ref=f4e363]:
+                                  - generic [ref=f4e364]: Community engagement
+                                  - heading "Queens Cultural Center Potluck" [level=2] [ref=f4e365]
+                                  - paragraph [ref=f4e366]: Flushing, Queens
+                                  - paragraph [ref=f4e367]: 2 hours · Up to 40 people
+                                  - generic [ref=f4e368]:
+                                    - generic [ref=f4e369]: "4.84"
+                                    - generic [ref=f4e370]: 61 reviews
+                                    - generic [ref=f4e371]: Rated 4.84 out of 5, 61 reviews
+                                  - note "Regenerative impact" [ref=f4e372]:
+                                    - generic [ref=f4e376]: Funds free programming at a neighborhood center
+                                  - paragraph [ref=f4e377]: $8 per person
+                          - button "Load 12 more experiences" [ref=f4e378] [cursor=pointer]
+                      - contentinfo [ref=f4e380]:
+                        - paragraph [ref=f4e382]: A working portfolio rebuild of a graduate-studio concept.
+                        - generic [ref=f4e383]:
+                          - navigation "Explore Navi" [ref=f4e384]:
+                            - heading "Explore Navi" [level=2] [ref=f4e385]
+                            - list [ref=f4e386]:
+                              - listitem [ref=f4e387]:
+                                - link "Experiences" [ref=f4e388] [cursor=pointer]:
+                                  - /url: /work/navi/demo
+                              - listitem [ref=f4e389]:
+                                - link "Where bookings go" [ref=f4e390] [cursor=pointer]:
+                                  - /url: /work/navi/demo/impact
+                              - listitem [ref=f4e391]:
+                                - link "Host an event" [ref=f4e392] [cursor=pointer]:
+                                  - /url: /work/navi/demo/host
+                              - listitem [ref=f4e393]:
+                                - link "Design system" [ref=f4e394] [cursor=pointer]:
+                                  - /url: /work/navi/system
+                          - navigation "Project" [ref=f4e395]:
+                            - heading "Project" [level=2] [ref=f4e396]
+                            - list [ref=f4e397]:
+                              - listitem [ref=f4e398]:
+                                - link "Read the case study" [ref=f4e399] [cursor=pointer]:
+                                  - /url: /work/navi
+              - link "Open full demo in a new tab" [ref=f3e357]:
+                - /url: /work/navi/demo
+                - text: Open full demo in a new tab
+                - generic [ref=f3e358]: ↗
+        - region [ref=f3e359]:
+          - paragraph [ref=f3e360]:
+            - generic [ref=f3e361]: Validate
+            - generic [ref=f3e362]: 5 of 5
+          - heading "What works now and what still needs testing" [level=2] [ref=f3e363]
+          - generic [ref=f3e368]:
+            - paragraph [ref=f3e370]: I can now inspect the component states and individual booking flow in a browser. I still need to test them with residents, travelers, and local hosts before treating those choices as settled.
+            - generic [ref=f3e371]:
+              - region [ref=f3e372]:
+                - heading "Working now" [level=3] [ref=f3e373]
+                - list [ref=f3e374]:
+                  - listitem [ref=f3e375]: Live component system and editable variants
+                  - listitem [ref=f3e376]: Neighborhood exploration and filters
+                  - listitem [ref=f3e377]: Working individual booking flow
+              - region [ref=f3e378]:
+                - heading "Next research" [level=3] [ref=f3e379]
+                - list [ref=f3e380]:
+                  - listitem [ref=f3e381]: Deeper Learn pages
+                  - listitem [ref=f3e382]: Local host and business onboarding
+                  - listitem [ref=f3e383]: Group booking remains a future opportunity and is not wired into this demo.
+            - generic "Explore the working Navi demo" [ref=f3e384]:
+              - link "Open the demo" [ref=f3e385]:
+                - /url: /work/navi/demo
+              - link "View the design system" [ref=f3e386]:
+                - /url: /work/navi/system
+        - region [ref=f3e387]:
+          - link "Next project UnderstandingFAFSA I turned an audit of 120 newsletter sends into a modular system a non-designer could run each week. Read case study" [ref=f3e388]:
+            - /url: /work/understandingfafsa
+            - generic [ref=f3e389]:
+              - generic [ref=f3e390]: Projects / Next project
+              - generic [ref=f3e392]: ↗
+            - generic [ref=f3e394]:
+              - generic [ref=f3e395]: Next project
+              - heading "UnderstandingFAFSA" [level=2] [ref=f3e396]
+              - generic [ref=f3e397]: I turned an audit of 120 newsletter sends into a modular system a non-designer could run each week.
+              - generic [ref=f3e398]:
+                - text: Read case study
+                - generic [ref=f3e399]: →
+          - link "View all work" [ref=f3e401]:
+            - /url: /#projects
+            - text: View all work
+            - generic [ref=f3e402]: →
+  - button "Open Next.js Dev Tools" [ref=f3e423] [cursor=pointer]:
+    - generic [ref=f3e426]:
+      - text: Compiling
+      - generic [ref=f3e427]:
+        - generic [ref=f3e428]: .
+        - generic [ref=f3e429]: .
+        - generic [ref=f3e430]: .
+  - alert [ref=f3e419]

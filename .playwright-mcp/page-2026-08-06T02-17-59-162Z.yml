@@ -1,0 +1,37 @@
+- generic [active] [ref=f2e1]:
+  - generic [ref=f2e2]:
+    - link "Skip to main content" [ref=f2e3]:
+      - /url: "#main-content"
+    - main [ref=f2e489]:
+      - region "Settings" [ref=f2e674]:
+        - generic [ref=f2e675]:
+          - button "Back" [ref=f2e676]:
+            - generic [ref=f2e677]: ←
+            - text: Back
+          - heading "Settings" [level=1] [ref=f2e678]
+        - generic [ref=f2e680]:
+          - group "Color scheme" [ref=f2e681]:
+            - generic [ref=f2e683]:
+              - radio "Light" [checked] [ref=f2e684]
+              - generic [ref=f2e685]: Light
+            - generic [ref=f2e686]:
+              - radio "Dark" [ref=f2e687]
+              - generic [ref=f2e688]: Dark
+          - group "Accessibility" [ref=f2e689]:
+            - generic [ref=f2e691]:
+              - checkbox "High contrast" [ref=f2e692]
+              - generic [ref=f2e693]: High contrast
+            - generic [ref=f2e694]:
+              - checkbox "Reduce motion" [ref=f2e695]
+              - generic [ref=f2e696]: Reduce motion
+          - group "Confirm reset desktop" [ref=f2e699]:
+            - paragraph [ref=f2e700]: This clears saved windows, display choices, and return positions.
+            - button "Confirm Reset Desktop" [ref=f2e701]
+            - button "Cancel" [ref=f2e702]
+      - navigation "Pocket 97 dock" [ref=f2e669]:
+        - button "Projects" [ref=f2e670]
+        - button "Loose Parts" [ref=f2e671]
+        - button "Currently Open" [ref=f2e672]
+        - button "Settings" [ref=f2e673]
+  - button "Open Next.js Dev Tools" [ref=f2e166] [cursor=pointer]
+  - alert [ref=f2e338]

@@ -1,0 +1,7 @@
+- generic [active] [ref=f6e1]:
+  - generic [ref=f6e2]:
+    - link "Skip to main content" [ref=f6e3] [cursor=pointer]:
+      - /url: "#main-content"
+    - main [ref=f6e4]:
+      - status [ref=f6e5]: Restoring Myles '98 workspace…
+  - button "Open Next.js Dev Tools" [ref=f6e11] [cursor=pointer]

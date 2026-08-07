@@ -1,0 +1,90 @@
+- generic [active] [ref=f2e1]:
+  - generic [ref=f2e2]:
+    - link "Skip to main content" [ref=f2e3]:
+      - /url: "#main-content"
+    - main [ref=f2e116]:
+      - generic "Myles 97 desktop" [ref=f2e117]:
+        - region "Welcome to Myles 97":
+          - region [ref=f2e118]:
+            - generic [ref=f2e119]:
+              - heading "Welcome" [level=2] [ref=f2e121]
+              - generic [ref=f2e122]:
+                - button "Minimize Welcome" [ref=f2e123]
+                - button "Close Welcome" [ref=f2e125]
+            - generic [ref=f2e128]:
+              - generic [ref=f2e129]:
+                - img "Portrait mark of Myles Ashitey with locs" [ref=f2e132]
+                - generic [ref=f2e133]:
+                  - paragraph [ref=f2e134]: Product designer and builder
+                  - heading "Myles Ashitey" [level=1] [ref=f2e135]
+                  - paragraph [ref=f2e136]: Design, code, whatever you need.
+                  - paragraph [ref=f2e137]: "Previously TikTok and UMG. Latest project: Fresh Greens."
+              - 'region "Now running: Fresh Greens" [ref=f2e138]':
+                - paragraph [ref=f2e139]: Now running
+                - img "Fresh Greens project cover" [ref=f2e141]
+                - generic [ref=f2e142]:
+                  - heading "Fresh Greens" [level=2] [ref=f2e143]
+                  - paragraph [ref=f2e144]: Route-planning software
+                  - paragraph [ref=f2e145]: "Evidence: Built"
+                - button "Selected Work" [ref=f2e146]
+            - generic "Welcome status" [ref=f2e147]: Myles 97 is ready
+        - region "Selected Work":
+          - region [ref=f2e148]:
+            - generic [ref=f2e149]:
+              - heading "Selected Work Explorer" [level=2] [ref=f2e151]
+              - generic [ref=f2e152]:
+                - button "Minimize Selected Work Explorer" [ref=f2e153]
+                - button "Close Selected Work Explorer" [ref=f2e155]
+            - list "Published case studies" [ref=f2e158]:
+              - listitem [ref=f2e159]:
+                - generic [ref=f2e160]:
+                  - heading "Fresh Greens.exe" [level=3] [ref=f2e161]
+                  - paragraph [ref=f2e162]: Route-planning software
+                  - paragraph [ref=f2e163]: "Evidence: Built"
+                  - link "Open Fresh Greens case study" [ref=f2e164]:
+                    - /url: /work/fresh-greens
+                    - text: Open case study
+              - listitem [ref=f2e165]:
+                - generic [ref=f2e166]:
+                  - heading "FAFSA Mail.app" [level=3] [ref=f2e167]
+                  - paragraph [ref=f2e168]: Modular mail composer
+                  - paragraph [ref=f2e169]: "Evidence: Observed"
+                  - link "Open UnderstandingFAFSA case study" [ref=f2e170]:
+                    - /url: /work/understandingfafsa
+                    - text: Open case study
+              - listitem [ref=f2e171]:
+                - generic [ref=f2e172]:
+                  - heading "Navi Places.exe" [level=3] [ref=f2e173]
+                  - paragraph [ref=f2e174]: Place-discovery application
+                  - paragraph [ref=f2e175]: "Evidence: Built"
+                  - link "Open Navi case study" [ref=f2e176]:
+                    - /url: /work/navi
+                    - text: Open case study
+              - listitem [ref=f2e177]:
+                - generic [ref=f2e178]:
+                  - heading "TikTok Catalog.studio" [level=3] [ref=f2e179]
+                  - paragraph [ref=f2e180]: Catalog-template studio
+                  - paragraph [ref=f2e181]: "Evidence: Shipped"
+                  - link "Open TikTok Dynamic Showcase Ads case study" [ref=f2e182]:
+                    - /url: /work/tiktok
+                    - text: Open case study
+            - generic "Selected Work Explorer status" [ref=f2e183]: 4 published programs
+        - navigation "Desktop programs" [ref=f2e184]:
+          - list [ref=f2e185]:
+            - listitem [ref=f2e186]:
+              - button "About Myles" [ref=f2e187]
+            - listitem [ref=f2e192]:
+              - button "Loose Parts" [ref=f2e193]
+            - listitem [ref=f2e200]:
+              - button "Résumé" [ref=f2e201]
+            - listitem [ref=f2e206]:
+              - link "E-mail" [ref=f2e207]:
+                - /url: mailto:mylesashitey@gmail.com
+      - toolbar "Taskbar" [ref=f2e213]:
+        - button "Start" [ref=f2e214]
+        - generic "Open programs" [ref=f2e215]:
+          - button "Welcome taskbar button" [ref=f2e216]: Welcome
+          - button "Selected Work taskbar button" [pressed] [ref=f2e217]: Selected Work
+        - time [ref=f2e218]: 1:50 AM
+  - button "Open Next.js Dev Tools" [ref=f2e112] [cursor=pointer]
+  - alert [ref=f2e219]

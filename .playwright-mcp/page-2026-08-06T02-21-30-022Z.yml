@@ -1,0 +1,34 @@
+- generic [ref=f8e1]:
+  - generic [ref=f8e2]:
+    - link "Skip to main content" [ref=f8e3]:
+      - /url: "#main-content"
+    - main [ref=f8e15]:
+      - region "Settings" [ref=f8e17]:
+        - generic [ref=f8e18]:
+          - button "Back" [ref=f8e19]:
+            - generic [ref=f8e20]: ←
+            - text: Back
+          - heading "Settings" [level=1] [ref=f8e21]
+        - generic [ref=f8e23]:
+          - group "Color scheme" [ref=f8e24]:
+            - generic [ref=f8e26]:
+              - radio "Light" [checked] [ref=f8e27]
+              - generic [ref=f8e28]: Light
+            - generic [ref=f8e29]:
+              - radio "Dark" [ref=f8e30]
+              - generic [ref=f8e31]: Dark
+          - group "Accessibility" [ref=f8e32]:
+            - generic [ref=f8e34]:
+              - checkbox "High contrast" [ref=f8e35]
+              - generic [ref=f8e36]: High contrast
+            - generic [ref=f8e37]:
+              - checkbox "Reduce motion" [active] [ref=f8e38]
+              - generic [ref=f8e39]: Reduce motion
+          - button "Reset Desktop" [ref=f8e41]
+      - navigation "Pocket 97 dock" [ref=f8e42]:
+        - button "Projects" [ref=f8e43]
+        - button "Loose Parts" [ref=f8e44]
+        - button "Currently Open" [ref=f8e45]
+        - button "Settings" [ref=f8e46]
+  - button "Open Next.js Dev Tools" [ref=f8e11] [cursor=pointer]
+  - alert [ref=f8e47]

@@ -1,0 +1,304 @@
+- generic [active] [ref=f2e1]:
+  - generic [ref=f2e2]:
+    - link "Skip to main content" [ref=f2e3]:
+      - /url: "#main-content"
+    - banner [ref=f2e4]:
+      - link "Return to Projects" [ref=f2e5]:
+        - /url: /#projects
+        - generic [ref=f2e6]: ←
+        - text: Return to Projects
+      - paragraph [ref=f2e7]: FAFSA Mail.app
+    - main [ref=f2e8]:
+      - region [ref=f2e9]:
+        - paragraph [ref=f2e10]: Product design · 2025–present
+        - heading "UnderstandingFAFSA" [level=1] [ref=f2e11]
+        - paragraph [ref=f2e12]: Built a modular newsletter system for a site rebrand. The first redesigned send had an observed ~52.6% open rate with Mailchimp Privacy Protection excluded.
+      - figure [ref=f2e13]:
+        - img "Two phone mockups showing blue and orange UnderstandingFAFSA newsletter templates." [ref=f2e14]
+      - region "At a glance" [ref=f2e15]:
+        - generic [ref=f2e16]:
+          - generic [ref=f2e17]:
+            - term [ref=f2e18]: Role
+            - definition [ref=f2e19]: Product Designer
+          - generic [ref=f2e20]:
+            - term [ref=f2e21]: Tools
+            - definition [ref=f2e22]: Figma, Mailchimp
+          - generic [ref=f2e23]:
+            - term [ref=f2e24]: Timeline
+            - definition [ref=f2e25]: February 2025 – Ongoing
+          - generic [ref=f2e26]:
+            - term [ref=f2e27]: Outcome
+            - definition [ref=f2e28]:
+              - generic [ref=f2e29]: ~52.6%
+              - text: observed open rate on the first redesigned send, with Mailchimp Privacy Protection excluded
+        - generic [ref=f2e30]:
+          - paragraph [ref=f2e31]: Interactive case-study explanation
+          - link "Build a sample send" [ref=f2e32]:
+            - /url: "#uf-locked"
+        - generic [ref=f2e33]:
+          - paragraph [ref=f2e34]: Key moves
+          - list [ref=f2e35]:
+            - listitem [ref=f2e36]: "→ Research: one collaborator and I compiled and evaluated more than 120 newsletters."
+            - listitem [ref=f2e37]: "→ System: I designed the modular rules and rebuilt the live template in Mailchimp."
+            - listitem [ref=f2e38]: "→ Workflow: the founder assembles each send from the kit without editing HTML."
+      - navigation "Case study chapters" [ref=f2e39]:
+        - generic [ref=f2e40]:
+          - list [ref=f2e41]:
+            - listitem [ref=f2e42]:
+              - 'link "Frame: A rebrand and a weekly workflow" [ref=f2e43]':
+                - /url: "#uf-context"
+                - generic [ref=f2e45]: "01."
+                - generic [ref=f2e46]:
+                  - generic [ref=f2e47]: Frame
+                  - generic [ref=f2e48]: ":"
+                  - generic [ref=f2e49]: A rebrand and a weekly workflow
+            - listitem [ref=f2e51]:
+              - 'link "Research: What 120 newsletters revealed" [ref=f2e52]':
+                - /url: "#uf-audit"
+                - generic [ref=f2e54]: "02."
+                - generic [ref=f2e55]:
+                  - generic [ref=f2e56]: Research
+                  - generic [ref=f2e57]: ":"
+                  - generic [ref=f2e58]: What 120 newsletters revealed
+            - listitem [ref=f2e60]:
+              - 'link "Define: Rules for fixed and swappable parts" [ref=f2e61]':
+                - /url: "#uf-locked"
+                - generic [ref=f2e63]: "03."
+                - generic [ref=f2e64]:
+                  - generic [ref=f2e65]: Define
+                  - generic [ref=f2e66]: ":"
+                  - generic [ref=f2e67]: Rules for fixed and swappable parts
+            - listitem [ref=f2e69]:
+              - 'link "Build: Rebuilding the system in Mailchimp" [ref=f2e70]':
+                - /url: "#uf-figma"
+                - generic [ref=f2e72]: "04."
+                - generic [ref=f2e73]:
+                  - generic [ref=f2e74]: Build
+                  - generic [ref=f2e75]: ":"
+                  - generic [ref=f2e76]: Rebuilding the system in Mailchimp
+            - listitem [ref=f2e78]:
+              - 'link "Measure: The first redesigned send" [ref=f2e79]':
+                - /url: "#uf-results"
+                - generic [ref=f2e81]: "05."
+                - generic [ref=f2e82]:
+                  - generic [ref=f2e83]: Measure
+                  - generic [ref=f2e84]: ":"
+                  - generic [ref=f2e85]: The first redesigned send
+          - generic [ref=f2e355]: ›
+          - generic [ref=f2e356]: 7% · 4 min left
+        - paragraph [ref=f2e87]: Arrow keys move between chapters. Home and End jump to the ends.
+      - status [ref=f2e88]
+      - button "Back to top" [ref=f2e358]
+      - region [ref=f2e89]:
+        - paragraph [ref=f2e90]:
+          - generic [ref=f2e91]: Frame
+          - generic [ref=f2e92]: 1 of 5
+        - heading "A rebrand and a weekly workflow" [level=2] [ref=f2e93]
+        - paragraph [ref=f2e100]: UnderstandingFAFSA helps students, parents, and counselors navigate the Free Application for Federal Student Aid (FAFSA). The newsletter carries guidance for all three groups. The website had already adopted Saans and a refreshed palette. The scope was email-only, and the founder assembles every issue.
+        - region [ref=f2e101]:
+          - heading "Where the old template broke down" [level=3] [ref=f2e102]
+          - paragraph [ref=f2e104]: "The newsletter covers deadline-driven guidance at key checkpoints: FAFSA filing windows, scholarship deadlines, and policy changes. The old template had uneven CTAs, long stretches of text, weak section breaks, and a layout that wasn't optimized for mobile. Its muted palette also came from the site's previous visual system."
+          - generic "Newsletter mobile layouts and reported open rates" [ref=f2e105]:
+            - figure "Prior sends · around 30% open rate" [ref=f2e106]:
+              - region "Prior sends · around 30% open rate. Scrollable full newsletter." [ref=f2e110]:
+                - img "Old newsletter template on mobile before the redesign, full scroll." [ref=f2e111]
+              - paragraph [ref=f2e113]: Scroll inside the frame to read the full send.
+              - link "Open original prior newsletter capture" [ref=f2e114]:
+                - /url: /projects/understandingfafsa/mobile-before.jpg
+                - text: Open original capture
+                - generic [ref=f2e115]: ↗
+            - figure "First redesigned send · ~52.6% open rate (MPP excluded)" [ref=f2e116]:
+              - region "First redesigned send · ~52.6% open rate (MPP excluded). Scrollable full newsletter." [ref=f2e120]:
+                - img "Redesigned newsletter on mobile with updated hierarchy and brand system, full scroll." [ref=f2e121]
+              - paragraph [ref=f2e123]: Scroll inside the frame to read the full send.
+              - link "Open original redesigned newsletter capture" [ref=f2e124]:
+                - /url: /projects/understandingfafsa/mobile-after.jpeg
+                - text: Open original capture
+                - generic [ref=f2e125]: ↗
+            - paragraph [ref=f2e126]: Reported open rates are shown for context. This was not a controlled attribution test.
+      - region [ref=f2e127]:
+        - paragraph [ref=f2e128]:
+          - generic [ref=f2e129]: Research
+          - generic [ref=f2e130]: 2 of 5
+        - heading "What 120 newsletters revealed" [level=2] [ref=f2e131]
+        - generic [ref=f2e137]:
+          - paragraph [ref=f2e138]: One collaborator and I worked together to compile and evaluate more than 120 newsletter examples. We compared clarity, personalization, tone of voice, visual appeal, and branding consistency.
+          - paragraph [ref=f2e139]: We looked most closely at Revenews, The 74, Next by Jeff Selingo, Medium, and Folderly as references for scanning, hierarchy, tone, and brand structure.
+          - list "Audit findings and system rules" [ref=f2e140]:
+            - listitem [ref=f2e141]:
+              - paragraph [ref=f2e142]:
+                - strong [ref=f2e143]: "Finding:"
+                - text: Long sends needed stronger scanning cues.
+              - paragraph [ref=f2e144]:
+                - strong [ref=f2e145]: "System rule:"
+                - text: Action-focused section titles, selective emphasis, and clearer breaks.
+            - listitem [ref=f2e146]:
+              - paragraph [ref=f2e147]:
+                - strong [ref=f2e148]: "Finding:"
+                - text: Weekly content changed while the brand structure should not.
+              - paragraph [ref=f2e149]:
+                - strong [ref=f2e150]: "System rule:"
+                - text: Locked spacing, type, dividers, and section order with swappable copy and imagery.
+            - listitem [ref=f2e151]:
+              - paragraph [ref=f2e152]:
+                - strong [ref=f2e153]: "Finding:"
+                - text: The founder assembled every issue.
+              - paragraph [ref=f2e154]:
+                - strong [ref=f2e155]: "System rule:"
+                - text: A Mailchimp-native kit that can be edited without touching HTML.
+            - listitem [ref=f2e156]:
+              - paragraph [ref=f2e157]:
+                - strong [ref=f2e158]: "Finding:"
+                - text: Gmail clips large HTML emails.
+              - paragraph [ref=f2e159]:
+                - strong [ref=f2e160]: "System rule:"
+                - text: Flatter hierarchy, fewer wrappers and blocks, and selective native components.
+            - listitem [ref=f2e161]:
+              - paragraph [ref=f2e162]:
+                - strong [ref=f2e163]: "Finding:"
+                - text: Different send purposes need different density.
+              - paragraph [ref=f2e164]:
+                - strong [ref=f2e165]: "System rule:"
+                - text: Welcome, weekly, and short event templates built from the same rules.
+      - region [ref=f2e166]:
+        - paragraph [ref=f2e167]:
+          - generic [ref=f2e168]: Define
+          - generic [ref=f2e169]: 3 of 5
+        - heading "Rules for fixed and swappable parts" [level=2] [ref=f2e170]
+        - region [ref=f2e175]:
+          - heading "Three send types from the audit" [level=3] [ref=f2e176]
+          - generic [ref=f2e177]:
+            - paragraph [ref=f2e178]: "The audit led to three templates: a welcome email, the weekly newsletter, and a shorter version for event invites and recaps. A counselor toolkit is still in progress."
+            - paragraph [ref=f2e179]: "The welcome email sets expectations in a fixed order: a banner, a thank-you, what to expect, a short history and current mission, a CTA, suggested reading, and social links. It also introduces the updated type and palette."
+          - generic "Newsletter template variants" [ref=f2e180]:
+            - group "Choose template variant" [ref=f2e181]:
+              - button "Weekly" [pressed] [ref=f2e182]
+              - button "Event" [ref=f2e183]
+            - region "Scrollable Weekly newsletter template" [ref=f2e184]:
+              - img "Full weekly newsletter. Modular kit with emoji section headers and color theme variants." [ref=f2e185]
+            - paragraph [ref=f2e186]: Default send. Full modular kit assembled each week.
+            - paragraph [ref=f2e187]: "Scroll inside the frame to read the full send. Two of the three template types are shown here: weekly and event."
+            - link "Open original Weekly capture" [ref=f2e188]:
+              - /url: /projects/understandingfafsa/template-weekly.jpeg
+              - text: Open original capture
+              - generic [ref=f2e189]: ↗
+          - button "Try the system" [ref=f2e191]
+        - generic [ref=f2e192]:
+          - paragraph [ref=f2e194]: I designed the modular rules around a fixed section order, spacing, type, and dividers. The founder can swap weekly copy and imagery without changing that structure.
+          - generic "Locked structure and swappable content, shown together" [ref=f2e195]:
+            - group "Annotation focus" [ref=f2e196]:
+              - button "Both" [pressed] [ref=f2e197]
+              - button "Swappable" [ref=f2e198]
+              - button "Locked" [ref=f2e199]
+            - paragraph [ref=f2e200]: Pick a layer to isolate it. The other dims back.
+            - generic [ref=f2e201]: "Showing both layers: swappable content and the locked frame."
+            - generic [ref=f2e202]:
+              - 'button "Expand image: Students block with the locked structural frame and swappable content regions marked together." [ref=f2e203]':
+                - img "Students block with the locked structural frame and swappable content regions marked together." [ref=f2e204]
+              - img:
+                - generic: Locked
+                - generic: Swappable
+            - group "Recolor the swappable regions" [ref=f2e205]:
+              - paragraph [ref=f2e206]: Try a swap. The palette re-tints the region markers.
+              - list [ref=f2e207]:
+                - listitem [ref=f2e208]:
+                  - button "Use Signal orange (#f26938) as the swappable accent" [pressed] [ref=f2e209]:
+                    - generic [ref=f2e211]: Signal orange
+                - listitem [ref=f2e212]:
+                  - button "Use Magenta (#be5abf) as the swappable accent" [ref=f2e213]:
+                    - generic [ref=f2e215]: Magenta
+                - listitem [ref=f2e216]:
+                  - button "Use Sky (#2788c1) as the swappable accent" [ref=f2e217]:
+                    - generic [ref=f2e219]: Sky
+                - listitem [ref=f2e220]:
+                  - button "Use Meadow (#2fac38) as the swappable accent" [ref=f2e221]:
+                    - generic [ref=f2e223]: Meadow
+                - listitem [ref=f2e224]:
+                  - button "Use Sunbeam (#f2b544) as the swappable accent" [ref=f2e225]:
+                    - generic [ref=f2e227]: Sunbeam
+                - listitem [ref=f2e228]:
+                  - button "Use Deep navy (#164f73) as the swappable accent" [ref=f2e229]:
+                    - generic [ref=f2e231]: Deep navy
+            - list [ref=f2e232]:
+              - listitem [ref=f2e233]:
+                - generic [ref=f2e235]:
+                  - strong [ref=f2e236]: Swappable
+                  - text: ": editors change each send (headlines, body copy, emoji icons, article links)."
+              - listitem [ref=f2e237]:
+                - generic [ref=f2e239]:
+                  - strong [ref=f2e240]: Locked
+                  - text: ": structure holds every send (wave dividers, padding rails, section rhythm, footer skeleton)."
+          - generic [ref=f2e241]:
+            - 'button "Copy color #be5abf" [ref=f2e242]':
+              - generic [ref=f2e244]: "#be5abf"
+            - 'button "Copy color #164f73" [ref=f2e245]':
+              - generic [ref=f2e247]: "#164f73"
+            - 'button "Copy color #82c5fb" [ref=f2e248]':
+              - generic [ref=f2e250]: "#82c5fb"
+            - 'button "Copy color #f2b544" [ref=f2e251]':
+              - generic [ref=f2e253]: "#f2b544"
+            - 'button "Copy color #f26938" [ref=f2e254]':
+              - generic [ref=f2e256]: "#f26938"
+            - 'button "Copy color #2fac38" [ref=f2e257]':
+              - generic [ref=f2e259]: "#2fac38"
+            - 'button "Copy color #6d2161" [ref=f2e260]':
+              - generic [ref=f2e262]: "#6d2161"
+            - 'button "Copy color #2788c1" [ref=f2e263]':
+              - generic [ref=f2e265]: "#2788c1"
+            - 'button "Copy color #48d1c7" [ref=f2e266]':
+              - generic [ref=f2e268]: "#48d1c7"
+            - 'button "Copy color #004aad" [ref=f2e269]':
+              - generic [ref=f2e271]: "#004aad"
+            - 'button "Copy color #e572e4" [ref=f2e272]':
+              - generic [ref=f2e274]: "#e572e4"
+            - 'button "Copy color #7100bf" [ref=f2e275]':
+              - generic [ref=f2e277]: "#7100bf"
+            - status [ref=f2e278]
+      - region [ref=f2e279]:
+        - paragraph [ref=f2e280]:
+          - generic [ref=f2e281]: Build
+          - generic [ref=f2e282]: 4 of 5
+        - heading "Rebuilding the system in Mailchimp" [level=2] [ref=f2e283]
+        - generic [ref=f2e288]:
+          - generic [ref=f2e289]:
+            - paragraph [ref=f2e290]: I rebuilt the live system in Mailchimp so the founder could edit it without touching HTML. Matching the Figma spacing in the builder added too many containers and wrappers. Test sends showed which wrappers and dividers could go.
+            - paragraph [ref=f2e291]:
+              - mark [ref=f2e292]: Gmail's 102 KB HTML clipping threshold set a rigid constraint.
+              - text: To reduce the HTML Gmail measures, I flattened the hierarchy, removed wrappers and blocks that didn't need to ship, and used Mailchimp-native structure where it replaced custom markup.
+            - paragraph [ref=f2e293]: I handled the image files separately. Compressing the PNGs through an external tool lowered their download weight. It didn't reduce the HTML source Gmail measures. For dark-mode-friendly dividers, I removed backgrounds in Photoshop so they wouldn't look muddy on phones.
+            - paragraph [ref=f2e294]: The weekly kit used fewer custom assets and more Mailchimp-native structure. The counselor toolkit needed more image work and tighter file discipline for its duotone icons. I kept the closest Mailchimp sans to Saans and the full brand palette. Those choices kept the email close to the site and reflected the founder's preference for vibrant color.
+          - generic [ref=f2e295]:
+            - 'figure "Figma: students block (design source)" [ref=f2e296]':
+              - 'button "Expand image: Figma: students block with layout guides, spacing rails, and type hierarchy." [ref=f2e297]':
+                - 'img "Figma: students block with layout guides, spacing rails, and type hierarchy." [ref=f2e298]'
+            - 'figure "Mailchimp: students block (shipped module)" [ref=f2e300]':
+              - 'button "Expand image: Mailchimp: same students block after translation into editable modules." [ref=f2e301]':
+                - 'img "Mailchimp: same students block after translation into editable modules." [ref=f2e302]'
+      - region [ref=f2e304]:
+        - paragraph [ref=f2e305]:
+          - generic [ref=f2e306]: Measure
+          - generic [ref=f2e307]: 5 of 5
+        - heading "The first redesigned send" [level=2] [ref=f2e308]
+        - generic [ref=f2e314]:
+          - paragraph [ref=f2e315]: I shipped a master template, modular blocks, locked-versus-swappable rules, and three template variants.
+          - paragraph [ref=f2e316]: The founder now assembles each send from the Mailchimp-native kit without editing HTML.
+          - paragraph [ref=f2e317]: The first redesigned send went out November 4, 2025. Mailchimp reported an observed ~52.6% open rate with MPP excluded, while earlier sends were around 30%. That result is supporting context, not a controlled attribution test. I don't claim the redesign caused the change.
+      - region [ref=f2e318]:
+        - link "Next project TikTok Dynamic Showcase Ads At TikTok, I worked within a fixed catalog structure to build visual templates for fashion brands. Read case study" [ref=f2e319]:
+          - /url: /work/tiktok
+          - generic [ref=f2e320]:
+            - generic [ref=f2e321]: Projects / Next project
+            - generic [ref=f2e323]: ↗
+          - generic [ref=f2e325]:
+            - generic [ref=f2e326]: Next project
+            - heading "TikTok Dynamic Showcase Ads" [level=2] [ref=f2e327]
+            - generic [ref=f2e328]: At TikTok, I worked within a fixed catalog structure to build visual templates for fashion brands.
+            - generic [ref=f2e329]:
+              - text: Read case study
+              - generic [ref=f2e330]: →
+        - link "View all work" [ref=f2e344]:
+          - /url: /#projects
+          - text: View all work
+          - generic [ref=f2e345]: →
+  - button "Open Next.js Dev Tools" [ref=f2e351] [cursor=pointer]
+  - alert [ref=f2e357]

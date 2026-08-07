@@ -1,0 +1,128 @@
+- generic [ref=f2e1]:
+  - generic [ref=f2e2]:
+    - link "Skip to main content" [ref=f2e3]:
+      - /url: "#main-content"
+    - main [ref=f2e170]:
+      - generic "Myles '98 desktop" [ref=f2e171]:
+        - navigation "Desktop project objects" [ref=f2e172]:
+          - list [ref=f2e173]:
+            - listitem [ref=f2e174]:
+              - link "Fresh Greens.exe" [ref=f2e175]:
+                - /url: /work/fresh-greens
+                - generic [ref=f2e189]: Fresh Greens
+                - generic [ref=f2e190]: ▶
+            - listitem [ref=f2e191]:
+              - link "FAFSA Mail.app" [ref=f2e192]:
+                - /url: /work/understandingfafsa
+                - generic [ref=f2e206]: Understanding FAFSA
+            - listitem [ref=f2e207]:
+              - link "Navi Places.exe" [ref=f2e208]:
+                - /url: /work/navi
+                - generic [ref=f2e219]: Navi
+            - listitem [ref=f2e220]:
+              - link "TikTok Catalog.studio" [ref=f2e221]:
+                - /url: /work/tiktok
+                - generic [ref=f2e238]: TikTok
+        - 'complementary "Quick Look: Fresh Greens" [ref=f2e239]':
+          - heading "Fresh Greens" [level=2] [ref=f2e254]
+          - generic [ref=f2e255]:
+            - generic [ref=f2e256]:
+              - term [ref=f2e257]: Type
+              - definition [ref=f2e258]: Route-planning application
+            - generic [ref=f2e259]:
+              - term [ref=f2e260]: Contribution
+              - definition [ref=f2e261]: Solo product design and engineering
+            - generic [ref=f2e262]:
+              - term [ref=f2e263]: Proof
+              - definition [ref=f2e264]: Working React Native prototype across 26+ screens.
+          - img "Fresh Greens route preview shown in a phone mockup." [ref=f2e266]
+          - link "Open case study" [ref=f2e267]:
+            - /url: /work/fresh-greens
+        - region "Welcome to Myles '98":
+          - region [ref=f2e268]:
+            - generic [ref=f2e269]:
+              - heading "Welcome" [level=2] [ref=f2e271]
+              - generic [ref=f2e272]:
+                - button "Minimize Welcome" [ref=f2e273]
+                - button "Maximize Welcome" [ref=f2e276]
+                - button "Close Welcome" [ref=f2e279]
+            - generic [ref=f2e283]:
+              - generic [ref=f2e284]:
+                - img "Portrait mark of Myles Ashitey with locs" [ref=f2e285]
+                - generic [ref=f2e286]:
+                  - paragraph [ref=f2e287]: Product designer and builder
+                  - heading "Myles Ashitey" [level=1] [ref=f2e288]
+              - paragraph [ref=f2e289]: Design, code, whatever you need.
+              - paragraph [ref=f2e290]: Single-click a project on the desktop, or launch Projects to see everything in one place.
+              - button "Launch “Projects”" [ref=f2e291]
+              - paragraph [ref=f2e292]: 4 projects ready · Résumé and contact stay one click away
+            - generic "Welcome status" [ref=f2e293]: Myles '98 is ready
+        - region [ref=f2e339]:
+          - generic [ref=f2e340]:
+            - heading "Fresh Greens.exe" [level=2] [ref=f2e342]
+            - generic [ref=f2e343]:
+              - button "Minimize Fresh Greens.exe" [ref=f2e344]
+              - button "Restore Fresh Greens.exe" [ref=f2e374]
+              - button "Close Fresh Greens.exe" [ref=f2e350]
+          - article [ref=f2e354]:
+            - generic [ref=f2e355]:
+              - generic [ref=f2e356]:
+                - heading "Fresh Greens" [level=3] [ref=f2e357]
+                - paragraph [ref=f2e358]: A working wayfinding prototype for Black drivers that brings community safety reports into route scoring alongside public map data.
+              - generic [ref=f2e359]:
+                - generic [ref=f2e360]:
+                  - term [ref=f2e361]: Type
+                  - definition [ref=f2e362]: Route-planning application
+                - generic [ref=f2e363]:
+                  - term [ref=f2e364]: Contribution
+                  - definition [ref=f2e365]: Solo product design and engineering
+                - generic [ref=f2e366]:
+                  - term [ref=f2e367]: Proof
+                  - definition [ref=f2e368]: Working React Native prototype across 26+ screens.
+              - link "Open case study" [ref=f2e369]:
+                - /url: /work/fresh-greens
+            - img "Fresh Greens project preview" [ref=f2e371]
+          - generic "Fresh Greens.exe status" [ref=f2e372]: "Evidence: built"
+        - region [ref=f2e375]:
+          - generic [ref=f2e376]:
+            - heading "Documents" [level=2] [ref=f2e378]
+            - generic [ref=f2e379]:
+              - button "Minimize Documents" [ref=f2e380]
+              - button "Maximize Documents" [ref=f2e383]
+              - button "Close Documents" [ref=f2e386]
+          - list "Documents items" [ref=f2e392]:
+            - listitem [ref=f2e393]:
+              - link "About" [ref=f2e394]:
+                - /url: /about
+            - listitem [ref=f2e399]:
+              - link "Résumé" [ref=f2e400]:
+                - /url: /resume
+            - listitem [ref=f2e405]:
+              - link "Loose Parts" [ref=f2e406]:
+                - /url: /play
+          - generic "Documents status" [ref=f2e413]: 3 documents
+      - menu "Start menu" [ref=f2e415]:
+        - menuitem "Projects" [active] [ref=f2e416]:
+          - generic [ref=f2e421]: ▶
+        - menuitem "Documents" [ref=f2e422]:
+          - generic [ref=f2e427]: ▶
+        - menuitem "Settings" [ref=f2e428]:
+          - generic [ref=f2e434]: ▶
+        - menuitem "My Computer" [ref=f2e435]
+      - toolbar "Taskbar" [ref=f2e294]:
+        - button "Start" [expanded] [ref=f2e295]
+        - group "Fixed shortcuts" [ref=f2e329]:
+          - button "Projects fixed shortcut" [ref=f2e330]: Projects
+          - button "Documents fixed shortcut" [pressed] [ref=f2e331]: Documents
+          - button "Résumé fixed shortcut" [ref=f2e332]: Résumé
+          - link "Contact fixed shortcut" [ref=f2e333]:
+            - /url: mailto:mylesashitey@gmail.com
+            - text: Contact
+        - separator [ref=f2e334]
+        - group "Currently open windows" [ref=f2e335]:
+          - button "Welcome taskbar button" [ref=f2e336]: Welcome
+          - button "Fresh Greens.exe taskbar button" [ref=f2e373]: Fresh Greens.exe
+          - button "Documents taskbar button" [pressed] [ref=f2e414]: Documents
+        - time [ref=f2e337]: 10:15 PM
+  - button "Open Next.js Dev Tools" [ref=f2e166] [cursor=pointer]
+  - alert [ref=f2e338]

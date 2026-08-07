@@ -1,0 +1,107 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - link "Skip to main content" [ref=e3]:
+      - /url: "#main-content"
+    - main [ref=e4]:
+      - generic "Myles '98 desktop" [ref=e5]:
+        - navigation "Desktop project objects" [ref=e6]:
+          - list [ref=e7]:
+            - listitem [ref=e8]:
+              - link "Fresh Greens.exe" [ref=e9]:
+                - /url: /work/fresh-greens
+                - generic [ref=e23]: Fresh Greens
+                - generic [ref=e24]: ▶
+            - listitem [ref=e25]:
+              - link "FAFSA Mail.app" [ref=e26]:
+                - /url: /work/understandingfafsa
+                - generic [ref=e40]: Understanding FAFSA
+            - listitem [ref=e41]:
+              - link "Navi Places.exe" [ref=e42]:
+                - /url: /work/navi
+                - generic [ref=e53]: Navi
+            - listitem [ref=e54]:
+              - link "TikTok Catalog.studio" [ref=e55]:
+                - /url: /work/tiktok
+                - generic [ref=e72]: TikTok
+        - 'complementary "Quick Look: Fresh Greens" [ref=e73]':
+          - heading "Fresh Greens" [level=2] [ref=e88]
+          - generic [ref=e89]:
+            - generic [ref=e90]:
+              - term [ref=e91]: Type
+              - definition [ref=e92]: Route-planning application
+            - generic [ref=e93]:
+              - term [ref=e94]: Contribution
+              - definition [ref=e95]: Solo product design and engineering
+            - generic [ref=e96]:
+              - term [ref=e97]: Proof
+              - definition [ref=e98]: Working React Native prototype across 26+ screens.
+          - img "Fresh Greens route preview shown in a phone mockup." [ref=e100]
+          - link "Open case study" [ref=e101]:
+            - /url: /work/fresh-greens
+        - region "Welcome to Myles '98":
+          - region [ref=e102]:
+            - generic [ref=e103]:
+              - heading "Welcome" [level=2] [ref=e105]
+              - generic [ref=e106]:
+                - button "Minimize Welcome" [ref=e107]
+                - button "Maximize Welcome" [ref=e110]
+                - button "Close Welcome" [ref=e113]
+            - generic [ref=e117]:
+              - generic [ref=e118]:
+                - img "Portrait mark of Myles Ashitey with locs" [ref=e119]
+                - generic [ref=e120]:
+                  - paragraph [ref=e121]: Product designer and builder
+                  - heading "Myles Ashitey" [level=1] [ref=e122]
+              - paragraph [ref=e123]: Design, code, whatever you need.
+              - paragraph [ref=e124]: Single-click a project on the desktop, or launch Projects to see everything in one place.
+              - button "Launch “Projects”" [ref=e125]
+              - paragraph [ref=e126]: 4 projects ready · Résumé and contact are just a tap away.
+            - generic "Welcome status" [ref=e127]: Myles '98 is ready
+        - region [ref=e128]:
+          - generic [ref=e129]:
+            - heading "Projects" [level=2] [ref=e131]
+            - generic [ref=e132]:
+              - button "Minimize Projects" [ref=e133]
+              - button "Maximize Projects" [ref=e136]
+              - button "Close Projects" [ref=e139]
+          - generic [ref=e143]:
+            - list "Projects items" [ref=e145]:
+              - listitem [ref=e146]:
+                - link "Fresh Greens" [ref=e147]:
+                  - /url: /work/fresh-greens
+              - listitem [ref=e158]:
+                - link "Understanding FAFSA" [ref=e159]:
+                  - /url: /work/understandingfafsa
+              - listitem [ref=e174]:
+                - link "Navi" [ref=e175]:
+                  - /url: /work/navi
+              - listitem [ref=e186]:
+                - link "TikTok" [ref=e187]:
+                  - /url: /work/tiktok
+            - region "Fresh Greens preview" [ref=e200]:
+              - img "Fresh Greens route preview shown in a phone mockup." [ref=e202]
+              - generic [ref=e203]:
+                - heading "Fresh Greens.exe" [level=3] [ref=e204]
+                - paragraph [ref=e205]: Route-planning application
+                - paragraph [ref=e206]: Solo product design and engineering
+                - paragraph [ref=e207]: Working React Native prototype across 26+ screens.
+                - link "Open Fresh Greens case study" [ref=e208]:
+                  - /url: /work/fresh-greens
+                  - text: Open case study
+          - generic "Projects status" [ref=e209]: 4 projects
+      - toolbar "Taskbar" [ref=e210]:
+        - button "Start" [ref=e211]
+        - group "Fixed shortcuts" [ref=e213]:
+          - button "Projects fixed shortcut" [pressed] [ref=e214]: Projects
+          - button "Documents fixed shortcut" [ref=e215]: Documents
+          - button "Résumé fixed shortcut" [ref=e216]: Résumé
+          - link "Contact fixed shortcut" [ref=e217]:
+            - /url: mailto:mylesashitey@gmail.com
+            - text: Contact
+        - separator [ref=e218]
+        - group "Currently open windows" [ref=e219]:
+          - button "Welcome taskbar button" [ref=e220]: Welcome
+          - button "Projects taskbar button" [pressed] [ref=e221]: Projects
+        - time [ref=e222]: 9:57 AM
+  - button "Open Next.js Dev Tools" [ref=e298] [cursor=pointer]
+  - alert [ref=e302]

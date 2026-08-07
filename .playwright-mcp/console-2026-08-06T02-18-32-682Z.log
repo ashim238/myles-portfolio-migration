@@ -1,0 +1,9 @@
+[      60ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:27
+[     603ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:27
+[     630ms] [LOG] [HMR] connected @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:27
+[     670ms] [LOG] %cHey, you're inspecting. I like that. font-size:14px;font-weight:600;color:#8ab4ff; @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:27
+[     670ms] [LOG] %cThis portfolio is built with Next.js, React 19, and Tailwind v4.
+The motion layer uses CSS scroll-driven animations and anime.js.
+If you want to talk about how any of it works: ashim238@newschool.edu font-size:12px;color:#c4c4c4; @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/next-devtools/shared/forward-logs-shared.js:27
+[    3651ms] [WARNING] The resource http://localhost:56317/_next/static/media/26d0ba92e140f0dc-s.p.woff2?v=1785982712905 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:56317/resume:0
+[    3651ms] [WARNING] The resource http://localhost:56317/_next/static/media/7d4881bb7e1bf84d-s.p.woff2?v=1785982712905 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:56317/resume:0

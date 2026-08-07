@@ -1,0 +1,58 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e2]:
+    - link "Skip to main content" [ref=f3e3] [cursor=pointer]:
+      - /url: "#main-content"
+    - generic [ref=f3e4]:
+      - banner [ref=f3e5]:
+        - generic [ref=f3e6]: about_myles.rtf - MylesWrite
+        - link "Close document and return to Desktop" [ref=f3e7] [cursor=pointer]:
+          - /url: /#documents
+      - button "Document commands" [ref=f3e22]
+      - toolbar "Document toolbar" [ref=f3e23]:
+        - link "Projects" [ref=f3e24] [cursor=pointer]:
+          - /url: /#projects
+      - main "About Myles" [ref=f3e34]:
+        - article [ref=f3e35]:
+          - region [ref=f3e36]:
+            - generic [ref=f3e37]:
+              - paragraph [ref=f3e38]: About
+              - heading "Myles Ashitey" [level=1] [ref=f3e39]
+              - generic [ref=f3e40]:
+                - paragraph [ref=f3e41]: I came to product design through creative strategy at TikTok and Universal Music Group. I learned how brands talk to people, then realized I wanted to build rather than just shape. That led me to an MFA in Design and Technology at Parsons, which I completed in 2026.
+                - paragraph [ref=f3e42]: My thesis became Fresh Greens, a React Native wayfinding prototype for Black drivers. For UnderstandingFAFSA, I built reusable newsletter templates. The first redesigned send had an observed 52.6% open rate with Mailchimp Privacy Protection excluded. At TikTok, I designed three catalog templates. One entered the launch library and was later selected by American Eagle.
+                - paragraph [ref=f3e43]: Outside of work, I'm a huge comic fan. The work Daniel Mora's been doing on World's Finest is “chef's kiss.” I've also been trying to hike more, as much as the city and my allergies allow. If you want to talk product design, RPGs, or a bit of both, my email is below.
+              - generic [ref=f3e44]:
+                - link "See the work" [ref=f3e45] [cursor=pointer]:
+                  - /url: /#projects
+                  - text: See the work
+                  - generic [ref=f3e46]: →
+                - link "Read the résumé" [ref=f3e47] [cursor=pointer]:
+                  - /url: /resume
+                  - text: Read the résumé
+                  - generic [ref=f3e48]: →
+                - link "Get in touch" [ref=f3e49] [cursor=pointer]:
+                  - /url: mailto:mylesashitey@gmail.com
+                  - text: Get in touch
+                  - generic [ref=f3e50]: ↗
+            - region [ref=f3e51]:
+              - heading "Quick details" [level=2] [ref=f3e52]
+              - generic [ref=f3e53]:
+                - generic [ref=f3e54]:
+                  - term [ref=f3e55]: Based in
+                  - definition [ref=f3e56]: Brooklyn, NY
+                - generic [ref=f3e57]:
+                  - term [ref=f3e58]: Education
+                  - definition [ref=f3e59]: MFA · Design and Technology, Parsons · 2026
+                - generic [ref=f3e60]:
+                  - term [ref=f3e61]: Tools
+                  - definition [ref=f3e62]: Figma · Adobe Suite · React Native · TypeScript
+                - generic [ref=f3e63]:
+                  - term [ref=f3e64]: Contact
+                  - definition [ref=f3e65]:
+                    - link "mylesashitey@gmail.com" [ref=f3e66] [cursor=pointer]:
+                      - /url: mailto:mylesashitey@gmail.com
+      - contentinfo "Document status" [ref=f3e67]:
+        - generic [ref=f3e68]: Read only
+        - generic [ref=f3e69]: Rich Text Format
+        - generic [ref=f3e70]: Default text
+  - button "Open Next.js Dev Tools" [ref=f3e76] [cursor=pointer]

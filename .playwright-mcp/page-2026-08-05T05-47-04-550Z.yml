@@ -1,0 +1,63 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - link "Skip to main content" [ref=e3]:
+      - /url: "#main-content"
+    - main [ref=e152]:
+      - region "Pocket 97 home" [ref=e154]:
+        - generic [ref=e155]:
+          - generic [ref=e156]:
+            - img "Portrait mark of Myles Ashitey with locs" [ref=e159]
+            - generic [ref=e160]:
+              - paragraph [ref=e161]: Product designer and builder
+              - heading "Myles Ashitey" [level=1] [ref=e162]
+              - paragraph [ref=e163]: Design, code, whatever you need.
+              - paragraph [ref=e164]: "Previously TikTok and UMG. Latest project: Fresh Greens."
+          - 'region "Now running: Fresh Greens" [ref=e165]':
+            - paragraph [ref=e166]: Now running
+            - img "Fresh Greens project cover" [ref=e168]
+            - generic [ref=e169]:
+              - heading "Fresh Greens" [level=2] [ref=e170]
+              - paragraph [ref=e171]: Route-planning software
+              - paragraph [ref=e172]: "Evidence: Built"
+            - button "Selected Work" [ref=e173]
+        - region "Selected Work" [ref=e174]:
+          - list "Published case studies" [ref=e175]:
+            - listitem [ref=e176]:
+              - generic [ref=e177]:
+                - heading "Fresh Greens.exe" [level=3] [ref=e178]
+                - paragraph [ref=e179]: Route-planning software
+                - paragraph [ref=e180]: "Evidence: Built"
+                - link "Open Fresh Greens case study" [ref=e181]:
+                  - /url: /work/fresh-greens
+                  - text: Open case study
+            - listitem [ref=e182]:
+              - generic [ref=e183]:
+                - heading "FAFSA Mail.app" [level=3] [ref=e184]
+                - paragraph [ref=e185]: Modular mail composer
+                - paragraph [ref=e186]: "Evidence: Observed"
+                - link "Open UnderstandingFAFSA case study" [ref=e187]:
+                  - /url: /work/understandingfafsa
+                  - text: Open case study
+            - listitem [ref=e188]:
+              - generic [ref=e189]:
+                - heading "Navi Places.exe" [level=3] [ref=e190]
+                - paragraph [ref=e191]: Place-discovery application
+                - paragraph [ref=e192]: "Evidence: Built"
+                - link "Open Navi case study" [ref=e193]:
+                  - /url: /work/navi
+                  - text: Open case study
+            - listitem [ref=e194]:
+              - generic [ref=e195]:
+                - heading "TikTok Catalog.studio" [level=3] [ref=e196]
+                - paragraph [ref=e197]: Catalog-template studio
+                - paragraph [ref=e198]: "Evidence: Shipped"
+                - link "Open TikTok Dynamic Showcase Ads case study" [ref=e199]:
+                  - /url: /work/tiktok
+                  - text: Open case study
+      - navigation "Pocket 97 dock" [ref=e200]:
+        - button "Start" [ref=e201]
+        - button "Work" [ref=e202]
+        - button "Loose Parts" [ref=e203]
+        - button "Open Apps" [ref=e204]
+  - button "Open Next.js Dev Tools" [ref=e112] [cursor=pointer]
+  - alert [ref=e116]

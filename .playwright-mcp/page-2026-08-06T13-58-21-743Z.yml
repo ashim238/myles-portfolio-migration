@@ -1,0 +1,134 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - link "Skip to main content" [ref=e3]:
+      - /url: "#main-content"
+    - main [ref=e4]:
+      - generic "Myles '98 desktop" [ref=e5]:
+        - navigation "Desktop project objects" [ref=e6]:
+          - list [ref=e7]:
+            - listitem [ref=e8]:
+              - link "Fresh Greens.exe" [ref=e9]:
+                - /url: /work/fresh-greens
+                - generic [ref=e23]: Fresh Greens
+            - listitem [ref=e25]:
+              - link "FAFSA Mail.app" [ref=e26]:
+                - /url: /work/understandingfafsa
+                - generic [ref=e40]: Understanding FAFSA
+            - listitem [ref=e41]:
+              - link "Navi Places.exe" [ref=e42]:
+                - /url: /work/navi
+                - generic [ref=e53]: Navi
+            - listitem [ref=e54]:
+              - link "TikTok Catalog.studio" [ref=e55]:
+                - /url: /work/tiktok
+                - generic [ref=e72]: TikTok
+                - generic [ref=e303]: ▶
+        - 'complementary "Quick Look: TikTok" [ref=e304]':
+          - heading "TikTok" [level=2] [ref=e314]
+          - generic [ref=e89]:
+            - generic [ref=e90]:
+              - term [ref=e91]: Type
+              - definition [ref=e92]: Catalog-template system
+            - generic [ref=e93]:
+              - term [ref=e94]: Contribution
+              - definition [ref=e95]: Creative strategy and product design
+            - generic [ref=e96]:
+              - term [ref=e97]: Proof
+              - definition [ref=e98]: Shipped template later selected by American Eagle.
+          - img "Dopamine Dressing catalog template shown in a phone mockup." [ref=e319]
+          - link "Open case study" [ref=e101]:
+            - /url: /work/tiktok
+        - region "Welcome to Myles '98":
+          - region [ref=e102]:
+            - generic [ref=e103]:
+              - heading "Welcome" [level=2] [ref=e105]
+              - generic [ref=e106]:
+                - button "Minimize Welcome" [ref=e107]
+                - button "Maximize Welcome" [ref=e110]
+                - button "Close Welcome" [ref=e113]
+            - generic [ref=e117]:
+              - generic [ref=e118]:
+                - img "Portrait mark of Myles Ashitey with locs" [ref=e119]
+                - generic [ref=e120]:
+                  - paragraph [ref=e121]: Product designer and builder
+                  - heading "Myles Ashitey" [level=1] [ref=e122]
+              - paragraph [ref=e123]: Design, code, whatever you need.
+              - paragraph [ref=e124]: Single-click a project on the desktop, or launch Projects to see everything in one place.
+              - button "Launch “Projects”" [ref=e125]
+              - paragraph [ref=e126]: 4 projects ready · Résumé and contact are just a tap away.
+            - generic "Welcome status" [ref=e127]: Myles '98 is ready
+        - region [ref=e128]:
+          - generic [ref=e129]:
+            - heading "Projects" [level=2] [ref=e131]
+            - generic [ref=e132]:
+              - button "Minimize Projects" [ref=e133]
+              - button "Maximize Projects" [ref=e136]
+              - button "Close Projects" [ref=e139]
+          - generic [ref=e143]:
+            - list "Projects items" [ref=e145]:
+              - listitem [ref=e146]:
+                - link "Fresh Greens" [ref=e147]:
+                  - /url: /work/fresh-greens
+              - listitem [ref=e158]:
+                - link "Understanding FAFSA" [ref=e159]:
+                  - /url: /work/understandingfafsa
+              - listitem [ref=e174]:
+                - link "Navi" [ref=e175]:
+                  - /url: /work/navi
+              - listitem [ref=e186]:
+                - link "TikTok" [ref=e187]:
+                  - /url: /work/tiktok
+            - region "TikTok preview" [ref=e321]:
+              - img "Dopamine Dressing catalog template shown in a phone mockup." [ref=e326]
+              - generic [ref=e203]:
+                - heading "TikTok Catalog.studio" [level=3] [ref=e328]
+                - paragraph [ref=e205]: Catalog-template system
+                - paragraph [ref=e206]: Creative strategy and product design
+                - paragraph [ref=e207]: Shipped template later selected by American Eagle.
+                - link "Open TikTok case study" [ref=e329]:
+                  - /url: /work/tiktok
+                  - text: Open case study
+          - generic "Projects status" [ref=e209]: 4 projects
+        - region [active] [ref=e330]:
+          - generic [ref=e331]:
+            - heading "TikTok Catalog.studio" [level=2] [ref=e333]
+            - generic [ref=e334]:
+              - button "Minimize TikTok Catalog.studio" [ref=e335]
+              - button "Maximize TikTok Catalog.studio" [ref=e338]
+              - button "Close TikTok Catalog.studio" [ref=e341]
+          - article [ref=e345]:
+            - generic [ref=e346]:
+              - generic [ref=e347]:
+                - heading "TikTok Dynamic Showcase Ads" [level=3] [ref=e348]
+                - paragraph [ref=e349]: Static catalog templates for TikTok's Dynamic Showcase Ads. Light Academia shipped in the launch library, and I later learned through Global Creative Lab that American Eagle selected it.
+              - generic [ref=e350]:
+                - generic [ref=e351]:
+                  - term [ref=e352]: Type
+                  - definition [ref=e353]: Catalog-template system
+                - generic [ref=e354]:
+                  - term [ref=e355]: Contribution
+                  - definition [ref=e356]: Creative strategy and product design
+                - generic [ref=e357]:
+                  - term [ref=e358]: Proof
+                  - definition [ref=e359]: Shipped template later selected by American Eagle.
+              - link "Open case study" [ref=e360]:
+                - /url: /work/tiktok
+            - img "Dopamine Dressing catalog template shown in a phone mockup." [ref=e366]
+          - generic "TikTok Catalog.studio status" [ref=e368]: "Evidence: shipped"
+      - toolbar "Taskbar" [ref=e210]:
+        - button "Start" [ref=e211]
+        - group "Fixed shortcuts" [ref=e213]:
+          - button "Projects fixed shortcut" [ref=e214]: Projects
+          - button "Documents fixed shortcut" [ref=e215]: Documents
+          - button "Résumé fixed shortcut" [ref=e216]: Résumé
+          - link "Contact fixed shortcut" [ref=e217]:
+            - /url: mailto:mylesashitey@gmail.com
+            - text: Contact
+        - separator [ref=e218]
+        - group "Currently open windows" [ref=e219]:
+          - button "Welcome taskbar button" [ref=e220]: Welcome
+          - button "Projects taskbar button" [ref=e221]: Projects
+          - button "TikTok Catalog.studio taskbar button" [pressed] [ref=e369]: TikTok Catalog.studio
+        - time [ref=e222]: 9:58 AM
+  - button "Open Next.js Dev Tools" [ref=e298] [cursor=pointer]
+  - alert [ref=e302]

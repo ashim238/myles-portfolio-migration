@@ -1,0 +1,68 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - link "Prime Radiant Superpowers v6.2.0" [ref=f1e4] [cursor=pointer]:
+      - /url: https://github.com/obra/superpowers
+      - img "Prime Radiant" [ref=f1e5]
+      - generic [ref=f1e6]: Superpowers v6.2.0
+    - generic [ref=f1e7]: Connected
+  - generic [ref=f1e9]:
+    - heading "Entry state, rebuilt around the work" [level=2] [ref=f1e10]
+    - generic [ref=f1e11]: Full desktop context · 1025px and wider
+    - paragraph [ref=f1e12]: The desktop starts with one compact Welcome window. Hover or focus the project objects to compare role, medium, and proof before opening anything.
+    - generic "Myles '98 portfolio desktop mockup" [ref=f1e13]:
+      - generic [ref=f1e14]: Myles '98 Desktop
+      - generic "Project applications" [ref=f1e15]:
+        - button "Fresh Greens" [pressed] [ref=f1e16]
+        - button "Understanding FAFSA" [ref=f1e20]
+        - button "Navi" [ref=f1e24]
+        - button "TikTok DSA" [ref=f1e28]
+      - complementary "Project Quick Look" [ref=f1e32]:
+        - generic [ref=f1e33]:
+          - img "Fresh Greens project cover" [ref=f1e35]
+          - generic [ref=f1e36]:
+            - heading "Fresh Greens" [level=3] [ref=f1e37]
+            - paragraph [ref=f1e38]: Route-planning application
+            - paragraph [ref=f1e39]: Solo product design and engineering
+            - paragraph [ref=f1e40]: Working React Native prototype across 26+ screens.
+        - generic [ref=f1e41]: Single-click to open project preview
+      - region "Welcome window" [ref=f1e42]:
+        - generic [ref=f1e43]:
+          - generic [ref=f1e44]: Welcome to Myles '98
+          - generic [ref=f1e45]:
+            - generic [ref=f1e46]: _
+            - generic [ref=f1e47]: □
+            - generic [ref=f1e48]: ×
+        - generic [ref=f1e50]:
+          - paragraph [ref=f1e51]: Product designer and builder
+          - generic [ref=f1e52]:
+            - img "Portrait mark of Myles Ashitey with locs" [ref=f1e54]
+            - heading "Myles Ashitey" [level=1] [ref=f1e55]
+          - paragraph [ref=f1e56]: Design, code, whatever you need.
+          - paragraph [ref=f1e57]: Single-click a project on the desktop, or launch Projects to see everything in one place.
+          - button "Launch “Projects”" [ref=f1e58]
+        - generic [ref=f1e61]: 4 projects ready · Résumé and contact stay one click away
+      - generic "Desktop taskbar" [ref=f1e62]:
+        - button "M Start" [ref=f1e63]:
+          - generic [ref=f1e64]: M
+          - text: Start
+        - generic "Fixed shortcuts" [ref=f1e65]:
+          - generic "My Computer" [ref=f1e66]: PC
+          - generic "Projects" [ref=f1e67]: P
+          - generic "Documents" [ref=f1e68]: D
+          - generic "Résumé" [ref=f1e69]: R
+          - generic "E-mail" [ref=f1e70]: "@"
+        - button "Welcome to Myles '98" [ref=f1e71]
+        - generic [ref=f1e72]: 10:37 AM
+    - generic [ref=f1e73]:
+      - generic [ref=f1e74]:
+        - strong [ref=f1e75]: Identity is immediate
+        - text: Name, role, point of view, and portrait arrive in one compact window.
+      - generic [ref=f1e76]:
+        - strong [ref=f1e77]: Work is visible
+        - text: All four projects are on the desktop before the visitor learns Start or Explorer.
+      - generic [ref=f1e78]:
+        - strong [ref=f1e79]: Evidence precedes commitment
+        - text: Quick Look exposes medium, contribution, and a concrete proof line on hover or focus.
+      - generic [ref=f1e80]:
+        - strong [ref=f1e81]: The OS stays useful
+        - text: Taskbar shortcuts keep Projects, Documents, résumé, and contact easy to recover.

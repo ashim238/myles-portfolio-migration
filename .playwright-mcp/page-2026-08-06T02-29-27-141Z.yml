@@ -1,0 +1,163 @@
+- generic [ref=f9e1]:
+  - generic [ref=f9e2]:
+    - link "Skip to main content" [ref=f9e3]:
+      - /url: "#main-content"
+    - main [ref=f9e15]:
+      - generic "Myles '98 desktop" [ref=f9e16]:
+        - navigation "Desktop project objects" [ref=f9e17]:
+          - list [ref=f9e18]:
+            - listitem [ref=f9e19]:
+              - link "Fresh Greens.exe" [ref=f9e20]:
+                - /url: /work/fresh-greens
+                - generic [ref=f9e34]: Fresh Greens
+            - listitem [ref=f9e36]:
+              - link "FAFSA Mail.app" [ref=f9e37]:
+                - /url: /work/understandingfafsa
+                - generic [ref=f9e51]: Understanding FAFSA
+            - listitem [ref=f9e52]:
+              - link "Navi Places.exe" [ref=f9e53]:
+                - /url: /work/navi
+                - generic [ref=f9e64]: Navi
+            - listitem [ref=f9e65]:
+              - link "TikTok Catalog.studio" [ref=f9e66]:
+                - /url: /work/tiktok
+                - generic [ref=f9e83]: TikTok
+                - generic [ref=f9e303]: ▶
+        - 'complementary "Quick Look: TikTok" [ref=f9e304]':
+          - heading "TikTok" [level=2] [ref=f9e314]
+          - generic [ref=f9e100]:
+            - generic [ref=f9e101]:
+              - term [ref=f9e102]: Type
+              - definition [ref=f9e103]: Catalog-template system
+            - generic [ref=f9e104]:
+              - term [ref=f9e105]: Contribution
+              - definition [ref=f9e106]: Creative strategy and product design
+            - generic [ref=f9e107]:
+              - term [ref=f9e108]: Proof
+              - definition [ref=f9e109]: Shipped template later selected by American Eagle.
+          - img "Dopamine Dressing catalog template shown in a phone mockup." [ref=f9e316]
+          - link "Open case study" [ref=f9e112]:
+            - /url: /work/tiktok
+        - region "Welcome to Myles '98":
+          - region [ref=f9e113]:
+            - generic [ref=f9e114]:
+              - heading "Welcome" [level=2] [ref=f9e116]
+              - generic [ref=f9e117]:
+                - button "Minimize Welcome" [ref=f9e118]
+                - button "Maximize Welcome" [ref=f9e121]
+                - button "Close Welcome" [ref=f9e124]
+            - generic [ref=f9e128]:
+              - generic [ref=f9e129]:
+                - img "Portrait mark of Myles Ashitey with locs" [ref=f9e130]
+                - generic [ref=f9e131]:
+                  - paragraph [ref=f9e132]: Product designer and builder
+                  - heading "Myles Ashitey" [level=1] [ref=f9e133]
+              - paragraph [ref=f9e134]: Design, code, whatever you need.
+              - paragraph [ref=f9e135]: Single-click a project on the desktop, or launch Projects to see everything in one place.
+              - button "Launch “Projects”" [ref=f9e136]
+              - paragraph [ref=f9e137]: 4 projects ready · Résumé and contact stay one click away
+            - generic "Welcome status" [ref=f9e138]: Myles '98 is ready
+        - region [ref=f9e139]:
+          - generic [ref=f9e140]:
+            - heading "Fresh Greens.exe" [level=2] [ref=f9e142]
+            - generic [ref=f9e143]:
+              - button "Minimize Fresh Greens.exe" [ref=f9e144]
+              - button "Maximize Fresh Greens.exe" [ref=f9e302]
+              - button "Close Fresh Greens.exe" [ref=f9e150]
+          - article [ref=f9e154]:
+            - generic [ref=f9e155]:
+              - generic [ref=f9e156]:
+                - heading "Fresh Greens" [level=3] [ref=f9e157]
+                - paragraph [ref=f9e158]: A working wayfinding prototype for Black drivers that brings community safety reports into route scoring alongside public map data.
+              - generic [ref=f9e159]:
+                - generic [ref=f9e160]:
+                  - term [ref=f9e161]: Type
+                  - definition [ref=f9e162]: Route-planning application
+                - generic [ref=f9e163]:
+                  - term [ref=f9e164]: Contribution
+                  - definition [ref=f9e165]: Solo product design and engineering
+                - generic [ref=f9e166]:
+                  - term [ref=f9e167]: Proof
+                  - definition [ref=f9e168]: Working React Native prototype across 26+ screens.
+              - link "Open case study" [ref=f9e169]:
+                - /url: /work/fresh-greens
+            - img "Fresh Greens project preview" [ref=f9e171]
+          - generic "Fresh Greens.exe status" [ref=f9e172]: "Evidence: built"
+        - region [ref=f9e173]:
+          - generic [ref=f9e174]:
+            - heading "Documents" [level=2] [ref=f9e176]
+            - generic [ref=f9e177]:
+              - button "Minimize Documents" [ref=f9e178]
+              - button "Maximize Documents" [ref=f9e181]
+              - button "Close Documents" [ref=f9e184]
+          - list "Documents items" [ref=f9e190]:
+            - listitem [ref=f9e191]:
+              - link "About" [ref=f9e192]:
+                - /url: /about
+            - listitem [ref=f9e197]:
+              - link "Résumé" [ref=f9e198]:
+                - /url: /resume
+            - listitem [ref=f9e203]:
+              - link "Loose Parts" [ref=f9e204]:
+                - /url: /play
+          - generic "Documents status" [ref=f9e211]: 3 documents
+        - region [ref=f9e212]:
+          - generic [ref=f9e213]:
+            - heading "Settings" [level=2] [ref=f9e215]
+            - generic [ref=f9e216]:
+              - button "Minimize Settings" [ref=f9e217]
+              - button "Maximize Settings" [ref=f9e220]
+              - button "Close Settings" [ref=f9e223]
+          - list "Settings items" [ref=f9e231]:
+            - listitem [ref=f9e232]:
+              - button "Accessibility" [pressed] [ref=f9e233]
+            - listitem [ref=f9e239]:
+              - button "Display" [ref=f9e240]
+            - listitem [ref=f9e246]:
+              - button "Reset Desktop" [ref=f9e247]
+          - generic "Settings status" [ref=f9e253]: Ready
+        - region [active] [ref=f9e317]:
+          - generic [ref=f9e318]:
+            - heading "TikTok Catalog.studio" [level=2] [ref=f9e320]
+            - generic [ref=f9e321]:
+              - button "Minimize TikTok Catalog.studio" [ref=f9e322]
+              - button "Maximize TikTok Catalog.studio" [ref=f9e325]
+              - button "Close TikTok Catalog.studio" [ref=f9e328]
+          - article [ref=f9e332]:
+            - generic [ref=f9e333]:
+              - generic [ref=f9e334]:
+                - heading "TikTok Dynamic Showcase Ads" [level=3] [ref=f9e335]
+                - paragraph [ref=f9e336]: Static catalog templates for TikTok's Dynamic Showcase Ads. Light Academia shipped in the launch library, and I later learned through Global Creative Lab that American Eagle selected it.
+              - generic [ref=f9e337]:
+                - generic [ref=f9e338]:
+                  - term [ref=f9e339]: Type
+                  - definition [ref=f9e340]: Catalog-template system
+                - generic [ref=f9e341]:
+                  - term [ref=f9e342]: Contribution
+                  - definition [ref=f9e343]: Creative strategy and product design
+                - generic [ref=f9e344]:
+                  - term [ref=f9e345]: Proof
+                  - definition [ref=f9e346]: Shipped template later selected by American Eagle.
+              - link "Open case study" [ref=f9e347]:
+                - /url: /work/tiktok
+            - img "TikTok Dynamic Showcase Ads project preview" [ref=f9e349]
+          - generic "TikTok Catalog.studio status" [ref=f9e350]: "Evidence: shipped"
+      - toolbar "Taskbar" [ref=f9e254]:
+        - button "Start" [ref=f9e255]
+        - group "Fixed shortcuts" [ref=f9e289]:
+          - button "Projects fixed shortcut" [ref=f9e290]: Projects
+          - button "Documents fixed shortcut" [ref=f9e291]: Documents
+          - button "Résumé fixed shortcut" [ref=f9e292]: Résumé
+          - link "Contact fixed shortcut" [ref=f9e293]:
+            - /url: mailto:mylesashitey@gmail.com
+            - text: Contact
+        - separator [ref=f9e294]
+        - group "Currently open windows" [ref=f9e295]:
+          - button "Welcome taskbar button" [ref=f9e296]: Welcome
+          - button "Fresh Greens.exe taskbar button" [ref=f9e297]: Fresh Greens.exe
+          - button "Documents taskbar button" [ref=f9e298]: Documents
+          - button "Settings taskbar button" [ref=f9e299]: Settings
+          - button "TikTok Catalog.studio taskbar button" [pressed] [ref=f9e351]: TikTok Catalog.studio
+        - time [ref=f9e300]: 10:29 PM
+  - button "Open Next.js Dev Tools" [ref=f9e11] [cursor=pointer]
+  - alert [ref=f9e301]
