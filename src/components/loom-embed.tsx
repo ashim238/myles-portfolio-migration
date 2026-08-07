@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { getThemeSnapshot, subscribeTheme, type Theme } from "@/lib/myles-97/theme";
 import styles from "./loom-embed.module.css";
 
 type LoomEmbedProps = {
@@ -8,55 +9,18 @@ type LoomEmbedProps = {
   title: string;
 };
 
-type LoomTheme = "light" | "dark";
-
-function isLoomTheme(value: unknown): value is LoomTheme {
-  return value === "light" || value === "dark";
-}
-
-function getStoredTheme(): LoomTheme | undefined {
-  try {
-    const storedTheme = localStorage.getItem("theme");
-    if (isLoomTheme(storedTheme)) {
-      return storedTheme;
-    }
-  } catch {
-    // Storage can be unavailable in privacy-restricted browsing contexts.
-  }
-
-  return undefined;
-}
-
-function getActiveTheme(): LoomTheme {
-  const storedTheme = getStoredTheme();
-  if (storedTheme) {
-    return storedTheme;
-  }
-
-  const documentTheme = document.documentElement.dataset.theme;
-  if (isLoomTheme(documentTheme)) {
-    return documentTheme;
-  }
-
-  return window.matchMedia("(prefers-color-scheme: light)").matches
-    ? "light"
-    : "dark";
-}
-
 export function LoomEmbed({ src, title }: LoomEmbedProps) {
   const frameRef = useRef<HTMLIFrameElement>(null);
   const [frameHeight, setFrameHeight] = useState(320);
 
-  const sendTheme = useCallback(() => {
+  const sendTheme = useCallback((theme: Theme = getThemeSnapshot()) => {
     frameRef.current?.contentWindow?.postMessage(
-      { type: "loom:theme", theme: getActiveTheme() },
+      { type: "loom:theme", theme },
       window.location.origin,
     );
   }, []);
 
   useEffect(() => {
-    const systemTheme = window.matchMedia("(prefers-color-scheme: light)");
-
     const handleMessage = (event: MessageEvent<unknown>) => {
       if (
         event.origin !== window.location.origin ||
@@ -81,23 +45,12 @@ export function LoomEmbed({ src, title }: LoomEmbedProps) {
     };
 
     window.addEventListener("message", handleMessage);
-    window.addEventListener("theme-change", sendTheme);
-    window.addEventListener("storage", sendTheme);
-    const handleSystemTheme = (event: MediaQueryListEvent) => {
-      const theme = getStoredTheme() ?? (event.matches ? "light" : "dark");
-      frameRef.current?.contentWindow?.postMessage(
-        { type: "loom:theme", theme },
-        window.location.origin,
-      );
-    };
-    systemTheme.addEventListener("change", handleSystemTheme);
+    const unsubscribeTheme = subscribeTheme(sendTheme);
     sendTheme();
 
     return () => {
       window.removeEventListener("message", handleMessage);
-      window.removeEventListener("theme-change", sendTheme);
-      window.removeEventListener("storage", sendTheme);
-      systemTheme.removeEventListener("change", handleSystemTheme);
+      unsubscribeTheme();
     };
   }, [sendTheme]);
 
@@ -112,7 +65,7 @@ export function LoomEmbed({ src, title }: LoomEmbedProps) {
           loading="lazy"
           scrolling="no"
           style={{ height: `${frameHeight}px` }}
-          onLoad={sendTheme}
+          onLoad={() => sendTheme()}
         />
       </div>
       <p className={styles.fallback}>

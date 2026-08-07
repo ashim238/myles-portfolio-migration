@@ -1,53 +1,27 @@
 "use client";
 
 import { useEffect, useSyncExternalStore } from "react";
-
-type Theme = "dark" | "light";
-const THEME_CHANGE_EVENT = "theme-change";
-
-function isTheme(value: string | null): value is Theme {
-  return value === "dark" || value === "light";
-}
-
-function getThemeSnapshot(): Theme {
-  const storedTheme = localStorage.getItem("theme");
-  if (isTheme(storedTheme)) return storedTheme;
-  return window.matchMedia("(prefers-color-scheme: light)").matches
-    ? "light"
-    : "dark";
-}
-
-function getThemeServerSnapshot(): Theme {
-  return "dark";
-}
-
-function subscribeTheme(callback: () => void) {
-  const query = window.matchMedia("(prefers-color-scheme: light)");
-  query.addEventListener("change", callback);
-  window.addEventListener("storage", callback);
-  window.addEventListener(THEME_CHANGE_EVENT, callback);
-  return () => {
-    query.removeEventListener("change", callback);
-    window.removeEventListener("storage", callback);
-    window.removeEventListener(THEME_CHANGE_EVENT, callback);
-  };
-}
+import {
+  applyThemeToDocument,
+  getThemeServerSnapshot,
+  getThemeSnapshot,
+  setTheme,
+  subscribeTheme,
+} from "@/lib/myles-97/theme";
 
 export function ThemeToggle() {
   const theme = useSyncExternalStore(
-    subscribeTheme,
+    (notify) => subscribeTheme(() => notify()),
     getThemeSnapshot,
     getThemeServerSnapshot,
   );
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
+    applyThemeToDocument(theme);
   }, [theme]);
 
   function toggle() {
-    const next = theme === "dark" ? "light" : "dark";
-    localStorage.setItem("theme", next);
-    window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
+    setTheme(theme === "dark" ? "light" : "dark");
   }
 
   return (

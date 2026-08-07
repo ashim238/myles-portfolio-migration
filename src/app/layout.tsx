@@ -62,7 +62,7 @@ export default function RootLayout({
           id="theme-init"
           suppressHydrationWarning
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem("theme");var v=t==="dark"||t==="light"?t:matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";document.documentElement.setAttribute("data-theme",v)}catch(e){}})()`,
+            __html: `(function(){try{var k="theme";var t=localStorage.getItem(k);var v=t==="dark"||t==="light"?t:matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";document.documentElement.setAttribute("data-theme",v)}catch(e){}})()`,
           }}
         />
       </head>

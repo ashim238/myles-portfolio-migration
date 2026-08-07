@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useRef, useState, type Dispatch } from "react";
+import { DisplayProperties } from "@/components/myles-97/display-properties";
 import { Myles97Icon } from "@/components/myles-97/icons";
 import { ProgramWindow } from "@/components/myles-97/program-window";
 import { SelectedWorkExplorer } from "@/components/myles-97/selected-work-explorer";
@@ -15,7 +16,6 @@ import type {
   ProjectProgramId,
 } from "@/lib/myles-97/programs";
 import type {
-  DisplayPreferences,
   WindowGeometry,
   WorkstationAction,
   WorkstationState,
@@ -30,7 +30,7 @@ export type WorkstationDesktopProps = {
 const defaultGeometry: Partial<Record<ProgramId, WindowGeometry>> = {
   "selected-work": { x: 88, y: 112, width: 760, height: 536 },
   welcome: { x: 416, y: 64, width: 600, height: 352 },
-  "display-properties": { x: 504, y: 168, width: 448, height: 384 },
+  "display-properties": { x: 504, y: 168, width: 448, height: 456 },
 };
 
 const evidenceLabels = {
@@ -85,79 +85,12 @@ function ProjectProgramPreview({ program }: { program: ProgramDefinition }) {
   );
 }
 
-function DisplayPropertiesPreview({
-  preferences,
-  resetRequested,
-  onChange,
-  onRequestReset,
-  onConfirmReset,
-  onCancelReset,
-}: {
-  preferences: DisplayPreferences;
-  resetRequested: boolean;
-  onChange: (preferences: DisplayPreferences) => void;
-  onRequestReset: () => void;
-  onConfirmReset: () => void;
-  onCancelReset: () => void;
-}) {
-  return (
-    <div className="myles97-display-preview">
-      <p>
-        Myles 97 currently uses the workstation palette. High-contrast and
-        motion preferences can be adjusted independently.
-      </p>
-      <fieldset>
-        <legend>Display accessibility</legend>
-        <label>
-          <input
-            type="checkbox"
-            checked={preferences.highContrast}
-            onChange={(event) =>
-              onChange({ ...preferences, highContrast: event.currentTarget.checked })
-            }
-          />
-          High contrast
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            checked={preferences.reduceMotion}
-            onChange={(event) =>
-              onChange({ ...preferences, reduceMotion: event.currentTarget.checked })
-            }
-          />
-          Reduce motion
-        </label>
-      </fieldset>
-
-      {resetRequested ? (
-        <div className="myles97-reset-confirmation" role="alert">
-          <p>Reset open programs, positions, and display preferences?</p>
-          <div>
-            <button type="button" onClick={onConfirmReset}>
-              Confirm reset
-            </button>
-            <button type="button" onClick={onCancelReset}>
-              Cancel
-            </button>
-          </div>
-        </div>
-      ) : (
-        <button type="button" onClick={onRequestReset}>
-          Reset desktop…
-        </button>
-      )}
-    </div>
-  );
-}
-
 export function WorkstationDesktop({
   programs,
   state,
   dispatch,
 }: WorkstationDesktopProps) {
   const [startOpen, setStartOpen] = useState(false);
-  const [resetRequested, setResetRequested] = useState(false);
   const startButtonRef = useRef<HTMLButtonElement>(null);
   const minimized = new Set(state.minimizedPrograms);
   const projectById = new Map(programs.map((program) => [program.id, program]));
@@ -170,10 +103,6 @@ export function WorkstationDesktop({
     setStartOpen(false);
     startButtonRef.current?.focus();
   }, []);
-  const requestReset = useCallback(() => {
-    setResetRequested(true);
-    dispatch({ type: "open", id: "display-properties" });
-  }, [dispatch]);
 
   const commonWindowProps = (id: ProgramId, stackIndex: number) => ({
     id,
@@ -245,16 +174,10 @@ export function WorkstationDesktop({
         if (id === "display-properties") {
           return (
             <ProgramWindow key={id} {...props} title="Display Properties">
-              <DisplayPropertiesPreview
+              <DisplayProperties
                 preferences={state.displayPreferences}
-                resetRequested={resetRequested}
                 onChange={(preferences) => dispatch({ type: "display", preferences })}
-                onRequestReset={() => setResetRequested(true)}
-                onConfirmReset={() => {
-                  setResetRequested(false);
-                  dispatch({ type: "reset" });
-                }}
-                onCancelReset={() => setResetRequested(false)}
+                onReset={() => dispatch({ type: "reset" })}
               />
             </ProgramWindow>
           );
@@ -279,7 +202,7 @@ export function WorkstationDesktop({
         open={startOpen}
         onClose={closeStart}
         onOpenProgram={openProgram}
-        onRequestReset={requestReset}
+        onRequestReset={() => openProgram("display-properties")}
       />
       <Taskbar
         programs={programs}
