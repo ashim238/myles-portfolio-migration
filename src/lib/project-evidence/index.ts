@@ -9,6 +9,7 @@ export {
   NAVI_DEMO_EVIDENCE_SURFACE,
   NAVI_RESEARCH_EVIDENCE_SURFACE,
   orientationSurfaceData,
+  TIKTOK_DIRECTION_EVIDENCE_SURFACE,
 } from "@/lib/project-evidence/surfaces";
 
 export type {
