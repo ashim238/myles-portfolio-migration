@@ -1,3 +1,4 @@
+import { createElement } from "react";
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Metadata } from "next";
@@ -159,7 +160,7 @@ describe("public route metadata", () => {
   });
 
   it("gives unknown routes real Myles 98 recovery actions", () => {
-    render(<NotFound />);
+    render(createElement(NotFound));
 
     expect(screen.getByRole("heading", { level: 1, name: "Page not found" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Return to Desktop" })).toHaveAttribute(
