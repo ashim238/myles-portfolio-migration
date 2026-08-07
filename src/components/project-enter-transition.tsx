@@ -516,9 +516,16 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
         : pathname === "/";
     if (!reachedDestination) return;
 
-    setOverlay((current) =>
-      current ? { ...current, phase: "settling" } : current,
-    );
+    const transitionId = overlay.id;
+    const animationFrame = window.requestAnimationFrame(() => {
+      setOverlay((current) =>
+        current?.id === transitionId && current.phase === "navigating"
+          ? { ...current, phase: "settling" }
+          : current,
+      );
+    });
+
+    return () => window.cancelAnimationFrame(animationFrame);
   }, [overlay, pathname]);
 
   useEffect(() => {
