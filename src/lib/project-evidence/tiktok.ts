@@ -44,18 +44,16 @@ export const TIKTOK_EVIDENCE = [
     proofs: [
       {
         id: "tt-direction-comparison",
-        label: "Three-direction visual-system comparison",
-        kind: "comparison",
+        label: "Selected-direction signal matrix",
+        kind: "structured",
         role: "dominant",
-        surface: "TikTokTemplateSystem and process cards",
-        surfaceChapterId: "tt-system",
-        job: "Let readers compare how the same slot map changes across the three selected directions.",
+        surface: ".tt-direction-proof",
+        surfaceChapterId: "tt-research",
+        job: "Compare one concrete layer of difference across the three selected systems without duplicating the full media gallery.",
         proves:
-          "Dopamine Dressing, e-Boy/e-Girl, and Light Academia create materially different systems from the same fixed structure.",
+          "Dopamine Dressing, e-Boy/e-Girl, and Light Academia use different palettes and authored regions inside the same fixed catalog structure.",
         limitation:
-          "The visual proof appears in the following chapter rather than beside the selection rationale.",
-        placementNote:
-          "Composition review should decide whether a small three-direction preview belongs in the Choose chapter.",
+          "The matrix does not show every type, texture, or graphic decision; the full interactive systems and layered process appear in Build.",
       },
     ],
   },
