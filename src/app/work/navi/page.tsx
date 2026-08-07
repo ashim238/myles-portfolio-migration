@@ -151,26 +151,18 @@ export default async function NaviPage() {
 
       <ProjectChapter entry={chapters[1]} index={2} total={chapters.length} variant="navi">
         <section className="project-section nv-section" aria-labelledby="nv-research">
-          <h3 className="project-evidence-heading" id="nv-research">Platform audits and resident research</h3>
+          <h3 className="project-evidence-heading" id="nv-research">
+            Resident evidence and supporting platform audit
+          </h3>
+          <p className="case-section-lead">
+            Two concerns appeared most often in the resident and stakeholder survey.
+          </p>
           <div className="project-section-body">
             <p>
               I collected 14 resident and stakeholder responses, including two
               local businesses. The sample informed this concept. It doesn&apos;t
               stand in for all NYC residents.
             </p>
-            <p>
-              The team audited six travel platforms. I evaluated Airbnb with Kaori Ogawa and Amy Zhang
-              against Nielsen&apos;s ten usability heuristics.
-              The evaluation surfaced issues with label consistency, family-facing
-              filters, and visual clutter.
-            </p>
-          </div>
-          <HeuristicInsightCards />
-        </section>
-
-        <div className="project-section nv-section">
-          <p className="case-section-lead">Two concerns appeared most often in the resident and stakeholder survey.</p>
-          <div className="project-section-body">
             <p>
               {overcrowdingStat.count} of {NAVI_SURVEY_META.responseCount} responses (
               {overcrowdingStat.label}) named overcrowding and over-tourism.{" "}
@@ -185,7 +177,17 @@ export default async function NaviPage() {
             </p>
           </div>
           <SurveyStatRings />
-        </div>
+          <div className="project-section-body">
+            <p className="case-section-lead">The platform audit supported the same shift toward clearer comparison and trust.</p>
+            <p>
+              The team audited six travel platforms. I evaluated Airbnb with Kaori Ogawa and Amy Zhang
+              against Nielsen&apos;s ten usability heuristics.
+              The evaluation surfaced issues with label consistency, family-facing
+              filters, and visual clutter.
+            </p>
+          </div>
+          <HeuristicInsightCards />
+        </section>
       </ProjectChapter>
 
       <ProjectChapter entry={chapters[2]} index={3} total={chapters.length} variant="navi">
