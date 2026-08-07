@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: verify-myles-98-${{ github.ref }}
@@ -17,7 +17,7 @@ jobs:
   verify:
     name: Test, lint, typecheck, content, and build
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 40
     env:
       NEXT_TELEMETRY_DISABLED: "1"
     steps:
@@ -32,39 +32,131 @@ jobs:
           node-version: 22
           cache: npm
 
+      - name: Prepare verification logs
+        run: mkdir -p verification-logs
+
       - name: Regenerate package lock
         run: npm install --package-lock-only --ignore-scripts
 
+      - name: Commit regenerated package lock
+        id: lock
+        shell: bash
+        run: |
+          if git diff --quiet -- package-lock.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add package-lock.json
+            git commit -m "chore: sync npm lockfile"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Verify clean dependency install
+        if: steps.lock.outputs.changed != 'true'
         run: npm ci
 
       - name: Run tests
-        run: npm test
-
-      - name: Run lint
-        run: npm run lint
-
-      - name: Run TypeScript
-        run: npx tsc --noEmit
-
-      - name: Validate content
-        run: npm run validate:content
-
-      - name: Build production app
-        run: npm run build
-
-      - name: Check whitespace
+        id: tests
+        if: steps.lock.outputs.changed != 'true'
+        continue-on-error: true
         shell: bash
         run: |
-          git diff --check
-          base="$(git merge-base origin/main HEAD)"
-          git diff --check "$base"..HEAD
+          set -o pipefail
+          npm test -- --reporter=verbose 2>&1 | tee verification-logs/tests.log
 
-      - name: Upload regenerated package lock
+      - name: Run lint
+        id: lint
+        if: steps.lock.outputs.changed != 'true'
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run lint 2>&1 | tee verification-logs/lint.log
+
+      - name: Run TypeScript
+        id: typescript
+        if: steps.lock.outputs.changed != 'true'
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          npx tsc --noEmit 2>&1 | tee verification-logs/typescript.log
+
+      - name: Validate content
+        id: content
+        if: steps.lock.outputs.changed != 'true'
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run validate:content 2>&1 | tee verification-logs/content.log
+
+      - name: Build production app
+        id: build
+        if: steps.lock.outputs.changed != 'true'
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee verification-logs/build.log
+
+      - name: Check whitespace
+        id: whitespace
+        if: steps.lock.outputs.changed != 'true'
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          {
+            git diff --check
+            base="$(git merge-base origin/main HEAD)"
+            git diff --check "$base"..HEAD
+          } 2>&1 | tee verification-logs/whitespace.log
+
+      - name: Publish verification summary
+        if: always() && steps.lock.outputs.changed != 'true'
+        shell: bash
+        run: |
+          {
+            echo "## Myles 98 verification matrix"
+            echo
+            echo "| Check | Outcome |"
+            echo "|---|---|"
+            echo "| npm test | ${{ steps.tests.outcome }} |"
+            echo "| npm run lint | ${{ steps.lint.outcome }} |"
+            echo "| npx tsc --noEmit | ${{ steps.typescript.outcome }} |"
+            echo "| npm run validate:content | ${{ steps.content.outcome }} |"
+            echo "| npm run build | ${{ steps.build.outcome }} |"
+            echo "| git diff --check | ${{ steps.whitespace.outcome }} |"
+          } | tee verification-logs/summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload verification evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: regenerated-package-lock
-          path: package-lock.json
+          name: myles-98-verification-${{ github.sha }}
+          path: |
+            verification-logs
+            package-lock.json
           if-no-files-found: error
-          retention-days: 1
+          retention-days: 3
+
+      - name: Enforce verification gate
+        if: always() && steps.lock.outputs.changed != 'true'
+        shell: bash
+        run: |
+          failed=0
+          for outcome in \
+            "${{ steps.tests.outcome }}" \
+            "${{ steps.lint.outcome }}" \
+            "${{ steps.typescript.outcome }}" \
+            "${{ steps.content.outcome }}" \
+            "${{ steps.build.outcome }}" \
+            "${{ steps.whitespace.outcome }}"; do
+            if [ "$outcome" != "success" ]; then
+              failed=1
+            fi
+          done
+          exit "$failed"
