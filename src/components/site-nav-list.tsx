@@ -14,7 +14,7 @@ export function SiteNavList() {
         const isExternal = item.href.startsWith("mailto:");
         const isActive = isExternal
           ? false
-          : item.href === "/#work"
+          : item.href === "/#selected-work"
             ? isWorkPath(pathname)
             : pathname === item.href;
 
