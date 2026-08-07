@@ -31,6 +31,7 @@ describe("MobileNav route ownership", () => {
     "/work/understandingfafsa",
     "/work/navi",
     "/work/tiktok",
+    "/work/other-project",
     "/work/navi/demo",
     "/work/navi/demo/experience/harlem-jazz-walk",
     "/work/navi/system",
@@ -49,26 +50,23 @@ describe("MobileNav route ownership", () => {
     );
   });
 
-  it.each(["/work", "/work/other-project"])(
-    "marks Selected Work current where legacy mobile navigation still owns %s",
-    (pathname) => {
-      route.pathname = pathname;
-      const { container } = render(
-        <>
-          <MobileNav />
-          <SiteNavList />
-        </>,
-      );
+  it("marks Selected Work current on the legacy /work index", () => {
+    route.pathname = "/work";
+    const { container } = render(
+      <>
+        <MobileNav />
+        <SiteNavList />
+      </>,
+    );
 
-      const mobile = screen.getByRole("navigation", {
-        name: "Mobile navigation",
-      });
-      expect(
-        within(mobile).getByRole("link", { name: "Selected Work" }),
-      ).toHaveAttribute("aria-current", "page");
-      expect(
-        container.querySelector('.site-nav-list a[href="/#selected-work"]'),
-      ).toHaveAttribute("aria-current", "page");
-    },
-  );
+    const mobile = screen.getByRole("navigation", {
+      name: "Mobile navigation",
+    });
+    expect(
+      within(mobile).getByRole("link", { name: "Selected Work" }),
+    ).toHaveAttribute("aria-current", "page");
+    expect(
+      container.querySelector('.site-nav-list a[href="/#selected-work"]'),
+    ).toHaveAttribute("aria-current", "page");
+  });
 });
