@@ -1,32 +1,31 @@
 import Link from "next/link";
-import { SiteNav } from "@/components/site-nav";
+import { Myles97Icon } from "@/components/myles-97/icons";
 
 export default function NotFound() {
   return (
-    <main className="page-shell home-page" id="main-content">
-      <SiteNav />
-
-      <section className="not-found" aria-labelledby="not-found-heading">
-        <div className="not-found-content">
-          <p className="not-found-label" aria-hidden="true">
-            Error
-          </p>
-          <h1 id="not-found-heading" className="not-found-title">
-            Page not found
-          </h1>
-          <p className="not-found-body">
-            Nothing here, just empty pixels. The page you&rsquo;re
-            looking for was moved, removed, or never existed.
-          </p>
-          <Link href="/" className="not-found-link">
-            Take me home
-          </Link>
+    <main className="myles97-error-shell" id="main-content">
+      <section className="myles97-system-dialog" aria-labelledby="not-found-heading">
+        <header className="myles97-system-dialog-titlebar">
+          <Myles97Icon name="app" size={16} aria-hidden="true" />
+          <strong>Myles 97</strong>
+        </header>
+        <div className="myles97-system-dialog-body">
+          <div className="myles97-system-dialog-mark" aria-hidden="true">
+            404
+          </div>
+          <div>
+            <p className="myles97-eyebrow">System message</p>
+            <h1 id="not-found-heading">Page not found</h1>
+            <p>
+              This address does not point to a portfolio page. The desktop and
+              Selected Work are both still available.
+            </p>
+          </div>
         </div>
-        <p className="not-found-code" aria-hidden="true">
-          <span className="not-found-digit">4</span>
-          <span className="not-found-digit">0</span>
-          <span className="not-found-digit">4</span>
-        </p>
+        <div className="myles97-system-dialog-actions">
+          <Link href="/">Return to Desktop</Link>
+          <Link href="/#selected-work">Open Selected Work</Link>
+        </div>
       </section>
     </main>
   );

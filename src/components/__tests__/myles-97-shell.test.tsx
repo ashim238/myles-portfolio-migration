@@ -59,6 +59,15 @@ const programs: ProgramDefinition[] = [
   },
 ];
 
+const looseParts = [
+  {
+    slug: "loom",
+    title: "Loom",
+    medium: "p5.js",
+    state: "testing" as const,
+  },
+];
+
 describe("Myles97Shell", () => {
   beforeEach(() => {
     localStorage.clear();
@@ -66,7 +75,7 @@ describe("Myles97Shell", () => {
   });
 
   it("renders the approved first impression with Welcome focused over Selected Work", () => {
-    render(<Myles97Shell programs={programs} />);
+    render(<Myles97Shell programs={programs} looseParts={looseParts} />);
 
     expect(screen.getByRole("heading", { name: "Myles Ashitey" })).toBeInTheDocument();
     expect(screen.getByText("Design, code, whatever you need.")).toBeInTheDocument();
@@ -84,7 +93,7 @@ describe("Myles97Shell", () => {
 
   it("focuses Selected Work and launches a project program while preserving a native case-study link", async () => {
     const user = userEvent.setup();
-    render(<Myles97Shell programs={programs} />);
+    render(<Myles97Shell programs={programs} looseParts={looseParts} />);
 
     const welcome = screen.getByRole("region", { name: "Welcome to Myles 97" });
     await user.click(within(welcome).getByRole("button", { name: "Selected Work" }));
@@ -107,24 +116,19 @@ describe("Myles97Shell", () => {
     );
   });
 
-  it("opens Start, exposes required destinations, and closes the transient menu with Escape", async () => {
+  it("opens Start, exposes program actions, and closes the transient menu with Escape", async () => {
     const user = userEvent.setup();
-    render(<Myles97Shell programs={programs} />);
+    render(<Myles97Shell programs={programs} looseParts={looseParts} />);
 
     await user.click(screen.getByRole("button", { name: "Start" }));
     const startMenu = screen.getByRole("group", { name: "Start menu" });
-    expect(within(startMenu).getByText("Selected Work")).toBeInTheDocument();
-    expect(within(startMenu).getByRole("link", { name: "About Myles" })).toHaveAttribute(
+    expect(within(startMenu).getByRole("button", { name: "Selected Work" })).toBeInTheDocument();
+    expect(within(startMenu).getByRole("button", { name: "About Myles" })).toBeInTheDocument();
+    expect(within(startMenu).getByRole("button", { name: "Loose Parts" })).toBeInTheDocument();
+    expect(within(startMenu).getByRole("button", { name: "Résumé" })).toBeInTheDocument();
+    expect(within(startMenu).getByRole("link", { name: "E-mail" })).toHaveAttribute(
       "href",
-      "/about",
-    );
-    expect(within(startMenu).getByRole("link", { name: "Loose Parts" })).toHaveAttribute(
-      "href",
-      "/play",
-    );
-    expect(within(startMenu).getByRole("link", { name: "Résumé" })).toHaveAttribute(
-      "href",
-      "/resume",
+      "mailto:mylesashitey@gmail.com",
     );
     expect(within(startMenu).getByText("Display Properties")).toBeInTheDocument();
     expect(within(startMenu).getByText("Reset Desktop…")).toBeInTheDocument();

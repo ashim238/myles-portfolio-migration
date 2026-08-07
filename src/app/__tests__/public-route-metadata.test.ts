@@ -1,3 +1,4 @@
+import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Metadata } from "next";
 
@@ -18,6 +19,7 @@ vi.mock("next/font/google", () => ({
 }));
 
 import { metadata as rootMetadata } from "@/app/layout";
+import NotFound from "@/app/not-found";
 import { metadata as aboutMetadata } from "@/app/about/page";
 import { metadata as playMetadata } from "@/app/play/page";
 import { metadata as resumeMetadata } from "@/app/resume/page";
@@ -154,5 +156,19 @@ describe("public route metadata", () => {
       index: false,
       follow: false,
     });
+  });
+
+  it("gives unknown routes real Myles 97 recovery actions", () => {
+    render(<NotFound />);
+
+    expect(screen.getByRole("heading", { level: 1, name: "Page not found" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Return to Desktop" })).toHaveAttribute(
+      "href",
+      "/",
+    );
+    expect(screen.getByRole("link", { name: "Open Selected Work" })).toHaveAttribute(
+      "href",
+      "/#selected-work",
+    );
   });
 });

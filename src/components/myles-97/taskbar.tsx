@@ -24,7 +24,7 @@ const systemTitles: Partial<Record<ProgramId, string>> = {
   "loose-parts": "Loose Parts",
   resume: "Résumé",
   "display-properties": "Display Properties",
-  "trini-roti": "Trini roti",
+  "trini-roti": "Buss Up Shut.txt",
 };
 
 function titleFor(id: ProgramId, programs: readonly ProgramDefinition[]) {

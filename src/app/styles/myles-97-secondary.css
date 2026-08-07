@@ -1,0 +1,382 @@
+/* Myles 97 secondary programs and recovery surfaces */
+.myles97-desktop {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr) minmax(184px, 224px);
+  grid-template-rows: minmax(calc(100svh - 60px), auto);
+}
+
+.myles97-roti-note {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  grid-column: 3;
+  grid-row: 1;
+  align-self: end;
+  justify-self: center;
+  width: min(196px, calc(100% - 28px));
+  min-height: 132px;
+  margin: 0 14px 86px 0;
+  padding: 16px;
+  border: 1px solid #756942;
+  background: #eadcab;
+  color: var(--m97-ink);
+  cursor: pointer;
+  font-family: var(--m97-reader-font);
+  text-align: left;
+  box-shadow: 3px 4px 0 rgb(17 17 17 / 20%);
+  transform: rotate(1.5deg);
+}
+
+.myles97-roti-note:hover {
+  transform: rotate(0.5deg) translateY(-2px);
+}
+
+.myles97-roti-note .myles97-roti-label {
+  display: block;
+  margin-bottom: 8px;
+  font: 700 10px/1.2 var(--m97-ui-font);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.myles97-roti-note strong {
+  display: block;
+  margin-bottom: 8px;
+  font: 700 18px/1.1 var(--m97-reader-font);
+}
+
+.myles97-roti-note > span:last-child {
+  display: block;
+  font: 12px/1.42 var(--m97-reader-font);
+}
+
+.myles97-recipe-program {
+  display: grid;
+  gap: 22px;
+  color: var(--m97-ink);
+  font-family: var(--m97-reader-font);
+  font-size: 15px;
+  line-height: 1.58;
+}
+
+.myles97-recipe-program :is(h2, h3, p) {
+  margin: 0;
+}
+
+.myles97-recipe-program header {
+  display: grid;
+  gap: 8px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #9c9270;
+}
+
+.myles97-recipe-program h2 {
+  font-size: 27px;
+  line-height: 1.05;
+}
+
+.myles97-recipe-program h3 {
+  margin-bottom: 8px;
+  font: 700 12px/1.2 var(--m97-ui-font);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.myles97-recipe-program :is(ul, ol) {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding-left: 1.35rem;
+}
+
+.myles97-recipe-note-copy {
+  padding: 12px 14px;
+  border-left: 3px solid #8c7b43;
+  background: #f3e9c7;
+}
+
+.myles97-recipe-source {
+  padding-top: 12px;
+  border-top: 1px solid #9c9270;
+  font: 11px/1.45 var(--m97-ui-font);
+}
+
+.myles97-recipe-source a {
+  font-weight: 700;
+}
+
+.myles97-secondary-program,
+.myles97-loose-parts-program,
+.myles97-secondary-empty {
+  display: grid;
+  gap: 16px;
+  color: var(--m97-ink);
+  font-family: var(--m97-ui-font);
+}
+
+.myles97-secondary-program :is(h2, p),
+.myles97-loose-parts-program :is(h2, p),
+.myles97-secondary-empty :is(h2, p) {
+  margin: 0;
+}
+
+.myles97-secondary-program h2,
+.myles97-loose-parts-program h2,
+.myles97-secondary-empty h2 {
+  font-size: 26px;
+  line-height: 1.05;
+}
+
+.myles97-secondary-program > p,
+.myles97-loose-parts-program > header > p:last-child,
+.myles97-secondary-empty p {
+  max-width: 58ch;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.myles97-secondary-program dl {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+  border: 1px solid #777;
+  background: #777;
+}
+
+.myles97-secondary-program dl > div {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 12px;
+  padding: 10px 12px;
+  background: #f5f5f5;
+}
+
+.myles97-secondary-program :is(dt, dd) {
+  margin: 0;
+}
+
+.myles97-secondary-program dt {
+  font-weight: 700;
+}
+
+.myles97-secondary-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.myles97-secondary-actions > a:not(.myles97-primary-button) {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 7px 10px;
+  font-weight: 700;
+}
+
+.myles97-loose-parts-program header {
+  display: grid;
+  gap: 6px;
+}
+
+.myles97-loose-parts-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.myles97-loose-parts-list > li {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #777;
+  background: #f5f5f5;
+}
+
+.myles97-loose-parts-list > li > div {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.myles97-loose-parts-list > li > div > strong {
+  font-size: 13px;
+}
+
+.myles97-loose-parts-list > li > div > span:not(.myles97-evidence-badge) {
+  overflow: hidden;
+  color: #555;
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.myles97-loose-parts-index {
+  color: #555;
+  font: 700 11px/1 var(--m97-ui-font);
+}
+
+.myles97-loose-parts-list > li > a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 6px 9px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.myles97-error-shell {
+  display: grid;
+  min-height: 100svh;
+  place-items: center;
+  padding: 24px;
+  background: var(--m97-desktop);
+  color: var(--m97-ink);
+  font-family: var(--m97-ui-font);
+}
+
+.myles97-system-dialog {
+  width: min(520px, 100%);
+  border: 2px solid var(--m97-ink);
+  background: var(--m97-chrome);
+  box-shadow: 6px 7px 0 rgb(17 17 17 / 28%);
+}
+
+.myles97-system-dialog-titlebar {
+  display: flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  background: var(--m97-active);
+  color: #fff;
+}
+
+.myles97-system-dialog-body {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 18px;
+  padding: 24px;
+  background: #fff;
+}
+
+.myles97-system-dialog-body :is(h1, p) {
+  margin: 0;
+}
+
+.myles97-system-dialog-body h1 {
+  margin: 4px 0 8px;
+  font-size: 28px;
+  line-height: 1.05;
+}
+
+.myles97-system-dialog-body > div:last-child > p:last-child {
+  max-width: 44ch;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.myles97-system-dialog-mark {
+  display: grid;
+  width: 72px;
+  height: 72px;
+  place-items: center;
+  border: 2px solid var(--m97-ink);
+  background: var(--m97-signal);
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.myles97-system-dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 12px;
+  border-top: 1px solid #777;
+}
+
+.myles97-system-dialog-actions a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border: 1px solid var(--m97-ink);
+  background: #e2e2e2;
+  color: var(--m97-ink);
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 1px 1px 0 var(--m97-ink);
+}
+
+.myles97-system-dialog-actions a:first-child {
+  background: var(--m97-signal);
+}
+
+.myles97-error-shell :is(a, button):focus-visible {
+  outline: 3px solid var(--m97-signal);
+  outline-offset: 3px;
+}
+
+@media (max-width: 1080px) {
+  .myles97-desktop {
+    grid-template-columns: 116px minmax(0, 1fr) 188px;
+  }
+
+  .myles97-roti-note {
+    width: 166px;
+    margin-right: 8px;
+  }
+}
+
+@media (max-width: 640px) {
+  .myles97-system-dialog-body {
+    grid-template-columns: 1fr;
+  }
+
+  .myles97-system-dialog-mark {
+    width: 60px;
+    height: 60px;
+  }
+
+  .myles97-system-dialog-actions {
+    display: grid;
+  }
+}
+
+@media (forced-colors: active) {
+  .myles97-roti-note,
+  .myles97-recipe-note-copy,
+  .myles97-secondary-program dl,
+  .myles97-secondary-program dl > div,
+  .myles97-loose-parts-list > li,
+  .myles97-error-shell,
+  .myles97-system-dialog,
+  .myles97-system-dialog-titlebar,
+  .myles97-system-dialog-body,
+  .myles97-system-dialog-mark,
+  .myles97-system-dialog-actions a {
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+    box-shadow: none;
+  }
+
+  .myles97-system-dialog-titlebar,
+  .myles97-system-dialog-actions a:first-child {
+    background: Highlight;
+    color: HighlightText;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .myles97-roti-note {
+    transform: none;
+    transition: none;
+  }
+}

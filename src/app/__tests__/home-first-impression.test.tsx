@@ -5,15 +5,30 @@ import Home from "@/app/page";
 const mocks = vi.hoisted(() => ({
   getPublishedProjects: vi.fn(),
   shell: vi.fn(),
+  playEntries: [
+    {
+      slug: "loom",
+      title: "Loom",
+      medium: "p5.js, text hashing, generative drawing",
+      state: "testing" as const,
+    },
+  ],
 }));
 
 vi.mock("@/lib/content", () => ({
   getPublishedProjects: mocks.getPublishedProjects,
+  playEntries: mocks.playEntries,
 }));
 
 vi.mock("@/components/myles-97/myles-97-shell", () => ({
-  Myles97Shell: ({ programs }: { programs: Array<{ id: string }> }) => {
-    mocks.shell(programs);
+  Myles97Shell: ({
+    programs,
+    looseParts,
+  }: {
+    programs: Array<{ id: string }>;
+    looseParts: Array<{ slug: string }>;
+  }) => {
+    mocks.shell(programs, looseParts);
     return <main data-testid="myles-97-shell" />;
   },
 }));
@@ -43,7 +58,7 @@ describe("homepage first impression", () => {
     ]);
   });
 
-  it("server-renders the Myles 97 shell with four published programs", async () => {
+  it("server-renders the Myles 97 shell with projects and serialized Loose Parts", async () => {
     render(await Home());
 
     expect(screen.getByTestId("myles-97-shell")).toBeInTheDocument();
@@ -51,5 +66,6 @@ describe("homepage first impression", () => {
     expect(
       mocks.shell.mock.calls[0][0].map((program: { id: string }) => program.id),
     ).toEqual(["fresh-greens", "understandingfafsa", "navi", "tiktok"]);
+    expect(mocks.shell.mock.calls[0][1]).toEqual(mocks.playEntries);
   });
 });

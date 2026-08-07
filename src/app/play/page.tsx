@@ -54,7 +54,7 @@ export default function PlayPage() {
 
         <ol className="play-entries" role="list">
           {playEntries.map((entry, index) => (
-            <li key={entry.slug} className="play-entry">
+            <li key={entry.slug} id={entry.slug} className="play-entry">
               <div className="play-entry-header">
                 <span className="play-entry-index" aria-hidden="true">
                   {String(index + 1).padStart(2, "0")}

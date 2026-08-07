@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect } from "react";
 import { Myles97Icon } from "@/components/myles-97/icons";
 import type { ProgramId } from "@/lib/myles-97/programs";
@@ -31,6 +30,11 @@ export function StartMenu({
 
   if (!open) return null;
 
+  const openThenClose = (id: ProgramId) => {
+    onOpenProgram(id);
+    onClose();
+  };
+
   return (
     <div className="myles97-start-menu" id="myles97-start-menu" role="group" aria-label="Start menu">
       <div className="myles97-start-menu-brand" aria-hidden="true">
@@ -38,39 +42,27 @@ export function StartMenu({
         <strong>97</strong>
       </div>
       <div className="myles97-start-menu-items">
-        <button
-          type="button"
-          onClick={() => {
-            onOpenProgram("selected-work");
-            onClose();
-          }}
-        >
+        <button type="button" onClick={() => openThenClose("selected-work")}>
           <Myles97Icon name="folder" size={20} aria-hidden="true" />
           <span>Selected Work</span>
         </button>
-        <Link href="/about" onClick={onClose}>
+        <button type="button" onClick={() => openThenClose("about")}>
           <Myles97Icon name="document" size={20} aria-hidden="true" />
           <span>About Myles</span>
-        </Link>
-        <Link href="/play" onClick={onClose}>
+        </button>
+        <button type="button" onClick={() => openThenClose("loose-parts")}>
           <Myles97Icon name="loose-parts" size={20} aria-hidden="true" />
           <span>Loose Parts</span>
-        </Link>
-        <Link href="/resume" onClick={onClose}>
+        </button>
+        <button type="button" onClick={() => openThenClose("resume")}>
           <Myles97Icon name="document" size={20} aria-hidden="true" />
           <span>Résumé</span>
-        </Link>
+        </button>
         <a href={`mailto:${siteConfig.email}`} onClick={onClose}>
           <Myles97Icon name="mail" size={20} aria-hidden="true" />
           <span>E-mail</span>
         </a>
-        <button
-          type="button"
-          onClick={() => {
-            onOpenProgram("display-properties");
-            onClose();
-          }}
-        >
+        <button type="button" onClick={() => openThenClose("display-properties")}>
           <Myles97Icon name="display" size={20} aria-hidden="true" />
           <span>Display Properties</span>
         </button>

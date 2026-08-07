@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useReducer, useState } from "react";
 import { BootSequence } from "@/components/myles-97/boot-sequence";
+import type { LoosePartSummary } from "@/components/myles-97/loose-parts-program";
 import { WorkstationDesktop } from "@/components/myles-97/workstation-desktop";
 import type { ProgramDefinition } from "@/lib/myles-97/programs";
 import {
@@ -16,9 +17,10 @@ import {
 
 export type Myles97ShellProps = {
   programs: readonly ProgramDefinition[];
+  looseParts: readonly LoosePartSummary[];
 };
 
-export function Myles97Shell({ programs }: Myles97ShellProps) {
+export function Myles97Shell({ programs, looseParts }: Myles97ShellProps) {
   const [state, dispatch] = useReducer(
     workstationReducer,
     undefined,
@@ -48,7 +50,12 @@ export function Myles97Shell({ programs }: Myles97ShellProps) {
       data-m97-contrast={state.displayPreferences.highContrast ? "high" : "default"}
       data-m97-motion={state.displayPreferences.reduceMotion ? "reduce" : "full"}
     >
-      <WorkstationDesktop programs={programs} state={state} dispatch={dispatch} />
+      <WorkstationDesktop
+        programs={programs}
+        looseParts={looseParts}
+        state={state}
+        dispatch={dispatch}
+      />
       <BootSequence
         eligible={hydrated && !state.bootCompleted}
         reduceMotion={state.displayPreferences.reduceMotion}

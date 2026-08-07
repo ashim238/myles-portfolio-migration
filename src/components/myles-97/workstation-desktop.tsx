@@ -1,11 +1,16 @@
 "use client";
 
-import Link from "next/link";
 import { useCallback, useRef, useState, type Dispatch } from "react";
 import { DisplayProperties } from "@/components/myles-97/display-properties";
 import { Myles97Icon } from "@/components/myles-97/icons";
+import type { LoosePartSummary } from "@/components/myles-97/loose-parts-program";
 import { ProgramWindow } from "@/components/myles-97/program-window";
 import { ProjectProgram } from "@/components/myles-97/project-program";
+import { RecipeNote, RecipeNoteProgram } from "@/components/myles-97/recipe-note";
+import {
+  SecondaryProgram,
+  type SecondaryProgramId,
+} from "@/components/myles-97/secondary-programs";
 import { SelectedWorkExplorer } from "@/components/myles-97/selected-work-explorer";
 import { StartMenu } from "@/components/myles-97/start-menu";
 import { Taskbar } from "@/components/myles-97/taskbar";
@@ -23,6 +28,7 @@ import type {
 
 export type WorkstationDesktopProps = {
   programs: readonly ProgramDefinition[];
+  looseParts: readonly LoosePartSummary[];
   state: WorkstationState;
   dispatch: Dispatch<WorkstationAction>;
 };
@@ -30,6 +36,10 @@ export type WorkstationDesktopProps = {
 const defaultGeometry: Partial<Record<ProgramId, WindowGeometry>> = {
   "selected-work": { x: 88, y: 112, width: 760, height: 536 },
   welcome: { x: 416, y: 64, width: 600, height: 352 },
+  about: { x: 312, y: 124, width: 540, height: 430 },
+  "loose-parts": { x: 232, y: 92, width: 720, height: 520 },
+  resume: { x: 344, y: 112, width: 560, height: 470 },
+  "trini-roti": { x: 472, y: 92, width: 520, height: 560 },
   "display-properties": { x: 504, y: 168, width: 448, height: 456 },
 };
 
@@ -40,6 +50,16 @@ const evidenceLabels = {
   proposed: "Proposed",
   "needs-proof": "Still needs proof",
 } as const;
+
+const secondaryTitles: Record<SecondaryProgramId, string> = {
+  about: "About Myles",
+  "loose-parts": "Loose Parts",
+  resume: "Résumé",
+};
+
+function isSecondaryProgram(id: ProgramId): id is SecondaryProgramId {
+  return id === "about" || id === "loose-parts" || id === "resume";
+}
 
 function fallbackGeometry(id: ProgramId, stackIndex: number): WindowGeometry {
   const defined = defaultGeometry[id];
@@ -56,11 +76,13 @@ function fallbackGeometry(id: ProgramId, stackIndex: number): WindowGeometry {
 
 export function WorkstationDesktop({
   programs,
+  looseParts,
   state,
   dispatch,
 }: WorkstationDesktopProps) {
   const [startOpen, setStartOpen] = useState(false);
   const startButtonRef = useRef<HTMLButtonElement>(null);
+  const recipeTriggerRef = useRef<HTMLButtonElement>(null);
   const minimized = new Set(state.minimizedPrograms);
   const projectById = new Map(programs.map((program) => [program.id, program]));
 
@@ -93,24 +115,19 @@ export function WorkstationDesktop({
           <Myles97Icon name="folder" size={32} aria-hidden="true" />
           <span>Selected Work</span>
         </button>
-        <Link href="/about">
+        <button type="button" onClick={() => openProgram("about")}>
           <Myles97Icon name="document" size={32} aria-hidden="true" />
           <span>About Myles</span>
-        </Link>
-        <Link href="/play">
+        </button>
+        <button type="button" onClick={() => openProgram("loose-parts")}>
           <Myles97Icon name="loose-parts" size={32} aria-hidden="true" />
           <span>Loose Parts</span>
-        </Link>
-        <Link href="/resume">
+        </button>
+        <button type="button" onClick={() => openProgram("resume")}>
           <Myles97Icon name="document" size={32} aria-hidden="true" />
           <span>Résumé</span>
-        </Link>
+        </button>
       </nav>
-
-      <aside className="myles97-roti-note" aria-label="Trini roti recipe note">
-        <span className="myles97-roti-label">Recipe note</span>
-        <strong>Trini roti</strong>
-      </aside>
 
       {state.openPrograms.map((id, stackIndex) => {
         if (minimized.has(id)) return null;
@@ -152,6 +169,30 @@ export function WorkstationDesktop({
           );
         }
 
+        if (id === "trini-roti") {
+          return (
+            <ProgramWindow
+              key={id}
+              {...props}
+              title="Buss Up Shut.txt"
+              onClose={(programId) => {
+                dispatch({ type: "close", id: programId });
+                recipeTriggerRef.current?.focus();
+              }}
+            >
+              <RecipeNoteProgram />
+            </ProgramWindow>
+          );
+        }
+
+        if (isSecondaryProgram(id)) {
+          return (
+            <ProgramWindow key={id} {...props} title={secondaryTitles[id]}>
+              <SecondaryProgram id={id} looseParts={looseParts} />
+            </ProgramWindow>
+          );
+        }
+
         const project = projectById.get(id as ProjectProgramId);
         if (!project) return null;
 
@@ -169,6 +210,11 @@ export function WorkstationDesktop({
           </ProgramWindow>
         );
       })}
+
+      <RecipeNote
+        triggerRef={recipeTriggerRef}
+        onOpen={() => openProgram("trini-roti")}
+      />
 
       <StartMenu
         open={startOpen}
