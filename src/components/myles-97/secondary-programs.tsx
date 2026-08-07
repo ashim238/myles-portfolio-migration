@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   LoosePartsProgram,
   type LoosePartSummary,
@@ -36,9 +37,9 @@ function AboutPreview() {
           </dd>
         </div>
       </dl>
-      <a className="myles97-primary-button" href="/about">
+      <Link className="myles97-primary-button" href="/about">
         Open full About page
-      </a>
+      </Link>
     </div>
   );
 }
@@ -68,9 +69,9 @@ function ResumePreview() {
         </div>
       </dl>
       <div className="myles97-secondary-actions">
-        <a className="myles97-primary-button" href={siteConfig.resumeUrl}>
+        <Link className="myles97-primary-button" href={siteConfig.resumeUrl}>
           Open full résumé
-        </a>
+        </Link>
         <a href="/myles-ashitey-resume.pdf" download="myles-ashitey-resume.pdf">
           Download PDF
         </a>
