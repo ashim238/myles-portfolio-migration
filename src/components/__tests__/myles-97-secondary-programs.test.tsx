@@ -133,13 +133,13 @@ describe("Myles 98 secondary programs", () => {
     }
   });
 
-  it("explains an empty Loose Parts surface and recovers to Work", () => {
+  it("explains an empty Loose Parts surface and recovers to Selected Work", () => {
     render(<SecondaryProgram id="loose-parts" looseParts={[]} />);
 
     expect(screen.getByText("No experiments are in the lab right now.")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Return to work" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Return to Selected Work" })).toHaveAttribute(
       "href",
-      "/#work",
+      "/#selected-work",
     );
   });
 
