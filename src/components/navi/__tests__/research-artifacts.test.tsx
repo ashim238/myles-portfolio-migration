@@ -18,6 +18,19 @@ const naviAnimReadySource = naviSource.slice(
 );
 
 describe("NaviResearchArtifacts", () => {
+  it("identifies itself as the dominant structured proof for Define", () => {
+    const { container } = render(<NaviResearchArtifacts />);
+    const surface = container.querySelector(".nv-research-artifacts");
+
+    expect(surface).toHaveAttribute(
+      "data-evidence-proof",
+      "nv-research-artifacts",
+    );
+    expect(surface).toHaveAttribute("data-evidence-role", "dominant");
+    expect(surface).toHaveAttribute("data-evidence-kind", "structured");
+    expect(surface).toHaveAttribute("data-evidence-chapter", "nv-framework");
+  });
+
   it("presents one traceable research board with explicit provenance", () => {
     render(<NaviResearchArtifacts />);
 
@@ -57,7 +70,13 @@ describe("NaviResearchArtifacts", () => {
       expect(within(journey).getByText(stage)).toBeInTheDocument();
     }
     const booking = screen.getByLabelText("Individual booking-flow excerpt");
-    for (const step of ["Neighborhood discovery", "Activity detail", "Date and time", "Cost review", "Confirmation"]) {
+    for (const step of [
+      "Neighborhood discovery",
+      "Activity detail",
+      "Date and time",
+      "Cost review",
+      "Confirmation",
+    ]) {
       expect(within(booking).getByText(step)).toBeInTheDocument();
     }
     expect(
