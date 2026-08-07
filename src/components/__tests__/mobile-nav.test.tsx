@@ -24,6 +24,9 @@ describe("MobileNav route ownership", () => {
 
   it.each([
     "/",
+    "/about",
+    "/play",
+    "/resume",
     "/work/fresh-greens",
     "/work/understandingfafsa",
     "/work/navi",
@@ -32,7 +35,7 @@ describe("MobileNav route ownership", () => {
     "/work/navi/demo/experience/harlem-jazz-walk",
     "/work/navi/system",
     "/work/navi/system/components",
-  ])("stays out of Pocket, Reader, or Navi-owned route %s", (pathname) => {
+  ])("stays out of Myles 98, Reader, or Navi-owned route %s", (pathname) => {
     route.pathname = pathname;
     render(<MobileNav />);
     expect(
@@ -40,25 +43,14 @@ describe("MobileNav route ownership", () => {
     ).not.toBeInTheDocument();
   });
 
-  it.each(["/about", "/play", "/resume"])(
-    "remains available on direct utility route %s",
-    (pathname) => {
-      route.pathname = pathname;
-      render(<MobileNav />);
-      expect(
-        screen.getByRole("navigation", { name: "Mobile navigation" }),
-      ).toBeInTheDocument();
-    },
-  );
-
-  it("uses an opaque-enough surface to keep page content from bleeding through", () => {
+  it("uses an opaque-enough surface to keep legacy-owned page content from bleeding through", () => {
     expect(baseStyles).toContain(
       "background: color-mix(in srgb, var(--background) 96%, transparent)",
     );
   });
 
   it.each(["/work", "/work/other-project"])(
-    "marks Work current where legacy mobile navigation still owns %s",
+    "marks Selected Work current where legacy mobile navigation still owns %s",
     (pathname) => {
       route.pathname = pathname;
       const { container } = render(
@@ -71,12 +63,11 @@ describe("MobileNav route ownership", () => {
       const mobile = screen.getByRole("navigation", {
         name: "Mobile navigation",
       });
-      expect(within(mobile).getByRole("link", { name: "Work" })).toHaveAttribute(
-        "aria-current",
-        "page",
-      );
       expect(
-        container.querySelector('.site-nav-list a[href="/#work"]'),
+        within(mobile).getByRole("link", { name: "Selected Work" }),
+      ).toHaveAttribute("aria-current", "page");
+      expect(
+        container.querySelector('.site-nav-list a[href="/#selected-work"]'),
       ).toHaveAttribute("aria-current", "page");
     },
   );
