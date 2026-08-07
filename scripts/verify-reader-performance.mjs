@@ -1,8 +1,13 @@
-import { existsSync, readFileSync, statSync, writeFileSync } from "node:fs";
-import { resolve } from "node:path";
+import {
+  existsSync,
+  readFileSync,
+  readdirSync,
+  statSync,
+  writeFileSync,
+} from "node:fs";
+import { basename, join, relative, resolve } from "node:path";
 
 const nextDir = resolve(process.cwd(), ".next");
-const appManifestPath = resolve(nextDir, "app-build-manifest.json");
 const budgetPath = resolve(
   process.cwd(),
   "docs/verification/reader-performance-budgets.json",
@@ -20,21 +25,62 @@ function readJson(path) {
   return JSON.parse(readFileSync(path, "utf8"));
 }
 
-function normalizedRouteKey(key) {
-  const withoutPage = key.endsWith("/page") ? key.slice(0, -5) : key;
-  return withoutPage || "/";
+function walkFiles(root) {
+  if (!existsSync(root)) return [];
+
+  const files = [];
+  const visit = (directory) => {
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      const path = join(directory, entry.name);
+      if (entry.isDirectory()) visit(path);
+      else if (entry.isFile()) files.push(path);
+    }
+  };
+
+  visit(root);
+  return files;
 }
 
-function routeFiles(pages, route) {
-  const exactCandidates = [route, `${route}/page`];
-  for (const candidate of exactCandidates) {
-    if (Array.isArray(pages[candidate])) return pages[candidate];
+function normalizeBuildPath(path) {
+  return path
+    .replaceAll("\\", "/")
+    .replace(/^\/_next\//, "")
+    .replace(/^_next\//, "")
+    .replace(/^\/+/, "");
+}
+
+function routeManifest(allFiles, route) {
+  const routeDirectory = `server/app${route}/`;
+  const candidates = allFiles.filter((path) => {
+    const relativePath = relative(nextDir, path).replaceAll("\\", "/");
+    return (
+      relativePath.includes(routeDirectory) &&
+      basename(path).includes("client-reference-manifest") &&
+      path.endsWith(".js")
+    );
+  });
+
+  return (
+    candidates.find((path) =>
+      relative(nextDir, path)
+        .replaceAll("\\", "/")
+        .endsWith(`${routeDirectory}page_client-reference-manifest.js`),
+    ) ?? candidates[0]
+  );
+}
+
+function manifestAssets(path) {
+  const source = readFileSync(path, "utf8")
+    .replaceAll("\\u002F", "/")
+    .replaceAll("\\/", "/");
+  const assets = new Set();
+  const pattern = /(?:\/_next\/)?(static\/(?:chunks|css)\/[^"'\\\s,}\]]+?\.(?:js|css))/g;
+
+  for (const match of source.matchAll(pattern)) {
+    assets.add(normalizeBuildPath(match[1]));
   }
 
-  const matchingKey = Object.keys(pages).find(
-    (key) => normalizedRouteKey(key) === route,
-  );
-  return matchingKey ? pages[matchingKey] : undefined;
+  return [...assets];
 }
 
 function fileMetrics(files) {
@@ -42,12 +88,12 @@ function fileMetrics(files) {
     /\.(?:js|css)$/.test(file),
   );
   const metrics = uniqueFiles.map((file) => {
-    const diskPath = resolve(nextDir, file.replace(/^\/+/, ""));
+    const diskPath = resolve(nextDir, normalizeBuildPath(file));
     if (!existsSync(diskPath)) {
       throw new Error(`Reader performance asset is missing: ${file}`);
     }
     return {
-      file,
+      file: normalizeBuildPath(file),
       bytes: statSync(diskPath).size,
       type: file.endsWith(".css") ? "css" : "js",
     };
@@ -70,32 +116,43 @@ function formatKb(bytes) {
   return `${(bytes / 1024).toFixed(1)} KB`;
 }
 
-if (!existsSync(appManifestPath)) {
+if (!existsSync(nextDir)) {
   throw new Error(
     "Reader performance verification requires a completed Next.js production build.",
   );
 }
 
-const manifest = readJson(appManifestPath);
-const pages = manifest.pages ?? {};
+const allFiles = walkFiles(nextDir);
 const routeReport = {};
 
 for (const route of routes) {
-  const files = routeFiles(pages, route);
-  if (!files) {
-    const knownReaderKeys = Object.keys(pages).filter((key) =>
-      key.includes("/work/"),
-    );
+  const manifestPath = routeManifest(allFiles, route);
+  if (!manifestPath) {
+    const knownManifests = allFiles
+      .filter((path) => basename(path).includes("client-reference-manifest"))
+      .map((path) => relative(nextDir, path).replaceAll("\\", "/"));
     throw new Error(
-      `Reader route ${route} was not found in app-build-manifest.json. Known work keys: ${knownReaderKeys.join(", ")}`,
+      `Reader route ${route} has no generated client-reference manifest. Known manifests: ${knownManifests.join(", ")}`,
     );
   }
-  routeReport[route] = fileMetrics(files);
+
+  const assets = manifestAssets(manifestPath);
+  if (assets.length === 0) {
+    throw new Error(
+      `Reader route ${route} has no JavaScript or CSS assets in ${relative(nextDir, manifestPath)}.`,
+    );
+  }
+
+  routeReport[route] = {
+    manifest: relative(nextDir, manifestPath).replaceAll("\\", "/"),
+    ...fileMetrics(assets),
+  };
 }
 
 const report = {
   generatedAt: new Date().toISOString(),
-  measurement: "uncompressed unique JavaScript and CSS bytes listed for each route in .next/app-build-manifest.json",
+  measurement:
+    "uncompressed unique JavaScript and CSS bytes referenced by each route's generated Next.js client-reference manifest",
   routes: routeReport,
 };
 
