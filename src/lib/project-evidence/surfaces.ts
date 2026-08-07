@@ -29,3 +29,10 @@ export const NAVI_DEMO_EVIDENCE_SURFACE = {
   kind: "working-product",
   chapterId: "nv-build",
 } as const satisfies EvidenceSurfaceMetadata;
+
+export const TIKTOK_DIRECTION_EVIDENCE_SURFACE = {
+  proofId: "tt-direction-comparison",
+  role: "dominant",
+  kind: "structured",
+  chapterId: "tt-research",
+} as const satisfies EvidenceSurfaceMetadata;
