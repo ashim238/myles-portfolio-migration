@@ -27,6 +27,7 @@ export type EvidenceProofKind =
   | "scope-ledger";
 
 export type EvidenceProofRole = "dominant" | "supporting";
+export type EvidenceSurfaceRole = EvidenceProofRole | "orientation";
 
 export type ProjectEvidenceClaim = {
   readonly id: string;
@@ -47,6 +48,13 @@ export type ProjectEvidenceProof = {
   readonly proves: string;
   readonly limitation: string;
   readonly placementNote?: string;
+};
+
+export type EvidenceSurfaceMetadata = {
+  readonly proofId: ProjectEvidenceProof["id"];
+  readonly role: ProjectEvidenceProof["role"];
+  readonly kind: ProjectEvidenceProof["kind"];
+  readonly chapterId: ProjectEvidenceProof["surfaceChapterId"];
 };
 
 export type ProjectChapterEvidence = {
