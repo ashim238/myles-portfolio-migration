@@ -1,0 +1,153 @@
+/* Myles 97 workstation foundation */
+:root {
+  --m97-desktop: #087f86;
+  --m97-chrome: #c7c7c7;
+  --m97-active: #263cb8;
+  --m97-signal: #ffe52f;
+  --m97-ink: #111111;
+  --m97-paper: #f5f3ea;
+  --m97-reader-ink: #171717;
+  --m97-ui-font: Tahoma, Verdana, Geneva, sans-serif;
+  --m97-reader-font: Georgia, "Times New Roman", serif;
+  --m97-space-1: 4px;
+  --m97-space-2: 8px;
+  --m97-space-3: 16px;
+  --m97-space-4: 24px;
+}
+
+.myles97-window {
+  position: absolute;
+  display: flex;
+  min-width: 280px;
+  min-height: 180px;
+  flex-direction: column;
+  overflow: hidden;
+  border: 2px solid var(--m97-ink);
+  background: var(--m97-chrome);
+  color: var(--m97-ink);
+  font-family: var(--m97-ui-font);
+  font-size: 12px;
+  line-height: 1.35;
+  box-shadow: 4px 4px 0 rgb(17 17 17 / 28%);
+  will-change: transform;
+}
+
+.myles97-window[data-dragging="true"] {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.myles97-titlebar {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  gap: var(--m97-space-2);
+  padding-left: var(--m97-space-2);
+  background: #666;
+  color: #fff;
+  cursor: grab;
+  touch-action: none;
+}
+
+.myles97-window[data-focused="true"] .myles97-titlebar {
+  background: var(--m97-active);
+}
+
+.myles97-titlebar-icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+.myles97-window-title {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.myles97-window-controls {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+}
+
+.myles97-hit-target {
+  display: inline-grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+}
+
+.myles97-window-control {
+  display: grid;
+  width: 22px;
+  height: 22px;
+  place-items: center;
+  border: 1px solid currentColor;
+  background: var(--m97-chrome);
+  color: var(--m97-ink);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.myles97-window-content {
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow: auto;
+  margin: 0 var(--m97-space-1);
+  padding: var(--m97-space-3);
+  border: 1px solid var(--m97-ink);
+  background: #fff;
+}
+
+.myles97-window-status {
+  min-height: 28px;
+  margin: var(--m97-space-1);
+  padding: var(--m97-space-1) var(--m97-space-2);
+  border: 1px solid var(--m97-ink);
+  background: #d7d7d7;
+  font-size: 12px;
+}
+
+.myles97-window :is(button, a, input, select, textarea):focus-visible {
+  outline: 3px solid var(--m97-signal);
+  outline-offset: 2px;
+}
+
+@media (forced-colors: active) {
+  .myles97-window,
+  .myles97-window-content,
+  .myles97-window-status,
+  .myles97-window-control,
+  .myles97-titlebar,
+  .myles97-window[data-focused="true"] .myles97-titlebar {
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+    box-shadow: none;
+  }
+
+  .myles97-window[data-focused="true"] .myles97-titlebar {
+    background: Highlight;
+    color: HighlightText;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .myles97-window {
+    transition: none !important;
+  }
+}
+
+[data-m97-motion="reduce"] .myles97-window {
+  transition: none !important;
+}

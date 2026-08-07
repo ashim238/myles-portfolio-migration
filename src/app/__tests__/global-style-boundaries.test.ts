@@ -7,6 +7,7 @@ const expectedImports = [
   '@import "tailwindcss";',
   '@import "./styles/base.css";',
   '@import "./styles/late-polish.css";',
+  '@import "./styles/myles-97.css";',
 ];
 
 const sections = [
@@ -14,6 +15,7 @@ const sections = [
   ["styles/portfolio-surfaces.css", "Fresh Greens case study"],
   ["styles/navi-minisite.css", "Navi mini-site scope (.nv-ui)"],
   ["styles/late-polish.css", "Motion-play: non-gating section-heading emphasis"],
+  ["styles/myles-97.css", "Myles 97 workstation foundation"],
 ] as const;
 
 describe("global stylesheet boundaries", () => {
