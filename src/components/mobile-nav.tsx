@@ -7,8 +7,8 @@ import { siteConfig } from "@/lib/site-config";
 
 const items = [
   {
-    label: "Work",
-    href: "/#work",
+    label: "Selected Work",
+    href: "/#selected-work",
     icon: (
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
         <rect x="2" y="3" width="7" height="6" rx="1" stroke="currentColor" strokeWidth="1.5" />
@@ -29,7 +29,7 @@ const items = [
     ),
   },
   {
-    label: "Play",
+    label: "Loose Parts",
     href: "/play",
     icon: (
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -65,6 +65,10 @@ function isReaderOwnedPath(pathname: string) {
   return /^\/work\/[^/]+\/?$/.test(pathname);
 }
 
+function isSystemDocumentPath(pathname: string) {
+  return pathname === "/about" || pathname === "/play" || pathname === "/resume";
+}
+
 export function MobileNav() {
   const pathname = usePathname();
   const isNaviMinisite =
@@ -72,15 +76,16 @@ export function MobileNav() {
     pathname.startsWith("/work/navi/demo/") ||
     pathname === "/work/navi/system" ||
     pathname.startsWith("/work/navi/system/");
-  const isMyles97Owned = pathname === "/" || isReaderOwnedPath(pathname);
+  const isMyles98Owned =
+    pathname === "/" || isReaderOwnedPath(pathname) || isSystemDocumentPath(pathname);
 
-  if (isNaviMinisite || isMyles97Owned) return null;
+  if (isNaviMinisite || isMyles98Owned) return null;
 
   return (
     <nav className="mobile-nav" aria-label="Mobile navigation">
       {items.map((item) => {
         const isActive =
-          item.href === "/#work"
+          item.href === "/#selected-work"
             ? isWorkPath(pathname)
             : pathname === item.href;
         const isExternal = item.href.startsWith("mailto:");
