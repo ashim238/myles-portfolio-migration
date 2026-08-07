@@ -32,7 +32,10 @@ jobs:
           node-version: 22
           cache: npm
 
-      - name: Install dependencies
+      - name: Regenerate package lock
+        run: npm install --package-lock-only --ignore-scripts
+
+      - name: Verify clean dependency install
         run: npm ci
 
       - name: Run tests
@@ -50,8 +53,18 @@ jobs:
       - name: Build production app
         run: npm run build
 
-      - name: Check branch diff whitespace
+      - name: Check whitespace
         shell: bash
         run: |
+          git diff --check
           base="$(git merge-base origin/main HEAD)"
           git diff --check "$base"..HEAD
+
+      - name: Upload regenerated package lock
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regenerated-package-lock
+          path: package-lock.json
+          if-no-files-found: error
+          retention-days: 1
