@@ -68,7 +68,7 @@ const looseParts = [
   },
 ];
 
-describe("Myles97Shell", () => {
+describe("Myles98 product shell", () => {
   beforeEach(() => {
     localStorage.clear();
     sessionStorage.clear();
@@ -83,7 +83,7 @@ describe("Myles97Shell", () => {
       screen.getByText("Previously TikTok and UMG. Latest project: Fresh Greens."),
     ).toBeInTheDocument();
 
-    expect(screen.getByRole("region", { name: "Welcome to Myles 97" })).toHaveAttribute(
+    expect(screen.getByRole("region", { name: "Welcome to Myles 98" })).toHaveAttribute(
       "data-focused",
       "true",
     );
@@ -95,7 +95,7 @@ describe("Myles97Shell", () => {
     const user = userEvent.setup();
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
 
-    const welcome = screen.getByRole("region", { name: "Welcome to Myles 97" });
+    const welcome = screen.getByRole("region", { name: "Welcome to Myles 98" });
     await user.click(within(welcome).getByRole("button", { name: "Selected Work" }));
     const selectedWork = screen.getByRole("region", { name: "Selected Work" });
     expect(selectedWork).toHaveAttribute("data-focused", "true");
@@ -135,6 +135,6 @@ describe("Myles97Shell", () => {
 
     fireEvent.keyDown(window, { key: "Escape" });
     expect(screen.queryByRole("group", { name: "Start menu" })).toBeNull();
-    expect(screen.getByRole("region", { name: "Welcome to Myles 97" })).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "Welcome to Myles 98" })).toBeInTheDocument();
   });
 });

@@ -89,7 +89,7 @@ function DesktopHarness() {
   );
 }
 
-describe("Myles 97 secondary programs", () => {
+describe("Myles 98 secondary programs", () => {
   afterEach(() => {
     vi.restoreAllMocks();
   });
@@ -131,6 +131,16 @@ describe("Myles 97 secondary programs", () => {
         screen.getByRole("link", { name: `Open ${entry.title} in Loose Parts` }),
       ).toHaveAttribute("href", `/play#${entry.slug}`);
     }
+  });
+
+  it("explains an empty Loose Parts surface and recovers to Work", () => {
+    render(<SecondaryProgram id="loose-parts" looseParts={[]} />);
+
+    expect(screen.getByText("No experiments are in the lab right now.")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Return to work" })).toHaveAttribute(
+      "href",
+      "/#work",
+    );
   });
 
   it("keeps About and resume previews linked to their canonical routes", () => {

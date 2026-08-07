@@ -22,7 +22,7 @@ function block(selector: string) {
   throw new Error(`Unclosed rule for ${selector}`);
 }
 
-describe("Myles 97 homepage layout", () => {
+describe("Myles 98 homepage layout", () => {
   it("uses the workstation field as the full first-impression surface", () => {
     const shell = block(".myles97-shell");
     const desktop = block(".myles97-desktop");

@@ -68,7 +68,7 @@ export function BootSequence({
   if (!eligible || !visible) return null;
 
   return (
-    <div className="myles97-boot" role="status" aria-label="Starting Myles 97">
+    <div className="myles97-boot" role="status" aria-label="Starting Myles 98">
       <div className="myles97-boot-panel">
         <div className="myles97-boot-mark" aria-hidden="true">
           <span className="myles97-boot-pixels" />
@@ -81,7 +81,7 @@ export function BootSequence({
             priority
           />
         </div>
-        <strong className="myles97-boot-name">Myles 97</strong>
+        <strong className="myles97-boot-name">Myles 98</strong>
         <div className="myles97-boot-progress" aria-hidden="true">
           <span />
         </div>

@@ -152,7 +152,7 @@ export function Pocket97Shell({
                 <Image src="/logomark.svg" alt="" width={72} height={72} priority />
               </div>
               <div>
-                <p className="myles97-eyebrow">Pocket 97</p>
+                <p className="myles97-eyebrow">Pocket 98</p>
                 <h1>Myles Ashitey</h1>
                 <p className="pocket97-statement">Design, code, whatever you need.</p>
                 <p className="pocket97-context">
@@ -186,7 +186,7 @@ export function Pocket97Shell({
       </div>
 
       {startOpen ? (
-        <div className="pocket97-sheet" role="group" aria-label="Pocket 97 Start">
+        <div className="pocket97-sheet" role="group" aria-label="Pocket 98 Start">
           <button type="button" onClick={() => openProgram("about")}>
             <Myles97Icon name="document" size={20} aria-hidden="true" />
             About Myles
@@ -224,7 +224,7 @@ export function Pocket97Shell({
         </div>
       ) : null}
 
-      <nav className="pocket97-dock" aria-label="Pocket 97 dock">
+      <nav className="pocket97-dock" aria-label="Pocket 98 dock">
         <button
           ref={startButtonRef}
           type="button"

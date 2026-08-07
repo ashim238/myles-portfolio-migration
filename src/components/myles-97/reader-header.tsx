@@ -1,7 +1,7 @@
 "use client";
 
 import type { MouseEvent } from "react";
-import { Myles97Icon } from "@/components/myles-97/icons";
+import { iconForProgram, Myles97Icon } from "@/components/myles-97/icons";
 import { PROJECT_PROGRAM_BLUEPRINTS } from "@/lib/myles-97/programs";
 import {
   dispatchProjectReturnRequest,
@@ -37,7 +37,7 @@ export function ReaderHeader({ slug, title }: ReaderHeaderProps) {
     <header className="reader-header" aria-label="Reader controls">
       <div className="reader-header-project">
         <span aria-hidden="true">
-          <Myles97Icon name="app" size={18} />
+          <Myles97Icon name={iconForProgram(slug)} size={18} />
         </span>
         <strong>{appName}</strong>
       </div>

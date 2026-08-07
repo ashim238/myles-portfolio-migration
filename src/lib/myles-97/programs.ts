@@ -84,23 +84,24 @@ export function isProgramId(value: unknown): value is ProgramId {
   return typeof value === "string" && PROGRAM_IDS.has(value as ProgramId);
 }
 
+function fallbackTitle(appName: string): string {
+  return appName.replace(/\.(?:exe|app|studio)$/i, "");
+}
+
 export function buildProgramRegistry(
   projects: readonly Project[],
 ): ProgramDefinition[] {
   const bySlug = new Map(projects.map((project) => [project.slug, project]));
 
-  return PROJECT_PROGRAM_BLUEPRINTS.flatMap((blueprint) => {
+  return PROJECT_PROGRAM_BLUEPRINTS.map((blueprint) => {
     const project = bySlug.get(blueprint.id);
-    if (!project) return [];
 
-    return [
-      {
-        ...blueprint,
-        title: project.title,
-        summary: project.summary,
-        href: `/work/${project.slug}` as const,
-        coverImage: project.coverImage,
-      },
-    ];
+    return {
+      ...blueprint,
+      title: project?.title ?? fallbackTitle(blueprint.appName),
+      summary: project?.summary ?? blueprint.applicationType,
+      href: `/work/${blueprint.id}` as const,
+      ...(project?.coverImage ? { coverImage: project.coverImage } : {}),
+    };
   });
 }

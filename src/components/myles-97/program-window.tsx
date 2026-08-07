@@ -3,7 +3,7 @@
 import type { CSSProperties, PropsWithChildren, ReactNode } from "react";
 import type { ProgramId } from "@/lib/myles-97/programs";
 import type { WindowGeometry } from "@/lib/myles-97/state";
-import { Myles97Icon } from "@/components/myles-97/icons";
+import { iconForProgram, Myles97Icon } from "@/components/myles-97/icons";
 import { useWindowDrag } from "@/components/myles-97/use-window-drag";
 
 type ProgramWindowProps = PropsWithChildren<{
@@ -66,7 +66,7 @@ export function ProgramWindow({
     >
       <header className="myles97-titlebar" {...dragHandleProps}>
         <span className="myles97-titlebar-icon" aria-hidden="true">
-          <Myles97Icon name="app" size={16} />
+          <Myles97Icon name={iconForProgram(id)} size={16} />
         </span>
         <strong id={titleId} className="myles97-window-title">
           {title}

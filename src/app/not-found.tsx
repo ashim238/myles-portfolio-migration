@@ -7,7 +7,7 @@ export default function NotFound() {
       <section className="myles97-system-dialog" aria-labelledby="not-found-heading">
         <header className="myles97-system-dialog-titlebar">
           <Myles97Icon name="app" size={16} aria-hidden="true" />
-          <strong>Myles 97</strong>
+          <strong>Myles 98</strong>
         </header>
         <div className="myles97-system-dialog-body">
           <div className="myles97-system-dialog-mark" aria-hidden="true">

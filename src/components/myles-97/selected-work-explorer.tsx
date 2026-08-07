@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { Myles97Icon } from "@/components/myles-97/icons";
+import Link from "next/link";
+import { iconForProgram, Myles97Icon } from "@/components/myles-97/icons";
 import type {
   ProgramDefinition,
   ProjectProgramId,
@@ -49,7 +50,7 @@ export function SelectedWorkExplorer({
                     sizes="(max-width: 900px) 80vw, 320px"
                   />
                 ) : (
-                  <Myles97Icon name="app" size={40} />
+                  <Myles97Icon name={iconForProgram(program.id)} size={40} />
                 )}
               </span>
               <span className="myles97-program-card-copy">
@@ -60,13 +61,13 @@ export function SelectedWorkExplorer({
                 </span>
               </span>
             </button>
-            <a
+            <Link
               className="myles97-case-study-link"
               href={program.href}
               aria-label={`Open ${program.title} case study`}
             >
               Open case study <span aria-hidden="true">↗</span>
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

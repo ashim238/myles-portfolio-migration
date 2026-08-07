@@ -34,7 +34,7 @@ export type WorkstationDesktopProps = {
 };
 
 const defaultGeometry: Partial<Record<ProgramId, WindowGeometry>> = {
-  "selected-work": { x: 88, y: 112, width: 760, height: 536 },
+  "selected-work": { x: 136, y: 112, width: 760, height: 536 },
   welcome: { x: 416, y: 64, width: 600, height: 352 },
   about: { x: 312, y: 124, width: 540, height: 430 },
   "loose-parts": { x: 232, y: 92, width: 720, height: 520 },
@@ -109,7 +109,7 @@ export function WorkstationDesktop({
   });
 
   return (
-    <div className="myles97-desktop" aria-label="Myles 97 desktop">
+    <div className="myles97-desktop" aria-label="Myles 98 desktop">
       <nav className="myles97-desktop-shortcuts" aria-label="Desktop shortcuts">
         <button type="button" onClick={() => openProgram("selected-work")}>
           <Myles97Icon name="folder" size={32} aria-hidden="true" />
@@ -135,7 +135,7 @@ export function WorkstationDesktop({
 
         if (id === "welcome") {
           return (
-            <ProgramWindow key={id} {...props} title="Welcome to Myles 97">
+            <ProgramWindow key={id} {...props} title="Welcome to Myles 98">
               <WelcomeProgram onSelectedWork={() => openProgram("selected-work")} />
             </ProgramWindow>
           );

@@ -20,7 +20,7 @@ const project = (slug: string, title: string): Project => ({
   coverImage: `/projects/${slug}/cover.png`,
 });
 
-describe("Myles 97 program registry", () => {
+describe("Myles 98 program registry", () => {
   it("maps each published project to one purpose-built program", () => {
     const programs = buildProgramRegistry([
       project("fresh-greens", "Fresh Greens"),
@@ -35,6 +35,24 @@ describe("Myles 97 program registry", () => {
       { id: "navi", appName: "Navi Places.exe", primaryEvidence: "built" },
       { id: "tiktok", appName: "TikTok Catalog.studio", primaryEvidence: "shipped" },
     ]);
+  });
+
+  it("keeps all four canonical programs discoverable when metadata is missing", () => {
+    const programs = buildProgramRegistry([
+      project("fresh-greens", "Fresh Greens"),
+    ]);
+
+    expect(programs.map((program) => program.id)).toEqual([
+      "fresh-greens",
+      "understandingfafsa",
+      "navi",
+      "tiktok",
+    ]);
+    expect(programs.find((program) => program.id === "navi")).toMatchObject({
+      title: "Navi Places",
+      summary: "Place-discovery application",
+      href: "/work/navi",
+    });
   });
 
   it("contains no Microsoft asset references", () => {

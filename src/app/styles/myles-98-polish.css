@@ -1,0 +1,17 @@
+/* Myles 98 recording-review polish */
+.myles97-task-button > svg {
+  flex: 0 0 auto;
+}
+
+.myles97-task-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) and (pointer: fine) {
+  .myles97-window[data-m97-program-window="loose-parts"] {
+    max-height: 400px;
+  }
+}

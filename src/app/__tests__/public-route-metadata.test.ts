@@ -158,7 +158,7 @@ describe("public route metadata", () => {
     });
   });
 
-  it("gives unknown routes real Myles 97 recovery actions", () => {
+  it("gives unknown routes real Myles 98 recovery actions", () => {
     render(<NotFound />);
 
     expect(screen.getByRole("heading", { level: 1, name: "Page not found" })).toBeInTheDocument();

@@ -2,6 +2,8 @@
 
 Lean Next.js portfolio with file-based CMS editing.
 
+The current portfolio experience is **Myles 98** on desktop and **Pocket 98** on mobile, with shared **Reader Mode** case studies. See [`docs/MYLES_98_NAMING.md`](docs/MYLES_98_NAMING.md) for the canonical product language and the reason legacy `myles-97` code identifiers remain stable.
+
 ## Run locally
 
 ```bash
@@ -68,9 +70,9 @@ This catches missing required frontmatter and malformed `sections`.
 
 ## Routes
 
-- `/` home + selected work
-- `/play` unserious work page
-- `/work/[slug]` case study page
+- `/` Myles 98 / Pocket 98 home + selected work
+- `/play` Loose Parts source page
+- `/work/[slug]` Reader Mode case study page
 
 ## Site settings
 
@@ -83,6 +85,6 @@ Update central settings in `src/lib/site-config.ts`:
 
 ## Keep code clean
 
-- Reuse `SiteNav` and shared styles in `globals.css`.
-- Keep content in markdown, not hardcoded JSX blocks.
+- Reuse shared navigation and styles instead of duplicating route logic.
+- Keep content in markdown or structured source data where practical.
 - Add one utility before adding one-off logic.

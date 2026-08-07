@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState, type RefObject } from "react";
+import { iconForProgram, Myles97Icon } from "@/components/myles-97/icons";
 import type { ProgramDefinition, ProgramId } from "@/lib/myles-97/programs";
 
 export type TaskbarProps = {
@@ -18,7 +19,7 @@ export type TaskbarProps = {
 };
 
 const systemTitles: Partial<Record<ProgramId, string>> = {
-  welcome: "Welcome to Myles 97",
+  welcome: "Welcome to Myles 98",
   "selected-work": "Selected Work",
   about: "About Myles",
   "loose-parts": "Loose Parts",
@@ -43,10 +44,12 @@ export function Taskbar({
   onMinimize,
   onRestore,
 }: TaskbarProps) {
-  const [now, setNow] = useState(() => new Date());
+  const [now, setNow] = useState<Date | null>(null);
 
   useEffect(() => {
-    const timer = window.setInterval(() => setNow(new Date()), 30_000);
+    const updateClock = () => setNow(new Date());
+    updateClock();
+    const timer = window.setInterval(updateClock, 30_000);
     return () => window.clearInterval(timer);
   }, []);
 
@@ -92,18 +95,17 @@ export function Taskbar({
                 }
               }}
             >
-              {title}
+              <Myles97Icon name={iconForProgram(id)} size={16} aria-hidden="true" />
+              <span className="myles97-task-label">{title}</span>
             </button>
           );
         })}
       </div>
 
-      <time
-        className="myles97-clock"
-        dateTime={now.toISOString()}
-        suppressHydrationWarning
-      >
-        {now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}
+      <time className="myles97-clock" dateTime={now?.toISOString()}>
+        {now
+          ? now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
+          : "--:--"}
       </time>
     </nav>
   );

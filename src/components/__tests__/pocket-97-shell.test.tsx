@@ -96,7 +96,7 @@ function installMatchMedia(pocket: boolean) {
   );
 }
 
-describe("Pocket 97", () => {
+describe("Pocket 98", () => {
   beforeEach(() => {
     localStorage.clear();
     sessionStorage.clear();
@@ -107,7 +107,7 @@ describe("Pocket 97", () => {
     installMatchMedia(true);
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
 
-    const dock = await screen.findByRole("navigation", { name: "Pocket 97 dock" });
+    const dock = await screen.findByRole("navigation", { name: "Pocket 98 dock" });
     expect(dock).toBeInTheDocument();
     expect(document.querySelector("[data-draggable-window]")).toBeNull();
     expect(screen.getAllByRole("link", { name: /Open .* case study/ })).toHaveLength(4);
@@ -119,7 +119,7 @@ describe("Pocket 97", () => {
     const user = userEvent.setup();
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
 
-    await screen.findByRole("navigation", { name: "Pocket 97 dock" });
+    await screen.findByRole("navigation", { name: "Pocket 98 dock" });
     await user.click(
       screen.getByRole("button", { name: "Open Fresh Greens.exe program" }),
     );
@@ -140,7 +140,7 @@ describe("Pocket 97", () => {
     const user = userEvent.setup();
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
 
-    const dock = await screen.findByRole("navigation", { name: "Pocket 97 dock" });
+    const dock = await screen.findByRole("navigation", { name: "Pocket 98 dock" });
     await user.click(within(dock).getByRole("button", { name: "Loose Parts" }));
     expect(screen.getByRole("region", { name: /Loose Parts/ })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Open Loom in Loose Parts" })).toHaveAttribute(
@@ -158,7 +158,7 @@ describe("Pocket 97", () => {
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
 
     await waitFor(() => {
-      expect(screen.queryByRole("navigation", { name: "Pocket 97 dock" })).toBeNull();
+      expect(screen.queryByRole("navigation", { name: "Pocket 98 dock" })).toBeNull();
       expect(screen.getByRole("navigation", { name: "Open programs" })).toBeInTheDocument();
     });
     expect(document.querySelector("[data-draggable-window]")).not.toBeNull();

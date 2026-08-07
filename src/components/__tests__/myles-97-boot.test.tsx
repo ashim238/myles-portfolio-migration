@@ -17,7 +17,7 @@ vi.mock("next/image", () => ({
   },
 }));
 
-describe("BootSequence", () => {
+describe("Myles 98 BootSequence", () => {
   beforeEach(() => {
     vi.useFakeTimers();
     vi.spyOn(window, "matchMedia").mockReturnValue({
@@ -73,7 +73,7 @@ describe("BootSequence", () => {
     expect(onComplete).toHaveBeenCalledTimes(1);
   });
 
-  it("also respects the saved Myles 97 reduced-motion preference", () => {
+  it("also respects the saved Myles 98 reduced-motion preference", () => {
     const onComplete = vi.fn();
     render(
       <BootSequence eligible reduceMotion onComplete={onComplete} />,
