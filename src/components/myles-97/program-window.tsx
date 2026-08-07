@@ -54,6 +54,7 @@ export function ProgramWindow({
 
   return (
     <section
+      id={id}
       className="myles97-window"
       role="region"
       aria-labelledby={titleId}
