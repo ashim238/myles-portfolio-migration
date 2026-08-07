@@ -154,7 +154,7 @@ describe("Navi case-study structure", () => {
 
     expect(headings).toEqual([
       { id: "nv-heatmap", title: "The first prototype: a Manhattan heatmap" },
-      { id: "nv-research", title: "Platform audits and resident research" },
+      { id: "nv-research", title: "Resident evidence and supporting platform audit" },
       { id: "nv-system", title: "Rebuilding Navi as a working system" },
       { id: "nv-screens", title: "A working booking flow" },
     ]);
