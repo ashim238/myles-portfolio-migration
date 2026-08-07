@@ -1,3 +1,4 @@
+# Release-candidate verification for the synced npm lockfile.
 name: Verify Myles 98
 
 on:
