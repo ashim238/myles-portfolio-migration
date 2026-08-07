@@ -76,6 +76,11 @@
   color: var(--m97-reader-ink);
 }
 
+.myles98-system-document :is(.about-layout, .resume-layout) {
+  margin-top: 0;
+  animation: none;
+}
+
 .myles98-system-document :is(
   .about-body,
   .resume-body,
