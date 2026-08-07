@@ -1,7 +1,6 @@
-import Link from "next/link";
-import { SiteNav } from "@/components/site-nav";
 import { ExpandableImage } from "@/components/expandable-image";
 import { LoomEmbed } from "@/components/loom-embed";
+import { SystemDocumentShell } from "@/components/myles-97/system-document-shell";
 import { PortfolioEndcap } from "@/components/portfolio-endcap";
 import { SpecimenCard } from "@/components/specimen-card";
 import { playEntries, type PlayState } from "@/lib/content";
@@ -24,24 +23,10 @@ export const metadata = createRouteMetadata({
 
 export default function PlayPage() {
   return (
-    <main className="page-shell project-page" id="main-content">
-      <SiteNav />
-      <nav className="project-topbar" aria-label="Breadcrumb">
-        <Link href="/">
-          <span aria-hidden="true">←</span>
-          Home
-        </Link>
-      </nav>
-
+    <SystemDocumentShell program="loose-parts" title="Loose Parts">
       <section className="hero project-hero play-hero" aria-labelledby="play-title">
         <h1 id="play-title" className="project-hero-title play-title">
-          <span className="play-title-word" aria-hidden="true">
-            <span className="play-title-letter">P</span>
-            <span className="play-title-letter">l</span>
-            <span className="play-title-letter">a</span>
-            <span className="play-title-letter">y</span>
-          </span>
-          <span className="sr-only">Play</span>
+          Loose Parts
         </h1>
         <p className="project-hero-lede play-lede">
           I use this page as a running lab for interaction studies, material
@@ -162,6 +147,6 @@ export default function PlayPage() {
         </ol>
       </section>
       <PortfolioEndcap context="play" />
-    </main>
+    </SystemDocumentShell>
   );
 }
