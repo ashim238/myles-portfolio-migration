@@ -14,6 +14,10 @@ import {
   TikTokTemplateSystem,
 } from "@/components/tiktok-dsa";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
+import {
+  evidenceSurfaceData,
+  TIKTOK_DIRECTION_EVIDENCE_SURFACE,
+} from "@/lib/project-evidence";
 import { CASE_STUDY_CHAPTERS } from "@/lib/project-chapters";
 import { createRouteMetadata } from "@/lib/site-config";
 import { TIKTOK_TEMPLATES } from "@/lib/tiktok-data";
@@ -22,6 +26,25 @@ import styles from "./tiktok-four-beat.module.css";
 const TIKTOK_DESCRIPTION =
   "Static catalog templates designed for TikTok's Dynamic Showcase Ads during a 2021 Global Creative Lab internship. Light Academia shipped in the launch library.";
 const chapters = CASE_STUDY_CHAPTERS.tiktok;
+const TIKTOK_REGION_LABELS = {
+  title: "Title",
+  catalog: "Catalog",
+  supporting: "Supporting graphics",
+} as const;
+
+function templatePartLabels(template: (typeof TIKTOK_TEMPLATES)[number]) {
+  const regions = new Set<string>([
+    ...Object.keys(template.regionOverlays),
+    ...template.componentAssets.map(({ region }) => region),
+  ]);
+
+  return (Object.keys(TIKTOK_REGION_LABELS) as Array<
+    keyof typeof TIKTOK_REGION_LABELS
+  >)
+    .filter((region) => regions.has(region))
+    .map((region) => TIKTOK_REGION_LABELS[region])
+    .join(", ");
+}
 
 export async function generateMetadata(): Promise<Metadata> {
   const project = await getProjectBySlug("tiktok");
@@ -164,6 +187,55 @@ export default async function TikTokPage() {
               Dopamine Dressing, e-Boy/e-Girl, and Light Academia.
             </p>
           </div>
+          <figure
+            className={styles.directionProof}
+            aria-labelledby="tt-direction-proof-title"
+            {...evidenceSurfaceData(TIKTOK_DIRECTION_EVIDENCE_SURFACE)}
+          >
+            <figcaption id="tt-direction-proof-title">
+              <strong>Selected direction signals</strong>
+              <span>
+                One fixed catalog structure with different palettes and authored
+                regions.
+              </span>
+            </figcaption>
+            <ul
+              className={styles.directionGrid}
+              aria-label="Selected direction differences"
+            >
+              {TIKTOK_TEMPLATES.map((template) => (
+                <li key={template.key}>
+                  <strong className={styles.directionName}>
+                    {template.name}
+                  </strong>
+                  <span className={styles.directionSwatches} aria-hidden="true">
+                    {template.palette.map((color) => (
+                      <span
+                        key={color.hex}
+                        style={{ backgroundColor: color.hex }}
+                      />
+                    ))}
+                  </span>
+                  <dl>
+                    <div>
+                      <dt>Palette</dt>
+                      <dd>
+                        {template.palette.map(({ label }) => label).join(", ")}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt>Authored regions</dt>
+                      <dd>{templatePartLabels(template)}</dd>
+                    </div>
+                  </dl>
+                </li>
+              ))}
+            </ul>
+            <p className={styles.directionBoundary}>
+              This matrix shows one concrete selection layer. The full template
+              comparison and layered process follow in Build.
+            </p>
+          </figure>
         </div>
       </ProjectChapter>
 
