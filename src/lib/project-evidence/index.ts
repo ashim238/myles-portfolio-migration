@@ -4,11 +4,20 @@ import { TIKTOK_EVIDENCE } from "@/lib/project-evidence/tiktok";
 import type { ProjectEvidenceMap } from "@/lib/project-evidence/types";
 import { UNDERSTANDING_FAFSA_EVIDENCE } from "@/lib/project-evidence/understandingfafsa";
 
+export {
+  evidenceSurfaceData,
+  NAVI_DEMO_EVIDENCE_SURFACE,
+  NAVI_RESEARCH_EVIDENCE_SURFACE,
+  orientationSurfaceData,
+} from "@/lib/project-evidence/surfaces";
+
 export type {
   EvidenceClaimClass,
   EvidenceProofKind,
   EvidenceProofRole,
   EvidenceState,
+  EvidenceSurfaceMetadata,
+  EvidenceSurfaceRole,
   ProjectChapterEvidence,
   ProjectEvidenceClaim,
   ProjectEvidenceMap,
