@@ -47,14 +47,14 @@ function cssAtRuleContaining(atRule: string, needle: string) {
 }
 
 describe("PortfolioEndcap", () => {
-  it("keeps selected work primary and adapts the secondary destination", () => {
+  it("keeps Selected Work primary and adapts the secondary destination", () => {
     const play = render(<PortfolioEndcap context="play" />);
     const playNav = screen.getByRole("navigation", {
       name: "Continue exploring",
     });
     expect(
-      within(playNav).getByRole("link", { name: "Selected work" }),
-    ).toHaveAttribute("href", "/#work");
+      within(playNav).getByRole("link", { name: "Selected Work" }),
+    ).toHaveAttribute("href", "/#selected-work");
     expect(within(playNav).getByRole("link", { name: "Résumé" })).toHaveAttribute(
       "href",
       "/resume",
@@ -66,12 +66,11 @@ describe("PortfolioEndcap", () => {
       name: "Continue exploring",
     });
     expect(
-      within(resumeNav).getByRole("link", { name: "Selected work" }),
-    ).toHaveAttribute("href", "/#work");
-    expect(within(resumeNav).getByRole("link", { name: "Play" })).toHaveAttribute(
-      "href",
-      "/play",
-    );
+      within(resumeNav).getByRole("link", { name: "Selected Work" }),
+    ).toHaveAttribute("href", "/#selected-work");
+    expect(
+      within(resumeNav).getByRole("link", { name: "Loose Parts" }),
+    ).toHaveAttribute("href", "/play");
   });
 
   it("stays compact and desktop-only beside the persistent mobile nav", () => {
@@ -95,7 +94,7 @@ describe("PortfolioEndcap", () => {
     expect(print).toMatch(/\.portfolio-endcap[\s\S]*?display:\s*none !important;/);
   });
 
-  it("continues both Play and Résumé into the rest of the portfolio", () => {
+  it("continues both Loose Parts and Résumé into the rest of the portfolio", () => {
     expect(playPage).toContain('import { PortfolioEndcap } from "@/components/portfolio-endcap";');
     expect(playPage).toContain('<PortfolioEndcap context="play" />');
     expect(resumePage).toContain('import { PortfolioEndcap } from "@/components/portfolio-endcap";');
