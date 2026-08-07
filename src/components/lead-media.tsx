@@ -1,5 +1,10 @@
 import Image from "next/image";
 import { LeadVideo } from "@/components/lead-video";
+import {
+  evidenceSurfaceData,
+  orientationSurfaceData,
+  type EvidenceSurfaceMetadata,
+} from "@/lib/project-evidence";
 
 type LeadMediaProps = {
   cover: string;
@@ -8,6 +13,7 @@ type LeadMediaProps = {
   width: number;
   height: number;
   presentation?: "default" | "fresh-greens";
+  evidence?: EvidenceSurfaceMetadata;
 };
 
 export function LeadMedia({
@@ -17,14 +23,22 @@ export function LeadMedia({
   width,
   height,
   presentation = "default",
+  evidence,
 }: LeadMediaProps) {
   const presentationClass =
     presentation === "default" ? "" : ` case-lead-media--${presentation}`;
+  const surfaceData = evidence
+    ? {
+        ...orientationSurfaceData("lead-media"),
+        ...evidenceSurfaceData(evidence),
+      }
+    : orientationSurfaceData("lead-media");
 
   return (
     <figure
       className={`case-lead-media${presentationClass}`}
       data-project-enter-cover
+      {...surfaceData}
     >
       {clip ? (
         <LeadVideo
