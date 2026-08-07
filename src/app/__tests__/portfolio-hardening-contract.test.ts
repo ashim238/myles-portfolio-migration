@@ -6,6 +6,14 @@ const baseStyles = readFileSync(
   resolve(process.cwd(), "src/app/styles/base.css"),
   "utf8",
 );
+const pocketStyles = readFileSync(
+  resolve(process.cwd(), "src/app/styles/myles-97-pocket.css"),
+  "utf8",
+);
+const pocketHook = readFileSync(
+  resolve(process.cwd(), "src/components/myles-97/use-pocket-97.ts"),
+  "utf8",
+);
 
 function cssBlock(selector: string, source = baseStyles) {
   const start = source.indexOf(`${selector} {`);
@@ -45,26 +53,43 @@ describe("portfolio hardening style contract", () => {
     expect(root).toMatch(/--rounded-lg:\s*1rem;/);
   });
 
-  it("gives mobile and desktop exclusive ownership at 767 and 768 pixels", () => {
-    const mobile = cssBlockContaining(
-      "@media (max-width: 767px)",
-      ".mobile-nav-item",
+  it("switches Pocket 97 through the approved capability query with a safe server snapshot", () => {
+    expect(pocketHook).toContain('useSyncExternalStore');
+    expect(pocketHook).toContain(
+      '"(max-width: 767px), (pointer: coarse)"',
     );
-    const desktop = cssBlockContaining(
-      "@media (min-width: 768px)",
-      ".project-work-jump-card",
-    );
-
-    expect(baseStyles).not.toMatch(/@media\s*\(max-width:\s*768px\)/);
-    expect(baseStyles).not.toMatch(/@media\s*\(max-width:\s*760px\)/);
-    expect(baseStyles).not.toMatch(/@media\s*\(min-width:\s*760px\)/);
-    expect(cssBlock(".mobile-nav", mobile)).toMatch(/display:\s*flex;/);
-    expect(cssBlock(".project-work-jump-card", desktop)).toMatch(
-      /grid-template-columns:/,
+    expect(pocketHook).toMatch(/function getServerSnapshot\(\)\s*\{\s*return false;/);
+    expect(pocketHook).not.toContain("window.innerWidth");
+    expect(pocketStyles).toContain(
+      "@media (max-width: 767px), (pointer: coarse)",
     );
   });
 
-  it("lets every mobile navigation item share narrow viewports", () => {
+  it("prevents horizontal desktop panning before Pocket hydration", () => {
+    const fallback = cssBlock(
+      '.myles97-shell[data-m97-shell="workstation"] .myles97-desktop',
+      pocketStyles,
+    );
+
+    expect(fallback).toMatch(/min-width:\s*0;/);
+    expect(fallback).toMatch(/overflow-x:\s*hidden;/);
+    expect(pocketStyles).toMatch(
+      /\.myles97-window\s*\{[\s\S]*position:\s*relative !important;/,
+    );
+  });
+
+  it("gives the Pocket dock safe-area clearance and 44px controls", () => {
+    const dock = cssBlock(".pocket97-dock", pocketStyles);
+    const button = cssBlock(".pocket97-dock button", pocketStyles);
+    const stage = cssBlock(".pocket97-stage", pocketStyles);
+
+    expect(dock).toMatch(/env\(safe-area-inset-bottom, 0px\)/);
+    expect(dock).toMatch(/grid-template-columns:\s*repeat\(4, minmax\(0, 1fr\)\);/);
+    expect(button).toMatch(/min-height:\s*44px;/);
+    expect(stage).toMatch(/env\(safe-area-inset-bottom, 0px\)/);
+  });
+
+  it("lets every legacy mobile navigation item share narrow utility routes", () => {
     const mobile = cssBlockContaining(
       "@media (max-width: 767px)",
       ".mobile-nav-item",
@@ -108,7 +133,7 @@ describe("portfolio hardening style contract", () => {
     expect(arrowSources).not.toMatch(/<span aria-hidden="true">← /);
   });
 
-  it("adds the safe area to mobile navigation without shrinking its controls", () => {
+  it("adds the safe area to legacy mobile navigation without shrinking its controls", () => {
     const mobile = cssBlockContaining(
       "@media (max-width: 767px)",
       ".mobile-nav-item",
@@ -126,7 +151,7 @@ describe("portfolio hardening style contract", () => {
     expect(item).toMatch(/min-height:\s*2\.75rem;/);
   });
 
-  it("clears the fixed mobile navigation and device safe area", () => {
+  it("clears the fixed legacy mobile navigation and device safe area", () => {
     const mobile = cssBlockContaining(
       "@media (max-width: 767px)",
       ".mobile-nav-item",
@@ -138,7 +163,7 @@ describe("portfolio hardening style contract", () => {
     );
   });
 
-  it("keeps only Email in the mobile footer navigation", () => {
+  it("keeps only Email in the legacy mobile footer navigation", () => {
     const mobile = cssBlockContaining(
       "@media (max-width: 767px)",
       ".mobile-nav-item",

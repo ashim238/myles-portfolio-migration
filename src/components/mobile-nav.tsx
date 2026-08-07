@@ -61,6 +61,10 @@ const items = [
   },
 ];
 
+function isReaderOwnedPath(pathname: string) {
+  return /^\/work\/[^/]+\/?$/.test(pathname);
+}
+
 export function MobileNav() {
   const pathname = usePathname();
   const isNaviMinisite =
@@ -68,8 +72,9 @@ export function MobileNav() {
     pathname.startsWith("/work/navi/demo/") ||
     pathname === "/work/navi/system" ||
     pathname.startsWith("/work/navi/system/");
+  const isMyles97Owned = pathname === "/" || isReaderOwnedPath(pathname);
 
-  if (isNaviMinisite) return null;
+  if (isNaviMinisite || isMyles97Owned) return null;
 
   return (
     <nav className="mobile-nav" aria-label="Mobile navigation">

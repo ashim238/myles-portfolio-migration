@@ -23,11 +23,16 @@ describe("MobileNav route ownership", () => {
   });
 
   it.each([
+    "/",
+    "/work/fresh-greens",
+    "/work/understandingfafsa",
+    "/work/navi",
+    "/work/tiktok",
     "/work/navi/demo",
     "/work/navi/demo/experience/harlem-jazz-walk",
     "/work/navi/system",
     "/work/navi/system/components",
-  ])("stays out of Navi-owned route %s", (pathname) => {
+  ])("stays out of Pocket, Reader, or Navi-owned route %s", (pathname) => {
     route.pathname = pathname;
     render(<MobileNav />);
     expect(
@@ -35,13 +40,16 @@ describe("MobileNav route ownership", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("remains available on the Navi case study", () => {
-    route.pathname = "/work/navi";
-    render(<MobileNav />);
-    expect(
-      screen.getByRole("navigation", { name: "Mobile navigation" }),
-    ).toBeInTheDocument();
-  });
+  it.each(["/about", "/play", "/resume"])(
+    "remains available on direct utility route %s",
+    (pathname) => {
+      route.pathname = pathname;
+      render(<MobileNav />);
+      expect(
+        screen.getByRole("navigation", { name: "Mobile navigation" }),
+      ).toBeInTheDocument();
+    },
+  );
 
   it("uses an opaque-enough surface to keep page content from bleeding through", () => {
     expect(baseStyles).toContain(
@@ -49,8 +57,8 @@ describe("MobileNav route ownership", () => {
     );
   });
 
-  it.each(["/work", "/work/fresh-greens"])(
-    "marks Work current in both navigation systems on %s",
+  it.each(["/work", "/work/other-project"])(
+    "marks Work current where legacy mobile navigation still owns %s",
     (pathname) => {
       route.pathname = pathname;
       const { container } = render(

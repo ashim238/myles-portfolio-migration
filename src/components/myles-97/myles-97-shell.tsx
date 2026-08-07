@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useReducer, useState } from "react";
 import { BootSequence } from "@/components/myles-97/boot-sequence";
 import type { LoosePartSummary } from "@/components/myles-97/loose-parts-program";
+import { Pocket97Shell } from "@/components/myles-97/pocket-97-shell";
+import { usePocket97 } from "@/components/myles-97/use-pocket-97";
 import { WorkstationDesktop } from "@/components/myles-97/workstation-desktop";
 import type { ProgramDefinition } from "@/lib/myles-97/programs";
 import {
@@ -27,6 +29,7 @@ export function Myles97Shell({ programs, looseParts }: Myles97ShellProps) {
     createInitialWorkstationState,
   );
   const [hydrated, setHydrated] = useState(false);
+  const pocket = usePocket97();
 
   useEffect(() => {
     dispatch({ type: "hydrate", state: loadPersistedWorkstation() });
@@ -49,13 +52,23 @@ export function Myles97Shell({ programs, looseParts }: Myles97ShellProps) {
       className="myles97-shell"
       data-m97-contrast={state.displayPreferences.highContrast ? "high" : "default"}
       data-m97-motion={state.displayPreferences.reduceMotion ? "reduce" : "full"}
+      data-m97-shell={pocket ? "pocket" : "workstation"}
     >
-      <WorkstationDesktop
-        programs={programs}
-        looseParts={looseParts}
-        state={state}
-        dispatch={dispatch}
-      />
+      {pocket ? (
+        <Pocket97Shell
+          programs={programs}
+          looseParts={looseParts}
+          state={state}
+          dispatch={dispatch}
+        />
+      ) : (
+        <WorkstationDesktop
+          programs={programs}
+          looseParts={looseParts}
+          state={state}
+          dispatch={dispatch}
+        />
+      )}
       <BootSequence
         eligible={hydrated && !state.bootCompleted}
         reduceMotion={state.displayPreferences.reduceMotion}
