@@ -3,30 +3,43 @@
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Myles97Icon } from "@/components/myles-97/icons";
 import { TikTokCoverBlobs } from "@/components/tiktok-dsa";
 import { prefersReducedMotion } from "@/lib/home-intro";
 import {
   PROJECT_ENTER_COMPLETE,
   PROJECT_ENTER_REQUEST,
   PROJECT_ENTER_SETTLE_MS,
+  PROJECT_RETURN_REQUEST,
+  queryProjectCover,
+  readProjectReturnSnapshot,
   waitForProjectCover,
+  waitForProjectProgram,
+  type ProjectCoverVisual,
   type ProjectEnterRequestDetail,
   type ProjectEnterRect,
   type ProjectEnterVisual,
+  type ProjectReturnRequestDetail,
+  type ProjectReturnSnapshot,
 } from "@/lib/project-enter";
 
 const EASE_OUT_CUBIC = "cubic-bezier(0.33, 1, 0.68, 1)";
+const TRANSITION_FAILSAFE_MS = 4500;
 
 type OverlayPhase = "holding" | "navigating" | "settling";
+type OverlayDirection = "enter" | "return";
 
 type OverlayState = {
   id: number;
+  direction: OverlayDirection;
   phase: OverlayPhase;
   slug: string;
   href: string;
   visual: ProjectEnterVisual;
   borderRadius: string;
   startRect: ProjectEnterRect;
+  snapshot?: ProjectReturnSnapshot;
+  crossfade: boolean;
 };
 
 function lockProjectEnter() {
@@ -37,6 +50,73 @@ function unlockProjectEnter() {
   document.documentElement.classList.remove("project-enter-lock");
   document.documentElement.classList.remove("project-enter-settling");
   window.dispatchEvent(new CustomEvent(PROJECT_ENTER_COMPLETE));
+}
+
+function validRect(rect: DOMRect): boolean {
+  return (
+    Number.isFinite(rect.top) &&
+    Number.isFinite(rect.left) &&
+    Number.isFinite(rect.width) &&
+    Number.isFinite(rect.height) &&
+    rect.width > 0 &&
+    rect.height > 0
+  );
+}
+
+function toRect(rect: DOMRect): ProjectEnterRect {
+  return {
+    top: rect.top,
+    left: rect.left,
+    width: rect.width,
+    height: rect.height,
+  };
+}
+
+function caseStudyPath(slug: string): string {
+  return `/work/${slug}`;
+}
+
+function CoverVisual({ visual }: { visual: ProjectCoverVisual }) {
+  if (visual.type === "tiktok") {
+    return (
+      <div className="project-enter-tiktok work-thumb--tiktok-logo tt-cover--preview">
+        <TikTokCoverBlobs deferUntilVisible={false} />
+      </div>
+    );
+  }
+
+  return (
+    <Image
+      className="project-enter-image"
+      src={visual.src}
+      alt=""
+      width={1400}
+      height={900}
+      priority
+      draggable={false}
+    />
+  );
+}
+
+function TransitionVisual({ visual }: { visual: ProjectEnterVisual }) {
+  if (visual.type !== "program") {
+    return <CoverVisual visual={visual} />;
+  }
+
+  return (
+    <div className="project-enter-program">
+      <div className="project-enter-program-titlebar">
+        <Myles97Icon name="app" size={16} aria-hidden="true" />
+        <strong className="project-enter-program-title">{visual.appName}</strong>
+        <span className="project-enter-program-control" aria-hidden="true">
+          ×
+        </span>
+      </div>
+      <div className="project-enter-program-cover">
+        <CoverVisual visual={visual.cover} />
+      </div>
+    </div>
+  );
 }
 
 type ProjectEnterTransitionProps = {
@@ -50,7 +130,6 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
   const shellRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
-  const pendingSlugRef = useRef<string | null>(null);
   const navigatingRef = useRef(false);
   const settleRanRef = useRef(false);
   const failsafeRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -66,6 +145,7 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
     ) {
       return;
     }
+
     activeTransitionIdRef.current = null;
     if (failsafeRef.current) {
       clearTimeout(failsafeRef.current);
@@ -77,35 +157,66 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
     }
     for (const animation of animationsRef.current) animation.cancel();
     animationsRef.current = [];
-    pendingSlugRef.current = null;
     navigatingRef.current = false;
     settleRanRef.current = false;
     unlockProjectEnter();
     setOverlay(null);
   }, []);
 
-  const runSettle = useCallback(
+  const runCrossfade = useCallback(
+    async (state: OverlayState) => {
+      const shell = shellRef.current;
+      const backdrop = backdropRef.current;
+      if (!shell || !backdrop) {
+        finishTransition(state.id);
+        return;
+      }
+
+      const backdropAnim = backdrop.animate([{ opacity: 1 }, { opacity: 0 }], {
+        duration: 220,
+        easing: EASE_OUT_CUBIC,
+        fill: "forwards",
+      });
+      const shellAnim = shell.animate([{ opacity: 1 }, { opacity: 0 }], {
+        duration: 240,
+        easing: EASE_OUT_CUBIC,
+        fill: "forwards",
+      });
+      animationsRef.current = [backdropAnim, shellAnim];
+
+      await Promise.race([
+        Promise.all([backdropAnim.finished, shellAnim.finished]).catch(
+          () => undefined,
+        ),
+        new Promise((resolve) => {
+          settleTimeoutRef.current = window.setTimeout(resolve, 360);
+        }),
+      ]);
+      finishTransition(state.id);
+    },
+    [finishTransition],
+  );
+
+  const runEnterSettle = useCallback(
     async (state: OverlayState) => {
       const cover = await waitForProjectCover(state.slug);
       if (activeTransitionIdRef.current !== state.id) return;
+
       const shell = shellRef.current;
       const backdrop = backdropRef.current;
       const frame = frameRef.current;
-
       if (!shell || !backdrop || !frame) {
         finishTransition(state.id);
         return;
       }
 
       if (!cover) {
-        shell.style.opacity = "0";
-        finishTransition(state.id);
+        await runCrossfade(state);
         return;
       }
 
       const targetRect = cover.getBoundingClientRect();
       const targetRadius = getComputedStyle(cover).borderRadius || "0.65rem";
-
       const frameAnim = frame.animate(
         [
           {
@@ -129,44 +240,27 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
           fill: "forwards",
         },
       );
+      const backdropAnim = backdrop.animate([{ opacity: 1 }, { opacity: 0 }], {
+        duration: 280,
+        easing: EASE_OUT_CUBIC,
+        fill: "forwards",
+      });
 
-      // Fade only the neutral backdrop first. This lets the case-study title,
-      // lede and destination hero appear around the still-solid shared cover
-      // instead of holding the visitor on an empty canvas until the very end.
-      const backdropAnim = backdrop.animate(
-        [{ opacity: 1 }, { opacity: 0 }],
-        {
-          duration: 280,
-          easing: EASE_OUT_CUBIC,
-          fill: "forwards",
-        },
-      );
-
-      const FRAME_FADE_MS = 220;
+      const frameFadeMs = 220;
       const frameFadeDelay = PROJECT_ENTER_SETTLE_MS - 140;
-
-      const shellAnim = shell.animate(
-        [{ opacity: 1 }, { opacity: 0 }],
-        {
-          duration: FRAME_FADE_MS,
-          delay: frameFadeDelay,
-          easing: EASE_OUT_CUBIC,
-          fill: "forwards",
-        },
-      );
-
-      // The page sits at opacity:0 via `.project-enter-settling`; this WAAPI
-      // fill overrides that rule to fade it up in lockstep with the overlay.
+      const shellAnim = shell.animate([{ opacity: 1 }, { opacity: 0 }], {
+        duration: frameFadeMs,
+        delay: frameFadeDelay,
+        easing: EASE_OUT_CUBIC,
+        fill: "forwards",
+      });
       const page = cover.closest<HTMLElement>(".project-page");
-      const pageAnim = page?.animate(
-        [{ opacity: 0 }, { opacity: 1 }],
-        {
-          duration: 380,
-          delay: 60,
-          easing: EASE_OUT_CUBIC,
-          fill: "forwards",
-        },
-      );
+      const pageAnim = page?.animate([{ opacity: 0 }, { opacity: 1 }], {
+        duration: 380,
+        delay: 60,
+        easing: EASE_OUT_CUBIC,
+        fill: "forwards",
+      });
       animationsRef.current = [
         frameAnim,
         backdropAnim,
@@ -174,10 +268,7 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
         ...(pageAnim ? [pageAnim] : []),
       ];
 
-      // Settle on real completion when the timeline runs, but fall back to a
-      // timer so a frozen timeline can never leave the overlay and scroll lock
-      // hanging.
-      const settleTimeout = frameFadeDelay + FRAME_FADE_MS + 120;
+      const settleTimeout = frameFadeDelay + frameFadeMs + 120;
       await Promise.race([
         Promise.all([
           frameAnim.finished,
@@ -191,10 +282,102 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
       ]);
       finishTransition(state.id);
     },
+    [finishTransition, runCrossfade],
+  );
+
+  const runReturnSettle = useCallback(
+    async (state: OverlayState) => {
+      if (!state.snapshot || state.crossfade) {
+        await runCrossfade(state);
+        return;
+      }
+
+      const target = await waitForProjectProgram(state.snapshot.slug);
+      if (activeTransitionIdRef.current !== state.id) return;
+
+      const shell = shellRef.current;
+      const backdrop = backdropRef.current;
+      const frame = frameRef.current;
+      if (!target || !shell || !backdrop || !frame) {
+        await runCrossfade(state);
+        return;
+      }
+
+      const targetBounds = target.getBoundingClientRect();
+      if (!validRect(targetBounds)) {
+        await runCrossfade(state);
+        return;
+      }
+
+      const targetRect = toRect(targetBounds);
+      const targetRadius =
+        getComputedStyle(target).borderRadius || state.snapshot.borderRadius;
+      const frameAnim = frame.animate(
+        [
+          {
+            top: `${state.startRect.top}px`,
+            left: `${state.startRect.left}px`,
+            width: `${state.startRect.width}px`,
+            height: `${state.startRect.height}px`,
+            borderRadius: state.borderRadius,
+          },
+          {
+            top: `${targetRect.top}px`,
+            left: `${targetRect.left}px`,
+            width: `${targetRect.width}px`,
+            height: `${targetRect.height}px`,
+            borderRadius: targetRadius,
+          },
+        ],
+        {
+          duration: PROJECT_ENTER_SETTLE_MS,
+          easing: EASE_OUT_CUBIC,
+          fill: "forwards",
+        },
+      );
+      const backdropAnim = backdrop.animate([{ opacity: 1 }, { opacity: 0 }], {
+        duration: 300,
+        easing: EASE_OUT_CUBIC,
+        fill: "forwards",
+      });
+      const shellAnim = shell.animate([{ opacity: 1 }, { opacity: 0 }], {
+        duration: 220,
+        delay: PROJECT_ENTER_SETTLE_MS - 120,
+        easing: EASE_OUT_CUBIC,
+        fill: "forwards",
+      });
+      animationsRef.current = [frameAnim, backdropAnim, shellAnim];
+
+      await Promise.race([
+        Promise.all([
+          frameAnim.finished,
+          backdropAnim.finished,
+          shellAnim.finished,
+        ]).catch(() => undefined),
+        new Promise((resolve) => {
+          settleTimeoutRef.current = window.setTimeout(
+            resolve,
+            PROJECT_ENTER_SETTLE_MS + 220,
+          );
+        }),
+      ]);
+      finishTransition(state.id);
+    },
+    [finishTransition, runCrossfade],
+  );
+
+  const armFailsafe = useCallback(
+    (transitionId: number) => {
+      if (failsafeRef.current) clearTimeout(failsafeRef.current);
+      failsafeRef.current = setTimeout(
+        () => finishTransition(transitionId),
+        TRANSITION_FAILSAFE_MS,
+      );
+    },
     [finishTransition],
   );
 
-  const startTransition = useCallback(
+  const startEnterTransition = useCallback(
     (detail: ProjectEnterRequestDetail) => {
       if (prefersReducedMotion()) {
         router.push(detail.href);
@@ -205,30 +388,63 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
       const transitionId = ++transitionSequenceRef.current;
       activeTransitionIdRef.current = transitionId;
       navigatingRef.current = true;
-      pendingSlugRef.current = detail.slug;
       lockProjectEnter();
       document.documentElement.classList.add("project-enter-settling");
-
-      // Failsafe: never hold the scroll lock / overlay longer than this,
-      // even if the destination route is slow to load or the cover never
-      // resolves. The navigation itself still completes in the background.
-      if (failsafeRef.current) clearTimeout(failsafeRef.current);
-      failsafeRef.current = setTimeout(
-        () => finishTransition(transitionId),
-        4500,
-      );
+      armFailsafe(transitionId);
 
       setOverlay({
         id: transitionId,
+        direction: "enter",
         phase: "holding",
         slug: detail.slug,
         href: detail.href,
         visual: detail.visual,
         borderRadius: detail.borderRadius,
         startRect: detail.rect,
+        crossfade: false,
       });
     },
-    [router, finishTransition],
+    [armFailsafe, router],
+  );
+
+  const startReturnTransition = useCallback(
+    (detail: ProjectReturnRequestDetail, navigationAlreadyStarted = false) => {
+      if (prefersReducedMotion()) {
+        if (!navigationAlreadyStarted) router.push(detail.href);
+        return;
+      }
+      if (navigatingRef.current) return;
+
+      const source = queryProjectCover(detail.snapshot.slug);
+      const sourceBounds = source?.getBoundingClientRect();
+      const hasSource = Boolean(sourceBounds && validRect(sourceBounds));
+      const startRect =
+        sourceBounds && hasSource ? toRect(sourceBounds) : detail.snapshot.rect;
+      const borderRadius =
+        source && hasSource
+          ? getComputedStyle(source).borderRadius || "0px"
+          : detail.snapshot.borderRadius;
+      const transitionId = ++transitionSequenceRef.current;
+      activeTransitionIdRef.current = transitionId;
+      navigatingRef.current = true;
+      lockProjectEnter();
+      document.documentElement.classList.add("project-enter-settling");
+      armFailsafe(transitionId);
+
+      setOverlay({
+        id: transitionId,
+        direction: "return",
+        phase: navigationAlreadyStarted ? "navigating" : "holding",
+        slug: detail.snapshot.slug,
+        href: detail.href,
+        visual: detail.snapshot.visual,
+        borderRadius,
+        startRect,
+        snapshot: detail.snapshot,
+        crossfade: !hasSource,
+      });
+    },
+    [armFailsafe, router],
   );
 
   useEffect(() => {
@@ -241,34 +457,50 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
     };
   }, []);
 
-  // Escape releases the overlay and scroll lock immediately; the in-app
-  // navigation it kicked off still resolves underneath.
   useEffect(() => {
     if (!overlay) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") finishTransition(overlay.id);
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") finishTransition(overlay.id);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [overlay, finishTransition]);
 
   useEffect(() => {
-    const onRequest = (event: Event) => {
+    const onEnterRequest = (event: Event) => {
       const detail = (event as CustomEvent<ProjectEnterRequestDetail>).detail;
-      if (!detail) return;
-      startTransition(detail);
+      if (detail) startEnterTransition(detail);
+    };
+    const onReturnRequest = (event: Event) => {
+      const detail = (event as CustomEvent<ProjectReturnRequestDetail>).detail;
+      if (detail) startReturnTransition(detail);
     };
 
-    window.addEventListener(PROJECT_ENTER_REQUEST, onRequest);
-    return () => window.removeEventListener(PROJECT_ENTER_REQUEST, onRequest);
-  }, [startTransition]);
+    window.addEventListener(PROJECT_ENTER_REQUEST, onEnterRequest);
+    window.addEventListener(PROJECT_RETURN_REQUEST, onReturnRequest);
+    return () => {
+      window.removeEventListener(PROJECT_ENTER_REQUEST, onEnterRequest);
+      window.removeEventListener(PROJECT_RETURN_REQUEST, onReturnRequest);
+    };
+  }, [startEnterTransition, startReturnTransition]);
+
+  useEffect(() => {
+    const onPopState = () => {
+      const snapshot = readProjectReturnSnapshot();
+      if (!snapshot) return;
+      if (pathname !== caseStudyPath(snapshot.slug)) return;
+      startReturnTransition({ href: "/", snapshot }, true);
+    };
+
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, [pathname, startReturnTransition]);
 
   useEffect(() => {
     if (!overlay || overlay.phase !== "holding") return;
-    if (!shellRef.current || !frameRef.current) return;
+    if (!shellRef.current) return;
+    if (!overlay.crossfade && !frameRef.current) return;
 
-    // This effect runs only after the overlay has committed, so the source
-    // cover is already painted before the route begins changing underneath it.
     setOverlay((current) =>
       current ? { ...current, phase: "navigating" } : current,
     );
@@ -277,10 +509,12 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
 
   useEffect(() => {
     if (!overlay || overlay.phase !== "navigating") return;
-    if (!pathname.startsWith("/work/")) return;
 
-    const slug = pathname.split("/").filter(Boolean).pop();
-    if (!slug || slug !== pendingSlugRef.current) return;
+    const reachedDestination =
+      overlay.direction === "enter"
+        ? pathname === overlay.href
+        : pathname === "/";
+    if (!reachedDestination) return;
 
     setOverlay((current) =>
       current ? { ...current, phase: "settling" } : current,
@@ -291,8 +525,13 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
     if (!overlay || overlay.phase !== "settling") return;
     if (settleRanRef.current) return;
     settleRanRef.current = true;
-    void runSettle(overlay);
-  }, [overlay, runSettle]);
+
+    if (overlay.direction === "enter") {
+      void runEnterSettle(overlay);
+    } else {
+      void runReturnSettle(overlay);
+    }
+  }, [overlay, runEnterSettle, runReturnSettle]);
 
   return (
     <>
@@ -303,35 +542,28 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
           className="project-enter-overlay"
           aria-hidden="true"
           data-phase={overlay.phase}
+          data-direction={overlay.direction}
         >
           <div ref={backdropRef} className="project-enter-backdrop" />
-          <div
-            ref={frameRef}
-            className="project-enter-frame"
-            style={{
-              top: overlay.startRect.top,
-              left: overlay.startRect.left,
-              width: overlay.startRect.width,
-              height: overlay.startRect.height,
-              borderRadius: overlay.borderRadius,
-            }}
-          >
-            {overlay.visual.type === "tiktok" ? (
-              <div className="project-enter-tiktok work-thumb--tiktok-logo tt-cover--preview">
-                <TikTokCoverBlobs deferUntilVisible={false} />
-              </div>
-            ) : (
-              <Image
-                className="project-enter-image"
-                src={overlay.visual.src}
-                alt=""
-                width={1400}
-                height={900}
-                priority
-                draggable={false}
-              />
-            )}
-          </div>
+          {!overlay.crossfade ? (
+            <div
+              ref={frameRef}
+              className={`project-enter-frame${
+                overlay.visual.type === "program"
+                  ? " project-enter-frame--program"
+                  : ""
+              }`}
+              style={{
+                top: overlay.startRect.top,
+                left: overlay.startRect.left,
+                width: overlay.startRect.width,
+                height: overlay.startRect.height,
+                borderRadius: overlay.borderRadius,
+              }}
+            >
+              <TransitionVisual visual={overlay.visual} />
+            </div>
+          ) : null}
         </div>
       ) : null}
     </>

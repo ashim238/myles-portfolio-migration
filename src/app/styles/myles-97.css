@@ -505,6 +505,9 @@
 }
 
 .myles97-project-preview-cover {
+  display: grid;
+  min-height: 180px;
+  place-items: center;
   overflow: hidden;
   border: 1px solid #777;
   background: #eee;
@@ -755,6 +758,98 @@
   background: #777;
 }
 
+/* Program-window transition identity. The shared transition state machine lives
+   in base.css; these rules only render Myles 97's structured program data. */
+.project-enter-frame--program {
+  border: 2px solid var(--m97-ink);
+  background: var(--m97-chrome);
+  color: var(--m97-ink);
+}
+
+.project-enter-program {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--m97-chrome);
+  color: var(--m97-ink);
+  font-family: var(--m97-ui-font);
+}
+
+.project-enter-program-titlebar {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  height: 36px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 7px;
+  background: var(--m97-active);
+  color: #fff;
+}
+
+.project-enter-program-title {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.project-enter-program-control {
+  display: grid;
+  width: 20px;
+  height: 20px;
+  place-items: center;
+  border: 1px solid currentColor;
+  background: var(--m97-chrome);
+  color: var(--m97-ink);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.project-enter-program-cover {
+  position: absolute;
+  inset: 36px 0 0;
+  overflow: hidden;
+  background: #fff;
+}
+
+.project-enter-program-cover :is(.project-enter-image, .project-enter-tiktok) {
+  width: 100%;
+  height: 100%;
+}
+
+.project-enter-overlay[data-direction="return"]
+  .project-enter-program-titlebar {
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+.project-enter-overlay[data-direction="return"]
+  .project-enter-program-cover {
+  top: 0;
+}
+
+.project-enter-overlay[data-direction="return"][data-phase="settling"]
+  .project-enter-program-titlebar {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 180ms var(--ease-project-enter),
+    transform 240ms var(--ease-project-enter);
+}
+
+.project-enter-overlay[data-direction="return"][data-phase="settling"]
+  .project-enter-program-cover {
+  top: 36px;
+  transition: top var(--duration-project-enter) var(--ease-project-enter);
+}
+
 @media (max-width: 899px) {
   .myles97-shell {
     overflow-x: auto;
@@ -777,7 +872,12 @@
   .myles97-roti-note,
   .myles97-boot,
   .myles97-boot-mark,
-  .myles97-boot-progress {
+  .myles97-boot-progress,
+  .project-enter-frame--program,
+  .project-enter-program,
+  .project-enter-program-titlebar,
+  .project-enter-program-cover,
+  .project-enter-program-control {
     border-color: CanvasText;
     background: Canvas;
     color: CanvasText;
@@ -788,7 +888,8 @@
   .myles97-task-button[data-focused="true"],
   .myles97-start-menu-brand,
   .myles97-start-menu-items :is(button, a):hover,
-  .myles97-case-study-link:hover {
+  .myles97-case-study-link:hover,
+  .project-enter-program-titlebar {
     background: Highlight;
     color: HighlightText;
   }
@@ -804,7 +905,9 @@
   .myles97-primary-button,
   .myles97-boot-pixels,
   .myles97-boot-logo,
-  .myles97-boot-progress span {
+  .myles97-boot-progress span,
+  .project-enter-program-titlebar,
+  .project-enter-program-cover {
     animation: none !important;
     transition: none !important;
   }
@@ -814,7 +917,9 @@
 [data-m97-motion="reduce"] .myles97-primary-button,
 [data-m97-motion="reduce"] .myles97-boot-pixels,
 [data-m97-motion="reduce"] .myles97-boot-logo,
-[data-m97-motion="reduce"] .myles97-boot-progress span {
+[data-m97-motion="reduce"] .myles97-boot-progress span,
+[data-m97-motion="reduce"] .project-enter-program-titlebar,
+[data-m97-motion="reduce"] .project-enter-program-cover {
   animation: none !important;
   transition: none !important;
 }

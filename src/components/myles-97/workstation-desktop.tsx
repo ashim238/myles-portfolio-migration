@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useRef, useState, type Dispatch } from "react";
 import { DisplayProperties } from "@/components/myles-97/display-properties";
 import { Myles97Icon } from "@/components/myles-97/icons";
 import { ProgramWindow } from "@/components/myles-97/program-window";
+import { ProjectProgram } from "@/components/myles-97/project-program";
 import { SelectedWorkExplorer } from "@/components/myles-97/selected-work-explorer";
 import { StartMenu } from "@/components/myles-97/start-menu";
 import { Taskbar } from "@/components/myles-97/taskbar";
@@ -52,37 +52,6 @@ function fallbackGeometry(id: ProgramId, stackIndex: number): WindowGeometry {
     width: 720,
     height: 520,
   };
-}
-
-function ProjectProgramPreview({ program }: { program: ProgramDefinition }) {
-  return (
-    <div className="myles97-project-preview">
-      {program.coverImage ? (
-        <div className="myles97-project-preview-cover">
-          <Image
-            src={program.coverImage}
-            alt=""
-            width={960}
-            height={540}
-            sizes="(max-width: 900px) 80vw, 680px"
-          />
-        </div>
-      ) : null}
-      <div className="myles97-project-preview-copy">
-        <p className="myles97-eyebrow">{program.applicationType}</p>
-        <h2>{program.title}</h2>
-        <p>{program.summary}</p>
-        <p>
-          <span className="myles97-evidence-badge">
-            {evidenceLabels[program.primaryEvidence]}
-          </span>
-        </p>
-        <Link className="myles97-primary-button" href={program.href}>
-          Open {program.title} case study
-        </Link>
-      </div>
-    </div>
-  );
 }
 
 export function WorkstationDesktop({
@@ -193,7 +162,10 @@ export function WorkstationDesktop({
             title={project.appName}
             status={evidenceLabels[project.primaryEvidence]}
           >
-            <ProjectProgramPreview program={project} />
+            <ProjectProgram
+              program={project}
+              reduceMotion={state.displayPreferences.reduceMotion}
+            />
           </ProgramWindow>
         );
       })}

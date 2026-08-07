@@ -59,6 +59,7 @@ export function ProgramWindow({
       aria-labelledby={titleId}
       data-focused={focused ? "true" : "false"}
       data-dragging={dragging ? "true" : "false"}
+      data-m97-program-window={id}
       style={style}
       onPointerDown={() => onFocus(id)}
     >
