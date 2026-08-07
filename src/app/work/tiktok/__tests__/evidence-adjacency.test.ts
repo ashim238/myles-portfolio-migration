@@ -21,8 +21,8 @@ const buildChapter = page.slice(
 
 describe("TikTok evidence adjacency", () => {
   it("keeps the selected-direction proof beside the Choose claim", () => {
-    expect(chooseChapter).toContain(
-      "Three directions moved forward because they created clearly different",
+    expect(chooseChapter).toMatch(
+      /Three\s+directions moved forward because they created clearly different/,
     );
     expect(chooseChapter).toContain("Selected direction signals");
     expect(chooseChapter).toContain(
