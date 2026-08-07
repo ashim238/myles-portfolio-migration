@@ -67,7 +67,7 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          base="$(git merge-base origin/main HEAD)"
+          base="$(git merge-base origin/codex/myles-97-design HEAD)"
           {
             git diff --check
             git diff --check "$base"..HEAD
