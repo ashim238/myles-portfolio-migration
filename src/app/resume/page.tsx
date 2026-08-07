@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { PortfolioEndcap } from "@/components/portfolio-endcap";
-import { SiteNav } from "@/components/site-nav";
+import { SystemDocumentShell } from "@/components/myles-97/system-document-shell";
 import { createRouteMetadata, siteConfig } from "@/lib/site-config";
 
 const RESUME_UPDATED = "July 2026";
@@ -114,15 +113,7 @@ export const metadata = createRouteMetadata({
 
 export default function ResumePage() {
   return (
-    <main className="page-shell project-page" id="main-content">
-      <SiteNav />
-      <nav className="project-topbar" aria-label="Breadcrumb">
-        <Link href="/">
-          <span aria-hidden="true">←</span>
-          Home
-        </Link>
-      </nav>
-
+    <SystemDocumentShell program="resume" title="Résumé">
       <header className="resume-layout" aria-labelledby="resume-title">
         <div className="resume-primary">
           <p className="resume-label">Résumé · updated {RESUME_UPDATED}</p>
@@ -268,7 +259,6 @@ export default function ResumePage() {
       </section>
 
       <PortfolioEndcap context="resume" />
-
-    </main>
+    </SystemDocumentShell>
   );
 }
