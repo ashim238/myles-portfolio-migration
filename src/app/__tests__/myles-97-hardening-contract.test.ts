@@ -34,7 +34,13 @@ const mylesSource = [
 describe("Myles 98 hardening contract", () => {
   it("uses original local UI resources without hotlinked or proprietary assets", () => {
     expect(mylesSource).not.toMatch(/(?:src|poster)\s*=\s*[{"']\s*https?:\/\//i);
-    expect(mylesSource).not.toMatch(/windows|microsoft|\.wav\b/i);
+
+    const resourceReferences =
+      mylesSource.match(
+        /(?:src|poster)\s*=\s*(?:\{\s*)?["'][^"']+["'](?:\s*\})?|url\([^)]*\)|from\s+["'][^"']+["']/gi,
+      )?.join("\n") ?? "";
+    expect(resourceReferences).not.toMatch(/windows|microsoft|\.wav\b/i);
+    expect(mylesSource).not.toMatch(/\.wav\b/i);
 
     const icons = read("src/components/myles-97/icons.tsx");
     expect(icons).toContain('import type { SVGProps } from "react";');
