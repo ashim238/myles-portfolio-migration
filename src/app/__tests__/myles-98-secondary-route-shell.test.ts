@@ -1,0 +1,40 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { describe, expect, it } from "vitest";
+
+const root = process.cwd();
+const read = (path: string) => readFileSync(resolve(root, path), "utf8");
+
+const routes = [
+  ["src/app/about/page.tsx", 'program="about"', 'title="About Myles"'],
+  ["src/app/resume/page.tsx", 'program="resume"', 'title="Résumé"'],
+  ["src/app/play/page.tsx", 'program="loose-parts"', 'title="Loose Parts"'],
+] as const;
+
+describe("Myles 98 secondary route shell", () => {
+  it.each(routes)("keeps %s inside system document chrome", (path, program, title) => {
+    const source = read(path);
+    expect(source).toContain("SystemDocumentShell");
+    expect(source).toContain(program);
+    expect(source).toContain(title);
+    expect(source).not.toContain("<SiteNav");
+    expect(source).not.toContain('aria-label="Breadcrumb"');
+  });
+
+  it("keeps the Selected Work return affordance at the document-shell level", () => {
+    const shell = read("src/components/myles-97/system-document-shell.tsx");
+    expect(shell).toContain('href="/#selected-work"');
+    expect(shell).toContain("Selected Work");
+
+    const window = read("src/components/myles-97/program-window.tsx");
+    expect(window).toContain("id={id}");
+  });
+
+  it("uses Loose Parts rather than the legacy Play label in Myles 98 navigation", () => {
+    const play = read("src/app/play/page.tsx");
+    const endcap = read("src/components/portfolio-endcap.tsx");
+    expect(play).toContain("Loose Parts");
+    expect(endcap).toContain('label: "Loose Parts"');
+    expect(endcap).toContain('href="/#selected-work"');
+  });
+});
