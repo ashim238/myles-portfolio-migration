@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SiteNav } from "@/components/site-nav";
+import { SystemDocumentShell } from "@/components/myles-97/system-document-shell";
 import { createRouteMetadata, siteConfig } from "@/lib/site-config";
 
 export const metadata = createRouteMetadata({
@@ -10,15 +10,7 @@ export const metadata = createRouteMetadata({
 
 export default function AboutPage() {
   return (
-    <main className="page-shell project-page" id="main-content">
-      <SiteNav />
-      <nav className="project-topbar" aria-label="Breadcrumb">
-        <Link href="/">
-          <span aria-hidden="true">←</span>
-          Home
-        </Link>
-      </nav>
-
+    <SystemDocumentShell program="about" title="About Myles">
       <section className="about-layout" aria-labelledby="about-title">
         <div className="about-primary">
           <p className="about-kicker">About</p>
@@ -52,10 +44,7 @@ export default function AboutPage() {
           </div>
 
           <div className="about-actions about-page-actions">
-            <Link
-              className="about-action"
-              href="/#work"
-            >
+            <Link className="about-action" href="/#selected-work">
               See the work
               <span aria-hidden="true">→</span>
             </Link>
@@ -63,10 +52,7 @@ export default function AboutPage() {
               Read the résumé
               <span aria-hidden="true">→</span>
             </Link>
-            <a
-              className="about-action"
-              href={`mailto:${siteConfig.email}`}
-            >
+            <a className="about-action" href={`mailto:${siteConfig.email}`}>
               Get in touch
               <span aria-hidden="true">↗</span>
             </a>
@@ -101,6 +87,6 @@ export default function AboutPage() {
           </dl>
         </section>
       </section>
-    </main>
+    </SystemDocumentShell>
   );
 }
