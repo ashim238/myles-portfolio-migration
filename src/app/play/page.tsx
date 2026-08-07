@@ -15,7 +15,7 @@ const PLAY_STATE_LABELS: Record<PlayState, string> = {
 };
 
 export const metadata = createRouteMetadata({
-  title: "Play",
+  title: "Loose Parts",
   description:
     "A running lab for interaction studies, material tests, and small builds.",
   path: "/play",
