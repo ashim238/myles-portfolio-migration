@@ -104,6 +104,12 @@ describe("Fresh Greens rendered narrative ownership", () => {
 
     expect(within(plan).getByTestId("pivot-journey")).toBeInTheDocument();
     expect(within(plan).getByTestId("architecture-diagram")).toBeInTheDocument();
+    expect(within(plan).getByText("Time to head out")).toBeInTheDocument();
+    expect(
+      within(plan).getByRole("img", {
+        name: /route preview showing route conditions, daylight timing/i,
+      }),
+    ).toBeInTheDocument();
     expect(
       within(plan).queryByTestId("pulled-over-journey"),
     ).not.toBeInTheDocument();
@@ -224,7 +230,7 @@ describe("Fresh Greens rendered narrative ownership", () => {
       scopeCopy.indexOf("What remains"),
     );
     expect(scope).toHaveTextContent(
-      "a working React Native prototype spanning route comparison, en-route guidance, stress-state support, community reporting, and moderation",
+      "a working React Native prototype spanning route comparison, departure and refuel reminders, en-route guidance, stress-state support, community reporting, and moderation",
     );
     expect(scope).toHaveTextContent("can explain why it prefers one route");
     expect(scope).toHaveTextContent(
