@@ -19,7 +19,7 @@ export function orientationSurfaceData(surface: string) {
 export const FRESH_GREENS_REMINDER_EVIDENCE_SURFACE = {
   proofId: "fg-departure-reminder",
   role: "supporting",
-  kind: "sequence",
+  kind: "working-product",
   chapterId: "fg-design",
 } as const satisfies EvidenceSurfaceMetadata;
 
