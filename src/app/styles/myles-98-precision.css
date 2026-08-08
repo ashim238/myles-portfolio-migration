@@ -1,0 +1,53 @@
+/* Myles 98 precision pass
+   Optical corrections for welcome copy, Start chrome, and compact glyphs. */
+
+.myles97-welcome-statement,
+.pocket97-statement {
+  max-width: 27ch;
+  text-wrap: balance;
+}
+
+/* Keep the signal rail in its own geometry. Rotating only the wordmark means
+   the yellow edge no longer paints over the narrow vertical label. */
+.myles97-start-menu-brand {
+  writing-mode: horizontal-tb;
+  transform: none;
+}
+
+.myles97-start-menu-wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+}
+
+.myles97-start-menu-wordmark span {
+  line-height: 1;
+}
+
+.myles97-start-menu-wordmark strong {
+  line-height: 0.9;
+}
+
+@media (min-width: 768px) and (pointer: fine) {
+  .myles97-start-menu {
+    bottom: 64px;
+    grid-template-columns: 62px minmax(0, 1fr);
+  }
+
+  .myles97-start-menu-brand {
+    justify-content: center;
+    padding: 14px 9px;
+    border-right: 5px solid var(--m97-signal);
+    box-shadow: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .myles97-start-menu-brand {
+    border-color: Highlight;
+    box-shadow: none;
+  }
+}
