@@ -1,0 +1,56 @@
+.icon {
+  flex: 0 0 auto;
+  overflow: visible;
+}
+
+.color {
+  color: #111;
+}
+
+:global(.myles97-desktop-shortcuts) .color {
+  filter: drop-shadow(1px 2px 0 rgb(17 17 17 / 32%));
+}
+
+:global(.myles97-start-menu-items) .color,
+:global(.pocket97-sheet) .color,
+:global(.pocket97-dock) .color,
+:global(.pocket97-app-identity) .color {
+  filter: drop-shadow(1px 1px 0 rgb(17 17 17 / 20%));
+}
+
+:global(.pocket97-app-identity) {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 7px;
+}
+
+:global(.pocket97-app-identity) strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (forced-colors: active) {
+  .color {
+    filter: none;
+  }
+
+  .surface {
+    fill: Canvas !important;
+    stroke: CanvasText !important;
+  }
+
+  .accent,
+  .accentSecondary,
+  .accentTertiary {
+    fill: CanvasText !important;
+    stroke: CanvasText !important;
+  }
+
+  .line {
+    fill: none !important;
+    stroke: CanvasText !important;
+  }
+}

@@ -1,8 +1,12 @@
 import type { SVGProps } from "react";
+import styles from "./icons.module.css";
 
 export type Myles97IconName =
   | "folder"
   | "document"
+  | "profile"
+  | "resume"
+  | "recipe"
   | "display"
   | "mail"
   | "app"
@@ -12,10 +16,13 @@ export type Myles97IconName =
   | "navi"
   | "tiktok";
 
+export type Myles97IconVariant = "mono" | "color";
+
 type Myles97IconProps = Omit<SVGProps<SVGSVGElement>, "name"> & {
   name: Myles97IconName;
   size?: number;
   title?: string;
+  variant?: Myles97IconVariant;
 };
 
 export function iconForProgram(id: string): Myles97IconName {
@@ -31,9 +38,11 @@ export function iconForProgram(id: string): Myles97IconName {
     case "selected-work":
       return "folder";
     case "about":
+      return "profile";
     case "resume":
+      return "resume";
     case "trini-roti":
-      return "document";
+      return "recipe";
     case "loose-parts":
       return "loose-parts";
     case "display-properties":
@@ -47,110 +56,318 @@ export function Myles97Icon({
   name,
   size = 20,
   title,
+  variant = "mono",
+  className,
   ...props
 }: Myles97IconProps) {
+  const color = variant === "color";
+  const ink = color ? "#111111" : "currentColor";
+  const paper = color ? "#f5f3ea" : "none";
+  const chrome = color ? "#c7c7c7" : "none";
+  const yellow = color ? "#ffe52f" : "currentColor";
+  const blue = color ? "#263cb8" : "currentColor";
+  const teal = color ? "#087f86" : "none";
+  const orange = color ? "#f26a3d" : "currentColor";
+  const green = color ? "#19784a" : "none";
+  const cyan = color ? "#35d3df" : "none";
+  const magenta = color ? "#e553a1" : "currentColor";
+  const classes = [styles.icon, color ? styles.color : null, className]
+    .filter(Boolean)
+    .join(" ");
   const common = {
     width: size,
     height: size,
     viewBox: "0 0 24 24",
     fill: "none",
-    stroke: "currentColor",
-    strokeWidth: 2,
+    stroke: ink,
+    strokeWidth: 1.6,
     strokeLinecap: "square" as const,
     strokeLinejoin: "miter" as const,
+    shapeRendering: "geometricPrecision" as const,
     focusable: false,
+    className: classes,
+    "data-m98-icon": name,
+    "data-m98-icon-variant": variant,
     "aria-hidden": title ? undefined : true,
     "aria-label": title,
     role: title ? ("img" as const) : undefined,
     ...props,
   };
+  const accessibleTitle = title ? <title>{title}</title> : null;
 
   switch (name) {
     case "folder":
       return (
         <svg {...common}>
-          <path d="M3 7h7l2 2h9v10H3z" />
-          <path d="M3 7V5h7l2 2" />
-          <path d="M5 11h14v6H5z" fill="currentColor" opacity="0.16" stroke="none" />
+          {accessibleTitle}
+          <path
+            className={styles.surface}
+            d="M2.5 6.5h7l2 2H21v11H2.5z"
+            fill={color ? "#e4ae22" : "none"}
+          />
+          <path className={styles.accent} d="M3 9h18v10.5H3z" fill={yellow} />
+          <path className={styles.line} d="M3 6.5V4.5h7l2 2" />
+          <rect
+            className={styles.surface}
+            x="5.5"
+            y="12"
+            width="11"
+            height="4.5"
+            fill={paper}
+          />
+          <rect
+            className={styles.accentSecondary}
+            x="6.5"
+            y="13"
+            width="4.5"
+            height="1.5"
+            fill={blue}
+            stroke="none"
+          />
         </svg>
       );
     case "document":
       return (
         <svg {...common}>
-          <path d="M6 3h8l4 4v14H6z" />
-          <path d="M14 3v5h4" />
-          <path d="M9 12h6M9 16h6" strokeWidth="2.4" />
+          {accessibleTitle}
+          <path className={styles.surface} d="M5 2.5h9l5 5V21H5z" fill={paper} />
+          <path className={styles.accentSecondary} d="M14 2.5v5h5" fill={blue} />
+          <rect
+            className={styles.accent}
+            x="8"
+            y="10.5"
+            width="8"
+            height="2"
+            fill={yellow}
+            stroke="none"
+          />
+          <path className={styles.line} d="M8 15h8M8 18h6" />
+        </svg>
+      );
+    case "profile":
+      return (
+        <svg {...common}>
+          {accessibleTitle}
+          <rect
+            className={styles.surface}
+            x="2.5"
+            y="4"
+            width="19"
+            height="16"
+            fill={paper}
+          />
+          <rect
+            className={styles.accentSecondary}
+            x="2.5"
+            y="4"
+            width="19"
+            height="4"
+            fill={blue}
+          />
+          <circle
+            className={styles.accent}
+            cx="8"
+            cy="12.5"
+            r="2.75"
+            fill={yellow}
+          />
+          <path
+            className={styles.accentTertiary}
+            d="M4.75 18c.4-2.4 1.45-3.6 3.25-3.6s2.85 1.2 3.25 3.6z"
+            fill={teal}
+          />
+          <path className={styles.line} d="M13 11h6M13 14h5M13 17h4" />
+        </svg>
+      );
+    case "resume":
+      return (
+        <svg {...common}>
+          {accessibleTitle}
+          <path className={styles.surface} d="M5 2.5h9l5 5V21H5z" fill={paper} />
+          <path className={styles.accentSecondary} d="M14 2.5v5h5" fill={blue} />
+          <rect className={styles.accent} x="7.5" y="9.5" width="2" height="2" fill={yellow} />
+          <rect className={styles.accent} x="7.5" y="13.5" width="2" height="2" fill={yellow} />
+          <path className={styles.line} d="M11 10.5h5M11 14.5h5M7.5 18h8.5" />
+        </svg>
+      );
+    case "recipe":
+      return (
+        <svg {...common}>
+          {accessibleTitle}
+          <path className={styles.surface} d="M5 2.5h9l5 5V21H5z" fill={paper} />
+          <path className={styles.accentTertiary} d="M14 2.5v5h5" fill={orange} />
+          <rect
+            className={styles.accentSecondary}
+            x="7.5"
+            y="10"
+            width="9"
+            height="2"
+            fill={blue}
+            stroke="none"
+          />
+          <path className={styles.line} d="M8 15h8M8 18h6" />
+          <path className={styles.accent} d="M8 7c0-1 1-1 1-2M11 7c0-1 1-1 1-2" stroke={yellow} />
         </svg>
       );
     case "display":
       return (
         <svg {...common}>
-          <rect x="3" y="4" width="18" height="13" />
-          <path d="M6 7h12v7H6z" fill="currentColor" opacity="0.15" stroke="none" />
-          <path d="M9 21h6M12 17v4" />
+          {accessibleTitle}
+          <rect className={styles.surface} x="2" y="3" width="20" height="15" fill={chrome} />
+          <rect
+            className={styles.accentSecondary}
+            x="4.5"
+            y="5.5"
+            width="15"
+            height="9"
+            fill={blue}
+          />
+          <rect
+            className={styles.accent}
+            x="6"
+            y="7"
+            width="3"
+            height="3"
+            fill={yellow}
+            stroke="none"
+          />
+          <path className={styles.line} d="M8 21h8M12 18v3" />
         </svg>
       );
     case "mail":
       return (
         <svg {...common}>
-          <rect x="3" y="5" width="18" height="14" />
-          <path d="m4 7 8 6 8-6" />
-          <path d="m4 17 5-5M20 17l-5-5" opacity="0.55" />
+          {accessibleTitle}
+          <rect className={styles.surface} x="2.5" y="5" width="19" height="14" fill={paper} />
+          <path
+            className={styles.accentSecondary}
+            d="m3.5 7 8.5 6 8.5-6v3.5L12 17 3.5 10.5z"
+            fill={blue}
+          />
+          <rect className={styles.accent} x="16.5" y="7" width="2.5" height="2.5" fill={yellow} />
         </svg>
       );
     case "app":
       return (
         <svg {...common}>
-          <rect x="4" y="4" width="16" height="16" />
-          <path d="M4 9h16M9 9v11" />
-          <rect x="6" y="6" width="2" height="1" fill="currentColor" stroke="none" />
+          {accessibleTitle}
+          <rect className={styles.surface} x="2.5" y="3" width="19" height="18" fill={chrome} />
+          <rect
+            className={styles.accentSecondary}
+            x="2.5"
+            y="3"
+            width="19"
+            height="4.5"
+            fill={blue}
+          />
+          <rect className={styles.accent} x="5" y="10" width="5" height="7" fill={yellow} />
+          <path className={styles.line} d="M12.5 10h6M12.5 13.5h6M12.5 17h4" />
         </svg>
       );
     case "loose-parts":
       return (
         <svg {...common}>
-          <circle cx="7" cy="7" r="3" />
-          <rect x="14" y="4" width="6" height="6" />
-          <path d="M4 15h6v5H4z" />
-          <path d="M15 15l5 5M20 15l-5 5" strokeWidth="2.4" />
+          {accessibleTitle}
+          <circle className={styles.accent} cx="6.5" cy="6.5" r="3.25" fill={yellow} />
+          <rect
+            className={styles.accentSecondary}
+            x="13.5"
+            y="3"
+            width="7"
+            height="7"
+            fill={blue}
+          />
+          <path className={styles.accentTertiary} d="M3 14h7v6.5H3z" fill={teal} />
+          <path
+            className={styles.line}
+            d="m14 14 6.5 6.5M20.5 14 14 20.5"
+            stroke={orange}
+            strokeWidth="2.4"
+          />
         </svg>
       );
     case "fresh-greens":
       return (
         <svg {...common}>
-          <path d="M4 19h5l2-4 3 2 6-9" />
-          <rect x="3" y="4" width="6" height="6" fill="currentColor" opacity="0.2" />
-          <path d="M6 10v4" />
-          <circle cx="19" cy="6" r="2" fill="currentColor" />
+          {accessibleTitle}
+          <rect
+            className={styles.accentTertiary}
+            x="2.5"
+            y="2.5"
+            width="19"
+            height="19"
+            fill={green}
+          />
+          <rect className={styles.accent} x="4.5" y="4.5" width="5.5" height="5.5" fill={yellow} />
+          <circle
+            className={styles.accentSecondary}
+            cx="17.5"
+            cy="6.5"
+            r="2.25"
+            fill={orange}
+          />
+          <path
+            className={styles.line}
+            d="M4.5 18.5h4l2.5-5 3.25 2 4.25-6"
+            stroke={color ? paper : ink}
+            strokeWidth="2"
+          />
+          <path className={styles.line} d="M7.25 10v3" stroke={color ? paper : ink} />
         </svg>
       );
     case "fafsa":
       return (
         <svg {...common}>
-          <rect x="3" y="6" width="13" height="11" />
-          <path d="m4 8 5.5 4L15 8" />
-          <rect x="17" y="5" width="4" height="4" fill="currentColor" />
-          <rect x="17" y="11" width="4" height="3" />
-          <rect x="17" y="16" width="4" height="3" fill="currentColor" opacity="0.45" />
+          {accessibleTitle}
+          <rect className={styles.surface} x="2" y="5.5" width="14" height="12" fill={paper} />
+          <path
+            className={styles.accentSecondary}
+            d="m3 7.5 6 4.5 6-4.5v3L9 15l-6-4.5z"
+            fill={blue}
+          />
+          <rect className={styles.accent} x="17.5" y="4" width="4" height="4" fill={yellow} />
+          <rect className={styles.accentSecondary} x="17.5" y="10" width="4" height="4" fill={cyan} />
+          <rect className={styles.accentTertiary} x="17.5" y="16" width="4" height="4" fill={magenta} />
         </svg>
       );
     case "navi":
       return (
         <svg {...common}>
-          <path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11Z" />
-          <path d="m9 13 2-5 4-2-2 5z" fill="currentColor" opacity="0.26" />
-          <path d="m11 8 4-2-2 5z" />
+          {accessibleTitle}
+          <path
+            className={styles.accentTertiary}
+            d="M12 22s7-6 7-12a7 7 0 1 0-14 0c0 6 7 12 7 12Z"
+            fill={orange}
+          />
+          <circle className={styles.accentSecondary} cx="12" cy="10" r="4" fill={blue} />
+          <path className={styles.accent} d="m10 13 1.5-4 3-1.5-1.5 4z" fill={yellow} />
         </svg>
       );
     case "tiktok":
       return (
         <svg {...common}>
-          <rect x="3" y="4" width="18" height="16" />
-          <path d="M3 9h18" />
-          <rect x="6" y="12" width="4" height="5" fill="currentColor" opacity="0.28" />
-          <rect x="12" y="12" width="6" height="2" />
-          <rect x="12" y="16" width="6" height="1" fill="currentColor" stroke="none" />
-          <path d="M6 6h2M10 6h2" strokeWidth="2.4" />
+          {accessibleTitle}
+          <rect
+            className={styles.surface}
+            x="2"
+            y="3"
+            width="20"
+            height="18"
+            fill={color ? "#111111" : "none"}
+            stroke={ink}
+          />
+          <rect
+            className={styles.accentSecondary}
+            x="2"
+            y="3"
+            width="20"
+            height="4.5"
+            fill={color ? "#f5f3ea" : "none"}
+          />
+          <rect className={styles.accentSecondary} x="4.5" y="10" width="4" height="7.5" fill={cyan} />
+          <rect className={styles.accentTertiary} x="10" y="10" width="4" height="7.5" fill={magenta} />
+          <rect className={styles.accent} x="15.5" y="10" width="4" height="7.5" fill={yellow} />
+          <path className={styles.line} d="M5 5.25h2M9 5.25h2" stroke={color ? "#111111" : ink} />
         </svg>
       );
   }
