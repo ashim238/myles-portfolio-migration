@@ -1,0 +1,37 @@
+/* Navi case-study refinement
+   Preserve the project's orange identity while correcting its diagram geometry. */
+
+/* The rail begins at the center of the first equal grid cell and ends at the
+   center of the last. Account for the full declared 1rem grid gaps. */
+.nv-page .nv-research-route--journey {
+  margin-inline: calc((100% - 2rem) / 6);
+}
+
+.nv-page .nv-research-route--booking {
+  margin-inline: calc((100% - 4rem) / 10);
+}
+
+/* The lists reserve 1.25rem above their cards. Center a 0.65rem marker on the
+   one-pixel rail rather than leaving its center an eighth-rem below it. */
+.nv-page :is(.nv-research-journey, .nv-research-booking) > li::before {
+  top: -1.575rem;
+}
+
+@media (max-width: 700px) {
+  .nv-page :is(.nv-research-journey, .nv-research-booking) {
+    --nv-mobile-rail-x: 1.25rem;
+  }
+
+  .nv-page :is(.nv-research-journey, .nv-research-booking) > li {
+    padding-left: 3.5rem;
+  }
+
+  .nv-page :is(.nv-research-journey, .nv-research-booking) > li::before {
+    top: 1.3rem;
+    left: var(--nv-mobile-rail-x);
+  }
+
+  .nv-page .nv-research-route {
+    margin-left: var(--nv-mobile-rail-x);
+  }
+}
