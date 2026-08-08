@@ -37,4 +37,28 @@ describe("Myles 98 visual refinement", () => {
       /@media \(max-width: 767px\), \(pointer: coarse\)[\s\S]*?\.myles98-document-statusbar\s*\{?[\s\S]*?display:\s*none;/,
     );
   });
+
+  it("uses one yellow focus rhythm across windows, taskbar, and Start", () => {
+    expect(css).toMatch(
+      /\.myles97-window\[data-focused="true"\] \.myles97-titlebar\s*\{[\s\S]*?box-shadow:\s*inset 4px 0 var\(--m97-signal\);/,
+    );
+    expect(css).toMatch(
+      /\.myles97-task-button\[data-focused="true"\]\s*\{[\s\S]*?inset 0 -3px 0 var\(--m97-signal\)/,
+    );
+    expect(css).toMatch(
+      /\.myles97-start-menu-brand\s*\{[\s\S]*?inset -5px 0 0 var\(--m97-signal\);/,
+    );
+    expect(css).toMatch(
+      /\.myles97-desktop-shortcuts :is\(button, a\):hover\s*\{[\s\S]*?background:\s*rgb\(255 255 255 \/ 9%\);/,
+    );
+  });
+
+  it("keeps tactile controls accessible in forced colors and reduced motion", () => {
+    expect(css).toMatch(
+      /@media \(forced-colors: active\)[\s\S]*?\.myles97-window,[\s\S]*?\.myles97-taskbar,[\s\S]*?box-shadow:\s*none;/,
+    );
+    expect(css).toMatch(
+      /@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.myles97-window,[\s\S]*?transition:\s*none !important;/,
+    );
+  });
 });
