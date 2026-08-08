@@ -6,6 +6,7 @@ import { UNDERSTANDING_FAFSA_EVIDENCE } from "@/lib/project-evidence/understandi
 
 export {
   evidenceSurfaceData,
+  FRESH_GREENS_REMINDER_EVIDENCE_SURFACE,
   NAVI_DEMO_EVIDENCE_SURFACE,
   NAVI_RESEARCH_EVIDENCE_SURFACE,
   orientationSurfaceData,
