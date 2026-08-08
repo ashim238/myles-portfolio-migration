@@ -1,38 +1,14 @@
-.briefFacts {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 1.5rem;
-  margin: 1.5rem 0 0;
-}
-
-.briefFacts > div {
-  border-top: 1px solid var(--line);
-  padding: 0.75rem 0 0.9rem;
-}
-
-.briefFacts dt {
-  color: var(--muted);
-  font-size: 0.75rem;
-  letter-spacing: var(--track-caps);
-  text-transform: uppercase;
-}
-
-.briefFacts dd {
-  margin: 0.3rem 0 0;
-  line-height: var(--lead-copy);
-}
-
 .directionProof {
-  border-block: 1px solid var(--line);
   margin: 1.75rem 0 0;
   padding: 1rem 0;
+  border-block: 1px solid var(--line);
 }
 
 .directionProof > figcaption {
-  align-items: baseline;
   display: flex;
-  gap: 0.75rem 1.5rem;
+  align-items: baseline;
   justify-content: space-between;
+  gap: 0.75rem 1.5rem;
 }
 
 .directionProof > figcaption strong {
@@ -40,25 +16,28 @@
 }
 
 .directionProof > figcaption span,
-.directionBoundary {
+.directionSignal {
   color: var(--muted);
   line-height: var(--lead-copy);
 }
 
 .directionGrid {
-  background: var(--line);
   display: grid;
-  gap: 1px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  list-style: none;
+  gap: 1px;
   margin: 1rem 0 0;
   padding: 0;
+  background: var(--line);
+  list-style: none;
 }
 
 .directionGrid > li {
-  background: var(--bg);
+  display: grid;
   min-width: 0;
+  align-content: start;
+  gap: 0.75rem;
   padding: 1rem;
+  background: var(--bg);
 }
 
 .directionName {
@@ -70,44 +49,17 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   height: 0.55rem;
-  margin: 0.8rem 0 1rem;
 }
 
 .directionSwatches > span {
   border: 1px solid color-mix(in srgb, var(--ink) 24%, transparent);
 }
 
-.directionGrid dl,
-.directionGrid dd {
+.directionSignal {
   margin: 0;
 }
 
-.directionGrid dl {
-  display: grid;
-  gap: 0.75rem;
-}
-
-.directionGrid dt {
-  color: var(--muted);
-  font-size: 0.75rem;
-  letter-spacing: var(--track-caps);
-  text-transform: uppercase;
-}
-
-.directionGrid dd {
-  line-height: var(--lead-copy);
-  margin-top: 0.25rem;
-}
-
-.directionBoundary {
-  margin: 1rem 0 0;
-}
-
 @media (max-width: 639px) {
-  .briefFacts {
-    grid-template-columns: 1fr;
-  }
-
   .directionProof > figcaption {
     align-items: start;
     flex-direction: column;
