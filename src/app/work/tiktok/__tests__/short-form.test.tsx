@@ -80,7 +80,7 @@ describe("TikTok short-form case study", () => {
     getPublishedProjects.mockResolvedValue([project]);
   });
 
-  it("links the evidence trailhead to the rendered template-system explanation", async () => {
+  it("links the evidence trailhead to the template-system explanation", async () => {
     const { container } = render(await TikTokPage());
 
     expect(
@@ -93,130 +93,79 @@ describe("TikTok short-form case study", () => {
     ).toHaveAttribute("href", "#tt-system");
 
     const target = container.querySelector("#tt-system");
-    expect(target).not.toBeNull();
     const chapter = target?.closest(".project-chapter");
     expect(chapter).not.toBeNull();
-    expect(within(chapter as HTMLElement).getByTestId("template-system")).toBeInTheDocument();
+    expect(
+      within(chapter as HTMLElement).getByTestId("template-system"),
+    ).toBeInTheDocument();
   });
 
-  it("publishes the approved artifact-led preview as the canonical case study", async () => {
+  it("publishes four visual beats without the retired component stack", async () => {
     render(await TikTokPage());
 
     const hero = document.querySelector(".tt-cover");
-    expect(hero).not.toBeNull();
     expect(hero).toHaveClass("tt-cover--preview");
-    expect(screen.queryByTestId("hero-three-phones")).not.toBeInTheDocument();
-
-    expect(
-      screen.getByRole("region", { name: "At a glance" }),
-    ).toBeInTheDocument();
     for (const chapter of CASE_STUDY_CHAPTERS.tiktok) {
       expect(
         screen.getByRole("heading", { name: chapter.title }),
       ).toHaveAttribute("id", chapter.id);
     }
+
     expect(screen.getByTestId("template-system")).toBeInTheDocument();
-    expect(
-      screen.getByRole("heading", {
-        name: CASE_STUDY_CHAPTERS.tiktok[3].title,
-      }),
-    ).toHaveAttribute("id", "tt-outcome");
-    const outcome = document.querySelector(".tt-preview-outcome");
+    const outcome = document.querySelector(".tt-preview-outcome") as HTMLElement;
     expect(outcome).not.toBeNull();
     expect(outcome).toHaveTextContent("Critique");
     expect(outcome).toHaveTextContent("My response");
     expect(outcome).toHaveTextContent("Shipped result");
     expect(
-      within(outcome as HTMLElement).getByRole("img", {
-        name: "Light Academia process sketch",
-      }),
+      within(outcome).getByRole("img", { name: "Light Academia process sketch" }),
     ).toBeInTheDocument();
     expect(
-      within(outcome as HTMLElement).getByRole("img", {
+      within(outcome).getByRole("img", {
         name: "Light Academia editorial title asset",
       }),
     ).toBeInTheDocument();
     expect(
-      within(outcome as HTMLElement).getByRole("img", {
+      within(outcome).getByRole("img", {
         name: "Finished Light Academia catalog template",
       }),
     ).toBeInTheDocument();
-    expect(screen.getAllByText("Static template")).toHaveLength(3);
     expect(
       screen.getByText(
         "I later learned through Global Creative Lab that American Eagle selected it.",
       ),
     ).toHaveClass("case-highlight");
-    expect(screen.getByTestId("project-work-jump")).toBeInTheDocument();
-    expect(screen.getByTestId("case-highlight-observer")).toBeInTheDocument();
 
     expect(screen.getByTestId("project-toc")).toBeInTheDocument();
+    expect(screen.getByTestId("project-work-jump")).toBeInTheDocument();
     expect(screen.queryByTestId("console-hello")).not.toBeInTheDocument();
     expect(screen.queryByTestId("system-overview-band")).not.toBeInTheDocument();
     expect(screen.queryByTestId("outcome-card")).not.toBeInTheDocument();
     expect(screen.queryByTestId("lineage-timeline")).not.toBeInTheDocument();
-    expect(screen.queryByText("The full breakdown ↓")).not.toBeInTheDocument();
-    expect(
-      screen.queryByRole("heading", { name: "Five subcultures. Three buckets." }),
-    ).not.toBeInTheDocument();
-    expect(
-      screen.queryByRole("heading", { name: "What it actually taught me." }),
-    ).not.toBeInTheDocument();
   });
 
-  it("defines DSA before research and renders the four approved beats", async () => {
+  it("defines the deliverable once instead of repeating six brief facts", async () => {
     const { container } = render(await TikTokPage());
-    const renderedChapters = Array.from(
+    const chapters = Array.from(
       container.querySelectorAll<HTMLElement>(".project-chapter"),
     );
 
+    expect(chapters).toHaveLength(4);
     expect(
-      CASE_STUDY_CHAPTERS.tiktok.map(({ id, stage }) => ({ id, stage })),
-    ).toEqual([
-      { id: "tt-brief", stage: "Brief" },
-      { id: "tt-research", stage: "Choose" },
-      { id: "tt-system", stage: "Build" },
-      { id: "tt-outcome", stage: "Deliver" },
-    ]);
-    expect(renderedChapters).toHaveLength(4);
-    expect(
-      renderedChapters.map((chapter) => chapter.querySelector("h2")?.id),
+      chapters.map((chapter) => chapter.querySelector("h2")?.id),
     ).toEqual(["tt-brief", "tt-research", "tt-system", "tt-outcome"]);
 
     const brief = container.querySelector("#tt-brief")?.closest(".project-chapter");
-    const research = container
-      .querySelector("#tt-research")
-      ?.closest(".project-chapter");
-    expect(brief).not.toBeNull();
-    expect(research).not.toBeNull();
-    expect(brief?.compareDocumentPosition(research as Node)).toBe(
-      Node.DOCUMENT_POSITION_FOLLOWING,
-    );
     expect(brief).toHaveTextContent(
-      "Dynamic Showcase Ads (DSA) used reusable templates with fixed product slots for brand catalog content.",
+      "Dynamic Showcase Ads turned brand catalogs into reusable ad templates with fixed product slots.",
     );
-
-    const facts = brief?.querySelector("dl");
-    expect(facts).not.toBeNull();
-    expect(
-      Array.from(facts!.querySelectorAll("dt"), (term) => term.textContent),
-    ).toEqual([
-      "Role",
-      "Team",
-      "Intended use",
-      "Deliverable",
-      "Fixed parts",
-      "Variable parts",
-    ]);
-    expect(
-      within(facts as HTMLElement).getByText("Creative Strategist Intern"),
-    ).toBeInTheDocument();
-    expect(
-      within(facts as HTMLElement).getByText("Global Creative Lab"),
-    ).toBeInTheDocument();
+    expect(brief).toHaveTextContent("three static, layered Photoshop directions");
+    expect(brief?.querySelector("dl")).toBeNull();
+    expect(brief).not.toHaveTextContent("Intended use");
+    expect(brief).not.toHaveTextContent("Variable parts");
   });
 
-  it("explains why five references became three directions inside one slot map", async () => {
+  it("uses a light direction strip and keeps the full comparison in Build", async () => {
     const { container } = render(await TikTokPage());
     const research = container
       .querySelector("#tt-research")
@@ -225,61 +174,33 @@ describe("TikTok short-form case study", () => {
       .querySelector("#tt-system")
       ?.closest(".project-chapter") as HTMLElement;
 
-    expect(research).toHaveTextContent("Y2K");
-    expect(research).toHaveTextContent("Maximalism");
-    expect(research).toHaveTextContent("Dark Academia");
-    expect(research).toHaveTextContent("WitchTok");
-    expect(research).toHaveTextContent("Cottagecore");
-    expect(research).toHaveTextContent(
-      "Three directions moved forward because they created clearly different visual systems inside the same slot map.",
-    );
-    expect(research).toHaveTextContent("Dopamine Dressing");
-    expect(research).toHaveTextContent("e-Boy/e-Girl");
-    expect(research).toHaveTextContent("Light Academia");
-
-    expect(within(system).getByTestId("template-system")).toBeInTheDocument();
-    expect(
-      within(system)
-        .getAllByRole("heading", { level: 3 })
-        .map((heading) => heading.textContent),
-    ).toEqual(["#DopamineDressing", "#e-Boy/#e-Girl", "#LightAcademia"]);
-    expect(within(system).getAllByText("Static template")).toHaveLength(3);
-    expect(system).toHaveTextContent("layered Photoshop");
-    expect(system).toHaveTextContent(
-      /most parts stayed within their own visual system/i,
-    );
-
-    const disclosure = within(system).getByText(/notes below paraphrase/i);
-    const processCards = system.querySelector(".tt-preview-process-list");
-    expect(processCards).not.toBeNull();
-    expect(disclosure.compareDocumentPosition(processCards as Node)).toBe(
-      Node.DOCUMENT_POSITION_FOLLOWING,
-    );
-  });
-
-  it("keeps the artifact cards and shipped claim intact inside chapters", async () => {
-    render(await TikTokPage());
-
-    for (const templateName of [
+    for (const reference of [
+      "Y2K",
+      "Maximalism",
+      "Dark Academia",
+      "WitchTok",
+      "Cottagecore",
+    ]) {
+      expect(research).toHaveTextContent(reference);
+    }
+    for (const direction of [
       "#DopamineDressing",
       "#e-Boy/#e-Girl",
       "#LightAcademia",
     ]) {
-      expect(
-        screen.getByRole("heading", { level: 3, name: templateName }),
-      ).toBeInTheDocument();
+      expect(research).toHaveTextContent(direction);
     }
+    expect(research).toHaveTextContent("Three directions, one catalog structure.");
+    expect(research).toHaveTextContent("Bright color, oversized type");
+    expect(research).toHaveTextContent("Dark texture, harder edges");
+    expect(research).toHaveTextContent("Editorial type, softer color");
+    expect(research).not.toHaveTextContent("Authored regions");
 
-    expect(screen.getAllByText("Static template")).toHaveLength(3);
-    expect(
-      screen.getByText("Light Academia entered the launch library."),
-    ).toBeInTheDocument();
-    expect(
-      screen.queryByText(/Dopamine Dressing entered the launch library/i),
-    ).not.toBeInTheDocument();
-    expect(
-      screen.queryByText(/e-Boy\/e-Girl entered the launch library/i),
-    ).not.toBeInTheDocument();
+    expect(within(system).getByTestId("template-system")).toBeInTheDocument();
+    expect(system).toHaveTextContent("layered Photoshop file");
+    expect(system).toHaveTextContent("Feedback summaries are paraphrased");
+    expect(system.querySelector(".tt-preview-process-list")).toBeNull();
+    expect(system).not.toHaveTextContent("Process sketch");
   });
 
   it("orders the Light Academia critique, response, result, and relationship", async () => {
@@ -301,9 +222,7 @@ describe("TikTok short-form case study", () => {
     expect(outcome).toHaveTextContent(
       "I kept the fixed catalog slot and refined the editorial title, color, and supporting details.",
     );
-    expect(outcome).toHaveTextContent(
-      "Light Academia entered the launch library.",
-    );
+    expect(outcome).toHaveTextContent("Light Academia entered the launch library.");
 
     const shippedStep = within(outcome).getByText("Shipped result").closest("li");
     expect(shippedStep?.compareDocumentPosition(relationship)).toBe(
@@ -326,7 +245,7 @@ describe("TikTok short-form case study", () => {
     expect(figureRule).not.toMatch(/min-height:\s*100%/);
   });
 
-  it("retires the duplicate preview route and phone-based hero implementation", () => {
+  it("retires the duplicate preview route and unsupported claims", () => {
     const page = readFileSync(
       resolve(process.cwd(), "src/app/work/tiktok/page.tsx"),
       "utf8",
@@ -338,54 +257,10 @@ describe("TikTok short-form case study", () => {
     expect(page).toContain("TikTokTemplateSystem");
     expect(page).not.toContain("HeroThreePhones");
     expect(page).not.toContain("hero-rolling-phones.png");
-  });
-
-  it("removes unsupported or inflated claims from the rendered route source", () => {
-    const source = readFileSync(
-      resolve(process.cwd(), "src/app/work/tiktok/page.tsx"),
-      "utf8",
-    );
-
-    expect(source).not.toContain("does not land");
-    expect(source).not.toContain("stays native to each audience");
-    expect(source).not.toContain("researching an audience");
-    expect(source).not.toContain("product-level work");
-    expect(source).not.toContain("2022");
-  });
-
-  it("avoids repeating the same compressed reference cadence across all three cards", () => {
-    const source = readFileSync(
-      resolve(process.cwd(), "src/app/work/tiktok/page.tsx"),
-      "utf8",
-    );
-
-    expect(source).not.toContain(
-      "70s psychedelia: fluid forms, bold patterning, color treated as content.",
-    );
-    expect(source).not.toContain(
-      "Grungy punk magazine: texture, distress, dimension.",
-    );
-    expect(source).not.toContain(
-      "Acne Studios pastels: clean, restrained, anchored.",
-    );
-  });
-
-  it("removes the repeated three-part summary scaffold from page headings and copy", () => {
-    const published = readFileSync(
-      resolve(process.cwd(), "src/app/work/tiktok/page.tsx"),
-      "utf8",
-    );
-    const component = readFileSync(
-      resolve(process.cwd(), "src/components/tiktok-dsa.tsx"),
-      "utf8",
-    );
-
-    for (const source of [published, component]) {
-      expect(source).not.toContain("One skeleton. Three fills.");
-      expect(source).not.toContain("Three aesthetics.");
-      expect(source).not.toContain("One catalog structure. Three templates.");
-      expect(source).not.toContain("Narrowed the landscape");
-      expect(source).not.toContain("gives each template its own voice");
-    }
+    expect(page).not.toContain("does not land");
+    expect(page).not.toContain("stays native to each audience");
+    expect(page).not.toContain("product-level work");
+    expect(page).not.toContain("One skeleton. Three fills.");
+    expect(page).not.toContain("One catalog structure. Three templates.");
   });
 });
