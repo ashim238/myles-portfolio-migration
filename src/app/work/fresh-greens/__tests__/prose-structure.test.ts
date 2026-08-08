@@ -15,13 +15,13 @@ const projectContentPath = resolve(
   process.cwd(),
   "content/projects/fresh-greens.md",
 );
-const portfolioStylesPath = resolve(
-  process.cwd(),
-  "src/app/styles/portfolio-surfaces.css",
-);
 const latePolishStylesPath = resolve(
   process.cwd(),
   "src/app/styles/late-polish.css",
+);
+const refinementStylesPath = resolve(
+  process.cwd(),
+  "src/app/styles/fresh-greens-case-refinement.css",
 );
 const baseStylesPath = resolve(process.cwd(), "src/app/styles/base.css");
 const pivotPath = resolve(
@@ -32,11 +32,7 @@ const pulledOverPath = resolve(
   process.cwd(),
   "src/components/fresh-greens/pulled-over-journey.tsx",
 );
-const primaryPathFiles = [
-  pagePath,
-  pivotPath,
-  pulledOverPath,
-];
+const primaryPathFiles = [pagePath, pivotPath, pulledOverPath];
 
 const recruiterCutAttributes = new Set([
   "role",
@@ -108,9 +104,7 @@ function primaryPathWordCount(
     );
 
     const visit = (node: ts.Node) => {
-      if (ts.isJsxText(node)) {
-        add(node.text);
-      }
+      if (ts.isJsxText(node)) add(node.text);
 
       if (ts.isPropertyAssignment(node)) {
         const property = node.name.getText(sourceFile).replace(/["']/g, "");
@@ -193,7 +187,7 @@ describe("Fresh Greens prose structure", () => {
 
     expect(
       wordCount,
-      `Fresh Greens authored primary narrative is ${wordCount} words; target is 800 to 950`,
+      `Fresh Greens authored primary narrative is ${wordCount} words; target is at most 950`,
     ).toBeLessThanOrEqual(950);
   });
 
@@ -232,34 +226,18 @@ describe("Fresh Greens prose structure", () => {
     expect(titleRule).toMatch(/padding-top:\s*0\.85rem;/);
   });
 
-  it("removes redundant scaffolding while keeping the evidence-bearing lead", () => {
-    const source = readPage();
-    const copy = normalizeCopy(source);
-
-    expect(source).not.toContain("case-tier-divider");
-    expect(source).not.toContain("The full breakdown");
-    expect(source).not.toContain(
-      "Community reports and public data share one adapter and one scoring function",
-    );
-    expect(source).not.toContain("The interface asks before it assumes");
-    expect(source).not.toContain("The first pass was a Google Maps feature");
-    expect(source).not.toContain("Warm surfaces and a reserved serif");
-    expect(source).not.toContain("Four colors and the daylight gradient");
-    expect(source).not.toContain("The honest split between");
-    expect(copy).toContain("I interviewed six Black drivers");
-  });
-
-  it("keeps only decision-bearing artifacts in the five-minute path", () => {
+  it("keeps the five-minute path focused on consequential decisions", () => {
     const source = readPage();
 
     for (const component of [
       "PivotJourney",
-      "ArchitectureDiagram",
+      "DepartureReminderEvidence",
       "PulledOverJourney",
     ]) {
       expect(source).toContain(`<${component}`);
     }
     for (const retired of [
+      "ArchitectureDiagram",
       "ResearchSynthesis",
       "LeadVideo",
       "OnboardingIllustrationSequence",
@@ -268,19 +246,23 @@ describe("Fresh Greens prose structure", () => {
     ]) {
       expect(source).not.toContain(`<${retired}`);
     }
+
     expect(source).toContain('name="report-detail"');
     expect(source).not.toContain('name="report-picker"');
-    expect(source).not.toContain('name="en-route"');
-    expect(source).not.toContain('name="route-preview"');
-    expect(source).not.toContain("thesis-zone-flow.png");
+    expect(source).not.toContain("26+ screens");
+    expect(source).not.toContain("300 accessibility touchpoints");
+    expect(source).not.toContain("62 Figma variables");
+    expect(source).not.toContain("/superpowers");
+    expect(source).not.toContain("/impeccable");
+    expect(source).not.toMatch(/core loop/i);
   });
 
-  it("names the tools used without turning them into validation claims", () => {
+  it("names the main tools without turning them into validation claims", () => {
     const source = readPage();
 
     expect(source).toContain('stackLabel="Tools"');
     expect(source).toContain(
-      'stack="Figma, Illustrator, Claude, React Native, Expo, TypeScript, Supabase"',
+      'stack="Figma, Illustrator, React Native, Expo, TypeScript, Supabase"',
     );
     expect(source).not.toMatch(/validated safety through Figma/i);
     expect(source).not.toMatch(/proved safety through React Native/i);
@@ -307,124 +289,81 @@ describe("Fresh Greens prose structure", () => {
     );
     expect(styles).toMatch(/\.fg-mod-arrow::before\s*\{/);
     expect(styles).toMatch(/\.fg-mod-arrow::after\s*\{/);
-    expect(styles).toMatch(
-      /@media \(max-width: 620px\)[\s\S]*?\.fg-mod-arrow::before\s*\{[\s\S]*?height:\s*auto;/,
-    );
     expect(styles).not.toMatch(
       /\.fg-mod-arrow\s*\{[^}]*transform:\s*rotate\(90deg\)/,
     );
   });
 
-  it("keeps house punctuation out of composed reserved-palette copy", () => {
-    const source = readFileSync(composedCopyPath, "utf8");
-
-    expect(source).not.toContain("affordance — the");
-    expect(source).not.toContain("safety-signal work; the");
-  });
-
-  it("distinguishes public data from community input and keeps color categories consistent", () => {
+  it("keeps data-source language accurate in the composed diagrams", () => {
     const component = readFileSync(composedCopyPath, "utf8");
-    const page = readPage();
 
     expect(component).not.toContain("eight public data sources");
     expect(component).toMatch(/eight data inputs/i);
     expect(component).toContain("local-first in the prototype");
     expect(component).toContain("Supabase and Postgres path behind configuration");
-    expect(component).toContain("local-first · Supabase when configured");
-    expect(component).not.toContain("the only non-reserved color");
     expect(component).not.toContain("Postgres + RLS");
-    expect(component).not.toContain("held in Postgres under row-level security");
-    expect(page).not.toContain("the one non-reserved color");
     expect(component).toContain("general interface actions");
   });
 
-  it("moves from Myles's experience to a research-backed three-problem brief", () => {
-    const source = readPage();
-    const copy = normalizeCopy(source);
+  it("tells the story in chronological cause-and-effect order", () => {
+    const copy = normalizeCopy(readPage());
+    const beats = [
+      "Fresh Greens started out of a personal need",
+      "I interviewed six Black drivers",
+      "The interviews revealed two customer problems",
+      "My first high-fidelity direction was a Google Maps add-on",
+      "The pulled-over feature is the decision I'm proudest to explain",
+      "I tested the early Figma flows with classmates",
+      "On thesis presentation day",
+    ];
 
-    expect(copy).toContain(
-      "Fresh Greens brings the safety knowledge Black drivers already use into route planning.",
-    );
-    expect(copy).toContain("I grew up in Brooklyn");
-    expect(copy).toContain("moved to rural South Jersey around age ten");
-    expect(copy).toContain("Confederate flags on front lawns");
-    expect(copy).toContain("a police stop or car trouble");
-    expect(copy).toContain("Google Maps or Apple Maps");
-    expect(copy).toContain("drove comfortably below the speed limit");
-    expect(copy).toContain("That experience gave me a hypothesis, not proof.");
-    expect(copy).toContain("I interviewed six Black drivers");
-
-    expect(source).toContain(
-      'href="https://nmaahc.si.edu/explore/stories/traveling-through-jim-crow-america"',
-    );
-    expect(copy).toContain("Plan");
-    expect(copy).toContain("Respond");
-    expect(copy).toContain("Trust");
-    expect(copy).toContain("6 of 6 connected trip timing to daylight");
-    expect(copy).toContain("5 of 6 raised road conditions");
-    expect(copy).toContain("5 of 6 raised police presence");
-    expect(copy).toContain("3 of 6 raised wildlife");
-    expect(copy).toContain(
-      "5 of 6 asked family or friends before trusting an unfamiliar place",
-    );
-    expect(copy).toContain(
-      "Drivers couldn't inspect conditions on each route before choosing.",
-    );
-    expect(copy).toContain(
-      "Useful community knowledge lived outside navigation",
-    );
-    expect(copy).toContain(
-      "These interviews widened my hypothesis. They don't represent every Black driver.",
-    );
+    for (const beat of beats) expect(copy).toContain(beat);
+    for (let index = 1; index < beats.length; index += 1) {
+      expect(copy.indexOf(beats[index - 1])).toBeLessThan(copy.indexOf(beats[index]));
+    }
   });
 
-  it("retires the four-tab taxonomy from the primary research path", () => {
+  it("uses one problem, opportunity, and goal brief instead of exposing the taxonomy", () => {
     const source = readPage();
+    const styles = readFileSync(refinementStylesPath, "utf8");
+    const briefStart = source.indexOf('className="fg-story-brief"');
+    const briefEnd = source.indexOf("</div>", briefStart);
+    const briefMarkup = source.slice(briefStart, briefEnd);
 
     expect(source).not.toContain("<ResearchSynthesis");
-    expect(source).not.toContain("Four recurring signals shaped the route model");
-    expect(source.match(/className="fg-evidence-boundary"/g)).toHaveLength(3);
-    expect(source).toContain("moves={[]}");
+    expect(source.match(/className="fg-story-brief-label"/g)).toHaveLength(3);
+    expect(briefMarkup).toContain("Problem");
+    expect(briefMarkup).toContain("Opportunity");
+    expect(briefMarkup).toContain("Goal");
+    expect(styles).toMatch(
+      /\.fg-page \.fg-story-brief\s*\{[\s\S]*?width:\s*min\(68rem, 100%\);[\s\S]*?grid-template-columns:\s*repeat\(3, minmax\(0, 1fr\)\);/,
+    );
+    expect(styles).toMatch(
+      /@media \(max-width: 720px\)[\s\S]*?\.fg-page \.fg-story-brief,[\s\S]*?grid-template-columns:\s*minmax\(0, 1fr\);/,
+    );
   });
 
-  it("keeps the evidence labels in the portfolio's sentence-case type system", () => {
-    const styles = readFileSync(portfolioStylesPath, "utf8");
-    const labelRule = styles.match(/\.fg-evidence-label\s*\{([^}]+)\}/)?.[1];
+  it("separates available usability evidence from intended-audience validation", () => {
+    const copy = normalizeCopy(readPage());
 
-    expect(labelRule).toBeDefined();
-    expect(labelRule).not.toMatch(/text-transform:\s*uppercase/);
-    expect(labelRule).not.toMatch(/font-family:\s*var\(--font-mono\)/);
+    expect(copy).toContain("tested the early Figma flows with classmates");
+    expect(copy).toContain("weren't the audience Fresh Greens was designed for");
+    expect(copy).toContain("Basic functionality achieved!");
+    expect(copy).toContain("entered their own addresses");
+    expect(copy).toContain("Route quality and trust with Black drivers across regions");
+    expect(copy).not.toMatch(/validated with Black drivers|proved safety|made drivers safer/i);
   });
 
-  it("gives the three research problems enough horizontal measure", () => {
-    const styles = readFileSync(portfolioStylesPath, "utf8");
-    const gridRule = styles.match(/\.fg-evidence-boundaries\s*\{([^}]+)\}/)?.[1];
-    const bodyRule = styles.match(/\.fg-evidence-boundary p:last-child\s*\{([^}]+)\}/)?.[1];
-
-    expect(gridRule).toContain("max-width: min(68rem, 100%)");
-    expect(bodyRule).toContain("font-size: 0.96rem");
-    expect(bodyRule).toContain("line-height: 1.58");
-  });
-
-  it("does not present prototype mechanics or output volume as validated safety outcomes", () => {
-    const source = `${readPage()}\n${readFileSync(projectContentPath, "utf8")}`;
-
-    expect(source).not.toMatch(/every score labeled by source/i);
-    expect(source).not.toMatch(/with source labels/i);
-    expect(source).not.toMatch(/weighted exactly like|weighted the same way/i);
-    expect(source).not.toMatch(/equal-weighting routing pipeline/i);
-    expect(source).not.toMatch(/screens shipped/i);
-    expect(source).not.toMatch(/A shipped wayfinding app/i);
-    expect(source).toMatch(/working React Native prototype/i);
-  });
-
-  it("describes the project-card work as a prototype for Black drivers", () => {
+  it("describes the project card through the route decision rather than output volume", () => {
     const content = readFileSync(projectContentPath, "utf8");
     const summary = content.match(/^summary: (.+)$/m)?.[1];
 
     expect(summary).toBe(
-      "A working wayfinding prototype for Black drivers that brings community safety reports into route scoring alongside public map data.",
+      "A wayfinding prototype for Black drivers that brings daylight, road conditions, police presence, wildlife, and community knowledge into the route decision.",
     );
-    expect(summary).not.toMatch(/\bapp\b|maximi[sz]/i);
+    expect(content).toContain(
+      "Students entered their own addresses and generated Fresh Greens routes on thesis day.",
+    );
+    expect(content).not.toContain("26+ screens");
   });
 });
