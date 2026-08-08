@@ -25,12 +25,12 @@ describe("case-study chapter maps", () => {
         stage,
       })),
     ).toEqual([
-      { id: "fg-problem", stage: "Frame" },
+      { id: "fg-problem", stage: "Background" },
       { id: "fg-research", stage: "Research" },
-      { id: "fg-design", stage: "Plan" },
+      { id: "fg-design", stage: "Pivot" },
       { id: "fg-pulled-over", stage: "Respond" },
       { id: "fg-trust", stage: "Trust" },
-      { id: "fg-scope", stage: "Validate" },
+      { id: "fg-scope", stage: "Test" },
     ]);
 
     expect(

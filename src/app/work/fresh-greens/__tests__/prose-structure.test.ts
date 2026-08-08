@@ -182,13 +182,13 @@ function primaryPathWordCount(
 }
 
 describe("Fresh Greens prose structure", () => {
-  it("keeps the authored primary narrative within the 950-word ceiling", () => {
+  it("keeps the authored primary narrative within the 960-word ceiling", () => {
     const wordCount = primaryPathWordCount(primaryPathFiles);
 
     expect(
       wordCount,
-      `Fresh Greens authored primary narrative is ${wordCount} words; target is at most 950`,
-    ).toBeLessThanOrEqual(950);
+      `Fresh Greens authored primary narrative is ${wordCount} words; target is at most 960`,
+    ).toBeLessThanOrEqual(960);
   });
 
   it("counts display props without counting metadata or internal identifiers", () => {

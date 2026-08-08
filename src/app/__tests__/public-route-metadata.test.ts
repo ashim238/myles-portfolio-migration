@@ -108,7 +108,7 @@ describe("public route metadata", () => {
       metadata: freshGreensMetadata,
       title: "Fresh Greens",
       description:
-        "A wayfinding app for Black drivers that brings community safety knowledge into route planning alongside public map data.",
+        "A wayfinding prototype for Black drivers that brings daylight, road conditions, police presence, wildlife, and community knowledge into the route decision.",
       image: "/projects/fresh-greens/cover.png",
     },
     {
