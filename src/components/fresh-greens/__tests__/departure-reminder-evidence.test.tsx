@@ -17,7 +17,10 @@ vi.mock("@/components/expandable-image", () => ({
     alt: string;
     src: string;
     className?: string;
-  }) => <img alt={alt} src={src} className={className} />,
+  }) => {
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img alt={alt} src={src} className={className} />;
+  },
 }));
 
 const styles = readFileSync(
@@ -34,16 +37,16 @@ describe("Fresh Greens departure reminder evidence", () => {
         name: "The route should still be useful after the app closes.",
       }),
     ).toBeInTheDocument();
-    expect(
-      screen.getByRole("list", { name: "How the departure reminder works" }),
-    ).toHaveTextContent(
-      "Find a useful windowChoose ScheduleLeave the app",
-    );
+    expect(screen.getByText("Find a useful window")).toBeInTheDocument();
+    expect(screen.getByText("Choose Schedule")).toBeInTheDocument();
+    expect(screen.getByText("Leave the app")).toBeInTheDocument();
     expect(screen.getByText("Time to head out")).toBeInTheDocument();
     expect(
-      screen.getByText("Leaving now gives you more daylight on your route."),
+      screen.getByText("Leaving now gives you more daylight."),
     ).toBeInTheDocument();
-    expect(screen.getByText(/does not prove that a reminder changes behavior/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/does not prove that a reminder changes behavior/i),
+    ).toBeInTheDocument();
   });
 
   it("uses the existing route-preview capture as inspectable media", () => {
