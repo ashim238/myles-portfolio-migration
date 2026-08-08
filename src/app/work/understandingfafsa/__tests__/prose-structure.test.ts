@@ -4,7 +4,6 @@ import { render, screen, within } from "@testing-library/react";
 import ts from "typescript";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Project } from "@/lib/content";
-import { UNDERSTANDING_FAFSA_AUDIT_RULES } from "@/lib/understandingfafsa-audit-rules";
 
 const getProjectBySlug = vi.fn();
 const getPublishedProjects = vi.fn();
@@ -24,8 +23,11 @@ vi.mock("next/navigation", () => ({
 
 import UnderstandingFafsaPage from "@/app/work/understandingfafsa/page";
 
-const pagePath = "src/app/work/understandingfafsa/page.tsx";
-const page = readFileSync(resolve(process.cwd(), pagePath), "utf8");
+const pagePath = resolve(
+  process.cwd(),
+  "src/app/work/understandingfafsa/page.tsx",
+);
+const page = readFileSync(pagePath, "utf8");
 const prose = page.replace(/\s+/g, " ");
 const readerFacingProperties = new Set([
   "description",
@@ -36,17 +38,10 @@ const readerFacingProperties = new Set([
   "outcomeValue",
   "outcomeLabel",
   "moves",
-  "label",
-  "decision",
-  "detail",
-  "insight",
-  "snippets",
-  "designResponse",
-  "asked",
-  "became",
-  "name",
-  "note",
+  "type",
+  "cta",
 ]);
+
 const project: Project = {
   slug: "understandingfafsa",
   title: "UnderstandingFAFSA",
@@ -60,83 +55,67 @@ const project: Project = {
   bodyHtml: "",
 };
 
-function readerFacingWordCount(
-  paths: string[],
-  importedDisplayChunks: readonly string[] = [],
-) {
+function readerFacingWordCount(path: string) {
+  const source = readFileSync(path, "utf8");
+  const sourceFile = ts.createSourceFile(
+    path,
+    source,
+    ts.ScriptTarget.Latest,
+    true,
+    ts.ScriptKind.TSX,
+  );
   const chunks: string[] = [];
-
   const add = (value: string) => {
     const normalized = value.replace(/\s+/g, " ").trim();
     if (normalized) chunks.push(normalized);
   };
 
-  for (const path of paths) {
-    const source = readFileSync(path, "utf8");
-    const sourceFile = ts.createSourceFile(
-      path,
-      source,
-      ts.ScriptTarget.Latest,
-      true,
-      ts.ScriptKind.TSX,
-    );
+  const visit = (node: ts.Node) => {
+    if (ts.isJsxText(node)) add(node.text);
 
-    const visit = (node: ts.Node) => {
-      if (ts.isJsxText(node)) {
-        add(node.text);
-      }
+    if (
+      ts.isJsxExpression(node) &&
+      !ts.isJsxAttribute(node.parent) &&
+      node.expression &&
+      ts.isStringLiteralLike(node.expression)
+    ) {
+      add(node.expression.text);
+    }
 
-      if (
-        ts.isJsxExpression(node) &&
-        !ts.isJsxAttribute(node.parent) &&
-        node.expression &&
-        ts.isStringLiteralLike(node.expression)
-      ) {
-        add(node.expression.text);
-      }
-
-      if (ts.isPropertyAssignment(node)) {
-        const property = node.name.getText(sourceFile).replace(/["']/g, "");
-        if (readerFacingProperties.has(property)) {
-          if (ts.isStringLiteralLike(node.initializer)) {
-            add(node.initializer.text);
-          } else if (ts.isArrayLiteralExpression(node.initializer)) {
-            node.initializer.elements.forEach((element) => {
-              if (ts.isStringLiteralLike(element)) add(element.text);
-            });
-          }
+    if (ts.isPropertyAssignment(node)) {
+      const property = node.name.getText(sourceFile).replace(/["']/g, "");
+      if (readerFacingProperties.has(property)) {
+        if (ts.isStringLiteralLike(node.initializer)) {
+          add(node.initializer.text);
+        } else if (ts.isArrayLiteralExpression(node.initializer)) {
+          node.initializer.elements.forEach((element) => {
+            if (ts.isStringLiteralLike(element)) add(element.text);
+          });
         }
       }
+    }
 
-      if (ts.isJsxAttribute(node)) {
-        const property = node.name.getText(sourceFile);
-        if (readerFacingProperties.has(property)) {
-          const initializer = node.initializer;
-          if (initializer && ts.isStringLiteral(initializer)) {
-            add(initializer.text);
-          } else if (
-            initializer &&
-            ts.isJsxExpression(initializer) &&
-            initializer.expression
-          ) {
-            if (ts.isStringLiteralLike(initializer.expression)) {
-              add(initializer.expression.text);
-            } else if (ts.isArrayLiteralExpression(initializer.expression)) {
-              initializer.expression.elements.forEach((element) => {
-                if (ts.isStringLiteralLike(element)) add(element.text);
-              });
-            }
-          }
+    if (ts.isJsxAttribute(node)) {
+      const property = node.name.getText(sourceFile);
+      if (readerFacingProperties.has(property)) {
+        const initializer = node.initializer;
+        if (initializer && ts.isStringLiteral(initializer)) {
+          add(initializer.text);
+        } else if (
+          initializer &&
+          ts.isJsxExpression(initializer) &&
+          initializer.expression &&
+          ts.isStringLiteralLike(initializer.expression)
+        ) {
+          add(initializer.expression.text);
         }
       }
+    }
 
-      ts.forEachChild(node, visit);
-    };
+    ts.forEachChild(node, visit);
+  };
 
-    visit(sourceFile);
-  }
-
-  importedDisplayChunks.forEach(add);
+  visit(sourceFile);
 
   return (
     chunks
@@ -175,185 +154,129 @@ describe("UnderstandingFAFSA case-study structure", () => {
     );
   });
 
-  it("uses five process chapters with nested evidence headings", () => {
+  it("uses five chapters without nested evidence-heading scaffolding", () => {
     const chapterIndexes = Array.from(
       page.matchAll(/entry=\{chapters\[(\d+)\]\}/g),
       ([, index]) => index,
-    );
-    const evidenceHeadings = Array.from(
-      page.matchAll(
-        /<h3 className="project-evidence-heading" id="([^"]+)">\s*([^<]+)\s*<\/h3>/g,
-      ),
-      ([, id, title]) => ({ id, title: title.trim() }),
     );
 
     expect(page).toContain("const chapters = CASE_STUDY_CHAPTERS.understandingfafsa");
     expect(page).toContain("<ProjectToc sections={chapters} />");
     expect(page.match(/<ProjectChapter/g)).toHaveLength(5);
     expect(chapterIndexes).toEqual(["0", "1", "2", "3", "4"]);
-    expect(evidenceHeadings).toEqual([
-      { id: "uf-problem", title: "Where the old template broke down" },
-      { id: "uf-templates", title: "Three send types from the audit" },
-    ]);
+    expect(page).not.toContain("project-evidence-heading");
+    expect(page).not.toContain("Where the old template broke down");
+    expect(page).not.toContain("Three send types from the audit");
   });
 
-  it("removes repeated framing and the redundant palette inventory", () => {
-    expect(page).not.toContain("case-tier-divider");
-    expect(page).not.toContain("case-pullquote");
-    expect(page).not.toContain("case-section-lead");
-    expect(page).not.toContain("The full breakdown");
-    expect(page).not.toContain("From there we put our own spin on it");
-    expect(page).not.toContain("ColorPalette");
-    expect(page).not.toContain("UF_COLORS");
-
+  it("keeps one proof surface for each major part of the story", () => {
     for (const artifact of [
       "BeforeAfterPhones",
-      "TemplateSwitcher",
       "NewsletterComposerDemo",
-      "LockedSwappableView",
       "FigmaMailchimpPair",
       "CountUp",
     ]) {
       expect(page).toContain(`<${artifact}`);
     }
-  });
 
-  it("renders the five audit findings as one ordered rule chain", () => {
-    expect(page).toMatch(
-      /import\s*\{\s*UNDERSTANDING_FAFSA_AUDIT_RULES\s*\}\s*from\s*"@\/lib\/understandingfafsa-audit-rules"/,
-    );
-    expect(page).toContain(
-      '<ol aria-label="Audit findings and system rules">',
-    );
-    expect(page).toMatch(
-      /UNDERSTANDING_FAFSA_AUDIT_RULES\.map\(\(rule\) =>/,
-    );
-    expect(
-      page.match(/UNDERSTANDING_FAFSA_AUDIT_RULES\.map/g) ?? [],
-    ).toHaveLength(1);
-    expect(page).toContain("<strong>Finding:</strong>");
-    expect(page).toContain("<strong>System rule:</strong>");
-  });
-
-  it("exposes the audit chain as a named ordered list", async () => {
-    render(await UnderstandingFafsaPage());
-
-    const list = screen.getByRole("list", {
-      name: "Audit findings and system rules",
-    });
-    const items = within(list).getAllByRole("listitem");
-
-    expect(list.tagName).toBe("OL");
-    expect(items).toHaveLength(5);
-    for (const item of items) {
-      expect(within(item).getByText("Finding:")).toBeVisible();
-      expect(within(item).getByText("System rule:")).toBeVisible();
+    for (const retired of [
+      "TemplateSwitcher",
+      "LockedSwappableView",
+      "ColorPalette",
+      "UNDERSTANDING_FAFSA_AUDIT_RULES",
+    ]) {
+      expect(page).not.toContain(retired);
     }
+    expect(page).not.toContain("case-tier-divider");
+    expect(page).not.toContain("The full breakdown");
   });
 
-  it("orders the story from operating context through the supporting metric", () => {
+  it("compresses the audit into a problem, opportunity, and goal", async () => {
+    const { container } = render(await UnderstandingFafsaPage());
+    const brief = container.querySelector(".uf-story-brief") as HTMLElement;
+
+    expect(brief).not.toBeNull();
+    expect(brief).toHaveTextContent("Problem");
+    expect(brief).toHaveTextContent("Opportunity");
+    expect(brief).toHaveTextContent("Goal");
+    expect(brief).toHaveTextContent("Important guidance was hard to scan");
+    expect(brief).toHaveTextContent("Lock the system, not the weekly content");
+    expect(brief).toHaveTextContent("Make the kit work inside Mailchimp");
+    expect(within(brief).getAllByRole("article")).toHaveLength(3);
+    expect(
+      screen.queryByRole("list", { name: "Audit findings and system rules" }),
+    ).toBeNull();
+  });
+
+  it("orders the story from the old template to the qualified result", () => {
     const storyMarkers = [
-      "Where the old template broke down",
-      "compile and evaluate more than 120 newsletter examples",
-      "Audit findings and system rules",
-      "Three send types from the audit",
+      "The website had just been rebranded",
+      "compiled and reviewed more than 120 newsletters",
+      "The audit led to three send types",
+      "I rebuilt the system in Mailchimp",
       "Gmail&apos;s 102 KB HTML clipping threshold",
       "I shipped a master template",
       "November 4, 2025",
     ];
 
-    for (const [current, next] of storyMarkers
-      .slice(0, -1)
-      .map((marker, index) => [marker, storyMarkers[index + 1]] as const)) {
-      expect(page.indexOf(current)).toBeGreaterThan(-1);
-      expect(page.indexOf(current)).toBeLessThan(page.indexOf(next));
+    for (const marker of storyMarkers) expect(page).toContain(marker);
+    for (let index = 1; index < storyMarkers.length; index += 1) {
+      expect(page.indexOf(storyMarkers[index - 1])).toBeLessThan(
+        page.indexOf(storyMarkers[index]),
+      );
     }
   });
 
   it("keeps ownership, workflow, and the implementation constraint explicit", () => {
-    expect(prose).toMatch(/one collaborator and I[\s\S]{0,100}more than 120/i);
-    expect(prose).toMatch(/I designed[\s\S]{0,100}modular rules/i);
-    expect(prose).toMatch(/I rebuilt[\s\S]{0,100}Mailchimp/i);
-    expect(prose).toMatch(
-      /founder[\s\S]{0,100}without (?:touching|editing) HTML/i,
-    );
+    expect(prose).toMatch(/one collaborator and I[\s\S]{0,80}more than 120/i);
+    expect(prose).toMatch(/I used that audit to define what should stay fixed/i);
+    expect(prose).toMatch(/I rebuilt the system in Mailchimp/i);
+    expect(prose).toMatch(/founder[\s\S]{0,100}without (?:touching|editing) HTML/i);
     expect(prose).toMatch(/102 ?KB/i);
+    expect(prose).toContain("Image compression helped download weight");
+    expect(prose).toContain("it did not change that HTML limit");
 
-    for (const source of [
+    for (const removedMinutia of [
       "Revenews",
       "The 74",
       "Next by Jeff Selingo",
-      "Medium",
       "Folderly",
+      "removed backgrounds in Photoshop",
+      "counselor toolkit needed more image work",
+      "duotone icons",
     ]) {
-      expect(prose).toContain(source);
+      expect(prose).not.toContain(removedMinutia);
     }
   });
 
-  it("separates Gmail HTML clipping work from PNG download weight", () => {
-    expect(prose).not.toContain("The fix arrived through test sends");
-    expect(prose).toContain(
-      "Test sends showed which wrappers and dividers could go.",
-    );
-    expect(prose).toContain(
-      "To reduce the HTML Gmail measures, I flattened the hierarchy, removed wrappers and blocks that didn&apos;t need to ship, and used Mailchimp-native structure where it replaced custom markup.",
-    );
-    expect(prose).toContain(
-      "Compressing the PNGs through an external tool lowered their download weight. It didn&apos;t reduce the HTML source Gmail measures.",
-    );
-    expect(prose).not.toContain(
-      "Early weight came from custom section icons and themed dividers",
-    );
-    expect(prose).toContain("removed backgrounds in Photoshop");
-  });
-
-  it("names the three templates and the Mailchimp tradeoff without abstract system language", () => {
-    expect(prose).toContain(
-      "The audit led to three templates: a welcome email, the weekly newsletter, and a shorter version for event invites and recaps.",
-    );
-    expect(prose).toMatch(/I designed the modular rules around a fixed section order/i);
-    expect(prose).not.toContain("The shared framework");
-    expect(prose).not.toContain("same vocabulary");
-    expect(prose).not.toContain("modular rhythm");
-    expect(prose).not.toContain("same design vocabulary");
-  });
-
-  it("keeps the build and measured result specific after distillation", () => {
-    expect(prose).toMatch(
-      /I rebuilt the live (?:system|template) in Mailchimp[\s\S]{0,100}without touching HTML/i,
-    );
-    expect(prose).toContain("November 4, 2025");
+  it("keeps the metric specific, observational, and visibly spaced", () => {
+    expect(page).toContain("November 4, 2025");
+    expect(page).toContain('<CountUp value="~52.6%" />{" "}open rate');
+    expect(prose).toContain("while earlier sends were around 30%");
     expect(prose).toContain(
       "That result is supporting context, not a controlled attribution test.",
     );
-    expect(prose).toContain(
-      "I don&apos;t claim the redesign caused the change.",
-    );
-    expect(prose).not.toContain(
-      "The rest of the newsletter pool served as lighter references",
-    );
-    expect(prose).not.toContain("Compression wasn&apos;t one recipe.");
+    expect(prose).toContain("I don&apos;t claim the redesign caused the change.");
   });
 
-  it("keeps a visible space between the measured rate and its label", () => {
-    expect(page).toContain('<CountUp value="~52.6%" />{" "}open rate');
+  it("keeps the authored page below a 650-word reading budget", () => {
+    const count = readerFacingWordCount(pagePath);
+    expect(
+      count,
+      `UnderstandingFAFSA reader-facing source is ${count} words; target is at most 650`,
+    ).toBeLessThanOrEqual(650);
   });
 
-  it("counts imported audit-rule copy inside the prose budget", () => {
-    const importedAuditCopy = UNDERSTANDING_FAFSA_AUDIT_RULES.flatMap(
-      ({ finding, response }) => [finding, response],
-    );
-    const repeatedLabels = Array.from(
-      { length: UNDERSTANDING_FAFSA_AUDIT_RULES.length - 1 },
-      () => ["Finding", "System rule"],
-    ).flat();
-    const sourceOnlyCount = readerFacingWordCount([pagePath]);
-    const completeCount = readerFacingWordCount(
-      [pagePath],
-      [...importedAuditCopy, ...repeatedLabels],
-    );
-
-    expect(completeCount - sourceOnlyCount).toBe(96);
-    expect(completeCount).toBeLessThanOrEqual(800);
+  it("avoids evidence-map and generic product language in public copy", () => {
+    for (const phrase of [
+      "dominant proof",
+      "supporting proof",
+      "the core loop worked",
+      "leveraging insights",
+      "seamless experience",
+      "This proves",
+    ]) {
+      expect(prose).not.toMatch(new RegExp(phrase, "i"));
+    }
   });
 });
