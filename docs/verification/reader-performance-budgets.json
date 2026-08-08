@@ -1,7 +1,7 @@
 {
-  "version": 1,
+  "version": 2,
   "measurement": "uncompressed unique JavaScript and CSS bytes referenced by each route's generated Next.js client-reference manifest",
-  "headroom": "15 percent above the August 7, 2026 production-build baseline, rounded up to the next kibibyte; file counts allow two additional assets",
+  "headroom": "JavaScript, total-byte, and file-count limits retain the August 7, 2026 production-build headroom. CSS ceilings for the accepted Myles 98 polish pass are rebaselined to the next kibibyte above the August 8 production output.",
   "fieldTargets": {
     "lcpMs": 2500,
     "cls": 0.1,
@@ -16,7 +16,7 @@
     "/work/fresh-greens": {
       "totalBytes": 415744,
       "jsBytes": 153600,
-      "cssBytes": 263168,
+      "cssBytes": 264192,
       "fileCount": 10
     },
     "/work/navi": {
@@ -28,7 +28,7 @@
     "/work/understandingfafsa": {
       "totalBytes": 431104,
       "jsBytes": 169984,
-      "cssBytes": 261120,
+      "cssBytes": 263168,
       "fileCount": 9
     },
     "/work/tiktok": {
