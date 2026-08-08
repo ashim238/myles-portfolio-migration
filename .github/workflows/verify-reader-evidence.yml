@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - codex/reader-evidence-grammar
+      - codex/myles-98-visual-refinement
   workflow_dispatch:
 
 permissions:
