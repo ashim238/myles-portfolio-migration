@@ -9,6 +9,7 @@ import { ProjectToc } from "@/components/project-toc";
 import { ProjectChapter } from "@/components/project-chapter";
 import { ProjectWorkJump } from "@/components/project-work-jump";
 import { ArchitectureDiagram, PhoneFrame } from "@/components/fresh-greens";
+import { DepartureReminderEvidence } from "@/components/fresh-greens/departure-reminder-evidence";
 import { PivotJourney } from "@/components/fresh-greens/pivot-journey";
 import { PulledOverJourney } from "@/components/fresh-greens/pulled-over-journey";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
@@ -51,13 +52,12 @@ export default async function FreshGreensPage() {
   return (
     <ReaderShell slug="fresh-greens" title="Fresh Greens" className="fg-page">
       <nav className="project-topbar" aria-label="Breadcrumb">
-        <TransitionLink href="/#work">
+        <TransitionLink href="/#selected-work">
           <span aria-hidden="true">←</span>
           Selected work
         </TransitionLink>
       </nav>
 
-      {/* ── Hero ─────────────────────────────────────── */}
       <section className="hero project-hero fg-hero" aria-labelledby="fg-title">
         <p className="fg-eyebrow">Product design + engineering · 2025–2026</p>
         <h1 id="fg-title" className="project-hero-title fg-title">
@@ -87,7 +87,7 @@ export default async function FreshGreensPage() {
           href: "#fg-pulled-over",
         }}
         outcomeValue="Working"
-        outcomeLabel="React Native prototype across 26+ screens"
+        outcomeLabel="Route planning, reminders, stress support, reporting, and moderation"
         moves={[]}
       />
 
@@ -154,10 +154,26 @@ export default async function FreshGreensPage() {
       <ProjectChapter entry={chapters[2]} index={3} total={chapters.length} variant="fresh-greens">
         <section className="project-section fg-section fg-section--wide">
           <div className="project-section-body">
-            <p>Participants timed trips around daylight, avoided roads, and compared clues outside maps that only optimized time and distance.</p>
-            <p>I moved from a Google Maps feature to a standalone route preview, then turned public and community inputs into route chips and source cards. The prototype can explain why it prefers one route. It doesn&apos;t prove that route is safer.</p>
+            <p>
+              Participants talked about timing trips around daylight, avoiding
+              certain roads, and comparing clues that Google Maps or Apple Maps
+              did not show.
+            </p>
+            <p>
+              My first idea was a feature inside Google Maps. I eventually moved
+              it into a standalone route preview, where the driver can compare
+              conditions, open the source behind a warning, and see why Fresh
+              Greens prefers one route. That makes the decision inspectable. It
+              does not prove the route is safer.
+            </p>
+            <p>
+              Daylight still matters after the route is chosen. When a different
+              departure would keep more of the trip in daylight, the driver can
+              schedule one local reminder instead of keeping the app open.
+            </p>
           </div>
           <PivotJourney />
+          <DepartureReminderEvidence />
           <ArchitectureDiagram />
         </section>
       </ProjectChapter>
@@ -213,13 +229,13 @@ export default async function FreshGreensPage() {
       <ProjectChapter entry={chapters[5]} index={6} total={chapters.length} variant="fresh-greens">
         <div className="project-section fg-section fg-scope">
           <div className="project-section-body">
-            <p>Six interviews became a working React Native prototype spanning route comparison, en-route guidance, stress-state support, community reporting, and moderation. It can explain why it prefers one route without proving it safer.</p>
+            <p>Six interviews became a working React Native prototype spanning route comparison, departure and refuel reminders, en-route guidance, stress-state support, community reporting, and moderation. It can explain why it prefers one route without proving it safer.</p>
           </div>
           <div className="fg-scope-grid">
             <div className="fg-scope-col">
               <p className="fg-scope-label">Built now</p>
               <ul className="fg-scope-list" role="list">
-                <li>Plan: route comparison explained through chips and source cards</li>
+                <li>Plan: route comparison explained through chips and source cards, plus local departure and refuel reminders</li>
                 <li>Respond: one-thumb, offline support across five stress states</li>
                 <li>Trust: contribution and moderation flows that keep reports reviewable</li>
               </ul>
