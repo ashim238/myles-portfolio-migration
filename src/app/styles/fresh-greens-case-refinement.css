@@ -1,5 +1,76 @@
-/* Fresh Greens case-study refinement
-   Keep the route-planning story project-owned while making Reminders visible. */
+/* Fresh Greens linear-story refinement
+   The public page follows the screenplay; the evidence grammar stays backstage. */
+
+.fg-page .fg-story-brief {
+  display: grid;
+  width: min(68rem, 100%);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 2rem 0 1.25rem;
+  border-block: 1px solid var(--line);
+  background: color-mix(in srgb, var(--fg-accent) 5%, var(--surface));
+}
+
+.fg-page .fg-story-brief > article {
+  min-width: 0;
+  padding: clamp(1rem, 2.4vw, 1.45rem);
+}
+
+.fg-page .fg-story-brief > article + article {
+  border-left: 1px solid var(--line);
+}
+
+.fg-page .fg-story-brief-label {
+  margin: 0 0 0.55rem;
+  color: var(--fg-accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.fg-page .fg-story-brief strong {
+  display: block;
+  margin-bottom: 0.45rem;
+  color: var(--foreground);
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  line-height: 1.2;
+}
+
+.fg-page .fg-story-brief p:last-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.58;
+}
+
+.fg-page .fg-route-factors {
+  display: grid;
+  width: min(48rem, 100%);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-page .fg-route-factors li {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.fg-page .fg-route-factors strong {
+  color: var(--foreground);
+}
+
+.fg-page .fg-route-factors span {
+  color: var(--muted);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
 
 .fg-page .fg-reminder-evidence {
   width: min(62rem, 100%);
@@ -17,7 +88,7 @@
 }
 
 .fg-page .fg-reminder-copy {
-  max-width: 62ch;
+  max-width: 64ch;
   margin-bottom: 1.5rem;
 }
 
@@ -25,11 +96,11 @@
   margin: 0 0 0.45rem;
   color: var(--fg-accent);
   font-size: 0.82rem;
-  font-weight: 650;
+  font-weight: 700;
 }
 
 .fg-page .fg-reminder-copy h3 {
-  max-width: 22ch;
+  max-width: 24ch;
   margin: 0 0 0.75rem;
   font-size: clamp(1.45rem, 3vw, 2.15rem);
   line-height: 1.08;
@@ -37,7 +108,8 @@
   text-wrap: balance;
 }
 
-.fg-page .fg-reminder-copy p:last-child {
+.fg-page .fg-reminder-copy p:last-child,
+.fg-page .fg-reminder-decision > p {
   margin: 0;
   color: var(--muted);
   font-size: 0.98rem;
@@ -51,7 +123,8 @@
   gap: clamp(1.4rem, 4vw, 3.4rem);
 }
 
-.fg-page .fg-reminder-device {
+.fg-page .fg-reminder-device,
+.fg-page .fg-reminder-decision {
   min-width: 0;
 }
 
@@ -59,71 +132,8 @@
   --phone-w: min(100%, 250px);
 }
 
-.fg-page .fg-reminder-sequence {
-  min-width: 0;
-}
-
-.fg-page .fg-reminder-sequence > ol {
-  position: relative;
-  display: grid;
-  gap: 0;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.fg-page .fg-reminder-sequence > ol::before {
-  content: "";
-  position: absolute;
-  top: 1.15rem;
-  bottom: 1.15rem;
-  left: 1rem;
-  width: 1px;
-  background: color-mix(in srgb, var(--fg-accent) 58%, var(--line));
-}
-
-.fg-page .fg-reminder-sequence li {
-  position: relative;
-  display: grid;
-  grid-template-columns: 2rem minmax(0, 1fr);
-  gap: 0.85rem;
-  padding: 0 0 1.25rem;
-}
-
-.fg-page .fg-reminder-sequence li:last-child {
-  padding-bottom: 0.3rem;
-}
-
-.fg-page .fg-reminder-step {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  width: 2rem;
-  height: 2rem;
-  place-items: center;
-  border: 1px solid var(--fg-accent-line);
-  border-radius: 50%;
-  background: var(--surface);
-  color: var(--fg-accent);
-  font: 700 0.76rem/1 var(--font-mono), ui-monospace, monospace;
-}
-
-.fg-page .fg-reminder-sequence strong {
-  display: block;
-  margin-bottom: 0.25rem;
-  color: var(--foreground);
-  font-size: 0.98rem;
-}
-
-.fg-page .fg-reminder-sequence li p {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.9rem;
-  line-height: 1.55;
-}
-
 .fg-page .fg-reminder-notification {
-  margin: 1.15rem 0 0.8rem 2.85rem;
+  margin: 1.15rem 0;
   padding: 0.9rem 1rem 1rem;
   border: 1px solid rgb(255 255 255 / 14%);
   border-radius: 1rem;
@@ -154,6 +164,7 @@
 }
 
 .fg-page .fg-reminder-notification > strong {
+  display: block;
   margin: 0 0 0.25rem;
   color: #fff;
   font-size: 0.98rem;
@@ -166,13 +177,23 @@
   line-height: 1.45;
 }
 
-.fg-page .fg-reminder-secondary {
-  margin: 0 0 0 2.85rem;
-  padding-left: 0.7rem;
-  border-left: 2px solid var(--fg-accent);
+.fg-page .fg-reminder-permission {
+  padding: 0.95rem 1rem;
+  border-left: 3px solid var(--fg-accent);
+  background: color-mix(in srgb, var(--fg-accent) 7%, var(--surface));
+}
+
+.fg-page .fg-reminder-permission strong {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--foreground);
+}
+
+.fg-page .fg-reminder-permission p {
+  margin: 0;
   color: var(--muted);
-  font-size: 0.83rem;
-  line-height: 1.5;
+  font-size: 0.88rem;
+  line-height: 1.55;
 }
 
 .fg-page .fg-reminder-evidence > figcaption {
@@ -184,37 +205,97 @@
   line-height: 1.5;
 }
 
+.fg-page .fg-validation-story {
+  width: min(62rem, 100%);
+}
+
+.fg-page .fg-thesis-demo {
+  display: grid;
+  gap: 0.45rem;
+  margin: 1.75rem 0;
+  padding: clamp(1.1rem, 3vw, 1.6rem);
+  border-left: 5px solid var(--fg-accent);
+  background: color-mix(in srgb, var(--fg-accent) 9%, var(--surface));
+}
+
+.fg-page .fg-thesis-demo strong {
+  color: var(--foreground);
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  line-height: 1.05;
+  letter-spacing: var(--track-display);
+}
+
+.fg-page .fg-thesis-demo span {
+  max-width: 58ch;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.fg-page .fg-validation-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.75rem 0;
+}
+
+.fg-page .fg-validation-grid > section {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.fg-page .fg-validation-label {
+  margin: 0 0 0.6rem;
+  color: var(--fg-accent);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.fg-page .fg-validation-grid ul {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
 @media (max-width: 720px) {
-  .fg-page .fg-reminder-evidence {
-    padding: 1rem;
+  .fg-page .fg-story-brief,
+  .fg-page .fg-route-factors,
+  .fg-page .fg-reminder-layout,
+  .fg-page .fg-validation-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .fg-page .fg-reminder-layout {
-    grid-template-columns: minmax(0, 1fr);
+  .fg-page .fg-story-brief > article + article {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .fg-page .fg-reminder-evidence {
+    padding: 1rem;
   }
 
   .fg-page .fg-reminder-device .fg-phone {
     --phone-w: min(68vw, 250px);
   }
-
-  .fg-page .fg-reminder-notification,
-  .fg-page .fg-reminder-secondary {
-    margin-left: 0;
-  }
 }
 
 @media (forced-colors: active) {
+  .fg-page .fg-story-brief,
+  .fg-page .fg-story-brief > article,
+  .fg-page .fg-route-factors li,
   .fg-page .fg-reminder-evidence,
-  .fg-page .fg-reminder-step,
-  .fg-page .fg-reminder-notification {
+  .fg-page .fg-reminder-notification,
+  .fg-page .fg-reminder-permission,
+  .fg-page .fg-thesis-demo,
+  .fg-page .fg-validation-grid > section {
     border-color: CanvasText;
     background: Canvas;
     color: CanvasText;
     box-shadow: none;
-  }
-
-  .fg-page .fg-reminder-sequence > ol::before {
-    background: CanvasText;
   }
 
   .fg-page .fg-reminder-app-mark {
