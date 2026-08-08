@@ -8,7 +8,7 @@ import { TransitionLink } from "@/components/transition-link";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectChapter } from "@/components/project-chapter";
 import { ProjectWorkJump } from "@/components/project-work-jump";
-import { ArchitectureDiagram, PhoneFrame } from "@/components/fresh-greens";
+import { PhoneFrame } from "@/components/fresh-greens";
 import { DepartureReminderEvidence } from "@/components/fresh-greens/departure-reminder-evidence";
 import { PivotJourney } from "@/components/fresh-greens/pivot-journey";
 import { PulledOverJourney } from "@/components/fresh-greens/pulled-over-journey";
@@ -22,7 +22,7 @@ const chapters = CASE_STUDY_CHAPTERS["fresh-greens"];
 export const metadata: Metadata = createRouteMetadata({
   title: "Fresh Greens",
   description:
-    "A wayfinding app for Black drivers that brings community safety knowledge into route planning alongside public map data.",
+    "A wayfinding prototype for Black drivers that brings daylight, road conditions, police presence, wildlife, and community knowledge into the route decision.",
   path: "/work/fresh-greens",
   image: "/projects/fresh-greens/cover.png",
   type: "article",
@@ -64,8 +64,9 @@ export default async function FreshGreensPage() {
           Fresh Greens
         </h1>
         <p className="project-hero-lede fg-lede">
-          Fresh Greens brings the safety knowledge Black drivers already use into
-          route planning.
+          Fresh Greens is a wayfinding app for Black drivers. It brings daylight,
+          road conditions, police presence, wildlife, and community knowledge
+          into the route decision, near or far.
         </p>
       </section>
 
@@ -80,41 +81,51 @@ export default async function FreshGreensPage() {
         role="Solo, design and engineering"
         timeline="Sep 2025 – Jun 2026"
         stackLabel="Tools"
-        stack="Figma, Illustrator, Claude, React Native, Expo, TypeScript, Supabase"
+        stack="Figma, Illustrator, React Native, Expo, TypeScript, Supabase"
         evidence={{
           type: "Working mobile prototype",
-          cta: "Try the safety-flow reconstruction",
+          cta: "See the pulled-over flow",
           href: "#fg-pulled-over",
         }}
         outcomeValue="Working"
-        outcomeLabel="Route planning, reminders, stress support, reporting, and moderation"
+        outcomeLabel="Students entered their own addresses and generated Fresh Greens routes on thesis day"
         moves={[]}
       />
 
       <ProjectToc sections={chapters} readingEndId="fg-scope" />
 
-      <ProjectChapter entry={chapters[0]} index={1} total={chapters.length} variant="fresh-greens">
+      <ProjectChapter
+        entry={chapters[0]}
+        index={1}
+        total={chapters.length}
+        variant="fresh-greens"
+      >
         <div className="project-section fg-section">
           <div className="project-section-body">
             <p>
-              I grew up in Brooklyn and moved to rural South Jersey around age
-              ten. Confederate flags on front lawns made night driving feel
-              exposing. I worried about a police stop or car trouble in a place
-              where asking for help might not feel safe.
+              Fresh Greens started out of a personal need. I grew up in Brooklyn
+              and moved to rural South Jersey around ten, where Confederate flags
+              on front lawns made night driving as a Black resident uncomfortable.
+              I wondered whether I could avoid those backroads and have a drive
+              that felt more centered on me.
             </p>
             <p>
-              I still used Google Maps or Apple Maps, then carried the rest
-              myself. At night, I avoided backroads, drove comfortably below the
-              speed limit, kept my wallet within reach, and watched the road
-              around me. That experience gave me a hypothesis, not proof. I
-              interviewed six Black drivers to see what carried beyond my own
-              route.
+              Maps found the fastest route; I still had to plan around daylight,
+              stops, unfamiliar roads, police interaction, and car trouble.
             </p>
             <p>
-              The Green Book used print to help Black travelers find places that
-              would serve them. I use that history as design lineage, not proof
-              that Fresh Greens is its digital successor.{" "}
-              <a href="https://nmaahc.si.edu/explore/stories/traveling-through-jim-crow-america" rel="noreferrer" target="_blank">
+              Because this was my thesis, I interviewed six Black drivers to see
+              what extended beyond my own town.
+            </p>
+            <p>
+              The Green Book showed how travel knowledge could be shared when
+              mainstream systems excluded Black travelers. I treated that as
+              lineage, not proof of a direct successor.{" "}
+              <a
+                href="https://nmaahc.si.edu/explore/stories/traveling-through-jim-crow-america"
+                rel="noreferrer"
+                target="_blank"
+              >
                 Source: Smithsonian National Museum of African American History
                 and Culture
               </a>
@@ -124,81 +135,174 @@ export default async function FreshGreensPage() {
         </div>
       </ProjectChapter>
 
-      <ProjectChapter entry={chapters[1]} index={2} total={chapters.length} variant="fresh-greens">
+      <ProjectChapter
+        entry={chapters[1]}
+        index={2}
+        total={chapters.length}
+        variant="fresh-greens"
+      >
         <div className="project-section fg-section fg-section--wide">
-          <p className="case-section-lead">
-            Participants already knew how to plan, prepare, and decide whom to
-            trust. Their answers became three product problems.
-          </p>
-          <div className="fg-evidence-boundaries" aria-label="Three Fresh Greens product problems">
-            <div className="fg-evidence-boundary">
-              <p className="fg-evidence-label">Plan</p>
-              <p>Drivers couldn&apos;t inspect conditions on each route before choosing. 6 of 6 connected trip timing to daylight, 5 of 6 raised road conditions, 5 of 6 raised police presence, and 3 of 6 raised wildlife.</p>
-            </div>
-            <div className="fg-evidence-boundary">
-              <p className="fg-evidence-label">Respond</p>
-              <p>Participants prepared for police encounters and kept help close when problems raised stress.</p>
-            </div>
-            <div className="fg-evidence-boundary">
-              <p className="fg-evidence-label">Trust</p>
-              <p>Useful community knowledge lived outside navigation. 5 of 6 asked family or friends before trusting an unfamiliar place.</p>
-            </div>
-          </div>
           <div className="project-section-body">
-            <p>These interviews widened my hypothesis. They don&apos;t represent every Black driver.</p>
+            <p>
+              The conversations moved from simple route choices into how people
+              decoded the places around them. Wayfinding was shared knowledge and
+              inherited behavior, not just point A to B.
+            </p>
+            <p>
+              All six tied timing to daylight; five raised road conditions; five
+              police presence; three wildlife; and five asked family or friends
+              before trusting an unfamiliar place.
+            </p>
+            <p>
+              The interviews revealed two customer problems: useful safety
+              knowledge lived outside navigation, and routes hid who or what
+              shaped them.
+            </p>
+          </div>
+
+          <div
+            className="fg-story-brief"
+            aria-label="Fresh Greens problem, opportunity, and goal"
+          >
+            <article>
+              <p className="fg-story-brief-label">Problem</p>
+              <strong>Safety planning lived outside the map.</strong>
+              <p>
+                People carried it in memory, family advice, and habits that
+                navigation never showed.
+              </p>
+            </article>
+            <article>
+              <p className="fg-story-brief-label">Opportunity</p>
+              <strong>Bring those signals into the route decision.</strong>
+              <p>
+                Show the conditions drivers already watch before they start
+                moving.
+              </p>
+            </article>
+            <article>
+              <p className="fg-story-brief-label">Goal</p>
+              <strong>Help people feel more secure on the road.</strong>
+              <p>
+                Support planning, unexpected moments, and trust without pretending
+                certainty.
+              </p>
+            </article>
+          </div>
+
+          <div className="project-section-body">
+            <p>Six interviews shaped the thesis. They don&apos;t represent every Black driver.</p>
           </div>
         </div>
       </ProjectChapter>
 
-      <ProjectChapter entry={chapters[2]} index={3} total={chapters.length} variant="fresh-greens">
+      <ProjectChapter
+        entry={chapters[2]}
+        index={3}
+        total={chapters.length}
+        variant="fresh-greens"
+      >
         <section className="project-section fg-section fg-section--wide">
           <div className="project-section-body">
             <p>
-              Participants timed trips around daylight, avoided certain roads,
-              and compared clues missing from Google Maps or Apple Maps.
+              My first high-fidelity direction was a Google Maps add-on. My
+              advisors said the thesis wasn&apos;t coming through, and they were right:
+              it looked like a reskinned Maps feature.
             </p>
             <p>
-              My first idea was a Google Maps feature. I moved it into a
-              standalone route preview, where drivers can compare conditions,
-              open a warning&apos;s source, and see why Fresh Greens prefers one
-              route. That makes the decision inspectable, not proven safer.
-            </p>
-            <p>
-              When another departure keeps more of the trip in daylight, the
-              driver can schedule one local reminder and close the app.
+              I was building on a product that was never designed around this
+              audience. Maps does routing at scale; Fresh Greens needed to own the
+              context it was missing.
             </p>
           </div>
+
           <PivotJourney />
+
+          <div className="project-section-body">
+            <p>
+              The standalone preview explains why routes score differently, shows
+              the source behind a warning, and keeps daylight visible before the
+              driver chooses. It makes the decision less opaque, not proven safer.
+            </p>
+            <p>
+              The interviews also changed how I thought about time. The reminder
+              takes one thing off the driver&apos;s plate after Fresh Greens finds a
+              better daylight window.
+            </p>
+          </div>
+
           <DepartureReminderEvidence />
-          <ArchitectureDiagram />
         </section>
       </ProjectChapter>
 
-      <ProjectChapter entry={chapters[3]} index={4} total={chapters.length} variant="fresh-greens">
+      <ProjectChapter
+        entry={chapters[3]}
+        index={4}
+        total={chapters.length}
+        variant="fresh-greens"
+      >
         <section className="project-section fg-section fg-section--wide">
           <div className="project-section-body">
-            <p>Under stress, a driver shouldn&apos;t have to search navigation controls. I hid four support paths behind one thumb-reachable control until requested.</p>
+            <p>
+              The pulled-over feature is the decision I&apos;m proudest to explain.
+              It&apos;s situational, but it holds so much weight.
+            </p>
+            <p>
+              I tweaked it a bunch to demand as little as possible under stress.
+              One thumb reveals the tools, recording can start quickly, and ACLU
+              guidance changes with the situation.
+            </p>
           </div>
+
           <PulledOverJourney />
+
           <div className="project-section-body">
-            <p>Pulled-over guidance starts recording, puts reassurance first, and keeps trusted-contact actions visible. Roadside help, unfamiliar-area guidance, location sharing, and emergency steps work offline. This demonstrates the prototype, not a better encounter.</p>
+            <p>
+              It earns its place when it—and hopefully never—kicks in. I haven&apos;t
+              tested it in a real encounter.
+            </p>
           </div>
         </section>
       </ProjectChapter>
 
-      <ProjectChapter entry={chapters[4]} index={5} total={chapters.length} variant="fresh-greens">
+      <ProjectChapter
+        entry={chapters[4]}
+        index={5}
+        total={chapters.length}
+        variant="fresh-greens"
+      >
         <div className="project-section fg-section fg-section--wide">
           <div className="project-section-body">
-            <p>Public datasets still matter because their source and scope can be inspected, but they can&apos;t describe how a place felt to someone who moved through it. I kept each firsthand account specific instead of treating it as fact.</p>
-            <p>The intended trust model keeps every firsthand account visible as one person&apos;s account unless human review hides or removes it for violating contribution rules. Similar reports from separate community contributors across time gain more influence in ranking. A time-sensitive hazard can surface sooner when waiting would make it useless. Sparse coverage stays labeled as uncertainty, never as a positive safety signal.</p>
-            <p><strong>Current prototype limit:</strong> the prototype maps one report to one scored zone, so a single report can affect route ranking now. Corroboration-weighted ranking is an intended safeguard, not a built feature. The screens don&apos;t yet show visible contributor provenance or differentiated trust levels.</p>
+            <p>
+              Community input mattered, but one report couldn&apos;t become an
+              official-looking safety fact. Each account stays specific.
+            </p>
+            <p>
+              Similar reports should gain influence over time, urgent hazards can
+              surface sooner, and sparse coverage stays uncertain.
+            </p>
           </div>
+
           <figure className="fg-safety-visual">
             <PhoneFrame variant="screenshot">
-              <Shot name="report-detail" alt="The Fresh Greens Felt welcome contribution form over the en-route map, with place-type chips, welcoming-reason chips, an optional experience field, and a green Share your experience button with black text." />
+              <Shot
+                name="report-detail"
+                alt="The Fresh Greens Felt welcome contribution form over the en-route map, with place-type chips, welcoming-reason chips, an optional experience field, and a green Share your experience button with black text."
+              />
             </PhoneFrame>
-            <figcaption className="fg-safety-visual-caption">Structured tags keep each account specific while leaving room for context.</figcaption>
+            <figcaption className="fg-safety-visual-caption">
+              One account stays one account.
+            </figcaption>
           </figure>
+
+          <div className="project-section-body">
+            <p>
+              The current prototype is simpler: one report can affect one scored
+              zone, while visible provenance, trust levels, weighted corroboration,
+              and public moderation transparency still need work.
+            </p>
+          </div>
+
           <div className="fg-moderation" aria-label="How a report moves through moderation">
             <div className="fg-mod-flow">
               <div className="fg-mod-stage">
@@ -209,7 +313,10 @@ export default async function FreshGreensPage() {
               <div className="fg-mod-stage fg-mod-stage--panel">
                 <p className="fg-mod-stage-label">Investigation panel</p>
                 <ul className="fg-mod-checks" role="list">
-                  <li>Source device</li><li>Prior reports at the same spot</li><li>Nearby reports</li><li>Coordination: duplicate IPs and devices</li>
+                  <li>Source device</li>
+                  <li>Prior reports at the same spot</li>
+                  <li>Nearby reports</li>
+                  <li>Coordination: duplicate IPs and devices</li>
                 </ul>
               </div>
               <span className="fg-mod-arrow" aria-hidden="true" />
@@ -222,31 +329,63 @@ export default async function FreshGreensPage() {
         </div>
       </ProjectChapter>
 
-      <ProjectChapter entry={chapters[5]} index={6} total={chapters.length} variant="fresh-greens">
-        <div className="project-section fg-section fg-scope">
+      <ProjectChapter
+        entry={chapters[5]}
+        index={6}
+        total={chapters.length}
+        variant="fresh-greens"
+      >
+        <div className="project-section fg-section fg-validation-story">
           <div className="project-section-body">
-            <p>Six interviews became a working React Native prototype spanning route comparison, departure and refuel reminders, en-route guidance, stress-state support, community reporting, and moderation. It can explain why it prefers one route without proving it safer.</p>
+            <p>
+              I tested the early Figma flows with classmates. They weren&apos;t the
+              audience Fresh Greens was designed for, so I used those sessions to
+              catch basic usability issues rather than validate the product itself.
+            </p>
           </div>
-          <div className="fg-scope-grid">
-            <div className="fg-scope-col">
-              <p className="fg-scope-label">Built now</p>
-              <ul className="fg-scope-list" role="list">
-                <li>Plan: route comparison explained through chips and source cards, plus local departure and refuel reminders</li>
-                <li>Respond: one-thumb, offline support across five stress states</li>
-                <li>Trust: contribution and moderation flows that keep reports reviewable</li>
-              </ul>
-            </div>
-            <div className="fg-scope-col">
-              <p className="fg-scope-label">What remains</p>
-              <ul className="fg-scope-list" role="list">
-                <li>Plan: route-quality testing with more Black drivers across regions before making any claim that a preferred route is safer</li>
-                <li>Respond: stress-state and failure-mode testing on real devices and configured builds</li>
-                <li>Trust: weighted ranking, visible provenance, trust levels, and public moderation transparency</li>
-              </ul>
-            </div>
+
+          <div className="fg-thesis-demo">
+            <strong>Basic functionality achieved!</strong>
+            <span>
+              On thesis presentation day, a few students entered their own
+              addresses and got Fresh Greens routes back, daylight gradient and
+              all.
+            </span>
           </div>
+
+          <div className="project-section-body">
+            <p>
+              Moving into React Native tested the design against real phone sizes,
+              safe areas, Dynamic Type, tap targets, and offline behavior.
+            </p>
+          </div>
+
+          <div className="fg-validation-grid">
+            <section>
+              <p className="fg-validation-label">What I could test</p>
+              <ul>
+                <li>Six interviews shaped the route criteria.</li>
+                <li>Classmates navigated the Figma prototype.</li>
+                <li>Real addresses generated routes on thesis day.</li>
+              </ul>
+            </section>
+            <section>
+              <p className="fg-validation-label">What still needs testing</p>
+              <ul>
+                <li>Route quality and trust with Black drivers across regions.</li>
+                <li>The pulled-over flow under stress and device failure.</li>
+                <li>Provenance, corroboration, and moderation transparency.</li>
+              </ul>
+            </section>
+          </div>
+
           <div className="project-section-body fg-scope-closer">
-            <p>I can show where each interview theme changed the product, then test those decisions with more drivers instead of treating the prototype as the answer.</p>
+            <p>
+              Fresh Greens started with me trying to feel more comfortable driving
+              home at night. Getting it into other people&apos;s hands will show me
+              which parts actually help and what needs to change once it leaves
+              Figma and my own phone.
+            </p>
           </div>
         </div>
       </ProjectChapter>
