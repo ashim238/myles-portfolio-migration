@@ -1,0 +1,51 @@
+name: Capture Myles 98 visual review
+
+on:
+  push:
+    branches:
+      - codex/myles-98-visual-refinement
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: capture-myles-98-visual-review-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      VISUAL_REVIEW_BASE_URL: https://portfolio-git-codex-myles-98-vis-a5b8c8-ashim238-1030s-projects.vercel.app
+      VISUAL_REVIEW_OUTPUT: .visual-review
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install project dependencies
+        run: npm ci
+
+      - name: Install Playwright for the capture runner
+        run: |
+          npm install --no-save --package-lock=false playwright@1.54.1
+          npx playwright install --with-deps chromium
+
+      - name: Capture the visual review matrix
+        run: node scripts/capture-visual-review.mjs
+
+      - name: Upload visual review captures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: myles-98-visual-review-${{ github.sha }}
+          if-no-files-found: error
+          retention-days: 14
+          path: .visual-review
