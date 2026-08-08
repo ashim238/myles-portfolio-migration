@@ -32,28 +32,28 @@ export const UNDERSTANDING_FAFSA_EVIDENCE = [
   {
     chapterId: "uf-audit",
     dominantClaim: {
-      id: "uf-audit-rules",
-      text: "The 120-plus newsletter audit produced explicit rules for hierarchy, structure, tone, and send types.",
+      id: "uf-audit-brief",
+      text: "A review of more than 120 newsletters became one brief: improve scanning, lock the brand structure, and make weekly assembly work inside Mailchimp.",
       class: "interpretive",
       state: "observed",
     },
     interpretation:
-      "The audit became a traceable set of system decisions instead of a mood board of preferred examples.",
+      "The audit is presented as a problem, opportunity, and goal instead of a five-rule inventory.",
     caveat:
-      "The benchmark audit compares existing newsletters and does not replace direct research with students, parents, counselors, or the founder.",
+      "The benchmark review does not replace direct research with students, parents, counselors, or the founder.",
     proofs: [
       {
-        id: "uf-audit-rule-list",
-        label: "Audit finding to system-rule chain",
+        id: "uf-story-brief",
+        label: "Problem, opportunity, and goal brief",
         kind: "structured",
         role: "dominant",
-        surface: "UNDERSTANDING_FAFSA_AUDIT_RULES",
+        surface: ".uf-story-brief",
         surfaceChapterId: "uf-audit",
-        job: "Pair every audited weakness with a concrete system response.",
+        job: "Condense the audit into the three decisions a hiring reader needs to retain.",
         proves:
-          "The newsletter rules are explicitly tied to findings about scanning, changing content, founder assembly, clipping, and send density.",
+          "The newsletter redesign responds to scanning, changing weekly content, founder assembly, and Gmail clipping constraints.",
         limitation:
-          "The rules reflect comparative analysis and implementation judgment, not experimental validation.",
+          "The brief reflects comparative analysis and implementation judgment rather than experimental validation.",
       },
     ],
   },
@@ -61,14 +61,14 @@ export const UNDERSTANDING_FAFSA_EVIDENCE = [
     chapterId: "uf-locked",
     dominantClaim: {
       id: "uf-locked-modular-workflow",
-      text: "A locked-versus-swappable template system lets the founder assemble multiple send types without changing structure or editing HTML.",
+      text: "A locked-versus-swappable system lets the founder assemble welcome, weekly, and event sends without changing the structure or editing HTML.",
       class: "behavioral",
       state: "built",
     },
     interpretation:
-      "Fixed order, spacing, type, and dividers protect consistency while weekly copy and imagery remain editable.",
+      "Fixed header, footer, order, spacing, type, and dividers protect consistency while stories, links, and imagery remain editable.",
     caveat:
-      "The counselor toolkit remains in progress, and the case study does not claim measured time savings.",
+      "The case study does not claim measured time savings, error reduction, or coverage of every future send type.",
     proofs: [
       {
         id: "uf-composer-demo",
@@ -77,37 +77,11 @@ export const UNDERSTANDING_FAFSA_EVIDENCE = [
         role: "dominant",
         surface: "NewsletterComposerDemo",
         surfaceChapterId: "uf-locked",
-        job: "Demonstrate how a send can be assembled from reusable content blocks.",
+        job: "Demonstrate the locked header and footer alongside swappable, reorderable newsletter modules.",
         proves:
-          "The system supports repeatable assembly without editing raw HTML.",
+          "The authored system supports repeatable assembly without editing raw HTML.",
         limitation:
-          "The demonstration does not quantify the founder's time, error rate, or long-term maintenance cost.",
-      },
-      {
-        id: "uf-locked-swappable-view",
-        label: "Locked and swappable system rules",
-        kind: "structured",
-        role: "supporting",
-        surface: "LockedSwappableView",
-        surfaceChapterId: "uf-locked",
-        job: "Clarify which parts of the system remain fixed and which change by send.",
-        proves:
-          "The design has explicit boundaries between brand structure and weekly content.",
-        limitation:
-          "The view documents the rule set but does not show how consistently it will be followed over time.",
-      },
-      {
-        id: "uf-template-switcher",
-        label: "Three newsletter send types",
-        kind: "interactive",
-        role: "supporting",
-        surface: "TemplateSwitcher",
-        surfaceChapterId: "uf-locked",
-        job: "Show how welcome, weekly, and event sends vary inside one system.",
-        proves:
-          "The system supports multiple content densities and purposes with shared rules.",
-        limitation:
-          "The three variants do not establish that every future send type is covered.",
+          "The reconstruction does not quantify the founder's time, error rate, or long-term maintenance cost.",
       },
     ],
   },
@@ -115,12 +89,12 @@ export const UNDERSTANDING_FAFSA_EVIDENCE = [
     chapterId: "uf-figma",
     dominantClaim: {
       id: "uf-figma-mailchimp-constraints",
-      text: "The Mailchimp rebuild preserved the design intent while meeting Gmail clipping, builder, and dark-mode constraints.",
+      text: "The Mailchimp rebuild preserved the hierarchy and brand language while meeting Gmail's clipping constraint.",
       class: "behavioral",
       state: "shipped",
     },
     interpretation:
-      "Flattened structure, fewer wrappers, native blocks, and separate image optimization made the authored system workable inside production email constraints.",
+      "A flatter hierarchy, fewer wrappers, and native blocks made the Figma proposal workable inside production email constraints.",
     caveat:
       "Image compression reduces download weight but does not reduce the HTML source Gmail measures against its clipping threshold.",
     proofs: [
@@ -148,7 +122,7 @@ export const UNDERSTANDING_FAFSA_EVIDENCE = [
       state: "observed",
     },
     interpretation:
-      "The shipped system and the observed metric can be presented together as implementation outcome and supporting context.",
+      "The shipped system and observed metric can be presented together as implementation outcome and supporting context.",
     caveat:
       "The send was not a controlled attribution test, so the redesign cannot be claimed as the cause of the open-rate change.",
     proofs: [
