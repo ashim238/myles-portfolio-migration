@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import "../styles/portfolio-surfaces.css";
+import "../styles/fresh-greens-case-refinement.css";
 import "../styles/navi-case-refinement.css";
 import "../styles/fafsa-case-refinement.css";
 
