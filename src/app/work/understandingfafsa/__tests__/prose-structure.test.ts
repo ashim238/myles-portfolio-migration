@@ -219,10 +219,10 @@ describe("UnderstandingFAFSA case-study structure", () => {
       "November 4, 2025",
     ];
 
-    for (const marker of storyMarkers) expect(page).toContain(marker);
+    for (const marker of storyMarkers) expect(prose).toContain(marker);
     for (let index = 1; index < storyMarkers.length; index += 1) {
-      expect(page.indexOf(storyMarkers[index - 1])).toBeLessThan(
-        page.indexOf(storyMarkers[index]),
+      expect(prose.indexOf(storyMarkers[index - 1])).toBeLessThan(
+        prose.indexOf(storyMarkers[index]),
       );
     }
   });
