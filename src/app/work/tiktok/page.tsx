@@ -26,25 +26,11 @@ import styles from "./tiktok-four-beat.module.css";
 const TIKTOK_DESCRIPTION =
   "Static catalog templates designed for TikTok's Dynamic Showcase Ads during a 2021 Global Creative Lab internship. Light Academia shipped in the launch library.";
 const chapters = CASE_STUDY_CHAPTERS.tiktok;
-const TIKTOK_REGION_LABELS = {
-  title: "Title",
-  catalog: "Catalog",
-  supporting: "Supporting graphics",
+const DIRECTION_SIGNALS = {
+  dopamine: "Bright color, oversized type, and more graphic energy.",
+  eboy: "Dark texture, harder edges, and more visual density.",
+  lightacademia: "Editorial type, softer color, and the most restraint.",
 } as const;
-
-function templatePartLabels(template: (typeof TIKTOK_TEMPLATES)[number]) {
-  const regions = new Set<string>([
-    ...Object.keys(template.regionOverlays),
-    ...template.componentAssets.map(({ region }) => region),
-  ]);
-
-  return (Object.keys(TIKTOK_REGION_LABELS) as Array<
-    keyof typeof TIKTOK_REGION_LABELS
-  >)
-    .filter((region) => regions.has(region))
-    .map((region) => TIKTOK_REGION_LABELS[region])
-    .join(", ");
-}
 
 export async function generateMetadata(): Promise<Metadata> {
   const project = await getProjectBySlug("tiktok");
@@ -82,7 +68,7 @@ export default async function TikTokPage() {
       className="tt-page tt-preview-page"
     >
       <nav className="project-topbar" aria-label="Breadcrumb">
-        <Link href="/#work">
+        <Link href="/#selected-work">
           <span aria-hidden="true">←</span>
           Selected work
         </Link>
@@ -100,9 +86,8 @@ export default async function TikTokPage() {
           </h1>
           <p className="project-hero-lede tt-lede">
             During my 2021 internship with Global Creative Lab, I designed
-            three static catalog templates for TikTok&apos;s Dynamic Showcase
-            Ads. The product slot stayed fixed while the type, color, and
-            supporting graphics changed.
+            three static catalog templates for TikTok&apos;s Dynamic Showcase Ads.
+            The product structure stayed fixed while the art direction changed.
           </p>
         </div>
       </header>
@@ -118,11 +103,7 @@ export default async function TikTokPage() {
         }}
         outcomeValue="1"
         outcomeLabel="of 3 templates shipped in the launch library"
-        moves={[
-          "Studied Y2K, Maximalism, Dark Academia, WitchTok, and Cottagecore before choosing the final directions.",
-          "Used one product slot map across Dopamine Dressing, e-Boy/e-Girl, and Light Academia.",
-          "Built the files in parts and tested which elements could mix across directions.",
-        ]}
+        moves={[]}
       />
 
       <ProjectToc sections={chapters} />
@@ -136,37 +117,12 @@ export default async function TikTokPage() {
         <div className="project-section tt-section">
           <div className="project-section-body">
             <p>
-              Dynamic Showcase Ads (DSA) used reusable templates with fixed
-              product slots for brand catalog content.
+              Dynamic Showcase Ads turned brand catalogs into reusable ad
+              templates with fixed product slots. My deliverable was three
+              static, layered Photoshop directions built around the same slot
+              map. Product placement stayed put; type, color, texture, and
+              supporting graphics could change.
             </p>
-            <dl className={styles.briefFacts}>
-              <div>
-                <dt>Role</dt>
-                <dd>Creative Strategist Intern</dd>
-              </div>
-              <div>
-                <dt>Team</dt>
-                <dd>Global Creative Lab</dd>
-              </div>
-              <div>
-                <dt>Intended use</dt>
-                <dd>Reusable templates for brand catalog content</dd>
-              </div>
-              <div>
-                <dt>Deliverable</dt>
-                <dd>
-                  Three static template directions as layered Photoshop files
-                </dd>
-              </div>
-              <div>
-                <dt>Fixed parts</dt>
-                <dd>Product slots and the shared slot map</dd>
-              </div>
-              <div>
-                <dt>Variable parts</dt>
-                <dd>Type, color, texture, and supporting graphics</dd>
-              </div>
-            </dl>
           </div>
         </div>
       </ProjectChapter>
@@ -180,24 +136,20 @@ export default async function TikTokPage() {
         <div className="project-section tt-section">
           <div className="project-section-body">
             <p>
-              I compared Y2K, Maximalism, Dark Academia, WitchTok, and Cottagecore
-              through their use of type, color, texture, and imagery. Three
-              directions moved forward because they created clearly different
-              visual systems inside the same slot map. Those directions were
-              Dopamine Dressing, e-Boy/e-Girl, and Light Academia.
+              I looked at Y2K, Maximalism, Dark Academia, WitchTok, and
+              Cottagecore, then moved three directions forward because they felt
+              clearly different without changing the catalog structure.
             </p>
           </div>
+
           <figure
             className={styles.directionProof}
             aria-labelledby="tt-direction-proof-title"
             {...evidenceSurfaceData(TIKTOK_DIRECTION_EVIDENCE_SURFACE)}
           >
             <figcaption id="tt-direction-proof-title">
-              <strong>Selected direction signals</strong>
-              <span>
-                One fixed catalog structure with different palettes and authored
-                regions.
-              </span>
+              <strong>Three directions, one catalog structure.</strong>
+              <span>Color and tone changed. Product placement did not.</span>
             </figcaption>
             <ul
               className={styles.directionGrid}
@@ -216,25 +168,12 @@ export default async function TikTokPage() {
                       />
                     ))}
                   </span>
-                  <dl>
-                    <div>
-                      <dt>Palette</dt>
-                      <dd>
-                        {template.palette.map(({ label }) => label).join(", ")}
-                      </dd>
-                    </div>
-                    <div>
-                      <dt>Authored regions</dt>
-                      <dd>{templatePartLabels(template)}</dd>
-                    </div>
-                  </dl>
+                  <p className={styles.directionSignal}>
+                    {DIRECTION_SIGNALS[template.key]}
+                  </p>
                 </li>
               ))}
             </ul>
-            <p className={styles.directionBoundary}>
-              This matrix shows one concrete selection layer. The full template
-              comparison and layered process follow in Build.
-            </p>
           </figure>
         </div>
       </ProjectChapter>
@@ -248,73 +187,19 @@ export default async function TikTokPage() {
         <div className="project-section tt-section tt-section--wide">
           <div className="project-section-body">
             <p>
-              Each direction used the same product slots and shared slot map. I
-              handed off three static directions as layered Photoshop files,
-              then separated type, color, texture, and supporting graphics so I
-              could test how much of each direction could move.
+              I built each direction as a layered Photoshop file and separated
+              the type, color, texture, and supporting graphics. Most parts stayed
+              inside their own visual system. Light Academia and e-Boy/e-Girl
+              shared enough structure for a few pieces to cross over.
             </p>
           </div>
           <TikTokTemplateSystem />
           <div className="project-section-body">
             <p>
-              I proposed that limited modularity while building the files. Most
-              parts stayed within their own visual system. Light Academia and
-              e-Boy/e-Girl shared enough structure for a few parts to cross
-              between them.
+              Feedback summaries are paraphrased from Global Creative Lab review.
+              The comparison shows the system and the art direction, not ad
+              performance.
             </p>
-          </div>
-          <div className="tt-preview-process">
-            <p className="tt-preview-process-lede">
-              I started with loose sketches, then built each direction as a
-              layered Photoshop file. The notes below paraphrase feedback from
-              Global Creative Lab.
-            </p>
-            <div className="tt-preview-process-list">
-              {TIKTOK_TEMPLATES.map((template) => (
-                <article key={template.key} className="tt-preview-process-card">
-                  <header>
-                    <h3>{template.name}</h3>
-                    {template.shipped ? <span>Shipped</span> : null}
-                  </header>
-                  <div className="tt-preview-process-media">
-                    <figure className="tt-preview-sketch">
-                      <ExpandableImage
-                        src={template.sketch}
-                        alt={`Original process sketch for ${template.name}`}
-                        width={1600}
-                        height={900}
-                        sizes="(max-width: 768px) 100vw, 640px"
-                        style={{
-                          width: "100%",
-                          height: "auto",
-                          display: "block",
-                        }}
-                      />
-                      <figcaption>Process sketch</figcaption>
-                    </figure>
-                    <figure className="tt-preview-final">
-                      <ExpandableImage
-                        src={template.fullTemplate}
-                        alt={`Finished static ${template.name} catalog template`}
-                        width={1080}
-                        height={1920}
-                        sizes="(max-width: 768px) 75vw, 320px"
-                        style={{
-                          width: "100%",
-                          height: "auto",
-                          display: "block",
-                        }}
-                      />
-                      <figcaption>Static template</figcaption>
-                    </figure>
-                  </div>
-                  <p className="tt-preview-iteration">
-                    <strong>Iteration note</strong>
-                    <span>{template.iterationNote}</span>
-                  </p>
-                </article>
-              ))}
-            </div>
           </div>
         </div>
       </ProjectChapter>
