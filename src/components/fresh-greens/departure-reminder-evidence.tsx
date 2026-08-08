@@ -92,7 +92,7 @@ export function DepartureReminderEvidence() {
               <span>now</span>
             </div>
             <strong>Time to head out</strong>
-            <p>Leaving now gives you more daylight on your route.</p>
+            <p>Leaving now gives you more daylight.</p>
           </div>
 
           <p className="fg-reminder-secondary">
