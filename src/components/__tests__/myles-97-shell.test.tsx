@@ -78,7 +78,9 @@ describe("Myles98 product shell", () => {
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
 
     expect(screen.getByRole("heading", { name: "Myles Ashitey" })).toBeInTheDocument();
-    expect(screen.getByText("Design, code, whatever you need.")).toBeInTheDocument();
+    expect(
+      screen.getByText("Design, code, and everything inbetween."),
+    ).toBeInTheDocument();
     expect(
       screen.getByText("Previously TikTok and UMG. Latest project: Fresh Greens."),
     ).toBeInTheDocument();
