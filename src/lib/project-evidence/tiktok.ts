@@ -15,17 +15,17 @@ export const TIKTOK_EVIDENCE = [
       "The deliverable was static layered Photoshop files, not ownership of downstream production or ad performance.",
     proofs: [
       {
-        id: "tt-brief-facts",
-        label: "Dynamic Showcase Ads brief facts",
-        kind: "structured",
+        id: "tt-brief-summary",
+        label: "Dynamic Showcase Ads deliverable summary",
+        kind: "narrative",
         role: "dominant",
-        surface: "briefFacts definition list",
+        surface: "tt-brief chapter narrative",
         surfaceChapterId: "tt-brief",
-        job: "State role, team, intended use, deliverable, fixed parts, and variable parts in one scannable block.",
+        job: "State the shared slot map, three directions, and static layered-file deliverable without repeating the recruiter summary.",
         proves:
-          "The three directions shared product slots while type, color, texture, and supporting graphics changed.",
+          "The three directions shared product placement while type, color, texture, and supporting graphics changed.",
         limitation:
-          "The brief facts do not establish which direction was strongest or why one shipped.",
+          "The summary does not establish which direction was strongest or why one shipped.",
       },
     ],
   },
@@ -33,27 +33,27 @@ export const TIKTOK_EVIDENCE = [
     chapterId: "tt-research",
     dominantClaim: {
       id: "tt-research-three-directions",
-      text: "Five subculture references narrowed to three directions because those directions created distinct visual systems inside the same slot map.",
+      text: "Five subculture references narrowed to three directions because those directions felt clearly different inside the same catalog structure.",
       class: "interpretive",
       state: "observed",
     },
     interpretation:
-      "The selection criterion was meaningful visual-system separation rather than simply producing more themes.",
+      "The selection criterion was meaningful art-direction separation rather than producing more themes or changing the product structure.",
     caveat:
       "The rationale reflects design judgment and internal review, not measured audience preference.",
     proofs: [
       {
         id: "tt-direction-comparison",
-        label: "Selected-direction signal matrix",
+        label: "Three-direction signal strip",
         kind: "structured",
         role: "dominant",
         surface: ".tt-direction-proof",
         surfaceChapterId: "tt-research",
-        job: "Compare one concrete layer of difference across the three selected systems without duplicating the full media gallery.",
+        job: "Show the tonal difference between the selected directions without repeating the full templates or exposing a taxonomy table.",
         proves:
-          "Dopamine Dressing, e-Boy/e-Girl, and Light Academia use different palettes and authored regions inside the same fixed catalog structure.",
+          "Dopamine Dressing, e-Boy/e-Girl, and Light Academia use distinct color and visual tone inside the same fixed catalog structure.",
         limitation:
-          "The matrix does not show every type, texture, or graphic decision; the full interactive systems and layered process appear in Build.",
+          "The strip does not show every type, texture, or graphic decision; the full interactive comparison follows in Build.",
       },
     ],
   },
@@ -77,24 +77,11 @@ export const TIKTOK_EVIDENCE = [
         role: "dominant",
         surface: "TikTokTemplateSystem",
         surfaceChapterId: "tt-system",
-        job: "Expose the shared slot anatomy and visual differences across all three directions.",
+        job: "Expose the shared slot anatomy and visual differences across all three directions in one place.",
         proves:
           "The same product structure can support three clearly different art-direction systems.",
         limitation:
           "The comparison demonstrates visual-system behavior, not ad effectiveness or downstream production performance.",
-      },
-      {
-        id: "tt-process-cards",
-        label: "Sketch, static template, and iteration notes",
-        kind: "sequence",
-        role: "supporting",
-        surface: ".tt-preview-process-list",
-        surfaceChapterId: "tt-system",
-        job: "Show how each direction moved from sketch to layered static output with paraphrased review notes.",
-        proves:
-          "Each direction was developed as an authored process rather than a single finished image.",
-        limitation:
-          "The notes are paraphrases and do not document every review or production decision.",
       },
     ],
   },
