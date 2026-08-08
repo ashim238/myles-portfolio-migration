@@ -56,7 +56,7 @@ const projects = [
 ];
 
 describe("ProjectWorkJump", () => {
-  it("renders one destination link and one work-index link", () => {
+  it("renders one destination link and one Selected Work return link", () => {
     render(<ProjectWorkJump currentSlug="fresh-greens" projects={projects} />);
 
     const links = screen.getAllByRole("link");
@@ -67,8 +67,24 @@ describe("ProjectWorkJump", () => {
     expect(links[0]).toHaveTextContent(
       "I also explored routing through neighborhood discovery and local booking.",
     );
-    expect(links[1]).toHaveAttribute("href", "/#work");
-    expect(links[1]).toHaveTextContent("View all work");
+    expect(links[1]).toHaveAttribute("href", "/#selected-work");
+    expect(links[1]).toHaveTextContent("Return to Selected Work");
+  });
+
+  it("frames the destination as a Myles 98 program handoff", () => {
+    const { container } = render(
+      <ProjectWorkJump currentSlug="fresh-greens" projects={projects} />,
+    );
+
+    expect(container.querySelector(".project-work-jump-chrome")).toHaveTextContent(
+      "Next projectOpen",
+    );
+    expect(
+      container.querySelector('svg[data-m98-icon="navi"]'),
+    ).toBeInTheDocument();
+    expect(container.querySelector(".project-work-jump-status")).toHaveTextContent(
+      "Myles 98 / Selected Work / Navi",
+    );
   });
 
   it("treats destination media as decorative inside the descriptive link", () => {
@@ -93,7 +109,7 @@ describe("ProjectWorkJump", () => {
     expect(screen.queryByRole("img", { hidden: true })).toBeNull();
   });
 
-  it("retains the media surface when a published image is missing", () => {
+  it("retains an authored program surface when a published image is missing", () => {
     const withoutCover = projects.map((item) =>
       item.slug === "navi" ? { ...item, coverImage: undefined } : item,
     );
@@ -102,6 +118,9 @@ describe("ProjectWorkJump", () => {
     );
 
     expect(container.querySelector(".project-work-jump-media")).not.toBeNull();
+    expect(
+      container.querySelector(".project-work-jump-placeholder"),
+    ).toHaveTextContent("Navi");
   });
 
   it("gives UnderstandingFAFSA a semantic wrap point between its two words", () => {
@@ -119,14 +138,13 @@ describe("ProjectWorkJump", () => {
         item.slug === "navi" ? { ...item, status: "draft" as const } : item,
       ),
     ],
-  ])("keeps View all work when no destination resolves", (slug, items) => {
+  ])("keeps Selected Work available when no destination resolves", (slug, items) => {
     render(<ProjectWorkJump currentSlug={slug} projects={items} />);
 
     expect(screen.getAllByRole("link")).toHaveLength(1);
-    expect(screen.getByRole("link", { name: /View all work/ })).toHaveAttribute(
-      "href",
-      "/#work",
-    );
+    expect(
+      screen.getByRole("link", { name: /Return to Selected Work/ }),
+    ).toHaveAttribute("href", "/#selected-work");
     expect(screen.queryByText("Next project")).toBeNull();
   });
 });
