@@ -74,14 +74,14 @@ export const FRESH_GREENS_EVIDENCE = [
     chapterId: "fg-design",
     dominantClaim: {
       id: "fg-design-inspectable-routes",
-      text: "The prototype makes route alternatives inspectable and explains why it prefers one route.",
+      text: "The prototype makes route alternatives inspectable and carries a useful daylight window into a local reminder.",
       class: "behavioral",
       state: "built",
     },
     interpretation:
-      "Route chips, source cards, and a standalone preview move route choice beyond time and distance alone.",
+      "Route chips and source cards explain the preference; a one-shot local reminder lets the driver act on the suggested departure without keeping the app open.",
     caveat:
-      "An explainable preference does not prove that the preferred route is safer.",
+      "An explainable preference and a working reminder do not prove that the preferred route is safer or that the driver changes behavior.",
     proofs: [
       {
         id: "fg-pivot-journey",
@@ -95,6 +95,19 @@ export const FRESH_GREENS_EVIDENCE = [
           "The current prototype exposes alternative-route conditions, sources, and scoring cues before selection.",
         limitation:
           "The sequence demonstrates interface behavior, not real-world route quality.",
+      },
+      {
+        id: "fg-departure-reminder",
+        label: "Daylight departure reminder",
+        kind: "sequence",
+        role: "supporting",
+        surface: "DepartureReminderEvidence",
+        surfaceChapterId: "fg-design",
+        job: "Show how a suggested daylight window becomes a permission-gated, one-time local notification.",
+        proves:
+          "The prototype requests notification access at the moment of intent and schedules a device reminder for the suggested departure.",
+        limitation:
+          "The reminder proves implemented behavior, not that a driver leaves at that time or has a safer trip.",
       },
       {
         id: "fg-architecture-diagram",
@@ -184,7 +197,7 @@ export const FRESH_GREENS_EVIDENCE = [
     chapterId: "fg-scope",
     dominantClaim: {
       id: "fg-scope-working-prototype",
-      text: "A working React Native prototype now spans planning, stress-state support, contribution, and moderation, while route safety and efficacy still need proof.",
+      text: "A working React Native prototype now spans planning, local reminders, stress-state support, contribution, and moderation, while route safety and efficacy still need proof.",
       class: "outcome",
       state: "needs-proof",
       reopenWhen:
@@ -204,7 +217,7 @@ export const FRESH_GREENS_EVIDENCE = [
         surfaceChapterId: "fg-scope",
         job: "Separate implemented Plan, Respond, and Trust behavior from the tests and safeguards still required.",
         proves:
-          "The current prototype includes route comparison, five stress-state paths, contribution, and moderation flows.",
+          "The current prototype includes route comparison, departure and refuel reminders, five stress-state paths, contribution, and moderation flows.",
         limitation:
           "The ledger documents authored implementation status rather than independently measured outcomes.",
       },
