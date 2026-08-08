@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
+import { PROJECT_EVIDENCE_MAP } from "@/lib/project-evidence";
 import {
   NAVI_SURVEY_META,
   NAVI_SURVEY_STATS,
@@ -103,33 +104,21 @@ describe("Navi evidence claims", () => {
     expect(projectPage).toMatch(/Solo rebuild:[\s\S]{0,180}React/i);
   });
 
-  it("retains the complete chapter artifact stack", () => {
+  it("protects mapped proof coverage without freezing artifact quantity", () => {
     const projectPage = readSource("src/app/work/navi/page.tsx");
-    const researchArtifacts = readSource(
-      "src/components/navi/research-artifacts.tsx",
-    );
 
-    for (const component of [
-      "LeadMedia",
-      "RecruiterCut",
-      "HeatmapExplorer",
-      "HeuristicInsightCards",
-      "SurveyStatRings",
-      "NaviResearchArtifacts",
-      "CompositionStrip",
-      "NaviDemoEmbed",
-      "ProjectWorkJump",
-      "CaseHighlightObserver",
-      "NaviAnimReady",
-    ]) {
-      expect(projectPage).toContain(`<${component}`);
+    for (const proof of PROJECT_EVIDENCE_MAP.navi.flatMap(
+      ({ proofs }) => proofs,
+    )) {
+      const marker = proof.surface.startsWith(".")
+        ? proof.surface.slice(1)
+        : `<${proof.surface}`;
+      expect(projectPage, proof.id).toContain(marker);
     }
 
-    expect(researchArtifacts).toContain('aria-label="Research-informed archetypes"');
-    expect(researchArtifacts).toContain('aria-label="Journey-map excerpt"');
-    expect(researchArtifacts).toContain(
-      'aria-label="Individual booking-flow excerpt"',
-    );
+    for (const orientationSurface of ["LeadMedia", "RecruiterCut"]) {
+      expect(projectPage).toContain(`<${orientationSurface}`);
+    }
   });
 
   it("separates research evidence, planning artifacts, and future work", () => {

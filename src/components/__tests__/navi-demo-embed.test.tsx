@@ -16,6 +16,16 @@ describe("NaviDemoEmbed", () => {
     }));
   });
 
+  it("identifies itself as the dominant working-product proof for Build", () => {
+    const { container } = render(<NaviDemoEmbed />);
+    const surface = container.querySelector(".nv-demo-embed");
+
+    expect(surface).toHaveAttribute("data-evidence-proof", "nv-demo-embed");
+    expect(surface).toHaveAttribute("data-evidence-role", "dominant");
+    expect(surface).toHaveAttribute("data-evidence-kind", "working-product");
+    expect(surface).toHaveAttribute("data-evidence-chapter", "nv-build");
+  });
+
   it("keeps the unloaded iframe out of the keyboard and accessibility trees", () => {
     render(<NaviDemoEmbed />);
 

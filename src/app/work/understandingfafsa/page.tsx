@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ColorPalette } from "@/components/color-palette";
 import { CountUp } from "@/components/count-up";
 import { LeadMedia } from "@/components/lead-media";
 import { ReaderShell } from "@/components/myles-97/reader-shell";
@@ -25,21 +24,6 @@ import { UNDERSTANDING_FAFSA_AUDIT_RULES } from "@/lib/understandingfafsa-audit-
 const UF_DESCRIPTION =
   "Built a modular newsletter system for a site rebrand. The first redesigned send had an observed ~52.6% open rate with Mailchimp Privacy Protection excluded. This was not a controlled attribution test.";
 const chapters = CASE_STUDY_CHAPTERS.understandingfafsa;
-
-const UF_COLORS = [
-  "#be5abf",
-  "#164f73",
-  "#82c5fb",
-  "#f2b544",
-  "#f26938",
-  "#2fac38",
-  "#6d2161",
-  "#2788c1",
-  "#48d1c7",
-  "#004aad",
-  "#e572e4",
-  "#7100bf",
-];
 
 export const metadata: Metadata = createRouteMetadata({
   title: "UnderstandingFAFSA",
@@ -211,7 +195,6 @@ export default async function UnderstandingFafsaPage() {
             </p>
           </div>
           <LockedSwappableView />
-          <ColorPalette colors={UF_COLORS} />
         </div>
       </ProjectChapter>
 

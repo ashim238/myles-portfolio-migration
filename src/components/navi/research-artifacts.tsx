@@ -1,4 +1,8 @@
 import {
+  evidenceSurfaceData,
+  NAVI_RESEARCH_EVIDENCE_SURFACE,
+} from "@/lib/project-evidence";
+import {
   NAVI_ARCHETYPES,
   NAVI_BOOKING_STEPS,
   NAVI_JOURNEY_STAGES,
@@ -9,6 +13,7 @@ export function NaviResearchArtifacts(): React.JSX.Element {
     <section
       className="nv-research-artifacts nv-reveal"
       aria-labelledby="nv-research-board-title"
+      {...evidenceSurfaceData(NAVI_RESEARCH_EVIDENCE_SURFACE)}
     >
       <div className="nv-research-board">
         <header className="nv-research-board-head">

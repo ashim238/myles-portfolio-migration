@@ -14,8 +14,18 @@ type BootSequenceProps = {
 
 function subscribeReducedMotion(onChange: () => void) {
   const media = window.matchMedia(REDUCED_MOTION_QUERY);
-  media.addEventListener("change", onChange);
-  return () => media.removeEventListener("change", onChange);
+
+  if (typeof media.addEventListener === "function") {
+    media.addEventListener("change", onChange);
+    return () => media.removeEventListener("change", onChange);
+  }
+
+  if (typeof media.addListener === "function") {
+    media.addListener(onChange);
+    return () => media.removeListener(onChange);
+  }
+
+  return () => {};
 }
 
 function getReducedMotionSnapshot() {

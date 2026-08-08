@@ -3,6 +3,10 @@
 import { useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  evidenceSurfaceData,
+  NAVI_DEMO_EVIDENCE_SURFACE,
+} from "@/lib/project-evidence";
 
 function subscribeDesktopQuery(callback: () => void) {
   const query = window.matchMedia("(min-width: 900px)");
@@ -46,7 +50,11 @@ export function NaviDemoEmbed() {
   );
 
   return (
-    <div className="nv-demo-embed" ref={containerRef}>
+    <div
+      className="nv-demo-embed"
+      ref={containerRef}
+      {...evidenceSurfaceData(NAVI_DEMO_EVIDENCE_SURFACE)}
+    >
       <div className="nv-demo-embed-chrome">
         <div className="nv-demo-embed-dots" aria-hidden="true">
           <span />

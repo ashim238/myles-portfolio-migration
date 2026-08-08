@@ -197,19 +197,20 @@ describe("UnderstandingFAFSA case-study structure", () => {
     ]);
   });
 
-  it("removes repeated framing while retaining the evidence artifacts", () => {
+  it("removes repeated framing and the redundant palette inventory", () => {
     expect(page).not.toContain("case-tier-divider");
     expect(page).not.toContain("case-pullquote");
     expect(page).not.toContain("case-section-lead");
     expect(page).not.toContain("The full breakdown");
     expect(page).not.toContain("From there we put our own spin on it");
+    expect(page).not.toContain("ColorPalette");
+    expect(page).not.toContain("UF_COLORS");
 
     for (const artifact of [
       "BeforeAfterPhones",
       "TemplateSwitcher",
       "NewsletterComposerDemo",
       "LockedSwappableView",
-      "ColorPalette",
       "FigmaMailchimpPair",
       "CountUp",
     ]) {
