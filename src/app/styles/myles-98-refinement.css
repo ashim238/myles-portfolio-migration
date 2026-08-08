@@ -1,0 +1,374 @@
+/* Myles 98 refinement direction
+   Shared skeleton, expressive documents, dependable system signals. */
+
+/* Secondary-document spacing: the chrome can stay compact while the content
+   cards and actions need enough interior room to feel deliberate. */
+.myles98-system-document .about-actions {
+  margin-top: clamp(1.8rem, 4vw, 2.5rem);
+  gap: 10px;
+}
+
+.myles98-system-document .about-action {
+  min-height: 44px;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  text-decoration: none;
+}
+
+.myles98-system-document .about-action::after,
+.myles98-system-document .resume-note::after {
+  display: none;
+}
+
+.myles98-system-document :is(.about-aside, .resume-aside) {
+  padding: 6px;
+}
+
+.myles98-system-document :is(.about-detail, .resume-detail) {
+  padding: 14px 16px;
+}
+
+.myles98-system-document :is(.about-detail, .resume-detail) dt {
+  margin-bottom: 4px;
+}
+
+.myles98-system-document .resume-body {
+  margin-bottom: 0;
+}
+
+.myles98-system-document .resume-note {
+  min-height: 44px;
+  margin-top: 1.6rem;
+  padding: 10px 14px;
+  text-decoration: none;
+}
+
+/* Reader handoff: one dependable Myles 98 navigation object instead of an
+   unrelated editorial card. Project-owned imagery stays inside the preview. */
+.reader-mode .project-work-jump {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.reader-mode .project-work-jump-card {
+  display: block;
+  overflow: hidden;
+  border: 2px solid var(--m97-ink);
+  border-radius: 0;
+  background: var(--m97-chrome);
+  color: var(--m97-ink);
+  box-shadow: 7px 9px 0 rgb(17 17 17 / 22%);
+}
+
+.reader-mode .project-work-jump-chrome {
+  display: flex;
+  min-height: 38px;
+  align-items: stretch;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--m97-ink);
+  background: var(--m97-active);
+  color: #fff;
+  font: 700 12px/1.2 var(--m97-ui-font);
+}
+
+.reader-mode .project-work-jump-window-title {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+}
+
+.reader-mode .project-work-jump-window-title > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reader-mode .project-work-jump-window-action {
+  display: inline-flex;
+  min-width: 58px;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 10px;
+  border-left: 2px solid var(--m97-ink);
+  background: var(--m97-signal);
+  color: var(--m97-ink);
+  box-shadow: inset 1px 1px 0 rgb(255 255 255 / 70%);
+}
+
+.reader-mode .project-work-jump-body {
+  display: grid;
+  grid-template-columns: minmax(15rem, 0.82fr) minmax(22rem, 1.18fr);
+  align-items: stretch;
+  background: var(--m97-paper);
+}
+
+.reader-mode .project-work-jump-text {
+  min-width: 0;
+  padding: clamp(1.6rem, 3.5vw, 2.7rem);
+  border-right: 2px solid var(--m97-ink);
+}
+
+.reader-mode .project-work-jump-label {
+  color: #505050;
+  font: 700 11px/1.3 var(--m97-ui-font);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.reader-mode .project-work-jump-title {
+  color: var(--m97-ink);
+  font-family: var(--m97-ui-font);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+}
+
+.reader-mode .project-work-jump-bridge {
+  color: #444;
+  font-family: var(--m97-reader-font);
+}
+
+.reader-mode .project-work-jump-cta {
+  gap: 8px;
+  padding: 9px 11px;
+  border: 1px solid var(--m97-ink);
+  background: var(--m97-signal);
+  color: var(--m97-ink);
+  box-shadow: 2px 2px 0 var(--m97-ink);
+  font: 700 12px/1.2 var(--m97-ui-font);
+}
+
+.reader-mode .project-work-jump-media {
+  min-height: 18rem;
+  margin: 10px;
+  border: 1px solid #777;
+  border-radius: 0;
+  background: #fff;
+  box-shadow: inset 1px 1px 0 rgb(17 17 17 / 18%);
+}
+
+.reader-mode .project-work-jump-placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 12px;
+  background:
+    linear-gradient(rgb(17 17 17 / 7%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(17 17 17 / 7%) 1px, transparent 1px),
+    var(--m97-chrome);
+  background-size: 16px 16px;
+  color: var(--m97-ink);
+  font: 700 12px/1.2 var(--m97-ui-font);
+}
+
+.reader-mode .project-work-jump-status {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px;
+  padding: 4px;
+  border-top: 2px solid var(--m97-ink);
+  background: var(--m97-chrome);
+  color: var(--m97-ink);
+  font: 11px/1.2 var(--m97-ui-font);
+}
+
+.reader-mode .project-work-jump-status > span {
+  display: flex;
+  min-width: 0;
+  min-height: 24px;
+  align-items: center;
+  padding: 4px 7px;
+  overflow: hidden;
+  border: 1px solid #777;
+  background: #d7d7d7;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reader-mode .project-work-jump-status > span:last-child {
+  justify-content: center;
+}
+
+.reader-mode .project-work-jump-card:hover,
+.reader-mode .project-work-jump-card:focus-visible {
+  transform: translate(-1px, -1px);
+  box-shadow: 9px 11px 0 rgb(17 17 17 / 27%);
+}
+
+.reader-mode .project-work-jump-card:hover .project-work-jump-window-action,
+.reader-mode .project-work-jump-card:focus-visible .project-work-jump-window-action {
+  background: #fff07a;
+}
+
+.reader-mode .project-work-jump-view-all {
+  width: fit-content;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 9px 11px;
+  border: 1px solid var(--m97-ink);
+  background: var(--m97-chrome);
+  color: var(--m97-ink);
+  box-shadow: 2px 2px 0 var(--m97-ink);
+  font: 700 12px/1.2 var(--m97-ui-font);
+  text-decoration: none;
+}
+
+.reader-mode .project-work-jump-view-all:hover,
+.reader-mode .project-work-jump-view-all:focus-visible {
+  background: var(--m97-signal);
+}
+
+/* Cursor: an original crisp-edged pointer built from the same hard outline,
+   paper, active blue, and signal yellow used by the rest of Myles 98. */
+.dot-cursor {
+  width: 24px;
+  height: 32px;
+  transform: translate3d(-40px, -40px, 0);
+  transition: opacity 90ms linear;
+}
+
+.dot-cursor::before {
+  content: none;
+}
+
+.myles98-cursor-arrow,
+.myles98-cursor-ibeam {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: visible;
+  shape-rendering: crispEdges;
+}
+
+.myles98-cursor-arrow {
+  transform: translate(-2px, -2px);
+  transform-origin: 2px 2px;
+}
+
+.myles98-cursor-outline {
+  fill: var(--m97-ink);
+}
+
+.myles98-cursor-fill {
+  fill: #fff;
+}
+
+.myles98-cursor-accent {
+  fill: var(--m97-active);
+  opacity: 0;
+}
+
+.myles98-cursor-ibeam {
+  display: none;
+  width: 18px;
+  height: 28px;
+  transform: translate(-8px, -13px);
+}
+
+.dot-cursor--hover .myles98-cursor-fill {
+  fill: var(--m97-signal);
+}
+
+.dot-cursor--hover .myles98-cursor-accent {
+  opacity: 1;
+}
+
+.dot-cursor--pressed .myles98-cursor-arrow {
+  transform: translate(-1px, -1px);
+}
+
+.dot-cursor--input .myles98-cursor-arrow {
+  display: none;
+}
+
+.dot-cursor--input .myles98-cursor-ibeam {
+  display: block;
+}
+
+@media (max-width: 767px), (pointer: coarse) {
+  .myles98-system-document .about-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .myles98-system-document .about-action,
+  .myles98-system-document .resume-note {
+    width: 100%;
+  }
+
+  .myles98-system-document :is(.about-detail, .resume-detail) {
+    padding: 13px 14px;
+  }
+
+  .reader-mode .project-work-jump-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .reader-mode .project-work-jump-text {
+    border-right: 0;
+    border-bottom: 2px solid var(--m97-ink);
+  }
+
+  .reader-mode .project-work-jump-media {
+    min-height: 0;
+    aspect-ratio: 3 / 2;
+  }
+
+  .reader-mode .project-work-jump-status {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .reader-mode .project-work-jump-status > span:last-child {
+    display: none;
+  }
+
+  .reader-mode .project-work-jump-view-all {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (forced-colors: active) {
+  .reader-mode .project-work-jump-card,
+  .reader-mode .project-work-jump-chrome,
+  .reader-mode .project-work-jump-window-action,
+  .reader-mode .project-work-jump-body,
+  .reader-mode .project-work-jump-text,
+  .reader-mode .project-work-jump-media,
+  .reader-mode .project-work-jump-cta,
+  .reader-mode .project-work-jump-status,
+  .reader-mode .project-work-jump-status > span,
+  .reader-mode .project-work-jump-view-all,
+  .myles98-system-document :is(.about-action, .resume-note) {
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+    box-shadow: none;
+  }
+
+  .reader-mode .project-work-jump-chrome,
+  .reader-mode .project-work-jump-card:hover .project-work-jump-window-action,
+  .reader-mode .project-work-jump-card:focus-visible .project-work-jump-window-action,
+  .reader-mode .project-work-jump-view-all:hover,
+  .reader-mode .project-work-jump-view-all:focus-visible {
+    background: Highlight;
+    color: HighlightText;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reader-mode .project-work-jump-card,
+  .reader-mode .project-work-jump-window-action,
+  .reader-mode .project-work-jump-view-all {
+    transition: none !important;
+  }
+
+  .reader-mode .project-work-jump-card:hover,
+  .reader-mode .project-work-jump-card:focus-visible {
+    transform: none;
+  }
+}
