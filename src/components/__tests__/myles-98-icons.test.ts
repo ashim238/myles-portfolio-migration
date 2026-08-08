@@ -14,10 +14,12 @@ describe("Myles 98 program icon identity", () => {
     expect(new Set(icons).size).toBe(4);
   });
 
-  it("keeps secondary programs on recognizable system glyphs", () => {
+  it("keeps secondary programs on recognizable authored system glyphs", () => {
     expect(iconForProgram("selected-work")).toBe("folder");
+    expect(iconForProgram("about")).toBe("profile");
+    expect(iconForProgram("resume")).toBe("resume");
     expect(iconForProgram("loose-parts")).toBe("loose-parts");
     expect(iconForProgram("display-properties")).toBe("display");
-    expect(iconForProgram("trini-roti")).toBe("document");
+    expect(iconForProgram("trini-roti")).toBe("recipe");
   });
 });
