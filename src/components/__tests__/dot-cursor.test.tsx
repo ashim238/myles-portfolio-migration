@@ -8,6 +8,10 @@ const baseStyles = readFileSync(
   resolve(process.cwd(), "src/app/styles/base.css"),
   "utf8",
 );
+const refinementStyles = readFileSync(
+  resolve(process.cwd(), "src/app/styles/myles-98-refinement.css"),
+  "utf8",
+);
 
 function declarationBlock(selector: string): string {
   const start = baseStyles.indexOf(`${selector} {`);
@@ -74,5 +78,20 @@ describe("DotCursor", () => {
     expect(hoverStyles).toContain("scale(2)");
     expect(hoverStyles).not.toContain("scale(2.6)");
     expect(hoverStyles).not.toContain("var(--foreground)");
+  });
+
+  it("renders an authored pixel pointer and an input I-beam", () => {
+    const { container } = render(<DotCursor />);
+
+    expect(container.querySelector(".myles98-cursor-arrow")).toBeInTheDocument();
+    expect(container.querySelector(".myles98-cursor-ibeam")).toBeInTheDocument();
+    expect(container.querySelector(".myles98-cursor-outline")).toBeInTheDocument();
+    expect(container.querySelector(".myles98-cursor-fill")).toBeInTheDocument();
+    expect(refinementStyles).toMatch(
+      /\.dot-cursor--hover \.myles98-cursor-fill\s*\{[\s\S]*?fill:\s*var\(--m97-signal\);/,
+    );
+    expect(refinementStyles).toMatch(
+      /\.dot-cursor--input \.myles98-cursor-ibeam\s*\{[\s\S]*?display:\s*block;/,
+    );
   });
 });
