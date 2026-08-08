@@ -1,85 +1,101 @@
-# Fresh Greens voice and Reminders source audit
+# Fresh Greens voice, story, and Reminders source audit
 
 **Audited:** 2026-08-08
 **Portfolio branch:** `codex/myles-98-visual-refinement`
 **Product source:** `ashim238/fresh-greens` on `main`
-**Purpose:** Restore Myles's voice without weakening claim accuracy, and add the omitted Reminders behavior from the working prototype.
+**Narrative source:** `MENTORSHIP MEETING W/ JAMES CARTER` → `Screenplay: Fresh Greens`
+**Purpose:** Restore Myles's voice, follow the screenplay's linear cause-and-effect story, and keep public claims inside the available evidence.
 
-## What changed in this slice
+## Canonical story sources
 
-The Plan chapter now includes a bounded Reminders artifact built from implemented behavior:
+The public case study now draws from four sources in this order:
 
-- the route preview offers `Schedule for [suggested time]` when a different departure preserves more daylight;
-- notification permission is requested only after the driver chooses Schedule;
-- the phone stores one local notification for the suggested departure;
-- the implemented notification says `Time to head out` and explains that leaving now provides more daylight;
-- the same local-notification layer supports recurring and distance-triggered refuel or recharge reminders.
+1. Myles's annotated Fresh Greens screenplay.
+2. James Carter's unresolved mentorship comments on that screenplay.
+3. Myles's follow-up answers about daylight reminders, permission timing, the pulled-over feature, and how he describes the product.
+4. The working Fresh Greens repository for implementation facts.
 
-The public artifact uses the existing `route-preview.png` capture and a clearly labelled reconstruction of the implemented notification copy. It does not claim that the reminder changes behavior or makes a route safer.
+The typed evidence map remains an editorial check. It is not the public writing template.
 
-The recruiter summary no longer presents `26+ screens` as the outcome. It names the connected product behaviors instead.
+## Linear story now used by the portfolio
 
-## Voice diagnosis
+The Reader page follows this sequence:
 
-The current case study became more accurate during the evidence pass, but several passages began to sound like a visible argument map rather than a person explaining their work. The recurring symptoms are:
+1. The personal experience that started the thesis.
+2. Why six interviews were necessary.
+3. The customer problems and route factors those interviews surfaced.
+4. The Google Maps add-on that failed to communicate the thesis.
+5. The pivot to a standalone product.
+6. The daylight reminder and pulled-over feature as consequential decisions.
+7. The trust model and its current limits.
+8. Classmate usability feedback, the thesis-day working route demonstration, and what still needs testing.
 
-- repeated proof disclaimers using nearly identical syntax;
-- compressed transitions that tell the reader what a paragraph means before letting the story show it;
-- abstract portfolio language replacing concrete memories or design decisions;
-- uniformly polished sentence length and cadence;
-- implementation lists standing in for what Myles found surprising, difficult, or personally important.
+This order follows James's central feedback: keep asking why, make the larger thesis clear, describe the current process, identify the customer problems, walk through the things to solve for, and show how the design changed.
 
-The evidence map should remain the private editorial guardrail. It should not dictate the public prose rhythm.
+## Myles's answers captured in the rewrite
 
-## Recovered Myles-approved voice markers
+### Why the reminder exists
 
-Commit `15069530db1b5f9b10cb394658f4ddf98c9549d3` records edits explicitly described as Myles's revisions. Useful signals include:
+The daylight reminder emerged through interviews rather than being part of the original thesis concept. Participants described families leaving a few hours before sunrise on long-haul trips to maximize daylight. Advice such as “make sure you're home before dark” appeared often enough to become a product requirement.
 
-- prefer `Black travelers` to the more abstract `Black travel`;
-- name the real missing information: `Which block did someone mark unsafe last week that the city's data hasn't caught?`;
-- explain technical behavior plainly: `same inputs of street data, daylight calculations, and community reports always produce the same routing decision`;
-- describe research synthesis as something participants already carried: `They had a working taxonomy, one that could be translated to something tangible if done correctly`;
-- connect features to the interview structure directly: `The four things the app scores routes against are the four markers that recurred across the conversations`;
-- remove performative design language such as `design's job was to listen for it`.
+Myles saw long-haul planning as an involved, anxiety-inducing process: timing the trip, planning stops, avoiding less savory areas, and accounting for unknowns. The reminder is a small way to take one thing off the driver's plate once Fresh Greens identifies a better daylight window.
 
-Additional earlier language worth considering, without automatically restoring it verbatim:
+### Why permission waits
 
-- `A lineage older than the app store.`
-- `Six interviews. Four markers. Four features.`
-- `The categories the app flags are the categories drivers told me they already watch for.`
+The notification-permission decision happened during implementation. Location and microphone access were essential enough to explain during onboarding. Notifications were not. Asking for every permission up front felt deceptive because someone might approve the request simply to finish onboarding, then forget what they granted before seeing its value.
 
-The pattern is concrete, conversational, and specific. It does not avoid emotion or technical detail, but it does avoid narrating design virtue.
+Fresh Greens therefore waits until the driver presses Schedule, when the reason for the permission is clear. The public case study presents this as an honesty decision, not as notification-library minutiae.
 
-## Source-backed Reminders decisions
+### The decision Myles is proudest to explain
 
-### Departure reminder
+The pulled-over feature carries the most weight for Myles. He revised the flow repeatedly to demand as little as possible during a high-stress moment. The guidance changes with the situation and uses ACLU information. The feature earns its place when it—and hopefully never—kicks in.
 
-The product source ties the reminder to the daylight model rather than presenting a generic notification toggle. The route card shows Schedule only when it has a meaningful suggested departure. The reminder is one-shot and local to the device.
+### Myles's plain-language product description
 
-### Permission timing
+Fresh Greens is a wayfinding app for Black drivers. It brings daylight, road conditions, police presence, wildlife, and community knowledge into the route decision so a driver can feel more comfortable with the route, near or far.
 
-The app asks for notification access at the moment the driver selects Schedule. It does not make notification permission part of onboarding. This is a meaningful product decision because the request is attached to an immediately understandable benefit.
+The portfolio avoids converting that intent into a claim that the product has already made trips safer.
 
-### Refuel and recharge reminders
+## Usability and functionality evidence
 
-The notification layer also supports:
+### Classmate sessions
 
-- recurring time-based reminders;
-- immediate distance-triggered reminders;
-- gas or electric language;
-- a trusted or on-route stop name when one is available.
+Myles put the early Figma prototype in front of classmates. They were not the intended audience, so those sessions are used only as basic usability evidence: where people hesitated, what they expected to tap, and whether the route-planning flow made sense without explanation.
 
-The primary case-study artifact stays focused on the daylight reminder because it is closest to the Plan argument and has an existing route-preview capture. Refuel behavior is mentioned as supporting scope rather than being given equal visual weight without a dedicated capture.
+The sessions do not validate the product's cultural relevance, route quality, trust model, or safety premise.
 
-## Public-copy rule for the next pass
+### Thesis-day demonstration
 
-For each paragraph:
+On thesis presentation day, several students entered their own addresses and received Fresh Greens routes with the daylight gradient. This is an end-to-end functionality demonstration for people other than Myles.
 
-1. Start from Myles's original or historically approved wording.
-2. Add product-source facts only where they clarify what changed or what was built.
-3. Ask Myles when intent, emotion, chronology, or authorship cannot be established from the source.
-4. Run the final wording against the evidence map.
-5. Keep caveats close to the claim, but vary the phrasing so the page does not read like a compliance document.
+The public page uses Myles's phrase `Basic functionality achieved!` rather than the generic product phrase `the core loop worked`.
+
+## What was removed or demoted
+
+The five-minute path no longer uses these items as proof of product quality:
+
+- `26+ screens`;
+- `300 accessibility touchpoints`;
+- `62 Figma variables`;
+- the full Claude Code and PR workflow;
+- `/superpowers` and `/impeccable` process detail;
+- the route-input architecture diagram;
+- an implementation inventory presented as the outcome.
+
+Those facts may remain useful in an interview or technical appendix, but they do not carry the central story.
+
+The route reminder was also simplified. The page now connects the interview insight, the Schedule action, the notification, and the permission decision without a three-step evidence exhibit or equal emphasis on refuel-notification mechanics.
+
+## Voice rules
+
+Public copy should:
+
+- start from Myles's original or historically approved wording;
+- use concrete memories and decisions before abstractions;
+- explain why a decision changed, not merely what component was built;
+- retain natural phrases such as `I was disheartened, but it made sense`, `I tweaked it a bunch`, and `hopefully never` when they fit;
+- keep caveats close without repeating compliance-style syntax;
+- use implementation detail only when it reveals judgment.
 
 Avoid stock constructions such as:
 
@@ -88,20 +104,26 @@ Avoid stock constructions such as:
 - `At the intersection of...`
 - `Leveraging insights...`
 - `The goal was to create a seamless...`
-- repeated `This proves... but does not prove...` sentences in public prose.
+- `The core loop worked.`
+- repeated `This proves... but does not prove...` sentences.
 
-## Questions for Myles before the full voice rewrite
+## Evidence boundary
 
-These are the remaining details that source code cannot answer reliably:
+The current evidence supports these statements:
 
-1. Was the daylight departure reminder part of the thesis concept, or did it emerge later while you were building the product?
-2. What problem did you personally think the reminder solved: forgetting the window, avoiding another planning session, reducing anxiety before leaving, or something else?
-3. Was requesting notification permission only after Schedule an intentional design principle from the start, or a decision you made during implementation?
-4. Which Fresh Greens decision are you proudest to explain in an interview, even if it is not the flashiest artifact?
-5. In two informal sentences, how would you describe Fresh Greens to another designer who asked what you made and why?
+- six interviews shaped the problem and route criteria;
+- classmates helped identify basic usability issues in the Figma prototype;
+- thesis-day participants entered addresses and generated Fresh Greens routes;
+- the working prototype contains route comparison, contextual reminders, pulled-over support, community reporting, and moderation behavior.
 
-These questions should guide the rewrite; they do not block the factual Reminders artifact.
+It does not yet establish:
+
+- that a recommended route is safer;
+- that reminders change departure behavior;
+- that the pulled-over flow improves a real encounter;
+- that Black drivers trust the recommendations;
+- that the trust and moderation model works across regions or at scale.
 
 ## Freeze boundary
 
-Do not rewrite the entire case study from the evidence map again. The next editorial pass should be collaborative, beginning with the five questions above and the recovered Myles-approved language. The typed map remains unchanged unless new source material alters a claim, proof, caveat, or ownership boundary.
+Do not reconstruct the public story from the evidence map again. Future edits should begin with the screenplay and Myles's language, then use the map only to check claims, ownership, and caveats. Reopen the story only when new research, testing, or a specific comprehension problem justifies it.
