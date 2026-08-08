@@ -6,6 +6,10 @@ const css = readFileSync(
   resolve(process.cwd(), "src/app/styles/fafsa-case-refinement.css"),
   "utf8",
 );
+const storyCss = readFileSync(
+  resolve(process.cwd(), "src/app/styles/fafsa-story-refinement.css"),
+  "utf8",
+);
 const workLayout = readFileSync(
   resolve(process.cwd(), "src/app/work/layout.tsx"),
   "utf8",
@@ -42,9 +46,18 @@ describe("UnderstandingFAFSA composer fidelity", () => {
     );
   });
 
-  it("loads after the shared, Fresh Greens, and Navi case-study surfaces", () => {
+  it("keeps the story brief compact and stacks it on phones", () => {
+    expect(storyCss).toMatch(
+      /\.uf-page \.uf-story-brief\s*\{[\s\S]*?grid-template-columns:\s*repeat\(3, minmax\(0, 1fr\)\);/,
+    );
+    expect(storyCss).toMatch(
+      /@media \(max-width: 720px\)[\s\S]*?\.uf-page \.uf-story-brief\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0, 1fr\);/,
+    );
+  });
+
+  it("loads the story refinement after the composer refinement", () => {
     expect(workLayout).toMatch(
-      /portfolio-surfaces\.css";\nimport "\.\.\/styles\/fresh-greens-case-refinement\.css";\nimport "\.\.\/styles\/navi-case-refinement\.css";\nimport "\.\.\/styles\/fafsa-case-refinement\.css";/,
+      /portfolio-surfaces\.css";\nimport "\.\.\/styles\/fresh-greens-case-refinement\.css";\nimport "\.\.\/styles\/navi-case-refinement\.css";\nimport "\.\.\/styles\/fafsa-case-refinement\.css";\nimport "\.\.\/styles\/fafsa-story-refinement\.css";/,
     );
   });
 });
