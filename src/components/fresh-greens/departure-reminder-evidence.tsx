@@ -13,15 +13,15 @@ export function DepartureReminderEvidence() {
       {...evidenceSurfaceData(FRESH_GREENS_REMINDER_EVIDENCE_SURFACE)}
     >
       <div className="fg-reminder-copy">
-        <p className="fg-reminder-kicker">Reminders</p>
+        <p className="fg-reminder-kicker">Interview insight → feature</p>
         <h3 id="fg-reminder-title">
-          The route should still be useful after the app closes.
+          Taking one thing off the driver&apos;s plate.
         </h3>
         <p>
-          When a different departure time preserves more daylight, the route
-          preview offers a Schedule action. Fresh Greens asks for notification
-          access only after the driver chooses it, then stores one local
-          reminder for that time.
+          People told me about families leaving a few hours before sunrise on
+          long-haul trips so they could spend more of the drive in daylight.
+          “Make sure you&apos;re home before dark” came up in different forms often
+          enough that the product needed to account for it.
         </p>
       </div>
 
@@ -39,45 +39,12 @@ export function DepartureReminderEvidence() {
           </PhoneFrame>
         </div>
 
-        <div className="fg-reminder-sequence">
-          <ol aria-label="How the departure reminder works">
-            <li>
-              <span className="fg-reminder-step" aria-hidden="true">
-                1
-              </span>
-              <div>
-                <strong>Find a useful window</strong>
-                <p>
-                  The route model compares daylight across the trip and only
-                  suggests another departure when the timing changes the plan.
-                </p>
-              </div>
-            </li>
-            <li>
-              <span className="fg-reminder-step" aria-hidden="true">
-                2
-              </span>
-              <div>
-                <strong>Choose Schedule</strong>
-                <p>
-                  Permission is requested at the moment of intent, not during
-                  onboarding for a feature the driver may never use.
-                </p>
-              </div>
-            </li>
-            <li>
-              <span className="fg-reminder-step" aria-hidden="true">
-                3
-              </span>
-              <div>
-                <strong>Leave the app</strong>
-                <p>
-                  A one-time notification fires from the phone at the suggested
-                  departure, without a push server or an open app session.
-                </p>
-              </div>
-            </li>
-          </ol>
+        <div className="fg-reminder-decision">
+          <p>
+            Long-haul planning has a lot of unknowns, and those unknowns can be
+            anxiety-inducing. Once Fresh Greens finds a better daylight window,
+            the driver can schedule it and move on.
+          </p>
 
           <div
             className="fg-reminder-notification"
@@ -95,17 +62,21 @@ export function DepartureReminderEvidence() {
             <p>Leaving now gives you more daylight.</p>
           </div>
 
-          <p className="fg-reminder-secondary">
-            The same local-notification layer also supports recurring and
-            distance-triggered refuel or recharge reminders.
-          </p>
+          <div className="fg-reminder-permission">
+            <strong>Ask when the value is clear.</strong>
+            <p>
+              Location and microphone access were essential enough to explain
+              during onboarding. Notifications were different. Asking for every
+              permission up front felt deceptive, so Fresh Greens waits until the
+              driver presses Schedule, when the reason is clear.
+            </p>
+          </div>
         </div>
       </div>
 
       <figcaption>
-        Implemented prototype behavior. It shows how Fresh Greens carries a
-        planning decision beyond the foreground app; it does not prove that a
-        reminder changes behavior or makes a trip safer.
+        Implemented in the prototype. It shows that the reminder exists; it
+        doesn&apos;t show that people leave at that time or have a safer trip.
       </figcaption>
     </figure>
   );
