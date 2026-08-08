@@ -25,9 +25,7 @@ describe("Navi research rail alignment", () => {
   });
 
   it("uses one shared mobile x-coordinate for the rail and markers", () => {
-    expect(css).toMatch(
-      /--nv-mobile-rail-x:\s*1\.25rem;/,
-    );
+    expect(css).toMatch(/--nv-mobile-rail-x:\s*1\.25rem;/);
     expect(css).toMatch(
       /li::before\s*\{[\s\S]*?left:\s*var\(--nv-mobile-rail-x\);/,
     );
@@ -36,9 +34,9 @@ describe("Navi research rail alignment", () => {
     );
   });
 
-  it("loads after the primary portfolio surfaces", () => {
+  it("loads after the shared and Fresh Greens case-study surfaces", () => {
     expect(workLayout).toMatch(
-      /portfolio-surfaces\.css";\nimport "\.\.\/styles\/navi-case-refinement\.css";/,
+      /portfolio-surfaces\.css";\nimport "\.\.\/styles\/fresh-greens-case-refinement\.css";\nimport "\.\.\/styles\/navi-case-refinement\.css";/,
     );
   });
 });
