@@ -29,24 +29,22 @@ const styles = readFileSync(
 );
 
 describe("Fresh Greens departure reminder evidence", () => {
-  it("shows the implemented route-to-reminder sequence without claiming an outcome", () => {
+  it("connects the interview insight to the implemented reminder decision", () => {
     render(<DepartureReminderEvidence />);
 
     expect(
       screen.getByRole("heading", {
-        name: "The route should still be useful after the app closes.",
+        name: "Taking one thing off the driver's plate.",
       }),
     ).toBeInTheDocument();
-    expect(screen.getByText("Find a useful window")).toBeInTheDocument();
-    expect(screen.getByText("Choose Schedule")).toBeInTheDocument();
-    expect(screen.getByText("Leave the app")).toBeInTheDocument();
+    expect(screen.getByText(/families leaving a few hours before sunrise/i)).toBeInTheDocument();
     expect(screen.getByText("Time to head out")).toBeInTheDocument();
     expect(
       screen.getByText("Leaving now gives you more daylight."),
     ).toBeInTheDocument();
-    expect(
-      screen.getByText(/does not prove that a reminder changes behavior/i),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Ask when the value is clear.")).toBeInTheDocument();
+    expect(screen.getByText(/asking for every permission up front felt deceptive/i)).toBeInTheDocument();
+    expect(screen.getByText(/it doesn't show that people leave at that time/i)).toBeInTheDocument();
   });
 
   it("uses the existing route-preview capture as inspectable media", () => {
@@ -82,12 +80,13 @@ describe("Fresh Greens departure reminder evidence", () => {
       FRESH_GREENS_REMINDER_EVIDENCE_SURFACE.proofId,
     );
     expect(surface).toHaveAttribute("data-evidence-role", "supporting");
+    expect(surface).toHaveAttribute("data-evidence-kind", "working-product");
     expect(surface).toHaveAttribute("data-evidence-chapter", "fg-design");
   });
 
   it("stacks the evidence on phones without shrinking the route capture", () => {
     expect(styles).toMatch(
-      /@media \(max-width: 720px\)[\s\S]*?\.fg-page \.fg-reminder-layout\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0, 1fr\);/,
+      /@media \(max-width: 720px\)[\s\S]*?\.fg-page \.fg-reminder-layout,[\s\S]*?grid-template-columns:\s*minmax\(0, 1fr\);/,
     );
     expect(styles).toMatch(
       /@media \(max-width: 720px\)[\s\S]*?--phone-w:\s*min\(68vw, 250px\);/,
