@@ -16,6 +16,13 @@ export function orientationSurfaceData(surface: string) {
   } as const;
 }
 
+export const FRESH_GREENS_REMINDER_EVIDENCE_SURFACE = {
+  proofId: "fg-departure-reminder",
+  role: "supporting",
+  kind: "sequence",
+  chapterId: "fg-design",
+} as const satisfies EvidenceSurfaceMetadata;
+
 export const NAVI_RESEARCH_EVIDENCE_SURFACE = {
   proofId: "nv-research-artifacts",
   role: "dominant",
