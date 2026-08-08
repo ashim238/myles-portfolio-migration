@@ -1,0 +1,224 @@
+/* Fresh Greens case-study refinement
+   Keep the route-planning story project-owned while making Reminders visible. */
+
+.fg-page .fg-reminder-evidence {
+  width: min(62rem, 100%);
+  margin: 2.4rem 0 2.8rem;
+  padding: clamp(1.1rem, 2.4vw, 1.6rem);
+  border: 1px solid var(--line);
+  border-radius: 0.8rem;
+  background:
+    radial-gradient(
+      circle at 84% 8%,
+      color-mix(in srgb, var(--fg-accent) 14%, transparent),
+      transparent 34%
+    ),
+    var(--surface);
+}
+
+.fg-page .fg-reminder-copy {
+  max-width: 62ch;
+  margin-bottom: 1.5rem;
+}
+
+.fg-page .fg-reminder-kicker {
+  margin: 0 0 0.45rem;
+  color: var(--fg-accent);
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.fg-page .fg-reminder-copy h3 {
+  max-width: 22ch;
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.45rem, 3vw, 2.15rem);
+  line-height: 1.08;
+  letter-spacing: var(--track-display);
+  text-wrap: balance;
+}
+
+.fg-page .fg-reminder-copy p:last-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.fg-page .fg-reminder-layout {
+  display: grid;
+  grid-template-columns: minmax(13rem, 17rem) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1.4rem, 4vw, 3.4rem);
+}
+
+.fg-page .fg-reminder-device {
+  min-width: 0;
+}
+
+.fg-page .fg-reminder-device .fg-phone {
+  --phone-w: min(100%, 250px);
+}
+
+.fg-page .fg-reminder-sequence {
+  min-width: 0;
+}
+
+.fg-page .fg-reminder-sequence > ol {
+  position: relative;
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fg-page .fg-reminder-sequence > ol::before {
+  content: "";
+  position: absolute;
+  top: 1.15rem;
+  bottom: 1.15rem;
+  left: 1rem;
+  width: 1px;
+  background: color-mix(in srgb, var(--fg-accent) 58%, var(--line));
+}
+
+.fg-page .fg-reminder-sequence li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 0.85rem;
+  padding: 0 0 1.25rem;
+}
+
+.fg-page .fg-reminder-sequence li:last-child {
+  padding-bottom: 0.3rem;
+}
+
+.fg-page .fg-reminder-step {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 1px solid var(--fg-accent-line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--fg-accent);
+  font: 700 0.76rem/1 var(--font-mono), ui-monospace, monospace;
+}
+
+.fg-page .fg-reminder-sequence strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--foreground);
+  font-size: 0.98rem;
+}
+
+.fg-page .fg-reminder-sequence li p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.fg-page .fg-reminder-notification {
+  margin: 1.15rem 0 0.8rem 2.85rem;
+  padding: 0.9rem 1rem 1rem;
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 1rem;
+  background: #1c1c1e;
+  color: #f5f5f7;
+  box-shadow: 0 12px 28px rgb(0 0 0 / 24%);
+}
+
+.fg-page .fg-reminder-notification-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.65rem;
+  color: rgb(245 245 247 / 70%);
+  font-size: 0.72rem;
+}
+
+.fg-page .fg-reminder-app-mark {
+  display: grid;
+  width: 1.55rem;
+  height: 1.55rem;
+  place-items: center;
+  border-radius: 0.4rem;
+  background: #4f7a5b;
+  color: #fff;
+  font: 700 0.57rem/1 var(--font-mono), ui-monospace, monospace;
+}
+
+.fg-page .fg-reminder-notification > strong {
+  margin: 0 0 0.25rem;
+  color: #fff;
+  font-size: 0.98rem;
+}
+
+.fg-page .fg-reminder-notification > p {
+  margin: 0;
+  color: rgb(245 245 247 / 82%);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.fg-page .fg-reminder-secondary {
+  margin: 0 0 0 2.85rem;
+  padding-left: 0.7rem;
+  border-left: 2px solid var(--fg-accent);
+  color: var(--muted);
+  font-size: 0.83rem;
+  line-height: 1.5;
+}
+
+.fg-page .fg-reminder-evidence > figcaption {
+  margin-top: 1.35rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 720px) {
+  .fg-page .fg-reminder-evidence {
+    padding: 1rem;
+  }
+
+  .fg-page .fg-reminder-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fg-page .fg-reminder-device .fg-phone {
+    --phone-w: min(68vw, 250px);
+  }
+
+  .fg-page .fg-reminder-notification,
+  .fg-page .fg-reminder-secondary {
+    margin-left: 0;
+  }
+}
+
+@media (forced-colors: active) {
+  .fg-page .fg-reminder-evidence,
+  .fg-page .fg-reminder-step,
+  .fg-page .fg-reminder-notification {
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+    box-shadow: none;
+  }
+
+  .fg-page .fg-reminder-sequence > ol::before {
+    background: CanvasText;
+  }
+
+  .fg-page .fg-reminder-app-mark {
+    background: Highlight;
+    color: HighlightText;
+  }
+}
