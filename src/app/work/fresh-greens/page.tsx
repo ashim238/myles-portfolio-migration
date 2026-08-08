@@ -112,9 +112,8 @@ export default async function FreshGreensPage() {
             </p>
             <p>
               The Green Book used print to help Black travelers find places that
-              would serve them. I use that history as design lineage, not
-              evidence that Fresh Greens is its digital successor. I wanted to
-              see what that principle could mean inside navigation.{" "}
+              would serve them. I use that history as design lineage, not proof
+              that Fresh Greens is its digital successor.{" "}
               <a href="https://nmaahc.si.edu/explore/stories/traveling-through-jim-crow-america" rel="noreferrer" target="_blank">
                 Source: Smithsonian National Museum of African American History
                 and Culture
@@ -129,7 +128,7 @@ export default async function FreshGreensPage() {
         <div className="project-section fg-section fg-section--wide">
           <p className="case-section-lead">
             Participants already knew how to plan, prepare, and decide whom to
-            trust. Their answers widened my hypothesis into three problems.
+            trust. Their answers became three product problems.
           </p>
           <div className="fg-evidence-boundaries" aria-label="Three Fresh Greens product problems">
             <div className="fg-evidence-boundary">
@@ -138,11 +137,11 @@ export default async function FreshGreensPage() {
             </div>
             <div className="fg-evidence-boundary">
               <p className="fg-evidence-label">Respond</p>
-              <p>Participants described preparing for police encounters and keeping help close when unexpected problems raised stress.</p>
+              <p>Participants prepared for police encounters and kept help close when problems raised stress.</p>
             </div>
             <div className="fg-evidence-boundary">
               <p className="fg-evidence-label">Trust</p>
-              <p>Useful community knowledge lived outside navigation and depended on reaching the right person. 5 of 6 asked family or friends before trusting an unfamiliar place.</p>
+              <p>Useful community knowledge lived outside navigation. 5 of 6 asked family or friends before trusting an unfamiliar place.</p>
             </div>
           </div>
           <div className="project-section-body">
@@ -155,21 +154,18 @@ export default async function FreshGreensPage() {
         <section className="project-section fg-section fg-section--wide">
           <div className="project-section-body">
             <p>
-              Participants talked about timing trips around daylight, avoiding
-              certain roads, and comparing clues that Google Maps or Apple Maps
-              did not show.
+              Participants timed trips around daylight, avoided certain roads,
+              and compared clues missing from Google Maps or Apple Maps.
             </p>
             <p>
-              My first idea was a feature inside Google Maps. I eventually moved
-              it into a standalone route preview, where the driver can compare
-              conditions, open the source behind a warning, and see why Fresh
-              Greens prefers one route. That makes the decision inspectable. It
-              does not prove the route is safer.
+              My first idea was a Google Maps feature. I moved it into a
+              standalone route preview, where drivers can compare conditions,
+              open a warning&apos;s source, and see why Fresh Greens prefers one
+              route. That makes the decision inspectable, not proven safer.
             </p>
             <p>
-              Daylight still matters after the route is chosen. When a different
-              departure would keep more of the trip in daylight, the driver can
-              schedule one local reminder instead of keeping the app open.
+              When another departure keeps more of the trip in daylight, the
+              driver can schedule one local reminder and close the app.
             </p>
           </div>
           <PivotJourney />
@@ -181,11 +177,11 @@ export default async function FreshGreensPage() {
       <ProjectChapter entry={chapters[3]} index={4} total={chapters.length} variant="fresh-greens">
         <section className="project-section fg-section fg-section--wide">
           <div className="project-section-body">
-            <p>Once stress is high, a driver shouldn&apos;t have to search navigation controls or forceful copy. I hid four support paths behind one thumb-reachable control until requested.</p>
+            <p>Under stress, a driver shouldn&apos;t have to search navigation controls. I hid four support paths behind one thumb-reachable control until requested.</p>
           </div>
           <PulledOverJourney />
           <div className="project-section-body">
-            <p>Pulled-over guidance starts recording, puts reassurance first, keeps questions in regular weight, and leaves trusted-contact actions visible. Roadside help, unfamiliar-area guidance, location sharing, and emergency steps work offline. This is prototype behavior, not evidence that it improves an encounter.</p>
+            <p>Pulled-over guidance starts recording, puts reassurance first, and keeps trusted-contact actions visible. Roadside help, unfamiliar-area guidance, location sharing, and emergency steps work offline. This demonstrates the prototype, not a better encounter.</p>
           </div>
         </section>
       </ProjectChapter>
