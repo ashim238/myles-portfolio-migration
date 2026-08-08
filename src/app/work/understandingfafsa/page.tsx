@@ -11,15 +11,12 @@ import { ProjectWorkJump } from "@/components/project-work-jump";
 import {
   BeforeAfterPhones,
   FigmaMailchimpPair,
-  LockedSwappableView,
   NewsletterComposerDemo,
-  TemplateSwitcher,
 } from "@/components/understandingfafsa";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
 import { CASE_STUDY_CHAPTERS } from "@/lib/project-chapters";
 import { createRouteMetadata } from "@/lib/site-config";
-import { UNDERSTANDING_FAFSA_AUDIT_RULES } from "@/lib/understandingfafsa-audit-rules";
 
 const UF_DESCRIPTION =
   "Built a modular newsletter system for a site rebrand. The first redesigned send had an observed ~52.6% open rate with Mailchimp Privacy Protection excluded. This was not a controlled attribution test.";
@@ -48,7 +45,7 @@ export default async function UnderstandingFafsaPage() {
       className="uf-page"
     >
       <nav className="project-topbar" aria-label="Breadcrumb">
-        <TransitionLink href="/#work">
+        <TransitionLink href="/#selected-work">
           <span aria-hidden="true">←</span>
           Selected work
         </TransitionLink>
@@ -76,17 +73,13 @@ export default async function UnderstandingFafsaPage() {
         stack="Figma, Mailchimp"
         stackLabel="Tools"
         evidence={{
-          type: "Interactive case-study explanation",
+          type: "Working newsletter system",
           cta: "Build a sample send",
           href: "#uf-locked",
         }}
         outcomeValue={project?.outcomeMetricValue}
         outcomeLabel={project?.outcomeMetricLabel}
-        moves={[
-          "Research: one collaborator and I compiled and evaluated more than 120 newsletters.",
-          "System: I designed the modular rules and rebuilt the live template in Mailchimp.",
-          "Workflow: the founder assembles each send from the kit without editing HTML.",
-        ]}
+        moves={[]}
       />
 
       <ProjectToc sections={chapters} />
@@ -100,30 +93,20 @@ export default async function UnderstandingFafsaPage() {
         <div className="project-section uf-section">
           <div className="project-section-body">
             <p>
-              UnderstandingFAFSA helps students, parents, and counselors navigate
-              the Free Application for Federal Student Aid (FAFSA). The
-              newsletter carries guidance for all three groups. The website had
-              already adopted Saans and a refreshed palette. The scope was
-              email-only, and the founder assembles every issue.
+              UnderstandingFAFSA helps students, parents, and counselors work
+              through financial-aid deadlines. The website had just been
+              rebranded, but the newsletter still had long stretches of text,
+              uneven calls to action, weak section breaks, and a mobile layout
+              that was hard to scan.
             </p>
-          </div>
-        </div>
-
-        <section className="project-section uf-section" aria-labelledby="uf-problem">
-          <h3 className="project-evidence-heading" id="uf-problem">
-            Where the old template broke down
-          </h3>
-          <div className="project-section-body">
             <p>
-              The newsletter covers deadline-driven guidance at key checkpoints:
-              FAFSA filing windows, scholarship deadlines, and policy changes.
-              The old template had uneven CTAs, long stretches of text, weak
-              section breaks, and a layout that wasn&apos;t optimized for mobile.
-              Its muted palette also came from the site&apos;s previous visual system.
+              The scope was email only, and the founder assembled every issue.
+              The redesign had to improve the reading experience without turning
+              weekly production into an HTML project.
             </p>
           </div>
           <BeforeAfterPhones />
-        </section>
+        </div>
       </ProjectChapter>
 
       <ProjectChapter
@@ -132,26 +115,44 @@ export default async function UnderstandingFafsaPage() {
         total={chapters.length}
         variant="understandingfafsa"
       >
-        <div className="project-section uf-section">
+        <div className="project-section uf-section uf-section--wide">
           <div className="project-section-body">
             <p>
-              One collaborator and I worked together to compile and evaluate more than 120 newsletter examples.
-              We compared clarity, personalization, tone of voice, visual appeal,
-              and branding consistency.
+              One collaborator and I compiled and reviewed more than 120
+              newsletters for scanning, tone, hierarchy, and brand consistency.
+              I used that audit to define what should stay fixed and what needed
+              to change from one send to the next.
             </p>
-            <p>
-              We looked most closely at Revenews, The 74, Next by Jeff Selingo,
-              Medium, and Folderly as references for scanning, hierarchy, tone,
-              and brand structure.
-            </p>
-            <ol aria-label="Audit findings and system rules">
-              {UNDERSTANDING_FAFSA_AUDIT_RULES.map((rule) => (
-                <li key={rule.id}>
-                  <p><strong>Finding:</strong> {rule.finding}.</p>
-                  <p><strong>System rule:</strong> {rule.response}.</p>
-                </li>
-              ))}
-            </ol>
+          </div>
+
+          <div
+            className="uf-story-brief"
+            aria-label="UnderstandingFAFSA problem, opportunity, and goal"
+          >
+            <article>
+              <p className="uf-story-brief-label">Problem</p>
+              <strong>Important guidance was hard to scan.</strong>
+              <p>
+                Long sends, uneven hierarchy, and weak mobile structure made
+                deadline-driven information harder to move through.
+              </p>
+            </article>
+            <article>
+              <p className="uf-story-brief-label">Opportunity</p>
+              <strong>Lock the system, not the weekly content.</strong>
+              <p>
+                Keep the order, spacing, type, and dividers consistent while copy
+                and imagery remain swappable.
+              </p>
+            </article>
+            <article>
+              <p className="uf-story-brief-label">Goal</p>
+              <strong>Make the kit work inside Mailchimp.</strong>
+              <p>
+                Give the founder a system they can assemble without HTML and keep
+                the email under Gmail&apos;s clipping limit.
+              </p>
+            </article>
           </div>
         </div>
       </ProjectChapter>
@@ -162,40 +163,21 @@ export default async function UnderstandingFafsaPage() {
         total={chapters.length}
         variant="understandingfafsa"
       >
-        <section
-          className="project-section uf-section project-section--wide uf-section--wide"
-          aria-labelledby="uf-templates"
-        >
-          <h3 className="project-evidence-heading" id="uf-templates">
-            Three send types from the audit
-          </h3>
+        <section className="project-section uf-section project-section--wide uf-section--wide">
           <div className="project-section-body">
             <p>
-              The audit led to three templates: a welcome email, the weekly
-              newsletter, and a shorter version for event invites and recaps.
-              A counselor toolkit is still in progress.
+              The audit led to three send types: welcome, weekly, and a shorter
+              event format. They share a fixed header, footer, section order,
+              spacing, type, and dividers. The founder can swap the stories,
+              links, and imagery in the middle without changing that structure.
             </p>
             <p>
-              The welcome email sets expectations in a fixed order: a banner,
-              a thank-you, what to expect, a short history and current mission,
-              a CTA, suggested reading, and social links. It also introduces
-              the updated type and palette.
+              The editor below is a case-study reconstruction of those rules,
+              using the actual newsletter modules.
             </p>
           </div>
-          <TemplateSwitcher />
           <NewsletterComposerDemo />
         </section>
-
-        <div className="project-section uf-section project-section--wide uf-section--wide">
-          <div className="project-section-body">
-            <p>
-              I designed the modular rules around a fixed section order, spacing,
-              type, and dividers. The founder can swap weekly copy and imagery
-              without changing that structure.
-            </p>
-          </div>
-          <LockedSwappableView />
-        </div>
       </ProjectChapter>
 
       <ProjectChapter
@@ -207,33 +189,18 @@ export default async function UnderstandingFafsaPage() {
         <div className="project-section uf-section">
           <div className="project-section-body">
             <p>
-              I rebuilt the live system in Mailchimp so the founder could edit it
-              without touching HTML. Matching the Figma spacing in the builder
-              added too many containers and wrappers. Test sends showed which
-              wrappers and dividers could go.
+              I rebuilt the system in Mailchimp so the founder could use it
+              without touching HTML. The first Figma version relied on more
+              containers and wrappers than the email could afford.
             </p>
             <p>
               <mark className="case-highlight">
                 Gmail&apos;s 102 KB HTML clipping threshold set a rigid constraint.
               </mark>{" "}
-              To reduce the HTML Gmail measures, I flattened the hierarchy,
-              removed wrappers and blocks that didn&apos;t need to ship, and used
-              Mailchimp-native structure where it replaced custom markup.
-            </p>
-            <p>
-              I handled the image files separately. Compressing the PNGs through
-              an external tool lowered their download weight. It didn&apos;t
-              reduce the HTML source Gmail measures. For dark-mode-friendly
-              dividers, I removed backgrounds in Photoshop so they wouldn&apos;t
-              look muddy on phones.
-            </p>
-            <p>
-              The weekly kit used fewer custom assets and more Mailchimp-native
-              structure. The counselor toolkit needed more image work and tighter
-              file discipline for its duotone icons. I kept the closest Mailchimp
-              sans to Saans and the full brand palette. Those choices kept the
-              email close to the site and reflected the founder&apos;s preference
-              for vibrant color.
+              To reduce the source Gmail measures, I flattened the hierarchy,
+              removed unnecessary wrappers, and used Mailchimp-native blocks
+              where they could replace custom markup. Image compression helped
+              download weight, but it did not change that HTML limit.
             </p>
           </div>
           <FigmaMailchimpPair />
@@ -249,12 +216,9 @@ export default async function UnderstandingFafsaPage() {
         <div className="project-section uf-section">
           <div className="project-section-body">
             <p>
-              I shipped a master template, modular blocks,
-              locked-versus-swappable rules, and three template variants.
-            </p>
-            <p>
-              The founder now assembles each send from the Mailchimp-native kit
-              without editing HTML.
+              I shipped a master template, reusable modules, and three send
+              formats. The founder now assembles each issue from the
+              Mailchimp-native kit without editing HTML.
             </p>
             <p>
               The first redesigned send went out November 4, 2025. Mailchimp
