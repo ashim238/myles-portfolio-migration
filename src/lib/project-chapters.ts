@@ -14,33 +14,33 @@ export const CASE_STUDY_CHAPTERS = {
   "fresh-greens": [
     {
       id: "fg-problem",
-      stage: "Frame",
-      title: "Why route planning needs more than time and distance",
+      stage: "Background",
+      title: "Why I started Fresh Greens",
     },
     {
       id: "fg-research",
       stage: "Research",
-      title: "Three problems the interviews made clear",
+      title: "What six Black drivers were already doing",
     },
     {
       id: "fg-design",
-      stage: "Plan",
-      title: "1. See what is on each route before choosing",
+      stage: "Pivot",
+      title: "Why the Google Maps version failed",
     },
     {
       id: "fg-pulled-over",
       stage: "Respond",
-      title: "2. Handle unexpected problems without adding stress",
+      title: "A feature I hope no one needs",
     },
     {
       id: "fg-trust",
       stage: "Trust",
-      title: "3. Navigate with transparent community contributors",
+      title: "How community reports stay accountable",
     },
     {
       id: "fg-scope",
-      stage: "Validate",
-      title: "What the prototype made possible and what still needs proof",
+      stage: "Test",
+      title: "What worked on thesis day and what still needs testing",
     },
   ],
   navi: [
