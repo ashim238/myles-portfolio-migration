@@ -1,0 +1,83 @@
+/* UnderstandingFAFSA story refinement
+   One compact brief, one editor, one implementation comparison. */
+
+.uf-page .uf-story-brief {
+  display: grid;
+  width: min(68rem, 100%);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 2rem 0 0;
+  border-block: 1px solid var(--line);
+  background: color-mix(in srgb, var(--uf-accent-soft) 38%, var(--surface));
+}
+
+.uf-page .uf-story-brief > article {
+  min-width: 0;
+  padding: clamp(1rem, 2.4vw, 1.45rem);
+}
+
+.uf-page .uf-story-brief > article + article {
+  border-left: 1px solid var(--line);
+}
+
+.uf-page .uf-story-brief-label {
+  margin: 0 0 0.55rem;
+  color: var(--uf-accent-cool-text);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.uf-page .uf-story-brief strong {
+  display: block;
+  margin-bottom: 0.45rem;
+  color: var(--foreground);
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  line-height: 1.2;
+}
+
+.uf-page .uf-story-brief p:last-child {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.58;
+}
+
+.uf-page .uf-composer-demo {
+  width: min(68rem, 100%);
+}
+
+.uf-page .uf-composer-demo-trigger {
+  min-width: 10rem;
+  border-radius: 0.35rem;
+  box-shadow: 2px 2px 0 color-mix(in srgb, var(--foreground) 35%, transparent);
+}
+
+.uf-page .uf-composer-demo-trigger:active {
+  box-shadow: none;
+  transform: translate(2px, 2px);
+}
+
+@media (max-width: 720px) {
+  .uf-page .uf-story-brief {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .uf-page .uf-story-brief > article + article {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .uf-page .uf-composer-demo-trigger {
+    width: 100%;
+  }
+}
+
+@media (forced-colors: active) {
+  .uf-page .uf-story-brief,
+  .uf-page .uf-story-brief > article,
+  .uf-page .uf-composer-demo-trigger {
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+    box-shadow: none;
+  }
+}
