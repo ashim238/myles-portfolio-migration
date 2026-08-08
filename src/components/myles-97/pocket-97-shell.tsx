@@ -22,6 +22,7 @@ import type {
   WorkstationAction,
   WorkstationState,
 } from "@/lib/myles-97/state";
+import { MYLES_98_TAGLINE } from "@/lib/myles-98-copy";
 import { siteConfig } from "@/lib/site-config";
 
 export type Pocket97ShellProps = {
@@ -162,7 +163,7 @@ export function Pocket97Shell({
               <div>
                 <p className="myles97-eyebrow">Pocket 98</p>
                 <h1>Myles Ashitey</h1>
-                <p className="pocket97-statement">Design, code, whatever you need.</p>
+                <p className="pocket97-statement">{MYLES_98_TAGLINE}</p>
                 <p className="pocket97-context">
                   Previously TikTok and UMG. Latest project: Fresh Greens.
                 </p>
