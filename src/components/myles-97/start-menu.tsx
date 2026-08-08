@@ -38,8 +38,10 @@ export function StartMenu({
   return (
     <div className="myles97-start-menu" id="myles97-start-menu" role="group" aria-label="Start menu">
       <div className="myles97-start-menu-brand" aria-hidden="true">
-        <span>Myles</span>
-        <strong>98</strong>
+        <div className="myles97-start-menu-wordmark">
+          <span>Myles</span>
+          <strong>98</strong>
+        </div>
       </div>
       <div className="myles97-start-menu-items">
         <button type="button" onClick={() => openThenClose("selected-work")}>
