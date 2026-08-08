@@ -1,21 +1,26 @@
 .icon {
+  display: block;
   flex: 0 0 auto;
   overflow: visible;
+  color: inherit;
 }
 
 .color {
   color: #111;
 }
 
+/* Large desktop shortcuts can carry one hard-edged shadow. Dense chrome stays
+   shadow-free so the 24-unit geometry remains crisp at 16–20px. */
 :global(.myles97-desktop-shortcuts) .color {
-  filter: drop-shadow(1px 2px 0 rgb(17 17 17 / 32%));
+  filter: drop-shadow(1px 1px 0 rgb(17 17 17 / 34%));
 }
 
 :global(.myles97-start-menu-items) .color,
 :global(.pocket97-sheet) .color,
 :global(.pocket97-dock) .color,
-:global(.pocket97-app-identity) .color {
-  filter: drop-shadow(1px 1px 0 rgb(17 17 17 / 20%));
+:global(.pocket97-app-identity) .color,
+:global(.myles97-taskbar) .color {
+  filter: none;
 }
 
 :global(.pocket97-app-identity) {
