@@ -42,9 +42,9 @@ describe("UnderstandingFAFSA composer fidelity", () => {
     );
   });
 
-  it("loads after the shared portfolio and Navi case-study surfaces", () => {
+  it("loads after the shared, Fresh Greens, and Navi case-study surfaces", () => {
     expect(workLayout).toMatch(
-      /portfolio-surfaces\.css";\nimport "\.\.\/styles\/navi-case-refinement\.css";\nimport "\.\.\/styles\/fafsa-case-refinement\.css";/,
+      /portfolio-surfaces\.css";\nimport "\.\.\/styles\/fresh-greens-case-refinement\.css";\nimport "\.\.\/styles\/navi-case-refinement\.css";\nimport "\.\.\/styles\/fafsa-case-refinement\.css";/,
     );
   });
 });
