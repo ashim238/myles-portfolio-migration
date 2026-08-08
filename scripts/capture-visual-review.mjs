@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import { chromium } from "playwright";
 
 const baseUrl = process.env.VISUAL_REVIEW_BASE_URL;
+const accessUrl = process.env.VISUAL_REVIEW_ACCESS_URL;
 const outputDir = resolve(
   process.cwd(),
   process.env.VISUAL_REVIEW_OUTPUT ?? ".visual-review",
@@ -93,10 +94,11 @@ const sleep = (milliseconds) =>
   new Promise((resolvePromise) => setTimeout(resolvePromise, milliseconds));
 
 async function waitForPreview() {
+  const probeUrl = accessUrl ?? baseUrl;
   let latestError;
   for (let attempt = 1; attempt <= 48; attempt += 1) {
     try {
-      const response = await fetch(baseUrl, { redirect: "follow" });
+      const response = await fetch(probeUrl, { redirect: "follow" });
       if (response.ok) return;
       latestError = new Error(`Preview returned HTTP ${response.status}.`);
     } catch (error) {
@@ -106,6 +108,28 @@ async function waitForPreview() {
     await sleep(10_000);
   }
   throw latestError ?? new Error("Preview did not become available.");
+}
+
+async function authorizeContext(context) {
+  if (!accessUrl) return;
+
+  const page = await context.newPage();
+  try {
+    const response = await page.goto(accessUrl, {
+      waitUntil: "networkidle",
+      timeout: 120_000,
+    });
+    if (!response?.ok()) {
+      throw new Error(
+        `Vercel share URL returned HTTP ${response?.status() ?? "unknown"}.`,
+      );
+    }
+    if ((await page.title()).toLowerCase().includes("login – vercel")) {
+      throw new Error("Vercel share URL did not unlock the deployment.");
+    }
+  } finally {
+    await page.close();
+  }
 }
 
 async function wakeLazyMedia(page) {
@@ -128,6 +152,7 @@ const browser = await chromium.launch({ headless: true });
 const report = {
   generatedAt: new Date().toISOString(),
   baseUrl,
+  accessMode: accessUrl ? "vercel-share" : "direct",
   captures: [],
 };
 
@@ -146,6 +171,7 @@ try {
     await context.addInitScript(() => {
       localStorage.setItem("theme", "dark");
     });
+    await authorizeContext(context);
 
     const page = await context.newPage();
     const consoleErrors = [];
@@ -165,6 +191,9 @@ try {
       throw new Error(
         `${target.name} returned HTTP ${response?.status() ?? "unknown"}.`,
       );
+    }
+    if ((await page.title()).toLowerCase().includes("login – vercel")) {
+      throw new Error(`${target.name} reached Vercel authentication instead.`);
     }
 
     await page.addStyleTag({
