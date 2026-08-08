@@ -96,30 +96,26 @@ describe("Fresh Greens rendered narrative ownership", () => {
     getPublishedProjects.mockResolvedValue([project]);
   });
 
-  it("gives Plan, Respond, and Trust the approved evidence", async () => {
+  it("keeps each major decision beside the proof that explains it", async () => {
     const { container } = render(await FreshGreensPage());
-    const plan = chapter(container, "fg-design");
+    const pivot = chapter(container, "fg-design");
     const respond = chapter(container, "fg-pulled-over");
     const trust = chapter(container, "fg-trust");
+    const validation = chapter(container, "fg-scope");
 
-    expect(within(plan).getByTestId("pivot-journey")).toBeInTheDocument();
-    expect(within(plan).getByTestId("architecture-diagram")).toBeInTheDocument();
-    expect(within(plan).getByText("Time to head out")).toBeInTheDocument();
+    expect(within(pivot).getByTestId("pivot-journey")).toBeInTheDocument();
+    expect(within(pivot).queryByTestId("architecture-diagram")).not.toBeInTheDocument();
+    expect(within(pivot).getByText("Time to head out")).toBeInTheDocument();
     expect(
-      within(plan).getByRole("img", {
+      within(pivot).getByRole("img", {
         name: /route preview showing route conditions, daylight timing/i,
       }),
     ).toBeInTheDocument();
-    expect(
-      within(plan).queryByTestId("pulled-over-journey"),
-    ).not.toBeInTheDocument();
 
     expect(
       within(respond).getByTestId("pulled-over-journey"),
     ).toBeInTheDocument();
-    expect(
-      within(respond).queryByTestId("pivot-journey"),
-    ).not.toBeInTheDocument();
+    expect(within(respond).queryByTestId("pivot-journey")).not.toBeInTheDocument();
 
     expect(
       within(trust).getByRole("img", {
@@ -127,24 +123,14 @@ describe("Fresh Greens rendered narrative ownership", () => {
       }),
     ).toBeInTheDocument();
     expect(
-      within(trust).queryByRole("img", { name: /report picker/i }),
-    ).not.toBeInTheDocument();
-    expect(
       within(trust).getByLabelText("How a report moves through moderation"),
     ).toBeInTheDocument();
-    expect(
-      within(trust).getByText("Current prototype limit:"),
-    ).toBeInTheDocument();
-    expect(trust).toHaveTextContent("one report to one scored zone");
-    expect(trust).toHaveTextContent("Corroboration-weighted ranking");
-    expect(
-      within(chapter(container, "fg-scope")).getByText("Built now"),
-    ).toBeInTheDocument();
-    expect(
-      within(chapter(container, "fg-scope")).getByText("What remains"),
-    ).toBeInTheDocument();
-    expect(container.querySelector('a[href="#fg-pulled-over"]')).not.toBeNull();
 
+    expect(within(validation).getByText("Basic functionality achieved!")).toBeInTheDocument();
+    expect(within(validation).getByText("What I could test")).toBeInTheDocument();
+    expect(within(validation).getByText("What still needs testing")).toBeInTheDocument();
+
+    expect(container.querySelector('a[href="#fg-pulled-over"]')).not.toBeNull();
     expect(container.querySelectorAll(".project-chapter")).toHaveLength(6);
     expect(
       Array.from(
@@ -157,90 +143,55 @@ describe("Fresh Greens rendered narrative ownership", () => {
       CASE_STUDY_CHAPTERS["fresh-greens"].map((entry) => entry.id),
     );
     expect(container.querySelectorAll("#fg-pulled-over")).toHaveLength(1);
-    expect(container.querySelectorAll(".project-evidence-heading")).toHaveLength(
-      0,
-    );
-    expect(
-      container.querySelector('[data-testid="research-synthesis"]'),
-    ).toBeNull();
-    expect(
-      container.querySelector('[data-testid="onboarding-sequence"]'),
-    ).toBeNull();
+    expect(container.querySelectorAll(".project-evidence-heading")).toHaveLength(0);
+    expect(container.querySelector('[data-testid="research-synthesis"]')).toBeNull();
+    expect(container.querySelector('[data-testid="onboarding-sequence"]')).toBeNull();
     expect(container.querySelector('[data-testid="token-exhibit"]')).toBeNull();
   });
 
-  it("connects the personal origin to the three research problems", async () => {
+  it("moves from the personal origin into a problem, opportunity, and goal", async () => {
     const { container } = render(await FreshGreensPage());
     const frame = chapter(container, "fg-problem");
     const research = chapter(container, "fg-research");
 
-    expect(frame).toHaveTextContent("drove comfortably below the speed limit");
-    expect(research).toHaveTextContent(
-      "Drivers couldn't inspect conditions on each route before choosing.",
-    );
-    expect(research).toHaveTextContent(
-      "Useful community knowledge lived outside navigation",
-    );
+    expect(frame).toHaveTextContent("Maps found the fastest route");
+    expect(frame).toHaveTextContent("I interviewed six Black drivers");
+    expect(research).toHaveTextContent("useful safety knowledge lived outside navigation");
+    expect(research).toHaveTextContent("routes hid who or what shaped them");
+    expect(research).toHaveTextContent("Problem");
+    expect(research).toHaveTextContent("Opportunity");
+    expect(research).toHaveTextContent("Goal");
+    expect(research).toHaveTextContent("Help people feel more secure on the road");
   });
 
-  it("frames the four trust states as intended before naming the current limit", async () => {
+  it("keeps the pulled-over and trust claims bounded", async () => {
     const { container } = render(await FreshGreensPage());
     const respond = chapter(container, "fg-pulled-over");
     const trust = chapter(container, "fg-trust");
-    const trustCopy = trust.textContent ?? "";
 
-    expect(respond).toHaveTextContent("trusted-contact actions");
-    expect(trust).toHaveTextContent("community contributors");
-    expect(`${respond.textContent} ${trustCopy}`).not.toMatch(/trusted agents/i);
-    expect(trust).toHaveTextContent(
-      "The intended trust model keeps every firsthand account visible as one person's account unless human review hides or removes it for violating contribution rules",
-    );
-    expect(
-      trustCopy.indexOf("The intended trust model"),
-    ).toBeLessThan(trustCopy.indexOf("Current prototype limit:"));
-    expect(trust).not.toHaveTextContent(
-      "A single account is never hidden or treated as proof",
-    );
-    expect(trust).toHaveTextContent(
-      "Similar reports from separate community contributors across time gain more influence in ranking",
-    );
-    expect(trust).toHaveTextContent(
-      "A time-sensitive hazard can surface sooner when waiting would make it useless",
-    );
-    expect(trust).toHaveTextContent(
-      "Sparse coverage stays labeled as uncertainty, never as a positive safety signal",
-    );
-    expect(trust).toHaveTextContent("one report to one scored zone");
-    expect(trust).toHaveTextContent(
-      "Corroboration-weighted ranking is an intended safeguard, not a built feature",
-    );
-    expect(trust).toHaveTextContent(
-      "don't yet show visible contributor provenance or differentiated trust levels",
-    );
+    expect(respond).toHaveTextContent("ACLU guidance");
+    expect(respond).toHaveTextContent("hopefully never");
+    expect(respond).toHaveTextContent("haven't tested it in a real encounter");
+
+    expect(trust).toHaveTextContent("one report couldn't become an official-looking safety fact");
+    expect(trust).toHaveTextContent("Similar reports should gain influence over time");
+    expect(trust).toHaveTextContent("sparse coverage stays uncertain");
+    expect(trust).toHaveTextContent("one report can affect one scored zone");
+    expect(trust).toHaveTextContent("weighted corroboration");
+    expect(trust).toHaveTextContent("public moderation transparency");
   });
 
-  it("keeps stress-state and failure-mode proof in the validation ledger", async () => {
+  it("separates basic usability and functionality from intended-audience validation", async () => {
     const { container } = render(await FreshGreensPage());
-    const scope = chapter(container, "fg-scope");
-    const scopeCopy = scope.textContent ?? "";
+    const validation = chapter(container, "fg-scope");
+    const copy = validation.textContent ?? "";
 
-    expect(scope).toHaveTextContent("Built now");
-    expect(scope).toHaveTextContent("What remains");
-    expect(scopeCopy.indexOf("Built now")).toBeLessThan(
-      scopeCopy.indexOf("What remains"),
-    );
-    expect(scope).toHaveTextContent(
-      "a working React Native prototype spanning route comparison, departure and refuel reminders, en-route guidance, stress-state support, community reporting, and moderation",
-    );
-    expect(scope).toHaveTextContent("can explain why it prefers one route");
-    expect(scope).toHaveTextContent(
-      "Respond: stress-state and failure-mode testing on real devices and configured builds",
-    );
-    expect(scope).toHaveTextContent(
-      "before making any claim that a preferred route is safer",
-    );
-    expect(scopeCopy).not.toMatch(
-      /improves safety|made drivers safer|a safer route recommendation/i,
-    );
+    expect(validation).toHaveTextContent("tested the early Figma flows with classmates");
+    expect(validation).toHaveTextContent("weren't the audience Fresh Greens was designed for");
+    expect(validation).toHaveTextContent("entered their own addresses");
+    expect(validation).toHaveTextContent("daylight gradient and all");
+    expect(validation).toHaveTextContent("Route quality and trust with Black drivers across regions");
+    expect(validation).toHaveTextContent("under stress and device failure");
+    expect(copy).not.toMatch(/proved safety|made drivers safer|validated with Black drivers/i);
   });
 });
