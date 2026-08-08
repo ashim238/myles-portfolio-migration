@@ -55,9 +55,11 @@ describe("Myles 98 hardening contract", () => {
         (specifier) => specifier === "react" || specifier.startsWith("./"),
       ),
     ).toBe(true);
-    expect(iconImports).not.toContainEqual(
-      expect.stringMatching(/^(?:https?:|@|[^./])/),
-    );
+    expect(
+      iconImports
+        .filter((specifier) => specifier !== "react")
+        .every((specifier) => specifier.startsWith("./")),
+    ).toBe(true);
     expect(existsSync(resolve(root, "THIRD_PARTY_NOTICES.md"))).toBe(false);
   });
 
