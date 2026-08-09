@@ -122,7 +122,9 @@ describe("ProjectChapter", () => {
         "The rules separate weekly content changes from the structure that protects consistency.",
       ),
     ).toBeVisible();
-    expect(screen.getByText("The counselor toolkit remains in progress.")).toBeVisible();
+    expect(
+      screen.getByText("The counselor toolkit remains in progress."),
+    ).toBeVisible();
   });
 
   it("keeps the Navi booking summary after the demo-bearing child", () => {
@@ -181,6 +183,68 @@ describe("ProjectChapter", () => {
         "Image compression reduced download weight, not the HTML source Gmail measures.",
       ),
     ).toBeVisible();
+  });
+
+  it("extends proof-adjacent summaries to Fresh Greens and TikTok", () => {
+    const cases = [
+      {
+        variant: "fresh-greens",
+        id: "fg-design",
+        proof: "fresh-greens-pivot-journey",
+        interpretation:
+          "Route chips and source cards explain why the prototype prefers one route over another.",
+        caveat: "The prototype does not prove that a preferred route is safer.",
+      },
+      {
+        variant: "fresh-greens",
+        id: "fg-trust",
+        proof: "fresh-greens-report-moderation",
+        interpretation:
+          "The prototype keeps reports reviewable instead of treating one account as universal fact.",
+        caveat:
+          "One report can affect route ranking now. Corroboration weighting, provenance, and trust levels are intended safeguards.",
+      },
+      {
+        variant: "tiktok",
+        id: "tt-system",
+        proof: "tiktok-template-system",
+        interpretation:
+          "Most parts stayed within one visual system, while a few could cross between Light Academia and e-Boy/e-Girl.",
+        caveat:
+          "Limited cross-direction modularity was a proposal made while building the files.",
+      },
+      {
+        variant: "tiktok",
+        id: "tt-outcome",
+        proof: "tiktok-light-academia-sequence",
+        interpretation:
+          "The final direction kept the fixed product slot while making the editorial system more deliberate and upbeat.",
+        caveat:
+          "American Eagle selection was learned later through Global Creative Lab. No performance result is claimed.",
+      },
+    ] as const;
+
+    for (const testCase of cases) {
+      const { container, unmount } = render(
+        <ProjectChapter
+          entry={{ id: testCase.id, stage: "Proof", title: testCase.proof }}
+          index={1}
+          total={1}
+          variant={testCase.variant}
+        >
+          <div data-testid="featured-proof">Featured proof</div>
+        </ProjectChapter>,
+      );
+
+      const summary = container.querySelector(".reader-evidence-summary");
+      expect(summary).toHaveAttribute("data-evidence-for", testCase.proof);
+      expect(screen.getByTestId("featured-proof").nextElementSibling).toBe(
+        summary,
+      );
+      expect(screen.getByText(testCase.interpretation)).toBeVisible();
+      expect(screen.getByText(testCase.caveat)).toBeVisible();
+      unmount();
+    }
   });
 
   it("does not add a visible summary to a mapped chapter outside the pilot", () => {

@@ -21,14 +21,18 @@ type ProjectChapterProps = {
   children: ReactNode;
 };
 
-// Each pilot summary follows the top-level child that owns its dominant proof.
-// This keeps interpretation beside the artifact without imposing shared visual
-// chrome on project-specific compositions.
+// Each featured summary follows the top-level child that owns its dominant
+// proof. This keeps interpretation beside the artifact without imposing shared
+// visual chrome on project-specific compositions.
 const FEATURED_EVIDENCE_PLACEMENTS = new Map<string, number>([
   ["navi-research-artifacts", 0],
   ["navi-booking-demo", 1],
+  ["fresh-greens-pivot-journey", 0],
+  ["fresh-greens-report-moderation", 0],
   ["fafsa-composer-demo", 0],
   ["fafsa-figma-mailchimp", 0],
+  ["tiktok-template-system", 0],
+  ["tiktok-light-academia-sequence", 0],
 ]);
 
 function findChapterEvidence(

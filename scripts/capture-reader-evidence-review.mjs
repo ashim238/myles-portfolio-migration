@@ -7,6 +7,8 @@ const outputDir = resolve(
   process.cwd(),
   process.env.READER_EVIDENCE_REVIEW_OUTPUT ?? "reader-evidence-review",
 );
+const MIN_PROOF_TO_SUMMARY_GAP = 0;
+const MAX_PROOF_TO_SUMMARY_GAP = 64;
 
 if (!baseUrl) {
   throw new Error("READER_EVIDENCE_REVIEW_BASE_URL is required.");
@@ -18,6 +20,20 @@ const viewports = {
 };
 
 const routes = [
+  {
+    name: "fresh-greens",
+    path: "/work/fresh-greens",
+    proofs: [
+      {
+        id: "fresh-greens-pivot-journey",
+        artifactSelectors: [".fg-pivot", ".fg-arch"],
+      },
+      {
+        id: "fresh-greens-report-moderation",
+        artifactSelectors: [".fg-safety-visual", ".fg-moderation"],
+      },
+    ],
+  },
   {
     name: "navi",
     path: "/work/navi",
@@ -43,6 +59,20 @@ const routes = [
       {
         id: "fafsa-figma-mailchimp",
         artifactSelectors: [".uf-figma-pair"],
+      },
+    ],
+  },
+  {
+    name: "tiktok",
+    path: "/work/tiktok",
+    proofs: [
+      {
+        id: "tiktok-template-system",
+        artifactSelectors: [".tt-template-system", ".tt-preview-process"],
+      },
+      {
+        id: "tiktok-light-academia-sequence",
+        artifactSelectors: [".tt-outcome-sequence", ".project-section-body"],
       },
     ],
   },
@@ -255,7 +285,7 @@ await writeFile(
   `${JSON.stringify(report, null, 2)}\n`,
 );
 
-const failures = report.routes.flatMap((route) => {
+const routeFailures = report.routes.flatMap((route) => {
   const messages = [];
   if (route.metrics.horizontalOverflow) {
     messages.push(`${route.name}/${route.viewport.name}: horizontal overflow`);
@@ -268,6 +298,22 @@ const failures = report.routes.flatMap((route) => {
   return messages;
 });
 
+const proofFailures = report.proofs.flatMap((proof) => {
+  if (
+    proof.artifactToSummaryGap >= MIN_PROOF_TO_SUMMARY_GAP &&
+    proof.artifactToSummaryGap <= MAX_PROOF_TO_SUMMARY_GAP
+  ) {
+    return [];
+  }
+
+  return [
+    `${proof.route}/${proof.viewport}/${proof.proof}: proof-to-summary gap ` +
+      `${proof.artifactToSummaryGap}px is outside ` +
+      `${MIN_PROOF_TO_SUMMARY_GAP}-${MAX_PROOF_TO_SUMMARY_GAP}px`,
+  ];
+});
+
+const failures = [...routeFailures, ...proofFailures];
 if (failures.length > 0) {
   console.error("Reader evidence visual-review failures:");
   failures.forEach((failure) => console.error(`  - ${failure}`));
