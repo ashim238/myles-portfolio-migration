@@ -106,7 +106,7 @@ The system rejects every pattern that signals templated production: SaaS marketi
 - Line-based depth (1px borders, color-mix rules) instead of shadows or glass.
 - Mobile is the first impression — recruiters open links on phones, then deep-dive on laptops.
 
-**The Three-Layer Ownership Rule.** Shared shell tokens govern portfolio chrome, project namespaces govern case-study identity, and artifact-local literals reproduce source material. Values move upward only when multiple independent consumers need the same semantic role. Project or artifact literals must not be promoted into global tokens for convenience.
+**The Three-Layer Ownership Rule.** The shell owns system chrome. Reader owns paper, ink, measure, and editorial chrome. Project and evidence namespaces own project identity and evidence styling. Projects must not repaint the shell or Reader, and shared layers must not normalize project evidence.
 
 ## 2. Colors
 
@@ -181,7 +181,7 @@ Flat by default. Depth comes from typography hierarchy, generous spacing, and 1p
 
 **The 1px Border Rule.** Hairlines are exactly 1px. The system never uses 2px or 3px colored borders as visual emphasis. Side-stripe borders (`border-left: Npx solid var(--accent)`) are absolutely banned — they are the most recognizable tell of AI-generated UI.
 
-**The Hardware Radius Rule.** The hardware-only radii are `device-bezel: 34px` for phone outer bezels and `device-screen: 27px` for screen apertures. They must not be used on general cards, panels, windows, buttons, or other interface surfaces.
+**The Hardware Radius Rule.** Hardware radii are approved for device hardware, screenshots, maps, and faithful reconstructions. Myles 98 and Pocket 98 chrome must stay square or low-radius. The exact `device-bezel: 34px` and `device-screen: 27px` metadata remains limited to phone outer bezels and screen apertures and must not be used as general UI radii.
 
 ## 5. Components
 
@@ -227,7 +227,7 @@ Flat by default. Depth comes from typography hierarchy, generous spacing, and 1p
 
 ### Scoped Shape Exceptions
 
-**The Semantic Pill Rule.** The `navi-pill: 999px` radius is reserved for Navi route, trust, filter, and status controls whose capsule shape carries meaning. It must not be used on generic buttons, tags, labels, or decorative containers.
+**The Semantic Pill Rule.** Pill geometry is approved when shape carries status, filter, chip or category, pagination, segmented-choice, or round device-control semantics. The `navi-pill: 999px` metadata remains limited to Navi route, trust, filter, and status controls. It must not be used for generic containers, CTAs, cards, or every label.
 
 ## 6. Do's and Don'ts
 

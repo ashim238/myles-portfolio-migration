@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-09T20:01:00Z",
+  "generatedAt": "2026-08-09T20:09:00Z",
   "title": "Design System: Myles Ashitey Portfolio",
   "extensions": {
     "colorMeta": {
@@ -156,10 +156,10 @@
       { "name": "The No Numbered Eyebrow Rule", "body": "Decorative 01 · About / 02 · Process / 03 · Pricing numbering above sections is forbidden as system grammar. The case-study TOC carries section numbers as navigation receipts; body sections do not repeat the number above their h2.", "section": "typography" },
       { "name": "The Flat-By-Default Rule", "body": "Surfaces are flat at rest. Hover states use color, opacity, or transform — never shadow. Cards and containers separate via background tonal shift or 1px line, never via drop shadow.", "section": "elevation" },
       { "name": "The 1px Border Rule", "body": "Hairlines are exactly 1px. The system never uses 2px or 3px colored borders as visual emphasis. Side-stripe borders are absolutely banned — they are the most recognizable tell of AI-generated UI.", "section": "elevation" },
-      { "name": "The Three-Layer Ownership Rule", "body": "Shared shell tokens govern portfolio chrome, project namespaces govern case-study identity, and artifact-local literals reproduce source material. Values move upward only when multiple independent consumers need the same semantic role. Project or artifact literals must not be promoted into global tokens for convenience.", "section": "overview" },
+      { "name": "The Three-Layer Ownership Rule", "body": "The shell owns system chrome. Reader owns paper, ink, measure, and editorial chrome. Project and evidence namespaces own project identity and evidence styling. Projects must not repaint the shell or Reader, and shared layers must not normalize project evidence.", "section": "overview" },
       { "name": "The Project Color Rule", "body": "Project colors live on the project page root or inside the artifact they reproduce. They may color project navigation, evidence, and authored simulations. They must not recolor shared shell chrome or enter the global palette solely because one project uses them.", "section": "colors" },
-      { "name": "The Hardware Radius Rule", "body": "The 34px device-bezel and 27px device-screen radii describe phone hardware only. They must not be used on general cards, panels, windows, buttons, or other interface surfaces.", "section": "elevation" },
-      { "name": "The Semantic Pill Rule", "body": "The 999px navi-pill radius is reserved for Navi route, trust, filter, and status controls whose capsule shape carries meaning. It must not be used on generic buttons, tags, labels, or decorative containers.", "section": "components" }
+      { "name": "The Hardware Radius Rule", "body": "Hardware radii are approved for device hardware, screenshots, maps, and faithful reconstructions. Myles 98 and Pocket 98 chrome must stay square or low-radius. The exact device-bezel: 34px and device-screen: 27px metadata remains limited to phone outer bezels and screen apertures and must not be used as general UI radii.", "section": "elevation" },
+      { "name": "The Semantic Pill Rule", "body": "Pill geometry is approved when shape carries status, filter, chip or category, pagination, segmented-choice, or round device-control semantics. The navi-pill: 999px metadata remains limited to Navi route, trust, filter, and status controls. It must not be used for generic containers, CTAs, cards, or every label.", "section": "components" }
     ],
     "dos": [
       "Do scope accent color per case study via a CSS custom property on the page root (.tt-page, .fg-page). Shell stays neutral.",
