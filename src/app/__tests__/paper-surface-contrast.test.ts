@@ -47,14 +47,38 @@ describe("Myles 98 paper-surface contrast", () => {
     );
   });
 
-  it("keeps Reader hero and recruiter copy on paper-safe tokens", () => {
+  it("keeps the complete Reader hierarchy on paper-safe tokens", () => {
     expect(paperStyles).toContain("--m98-paper-text: var(--m97-reader-ink);");
     expect(paperStyles).toContain("--m98-paper-muted: #5b5953;");
+
+    for (const selector of [
+      ".project-hero-title",
+      ".project-section-body",
+      ".project-chapter-stage",
+      ".project-toc-link--active",
+      ".project-toc-stage",
+      ".case-cut-row dd",
+      ".case-cut-evidence-cta",
+    ]) {
+      expect(paperStyles).toContain(selector);
+    }
+
+    for (const selector of [
+      ".project-topbar",
+      ".project-hero-lede",
+      ".project-chapter-meta",
+      ".project-toc-link",
+      ".project-toc-readout",
+      ".case-cut-row dt",
+    ]) {
+      expect(paperStyles).toContain(selector);
+    }
+
     expect(paperStyles).toMatch(
-      /\.reader-mode\.reader-mode :is\([\s\S]*?\.project-hero-title,[\s\S]*?\.case-cut-row dd,[\s\S]*?\.case-cut-evidence-cta,[\s\S]*?\)\s*\{\s*color:\s*var\(--m98-paper-text\);/,
+      /\.reader-mode\.reader-mode \.project-toc-dot\s*\{\s*background:\s*var\(--m98-paper-rule\);/,
     );
     expect(paperStyles).toMatch(
-      /\.reader-mode\.reader-mode :is\([\s\S]*?\.project-topbar,[\s\S]*?\.project-hero-lede,[\s\S]*?\.case-cut-row dt,[\s\S]*?\)\s*\{\s*color:\s*var\(--m98-paper-muted\);/,
+      /\.reader-mode\.reader-mode \.project-toc-rail\s*\{\s*background:\s*color-mix\(in srgb, var\(--m98-paper-text\) 18%, transparent\);/,
     );
   });
 

@@ -13,9 +13,40 @@
   );
 }
 
-/* Reader Mode hero and recruiter summary. */
+/* Reader Mode defaults: secondary copy stays subordinate but readable. */
+.reader-mode.reader-mode :is(
+  .project-topbar,
+  .project-hero-lede,
+  .project-meta-field dt,
+  .project-meta-field--tags dd,
+  .project-highlight-metric-label,
+  .project-chapter-meta,
+  .project-section-image-hint,
+  .project-toc-link,
+  .project-toc-num,
+  .project-toc-separator,
+  .project-toc-readout,
+  .project-toc-help,
+  .case-cut-row dt,
+  .case-cut-moves-label
+) {
+  color: var(--m98-paper-muted);
+}
+
+/* Reader Mode primary text and active navigation. */
 .reader-mode.reader-mode :is(
   .project-hero-title,
+  .project-section-body,
+  .project-section-body a,
+  .project-content,
+  .project-meta-field dd,
+  .project-highlight-quote blockquote,
+  .project-highlight-metric-value,
+  .project-chapter-stage,
+  .project-toc-link:hover,
+  .project-toc-link--active,
+  .project-toc-stage,
+  .project-toc-toggle,
   .case-cut-row dd,
   .case-cut-evidence-type,
   .case-cut-evidence-cta,
@@ -24,20 +55,35 @@
   color: var(--m98-paper-text);
 }
 
-.reader-mode.reader-mode :is(
-  .project-topbar,
-  .project-hero-lede,
-  .case-cut-row dt,
-  .case-cut-moves-label
-) {
-  color: var(--m98-paper-muted);
-}
-
 .reader-mode.reader-mode .case-cut-moves li::before {
   color: var(--m98-paper-muted);
 }
 
-.reader-mode.reader-mode :is(.case-lead-media, .case-cut-evidence) {
+.reader-mode.reader-mode
+  .project-toc-link:not(.project-toc-link--active):hover {
+  background: color-mix(in srgb, var(--m98-paper-text) 7%, transparent);
+}
+
+.reader-mode.reader-mode .project-toc-dot {
+  background: var(--m98-paper-rule);
+}
+
+.reader-mode.reader-mode .project-toc-item--read .project-toc-dot {
+  background: color-mix(in srgb, var(--m98-paper-text) 55%, transparent);
+}
+
+.reader-mode.reader-mode .project-toc-rail {
+  background: color-mix(in srgb, var(--m98-paper-text) 18%, transparent);
+}
+
+.reader-mode.reader-mode :is(
+  .case-lead-media,
+  .case-cut-evidence,
+  .project-cover-image,
+  .project-meta,
+  .project-section-image,
+  .project-section-image-scroll
+) {
   border-color: var(--m98-paper-rule);
 }
 
