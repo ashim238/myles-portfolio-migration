@@ -384,6 +384,12 @@
   }
 }
 
+@media (min-width: 768px) and (max-width: 1024px) {
+  .pocket97-shell .myles97-program-launch {
+    grid-template-rows: minmax(150px, min(42vw, 31svh)) auto;
+  }
+}
+
 @media (min-width: 1025px) and (max-width: 1080px) and (pointer: fine) {
   .myles97-roti-note {
     width: 116px;

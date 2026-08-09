@@ -101,6 +101,21 @@ describe("portfolio hardening style contract", () => {
     expect(stage).toMatch(/env\(safe-area-inset-bottom, 0px\)/);
   });
 
+  it("caps Pocket project previews below the dock on short tablet viewports", () => {
+    const shortTablet = cssBlock(
+      "@media (min-width: 768px) and (max-width: 1024px)",
+      pocketStyles,
+    );
+    const launch = cssBlock(
+      ".pocket97-shell .myles97-program-launch",
+      shortTablet,
+    );
+
+    expect(launch).toMatch(
+      /grid-template-rows:\s*minmax\(150px, min\(42vw, 31svh\)\) auto;/,
+    );
+  });
+
   it("lets every legacy mobile navigation item share narrow utility routes", () => {
     const mobile = cssBlockContaining(
       "@media (max-width: 767px)",
