@@ -120,10 +120,21 @@ describe("Reader opening route contract", () => {
       /@media \(min-width: 1200px\)\s*\{[\s\S]*?\.reader-mode\.reader-mode\.tt-page \.tt-cover--preview\s*\{[\s\S]*?min-height:\s*30rem;/,
     );
     expect(styles).toMatch(
-      /@media \(max-width: 767px\)\s*\{[\s\S]*?\.reader-mode\.reader-mode\.tt-page \.tt-cover--preview\s*\{[\s\S]*?min-height:\s*25rem;[\s\S]*?margin-top:\s*0\.75rem;[\s\S]*?margin-bottom:\s*0\.5rem;/,
+      /@media \(max-width: 767px\)\s*\{[\s\S]*?\.reader-mode\.reader-mode\.tt-page \.tt-cover--preview\s*\{[\s\S]*?min-height:\s*25rem;[\s\S]*?margin-top:\s*0\.5rem;[\s\S]*?margin-bottom:\s*0\.5rem;/,
     );
     expect(styles).toMatch(
       /\.reader-mode\.reader-mode\.tt-page \.project-opening-facts-list\s*\{[\s\S]*?gap:\s*0\.4rem;/,
+    );
+  });
+
+  it("keeps Navi's full opening summary clear of the mobile chapter control", () => {
+    const styles = readFileSync(
+      resolve(process.cwd(), "src/app/styles/portfolio-surfaces.css"),
+      "utf8",
+    );
+
+    expect(styles).toMatch(
+      /@media \(max-width: 767px\)\s*\{\s*\.reader-mode\.reader-mode\.nv-page \.project-opening-facts\s*\{[\s\S]*?margin-block:\s*1rem;[\s\S]*?padding-block:\s*0\.75rem;[\s\S]*?\}\s*\.reader-mode\.reader-mode\.nv-page \.project-opening-facts-list\s*\{[\s\S]*?gap:\s*0\.5rem;/,
     );
   });
 
@@ -140,8 +151,14 @@ describe("Reader opening route contract", () => {
       "tabletWorkstation: { width: 1025, height: 768 }",
     );
     expect(reviewScript).toContain("openingFacts");
+    expect(reviewScript).toMatch(
+      /openingFactsBlock[\s\S]*?getBoundingClientRect\(\)/,
+    );
+    expect(reviewScript).toContain("route.metrics.openingFactsBlock");
     expect(reviewScript).toContain("firstFoldLimit");
     expect(reviewScript).toContain("openingFailures");
+    expect(reviewScript).toContain("actual clearance");
+    expect(reviewScript).toContain("required ${MIN_OPENING_FOLD_GAP}px");
     expect(reviewScript).toContain(
       'const requiredOpeningFacts = ["Role", "Scope", "Outcome", "Proof"];',
     );

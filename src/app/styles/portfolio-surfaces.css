@@ -1451,7 +1451,7 @@
 @media (max-width: 767px) {
   .reader-mode.reader-mode.tt-page .tt-cover--preview {
     min-height: 25rem;
-    margin-top: 0.75rem;
+    margin-top: 0.5rem;
     margin-bottom: 0.5rem;
   }
 
@@ -2562,6 +2562,17 @@
   --nv-ui-border: color-mix(in srgb, var(--nv-ink) 18%, transparent);
   --nv-error: #e5383b;
   --nv-success: #2a9d8f;
+}
+
+@media (max-width: 767px) {
+  .reader-mode.reader-mode.nv-page .project-opening-facts {
+    margin-block: 1rem;
+    padding-block: 0.75rem;
+  }
+
+  .reader-mode.reader-mode.nv-page .project-opening-facts-list {
+    gap: 0.5rem;
+  }
 }
 
 :root[data-theme="dark"] .nv-page {

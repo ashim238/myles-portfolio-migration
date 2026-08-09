@@ -287,6 +287,11 @@ try {
                 chapterControlBox?.top ?? window.innerHeight,
               )
             : window.innerHeight;
+          const openingFactsBlock = document.querySelector(
+            ".project-opening-facts",
+          );
+          const openingFactsBlockBox =
+            openingFactsBlock?.getBoundingClientRect();
           const openingFacts = Array.from(
             document.querySelectorAll(".project-opening-facts-row"),
           ).map((row) => {
@@ -314,6 +319,18 @@ try {
             clientWidth: document.documentElement.clientWidth,
             clientHeight: document.documentElement.clientHeight,
             firstFoldLimit,
+            openingFactsBlock: openingFactsBlockBox
+              ? {
+                  box: {
+                    x: openingFactsBlockBox.x,
+                    y: openingFactsBlockBox.y,
+                    width: openingFactsBlockBox.width,
+                    height: openingFactsBlockBox.height,
+                    right: openingFactsBlockBox.right,
+                    bottom: openingFactsBlockBox.bottom,
+                  },
+                }
+              : null,
             chapterControlBox: chapterControlBox
               ? {
                   x: chapterControlBox.x,
@@ -426,6 +443,28 @@ const proofFailures = report.proofs.flatMap((proof) => {
 
 const openingFailures = report.routes.flatMap((route) => {
   const messages = [];
+  const openingFactsBlock = route.metrics.openingFactsBlock;
+  if (!openingFactsBlock) {
+    messages.push(
+      `${route.name}/${route.theme}/${route.viewport.name}: missing opening facts block`,
+    );
+  } else {
+    const clearance =
+      route.metrics.firstFoldLimit - openingFactsBlock.box.bottom;
+    const isFullyVisible =
+      openingFactsBlock.box.width > 0 &&
+      openingFactsBlock.box.height > 0 &&
+      openingFactsBlock.box.y >= 0 &&
+      clearance >= MIN_OPENING_FOLD_GAP;
+    if (!isFullyVisible) {
+      messages.push(
+        `${route.name}/${route.theme}/${route.viewport.name}: opening facts block ` +
+          `actual clearance ${clearance.toFixed(1)}px; ` +
+          `required ${MIN_OPENING_FOLD_GAP}px`,
+      );
+    }
+  }
+
   for (const label of requiredOpeningFacts) {
     const fact = route.metrics.openingFacts.find(
       (openingFact) => openingFact.label === label,
@@ -437,17 +476,17 @@ const openingFailures = report.routes.flatMap((route) => {
       continue;
     }
 
+    const clearance = route.metrics.firstFoldLimit - fact.box.bottom;
     const isFullyVisible =
       fact.box.width > 0 &&
       fact.box.height > 0 &&
       fact.box.y >= 0 &&
-      fact.box.bottom <=
-        route.metrics.firstFoldLimit - MIN_OPENING_FOLD_GAP;
+      clearance >= MIN_OPENING_FOLD_GAP;
     if (!isFullyVisible) {
       messages.push(
         `${route.name}/${route.theme}/${route.viewport.name}: ${label} opening fact ` +
-          `ends at ${Math.round(fact.box.bottom)}px beyond the ` +
-          `${Math.round(route.metrics.firstFoldLimit)}px first-fold limit`,
+          `actual clearance ${clearance.toFixed(1)}px; ` +
+          `required ${MIN_OPENING_FOLD_GAP}px`,
       );
     }
   }
