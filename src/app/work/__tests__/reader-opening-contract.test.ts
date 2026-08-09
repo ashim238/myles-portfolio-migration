@@ -106,4 +106,44 @@ describe("Reader opening route contract", () => {
     );
     expect(styles.match(/\.reader-mode\.reader-mode \.project-topbar\s*\{\s*display:\s*none;/g)).toHaveLength(1);
   });
+
+  it("keeps TikTok's art-directed opening compact enough for the locked first folds", () => {
+    const styles = readFileSync(
+      resolve(process.cwd(), "src/app/styles/portfolio-surfaces.css"),
+      "utf8",
+    );
+
+    expect(styles).toMatch(
+      /\.reader-mode\.reader-mode\.tt-page \.tt-cover--preview\s*\{[\s\S]*?min-height:\s*26rem;[\s\S]*?margin-top:\s*1rem;[\s\S]*?margin-bottom:\s*1rem;/,
+    );
+    expect(styles).toMatch(
+      /@media \(min-width: 1200px\)\s*\{[\s\S]*?\.reader-mode\.reader-mode\.tt-page \.tt-cover--preview\s*\{[\s\S]*?min-height:\s*30rem;/,
+    );
+    expect(styles).toMatch(
+      /@media \(max-width: 767px\)\s*\{[\s\S]*?\.reader-mode\.reader-mode\.tt-page \.tt-cover--preview\s*\{[\s\S]*?min-height:\s*25rem;[\s\S]*?margin-top:\s*0\.75rem;[\s\S]*?margin-bottom:\s*0\.5rem;/,
+    );
+    expect(styles).toMatch(
+      /\.reader-mode\.reader-mode\.tt-page \.project-opening-facts-list\s*\{[\s\S]*?gap:\s*0\.4rem;/,
+    );
+  });
+
+  it("keeps the rendered evidence matrix accountable for every locked Reader fold", () => {
+    const reviewScript = readFileSync(
+      resolve(process.cwd(), "scripts/capture-reader-evidence-review.mjs"),
+      "utf8",
+    );
+
+    expect(reviewScript).toContain(
+      "tabletPocket: { width: 1024, height: 768 }",
+    );
+    expect(reviewScript).toContain(
+      "tabletWorkstation: { width: 1025, height: 768 }",
+    );
+    expect(reviewScript).toContain("openingFacts");
+    expect(reviewScript).toContain("firstFoldLimit");
+    expect(reviewScript).toContain("openingFailures");
+    expect(reviewScript).toContain(
+      'const requiredOpeningFacts = ["Role", "Scope", "Outcome", "Proof"];',
+    );
+  });
 });

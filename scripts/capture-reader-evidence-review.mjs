@@ -9,6 +9,8 @@ const outputDir = resolve(
 );
 const MIN_PROOF_TO_SUMMARY_GAP = 0;
 const MAX_PROOF_TO_SUMMARY_GAP = 64;
+const MIN_OPENING_FOLD_GAP = 8;
+const requiredOpeningFacts = ["Role", "Scope", "Outcome", "Proof"];
 const themes = (process.env.READER_EVIDENCE_REVIEW_THEMES ?? "dark,light")
   .split(",")
   .map((theme) => theme.trim())
@@ -26,6 +28,8 @@ if (!baseUrl) {
 
 const viewports = {
   desktop: { width: 1440, height: 900 },
+  tabletPocket: { width: 1024, height: 768 },
+  tabletWorkstation: { width: 1025, height: 768 },
   medium: { width: 820, height: 900 },
   pocket: { width: 390, height: 844, isMobile: true, hasTouch: true },
 };
@@ -261,20 +265,74 @@ try {
         await wakeLazyMedia(page);
         await page.waitForTimeout(800);
 
-        const routeMetrics = await page.evaluate(() => ({
-          title: document.title,
-          theme: document.documentElement.dataset.theme,
-          scrollWidth: document.documentElement.scrollWidth,
-          scrollHeight: document.documentElement.scrollHeight,
-          clientWidth: document.documentElement.clientWidth,
-          clientHeight: document.documentElement.clientHeight,
-          horizontalOverflow:
-            document.documentElement.scrollWidth >
-            document.documentElement.clientWidth + 1,
-          brokenImages: Array.from(document.images)
-            .filter((image) => image.complete && image.naturalWidth === 0)
-            .map((image) => image.currentSrc || image.src),
-        }));
+        const routeMetrics = await page.evaluate(() => {
+          window.scrollTo(0, 0);
+
+          const chapterControl = document.querySelector(".project-toc");
+          const chapterControlBox = chapterControl?.getBoundingClientRect();
+          const chapterControlStyle = chapterControl
+            ? getComputedStyle(chapterControl)
+            : null;
+          const hasVisibleFixedChapterControl = Boolean(
+            chapterControlBox &&
+              chapterControlStyle?.position === "fixed" &&
+              chapterControlBox.width > 0 &&
+              chapterControlBox.height > 0 &&
+              chapterControlBox.bottom > 0 &&
+              chapterControlBox.top < window.innerHeight,
+          );
+          const firstFoldLimit = hasVisibleFixedChapterControl
+            ? Math.min(
+                window.innerHeight,
+                chapterControlBox?.top ?? window.innerHeight,
+              )
+            : window.innerHeight;
+          const openingFacts = Array.from(
+            document.querySelectorAll(".project-opening-facts-row"),
+          ).map((row) => {
+            const box = row.getBoundingClientRect();
+            return {
+              label: row.querySelector("dt")?.textContent?.trim() ?? "",
+              box: {
+                x: box.x,
+                y: box.y,
+                width: box.width,
+                height: box.height,
+                right: box.right,
+                bottom: box.bottom,
+              },
+            };
+          });
+
+          return {
+            title: document.title,
+            theme: document.documentElement.dataset.theme,
+            scrollX: window.scrollX,
+            scrollY: window.scrollY,
+            scrollWidth: document.documentElement.scrollWidth,
+            scrollHeight: document.documentElement.scrollHeight,
+            clientWidth: document.documentElement.clientWidth,
+            clientHeight: document.documentElement.clientHeight,
+            firstFoldLimit,
+            chapterControlBox: chapterControlBox
+              ? {
+                  x: chapterControlBox.x,
+                  y: chapterControlBox.y,
+                  width: chapterControlBox.width,
+                  height: chapterControlBox.height,
+                  right: chapterControlBox.right,
+                  bottom: chapterControlBox.bottom,
+                }
+              : null,
+            openingFacts,
+            horizontalOverflow:
+              document.documentElement.scrollWidth >
+              document.documentElement.clientWidth + 1,
+            brokenImages: Array.from(document.images)
+              .filter((image) => image.complete && image.naturalWidth === 0)
+              .map((image) => image.currentSrc || image.src),
+          };
+        });
         const fullPageFile = `${route.name}-${theme}-${viewportName}-full.jpg`;
         await page.screenshot({
           path: resolve(outputDir, fullPageFile),
@@ -366,7 +424,37 @@ const proofFailures = report.proofs.flatMap((proof) => {
   ];
 });
 
-const failures = [...routeFailures, ...proofFailures];
+const openingFailures = report.routes.flatMap((route) => {
+  const messages = [];
+  for (const label of requiredOpeningFacts) {
+    const fact = route.metrics.openingFacts.find(
+      (openingFact) => openingFact.label === label,
+    );
+    if (!fact) {
+      messages.push(
+        `${route.name}/${route.theme}/${route.viewport.name}: missing ${label} opening fact`,
+      );
+      continue;
+    }
+
+    const isFullyVisible =
+      fact.box.width > 0 &&
+      fact.box.height > 0 &&
+      fact.box.y >= 0 &&
+      fact.box.bottom <=
+        route.metrics.firstFoldLimit - MIN_OPENING_FOLD_GAP;
+    if (!isFullyVisible) {
+      messages.push(
+        `${route.name}/${route.theme}/${route.viewport.name}: ${label} opening fact ` +
+          `ends at ${Math.round(fact.box.bottom)}px beyond the ` +
+          `${Math.round(route.metrics.firstFoldLimit)}px first-fold limit`,
+      );
+    }
+  }
+  return messages;
+});
+
+const failures = [...routeFailures, ...proofFailures, ...openingFailures];
 if (failures.length > 0) {
   console.error("Reader evidence visual-review failures:");
   failures.forEach((failure) => console.error(`  - ${failure}`));
