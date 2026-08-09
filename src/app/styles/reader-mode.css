@@ -61,6 +61,8 @@
 
 .reader-mode.reader-mode {
   --project-heading-offset: 7rem;
+  --m97-reader-muted: #595750;
+  --m97-reader-line: #8d8a82;
   width: 100%;
   max-width: none;
   min-height: calc(100svh - 52px);
@@ -81,6 +83,7 @@
 
 .reader-mode.reader-mode .project-topbar {
   padding-top: 16px;
+  color: var(--m97-reader-muted);
   font-family: var(--m97-ui-font);
   font-size: 12px;
 }
@@ -90,6 +93,45 @@
   min-height: 44px;
   align-items: center;
   gap: 6px;
+  color: inherit;
+}
+
+.reader-mode.reader-mode .project-topbar a:hover {
+  color: var(--m97-reader-ink);
+}
+
+/* Reader Mode always uses a light paper canvas, even when the surrounding
+   portfolio theme is dark. Keep shared project chrome on Reader tokens rather
+   than inheriting the dark site's foreground and muted values. TikTok's cover
+   is intentionally excluded because it owns a dark art-directed surface. */
+.reader-mode.reader-mode .project-hero .project-hero-title {
+  color: var(--m97-reader-ink);
+}
+
+.reader-mode.reader-mode .project-hero .project-hero-lede {
+  color: var(--m97-reader-muted);
+}
+
+.reader-mode.reader-mode .case-cut-evidence {
+  border-color: var(--m97-reader-line);
+}
+
+.reader-mode.reader-mode :is(
+  .case-cut-row dd,
+  .case-cut-evidence-type,
+  .case-cut-evidence-cta,
+  .case-cut-moves li
+) {
+  color: var(--m97-reader-ink);
+}
+
+.reader-mode.reader-mode :is(
+  .case-cut-row dt,
+  .case-cut-moves-label,
+  .case-cut-moves li::before,
+  .project-chapter-count
+) {
+  color: var(--m97-reader-muted);
 }
 
 .reader-mode.reader-mode :is(
@@ -126,9 +168,25 @@
   background: var(--m97-active);
 }
 
+.reader-mode.reader-mode .project-toc-link {
+  color: var(--m97-reader-muted);
+}
+
+.reader-mode.reader-mode :is(
+  .project-toc-stage,
+  .project-toc-readout,
+  .project-toc-readout-mobile
+) {
+  color: var(--m97-reader-muted);
+}
+
 .reader-mode.reader-mode .project-toc-link--active,
 .reader-mode.reader-mode .project-toc-toggle[aria-expanded="true"] {
   color: var(--m97-active);
+}
+
+.reader-mode.reader-mode .project-toc-link--active .project-toc-stage {
+  color: currentColor;
 }
 
 .reader-mode.reader-mode .project-toc-dot {
