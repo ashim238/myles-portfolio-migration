@@ -1,0 +1,66 @@
+name: Capture Reader evidence review
+
+on:
+  push:
+    branches:
+      - codex/myles-97-design
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: capture-reader-evidence-review-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  capture:
+    name: Render desktop and Pocket evidence compositions
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      READER_EVIDENCE_REVIEW_BASE_URL: http://127.0.0.1:3000
+      READER_EVIDENCE_REVIEW_OUTPUT: reader-evidence-review
+      NEXT_TELEMETRY_DISABLED: "1"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install project dependencies
+        run: npm ci
+
+      - name: Install Playwright for the capture runner
+        run: |
+          npm install --no-save --package-lock=false playwright@1.54.1
+          npx playwright install --with-deps chromium
+
+      - name: Build the exact review commit
+        run: npm run build
+
+      - name: Start the production app
+        shell: bash
+        run: |
+          npm run start -- -H 127.0.0.1 -p 3000 > /tmp/reader-evidence-review-server.log 2>&1 &
+          echo $! > /tmp/reader-evidence-review-server.pid
+
+      - name: Capture the Reader evidence matrix
+        run: node scripts/capture-reader-evidence-review.mjs
+
+      - name: Upload Reader evidence captures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reader-evidence-review-${{ github.sha }}
+          if-no-files-found: error
+          retention-days: 14
+          path: reader-evidence-review
+
+      - name: Show server log on failure
+        if: failure()
+        run: cat /tmp/reader-evidence-review-server.log || true
