@@ -1,7 +1,7 @@
 {
-  "version": 3,
+  "version": 4,
   "measurement": "uncompressed unique JavaScript and CSS bytes referenced by each route's generated Next.js client-reference manifest",
-  "headroom": "JavaScript, total-byte, and file-count limits retain the August 7, 2026 production-build headroom. CSS ceilings for the accepted Myles 98 paper-contrast layer are rebaselined to the next kibibyte above the August 9 production output.",
+  "headroom": "JavaScript, total-byte, and file-count limits retain the August 7, 2026 production-build headroom. CSS ceilings for the accepted Myles 98 paper-contrast and responsive-shell corrections are rounded to the next kibibyte above the August 9 production output.",
   "fieldTargets": {
     "lcpMs": 2500,
     "cls": 0.1,
@@ -16,25 +16,25 @@
     "/work/fresh-greens": {
       "totalBytes": 415744,
       "jsBytes": 153600,
-      "cssBytes": 267264,
+      "cssBytes": 268288,
       "fileCount": 10
     },
     "/work/navi": {
       "totalBytes": 525312,
       "jsBytes": 261120,
-      "cssBytes": 266240,
+      "cssBytes": 267264,
       "fileCount": 11
     },
     "/work/understandingfafsa": {
       "totalBytes": 431104,
       "jsBytes": 169984,
-      "cssBytes": 266240,
+      "cssBytes": 267264,
       "fileCount": 9
     },
     "/work/tiktok": {
       "totalBytes": 403456,
       "jsBytes": 140288,
-      "cssBytes": 266240,
+      "cssBytes": 267264,
       "fileCount": 10
     }
   }
