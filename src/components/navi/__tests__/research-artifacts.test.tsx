@@ -84,13 +84,13 @@ describe("NaviResearchArtifacts", () => {
     );
     expect(portfolioSurfacesCss).not.toMatch(/\.nv-research-route span\s*\{/);
     expect(portfolioSurfacesCss).toContain(
-      "margin-inline: calc((100% - 1.5rem) / 6);",
+      "margin-inline: calc((100% - 2rem) / 6);",
     );
     expect(portfolioSurfacesCss).toContain(
-      "margin-inline: calc((100% - 3rem) / 10);",
+      "margin-inline: calc((100% - 4rem) / 10);",
     );
     expect(portfolioSurfacesCss).toContain(
-      "margin: 1.6rem 0 1rem 1rem;",
+      "margin-left: var(--nv-mobile-rail-x);",
     );
     expect(portfolioSurfacesCss).toContain(
       "@media (max-width: 1040px) and (min-width: 701px)",

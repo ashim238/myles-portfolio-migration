@@ -99,9 +99,9 @@ export default async function UnderstandingFafsaPage() {
         outcomeValue={project?.outcomeMetricValue}
         outcomeLabel={project?.outcomeMetricLabel}
         moves={[
-          "Research: one collaborator and I compiled and evaluated more than 120 newsletters.",
-          "System: I designed the modular rules and rebuilt the live template in Mailchimp.",
-          "Workflow: the founder assembles each send from the kit without editing HTML.",
+          "Outcome: I designed and rebuilt a Mailchimp-native newsletter kit the founder can update without editing HTML.",
+          "Rules: I defined the fixed and swappable parts across three send types.",
+          "Feasibility: I tested the Figma direction through Mailchimp practice sends.",
         ]}
       />
 
@@ -117,10 +117,11 @@ export default async function UnderstandingFafsaPage() {
           <div className="project-section-body">
             <p>
               UnderstandingFAFSA helps students, parents, and counselors navigate
-              the Free Application for Federal Student Aid (FAFSA). The
-              newsletter carries guidance for all three groups. The website had
+              the Free Application for Federal Student Aid (FAFSA). The brief was
+              to design a new email newsletter system the founder could update at
+              a moment&apos;s notice without much technical know-how. The website had
               already adopted Saans and a refreshed palette. The scope was
-              email-only, and the founder assembles every issue.
+              email-only, with guidance for students, parents, and counselors.
             </p>
           </div>
         </div>
@@ -151,7 +152,8 @@ export default async function UnderstandingFafsaPage() {
         <div className="project-section uf-section">
           <div className="project-section-body">
             <p>
-              One collaborator and I worked together to compile and evaluate more than 120 newsletter examples.
+              To make that autonomy workable, one collaborator and I worked
+              together to compile and evaluate more than 120 newsletter examples.
               We compared clarity, personalization, tone of voice, visual appeal,
               and branding consistency.
             </p>
@@ -224,10 +226,13 @@ export default async function UnderstandingFafsaPage() {
         <div className="project-section uf-section">
           <div className="project-section-body">
             <p>
+              I moved the design from Figma into Mailchimp for feasibility checks
+              and practice sends, creating a version ready for user testing. Those
+              checks showed how far I could push the visual design before
+              Figma&apos;s spacing created too many Mailchimp containers and wrappers.
               I rebuilt the live system in Mailchimp so the founder could edit it
-              without touching HTML. Matching the Figma spacing in the builder
-              added too many containers and wrappers. Test sends showed which
-              wrappers and dividers could go.
+              without touching HTML. Test sends showed which wrappers and dividers
+              could go.
             </p>
             <p>
               <mark className="case-highlight">

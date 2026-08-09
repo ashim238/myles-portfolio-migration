@@ -67,7 +67,7 @@ describe("Navi evidence claims", () => {
     expect(
       projectPage.indexOf("resident and stakeholder responses"),
     ).toBeLessThan(projectPage.indexOf("<HeatmapExplorer"));
-    expect(projectPage).toMatch(/including two local businesses/i);
+    expect(projectPage).toMatch(/including two\s+local businesses/i);
     expect(projectPage).toMatch(
       /I collected[\s\S]{0,120}resident and stakeholder responses/i,
     );
@@ -79,7 +79,7 @@ describe("Navi evidence claims", () => {
     );
     expect(projectPage).toMatch(/The team[\s\S]{0,100}six travel platforms/i);
     expect(projectPage).toMatch(
-      /I evaluated Airbnb with Kaori Ogawa and Amy\s+Zhang/i,
+      /I evaluated Airbnb with Kaori\s+Ogawa and Amy\s+Zhang/i,
     );
     expect(projectPage).toMatch(
       /\{overcrowdingStat\.count\} of \{NAVI_SURVEY_META\.responseCount\} responses \([\s\S]{0,40}\{overcrowdingStat\.label\}\)/,
@@ -101,6 +101,55 @@ describe("Navi evidence claims", () => {
     expect(projectPage).toMatch(/Graduate studio:[\s\S]{0,180}The team/i);
     expect(projectPage).toMatch(/My contribution:[\s\S]{0,220}I collected/i);
     expect(projectPage).toMatch(/Solo rebuild:[\s\S]{0,180}React/i);
+  });
+
+  it("preserves the studio brief, sample boundaries, and wider findings", () => {
+    const projectPage = readSource("src/app/work/navi/page.tsx");
+    const projectProse = projectPage.replace(/\s+/g, " ");
+
+    expect(projectProse).toMatch(
+      /regenerative.{0,120}participatory and contributive/i,
+    );
+    expect(projectProse).toMatch(
+      /visitors, local businesses and artisans, and longtime residents/i,
+    );
+    expect(projectProse).toMatch(/many college-aged/i);
+    expect(projectProse).toMatch(/rising costs/i);
+    expect(projectProse).toMatch(/displacement of local businesses/i);
+    expect(projectProse).toMatch(/repeat visitor relationships/i);
+    expect(projectProse).toMatch(/outside traditional social platforms/i);
+    expect(projectProse).toMatch(/regenerative work already happening/i);
+    expect(projectProse).toMatch(
+      /Survey responses.{0,120}rising costs.{0,120}displacement of local businesses/i,
+    );
+    expect(projectProse).toMatch(
+      /Other stakeholder input.{0,120}repeat visitor relationships/i,
+    );
+    expect(projectProse).toMatch(
+      /Tourism professionals.{0,120}regenerative work already happening/i,
+    );
+  });
+
+  it("labels target segments as a hypothesis and the studio as unimplemented", () => {
+    const projectPage = readSource("src/app/work/navi/page.tsx");
+    const projectProse = projectPage.replace(/\s+/g, " ");
+
+    expect(projectProse).toMatch(/digital nomads, ethical travelers/i);
+    expect(projectProse).toMatch(/research-informed target hypothesis/i);
+    expect(projectProse).toMatch(/not a validated market segment/i);
+    expect(projectProse).toMatch(/no engineering resources/i);
+    expect(projectProse).toMatch(/no implementation budget/i);
+    expect(projectProse).toMatch(/not a production website/i);
+  });
+
+  it("keeps the institutional path plausible rather than claimed", () => {
+    const projectPage = readSource("src/app/work/navi/page.tsx");
+    const projectProse = projectPage.replace(/\s+/g, " ");
+
+    expect(projectProse).toMatch(/plausible long-term path/i);
+    expect(projectProse).toMatch(/such as NYC Tourism/i);
+    expect(projectProse).toMatch(/future path, not a launch outcome/i);
+    expect(projectProse).not.toMatch(/presented (?:to|Navi to) NYC Tourism/i);
   });
 
   it("retains the complete chapter artifact stack", () => {

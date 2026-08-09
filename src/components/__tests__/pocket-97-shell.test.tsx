@@ -13,9 +13,14 @@ vi.mock("next/image", () => ({
   default: ({
     alt = "",
     priority,
+    preload,
     ...props
-  }: React.ImgHTMLAttributes<HTMLImageElement> & { priority?: boolean }) => {
+  }: React.ImgHTMLAttributes<HTMLImageElement> & {
+    priority?: boolean;
+    preload?: boolean;
+  }) => {
     void priority;
+    void preload;
     // eslint-disable-next-line @next/next/no-img-element
     return <img {...props} alt={alt} />;
   },

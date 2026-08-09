@@ -24,4 +24,9 @@ describe("ExperienceCard", () => {
       "(max-width: 720px) calc(100vw - 32px), 340px",
     );
   });
+
+  it("can preload a measured above-fold candidate", () => {
+    render(<ExperienceCard experience={e} href="#" preload />);
+    expect(screen.getByRole("img")).toHaveAttribute("loading", "eager");
+  });
 });

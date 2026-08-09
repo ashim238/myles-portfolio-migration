@@ -472,10 +472,10 @@
 .nv-search {
   display: flex; align-items: center; gap: var(--nv-sp-xs); width: 100%;
   border: 1px solid var(--nv-border); border-radius: var(--nv-r-pill);
-  padding: var(--nv-sp-xs) var(--nv-sp-md); background: var(--nv-surface);
+  padding: 0 var(--nv-sp-md); background: var(--nv-surface);
 }
 .nv-search-icon { display: inline-flex; flex: none; color: var(--nv-text-muted); }
-.nv-search-input { flex: 1; min-width: 0; border: none; outline: none; background: none; font: inherit; }
+.nv-search-input { flex: 1; min-width: 0; min-height: 44px; border: none; outline: none; background: none; font: inherit; }
 
 /* ── CarouselArrow + PaginationDots ─────────────────────────────── */
 .nv-carousel-arrow {
@@ -489,12 +489,15 @@
 .nv-carousel-arrow:disabled { color: var(--nv-disabled-text); border-color: transparent; cursor: not-allowed; }
 .nv-dots { display: inline-flex; gap: var(--nv-sp-xs); }
 .nv-dot {
-  width: 10px; height: 10px; border-radius: var(--nv-r-pill);
-  border: 1px solid var(--nv-border); background: transparent; cursor: pointer; padding: 0;
-  position: relative;
+  box-sizing: border-box; width: 44px; height: 44px; flex: none;
+  display: inline-grid; place-items: center; border: 0; background: transparent;
+  cursor: pointer; padding: 0;
 }
-.nv-dot::before { content: ''; position: absolute; inset: -17px; }
-.nv-dot--active { background: var(--nv-action); border-color: var(--nv-action); }
+.nv-dot-mark {
+  width: 10px; height: 10px; border-radius: var(--nv-r-pill);
+  border: 1px solid var(--nv-border); background: transparent; pointer-events: none;
+}
+.nv-dot--active .nv-dot-mark { background: var(--nv-action); border-color: var(--nv-action); }
 
 /* ── Tooltip ────────────────────────────────────────────────────── */
 .nv-tooltip { position: relative; display: inline-flex; }

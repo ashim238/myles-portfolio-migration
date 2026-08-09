@@ -154,7 +154,9 @@ export function Pocket97Shell({
               <div>
                 <p className="myles97-eyebrow">Pocket 98</p>
                 <h1>Myles Ashitey</h1>
-                <p className="pocket97-statement">Design, code, whatever you need.</p>
+                <p className="pocket97-statement">
+                  Design, code, and everything in between.
+                </p>
                 <p className="pocket97-context">
                   Previously TikTok and UMG. Latest project: Fresh Greens.
                 </p>

@@ -20,6 +20,17 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Local agent plugins and generated audit state are not application code.
+    ".agents/**",
+    ".claude/skills/**",
+    ".codex/**",
+    ".critique-assessment-a/**",
+    ".cursor/**",
+    ".impeccable/**",
+    ".planning/**",
+    ".playwright-mcp/**",
+    ".superpowers/**",
+    ".worktrees/**",
   ]),
 ]);
 

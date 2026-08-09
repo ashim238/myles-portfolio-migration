@@ -13,10 +13,12 @@ export function ExperienceCard({
   experience: e,
   href,
   headingLevel = 3,
+  preload = false,
 }: {
   experience: ExperienceSummary;
   href: string;
   headingLevel?: 2 | 3;
+  preload?: boolean;
 }) {
   const badge = statusBadge(e.tone);
   const Heading = headingLevel === 2 ? "h2" : "h3";
@@ -28,6 +30,7 @@ export function ExperienceCard({
           src={e.photos[0].src}
           alt={e.photos[0].alt}
           sizes="(max-width: 720px) calc(100vw - 32px), 340px"
+          preload={preload}
         />
       </div>
       <div className="nv-exp-card-body">

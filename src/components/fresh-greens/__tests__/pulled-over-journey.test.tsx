@@ -23,7 +23,7 @@ describe("Fresh Greens pulled-over journey", () => {
 
     expect(controls).toHaveAttribute("hidden");
     expect(
-      container.querySelector("h4.fg-pulled-reconstruction-title"),
+      container.querySelector("h3.fg-pulled-reconstruction-title"),
     ).toHaveTextContent("Interactive case-study reconstruction");
     expect(markup).toContain(
       "This web reconstruction shows one representative path. The native prototype contains the full flow.",

@@ -96,6 +96,16 @@ describe("Myles 98 hardening contract", () => {
     expect(reader).toMatch(/line-height:\s*1\.68/);
   });
 
+  it("keeps secondary note surfaces free of generic side-stripe chrome", () => {
+    const secondary = read("src/app/styles/myles-97-secondary.css");
+    expect(secondary).not.toMatch(
+      /\.myles97-recipe-note-copy\s*\{[^}]*border-(?:left|right):\s*[2-9]/,
+    );
+    expect(secondary).toMatch(
+      /\.myles97-recipe-note-copy\s*\{[^}]*border:\s*1px solid #9c9270;/,
+    );
+  });
+
   it("keeps direct case-study routes in Reader Mode without requiring desktop state", () => {
     const pages = [
       "src/app/work/[slug]/page.tsx",

@@ -4821,12 +4821,20 @@
 }
 
 .nv-research-board {
+  --nv-research-board-surface: #0a0a0a;
+  --nv-research-board-card: #161416;
+  --nv-research-board-ink: #f4f4f4;
+  --nv-research-board-muted: #c4c4c4;
+  --nv-research-board-line: #6b6870;
+  --nv-ui-border: var(--nv-research-board-line);
+  --nv-accent-text: #f3722c;
   display: grid;
   gap: clamp(2rem, 4vw, 3.25rem);
   padding: clamp(1.35rem, 3vw, 2.35rem);
-  border: 1px solid var(--line);
+  border: 1px solid var(--nv-research-board-line);
   border-radius: var(--rounded-md);
-  background: var(--surface);
+  background: var(--nv-research-board-surface);
+  color: var(--nv-research-board-ink);
 }
 
 .nv-research-board-head {
@@ -4866,7 +4874,7 @@
   min-width: 0;
   margin: 0;
   padding-top: 1.2rem;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--nv-research-board-line);
   isolation: isolate;
 }
 
@@ -4911,7 +4919,7 @@
   padding: 1.25rem 1.25rem 1.3rem;
   border: 1px solid var(--nv-ui-border);
   border-radius: var(--rounded-sm);
-  background: var(--background);
+  background: var(--nv-research-board-card);
 }
 
 .nv-research-archetypes > li:nth-child(1) {
@@ -4928,12 +4936,20 @@
 
 .nv-research-archetypes > li[data-scope="Implemented"] {
   border: 1px solid var(--nv-accent-line);
-  background: var(--nv-accent-soft);
+  background: color-mix(
+    in srgb,
+    var(--nv-accent) 18%,
+    var(--nv-research-board-card)
+  );
 }
 
 .nv-research-archetypes > li[data-scope="Future opportunity"] {
-  border: 1px dashed color-mix(in srgb, var(--foreground) 32%, transparent);
-  background: color-mix(in srgb, var(--foreground) 4%, var(--surface));
+  border: 1px dashed var(--nv-research-board-line);
+  background: color-mix(
+    in srgb,
+    var(--nv-research-board-ink) 4%,
+    var(--nv-research-board-card)
+  );
 }
 
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
@@ -5026,12 +5042,20 @@
   padding: 1.05rem 1.05rem 1.1rem;
   border: 1px solid var(--nv-ui-border);
   border-radius: 0.45rem;
-  background: color-mix(in srgb, var(--nv-accent) 5%, var(--surface));
+  background: color-mix(
+    in srgb,
+    var(--nv-accent) 5%,
+    var(--nv-research-board-card)
+  );
 }
 
 .nv-research-booking > li[data-decision-point="cost-review"] {
   border-color: var(--nv-accent);
-  background: var(--nv-accent-soft);
+  background: color-mix(
+    in srgb,
+    var(--nv-accent) 18%,
+    var(--nv-research-board-card)
+  );
 }
 
 .nv-research-step {
@@ -5047,13 +5071,13 @@
 .nv-research-booking > li::before {
   position: absolute;
   z-index: 3;
-  top: -1.45rem;
+  top: -1.575rem;
   left: 50%;
   width: 0.65rem;
   height: 0.65rem;
   border: 1px solid var(--nv-accent);
   border-radius: 50%;
-  background: var(--surface);
+  background: var(--nv-research-board-surface);
   content: "";
   transform: translateX(-50%) scale(1);
 }
@@ -5070,11 +5094,40 @@
 }
 
 .nv-research-route--journey {
-  margin-inline: calc((100% - 1.5rem) / 6);
+  margin-inline: calc((100% - 2rem) / 6);
 }
 
 .nv-research-route--booking {
-  margin-inline: calc((100% - 3rem) / 10);
+  margin-inline: calc((100% - 4rem) / 10);
+}
+
+.nv-research-board .nv-research-board-head p,
+.nv-research-board .nv-research-artifact figcaption span,
+.nv-research-board .nv-research-archetypes dd,
+.nv-research-board .nv-research-journey dd,
+.nv-research-board .nv-research-booking p,
+.nv-research-board .nv-research-archetype-details dt,
+.nv-research-board .nv-research-lane-details dt {
+  color: var(--nv-research-board-muted);
+}
+
+.nv-research-board :is(h3, h4),
+.nv-research-board .nv-research-artifact figcaption,
+.nv-research-board .nv-research-archetype-details dd,
+.nv-research-board .nv-research-lane-details dd,
+.nv-research-board .nv-research-archetype-details span {
+  color: var(--nv-research-board-ink);
+}
+
+@media (forced-colors: active) {
+  .nv-research-board {
+    --nv-research-board-surface: Canvas;
+    --nv-research-board-card: Canvas;
+    --nv-research-board-ink: CanvasText;
+    --nv-research-board-muted: CanvasText;
+    --nv-research-board-line: CanvasText;
+    --nv-accent-text: LinkText;
+  }
 }
 
 @media (max-width: 1040px) and (min-width: 701px) {
@@ -5165,6 +5218,10 @@
     padding: 1rem;
   }
 
+  .nv-research-artifact {
+    --nv-mobile-rail-x: 1.25rem;
+  }
+
   .nv-research-archetypes {
     grid-template-columns: 1fr;
   }
@@ -5191,13 +5248,13 @@
 
   .nv-research-journey > li,
   .nv-research-booking > li {
-    padding: 1rem 1rem 1rem 3rem;
+    padding: 1rem 1rem 1rem 3.5rem;
   }
 
   .nv-research-journey > li::before,
   .nv-research-booking > li::before {
     top: 1.3rem;
-    left: 1rem;
+    left: var(--nv-mobile-rail-x);
   }
 
   .nv-research-route {
@@ -5206,7 +5263,8 @@
     justify-self: start;
     width: 1px;
     height: calc(100% - 2.6rem);
-    margin: 1.6rem 0 1rem 1rem;
+    margin: 1.6rem 0 1rem;
+    margin-left: var(--nv-mobile-rail-x);
     transform: translateX(-50%) scaleY(1);
     transform-origin: center top;
   }

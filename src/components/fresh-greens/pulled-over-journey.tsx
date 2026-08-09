@@ -77,9 +77,9 @@ export function PulledOverJourney() {
       data-enhanced={enhanced ? "true" : undefined}
     >
       <div className="fg-pulled-reconstruction">
-        <h4 className="fg-pulled-reconstruction-title">
+        <h3 className="fg-pulled-reconstruction-title">
           Interactive case-study reconstruction
-        </h4>
+        </h3>
         <p className="fg-pulled-reconstruction-note">
           This web reconstruction shows one representative path. The native
           prototype contains the full flow.

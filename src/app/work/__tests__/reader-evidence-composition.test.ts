@@ -8,10 +8,13 @@ const styles = readFileSync(
 );
 
 describe("Reader evidence composition", () => {
-  it("keeps the shared layer semantic and project-accented", () => {
+  it("keeps the shared layer semantic without generic side-stripe chrome", () => {
     expect(styles).toContain(".reader-evidence-summary {");
+    expect(styles).not.toMatch(
+      /\.reader-evidence-summary\s*\{[^}]*border-left:/,
+    );
     expect(styles).toMatch(
-      /\.reader-evidence-summary\s*\{[^}]*border-left:\s*3px solid var\(--chapter-motif-accent\);/,
+      /\.reader-evidence-summary\s*\{[^}]*border-top:\s*1px solid/,
     );
     expect(styles).not.toMatch(
       /\.reader-evidence-summary\s*\{[^}]*(?:background|border-radius|box-shadow):/,

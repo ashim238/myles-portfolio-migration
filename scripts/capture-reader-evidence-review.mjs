@@ -9,6 +9,16 @@ const outputDir = resolve(
 );
 const MIN_PROOF_TO_SUMMARY_GAP = 0;
 const MAX_PROOF_TO_SUMMARY_GAP = 64;
+const themes = (process.env.READER_EVIDENCE_REVIEW_THEMES ?? "dark,light")
+  .split(",")
+  .map((theme) => theme.trim())
+  .filter((theme) => theme === "dark" || theme === "light");
+
+if (themes.length === 0) {
+  throw new Error(
+    "READER_EVIDENCE_REVIEW_THEMES must include dark, light, or both.",
+  );
+}
 
 if (!baseUrl) {
   throw new Error("READER_EVIDENCE_REVIEW_BASE_URL is required.");
@@ -16,6 +26,7 @@ if (!baseUrl) {
 
 const viewports = {
   desktop: { width: 1440, height: 900 },
+  medium: { width: 820, height: 900 },
   pocket: { width: 390, height: 844, isMobile: true, hasTouch: true },
 };
 
@@ -121,7 +132,14 @@ async function measureDocumentBox(locator) {
   });
 }
 
-async function captureProof(page, routeName, viewportName, proof, report) {
+async function captureProof(
+  page,
+  routeName,
+  theme,
+  viewportName,
+  proof,
+  report,
+) {
   const chapter = page.locator(`[data-dominant-proof="${proof.id}"]`).first();
   await chapter.waitFor({ state: "visible", timeout: 30_000 });
 
@@ -147,7 +165,7 @@ async function captureProof(page, routeName, viewportName, proof, report) {
   const artifactBottom = Math.max(
     ...artifactBoxes.map((box) => box.y + box.height),
   );
-  const prefix = `${routeName}-${proof.id}-${viewportName}`;
+  const prefix = `${routeName}-${proof.id}-${theme}-${viewportName}`;
   const chapterFile = `${prefix}-chapter.jpg`;
   const summaryFile = `${prefix}-summary.png`;
   const artifactFiles = [];
@@ -173,6 +191,7 @@ async function captureProof(page, routeName, viewportName, proof, report) {
 
   report.proofs.push({
     route: routeName,
+    theme,
     viewport: viewportName,
     proof: proof.id,
     artifactSelectors: proof.artifactSelectors,
@@ -198,83 +217,99 @@ const report = {
 };
 
 try {
-  for (const [viewportName, viewport] of Object.entries(viewports)) {
-    const { width, height, isMobile = false, hasTouch = false } = viewport;
-    const context = await browser.newContext({
-      viewport: { width, height },
-      deviceScaleFactor: 1,
-      colorScheme: "dark",
-      reducedMotion: "reduce",
-      isMobile,
-      hasTouch,
-    });
-    await context.addInitScript(() => {
-      localStorage.setItem("theme", "dark");
-    });
-
-    for (const route of routes) {
-      const page = await context.newPage();
-      const consoleErrors = [];
-      const pageErrors = [];
-      page.on("console", (message) => {
-        if (message.type() === "error") consoleErrors.push(message.text());
+  for (const theme of themes) {
+    for (const [viewportName, viewport] of Object.entries(viewports)) {
+      const { width, height, isMobile = false, hasTouch = false } = viewport;
+      const context = await browser.newContext({
+        viewport: { width, height },
+        deviceScaleFactor: 1,
+        colorScheme: theme,
+        reducedMotion: "reduce",
+        isMobile,
+        hasTouch,
       });
-      page.on("pageerror", (error) => pageErrors.push(error.message));
+      await context.addInitScript((selectedTheme) => {
+        localStorage.setItem("theme", selectedTheme);
+      }, theme);
 
-      const url = new URL(route.path, baseUrl).toString();
-      console.log(`Reviewing ${route.name} at ${width}x${height}: ${url}`);
-      const response = await page.goto(url, {
-        waitUntil: "domcontentloaded",
-        timeout: 120_000,
-      });
-      if (!response?.ok()) {
-        throw new Error(
-          `${route.name} returned HTTP ${response?.status() ?? "unknown"}.`,
+      for (const route of routes) {
+        const page = await context.newPage();
+        const consoleErrors = [];
+        const pageErrors = [];
+        page.on("console", (message) => {
+          if (message.type() === "error") consoleErrors.push(message.text());
+        });
+        page.on("pageerror", (error) => pageErrors.push(error.message));
+
+        const url = new URL(route.path, baseUrl).toString();
+        console.log(
+          `Reviewing ${route.name} in ${theme} at ${width}x${height}: ${url}`,
         );
+        const response = await page.goto(url, {
+          waitUntil: "domcontentloaded",
+          timeout: 120_000,
+        });
+        if (!response?.ok()) {
+          throw new Error(
+            `${route.name} returned HTTP ${response?.status() ?? "unknown"}.`,
+          );
+        }
+
+        await page
+          .waitForLoadState("networkidle", { timeout: 30_000 })
+          .catch(() => undefined);
+        await wakeLazyMedia(page);
+        await page.waitForTimeout(800);
+
+        const routeMetrics = await page.evaluate(() => ({
+          title: document.title,
+          theme: document.documentElement.dataset.theme,
+          scrollWidth: document.documentElement.scrollWidth,
+          scrollHeight: document.documentElement.scrollHeight,
+          clientWidth: document.documentElement.clientWidth,
+          clientHeight: document.documentElement.clientHeight,
+          horizontalOverflow:
+            document.documentElement.scrollWidth >
+            document.documentElement.clientWidth + 1,
+          brokenImages: Array.from(document.images)
+            .filter((image) => image.complete && image.naturalWidth === 0)
+            .map((image) => image.currentSrc || image.src),
+        }));
+        const fullPageFile = `${route.name}-${theme}-${viewportName}-full.jpg`;
+        await page.screenshot({
+          path: resolve(outputDir, fullPageFile),
+          type: "jpeg",
+          quality: 68,
+          fullPage: true,
+        });
+
+        report.routes.push({
+          name: route.name,
+          path: route.path,
+          theme,
+          viewport: { name: viewportName, width, height, isMobile, hasTouch },
+          file: fullPageFile,
+          metrics: routeMetrics,
+          consoleErrors,
+          pageErrors,
+        });
+
+        for (const proof of route.proofs) {
+          await captureProof(
+            page,
+            route.name,
+            theme,
+            viewportName,
+            proof,
+            report,
+          );
+        }
+
+        await page.close();
       }
 
-      await page
-        .waitForLoadState("networkidle", { timeout: 30_000 })
-        .catch(() => undefined);
-      await wakeLazyMedia(page);
-      await page.waitForTimeout(800);
-
-      const routeMetrics = await page.evaluate(() => ({
-        title: document.title,
-        scrollWidth: document.documentElement.scrollWidth,
-        scrollHeight: document.documentElement.scrollHeight,
-        clientWidth: document.documentElement.clientWidth,
-        clientHeight: document.documentElement.clientHeight,
-        horizontalOverflow:
-          document.documentElement.scrollWidth >
-          document.documentElement.clientWidth + 1,
-      }));
-      const fullPageFile = `${route.name}-${viewportName}-full.jpg`;
-      await page.screenshot({
-        path: resolve(outputDir, fullPageFile),
-        type: "jpeg",
-        quality: 68,
-        fullPage: true,
-      });
-
-      report.routes.push({
-        name: route.name,
-        path: route.path,
-        viewport: { name: viewportName, width, height, isMobile, hasTouch },
-        file: fullPageFile,
-        metrics: routeMetrics,
-        consoleErrors,
-        pageErrors,
-      });
-
-      for (const proof of route.proofs) {
-        await captureProof(page, route.name, viewportName, proof, report);
-      }
-
-      await page.close();
+      await context.close();
     }
-
-    await context.close();
   }
 } finally {
   await browser.close();
@@ -290,9 +325,27 @@ const routeFailures = report.routes.flatMap((route) => {
   if (route.metrics.horizontalOverflow) {
     messages.push(`${route.name}/${route.viewport.name}: horizontal overflow`);
   }
+  if (route.metrics.theme !== route.theme) {
+    messages.push(
+      `${route.name}/${route.theme}/${route.viewport.name}: expected ` +
+        `${route.theme} theme but found ${route.metrics.theme || "unset"}`,
+    );
+  }
   if (route.pageErrors.length > 0) {
     messages.push(
       `${route.name}/${route.viewport.name}: ${route.pageErrors.length} page error(s)`,
+    );
+  }
+  if (route.consoleErrors.length > 0) {
+    messages.push(
+      `${route.name}/${route.theme}/${route.viewport.name}: ` +
+        `${route.consoleErrors.length} console error(s)`,
+    );
+  }
+  if (route.metrics.brokenImages.length > 0) {
+    messages.push(
+      `${route.name}/${route.theme}/${route.viewport.name}: ` +
+        `${route.metrics.brokenImages.length} broken image(s)`,
     );
   }
   return messages;

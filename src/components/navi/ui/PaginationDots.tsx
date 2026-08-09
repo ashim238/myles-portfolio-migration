@@ -48,7 +48,9 @@ export function PaginationDots({ count, active, activeIndex, onSelect, label }: 
             className={`nv-dot${i === current ? " nv-dot--active" : ""}`}
             onClick={() => onSelect(i)}
             onKeyDown={(e) => handleKeyDown(e, i)}
-          />
+          >
+            <span className="nv-dot-mark" aria-hidden="true" />
+          </button>
         ))}
       </div>
     );
@@ -68,7 +70,9 @@ export function PaginationDots({ count, active, activeIndex, onSelect, label }: 
           className={`nv-dot${i === current ? " nv-dot--active" : ""}`}
           onClick={() => onSelect(i)}
           onKeyDown={(e) => handleKeyDown(e, i)}
-        />
+        >
+          <span className="nv-dot-mark" aria-hidden="true" />
+        </button>
       ))}
     </div>
   );

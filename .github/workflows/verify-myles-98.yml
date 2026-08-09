@@ -113,6 +113,15 @@ jobs:
           set -o pipefail
           npm run build 2>&1 | tee verification-logs/build.log
 
+      - name: Enforce Reader route asset budgets
+        id: performance
+        if: steps.lock.outputs.changed != 'true' && steps.build.outcome == 'success'
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -o pipefail
+          node scripts/verify-reader-performance.mjs 2>&1 | tee verification-logs/performance.log
+
       - name: Check whitespace
         id: whitespace
         if: steps.lock.outputs.changed != 'true'
@@ -140,6 +149,7 @@ jobs:
             echo "| npx tsc --noEmit | ${{ steps.typescript.outcome }} |"
             echo "| npm run validate:content | ${{ steps.content.outcome }} |"
             echo "| npm run build | ${{ steps.build.outcome }} |"
+            echo "| Reader asset budgets | ${{ steps.performance.outcome }} |"
             echo "| git diff --check | ${{ steps.whitespace.outcome }} |"
           } | tee verification-logs/summary.md >> "$GITHUB_STEP_SUMMARY"
 
@@ -150,6 +160,7 @@ jobs:
           name: myles-98-verification-${{ github.sha }}
           path: |
             verification-logs
+            .next/reader-performance-report.json
             package-lock.json
           if-no-files-found: error
           retention-days: 3
@@ -165,6 +176,7 @@ jobs:
             "${{ steps.typescript.outcome }}" \
             "${{ steps.content.outcome }}" \
             "${{ steps.build.outcome }}" \
+            "${{ steps.performance.outcome }}" \
             "${{ steps.whitespace.outcome }}"; do
             if [ "$outcome" != "success" ]; then
               failed=1

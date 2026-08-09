@@ -30,10 +30,9 @@
 .reader-mode.reader-mode .reader-evidence-summary {
   width: min(100%, 68ch);
   margin-top: 1.25rem;
-  padding: 0.95rem 0 0 1rem;
+  padding: 0.95rem 0 0;
   border-top: 1px solid
     color-mix(in srgb, var(--m97-reader-ink) 24%, transparent);
-  border-left: 3px solid var(--chapter-motif-accent);
   color: var(--m97-reader-ink);
   font-family: var(--m97-ui-font);
 }

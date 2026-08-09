@@ -173,7 +173,9 @@ describe("Navi case-study structure", () => {
   });
 
   it("orders the primary story from resident evidence through future validation", () => {
-    const primaryStory = page.slice(page.indexOf("<ProjectToc"));
+    const primaryStory = page
+      .slice(page.indexOf("<ProjectToc"))
+      .replace(/\s+/g, " ");
     const storyMarkers = [
       "The team used a Manhattan heatmap",
       "resident and stakeholder responses",

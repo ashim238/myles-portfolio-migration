@@ -4,15 +4,26 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Myles97Shell } from "@/components/myles-97/myles-97-shell";
 import type { ProgramDefinition } from "@/lib/myles-97/programs";
 
+/* eslint-disable @next/next/no-img-element */
+
 vi.mock("next/image", () => ({
   default: ({
     alt = "",
     priority,
+    preload,
     ...props
-  }: React.ImgHTMLAttributes<HTMLImageElement> & { priority?: boolean }) => {
+  }: React.ImgHTMLAttributes<HTMLImageElement> & {
+    priority?: boolean;
+    preload?: boolean;
+  }) => {
     void priority;
-    // eslint-disable-next-line @next/next/no-img-element
-    return <img {...props} alt={alt} />;
+    return (
+      <img
+        {...props}
+        alt={alt}
+        data-preload={String(Boolean(preload))}
+      />
+    );
   },
 }));
 
@@ -78,7 +89,9 @@ describe("Myles98 product shell", () => {
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
 
     expect(screen.getByRole("heading", { name: "Myles Ashitey" })).toBeInTheDocument();
-    expect(screen.getByText("Design, code, whatever you need.")).toBeInTheDocument();
+    expect(
+      screen.getByText("Design, code, and everything in between."),
+    ).toBeInTheDocument();
     expect(
       screen.getByText("Previously TikTok and UMG. Latest project: Fresh Greens."),
     ).toBeInTheDocument();
@@ -89,6 +102,20 @@ describe("Myles98 product shell", () => {
     );
     expect(screen.getByRole("region", { name: "Selected Work" })).toBeInTheDocument();
     expect(screen.getAllByRole("link", { name: /Open .* case study/ })).toHaveLength(4);
+  });
+
+  it("preloads one universal above-fold cover candidate", () => {
+    const { container } = render(
+      <Myles97Shell programs={programs} looseParts={looseParts} />,
+    );
+    const preloadSources = Array.from(
+      container.querySelectorAll<HTMLImageElement>(
+        '.myles97-program-cover img[data-preload="true"]',
+      ),
+      (image) => image.getAttribute("src"),
+    );
+
+    expect(preloadSources).toEqual(["/projects/fresh-greens/cover.png"]);
   });
 
   it("focuses Selected Work and launches a project program while preserving a native case-study link", async () => {

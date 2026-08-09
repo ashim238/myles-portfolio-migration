@@ -294,6 +294,7 @@ export function FeedView({
                 experience={e}
                 href={`/work/navi/demo/experience/${e.slug}`}
                 headingLevel={2}
+                preload={i === 0}
               />
             </li>
           ))}

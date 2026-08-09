@@ -147,6 +147,7 @@
 
 .reader-mode.reader-mode :is(.project-section-body, .project-content) {
   max-width: 68ch;
+  color: var(--m97-reader-ink);
 }
 
 .reader-mode.reader-mode .project-section-body :is(p, li),

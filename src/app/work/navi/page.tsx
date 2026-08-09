@@ -80,10 +80,9 @@ export default async function NaviPage() {
         <h1 id="nv-title" className="project-hero-title nv-title">Navi</h1>
         <p className="project-hero-lede nv-lede">
           I collected 14 resident and stakeholder responses, including two local
-          businesses, for a graduate-studio travel concept. What I learned redirected
-          the team&apos;s early Manhattan heatmap toward neighborhood context.
-          The next concept focused on helping people learn, plan, and book after
-          choosing a place.
+          businesses. What I learned redirected the team&apos;s early Manhattan
+          heatmap toward neighborhood context and into Learn, Plan, Go, a concept
+          for what happens after someone chooses a place.
         </p>
       </section>
 
@@ -107,7 +106,7 @@ export default async function NaviPage() {
         outcomeLabel={project?.outcomeMetricLabel}
         moves={[
           "Graduate studio: the team tested an early Manhattan redirection concept and audited six travel platforms.",
-          "My contribution: I collected and synthesized 14 resident and stakeholder responses, including two local businesses, then created archetypes, journeys, opportunity areas, and flows.",
+          "My contribution: I collected and synthesized the 14 responses, then created research-informed archetypes, journeys, opportunity areas, flows, and studio design-system work.",
           "Solo rebuild: I turned Learn, Plan, Go into a React component system and working individual booking flow.",
         ]}
       />
@@ -122,13 +121,17 @@ export default async function NaviPage() {
           </p>
           <div className="project-section-body">
             <p>
+              The studio brief asked how NYC tourism could become more
+              regenerative, meaning participatory and contributive for visitors,
+              local businesses and artisans, and longtime residents.
+            </p>
+            <p>
               The team used a Manhattan heatmap as an exploratory hypothesis to
               test whether redirecting visitors could distribute attention across
               more neighborhoods.
             </p>
             <p>
-              That first artifact made movement on the map the outcome. The survey
-              became the next step.
+              The survey tested what the map could not.
             </p>
           </div>
         </div>
@@ -140,9 +143,8 @@ export default async function NaviPage() {
           <p className="case-section-lead">Select a neighborhood to see how the first artifact worked.</p>
           <div className="project-section-body">
             <p>
-              The colored regions show where the early concept placed emphasis. They do not
-              represent actual tourist density or live geo analytics, and this interactive
-              reconstruction keeps the same constraint.
+              The regions show early emphasis. They do not represent actual
+              tourist density or live geo analytics.
             </p>
           </div>
           <HeatmapExplorer />
@@ -155,14 +157,15 @@ export default async function NaviPage() {
           <div className="project-section-body">
             <p>
               I collected 14 resident and stakeholder responses, including two
-              local businesses. The sample informed this concept. It doesn&apos;t
-              stand in for all NYC residents.
+              local businesses. The limited sample included longtime residents and
+              many college-aged people. Separately, tourism-industry professionals
+              added context about the NYC tourism website and sustainability. This
+              research informed the concept. It doesn&apos;t stand in for all NYC residents.
             </p>
             <p>
-              The team audited six travel platforms. I evaluated Airbnb with Kaori Ogawa and Amy Zhang
-              against Nielsen&apos;s ten usability heuristics.
-              The evaluation surfaced issues with label consistency, family-facing
-              filters, and visual clutter.
+              The team audited six travel platforms. I evaluated Airbnb with Kaori
+              Ogawa and Amy Zhang against Nielsen&apos;s ten heuristics, surfacing
+              inconsistent labels, weak family filters, and visual clutter.
             </p>
           </div>
           <HeuristicInsightCards />
@@ -177,6 +180,13 @@ export default async function NaviPage() {
               {authenticExperienceStat.count} of {NAVI_SURVEY_META.responseCount} (
               {authenticExperienceStat.label}) named a lack of authentic
               experiences.
+            </p>
+            <p>
+              Survey responses also raised rising costs and displacement of local
+              businesses. Other stakeholder input raised repeat visitor
+              relationships and discovery outside traditional social platforms.
+              Tourism professionals pointed to regenerative work already happening
+              citywide.
             </p>
             <p className="nv-survey-note">
               Highlights from {NAVI_SURVEY_META.responseCount} responses,
@@ -196,17 +206,22 @@ export default async function NaviPage() {
               secondary research.
             </p>
             <p>
-              The graduate-studio project ended as a concept without an engineering handoff, so the
-              journey maps and user flows remained internal planning artifacts.
+              Digital nomads, ethical travelers, and visitors who already
+              contribute to or share with communities became a research-informed
+              target hypothesis, not a validated market segment.
+            </p>
+            <p>
+              With no engineering resources and no implementation budget, the
+              studio ended with a responsible prototype, not a production website.
+              Its journeys and flows remained internal planning artifacts without
+              an engineering handoff.
             </p>
             <p>
               I used the archetypes, journey map, opportunity areas, and flows to
-              connect the survey findings with neighborhood exploration.
-            </p>
-            <p>
-              The Airbnb audit and secondary research shaped the individual booking flow. Cost,
-              requirements, and timing stayed visible at key decisions, especially when a lesser-known
-              vendor needed to earn trust.
+              connect the survey findings to neighborhood exploration. The Airbnb
+              audit and secondary research shaped the booking flow. Cost,
+              requirements, and timing stayed visible at key decisions where a
+              lesser-known vendor needed to earn trust.
             </p>
             <p>
               The research changed the product question. Instead of treating
@@ -231,20 +246,20 @@ export default async function NaviPage() {
           <h3 className="project-evidence-heading" id="nv-system">Rebuilding Navi as a working system</h3>
           <div className="project-section-body">
             <p>
-              The graduate-studio project ended as a Figma concept. Later, working alone,
-              I rebuilt the concept by turning Learn, Plan, Go into a React
+              My studio responsibilities included research and design-system work.
+              The graduate-studio project ended as a Figma concept. Later, working
+              alone, I rebuilt the concept by turning Learn, Plan, Go into a React
               and TypeScript component system and a working individual booking
               flow.
             </p>
             <p>
-              Jost was selected for display typography to echo urban wayfinding cues. Orange became
-              the primary accent to distinguish Navi from the travel platforms in the audit. The
-              palette pairs it with Lato and a 4px spacing system.
+              Jost echoes urban wayfinding. Orange distinguishes Navi from the
+              audited travel platforms, paired with Lato and a 4px spacing system.
             </p>
             <p>
-              The portfolio rebuild includes brand primitives, semantic aliases, interactive
-              variants, and a playground for changing component props. <Link href="/work/navi/system">See the Navi
-              design system</Link>. Those components are assembled into a working booking flow.{" "}
+              The portfolio rebuild includes brand primitives, semantic aliases,
+              variants, and an editable playground. <Link href="/work/navi/system">See the Navi
+              design system</Link>. The same components power the booking flow.{" "}
               <Link href="/work/navi/demo">Open the demo</Link>.
             </p>
           </div>
@@ -275,6 +290,12 @@ export default async function NaviPage() {
               I can now inspect the component states and individual booking flow in a browser. I
               still need to test them with residents, travelers, and local hosts before treating
               those choices as settled.
+            </p>
+            <p>
+              A plausible long-term path for the studio concept was to present the
+              evidence and prototype to an institution such as NYC
+              Tourism for native integration or further development. That remained
+              a future path, not a launch outcome.
             </p>
           </div>
           <div className="nv-validation-ledger">

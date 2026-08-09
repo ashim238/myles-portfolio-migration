@@ -48,6 +48,7 @@ export function SelectedWorkExplorer({
                     width={640}
                     height={360}
                     sizes="(max-width: 900px) 80vw, 320px"
+                    preload={program.id === "fresh-greens"}
                   />
                 ) : (
                   <Myles97Icon name={iconForProgram(program.id)} size={40} />

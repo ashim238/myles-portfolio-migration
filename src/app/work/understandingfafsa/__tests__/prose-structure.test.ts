@@ -269,6 +269,28 @@ describe("UnderstandingFAFSA case-study structure", () => {
     }
   });
 
+  it("centers founder autonomy before the rules and feasibility work that enabled it", () => {
+    const brief =
+      "The brief was to design a new email newsletter system the founder could update at a moment&apos;s notice without much technical know-how.";
+    const feasibility =
+      "I moved the design from Figma into Mailchimp for feasibility checks and practice sends, creating a version ready for user testing.";
+    const result =
+      "The founder now assembles each send from the Mailchimp-native kit without editing HTML.";
+
+    expect(prose).toContain(brief);
+    expect(prose).toContain(feasibility);
+    expect(prose).toContain(result);
+    expect(page.indexOf(brief)).toBeLessThan(
+      page.indexOf("compile and evaluate more than 120 newsletter examples"),
+    );
+    expect(page.indexOf(feasibility)).toBeLessThan(
+      page.indexOf("Gmail&apos;s 102 KB HTML clipping threshold"),
+    );
+    expect(page).toContain(
+      '"Outcome: I designed and rebuilt a Mailchimp-native newsletter kit the founder can update without editing HTML.",',
+    );
+  });
+
   it("keeps ownership, workflow, and the implementation constraint explicit", () => {
     expect(prose).toMatch(/one collaborator and I[\s\S]{0,100}more than 120/i);
     expect(prose).toMatch(/I designed[\s\S]{0,100}modular rules/i);

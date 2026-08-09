@@ -52,6 +52,17 @@ describe("Feed page", () => {
     expect(screen.getAllByRole("heading", { level: 2 })).toHaveLength(12);
   });
 
+  it("preloads one universal above-fold photo candidate", () => {
+    render(<FeedPage />);
+
+    expect(
+      screen.getByRole("img", { name: "Sunlit tunnel in Prospect Park" }),
+    ).toHaveAttribute("loading", "eager");
+    expect(
+      screen.getByRole("img", { name: "Hands shaping a metal bracelet" }),
+    ).toHaveAttribute("loading", "lazy");
+  });
+
   it("filters cards by typed query", async () => {
     render(<FeedPage />);
     const before = screen.getAllByRole("link").length;

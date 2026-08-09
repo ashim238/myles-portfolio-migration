@@ -35,10 +35,8 @@ jobs:
       - name: Install project dependencies
         run: npm ci
 
-      - name: Install Playwright for the capture runner
-        run: |
-          npm install --no-save --package-lock=false playwright@1.54.1
-          npx playwright install --with-deps chromium
+      - name: Install Chromium for the capture runner
+        run: npx playwright install --with-deps chromium
 
       - name: Build the exact review commit
         run: npm run build

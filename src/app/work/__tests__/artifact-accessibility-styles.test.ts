@@ -396,8 +396,13 @@ describe("portfolio artifact accessibility styles", () => {
       "grid-template-columns: repeat(5, minmax(8.5rem, 1fr))",
     );
     expect(styles).toContain("@media (max-width: 1040px) and (min-width: 701px)");
-    expect(researchBoard).toContain("border: 1px solid var(--line)");
-    expect(researchBoard).toContain("background: var(--surface)");
+    expect(researchBoard).toContain(
+      "border: 1px solid var(--nv-research-board-line)",
+    );
+    expect(researchBoard).toContain(
+      "background: var(--nv-research-board-surface)",
+    );
+    expect(researchBoard).toContain("color: var(--nv-research-board-ink)");
     expect(researchBoard).toContain("border-radius: var(--rounded-md)");
     expect(archetypeSheet).not.toContain("box-shadow");
     expect(costReview).not.toContain("box-shadow");
