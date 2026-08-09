@@ -298,7 +298,7 @@
 /* The server snapshot is workstation=false. Flatten that initial markup on
    Pocket-capable devices so the native project links are usable without a
    horizontal desktop or overlapping absolute windows before hydration. */
-@media (max-width: 767px), (pointer: coarse) {
+@media (max-width: 1024px), (pointer: coarse) {
   .myles97-shell {
     overflow-x: hidden;
   }
@@ -381,6 +381,33 @@
   .reader-mode.reader-mode .reading-top,
   .reader-header .reader-return {
     min-height: 44px;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1080px) and (pointer: fine) {
+  .myles97-roti-note {
+    width: 116px;
+    min-height: 176px;
+    justify-self: end;
+    margin-right: 8px;
+    padding: 12px;
+  }
+
+  .myles97-roti-note .myles97-roti-label {
+    margin-bottom: 6px;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+  }
+
+  .myles97-roti-note strong {
+    margin-bottom: 6px;
+    font-size: 15px;
+    line-height: 1.08;
+  }
+
+  .myles97-roti-note > span:last-child {
+    font-size: 10px;
+    line-height: 1.35;
   }
 }
 

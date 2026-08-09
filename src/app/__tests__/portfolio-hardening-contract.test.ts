@@ -56,13 +56,25 @@ describe("portfolio hardening style contract", () => {
   it("switches Pocket 97 through the approved capability query with a safe server snapshot", () => {
     expect(pocketHook).toContain('useSyncExternalStore');
     expect(pocketHook).toContain(
-      '"(max-width: 767px), (pointer: coarse)"',
+      '"(max-width: 1024px), (pointer: coarse)"',
     );
     expect(pocketHook).toMatch(/function getServerSnapshot\(\)\s*\{\s*return false;/);
     expect(pocketHook).not.toContain("window.innerWidth");
     expect(pocketStyles).toContain(
-      "@media (max-width: 767px), (pointer: coarse)",
+      "@media (max-width: 1024px), (pointer: coarse)",
     );
+  });
+
+  it("keeps the recipe note inside its dedicated column on the narrow workstation", () => {
+    const compact = cssBlock(
+      "@media (min-width: 1025px) and (max-width: 1080px) and (pointer: fine)",
+      pocketStyles,
+    );
+    const note = cssBlock(".myles97-roti-note", compact);
+
+    expect(note).toMatch(/width:\s*116px;/);
+    expect(note).toMatch(/min-height:\s*176px;/);
+    expect(note).toMatch(/justify-self:\s*end;/);
   });
 
   it("prevents horizontal desktop panning before Pocket hydration", () => {

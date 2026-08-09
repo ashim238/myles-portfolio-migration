@@ -108,6 +108,10 @@ describe("Pocket 98", () => {
     vi.unstubAllGlobals();
   });
 
+  it("uses the approved Pocket capability boundary", () => {
+    expect(POCKET_97_QUERY).toBe("(max-width: 1024px), (pointer: coarse)");
+  });
+
   it("switches to a single-app dock model for narrow or coarse capabilities", async () => {
     installMatchMedia(true);
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);

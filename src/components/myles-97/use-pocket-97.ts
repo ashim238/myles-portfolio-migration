@@ -2,7 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 
-export const POCKET_97_QUERY = "(max-width: 767px), (pointer: coarse)";
+export const POCKET_97_QUERY = "(max-width: 1024px), (pointer: coarse)";
 
 function getMediaQuery() {
   return window.matchMedia(POCKET_97_QUERY);

@@ -1,4 +1,6 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Myles97Shell } from "@/components/myles-97/myles-97-shell";
@@ -79,6 +81,11 @@ const looseParts = [
   },
 ];
 
+const workstationDesktop = readFileSync(
+  resolve(process.cwd(), "src/components/myles-97/workstation-desktop.tsx"),
+  "utf8",
+);
+
 describe("Myles98 product shell", () => {
   beforeEach(() => {
     localStorage.clear();
@@ -102,6 +109,12 @@ describe("Myles98 product shell", () => {
     );
     expect(screen.getByRole("region", { name: "Selected Work" })).toBeInTheDocument();
     expect(screen.getAllByRole("link", { name: /Open .* case study/ })).toHaveLength(4);
+  });
+
+  it("uses the approved Welcome fallback geometry for the initial desktop discovery lane", () => {
+    expect(workstationDesktop).toContain(
+      "welcome: { x: 520, y: 64, width: 504, height: 352 },",
+    );
   });
 
   it("preloads one universal above-fold cover candidate", () => {
