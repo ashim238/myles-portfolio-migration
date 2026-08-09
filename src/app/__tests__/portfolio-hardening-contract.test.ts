@@ -10,6 +10,10 @@ const pocketStyles = readFileSync(
   resolve(process.cwd(), "src/app/styles/myles-97-pocket.css"),
   "utf8",
 );
+const precisionStyles = readFileSync(
+  resolve(process.cwd(), "src/app/styles/myles-98-precision.css"),
+  "utf8",
+);
 const pocketHook = readFileSync(
   resolve(process.cwd(), "src/components/myles-97/use-pocket-97.ts"),
   "utf8",
@@ -54,14 +58,14 @@ describe("portfolio hardening style contract", () => {
   });
 
   it("switches Pocket 97 through the approved capability query with a safe server snapshot", () => {
-    expect(pocketHook).toContain('useSyncExternalStore');
+    expect(pocketHook).toContain("useSyncExternalStore");
     expect(pocketHook).toContain(
-      '"(max-width: 767px), (pointer: coarse)"',
+      '"(max-width: 1023px), (pointer: coarse)"',
     );
     expect(pocketHook).toMatch(/function getServerSnapshot\(\)\s*\{\s*return false;/);
     expect(pocketHook).not.toContain("window.innerWidth");
     expect(pocketStyles).toContain(
-      "@media (max-width: 767px), (pointer: coarse)",
+      "@media (max-width: 1023px), (pointer: coarse)",
     );
   });
 
@@ -76,6 +80,27 @@ describe("portfolio hardening style contract", () => {
     expect(pocketStyles).toMatch(
       /\.myles97-window\s*\{[\s\S]*position:\s*relative !important;/,
     );
+  });
+
+  it("keeps the narrow workstation recipe note in its dedicated column", () => {
+    const compact = cssBlock(
+      "@media (min-width: 1024px) and (max-width: 1080px) and (pointer: fine)",
+      precisionStyles,
+    );
+    const note = cssBlock(".myles97-roti-note", compact);
+    const title = cssBlock(".myles97-roti-note strong", compact);
+    const copy = cssBlock(
+      ".myles97-roti-note > span:last-child",
+      compact,
+    );
+
+    expect(note).toMatch(/width:\s*116px;/);
+    expect(note).toMatch(/min-height:\s*176px;/);
+    expect(note).toMatch(/justify-self:\s*end;/);
+    expect(note).toMatch(/margin-right:\s*8px;/);
+    expect(note).toMatch(/padding:\s*12px;/);
+    expect(title).toMatch(/font-size:\s*15px;/);
+    expect(copy).toMatch(/font-size:\s*10px;/);
   });
 
   it("gives the Pocket dock safe-area clearance and 44px controls", () => {
