@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import {
   READER_EVIDENCE_MAPS,
+  getEvidenceStateLabel,
   type ChapterEvidenceMap,
 } from "@/lib/reader-evidence";
 import type {
@@ -34,6 +35,9 @@ export function ProjectChapter({
   children,
 }: ProjectChapterProps) {
   const evidence = findChapterEvidence(variant, entry.id);
+  const evidenceStateLabel = evidence
+    ? getEvidenceStateLabel(evidence.evidenceState)
+    : null;
 
   return (
     <section
@@ -46,7 +50,15 @@ export function ProjectChapter({
       data-dominant-proof={evidence?.dominantProof.id}
     >
       <p className="project-chapter-meta">
-        <span className="project-chapter-stage">{entry.stage}</span>
+        <span className="project-chapter-meta-primary">
+          <span className="project-chapter-stage">{entry.stage}</span>
+          {evidenceStateLabel ? (
+            <span className="project-chapter-evidence-state">
+              <span className="sr-only">Evidence state: </span>
+              {evidenceStateLabel}
+            </span>
+          ) : null}
+        </span>
         <span className="project-chapter-count">
           {index} of {total}
         </span>

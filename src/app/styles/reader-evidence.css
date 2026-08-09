@@ -1,0 +1,33 @@
+/* Reader evidence state labels */
+.reader-mode.reader-mode .project-chapter-meta {
+  align-items: center;
+}
+
+.reader-mode.reader-mode .project-chapter-meta-primary {
+  display: inline-flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.reader-mode.reader-mode .project-chapter-evidence-state {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  padding: 3px 8px;
+  border: 1px solid
+    color-mix(in srgb, var(--chapter-motif-accent) 58%, transparent);
+  border-radius: 999px;
+  color: var(--chapter-motif-accent);
+  font: 700 12px/1 var(--m97-ui-font);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+@media (forced-colors: active) {
+  .reader-mode.reader-mode .project-chapter-evidence-state {
+    border-color: CanvasText;
+    color: CanvasText;
+  }
+}

@@ -35,7 +35,7 @@ describe("ProjectChapter", () => {
     );
   });
 
-  it("exposes the mapped claim class, evidence state, and dominant proof", () => {
+  it("exposes the mapped claim, evidence state, and dominant proof", () => {
     const { container } = render(
       <ProjectChapter entry={entry} index={3} total={5} variant="navi">
         <p>Journey map evidence</p>
@@ -48,6 +48,10 @@ describe("ProjectChapter", () => {
     expect(chapter).toHaveAttribute(
       "data-dominant-proof",
       "navi-research-artifacts",
+    );
+    expect(screen.getByText("Proposed")).toBeVisible();
+    expect(screen.getByText("Proposed").parentElement).toHaveTextContent(
+      "Evidence state: Proposed",
     );
   });
 
@@ -67,5 +71,6 @@ describe("ProjectChapter", () => {
     expect(chapter).not.toHaveAttribute("data-claim-class");
     expect(chapter).not.toHaveAttribute("data-evidence-state");
     expect(chapter).not.toHaveAttribute("data-dominant-proof");
+    expect(screen.queryByText(/Evidence state:/)).not.toBeInTheDocument();
   });
 });

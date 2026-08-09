@@ -10,6 +10,7 @@ const expectedImports = [
   '@import "./styles/myles-97.css";',
   '@import "./styles/myles-97-secondary.css";',
   '@import "./styles/reader-mode.css";',
+  '@import "./styles/reader-evidence.css";',
   '@import "./styles/myles-97-pocket.css";',
   '@import "./styles/myles-98-polish.css";',
 ];
@@ -22,6 +23,7 @@ const sections = [
   ["styles/myles-97.css", "Myles 97 workstation foundation"],
   ["styles/myles-97-secondary.css", "Myles 97 secondary programs and recovery surfaces"],
   ["styles/reader-mode.css", "Myles 97 Reader Mode"],
+  ["styles/reader-evidence.css", "Reader evidence state labels"],
   ["styles/myles-97-pocket.css", "Pocket 97 capability-led mobile shell"],
   ["styles/myles-98-polish.css", "Myles 98 recording-review polish"],
 ] as const;
