@@ -5,6 +5,7 @@ import { CountUp } from "@/components/count-up";
 import { LeadMedia } from "@/components/lead-media";
 import { ReaderShell } from "@/components/myles-97/reader-shell";
 import { ProjectChapter } from "@/components/project-chapter";
+import { ProjectOpeningFacts } from "@/components/project-opening-facts";
 import { RecruiterCut } from "@/components/recruiter-cut";
 import { TransitionLink } from "@/components/transition-link";
 import { ProjectToc } from "@/components/project-toc";
@@ -25,6 +26,10 @@ import { UNDERSTANDING_FAFSA_AUDIT_RULES } from "@/lib/understandingfafsa-audit-
 const UF_DESCRIPTION =
   "Built a modular newsletter system for a site rebrand. The first redesigned send had an observed ~52.6% open rate with Mailchimp Privacy Protection excluded. This was not a controlled attribution test.";
 const chapters = CASE_STUDY_CHAPTERS.understandingfafsa;
+const understandingFafsaProof = {
+  label: "Build a sample send",
+  href: "#uf-locked",
+};
 
 const UF_COLORS = [
   "#be5abf",
@@ -80,6 +85,12 @@ export default async function UnderstandingFafsaPage() {
         </p>
       </section>
 
+      <ProjectOpeningFacts
+        role="Product Designer"
+        scope="I designed the modular rules and rebuilt the live system in Mailchimp."
+        outcome="A Mailchimp-native newsletter kit the founder can update without editing HTML."
+        proof={understandingFafsaProof}
+      />
       <LeadMedia
         cover="/projects/understandingfafsa/cover.png"
         alt="Two phone mockups showing blue and orange UnderstandingFAFSA newsletter templates."
@@ -93,8 +104,8 @@ export default async function UnderstandingFafsaPage() {
         stackLabel="Tools"
         evidence={{
           type: "Interactive case-study explanation",
-          cta: "Build a sample send",
-          href: "#uf-locked",
+          cta: understandingFafsaProof.label,
+          href: understandingFafsaProof.href,
         }}
         outcomeValue={project?.outcomeMetricValue}
         outcomeLabel={project?.outcomeMetricLabel}

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { LeadMedia } from "@/components/lead-media";
 import { ReaderShell } from "@/components/myles-97/reader-shell";
+import { ProjectOpeningFacts } from "@/components/project-opening-facts";
 import { RecruiterCut } from "@/components/recruiter-cut";
 import { TransitionLink } from "@/components/transition-link";
 import { ProjectChapter } from "@/components/project-chapter";
@@ -41,6 +42,10 @@ const lato = Lato({
 });
 
 const chapters = CASE_STUDY_CHAPTERS.navi;
+const naviProof = {
+  label: "Try the booking flow",
+  href: "/work/navi/demo",
+};
 const [overcrowdingStat, authenticExperienceStat] = NAVI_SURVEY_STATS;
 
 const NAVI_DESCRIPTION =
@@ -86,6 +91,12 @@ export default async function NaviPage() {
         </p>
       </section>
 
+      <ProjectOpeningFacts
+        role="UI/UX Designer"
+        scope="I collected and synthesized 14 resident and stakeholder responses, including two local businesses."
+        outcome="In a later solo rebuild, I turned Learn, Plan, Go into a React component system and working individual booking flow."
+        proof={naviProof}
+      />
       <LeadMedia
         cover="/projects/navi/cover.png"
         alt="Navi neighborhood experience search results and cards on a tablet on a wooden table."
@@ -99,8 +110,8 @@ export default async function NaviPage() {
         stackLabel="Tools"
         evidence={{
           type: "Working product demo",
-          cta: "Try the booking flow",
-          href: "/work/navi/demo",
+          cta: naviProof.label,
+          href: naviProof.href,
         }}
         outcomeValue={project?.outcomeMetricValue}
         outcomeLabel={project?.outcomeMetricLabel}

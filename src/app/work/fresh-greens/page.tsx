@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ExpandableImage } from "@/components/expandable-image";
 import { LeadMedia } from "@/components/lead-media";
 import { ReaderShell } from "@/components/myles-97/reader-shell";
+import { ProjectOpeningFacts } from "@/components/project-opening-facts";
 import { RecruiterCut } from "@/components/recruiter-cut";
 import { TransitionLink } from "@/components/transition-link";
 import { ProjectToc } from "@/components/project-toc";
@@ -17,6 +18,10 @@ import { CASE_STUDY_CHAPTERS } from "@/lib/project-chapters";
 import { createRouteMetadata } from "@/lib/site-config";
 
 const chapters = CASE_STUDY_CHAPTERS["fresh-greens"];
+const freshGreensProof = {
+  label: "Try the safety-flow reconstruction",
+  href: "#fg-pulled-over",
+};
 
 export const metadata: Metadata = createRouteMetadata({
   title: "Fresh Greens",
@@ -69,6 +74,12 @@ export default async function FreshGreensPage() {
         </p>
       </section>
 
+      <ProjectOpeningFacts
+        role="Solo, design and engineering"
+        scope="Six interviews became a prototype spanning route comparison, en-route guidance, stress-state support, community reporting, and moderation."
+        outcome="Working React Native prototype across 26+ screens."
+        proof={freshGreensProof}
+      />
       <LeadMedia
         cover="/projects/fresh-greens/cover.png"
         alt="Fresh Greens welcome screen on a phone, with an illustrated Black driver at sunrise."
@@ -83,8 +94,8 @@ export default async function FreshGreensPage() {
         stack="Figma, Illustrator, Claude, React Native, Expo, TypeScript, Supabase"
         evidence={{
           type: "Working mobile prototype",
-          cta: "Try the safety-flow reconstruction",
-          href: "#fg-pulled-over",
+          cta: freshGreensProof.label,
+          href: freshGreensProof.href,
         }}
         outcomeValue="Working"
         outcomeLabel="React Native prototype across 26+ screens"

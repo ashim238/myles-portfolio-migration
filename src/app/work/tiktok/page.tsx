@@ -5,6 +5,7 @@ import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { ExpandableImage } from "@/components/expandable-image";
 import { ReaderShell } from "@/components/myles-97/reader-shell";
 import { ProjectChapter } from "@/components/project-chapter";
+import { ProjectOpeningFacts } from "@/components/project-opening-facts";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
 import { RecruiterCut } from "@/components/recruiter-cut";
@@ -22,6 +23,10 @@ import styles from "./tiktok-four-beat.module.css";
 const TIKTOK_DESCRIPTION =
   "Static catalog templates designed for TikTok's Dynamic Showcase Ads during a 2021 Global Creative Lab internship. Light Academia shipped in the launch library.";
 const chapters = CASE_STUDY_CHAPTERS.tiktok;
+const tiktokProof = {
+  label: "Inspect the template system",
+  href: "#tt-system",
+};
 
 export async function generateMetadata(): Promise<Metadata> {
   const project = await getProjectBySlug("tiktok");
@@ -84,14 +89,20 @@ export default async function TikTokPage() {
         </div>
       </header>
 
+      <ProjectOpeningFacts
+        role="Creative Strategist Intern · Global Creative Lab"
+        scope="I designed three static catalog templates for Dynamic Showcase Ads during my Global Creative Lab internship."
+        outcome="Light Academia was 1 of 3 templates shipped in the launch library."
+        proof={tiktokProof}
+      />
       <RecruiterCut
         role="Creative Strategist Intern"
         team="Global Creative Lab"
         timeline="May – August 2021"
         evidence={{
           type: "Static shipped deliverable with an interactive explanation",
-          cta: "Inspect the template system",
-          href: "#tt-system",
+          cta: tiktokProof.label,
+          href: tiktokProof.href,
         }}
         outcomeValue="1"
         outcomeLabel="of 3 templates shipped in the launch library"

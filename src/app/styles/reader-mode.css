@@ -112,6 +112,55 @@
   color: var(--m97-reader-muted);
 }
 
+.reader-mode.reader-mode .project-opening-facts {
+  width: min(100% - 32px, 72ch);
+  margin: 1.5rem auto;
+  padding-block: 1rem;
+  border-block: 1px solid var(--m97-reader-line);
+  color: var(--m97-reader-ink);
+  font-family: var(--m97-ui-font);
+}
+
+.reader-mode.reader-mode .project-opening-facts-list {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+}
+
+.reader-mode.reader-mode .project-opening-facts-row {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, 0.24fr) minmax(0, 1fr);
+  gap: 0.5rem 1rem;
+  align-items: baseline;
+}
+
+.reader-mode.reader-mode .project-opening-facts dt {
+  color: var(--m97-reader-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.reader-mode.reader-mode .project-opening-facts dd {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+.reader-mode.reader-mode .project-opening-facts-proof a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 42%, transparent);
+  text-underline-offset: 0.22em;
+}
+
+.reader-mode.reader-mode .project-opening-facts-proof a:hover {
+  text-decoration-color: currentColor;
+}
+
 .reader-mode.reader-mode .case-cut-evidence {
   border-color: var(--m97-reader-line);
 }
@@ -208,6 +257,10 @@
 }
 
 @media (max-width: 767px) {
+  .reader-mode.reader-mode .project-topbar {
+    display: none;
+  }
+
   .reader-header {
     min-height: 52px;
     padding-inline: 10px;
@@ -238,6 +291,11 @@
 
   .reader-mode.reader-mode .project-toc {
     top: 52px;
+  }
+
+  .reader-mode.reader-mode .project-opening-facts-row {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
   }
 }
 
