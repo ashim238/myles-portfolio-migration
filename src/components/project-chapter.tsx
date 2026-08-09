@@ -1,5 +1,9 @@
 import type { ReactNode } from "react";
 import {
+  EvidenceSummary,
+  evidenceSummaryIdFor,
+} from "@/components/evidence-summary";
+import {
   READER_EVIDENCE_MAPS,
   getEvidenceStateLabel,
   type ChapterEvidenceMap,
@@ -16,6 +20,16 @@ type ProjectChapterProps = {
   variant: ProjectChapterVariant;
   children: ReactNode;
 };
+
+// Phase one proves the shared reading grammar at materially different
+// structured-data, interaction, and comparison callsites. The artifacts keep
+// their project-owned composition; only the interpretation pattern is shared.
+const FEATURED_EVIDENCE_PROOFS = new Set([
+  "navi-research-artifacts",
+  "navi-booking-demo",
+  "fafsa-composer-demo",
+  "fafsa-figma-mailchimp",
+]);
 
 function findChapterEvidence(
   variant: ProjectChapterVariant,
@@ -38,11 +52,17 @@ export function ProjectChapter({
   const evidenceStateLabel = evidence
     ? getEvidenceStateLabel(evidence.evidenceState)
     : null;
+  const showEvidenceSummary = Boolean(
+    evidence && FEATURED_EVIDENCE_PROOFS.has(evidence.dominantProof.id),
+  );
+  const evidenceSummaryId =
+    evidence && showEvidenceSummary ? evidenceSummaryIdFor(evidence) : undefined;
 
   return (
     <section
       className="project-chapter"
       aria-labelledby={entry.id}
+      aria-describedby={evidenceSummaryId}
       data-chapter-index={index}
       data-chapter-variant={variant}
       data-claim-class={evidence?.claimClass}
@@ -72,6 +92,9 @@ export function ProjectChapter({
         <span className="project-chapter-motif-point project-chapter-motif-point--end" />
       </span>
       {children}
+      {evidence && showEvidenceSummary ? (
+        <EvidenceSummary evidence={evidence} />
+      ) : null}
     </section>
   );
 }

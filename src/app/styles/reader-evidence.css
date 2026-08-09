@@ -25,8 +25,49 @@
   white-space: nowrap;
 }
 
+/* The first migration callsites share reading semantics, not visual chrome.
+   Each project keeps ownership of the artifact directly above this summary. */
+.reader-mode.reader-mode .reader-evidence-summary {
+  width: min(100%, 68ch);
+  margin-top: 1.25rem;
+  padding: 0.95rem 0 0 1rem;
+  border-top: 1px solid
+    color-mix(in srgb, var(--m97-reader-ink) 24%, transparent);
+  border-left: 3px solid var(--chapter-motif-accent);
+  color: var(--m97-reader-ink);
+  font-family: var(--m97-ui-font);
+}
+
+.reader-mode.reader-mode .reader-evidence-summary-row {
+  display: grid;
+  grid-template-columns: minmax(7.5rem, 0.3fr) minmax(0, 1fr);
+  gap: 0.5rem 1rem;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.reader-mode.reader-mode
+  .reader-evidence-summary-row
+  + .reader-evidence-summary-row {
+  margin-top: 0.55rem;
+}
+
+.reader-mode.reader-mode .reader-evidence-summary-label {
+  font-weight: 700;
+}
+
+@media (max-width: 560px) {
+  .reader-mode.reader-mode .reader-evidence-summary-row {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+}
+
 @media (forced-colors: active) {
-  .reader-mode.reader-mode .project-chapter-evidence-state {
+  .reader-mode.reader-mode .project-chapter-evidence-state,
+  .reader-mode.reader-mode .reader-evidence-summary {
     border-color: CanvasText;
     color: CanvasText;
   }
