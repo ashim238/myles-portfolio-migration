@@ -1,0 +1,111 @@
+/* Paper-backed Myles 98 surfaces stay light even when the global site theme is
+   dark. Keep the correction on reader/document copy rather than remapping the
+   shared --foreground and --muted tokens, since embedded evidence panels still
+   rely on those dark-surface values. */
+.reader-mode.reader-mode,
+.myles98-system-document.myles98-system-document {
+  --m98-paper-text: var(--m97-reader-ink);
+  --m98-paper-muted: #5b5953;
+  --m98-paper-rule: color-mix(
+    in srgb,
+    var(--m97-reader-ink) 28%,
+    transparent
+  );
+}
+
+/* Reader Mode hero and recruiter summary. */
+.reader-mode.reader-mode :is(
+  .project-hero-title,
+  .case-cut-row dd,
+  .case-cut-evidence-type,
+  .case-cut-evidence-cta,
+  .case-cut-moves li
+) {
+  color: var(--m98-paper-text);
+}
+
+.reader-mode.reader-mode :is(
+  .project-topbar,
+  .project-hero-lede,
+  .case-cut-row dt,
+  .case-cut-moves-label
+) {
+  color: var(--m98-paper-muted);
+}
+
+.reader-mode.reader-mode .case-cut-moves li::before {
+  color: var(--m98-paper-muted);
+}
+
+.reader-mode.reader-mode :is(.case-lead-media, .case-cut-evidence) {
+  border-color: var(--m98-paper-rule);
+}
+
+/* Secondary Myles 98 documents: About, Resume, and Loose Parts. */
+.myles98-system-document :is(
+  .about-heading,
+  .about-body,
+  .about-detail dd,
+  .about-detail dd a,
+  .resume-heading,
+  .resume-detail dd,
+  .resume-detail dd a,
+  .resume-section-heading,
+  .resume-role-title,
+  .resume-role-title a,
+  .resume-role-summary,
+  .resume-role-bullets,
+  .resume-skill-group dt,
+  .resume-skill-group dd,
+  .project-hero-title,
+  .play-entry-title,
+  .play-entry-hook,
+  .play-entry-body dd
+) {
+  color: var(--m98-paper-text);
+}
+
+.myles98-system-document :is(
+  .about-kicker,
+  .about-detail dt,
+  .resume-label,
+  .resume-summary-heading,
+  .resume-body,
+  .resume-detail dt,
+  .resume-role-org,
+  .resume-role-dates,
+  .play-lede,
+  .play-section-label,
+  .play-entry-index,
+  .play-entry-exploration,
+  .play-entry-body dt,
+  .play-entry-meta,
+  .play-entry-tag
+) {
+  color: var(--m98-paper-muted);
+}
+
+.myles98-system-document :is(
+  .about-detail,
+  .resume-aside,
+  .resume-detail,
+  .resume-experience,
+  .resume-role,
+  .resume-skills,
+  .play-entries,
+  .play-entry,
+  .play-entry-tag,
+  .play-entry-body dl,
+  .play-entry-body dl > div
+) {
+  border-color: var(--m98-paper-rule);
+}
+
+@media (forced-colors: active) {
+  .reader-mode.reader-mode,
+  .myles98-system-document.myles98-system-document {
+    --m98-paper-text: CanvasText;
+    --m98-paper-muted: CanvasText;
+    --m98-paper-rule: CanvasText;
+  }
+}
