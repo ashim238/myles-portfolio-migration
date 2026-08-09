@@ -1,4 +1,8 @@
 import type { ReactNode } from "react";
+import {
+  READER_EVIDENCE_MAPS,
+  type ChapterEvidenceMap,
+} from "@/lib/reader-evidence";
 import type {
   ProjectChapterEntry,
   ProjectChapterVariant,
@@ -12,6 +16,16 @@ type ProjectChapterProps = {
   children: ReactNode;
 };
 
+function findChapterEvidence(
+  variant: ProjectChapterVariant,
+  chapterId: string,
+): ChapterEvidenceMap | undefined {
+  const chapters = READER_EVIDENCE_MAPS[variant]
+    .chapters as readonly ChapterEvidenceMap[];
+
+  return chapters.find((chapter) => chapter.chapterId === chapterId);
+}
+
 export function ProjectChapter({
   entry,
   index,
@@ -19,12 +33,17 @@ export function ProjectChapter({
   variant,
   children,
 }: ProjectChapterProps) {
+  const evidence = findChapterEvidence(variant, entry.id);
+
   return (
     <section
       className="project-chapter"
       aria-labelledby={entry.id}
       data-chapter-index={index}
       data-chapter-variant={variant}
+      data-claim-class={evidence?.claimClass}
+      data-evidence-state={evidence?.evidenceState}
+      data-dominant-proof={evidence?.dominantProof.id}
     >
       <p className="project-chapter-meta">
         <span className="project-chapter-stage">{entry.stage}</span>

@@ -34,4 +34,38 @@ describe("ProjectChapter", () => {
       "navi",
     );
   });
+
+  it("exposes the mapped claim class, evidence state, and dominant proof", () => {
+    const { container } = render(
+      <ProjectChapter entry={entry} index={3} total={5} variant="navi">
+        <p>Journey map evidence</p>
+      </ProjectChapter>,
+    );
+
+    const chapter = container.querySelector(".project-chapter");
+    expect(chapter).toHaveAttribute("data-claim-class", "interpretive");
+    expect(chapter).toHaveAttribute("data-evidence-state", "proposed");
+    expect(chapter).toHaveAttribute(
+      "data-dominant-proof",
+      "navi-research-artifacts",
+    );
+  });
+
+  it("keeps ad hoc chapter fixtures renderable without false metadata", () => {
+    const { container } = render(
+      <ProjectChapter
+        entry={{ id: "test-only", stage: "Test", title: "Fixture chapter" }}
+        index={1}
+        total={1}
+        variant="navi"
+      >
+        <p>Fixture evidence</p>
+      </ProjectChapter>,
+    );
+
+    const chapter = container.querySelector(".project-chapter");
+    expect(chapter).not.toHaveAttribute("data-claim-class");
+    expect(chapter).not.toHaveAttribute("data-evidence-state");
+    expect(chapter).not.toHaveAttribute("data-dominant-proof");
+  });
 });
