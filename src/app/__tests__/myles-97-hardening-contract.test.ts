@@ -96,8 +96,12 @@ describe("Myles 98 hardening contract", () => {
 
   it("keeps Pocket 98 free of horizontal desktop panning", () => {
     const pocket = read("src/app/styles/myles-97-pocket.css");
+    const pocketHook = read("src/components/myles-97/use-pocket-97.ts");
+    const query = "(max-width: 1023px), (pointer: coarse)";
+
     expect(pocket).toContain("overflow-x: hidden");
-    expect(pocket).toContain('@media (max-width: 767px), (pointer: coarse)');
+    expect(pocket).toContain(`@media ${query}`);
+    expect(pocketHook).toContain(`\"${query}\"`);
     expect(pocket).toContain('data-m97-shell="workstation"');
     expect(pocket).not.toMatch(/overflow-x:\s*(?:auto|scroll)/);
   });
