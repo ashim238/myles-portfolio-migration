@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { Children, Fragment, type ReactNode } from "react";
 import {
   EvidenceSummary,
   evidenceSummaryIdFor,
@@ -21,14 +21,14 @@ type ProjectChapterProps = {
   children: ReactNode;
 };
 
-// Phase one proves the shared reading grammar at materially different
-// structured-data, interaction, and comparison callsites. The artifacts keep
-// their project-owned composition; only the interpretation pattern is shared.
-const FEATURED_EVIDENCE_PROOFS = new Set([
-  "navi-research-artifacts",
-  "navi-booking-demo",
-  "fafsa-composer-demo",
-  "fafsa-figma-mailchimp",
+// Each pilot summary follows the top-level child that owns its dominant proof.
+// This keeps interpretation beside the artifact without imposing shared visual
+// chrome on project-specific compositions.
+const FEATURED_EVIDENCE_PLACEMENTS = new Map<string, number>([
+  ["navi-research-artifacts", 0],
+  ["navi-booking-demo", 1],
+  ["fafsa-composer-demo", 0],
+  ["fafsa-figma-mailchimp", 0],
 ]);
 
 function findChapterEvidence(
@@ -52,8 +52,15 @@ export function ProjectChapter({
   const evidenceStateLabel = evidence
     ? getEvidenceStateLabel(evidence.evidenceState)
     : null;
+  const chapterChildren = Children.toArray(children);
+  const summaryAfterChildIndex = evidence
+    ? FEATURED_EVIDENCE_PLACEMENTS.get(evidence.dominantProof.id)
+    : undefined;
   const showEvidenceSummary = Boolean(
-    evidence && FEATURED_EVIDENCE_PROOFS.has(evidence.dominantProof.id),
+    evidence &&
+      summaryAfterChildIndex !== undefined &&
+      summaryAfterChildIndex >= 0 &&
+      summaryAfterChildIndex < chapterChildren.length,
   );
   const evidenceSummaryId =
     evidence && showEvidenceSummary ? evidenceSummaryIdFor(evidence) : undefined;
@@ -91,10 +98,16 @@ export function ProjectChapter({
         <span className="project-chapter-motif-point project-chapter-motif-point--start" />
         <span className="project-chapter-motif-point project-chapter-motif-point--end" />
       </span>
-      {children}
-      {evidence && showEvidenceSummary ? (
-        <EvidenceSummary evidence={evidence} />
-      ) : null}
+      {chapterChildren.map((child, childIndex) => (
+        <Fragment key={childIndex}>
+          {child}
+          {evidence &&
+          showEvidenceSummary &&
+          childIndex === summaryAfterChildIndex ? (
+            <EvidenceSummary evidence={evidence} />
+          ) : null}
+        </Fragment>
+      ))}
     </section>
   );
 }

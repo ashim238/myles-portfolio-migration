@@ -55,10 +55,10 @@ describe("ProjectChapter", () => {
     );
   });
 
-  it("keeps interpretation and its boundary beside a featured Navi chapter", () => {
+  it("keeps interpretation and its boundary after a featured Navi proof", () => {
     const { container } = render(
       <ProjectChapter entry={entry} index={3} total={5} variant="navi">
-        <p>Journey map evidence</p>
+        <div data-testid="research-board">Journey map evidence</div>
       </ProjectChapter>,
     );
 
@@ -71,6 +71,7 @@ describe("ProjectChapter", () => {
       "data-evidence-for",
       "navi-research-artifacts",
     );
+    expect(screen.getByTestId("research-board").nextElementSibling).toBe(summary);
     expect(container.querySelector(".project-chapter")).toHaveAttribute(
       "aria-describedby",
       "reader-evidence-navi-research-artifacts-summary",
@@ -89,7 +90,68 @@ describe("ProjectChapter", () => {
     ).toBeVisible();
   });
 
-  it("applies the same summary grammar to a featured FAFSA chapter", () => {
+  it("places the FAFSA composer summary before supporting rule artifacts", () => {
+    const { container } = render(
+      <ProjectChapter
+        entry={{
+          id: "uf-locked",
+          stage: "Design",
+          title: "Rules for fixed and swappable parts",
+        }}
+        index={3}
+        total={5}
+        variant="understandingfafsa"
+      >
+        <div data-testid="composer-proof">Template switcher and composer</div>
+        <div data-testid="supporting-rules">Locked rules and palette</div>
+      </ProjectChapter>,
+    );
+
+    const summary = container.querySelector(".reader-evidence-summary");
+    const composerProof = screen.getByTestId("composer-proof");
+    const supportingRules = screen.getByTestId("supporting-rules");
+
+    expect(summary).toHaveAttribute(
+      "data-evidence-for",
+      "fafsa-composer-demo",
+    );
+    expect(composerProof.nextElementSibling).toBe(summary);
+    expect(summary?.nextElementSibling).toBe(supportingRules);
+    expect(
+      screen.getByText(
+        "The rules separate weekly content changes from the structure that protects consistency.",
+      ),
+    ).toBeVisible();
+    expect(screen.getByText("The counselor toolkit remains in progress.")).toBeVisible();
+  });
+
+  it("keeps the Navi booking summary after the demo-bearing child", () => {
+    const { container } = render(
+      <ProjectChapter
+        entry={{
+          id: "nv-build",
+          stage: "Build",
+          title: "From studio concept to working booking flow",
+        }}
+        index={4}
+        total={5}
+        variant="navi"
+      >
+        <div data-testid="component-system">Component system</div>
+        <div data-testid="booking-demo">Working booking demo</div>
+      </ProjectChapter>,
+    );
+
+    const summary = container.querySelector(".reader-evidence-summary");
+    expect(screen.getByTestId("component-system").nextElementSibling).toBe(
+      screen.getByTestId("booking-demo"),
+    );
+    expect(screen.getByTestId("booking-demo").nextElementSibling).toBe(summary);
+    expect(summary).toHaveAttribute("data-evidence-for", "navi-booking-demo");
+    expect(summary).not.toHaveTextContent("Boundary");
+  });
+
+  it("applies the same summary grammar to a featured FAFSA comparison", () => {
     const { container } = render(
       <ProjectChapter
         entry={{
