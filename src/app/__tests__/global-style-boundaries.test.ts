@@ -14,6 +14,7 @@ const expectedImports = [
   '@import "./styles/myles-98-polish.css";',
   '@import "./styles/myles-98-refinement.css";',
   '@import "./styles/myles-98-precision.css";',
+  '@import "./styles/myles-98-paper-contrast.css";',
 ];
 
 const sections = [
@@ -28,6 +29,10 @@ const sections = [
   ["styles/myles-98-polish.css", "Myles 98 recording-review polish"],
   ["styles/myles-98-refinement.css", "Myles 98 refinement direction"],
   ["styles/myles-98-precision.css", "Myles 98 precision pass"],
+  [
+    "styles/myles-98-paper-contrast.css",
+    "Paper-backed Myles 98 surfaces stay light",
+  ],
 ] as const;
 
 describe("global stylesheet boundaries", () => {
