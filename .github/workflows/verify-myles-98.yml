@@ -58,6 +58,16 @@ jobs:
         if: steps.lock.outputs.changed != 'true'
         run: npm ci
 
+      - name: Set up Python
+        if: steps.lock.outputs.changed != 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PDF verification dependency
+        if: steps.lock.outputs.changed != 'true'
+        run: python3 -m pip install --disable-pip-version-check pypdf
+
       - name: Run tests
         id: tests
         if: steps.lock.outputs.changed != 'true'

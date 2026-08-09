@@ -1,6 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useReducer, useRef } from "react";
+import {
+  useCallback,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { BootSequence } from "@/components/myles-97/boot-sequence";
 import type { LoosePartSummary } from "@/components/myles-97/loose-parts-program";
 import { Pocket97Shell } from "@/components/myles-97/pocket-97-shell";
@@ -28,6 +35,36 @@ type HydrationSnapshot = {
   state: WorkstationState | null;
 };
 
+type HydrationStore = {
+  subscribe: (listener: () => void) => () => void;
+  getSnapshot: () => boolean;
+  getServerSnapshot: () => boolean;
+  markComplete: () => void;
+};
+
+function createHydrationStore(): HydrationStore {
+  let complete = false;
+  const listeners = new Set<() => void>();
+
+  return {
+    subscribe(listener) {
+      listeners.add(listener);
+      return () => listeners.delete(listener);
+    },
+    getSnapshot() {
+      return complete;
+    },
+    getServerSnapshot() {
+      return false;
+    },
+    markComplete() {
+      if (complete) return;
+      complete = true;
+      for (const listener of listeners) listener();
+    },
+  };
+}
+
 export function Myles97Shell({ programs, looseParts }: Myles97ShellProps) {
   const [state, dispatch] = useReducer(
     workstationReducer,
@@ -39,6 +76,12 @@ export function Myles97Shell({ programs, looseParts }: Myles97ShellProps) {
     state: null,
   });
   const persistenceReady = useRef(false);
+  const [hydrationStore] = useState(createHydrationStore);
+  const hydrated = useSyncExternalStore(
+    hydrationStore.subscribe,
+    hydrationStore.getSnapshot,
+    hydrationStore.getServerSnapshot,
+  );
   const pocket = usePocket97();
 
   useEffect(() => {
@@ -54,17 +97,16 @@ export function Myles97Shell({ programs, looseParts }: Myles97ShellProps) {
     if (!persistenceReady.current) {
       if (state !== loaded) return;
       persistenceReady.current = true;
+      hydrationStore.markComplete();
     }
 
     saveLocalWorkstation(state);
     saveSessionWorkstation(state);
-  }, [state]);
+  }, [hydrationStore, state]);
 
   const completeBoot = useCallback(() => {
     dispatch({ type: "boot-complete" });
   }, []);
-
-  const hydrated = hydration.current.complete;
 
   return (
     <main

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import type { MouseEvent } from "react";
 import { iconForProgram, Myles97Icon } from "@/components/myles-97/icons";
 import { PROJECT_PROGRAM_BLUEPRINTS } from "@/lib/myles-97/programs";
@@ -41,7 +42,7 @@ export function ReaderHeader({ slug, title }: ReaderHeaderProps) {
         </span>
         <strong>{appName}</strong>
       </div>
-      <a
+      <Link
         className="reader-return"
         href="/"
         onClick={(event) => {
@@ -54,7 +55,7 @@ export function ReaderHeader({ slug, title }: ReaderHeaderProps) {
       >
         <span aria-hidden="true">←</span>
         Return to Desktop
-      </a>
+      </Link>
     </header>
   );
 }
