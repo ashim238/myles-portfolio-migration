@@ -298,7 +298,7 @@
 /* The server snapshot is workstation=false. Flatten that initial markup on
    Pocket-capable devices so the native project links are usable without a
    horizontal desktop or overlapping absolute windows before hydration. */
-@media (max-width: 767px), (pointer: coarse) {
+@media (max-width: 1023px), (pointer: coarse) {
   .myles97-shell {
     overflow-x: hidden;
   }
