@@ -79,33 +79,16 @@ async function wakeLazyMedia(page) {
   });
 }
 
-function toDocumentBox(box, scroll) {
-  return {
-    x: box.x + scroll.x,
-    y: box.y + scroll.y,
-    width: box.width,
-    height: box.height,
-  };
-}
-
-function expandedBox(boxes, pageMetrics, padding = 28) {
-  const left = Math.max(0, Math.min(...boxes.map((box) => box.x)) - padding);
-  const top = Math.max(0, Math.min(...boxes.map((box) => box.y)) - padding);
-  const right = Math.min(
-    pageMetrics.scrollWidth,
-    Math.max(...boxes.map((box) => box.x + box.width)) + padding,
-  );
-  const bottom = Math.min(
-    pageMetrics.scrollHeight,
-    Math.max(...boxes.map((box) => box.y + box.height)) + padding,
-  );
-
-  return {
-    x: left,
-    y: top,
-    width: Math.max(1, right - left),
-    height: Math.max(1, bottom - top),
-  };
+async function measureDocumentBox(locator) {
+  return locator.evaluate((element) => {
+    const rect = element.getBoundingClientRect();
+    return {
+      x: rect.left + window.scrollX,
+      y: rect.top + window.scrollY,
+      width: rect.width,
+      height: rect.height,
+    };
+  });
 }
 
 async function captureProof(page, routeName, viewportName, proof, report) {
@@ -124,53 +107,39 @@ async function captureProof(page, routeName, viewportName, proof, report) {
     await artifact.waitFor({ state: "visible", timeout: 30_000 });
   }
 
-  await summary.scrollIntoViewIfNeeded();
-  await page.waitForTimeout(300);
-
-  const scroll = await page.evaluate(() => ({ x: window.scrollX, y: window.scrollY }));
-  const rawChapterBox = await chapter.boundingBox();
-  const rawSummaryBox = await summary.boundingBox();
-  const rawArtifactBoxes = [];
+  const chapterBox = await measureDocumentBox(chapter);
+  const summaryBox = await measureDocumentBox(summary);
+  const artifactBoxes = [];
   for (const artifact of artifactLocators) {
-    const box = await artifact.boundingBox();
-    if (box) rawArtifactBoxes.push(box);
+    artifactBoxes.push(await measureDocumentBox(artifact));
   }
 
-  if (!rawChapterBox || !rawSummaryBox || rawArtifactBoxes.length === 0) {
-    throw new Error(`Could not measure evidence composition for ${proof.id}.`);
-  }
-
-  const chapterBox = toDocumentBox(rawChapterBox, scroll);
-  const summaryBox = toDocumentBox(rawSummaryBox, scroll);
-  const artifactBoxes = rawArtifactBoxes.map((box) =>
-    toDocumentBox(box, scroll),
-  );
-  const pageMetrics = await page.evaluate(() => ({
-    scrollWidth: document.documentElement.scrollWidth,
-    scrollHeight: document.documentElement.scrollHeight,
-    clientWidth: document.documentElement.clientWidth,
-    clientHeight: document.documentElement.clientHeight,
-  }));
   const artifactBottom = Math.max(
     ...artifactBoxes.map((box) => box.y + box.height),
   );
-  const focusedClip = expandedBox(
-    [...artifactBoxes, summaryBox],
-    pageMetrics,
-    viewportName === "pocket" ? 14 : 28,
-  );
   const prefix = `${routeName}-${proof.id}-${viewportName}`;
+  const chapterFile = `${prefix}-chapter.jpg`;
+  const summaryFile = `${prefix}-summary.png`;
+  const artifactFiles = [];
 
-  await page.screenshot({
-    path: resolve(outputDir, `${prefix}-composition.jpg`),
+  await chapter.screenshot({
+    path: resolve(outputDir, chapterFile),
     type: "jpeg",
     quality: 82,
-    clip: focusedClip,
   });
   await summary.screenshot({
-    path: resolve(outputDir, `${prefix}-summary.png`),
+    path: resolve(outputDir, summaryFile),
     type: "png",
   });
+
+  for (const [index, artifact] of artifactLocators.entries()) {
+    const artifactFile = `${prefix}-artifact-${index + 1}.png`;
+    await artifact.screenshot({
+      path: resolve(outputDir, artifactFile),
+      type: "png",
+    });
+    artifactFiles.push(artifactFile);
+  }
 
   report.proofs.push({
     route: routeName,
@@ -181,8 +150,9 @@ async function captureProof(page, routeName, viewportName, proof, report) {
     artifactBoxes,
     summaryBox,
     artifactToSummaryGap: Math.round(summaryBox.y - artifactBottom),
-    compositionFile: `${prefix}-composition.jpg`,
-    summaryFile: `${prefix}-summary.png`,
+    chapterFile,
+    artifactFiles,
+    summaryFile,
   });
 }
 
