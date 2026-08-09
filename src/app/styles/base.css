@@ -3247,6 +3247,19 @@ button:focus-visible,
     padding: 0;
   }
 
+  /* Keep the described keyboard instructions available to assistive tech,
+     but never let focus expand the fixed mobile bar between pointerdown and
+     pointerup. Desktop keeps the visible focus-within hint above. */
+  .project-toc:focus-within .project-toc-help {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
   .project-toc[data-toc-ready="true"] {
     position: sticky;
     top: 0;

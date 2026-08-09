@@ -100,6 +100,26 @@ describe("ProjectToc responsive layout", () => {
     expect(enhanced).toMatch(/top:\s*0;/);
   });
 
+  it("keeps mobile keyboard help out of the fixed navigation layout on focus", () => {
+    const mobile = cssBlocks("@media (max-width: 767px)").find((block) =>
+      block.includes(".project-toc-toggle"),
+    );
+    expect(mobile).toBeDefined();
+
+    const focusedHelp = cssBlock(
+      ".project-toc:focus-within .project-toc-help",
+      mobile!,
+    );
+
+    expect(focusedHelp).toMatch(/position:\s*absolute;/);
+    expect(focusedHelp).toMatch(/width:\s*1px;/);
+    expect(focusedHelp).toMatch(/height:\s*1px;/);
+    expect(focusedHelp).toMatch(/margin:\s*0;/);
+    expect(focusedHelp).toMatch(/overflow:\s*hidden;/);
+    expect(focusedHelp).toMatch(/clip:\s*rect\(0,\s*0,\s*0,\s*0\);/);
+    expect(focusedHelp).toMatch(/white-space:\s*nowrap;/);
+  });
+
   it("keeps 1440px horizontal and starts the vertical spine at 1600px", () => {
     expect(styles).not.toContain("@media (min-width: 1280px)");
     expect(styles).not.toContain("@media (min-width: 1440px)");

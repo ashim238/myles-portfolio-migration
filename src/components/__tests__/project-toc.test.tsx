@@ -253,7 +253,12 @@ describe("ProjectToc", () => {
         ".project-toc-active-title .project-toc-title",
       ),
     ).toHaveTextContent("What drivers changed");
-    expect(screen.getByText(/Arrow keys move between chapters/)).toBeInTheDocument();
+    const keyboardHelp = screen.getByText(/Arrow keys move between chapters/);
+    expect(keyboardHelp).toBeInTheDocument();
+    expect(screen.getByRole("list")).toHaveAttribute(
+      "aria-describedby",
+      keyboardHelp.id,
+    );
   });
 
   it("keeps a legacy section title as its accessible name", () => {
