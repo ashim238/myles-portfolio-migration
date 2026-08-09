@@ -325,6 +325,22 @@ describe("portfolio artifact accessibility styles", () => {
     );
   });
 
+  it("aligns the FAFSA composer chrome without shrinking its actions", () => {
+    expect(declarationBlock(".uf-composer-toolbar")).toContain(
+      "align-items: center",
+    );
+    expect(declarationBlock(".uf-composer-preview-head")).toContain(
+      "align-items: center",
+    );
+    expect(
+      declarationBlock(".uf-composer-preview-head .uf-composer-heading"),
+    ).toContain("margin-bottom: 0");
+    expect(declarationBlock(".uf-composer-shelf-btn")).toContain(
+      "grid-template-columns: 3.25rem minmax(0, 1fr) auto",
+    );
+    expect(declarationBlock(".uf-composer-btn")).toContain("min-height: 44px");
+  });
+
   it("gives coarse pointers 44px controls independent of viewport width", () => {
     expect(styles).toMatch(
       /@media \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.color-swatch,[\s\S]*?\.fg-synth-tab,[\s\S]*?\.fg-pulled-tab,[\s\S]*?\.project-toc-link\s*\{[\s\S]*?min-height: 44px;/,

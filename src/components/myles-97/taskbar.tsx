@@ -95,7 +95,12 @@ export function Taskbar({
                 }
               }}
             >
-              <Myles97Icon name={iconForProgram(id)} size={16} aria-hidden="true" />
+              <Myles97Icon
+                name={iconForProgram(id)}
+                size={16}
+                compact
+                aria-hidden="true"
+              />
               <span className="myles97-task-label">{title}</span>
             </button>
           );

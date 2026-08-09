@@ -3972,7 +3972,7 @@
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   margin-bottom: 1.25rem;
 }
 
@@ -4005,7 +4005,7 @@
 }
 
 .uf-composer-btn {
-  min-height: 36px;
+  min-height: 44px;
   padding: 0.4rem 0.85rem;
   border: 1px solid var(--line);
   border-radius: 0.35rem;
@@ -4066,7 +4066,7 @@
 
 .uf-composer-shelf-btn {
   display: grid;
-  grid-template-columns: 3.25rem 1fr auto;
+  grid-template-columns: 3.25rem minmax(0, 1fr) auto;
   align-items: center;
   gap: 0.75rem;
   width: 100%;
@@ -4146,10 +4146,14 @@
 .uf-composer-preview-head {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
   margin-bottom: 0.65rem;
+}
+
+.uf-composer-preview-head .uf-composer-heading {
+  margin-bottom: 0;
 }
 
 .uf-composer-weight {

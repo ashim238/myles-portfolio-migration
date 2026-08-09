@@ -16,6 +16,7 @@ type Myles97IconProps = Omit<SVGProps<SVGSVGElement>, "name"> & {
   name: Myles97IconName;
   size?: number;
   title?: string;
+  compact?: boolean;
 };
 
 export function iconForProgram(id: string): Myles97IconName {
@@ -47,6 +48,7 @@ export function Myles97Icon({
   name,
   size = 20,
   title,
+  compact = false,
   ...props
 }: Myles97IconProps) {
   const common = {
@@ -59,6 +61,7 @@ export function Myles97Icon({
     strokeLinecap: "square" as const,
     strokeLinejoin: "miter" as const,
     focusable: false,
+    "data-myles97-icon-density": compact ? "compact" : undefined,
     "aria-hidden": title ? undefined : true,
     "aria-label": title,
     role: title ? ("img" as const) : undefined,
@@ -125,6 +128,14 @@ export function Myles97Icon({
         </svg>
       );
     case "fafsa":
+      if (compact) {
+        return (
+          <svg {...common}>
+            <path d="M3 4h18v16H3zM3 8h18" />
+            <path d="M6 11h12v6H6zM6 11l6 4 6-4" />
+          </svg>
+        );
+      }
       return (
         <svg {...common}>
           <rect x="3" y="6" width="13" height="11" />

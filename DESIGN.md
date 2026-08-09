@@ -106,6 +106,8 @@ The system rejects every pattern that signals templated production: SaaS marketi
 - Line-based depth (1px borders, color-mix rules) instead of shadows or glass.
 - Mobile is the first impression — recruiters open links on phones, then deep-dive on laptops.
 
+**The Three-Layer Ownership Rule.** Shared shell tokens govern portfolio chrome, project namespaces govern case-study identity, and artifact-local literals reproduce source material. Values move upward only when multiple independent consumers need the same semantic role. Project or artifact literals must not be promoted into global tokens for convenience.
+
 ## 2. Colors
 
 A monochrome shell with strict tonal control, animated only by the case-study's scoped accent. Two themes, one logic.
@@ -143,6 +145,8 @@ The portfolio shell has no primary brand accent of its own. The primary color is
 
 **The No-Warm-Default Rule.** Neither the dark nor light theme tints toward warmth-by-default. `#050505` is true near-black; `#fafafa` is cool-neutral. The 2026 cream/sand/paper aesthetic is forbidden.
 
+**The Project Color Rule.** Project colors live on the project page root or inside the artifact they reproduce. They may color project navigation, evidence, and authored simulations. They must not recolor shared shell chrome or enter the global palette solely because one project uses them.
+
 ## 3. Typography
 
 **Display + Body Font:** Instrument Sans (with `system-ui, sans-serif` fallback)
@@ -176,6 +180,8 @@ Flat by default. Depth comes from typography hierarchy, generous spacing, and 1p
 **The Flat-By-Default Rule.** Surfaces are flat at rest. Hover states use color, opacity, or transform — never shadow. Cards and containers separate via background tonal shift (`--surface` vs `--background`) or 1px line, never via drop shadow.
 
 **The 1px Border Rule.** Hairlines are exactly 1px. The system never uses 2px or 3px colored borders as visual emphasis. Side-stripe borders (`border-left: Npx solid var(--accent)`) are absolutely banned — they are the most recognizable tell of AI-generated UI.
+
+**The Hardware Radius Rule.** The hardware-only radii are `device-bezel: 34px` for phone outer bezels and `device-screen: 27px` for screen apertures. They must not be used on general cards, panels, windows, buttons, or other interface surfaces.
 
 ## 5. Components
 
@@ -219,6 +225,10 @@ Flat by default. Depth comes from typography hierarchy, generous spacing, and 1p
 - **Always visible.** Sections never use `sr-only` for their primary heading — the visible h2 is part of the visual rhythm.
 - **Typography:** Headline scale, sentence-case, statement-shaped ("One skeleton. Three fills.", "Where the work went."). Never just a label.
 
+### Scoped Shape Exceptions
+
+**The Semantic Pill Rule.** The `navi-pill: 999px` radius is reserved for Navi route, trust, filter, and status controls whose capsule shape carries meaning. It must not be used on generic buttons, tags, labels, or decorative containers.
+
 ## 6. Do's and Don'ts
 
 ### Do:
@@ -229,6 +239,7 @@ Flat by default. Depth comes from typography hierarchy, generous spacing, and 1p
 - **Do** ship real imagery (process photos, in-hand shots, grid artifacts) — not colored CSS panels where photos should go.
 - **Do** test every animation under `prefers-reduced-motion: reduce`. Reduced motion is not optional.
 - **Do** verify ≥4.5:1 contrast on body text in both themes. Muted gray on muted background is the most common contrast failure.
+- **Do** keep shared-shell, project-namespace, and artifact-local values in their owning layer; document narrowly scoped hardware and semantic shape exceptions.
 
 ### Don't:
 - **Don't** use side-stripe borders (`border-left: Npx solid var(--accent)` where N > 1). Absolute ban; the most recognizable tell of AI-generated UI. Replace with full borders, background tints, leading numbers, oversized leading glyphs, or nothing.
@@ -242,3 +253,4 @@ Flat by default. Depth comes from typography hierarchy, generous spacing, and 1p
 - **Don't** redesign the shared portfolio chrome (`ProjectToc`, `project-meta`, `ProjectWorkJump`) inside a case study. If the system needs to change, change the system, not one page.
 - **Don't** use aphoristic / cryptic copy ("Design at the edge", "Crafting tomorrow"). PRODUCT.md anti-reference; the voice reads like a person talking, not a brand manifesto.
 - **Don't** animate decorative motion that delays content reveal. Reveals must enhance an already-visible default.
+- **Don't** promote literal project colors, `device-bezel`, `device-screen`, or `navi-pill` into reusable global defaults.
