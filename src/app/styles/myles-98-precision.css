@@ -31,6 +31,64 @@
   line-height: 0.9;
 }
 
+/* The full FAFSA project icon carries the modular-editor idea at shortcut
+   scale. In dense 16–20px chrome that same construction collapses into an
+   ambiguous knot, so compact monochrome placements use a dedicated small-icon
+   silhouette: an application window containing one clear mail surface. */
+:where(
+  .reader-header-project,
+  .myles97-titlebar,
+  .myles97-taskbar,
+  .project-work-jump-window-title,
+  .myles98-document-identity
+)
+  svg[data-m98-icon="fafsa"][data-m98-icon-variant="mono"] {
+  background: currentColor;
+  stroke: none;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='1.75' stroke-linecap='square' stroke-linejoin='miter'%3E%3Cpath d='M3 4h18v16H3zM3 8h18M6 11h12v6H6zM6 11l6 4 6-4'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='1.75' stroke-linecap='square' stroke-linejoin='miter'%3E%3Cpath d='M3 4h18v16H3zM3 8h18M6 11h12v6H6zM6 11l6 4 6-4'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+:where(
+  .reader-header-project,
+  .myles97-titlebar,
+  .myles97-taskbar,
+  .project-work-jump-window-title,
+  .myles98-document-identity
+)
+  svg[data-m98-icon="fafsa"][data-m98-icon-variant="mono"]
+  > * {
+  display: none;
+}
+
+/* Reader navigation is a system control, not part of the centered editorial
+   column. On Pocket-sized screens it aligns to the 12px safe edge shared by
+   the Reader header instead of inheriting both page-shell and content-column
+   insets. */
+@media (max-width: 767px) {
+  .reader-mode.reader-mode .project-topbar {
+    width: auto;
+    margin: 0 calc(12px - 1.4rem) 0.35rem;
+    padding-top: 8px;
+  }
+
+  .reader-mode.reader-mode .project-topbar a {
+    min-height: 44px;
+    gap: 8px;
+    margin: 0;
+    padding: 0 4px;
+    text-decoration: none;
+  }
+
+  .reader-mode.reader-mode
+    .project-topbar
+    a
+    > span[aria-hidden="true"]:first-child {
+    margin-inline-end: 0;
+    transform: none;
+  }
+}
+
 @media (min-width: 768px) and (pointer: fine) {
   .myles97-start-menu {
     bottom: 64px;
@@ -78,5 +136,16 @@
   .myles97-start-menu-brand {
     border-color: Highlight;
     box-shadow: none;
+  }
+
+  :where(
+    .reader-header-project,
+    .myles97-titlebar,
+    .myles97-taskbar,
+    .project-work-jump-window-title,
+    .myles98-document-identity
+  )
+    svg[data-m98-icon="fafsa"][data-m98-icon-variant="mono"] {
+    background: CanvasText;
   }
 }
