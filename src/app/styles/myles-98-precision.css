@@ -45,6 +45,35 @@
   }
 }
 
+/* At the narrowest workstation width, keep the recipe note in the dedicated
+   third column instead of letting its paper edge sit beneath Selected Work. */
+@media (min-width: 1024px) and (max-width: 1080px) and (pointer: fine) {
+  .myles97-roti-note {
+    width: 116px;
+    min-height: 176px;
+    justify-self: end;
+    margin-right: 8px;
+    padding: 12px;
+  }
+
+  .myles97-roti-note .myles97-roti-label {
+    margin-bottom: 6px;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+  }
+
+  .myles97-roti-note strong {
+    margin-bottom: 6px;
+    font-size: 15px;
+    line-height: 1.08;
+  }
+
+  .myles97-roti-note > span:last-child {
+    font-size: 10px;
+    line-height: 1.35;
+  }
+}
+
 @media (forced-colors: active) {
   .myles97-start-menu-brand {
     border-color: Highlight;
