@@ -132,6 +132,128 @@ function line(palette: IconPalette, color = palette.ink) {
   };
 }
 
+function renderDepthSilhouette(
+  name: Myles97IconName,
+  tier: Exclude<Myles97IconTier, "chrome">,
+  tone: string,
+): ReactNode {
+  const plane = {
+    "data-m98-icon-silhouette": name,
+    fill: tone,
+    stroke: "none",
+  };
+
+  if (tier === "menu") {
+    switch (name) {
+      case "folder":
+        return <path d="M2 7h8l3 3h9v11H2zM2 7V4h8l3 3" {...plane} />;
+      case "document":
+      case "resume":
+      case "recipe":
+        return <path d="M5 2h10l4 4v16H5z" {...plane} />;
+      case "profile":
+        return <rect x="2" y="4" width="20" height="16" {...plane} />;
+      case "display":
+        return (
+          <>
+            <rect x="2" y="3" width="20" height="14" {...plane} />
+            <rect x="11" y="17" width="2" height="4" {...plane} />
+            <rect x="8" y="21" width="8" height="1" {...plane} />
+          </>
+        );
+      case "mail":
+        return (
+          <>
+            <rect x="6" y="2" width="13" height="6" {...plane} />
+            <rect x="2" y="6" width="19" height="14" {...plane} />
+          </>
+        );
+      case "app":
+        return <rect x="3" y="3" width="18" height="18" {...plane} />;
+      case "loose-parts":
+        return (
+          <>
+            <circle cx="7" cy="7" r="3" {...plane} />
+            <rect x="14" y="4" width="6" height="6" {...plane} />
+            <path d="M3 21h8l-4-7z" {...plane} />
+          </>
+        );
+      case "fresh-greens":
+        return <rect x="2" y="2" width="20" height="20" {...plane} />;
+      case "fafsa":
+        return (
+          <>
+            <rect x="2" y="5" width="15" height="13" {...plane} />
+            <rect x="19" y="4" width="3" height="16" {...plane} />
+          </>
+        );
+      case "navi":
+        return (
+          <path
+            d="M12 21s7-6 7-13a7 7 0 1 0-14 0c0 7 7 13 7 13Z"
+            {...plane}
+          />
+        );
+      case "tiktok":
+        return <rect x="2" y="4" width="20" height="16" {...plane} />;
+    }
+  }
+
+  switch (name) {
+    case "folder":
+      return <path d="M2 9h11l4 4h13v16H2zM2 9V5h11l4 4" {...plane} />;
+    case "document":
+    case "resume":
+    case "recipe":
+      return <path d="M7 2h13l6 6v22H7z" {...plane} />;
+    case "profile":
+      return <rect x="2" y="5" width="28" height="23" {...plane} />;
+    case "display":
+      return (
+        <>
+          <rect x="2" y="4" width="28" height="20" {...plane} />
+          <rect x="15" y="24" width="2" height="5" {...plane} />
+          <rect x="10" y="29" width="12" height="1" {...plane} />
+        </>
+      );
+    case "mail":
+      return (
+        <>
+          <rect x="8" y="2" width="18" height="7" {...plane} />
+          <rect x="2" y="7" width="27" height="20" {...plane} />
+        </>
+      );
+    case "app":
+      return <rect x="4" y="4" width="24" height="24" {...plane} />;
+    case "loose-parts":
+      return (
+        <>
+          <circle cx="9" cy="9" r="5" {...plane} />
+          <rect x="19" y="4" width="9" height="9" {...plane} />
+          <path d="M3 29h12L9 18z" {...plane} />
+        </>
+      );
+    case "fresh-greens":
+      return <rect x="2" y="2" width="28" height="28" {...plane} />;
+    case "fafsa":
+      return (
+        <>
+          <rect x="2" y="8" width="21" height="18" {...plane} />
+          <rect x="25" y="5" width="5" height="22" {...plane} />
+        </>
+      );
+    case "navi":
+      return (
+        <path
+          d="M16 29s9-8 9-17a9 9 0 1 0-18 0c0 9 9 17 9 17Z"
+          {...plane}
+        />
+      );
+    case "tiktok":
+      return <rect x="2" y="5" width="28" height="23" {...plane} />;
+  }
+}
+
 function renderChromeGlyph(
   name: Myles97IconName,
   palette: IconPalette,
@@ -308,9 +430,35 @@ function renderMenuGlyph(
     case "mail":
       return (
         <>
-          <rect x="2" y="5" width="20" height="14" {...surface(palette)} />
-          <path d="m3 7 9 7 9-7M3 18l6-7M21 18l-6-7" />
-          <rect x="18" y="7" width="2" height="2" {...accent(palette, palette.yellow)} />
+          <rect
+            x="6"
+            y="2"
+            width="13"
+            height="9"
+            data-m98-mail-part="paper"
+            {...surface(palette, "#d8edf2")}
+          />
+          <path d="M8 5h8M8 8h6" {...line(palette, palette.blue)} />
+          <rect
+            x="4"
+            y="8"
+            width="19"
+            height="14"
+            data-m98-mail-part="shadow"
+            {...surface(palette, "#5c5c5c")}
+          />
+          <rect
+            x="2"
+            y="6"
+            width="19"
+            height="14"
+            data-m98-mail-part="envelope"
+            {...surface(palette)}
+          />
+          <path
+            d="m3 8 9 7 8-7M3 18l6-7M20 18l-6-7"
+            data-m98-mail-part="fold"
+          />
         </>
       );
     case "app":
@@ -320,7 +468,7 @@ function renderMenuGlyph(
           <path d="M4 4h16v5H4z" {...accent(palette, palette.blue)} />
           <path d="M3 9h18M9 9v12" />
           <rect x="5" y="12" width="3" height="6" {...secondaryAccent(palette, palette.yellow)} />
-          <rect x="6" y="6" width="3" height="1" fill={palette.color ? palette.paper : palette.ink} stroke="none" />
+          <rect x="6" y="6" width="3" height="1" fill={fill(palette, palette.paper)} stroke="none" />
         </>
       );
     case "loose-parts":
@@ -431,9 +579,35 @@ function renderDiscoveryGlyph(
     case "mail":
       return (
         <>
-          <rect x="2" y="7" width="28" height="19" {...surface(palette)} />
-          <path d="m4 9 12 10L28 9M4 24l8-9M28 24l-8-9" />
-          <rect x="25" y="9" width="3" height="3" {...accent(palette, palette.yellow)} />
+          <rect
+            x="8"
+            y="2"
+            width="18"
+            height="12"
+            data-m98-mail-part="paper"
+            {...surface(palette, "#d8edf2")}
+          />
+          <path d="M11 6h11M11 9h8" {...line(palette, palette.blue)} />
+          <rect
+            x="4"
+            y="9"
+            width="27"
+            height="20"
+            data-m98-mail-part="shadow"
+            {...surface(palette, "#5c5c5c")}
+          />
+          <rect
+            x="2"
+            y="7"
+            width="27"
+            height="20"
+            data-m98-mail-part="envelope"
+            {...surface(palette)}
+          />
+          <path
+            d="m4 9 12 10 11-10M4 25l8-10M27 25l-8-10"
+            data-m98-mail-part="fold"
+          />
         </>
       );
     case "app":
@@ -443,7 +617,7 @@ function renderDiscoveryGlyph(
           <path d="M5 5h22v7H5z" {...accent(palette, palette.blue)} />
           <path d="M4 12h24M12 12v16" />
           <rect x="7" y="16" width="4" height="8" {...secondaryAccent(palette, palette.yellow)} />
-          <rect x="8" y="8" width="4" height="2" fill={palette.color ? palette.paper : palette.ink} stroke="none" />
+          <rect x="8" y="8" width="4" height="2" fill={fill(palette, palette.paper)} stroke="none" />
         </>
       );
     case "loose-parts":
@@ -551,12 +725,26 @@ export function Myles97Icon({
     ...props,
   };
 
-  const glyph =
+  const renderer =
     resolvedTier === "chrome"
-      ? renderChromeGlyph(name, palette)
+      ? renderChromeGlyph
       : resolvedTier === "menu"
-        ? renderMenuGlyph(name, palette)
-        : renderDiscoveryGlyph(name, palette);
+        ? renderMenuGlyph
+        : renderDiscoveryGlyph;
+  const glyph = renderer(name, palette);
+  const hasPixelDepth = color && resolvedTier !== "chrome";
 
-  return <svg {...common}>{glyph}</svg>;
+  if (!hasPixelDepth) return <svg {...common}>{glyph}</svg>;
+
+  return (
+    <svg {...common}>
+      <g data-m98-icon-depth="shadow" transform="translate(1 1)">
+        {renderDepthSilhouette(name, resolvedTier, "#4a4a4a")}
+      </g>
+      <g data-m98-icon-depth="highlight" transform="translate(-1 -1)">
+        {renderDepthSilhouette(name, resolvedTier, "#ffffff")}
+      </g>
+      <g data-m98-icon-depth="face">{glyph}</g>
+    </svg>
+  );
 }

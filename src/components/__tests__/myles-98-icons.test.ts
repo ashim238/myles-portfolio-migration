@@ -15,6 +15,11 @@ const iconStyles = readFileSync(
   "utf8",
 );
 
+const workstationStyles = readFileSync(
+  resolve(process.cwd(), "src/app/styles/myles-97.css"),
+  "utf8",
+);
+
 describe("Myles 98 program icon identity", () => {
   it("gives every project program a distinct original glyph", () => {
     const icons = [
@@ -182,6 +187,168 @@ describe("Myles 98 program icon identity", () => {
     }
   });
 
+  it("builds color menu and discovery icons from explicit pixel-depth planes", () => {
+    const names: Myles97IconName[] = [
+      "folder",
+      "document",
+      "profile",
+      "resume",
+      "recipe",
+      "display",
+      "mail",
+      "app",
+      "loose-parts",
+      "fresh-greens",
+      "fafsa",
+      "navi",
+      "tiktok",
+    ];
+    const { container } = render(
+      createElement(
+        "div",
+        null,
+        ...names.flatMap((name) =>
+          [20, 32].map((size) =>
+            createElement(Myles97Icon, {
+              key: `${name}-${size}`,
+              name,
+              size,
+              variant: "color",
+              title: `${name}-${size}`,
+            }),
+          ),
+        ),
+        createElement(Myles97Icon, {
+          name: "mail",
+          size: 16,
+          variant: "color",
+          title: "mail-chrome",
+        }),
+      ),
+    );
+
+    for (const name of names) {
+      for (const size of [20, 32]) {
+        const icon = screen.getByRole("img", { name: `${name}-${size}` });
+        const shadow = icon.querySelector('[data-m98-icon-depth="shadow"]');
+        const highlight = icon.querySelector(
+          '[data-m98-icon-depth="highlight"]',
+        );
+
+        expect(shadow).toBeInTheDocument();
+        expect(highlight).toBeInTheDocument();
+        expect(shadow?.querySelector(".myles98-icon-line")).not.toBeInTheDocument();
+        expect(
+          highlight?.querySelector(".myles98-icon-line"),
+        ).not.toBeInTheDocument();
+        expect(
+          shadow?.querySelector("[data-m98-mail-part]"),
+        ).not.toBeInTheDocument();
+        expect(
+          highlight?.querySelector("[data-m98-mail-part]"),
+        ).not.toBeInTheDocument();
+
+        for (const plane of [shadow, highlight]) {
+          const geometry = plane?.querySelectorAll("path, rect, circle") ?? [];
+          expect(geometry.length).toBeGreaterThan(0);
+          for (const element of geometry) {
+            expect(element).toHaveAttribute("data-m98-icon-silhouette", name);
+            expect(element).toHaveAttribute("stroke", "none");
+          }
+        }
+      }
+    }
+
+    expect(
+      screen
+        .getByRole("img", { name: "mail-chrome" })
+        .querySelector("[data-m98-icon-depth]"),
+    ).not.toBeInTheDocument();
+    expect(container.querySelectorAll('[data-m98-icon-depth="shadow"]')).toHaveLength(
+      names.length * 2,
+    );
+  });
+
+  it("constructs the mail glyph from a paper inset and balanced envelope planes", () => {
+    const { container } = render(
+      createElement(
+        "div",
+        null,
+        createElement(Myles97Icon, {
+          name: "mail",
+          size: 20,
+          variant: "color",
+          title: "Menu mail",
+        }),
+        createElement(Myles97Icon, {
+          name: "mail",
+          size: 32,
+          variant: "color",
+          title: "Discovery mail",
+        }),
+      ),
+    );
+
+    for (const title of ["Menu mail", "Discovery mail"]) {
+      const icon = screen.getByRole("img", { name: title });
+      expect(
+        icon.querySelector('[data-m98-mail-part="paper"]'),
+      ).toBeInTheDocument();
+      expect(
+        icon.querySelector('[data-m98-mail-part="envelope"]'),
+      ).toBeInTheDocument();
+      expect(
+        icon.querySelector('[data-m98-mail-part="fold"]'),
+      ).toBeInTheDocument();
+      expect(
+        icon.querySelector('[data-m98-mail-part="shadow"]'),
+      ).toBeInTheDocument();
+      expect(icon.querySelectorAll('[data-m98-mail-part="shadow"]')).toHaveLength(
+        1,
+      );
+      expect(
+        icon.querySelectorAll(
+          '[data-m98-icon-depth] [data-m98-icon-silhouette="mail"]',
+        ),
+      ).toHaveLength(4);
+
+      const grid = Number(icon.getAttribute("data-m98-icon-grid"));
+      for (const rect of icon.querySelectorAll("rect")) {
+        const group = rect.closest("[data-m98-icon-depth]");
+        const offset = group?.getAttribute("transform") === "translate(1 1)" ? 1 :
+          group?.getAttribute("transform") === "translate(-1 -1)" ? -1 : 0;
+        const x = Number(rect.getAttribute("x")) + offset;
+        const y = Number(rect.getAttribute("y")) + offset;
+        const right = x + Number(rect.getAttribute("width"));
+        const bottom = y + Number(rect.getAttribute("height"));
+
+        expect(x).toBeGreaterThanOrEqual(0);
+        expect(y).toBeGreaterThanOrEqual(0);
+        expect(right).toBeLessThanOrEqual(grid);
+        expect(bottom).toBeLessThanOrEqual(grid);
+      }
+    }
+
+    expect(
+      container.querySelectorAll('[data-m98-mail-part="badge"]'),
+    ).toHaveLength(0);
+  });
+
+  it("keeps the Start-menu brand text inside the blue identity column", () => {
+    const brandRule = workstationStyles.match(
+      /\.myles97-start-menu-brand\s*\{([\s\S]*?)\n\}/,
+    )?.[1];
+    const labelRule = workstationStyles.match(
+      /\.myles97-start-menu-brand :is\(span, strong\)\s*\{([\s\S]*?)\n\}/,
+    )?.[1];
+
+    expect(brandRule).toBeDefined();
+    expect(brandRule).not.toMatch(/writing-mode:\s*vertical-rl/);
+    expect(brandRule).not.toMatch(/transform:\s*rotate\(180deg\)/);
+    expect(labelRule).toMatch(/writing-mode:\s*vertical-rl/);
+    expect(labelRule).toMatch(/transform:\s*rotate\(180deg\)/);
+  });
+
   it("uses color icons on discovery surfaces and preserves forced-color recovery", () => {
     const workstation = readFileSync(
       resolve(process.cwd(), "src/components/myles-97/workstation-desktop.tsx"),
@@ -202,6 +369,12 @@ describe("Myles 98 program icon identity", () => {
     expect(pocket).toContain('variant="color"');
     expect(iconStyles).toMatch(
       /@media \(forced-colors: active\)[\s\S]*?\.myles98-icon-accent,[\s\S]*?fill:\s*CanvasText !important;/,
+    );
+    expect(iconStyles).toMatch(
+      /@media \(forced-colors: active\)[\s\S]*?\[data-m98-icon-depth="shadow"\],[\s\S]*?display:\s*none;/,
+    );
+    expect(iconStyles).not.toMatch(
+      /\.myles97-desktop-shortcuts[\s\S]*?drop-shadow/,
     );
     expect(iconStyles).not.toMatch(/:global\(/);
   });

@@ -713,6 +713,9 @@
   padding: 12px 0;
   background: var(--m97-active);
   color: #fff;
+}
+
+.myles97-start-menu-brand :is(span, strong) {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
 }
