@@ -4,7 +4,7 @@ Date: 2026-08-09
 
 Branch: `codex/myles-97-design`
 
-Verified product build: `d09b71cfb19e76870ac87f7ce147d394412143f0`
+Verified product build: `62563f1c4a81b42ec9c089ba9c83ca6d4cd69be8`
 
 Starting remote-tracking head: `15e67a0`
 
@@ -20,7 +20,7 @@ The locked positioning line is:
 
 > Design, code, and everything in between.
 
-The six approved visual refinements are implemented. Both requested Impeccable gates are complete. No case study has a narrative blocker.
+The six approved visual refinements are implemented. Both requested Impeccable gates and the user-requested corrective identity pass are complete. No case study has a narrative blocker.
 
 ## Product and visual fixes
 
@@ -30,8 +30,11 @@ The six approved visual refinements are implemented. Both requested Impeccable g
 | Navi research board | The board owns surface, card, ink, muted, line, border, and accent tokens. | Heading 18:1 and muted copy 11.35:1 across final theme and viewport checks. |
 | Navi research rails | Desktop formulas and the Pocket rail share one coordinate system. | Geometry regression plus rendered desktop and Pocket evidence. |
 | Opening hiring scan | Every project now exposes Role, Scope, Outcome, and Proof in its first fold while retaining the full RecruiterCut after dominant media. | Shared semantic component, route contracts, 40 Reader frames, 160 opening-fact rows, and final hiring review. |
-| Mobile Reader exits | The redundant project breadcrumb is hidden at 767px and below. Reader Return and the fixed chapter control remain. | One visible route exit on all four mobile Readers, 44px Return target, and 44.73px chapter control. |
+| Mobile Reader exits | The redundant project breadcrumb is hidden at every Reader viewport. Reader Return and the fixed chapter control remain. | One visible route exit on all four Readers at 1440×900 and 390×844, with a 44px Return target and 44.73px mobile chapter control. |
 | Desktop discovery | Welcome uses the approved compact geometry and leaves the full project lane visible. | At 1440px, all four project identities are visible in both themes. |
+| Secondary documents | About, Resume, and Loose Parts now use a complete Myles 98 document frame while keeping paper-backed copy readable in either surrounding theme. | About, Resume, and Loose Parts checked at 1440×900 and 390×844 in both themes; primary copy 16.13:1 and muted copy 6.30:1. |
+| Authored pointer | Fine-pointer contexts use an original crisp Myles 98 arrow, yellow hover state, pressed state, and input I-beam. | Rendered pointer lifecycle checks passed with zero console errors; touch/coarse-pointer suppression remains intact. |
+| Shortcut identity | Desktop shortcuts, Start, and Pocket use distinct color icons for projects and document types. Dense titlebar, taskbar, and Reader chrome intentionally remain monochrome. | Home desktop and Pocket captures in both themes plus SVG variant, callsite, and forced-colors regressions. |
 | Shell handoff | Pocket applies through 1024px and workstation begins at 1025px. | Exact JavaScript and CSS contracts plus both-theme boundary captures. |
 | 1024px Pocket identity | Large-Pocket preview height is capped so the first project identity and action clear the fixed dock. | Action ends at 645.8px, dock begins at 697.6px, leaving 51.8px. |
 | Compact Reader chrome | UnderstandingFAFSA uses the simplified dense-chrome mark in Reader, titlebar, and taskbar contexts. | Focused SVG and callsite tests plus rendered optical review. |
@@ -87,6 +90,18 @@ The P3 is optional design-contract cleanup. A few purposeful local actions use p
 
 Final Gate B disposition: go. P0/P1/P2 = 0, with one optional P3.
 
+### Gate C: corrective identity and secondary-route pass
+
+The user review exposed four surfaces that were outside the earlier primary homepage and Reader release matrix: secondary-document visibility, the authored cursor, shortcut icon identity, and the redundant desktop Reader breadcrumb. The corrective pass reproduced each issue before changing it, then verified the fixes at 1440×900 and 390×844 in both surrounding themes.
+
+- About, Resume, and Loose Parts retain paper-safe text contrast inside a complete Myles 98 document frame.
+- The custom cursor now has authored arrow, hover, press, and input I-beam states on fine pointers.
+- Discovery surfaces use distinct color icons while dense chrome stays monochrome.
+- Reader pages use the header Return control as the sole visible route exit at every viewport.
+- All four Reader performance budgets remain under both byte and file-count thresholds after the icon work.
+
+Final Gate C disposition: go. P0/P1/P2 = 0, with no new P3 finding. Gate B's optional design-contract cleanup remains optional.
+
 ### One-shot detector
 
 The final detector ran exactly once against `src` at `6b8e176` and was not rerun. The post-detector diff through `d09b71c` was reviewed manually and through the final rendered matrix. Those final scoped spacing and evidence-script changes add no color, font, radius, or image concern from the detector families.
@@ -101,6 +116,16 @@ The final detector ran exactly once against `src` at `6b8e176` and was not rerun
 Detector exit: 2 with 180 advisory findings.
 
 Raw detector output: `/tmp/impeccable-final-detector-6b8e176.json`
+
+### Corrective one-shot detector
+
+The Gate C detector ran exactly once against the completed corrective source tree before its local product commit and was not rerun. It reported 182 findings: 95 radius advisories, 75 color advisories, 10 broken-image warnings, and 2 font warnings. Two findings in the corrective CSS used literal values where existing system tokens were available; both were replaced manually with `var(--m97-signal)` and `var(--m97-ink)`. The post-detector diff introduced no new finding family.
+
+The remaining findings retain the Gate B dispositions: named Project Color, Hardware Radius, Semantic Pill, and Three-Layer Ownership exceptions; intentional compact system-chrome type; test-fixture image placeholders; and prose-test regex false positives. Rendered evidence still has zero broken images.
+
+Detector exit: 2 with 182 advisory findings.
+
+Raw detector output: `/tmp/portfolio-corrective-evidence-20260809/impeccable-detector.json`
 
 ## Rendered evidence
 
@@ -136,6 +161,15 @@ Representative evidence:
 - `/tmp/portfolio-release-prep-evidence-20260809-d09b71c/navi-navi-research-artifacts-light-pocket-artifact-1.png`
 - `/tmp/portfolio-release-prep-evidence-20260809-d09b71c/accessibility-forced-colors-fafsa-1440x900.png`
 - `/tmp/portfolio-release-prep-evidence-20260809-d09b71c/accessibility-200-percent-reflow-proxy-fresh-greens.png`
+
+Corrective evidence root: `/tmp/portfolio-corrective-evidence-20260809`
+
+- Commit-bound manifest: `/tmp/portfolio-corrective-evidence-20260809/manifest.json`
+- 12 measured secondary-document views: About, Resume, and Loose Parts at 1440×900 and 390×844 in both themes.
+- 4 homepage identity views, 16 Reader exit views, and 4 Navi research-board contrast views.
+- Representative About, home, Fresh Greens, and Navi board screenshots are retained in the evidence root.
+- Horizontal overflow, broken images, console errors, and page errors: 0.
+- Paper primary contrast: 16.13:1. Paper muted contrast: 6.30:1.
 
 ### Browser limitations
 
@@ -186,7 +220,7 @@ No Grill Me answer is required before release. Optional future interviews remain
 
 | Gate | Result |
 | --- | --- |
-| Full Vitest suite | 170 files, 913 tests passed |
+| Full Vitest suite | 172 files, 921 tests passed |
 | ESLint | Passed |
 | TypeScript | Passed with `npx tsc --noEmit` |
 | Content validation | Passed for 4 project files |
@@ -200,6 +234,7 @@ No Grill Me answer is required before release. Optional future interviews remain
 | Accessibility modes | Keyboard, coarse pointer, reduced motion, forced colors, and 200 percent reflow proxy passed |
 | Impeccable Gate A | Passed after closing one 1024px P2 |
 | Impeccable Gate B | Go, P0/P1/P2 0, one optional P3 |
+| Impeccable Gate C | Go, P0/P1/P2 0, no new P3 |
 
 The build script uses webpack because the Next.js 16.2.10 Turbopack compiler repeatedly stalled during local production compilation. The shared webpack path completed normally.
 
@@ -209,7 +244,7 @@ Current remote-tracking snapshot:
 
 | Ref | Commit | Relationship and recommendation |
 | --- | --- | --- |
-| `codex/myles-97-design` | This closeout commit will be twelve commits ahead of `origin/codex/myles-97-design` at `15e67a0`. Verified product build: `d09b71c`. | Push and review this branch first. It is the integration branch. |
+| `codex/myles-97-design` | This closeout commit will be fourteen commits ahead of `origin/codex/myles-97-design` at `15e67a0`. Verified product build: `62563f1`. | Push and review this branch first. It is the integration branch. |
 | `origin/archive/reader-evidence-grammar-pre-cleanup-2026-08-07` | `08a9b71` | Retain as the canonical archive pointer through acceptance. |
 | `origin/codex/reader-evidence-grammar` | `08a9b71` | Exact commit duplicate of the archive. It becomes a deletion candidate after acceptance and a fresh fetch. |
 | `origin/codex/reader-evidence-grammar-cleanup` | `8ddbf01` | Different history but byte-identical tree `24d5539`. It becomes a deletion candidate after acceptance and a fresh tree comparison. |
@@ -220,7 +255,7 @@ Current remote-tracking snapshot:
 Safe consolidation sequence:
 
 1. Push `codex/myles-97-design` and complete review or acceptance.
-2. Copy `/tmp/portfolio-release-prep-evidence-20260809-d09b71c` to durable storage.
+2. Copy `/tmp/portfolio-release-prep-evidence-20260809-d09b71c` and `/tmp/portfolio-corrective-evidence-20260809` to durable storage.
 3. Create a retained tag or archive pointer for the accepted integration commit.
 4. Run `git fetch --all --prune` and repeat commit, tree, ancestry, worktree, and stash checks.
 5. Delete `codex/reader-evidence-grammar` and `codex/reader-evidence-grammar-cleanup` only if the archive pointer still preserves their commit or byte-identical tree.
