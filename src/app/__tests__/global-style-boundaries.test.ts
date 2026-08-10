@@ -13,6 +13,7 @@ const expectedImports = [
   '@import "./styles/reader-evidence.css";',
   '@import "./styles/myles-97-pocket.css";',
   '@import "./styles/myles-98-polish.css";',
+  '@import "./styles/myles-98-paper-contrast.css";',
 ];
 
 const sections = [
@@ -26,6 +27,7 @@ const sections = [
   ["styles/reader-evidence.css", "Reader evidence state labels"],
   ["styles/myles-97-pocket.css", "Pocket 97 capability-led mobile shell"],
   ["styles/myles-98-polish.css", "Myles 98 recording-review polish"],
+  ["styles/myles-98-paper-contrast.css", "Paper-backed Myles 98 surfaces"],
 ] as const;
 
 describe("global stylesheet boundaries", () => {

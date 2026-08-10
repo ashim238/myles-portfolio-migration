@@ -37,4 +37,20 @@ describe("Myles 98 secondary route shell", () => {
     expect(endcap).toContain('label: "Loose Parts"');
     expect(endcap).toContain('href="/#selected-work"');
   });
+
+  it("keeps secondary document details and actions comfortably usable", () => {
+    const polish = read("src/app/styles/myles-98-polish.css");
+
+    expect(polish).toMatch(
+      /\.myles98-system-document \.about-action\s*\{[\s\S]*?min-height:\s*44px;[\s\S]*?padding:\s*10px 12px;/,
+    );
+    expect(polish).toMatch(
+      /\.myles98-system-document :is\(\.about-detail, \.resume-detail\)\s*\{[\s\S]*?padding:\s*14px 16px;/,
+    );
+    expect(polish).toMatch(
+      /@media \(max-width: 767px\)[\s\S]*?\.myles98-system-document \.about-actions\s*\{[\s\S]*?grid-template-columns:\s*minmax\(0, 1fr\);/,
+    );
+    expect(polish).not.toContain("#fff07a");
+    expect(polish).not.toMatch(/color:\s*#444;/);
+  });
 });

@@ -182,6 +182,13 @@
   white-space: nowrap;
 }
 
+.pocket97-app-identity {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 7px;
+}
+
 .pocket97-back {
   display: inline-flex;
   min-height: 44px;

@@ -44,7 +44,7 @@ describe("Myles 98 hardening contract", () => {
 
     const icons = read("src/components/myles-97/icons.tsx");
     expect(icons).toContain('import type { SVGProps } from "react";');
-    expect(icons).not.toMatch(/from\s+["'](?!react)/);
+    expect(icons.match(/from\s+["'][^"']+["']/g)).toEqual(['from "react"']);
     expect(existsSync(resolve(root, "THIRD_PARTY_NOTICES.md"))).toBe(false);
   });
 

@@ -8,6 +8,10 @@ const baseStyles = readFileSync(
   resolve(process.cwd(), "src/app/styles/base.css"),
   "utf8",
 );
+const polishStyles = readFileSync(
+  resolve(process.cwd(), "src/app/styles/myles-98-polish.css"),
+  "utf8",
+);
 
 function declarationBlock(selector: string): string {
   const start = baseStyles.indexOf(`${selector} {`);
@@ -54,25 +58,38 @@ describe("DotCursor", () => {
   });
 
   it("keeps a dual-contrast mark visible across open backgrounds and interactive targets", () => {
-    const cursorBoxStyles = declarationBlock(".dot-cursor");
-    const cursorStyles = declarationBlock(".dot-cursor::before");
-    const hoverStyles = declarationBlock(".dot-cursor--hover::before");
-
     expect(baseStyles).toContain("--cursor-fill: #f4f4f4");
     expect(baseStyles).toContain("--cursor-outline: #050505");
     expect(baseStyles).toMatch(
       /:root\[data-theme="light"\]\s*\{[\s\S]*?--cursor-fill:\s*#111111;[\s\S]*?--cursor-outline:\s*#fafafa;/,
     );
-    expect(cursorBoxStyles).toContain("width: 12px");
-    expect(cursorBoxStyles).toContain("height: 12px");
-    expect(cursorStyles).toContain("background: var(--cursor-fill)");
-    expect(cursorStyles).toContain("border: 1px solid var(--cursor-outline)");
-    expect(cursorStyles).toContain("mix-blend-mode: normal");
-    expect(hoverStyles).toContain("background: transparent");
-    expect(hoverStyles).toContain("border: 1px solid var(--cursor-fill)");
-    expect(hoverStyles).toContain("outline: 1px solid var(--cursor-outline)");
-    expect(hoverStyles).toContain("scale(2)");
-    expect(hoverStyles).not.toContain("scale(2.6)");
-    expect(hoverStyles).not.toContain("var(--foreground)");
+    expect(declarationBlock(".dot-cursor")).toContain("pointer-events: none");
+    expect(polishStyles).toMatch(
+      /\.dot-cursor\s*\{[\s\S]*?width:\s*24px;[\s\S]*?height:\s*32px;/,
+    );
+    expect(polishStyles).toMatch(
+      /\.myles98-cursor-outline\s*\{[\s\S]*?fill:\s*var\(--m97-ink\);/,
+    );
+    expect(polishStyles).toMatch(
+      /\.myles98-cursor-fill\s*\{[\s\S]*?fill:\s*#fff;/,
+    );
+  });
+
+  it("renders an authored pixel pointer with hover, pressed, and input states", () => {
+    const { container } = render(<DotCursor />);
+
+    expect(container.querySelector(".myles98-cursor-arrow")).toBeInTheDocument();
+    expect(container.querySelector(".myles98-cursor-ibeam")).toBeInTheDocument();
+    expect(container.querySelector(".myles98-cursor-outline")).toBeInTheDocument();
+    expect(container.querySelector(".myles98-cursor-fill")).toBeInTheDocument();
+    expect(polishStyles).toMatch(
+      /\.dot-cursor--hover \.myles98-cursor-fill\s*\{[\s\S]*?fill:\s*var\(--m97-signal\);/,
+    );
+    expect(polishStyles).toMatch(
+      /\.dot-cursor--pressed \.myles98-cursor-arrow\s*\{[\s\S]*?transform:\s*translate\(-1px, -1px\);/,
+    );
+    expect(polishStyles).toMatch(
+      /\.dot-cursor--input \.myles98-cursor-ibeam\s*\{[\s\S]*?display:\s*block;/,
+    );
   });
 });

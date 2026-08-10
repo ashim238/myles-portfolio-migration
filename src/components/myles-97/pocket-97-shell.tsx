@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState, type Dispatch } from "react";
 import { DisplayProperties } from "@/components/myles-97/display-properties";
-import { Myles97Icon } from "@/components/myles-97/icons";
+import { iconForProgram, Myles97Icon } from "@/components/myles-97/icons";
 import type { LoosePartSummary } from "@/components/myles-97/loose-parts-program";
 import { ProjectProgram } from "@/components/myles-97/project-program";
 import { RecipeNoteProgram } from "@/components/myles-97/recipe-note";
@@ -121,7 +121,15 @@ export function Pocket97Shell({
                 <span aria-hidden="true">←</span>
                 Back
               </button>
-              <strong id="pocket97-app-title">{titleFor(activeProgram)}</strong>
+              <span className="pocket97-app-identity">
+                <Myles97Icon
+                  name={iconForProgram(activeProgram)}
+                  size={20}
+                  variant="color"
+                  aria-hidden="true"
+                />
+                <strong id="pocket97-app-title">{titleFor(activeProgram)}</strong>
+              </span>
             </header>
             <div className="pocket97-app-content">
               {activeProject ? (
@@ -190,19 +198,19 @@ export function Pocket97Shell({
       {startOpen ? (
         <div className="pocket97-sheet" role="group" aria-label="Pocket 98 Start">
           <button type="button" onClick={() => openProgram("about")}>
-            <Myles97Icon name="document" size={20} aria-hidden="true" />
+            <Myles97Icon name="profile" size={20} variant="color" aria-hidden="true" />
             About Myles
           </button>
           <button type="button" onClick={() => openProgram("resume")}>
-            <Myles97Icon name="document" size={20} aria-hidden="true" />
+            <Myles97Icon name="resume" size={20} variant="color" aria-hidden="true" />
             Résumé
           </button>
           <button type="button" onClick={() => openProgram("display-properties")}>
-            <Myles97Icon name="display" size={20} aria-hidden="true" />
+            <Myles97Icon name="display" size={20} variant="color" aria-hidden="true" />
             Display Properties
           </button>
           <a href={`mailto:${siteConfig.email}`}>
-            <Myles97Icon name="mail" size={20} aria-hidden="true" />
+            <Myles97Icon name="mail" size={20} variant="color" aria-hidden="true" />
             E-mail
           </a>
         </div>
@@ -216,7 +224,12 @@ export function Pocket97Shell({
               .reverse()
               .map((id) => (
                 <button key={id} type="button" onClick={() => openProgram(id)}>
-                  <Myles97Icon name="app" size={20} aria-hidden="true" />
+                  <Myles97Icon
+                    name={iconForProgram(id)}
+                    size={20}
+                    variant="color"
+                    aria-hidden="true"
+                  />
                   {titleFor(id)}
                 </button>
               ))
@@ -236,15 +249,15 @@ export function Pocket97Shell({
             setStartOpen((open) => !open);
           }}
         >
-          <Myles97Icon name="app" size={20} aria-hidden="true" />
+          <Myles97Icon name="app" size={20} variant="color" aria-hidden="true" />
           <span>Start</span>
         </button>
         <button ref={workButtonRef} type="button" onClick={returnHome}>
-          <Myles97Icon name="folder" size={20} aria-hidden="true" />
+          <Myles97Icon name="folder" size={20} variant="color" aria-hidden="true" />
           <span>Work</span>
         </button>
         <button type="button" onClick={() => openProgram("loose-parts")}>
-          <Myles97Icon name="loose-parts" size={20} aria-hidden="true" />
+          <Myles97Icon name="loose-parts" size={20} variant="color" aria-hidden="true" />
           <span>Loose Parts</span>
         </button>
         <button
@@ -256,7 +269,7 @@ export function Pocket97Shell({
             setAppsOpen((open) => !open);
           }}
         >
-          <Myles97Icon name="display" size={20} aria-hidden="true" />
+          <Myles97Icon name="display" size={20} variant="color" aria-hidden="true" />
           <span>Open Apps</span>
         </button>
       </nav>

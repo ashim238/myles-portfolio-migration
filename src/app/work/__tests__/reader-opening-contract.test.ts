@@ -94,14 +94,16 @@ describe("Reader opening route contract", () => {
     },
   );
 
-  it("hides only the Reader breadcrumb inside the 767px mobile query", () => {
+  it("removes the redundant in-body breadcrumb at every Reader viewport", () => {
     const styles = readFileSync(
       resolve(process.cwd(), "src/app/styles/reader-mode.css"),
       "utf8",
     );
-    const mobileQuery = styles.match(/@media \(max-width: 767px\) \{([\s\S]*?)\n\}/)?.[1];
+    const mobileBoundary = styles.indexOf("@media (max-width: 767px)");
+    const allViewportStyles = styles.slice(0, mobileBoundary);
 
-    expect(mobileQuery).toMatch(
+    expect(mobileBoundary).toBeGreaterThan(0);
+    expect(allViewportStyles).toMatch(
       /\.reader-mode\.reader-mode \.project-topbar\s*\{\s*display:\s*none;/,
     );
     expect(styles.match(/\.reader-mode\.reader-mode \.project-topbar\s*\{\s*display:\s*none;/g)).toHaveLength(1);

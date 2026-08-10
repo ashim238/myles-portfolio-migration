@@ -112,19 +112,19 @@ export function WorkstationDesktop({
     <div className="myles97-desktop" aria-label="Myles 98 desktop">
       <nav className="myles97-desktop-shortcuts" aria-label="Desktop shortcuts">
         <button type="button" onClick={() => openProgram("selected-work")}>
-          <Myles97Icon name="folder" size={32} aria-hidden="true" />
+          <Myles97Icon name="folder" size={32} variant="color" aria-hidden="true" />
           <span>Selected Work</span>
         </button>
         <button type="button" onClick={() => openProgram("about")}>
-          <Myles97Icon name="document" size={32} aria-hidden="true" />
+          <Myles97Icon name="profile" size={32} variant="color" aria-hidden="true" />
           <span>About Myles</span>
         </button>
         <button type="button" onClick={() => openProgram("loose-parts")}>
-          <Myles97Icon name="loose-parts" size={32} aria-hidden="true" />
+          <Myles97Icon name="loose-parts" size={32} variant="color" aria-hidden="true" />
           <span>Loose Parts</span>
         </button>
         <button type="button" onClick={() => openProgram("resume")}>
-          <Myles97Icon name="document" size={32} aria-hidden="true" />
+          <Myles97Icon name="resume" size={32} variant="color" aria-hidden="true" />
           <span>Résumé</span>
         </button>
       </nav>

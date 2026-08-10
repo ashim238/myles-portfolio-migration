@@ -82,10 +82,7 @@
 }
 
 .reader-mode.reader-mode .project-topbar {
-  padding-top: 16px;
-  color: var(--m97-reader-muted);
-  font-family: var(--m97-ui-font);
-  font-size: 12px;
+  display: none;
 }
 
 .reader-mode.reader-mode .project-topbar a {
@@ -257,10 +254,6 @@
 }
 
 @media (max-width: 767px) {
-  .reader-mode.reader-mode .project-topbar {
-    display: none;
-  }
-
   .reader-header {
     min-height: 52px;
     padding-inline: 10px;
