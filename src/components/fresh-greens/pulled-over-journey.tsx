@@ -9,7 +9,7 @@ const STEPS = [
     key: "toolkit",
     label: "Toolkit",
     image: "safety-toolkit",
-    decision: "Starts with the driver's question.",
+    decision: "I started with the driver's question.",
     detail:
       "Four paths stay behind one thumb-reachable control.",
     alt: "The Fresh Greens safety toolkit asking What's going on? above Pulled-over, Roadside assistance, Unfamiliar area, and Share location options.",
@@ -18,7 +18,7 @@ const STEPS = [
     key: "reassurance",
     label: "Reassurance",
     image: "pulled-over-guidance",
-    decision: "Recording begins before the next decision.",
+    decision: "I started recording before asking for another decision.",
     detail:
       "Reassurance comes first, with a trusted contact one step away.",
     alt: "The pulled-over guidance screen saying We'll walk you through what to do and confirming that recording has started.",
@@ -27,7 +27,7 @@ const STEPS = [
     key: "question",
     label: "Question",
     image: "pulled-over-armed-organic",
-    decision: "Regular weight keeps a necessary question from reading like an accusation.",
+    decision: "I kept a necessary question in regular weight so it wouldn't read like an accusation.",
     detail:
       "All three answers carry equal visual weight.",
     alt: "The pulled-over flow asking Are you armed? in regular weight with Yes, No, and Prefer not to answer options.",
@@ -36,7 +36,7 @@ const STEPS = [
     key: "contact",
     label: "Contact",
     image: "pulled-over-contact",
-    decision: "Recording and trusted-contact actions remain visible.",
+    decision: "I kept recording and trusted-contact actions visible.",
     detail:
       "The screen confirms that nothing has been sent.",
     alt: "The pulled-over contact screen showing a live recording timer, the message You're not alone, a note that no message or location has been sent, and Call and Text actions for trusted contact Jordan Lee.",

@@ -338,7 +338,7 @@ function DateTimePickerDemo() {
 
 export default function SystemPage() {
   return (
-    <div className="nv-system">
+    <div className="nv-system nv-ui">
       <header className="nv-system-head">
         <h1>Navi design system</h1>
         <p className="nv-system-context">

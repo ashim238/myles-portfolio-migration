@@ -6,6 +6,10 @@ const css = readFileSync(
   resolve(process.cwd(), "src/app/styles/myles-97.css"),
   "utf8",
 );
+const pocketCss = readFileSync(
+  resolve(process.cwd(), "src/app/styles/myles-97-pocket.css"),
+  "utf8",
+);
 
 function block(selector: string) {
   const start = css.indexOf(`${selector} {`);
@@ -39,5 +43,23 @@ describe("Myles 98 homepage layout", () => {
     expect(statement).toMatch(/max-width:\s*19ch/);
     expect(statement).toMatch(/clamp\(1\.25rem, 2\.5vw, 1\.75rem\)/);
     expect(explorer).toMatch(/grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/);
+  });
+
+  it("keeps the large name open enough to preserve letter shapes", () => {
+    const name = block(".myles97-welcome h1");
+
+    expect(name).toMatch(/letter-spacing:\s*-0\.025em/);
+    expect(pocketCss).toMatch(
+      /\.pocket97-intro h1\s*\{[^}]*letter-spacing:\s*-0\.025em;/,
+    );
+  });
+
+  it("contains the Start menu within the available viewport", () => {
+    const menu = block(".myles97-start-menu");
+    const items = block(".myles97-start-menu-items");
+
+    expect(menu).toMatch(/max-height:\s*calc\(100svh - 66px\)/);
+    expect(items).toMatch(/min-height:\s*0/);
+    expect(items).toMatch(/overflow-y:\s*auto/);
   });
 });

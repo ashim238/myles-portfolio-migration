@@ -241,7 +241,7 @@ export const READER_EVIDENCE_MAPS = {
       {
         chapterId: "fg-design",
         dominantClaim:
-          "The prototype makes route factors and their sources inspectable before a driver chooses.",
+          "The prototype makes route factors and their sources inspectable before a driver chooses, then lets them schedule a local departure reminder.",
         claimClass: "behavioral",
         evidenceState: "built",
         dominantProof: {
@@ -251,15 +251,20 @@ export const READER_EVIDENCE_MAPS = {
         },
         supportingProofs: [
           {
+            id: "fg-departure-reminder",
+            label: "Implemented daylight departure reminder",
+            kind: "interaction",
+          },
+          {
             id: "fresh-greens-architecture",
             label: "Public and community data architecture",
             kind: "diagram",
           },
         ],
         interpretation:
-          "Route chips and source cards explain why the prototype prefers one route over another.",
+          "Route chips and source cards explain the route preference, while the local reminder carries a useful daylight window beyond the open app.",
         caveat:
-          "The prototype does not prove that a preferred route is safer.",
+          "The prototype does not prove that a preferred route is safer or that the reminder changes behavior.",
       },
       {
         chapterId: "fg-pulled-over",
@@ -311,6 +316,13 @@ export const READER_EVIDENCE_MAPS = {
           label: "Built-now and remaining-work ledger",
           kind: "outcome-note",
         },
+        supportingProofs: [
+          {
+            id: "fresh-greens-en-route-video",
+            label: "Working en-route prototype recording",
+            kind: "interaction",
+          },
+        ],
         interpretation:
           "The prototype makes the research-to-product decisions inspectable and ready for broader validation.",
         caveat:
@@ -372,7 +384,7 @@ export const READER_EVIDENCE_MAPS = {
           },
         ],
         interpretation:
-          "The rules separate weekly content changes from the structure that protects consistency.",
+          "Headlines, body copy, imagery, and links can change. Section order, spacing, type, dividers, and the footer structure stay fixed.",
         caveat: "The counselor toolkit remains in progress.",
       },
       {
@@ -468,7 +480,7 @@ export const READER_EVIDENCE_MAPS = {
           },
         ],
         interpretation:
-          "Most parts stayed within one visual system, while a few could cross between Light Academia and e-Boy/e-Girl.",
+          "The slot map stayed constant. Only a few parts could cross between Light Academia and e-Boy/e-Girl.",
         caveat:
           "Limited cross-direction modularity was a proposal made while building the files.",
       },
@@ -484,7 +496,7 @@ export const READER_EVIDENCE_MAPS = {
           kind: "sequence",
         },
         interpretation:
-          "The final direction kept the fixed product slot while making the editorial system more deliberate and upbeat.",
+          "The critique led me to keep the simple editorial structure and make the color and supporting details more upbeat.",
         caveat:
           "American Eagle selection was learned later through Global Creative Lab. No performance result is claimed.",
       },

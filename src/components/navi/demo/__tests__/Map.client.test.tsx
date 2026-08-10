@@ -51,4 +51,27 @@ describe("MapClient rendered marker accessibility", () => {
     });
     expect(readdedMarker).toHaveAttribute("aria-label", marker.accessibleLabel);
   });
+
+  it("renders marker labels as text instead of executable divIcon markup", async () => {
+    const hostileLabel = '<img src=x onerror="window.__markerXss=1">$48';
+    render(
+      <MapClient
+        center={[40.7, -73.9]}
+        zoom={18}
+        markers={[
+          {
+            ...marker,
+            label: hostileLabel,
+            accessibleLabel: "Untrusted marker label",
+          },
+        ]}
+      />,
+    );
+
+    const renderedMarker = await screen.findByRole("button", {
+      name: "Untrusted marker label",
+    });
+    expect(renderedMarker).toHaveTextContent(hostileLabel);
+    expect(renderedMarker.querySelector("img")).not.toBeInTheDocument();
+  });
 });

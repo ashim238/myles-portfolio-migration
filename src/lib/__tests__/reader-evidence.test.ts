@@ -94,4 +94,16 @@ describe("Reader evidence maps", () => {
       "Missing Reader evidence map for navi:fg-design",
     );
   });
+
+  it("registers the Fresh Greens recording as supporting built-product proof", () => {
+    expect(getChapterEvidence("fresh-greens", "fg-scope")).toMatchObject({
+      supportingProofs: [
+        {
+          id: "fresh-greens-en-route-video",
+          label: "Working en-route prototype recording",
+          kind: "interaction",
+        },
+      ],
+    });
+  });
 });

@@ -119,7 +119,7 @@ describe("ProjectChapter", () => {
     expect(summary?.nextElementSibling).toBe(supportingRules);
     expect(
       screen.getByText(
-        "The rules separate weekly content changes from the structure that protects consistency.",
+        "Headlines, body copy, imagery, and links can change. Section order, spacing, type, dividers, and the footer structure stay fixed.",
       ),
     ).toBeVisible();
     expect(
@@ -151,6 +151,33 @@ describe("ProjectChapter", () => {
     expect(screen.getByTestId("booking-demo").nextElementSibling).toBe(summary);
     expect(summary).toHaveAttribute("data-evidence-for", "navi-booking-demo");
     expect(summary).not.toHaveTextContent("Boundary");
+  });
+
+  it("does not show Build and Built as adjacent duplicate labels", () => {
+    const { container } = render(
+      <ProjectChapter
+        entry={{
+          id: "nv-build",
+          stage: "Build",
+          title: "From studio concept to working booking flow",
+        }}
+        index={4}
+        total={5}
+        variant="navi"
+      >
+        <p>Working booking demo</p>
+      </ProjectChapter>,
+    );
+
+    expect(screen.getByText("Build")).toBeVisible();
+    expect(
+      container.querySelector(".project-chapter-evidence-state"),
+    ).not.toBeInTheDocument();
+    expect(screen.getByText("Evidence state: Built")).toHaveClass("sr-only");
+    expect(container.querySelector(".project-chapter")).toHaveAttribute(
+      "data-evidence-state",
+      "built",
+    );
   });
 
   it("applies the same summary grammar to a featured FAFSA comparison", () => {
@@ -192,8 +219,9 @@ describe("ProjectChapter", () => {
         id: "fg-design",
         proof: "fresh-greens-pivot-journey",
         interpretation:
-          "Route chips and source cards explain why the prototype prefers one route over another.",
-        caveat: "The prototype does not prove that a preferred route is safer.",
+          "Route chips and source cards explain the route preference, while the local reminder carries a useful daylight window beyond the open app.",
+        caveat:
+          "The prototype does not prove that a preferred route is safer or that the reminder changes behavior.",
       },
       {
         variant: "fresh-greens",
@@ -209,7 +237,7 @@ describe("ProjectChapter", () => {
         id: "tt-system",
         proof: "tiktok-template-system",
         interpretation:
-          "Most parts stayed within one visual system, while a few could cross between Light Academia and e-Boy/e-Girl.",
+          "The slot map stayed constant. Only a few parts could cross between Light Academia and e-Boy/e-Girl.",
         caveat:
           "Limited cross-direction modularity was a proposal made while building the files.",
       },
@@ -218,7 +246,7 @@ describe("ProjectChapter", () => {
         id: "tt-outcome",
         proof: "tiktok-light-academia-sequence",
         interpretation:
-          "The final direction kept the fixed product slot while making the editorial system more deliberate and upbeat.",
+          "The critique led me to keep the simple editorial structure and make the color and supporting details more upbeat.",
         caveat:
           "American Eagle selection was learned later through Global Creative Lab. No performance result is claimed.",
       },

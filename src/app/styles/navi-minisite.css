@@ -28,6 +28,9 @@
   --nv-text: #2b2b2b;
   --nv-text-muted: #5a5560;
   --nv-border: #e2e0e3;
+  --nv-ui-bg: var(--nv-surface);
+  --nv-ui-border: var(--nv-border);
+  --nv-ink: var(--nv-text);
   --nv-focus: #9e3f0b; /* action-strong: 6.07:1 on white, stronger ring than --nv-action */
   --nv-error: #c2371f;
   --nv-info: #3a86ff;
@@ -181,6 +184,28 @@
 }
 .nv-nav a.nv-nav-host {
   color: var(--nv-action);
+}
+
+@media (pointer: coarse), (any-pointer: coarse) {
+  .nv-nav a,
+  .nv-btn,
+  .nv-cat-nav,
+  .nv-feed-select select,
+  .nv-feed-filters,
+  .nv-feed-clear {
+    min-height: 44px;
+  }
+
+  .nv-nav a,
+  .nv-btn,
+  .nv-cat-nav {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .nv-cat-nav {
+    min-width: 44px;
+  }
 }
 .nv-footer {
   display: grid;
@@ -566,6 +591,21 @@
   content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--nv-surface);
 }
 
+.nv-pin-leaflet {
+  display: flex !important;
+  align-items: flex-end;
+  justify-content: center;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.nv-map-canvas .leaflet-control-zoom a {
+  box-sizing: border-box;
+  min-width: 44px;
+  min-height: 44px;
+  line-height: 42px;
+}
+
 
 /* ── Task 18: Specimen ─────────────────────────────────────────── */
 .nv-specimen { padding: var(--nv-sp-xl) 0; border-bottom: 1px solid var(--nv-border); }
@@ -905,6 +945,10 @@
   cursor: pointer;
 }
 .nv-booking-date--active { border-color: var(--nv-action); background: var(--nv-surface-muted); }
+.nv-booking-date:has(input:focus-visible) {
+  outline: 2px solid var(--nv-focus);
+  outline-offset: 2px;
+}
 .nv-booking-date-day { font-weight: 700; }
 .nv-booking-date-time { color: var(--nv-text-muted); }
 /* "Or pick another date" trigger — the Figma field (node 553-6399): a bordered
@@ -1266,6 +1310,12 @@
    modal (z 90), which surfaces as the map covering the calendar. */
 .nv-map { position: relative; isolation: isolate; height: 100%; min-height: 480px; border-radius: var(--nv-r-md); overflow: hidden; }
 .nv-map-canvas { width: 100%; height: 100%; }
+.nv-map-canvas:focus-visible {
+  outline-offset: -3px;
+}
+.nv-map-canvas .leaflet-control-attribution a:focus-visible {
+  outline-offset: -2px;
+}
 .nv-map-skeleton { width: 100%; height: 100%; background: var(--nv-surface-muted); }
 /* Empty-search feedback shown over the map so it stays above the fold on the
    mobile map-first layout, where the list (and its message) sits below. */
@@ -1832,4 +1882,25 @@
 .nv-booking-confirm svg { vertical-align: -3px; margin-right: 6px; color: var(--nv-action); }
 @media (prefers-reduced-motion: reduce) {
   .nv-booking-state > div { transition: none; }
+}
+
+/* Keep this after the product component rules so later 36/40px visual sizing
+   cannot undo the physical target size on touch-capable tablets. */
+@media (pointer: coarse), (any-pointer: coarse) {
+  .nv-feed-select select,
+  .nv-feed-filters,
+  .nv-feed-clear {
+    min-height: 44px;
+  }
+
+  .nv-icon-btn--sm,
+  .nv-icon-btn--md {
+    width: 44px;
+    height: 44px;
+  }
+
+  .nv-playground-opt {
+    min-width: 44px;
+    min-height: 44px;
+  }
 }

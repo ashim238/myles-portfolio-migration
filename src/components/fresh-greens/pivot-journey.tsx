@@ -74,7 +74,7 @@ export function PivotJourney() {
         </li>
 
         <li className="fg-pivot-step fg-pivot-step--v2">
-          <p className="fg-pivot-step-label">The break</p>
+          <p className="fg-pivot-step-label">The final</p>
           <div className="fg-pivot-phone">
             <PhoneFrame variant="screenshot">
               <ExpandableImage

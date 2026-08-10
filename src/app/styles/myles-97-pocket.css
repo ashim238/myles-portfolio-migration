@@ -59,7 +59,7 @@
   margin-top: 3px;
   font-size: clamp(2rem, 10vw, 3rem);
   line-height: 0.96;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.025em;
 }
 
 .pocket97-statement {

@@ -228,6 +228,165 @@
 
 /* ── Phone frame ──────────────────────────────────────── */
 
+.fg-page .fg-reminder-evidence {
+  width: min(62rem, 100%);
+  margin: 2.4rem 0 2.8rem;
+  padding: clamp(1.1rem, 2.4vw, 1.6rem);
+  border: 1px solid var(--m98-paper-rule, var(--line));
+  border-radius: var(--rounded-md);
+  background: var(--m98-paper-panel, #ffffff);
+  color: var(--m98-paper-text, #171717);
+}
+
+.fg-page .fg-reminder-copy {
+  max-width: 64ch;
+  margin-bottom: 1.5rem;
+}
+
+.fg-page .fg-reminder-kicker {
+  margin: 0 0 0.45rem;
+  color: #3d6447;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.fg-page .fg-reminder-copy h3 {
+  max-width: 24ch;
+  margin: 0 0 0.75rem;
+  color: var(--m98-paper-text, #171717);
+  font-size: clamp(1.45rem, 3vw, 2.15rem);
+  line-height: 1.08;
+  letter-spacing: var(--track-display);
+  text-wrap: balance;
+}
+
+.fg-page .fg-reminder-copy p:last-child,
+.fg-page .fg-reminder-decision > p {
+  margin: 0;
+  color: var(--m98-paper-muted, #5b5953);
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.fg-page .fg-reminder-layout {
+  display: grid;
+  grid-template-columns: minmax(13rem, 17rem) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1.4rem, 4vw, 3.4rem);
+}
+
+.fg-page .fg-reminder-device,
+.fg-page .fg-reminder-decision {
+  min-width: 0;
+}
+
+.fg-page .fg-reminder-device .fg-phone {
+  --phone-w: min(100%, 250px);
+}
+
+.fg-page .fg-reminder-notification {
+  margin: 1.15rem 0;
+  padding: 0.9rem 1rem 1rem;
+  border: 1px solid rgb(255 255 255 / 20%);
+  border-radius: var(--rounded-md);
+  background: #171717;
+  color: #f5f5f7;
+  box-shadow: 0 12px 28px rgb(0 0 0 / 24%);
+}
+
+.fg-page .fg-reminder-notification-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 0.55rem;
+  color: rgb(245 245 247 / 76%);
+  font-size: 0.72rem;
+}
+
+.fg-page .fg-reminder-app-mark {
+  display: grid;
+  width: 1.55rem;
+  height: 1.55rem;
+  place-items: center;
+  border-radius: var(--rounded-sm);
+  background: #3d6447;
+  color: #ffffff;
+  font: 700 0.57rem/1 var(--font-mono), ui-monospace, monospace;
+}
+
+.fg-page .fg-reminder-notification > strong {
+  display: block;
+  margin: 0 0 0.25rem;
+  color: #ffffff;
+  font-size: 0.98rem;
+}
+
+.fg-page .fg-reminder-notification > p {
+  margin: 0;
+  color: rgb(245 245 247 / 86%);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.fg-page .fg-reminder-permission {
+  padding: 0.95rem 1rem;
+  border-left: 3px solid #3d6447;
+  background: color-mix(in srgb, #3d6447 7%, var(--m98-paper-panel, #ffffff));
+}
+
+.fg-page .fg-reminder-permission strong {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--m98-paper-text, #171717);
+}
+
+.fg-page .fg-reminder-permission p {
+  margin: 0;
+  color: var(--m98-paper-muted, #5b5953);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.fg-page .fg-reminder-evidence > figcaption {
+  margin-top: 1.35rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--m98-paper-rule, var(--line));
+  color: var(--m98-paper-muted, #5b5953);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 720px) {
+  .fg-page .fg-reminder-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fg-page .fg-reminder-evidence {
+    padding: 1rem;
+  }
+
+  .fg-page .fg-reminder-device .fg-phone {
+    --phone-w: min(68vw, 250px);
+  }
+}
+
+@media (forced-colors: active) {
+  .fg-page .fg-reminder-evidence,
+  .fg-page .fg-reminder-notification,
+  .fg-page .fg-reminder-permission {
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+    box-shadow: none;
+  }
+
+  .fg-page .fg-reminder-app-mark {
+    background: Highlight;
+    color: HighlightText;
+  }
+}
+
 .fg-phone {
   --phone-w: 276px;
   width: var(--phone-w);
@@ -2564,6 +2723,14 @@
   --nv-success: #2a9d8f;
 }
 
+.reader-mode.reader-mode.nv-page :is(
+  .project-hero,
+  .project-opening-facts
+) {
+  width: min(100% - 32px, 48rem);
+  margin-inline: auto;
+}
+
 @media (max-width: 767px) {
   .reader-mode.reader-mode.nv-page .project-opening-facts {
     margin-block: 1rem;
@@ -2586,6 +2753,49 @@
 :root[data-theme="light"] .nv-page {
   --nv-accent-text: #9f3f0d;
   --nv-surface: color-mix(in srgb, var(--nv-accent) 5%, var(--surface));
+}
+
+/* Reader paper is theme-invariant. Keep paper-backed Navi evidence on its
+   light project palette even when the surrounding Myles 98 shell is dark. */
+.reader-mode.reader-mode.nv-page {
+  --nv-ink: #4a414d;
+  --nv-accent-text: #9f3f0d;
+  --nv-surface: color-mix(in srgb, var(--nv-accent) 5%, #ffffff);
+  --nv-ui-bg: #ffffff;
+  --nv-ui-border: color-mix(in srgb, var(--nv-ink) 18%, transparent);
+}
+
+:root[data-theme="dark"] .reader-mode.reader-mode.nv-page :is(
+  .nv-type-cell,
+  .nv-swatch,
+  .nv-composition-strip,
+  .nv-composition-card,
+  .nv-form-column
+) {
+  --nv-ui-bg: #ffffff;
+  --nv-ui-border: color-mix(in srgb, var(--nv-ink) 18%, transparent);
+}
+
+.reader-mode.reader-mode.nv-page .nv-trust-label {
+  color: var(--nv-accent-text);
+}
+
+.reader-mode.reader-mode.nv-page .nv-system-cta-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  margin-top: 12px;
+  padding: 12px 24px;
+  border-radius: 999px;
+  background: #c4541a;
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.reader-mode.reader-mode.nv-page .nv-system-cta-link:hover {
+  background: #9e3f0b;
+  color: #ffffff;
 }
 
 .nv-eyebrow {
@@ -2657,6 +2867,10 @@
 /* ── Heuristic cards ─────────────────────────────────── */
 
 .nv-heuristic {
+  --nv-heuristic-surface: #161416;
+  --nv-heuristic-ink: #f4f4f4;
+  --nv-heuristic-muted: #c4c4c4;
+  --nv-heuristic-line: #6b6870;
   margin: 2rem 0 0;
   padding: 0;
   list-style: none;
@@ -2672,9 +2886,10 @@
 
 .nv-heuristic-card {
   padding: 1.25rem 1.2rem 1.35rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--nv-heuristic-line);
   border-radius: 0.7rem;
-  background: var(--surface);
+  background: var(--nv-heuristic-surface);
+  color: var(--nv-heuristic-ink);
   transition:
     transform 220ms ease,
     border-color 220ms ease;
@@ -2698,6 +2913,7 @@
 
 .nv-heuristic-card h3 {
   margin: 0 0 0.55rem;
+  color: var(--nv-heuristic-ink);
   font-family: var(--font-navi-display), var(--font-sans), sans-serif;
   font-size: 1.05rem;
   line-height: 1.25;
@@ -2706,7 +2922,7 @@
 .nv-heuristic-card p {
   margin: 0;
   font-size: 0.95rem;
-  color: var(--muted);
+  color: var(--nv-heuristic-muted);
   line-height: 1.55;
 }
 
@@ -2728,6 +2944,15 @@
 
   .nv-heuristic-card:hover {
     transform: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .nv-heuristic {
+    --nv-heuristic-surface: Canvas;
+    --nv-heuristic-ink: CanvasText;
+    --nv-heuristic-muted: CanvasText;
+    --nv-heuristic-line: CanvasText;
   }
 }
 
@@ -2875,11 +3100,13 @@
   background: var(--nv-ui-bg);
 }
 
-:root[data-theme="dark"] .nv-type-cell,
-:root[data-theme="dark"] .nv-swatch,
-:root[data-theme="dark"] .nv-composition-strip,
-:root[data-theme="dark"] .nv-composition-card,
-:root[data-theme="dark"] .nv-form-column {
+:root[data-theme="dark"] .reader-mode :is(
+  .nv-type-cell,
+  .nv-swatch,
+  .nv-composition-strip,
+  .nv-composition-card,
+  .nv-form-column
+) {
   --nv-ui-bg: #141214;
   --nv-ui-border: color-mix(in srgb, #ffffff 14%, transparent);
 }
@@ -2891,7 +3118,7 @@
   font-size: 0.68rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--nv-text-muted, var(--muted));
 }
 
 .nv-type-sample {
@@ -2901,7 +3128,7 @@
   color: var(--nv-ink);
 }
 
-:root[data-theme="dark"] .nv-type-sample {
+:root[data-theme="dark"] .reader-mode .nv-type-sample {
   color: var(--foreground);
 }
 
@@ -2952,7 +3179,7 @@
 .nv-swatch-name {
   font-size: 0.78rem;
   text-transform: capitalize;
-  color: var(--muted);
+  color: var(--nv-text-muted, var(--muted));
 }
 
 .nv-swatch-hex {
@@ -2975,7 +3202,7 @@
 .nv-spacing-token {
   font-family: var(--font-mono), monospace;
   font-size: 0.75rem;
-  color: var(--muted);
+  color: var(--nv-text-muted, var(--muted));
 }
 
 .nv-spacing-px {
@@ -4721,17 +4948,6 @@
   }
 }
 
-/* ── About aside: scroll-driven detail reveal ──────── */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .about-detail {
-      animation: od-card-rise linear both;
-      animation-timeline: view();
-      animation-range: entry 0% cover 40%;
-    }
-  }
-}
-
 /* ── Case study meta fields: staggered entrance ────── */
 @media (prefers-reduced-motion: no-preference) {
   .project-meta-field:nth-child(1) {
@@ -5286,7 +5502,8 @@
   }
 
   .nv-research-artifact {
-    --nv-mobile-rail-x: 1.25rem;
+    --nv-mobile-rail-x: 1rem;
+    --nv-mobile-rail-gutter: 2.75rem;
   }
 
   .nv-research-archetypes {
@@ -5311,17 +5528,18 @@
   .nv-research-booking {
     gap: 1rem;
     padding-top: 0;
+    padding-left: var(--nv-mobile-rail-gutter);
   }
 
   .nv-research-journey > li,
   .nv-research-booking > li {
-    padding: 1rem 1rem 1rem 3.5rem;
+    padding: 1rem;
   }
 
   .nv-research-journey > li::before,
   .nv-research-booking > li::before {
     top: 1.3rem;
-    left: var(--nv-mobile-rail-x);
+    left: calc(var(--nv-mobile-rail-x) - var(--nv-mobile-rail-gutter));
   }
 
   .nv-research-route {
@@ -5466,7 +5684,17 @@
     min-height: 44px;
   }
 
+  .uf-chip,
+  .uf-segment,
+  .uf-lock-palette-swatch {
+    min-height: 44px;
+  }
+
   .color-swatch {
+    min-width: 44px;
+  }
+
+  .uf-lock-palette-swatch {
     min-width: 44px;
   }
 }

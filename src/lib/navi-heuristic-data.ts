@@ -9,16 +9,16 @@ export const NAVI_HEURISTIC_INSIGHTS: HeuristicInsight[] = [
   {
     id: "guest-favorite",
     headline: "Guest Favorite label overuse",
-    body: "The designation appeared on nearly every listing we reviewed, with no consistent criteria visible to the evaluator, eroding trust in a signal meant to shortcut decisions.",
+    body: "Nearly every listing we reviewed carried the badge, but we couldn't see consistent criteria. That made it less useful as a quick decision signal.",
   },
   {
     id: "family-filters",
     headline: "Minimal family & accessibility filters",
-    body: "Kid-friendly and accessibility-specific filters were thin. A crib amenity was often the only family-facing signal, leaving group planners without meaningful constraints.",
+    body: "Kid-friendly and accessibility filters were thin. A crib was often the only family-facing signal, so group planners had little to compare.",
   },
   {
     id: "visual-clutter",
     headline: "Visual clutter and repetitive listings",
-    body: "Grid layouts offered minimal differentiation between stays. Similar photography and copy patterns created decision fatigue before a traveler could compare neighborhood context.",
+    body: "Similar photography and copy made listings hard to distinguish before a traveler could compare neighborhood context.",
   },
 ];

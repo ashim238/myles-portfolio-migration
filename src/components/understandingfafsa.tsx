@@ -434,8 +434,8 @@ export function NewsletterComposer() {
         <div className="uf-composer-toolbar-title">
           <p className="uf-composer-eyebrow">Try it: assemble a send</p>
           <p className="uf-composer-help">
-            Header and footer stay locked. Add middle blocks from the shelf, drag to reorder, or use
-            the arrows. The exercise mirrors the system&apos;s locked and swappable rules.
+            Header and footer stay locked. Add middle blocks from the shelf, then drag or use the
+            arrows to reorder them.
           </p>
         </div>
         <div className="uf-composer-toolbar-actions" role="group" aria-label="Composer actions">

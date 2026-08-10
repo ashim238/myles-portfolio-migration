@@ -51,6 +51,11 @@ vi.mock("@/components/fresh-greens", () => ({
 vi.mock("@/components/fresh-greens/pivot-journey", () => ({
   PivotJourney: () => <figure data-testid="pivot-journey" />,
 }));
+vi.mock("@/components/fresh-greens/departure-reminder-evidence", () => ({
+  DepartureReminderEvidence: () => (
+    <figure data-testid="departure-reminder-evidence" />
+  ),
+}));
 vi.mock("@/components/fresh-greens/pulled-over-journey", () => ({
   PulledOverJourney: () => <section data-testid="pulled-over-journey" />,
 }));
@@ -103,6 +108,9 @@ describe("Fresh Greens rendered narrative ownership", () => {
     const trust = chapter(container, "fg-trust");
 
     expect(within(plan).getByTestId("pivot-journey")).toBeInTheDocument();
+    expect(
+      within(plan).getByTestId("departure-reminder-evidence"),
+    ).toBeInTheDocument();
     expect(within(plan).getByTestId("architecture-diagram")).toBeInTheDocument();
     expect(
       within(plan).queryByTestId("pulled-over-journey"),
@@ -129,7 +137,7 @@ describe("Fresh Greens rendered narrative ownership", () => {
     expect(
       within(trust).getByText("Current prototype limit:"),
     ).toBeInTheDocument();
-    expect(trust).toHaveTextContent("one report to one scored zone");
+    expect(trust).toHaveTextContent(/one report maps to one scored zone/i);
     expect(trust).toHaveTextContent("Corroboration-weighted ranking");
     expect(
       within(chapter(container, "fg-scope")).getByText("Built now"),
@@ -187,29 +195,29 @@ describe("Fresh Greens rendered narrative ownership", () => {
     expect(trust).toHaveTextContent("community contributors");
     expect(`${respond.textContent} ${trustCopy}`).not.toMatch(/trusted agents/i);
     expect(trust).toHaveTextContent(
-      "The intended trust model keeps every firsthand account visible as one person's account unless human review hides or removes it for violating contribution rules",
+      "I wanted each report to remain one person's account",
     );
     expect(
-      trustCopy.indexOf("The intended trust model"),
+      trustCopy.indexOf("I wanted each report"),
     ).toBeLessThan(trustCopy.indexOf("Current prototype limit:"));
     expect(trust).not.toHaveTextContent(
       "A single account is never hidden or treated as proof",
     );
     expect(trust).toHaveTextContent(
-      "Similar reports from separate community contributors across time gain more influence in ranking",
+      "Separate reports from different community contributors would carry more weight over time",
     );
     expect(trust).toHaveTextContent(
-      "A time-sensitive hazard can surface sooner when waiting would make it useless",
+      "a time-sensitive hazard could appear sooner",
     );
     expect(trust).toHaveTextContent(
-      "Sparse coverage stays labeled as uncertainty, never as a positive safety signal",
+      "show uncertainty instead of reading silence as safety",
     );
-    expect(trust).toHaveTextContent("one report to one scored zone");
+    expect(trust).toHaveTextContent(/one report maps to one scored zone/i);
     expect(trust).toHaveTextContent(
-      "Corroboration-weighted ranking is an intended safeguard, not a built feature",
+      "Corroboration-weighted ranking is still an intended safeguard, not a built feature",
     );
     expect(trust).toHaveTextContent(
-      "don't yet show visible contributor provenance or differentiated trust levels",
+      "Contributor provenance and trust levels aren't visible yet",
     );
   });
 
@@ -224,7 +232,7 @@ describe("Fresh Greens rendered narrative ownership", () => {
       scopeCopy.indexOf("What remains"),
     );
     expect(scope).toHaveTextContent(
-      "a working React Native prototype spanning route comparison, en-route guidance, stress-state support, community reporting, and moderation",
+      "a working React Native prototype across more than 26 screens",
     );
     expect(scope).toHaveTextContent("can explain why it prefers one route");
     expect(scope).toHaveTextContent(

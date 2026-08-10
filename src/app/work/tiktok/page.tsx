@@ -124,8 +124,9 @@ export default async function TikTokPage() {
         <div className="project-section tt-section">
           <div className="project-section-body">
             <p>
-              Dynamic Showcase Ads (DSA) used reusable templates with fixed
-              product slots for brand catalog content.
+              DSA needed reusable brand catalog templates built around fixed
+              product slots. I had to see how much visual range I could create
+              without moving that structure.
             </p>
             <dl className={styles.briefFacts}>
               <div>
@@ -168,11 +169,10 @@ export default async function TikTokPage() {
         <div className="project-section tt-section">
           <div className="project-section-body">
             <p>
-              I compared Y2K, Maximalism, Dark Academia, WitchTok, and Cottagecore
-              through their use of type, color, texture, and imagery. Three
-              directions moved forward because they created clearly different
-              visual systems inside the same slot map. Those directions were
-              Dopamine Dressing, e-Boy/e-Girl, and Light Academia.
+              I compared how Y2K, Maximalism, Dark Academia, WitchTok, and
+              Cottagecore used type, color, texture, and imagery. Dopamine
+              Dressing, e-Boy/e-Girl, and Light Academia gave the fixed slot map
+              three visibly different directions, so I moved them forward.
             </p>
           </div>
         </div>
@@ -187,19 +187,19 @@ export default async function TikTokPage() {
         <div className="project-section tt-section tt-section--wide">
           <div className="project-section-body">
             <p>
-              Each direction used the same product slots and shared slot map. I
-              handed off three static directions as layered Photoshop files,
-              then separated type, color, texture, and supporting graphics so I
-              could test how much of each direction could move.
+              I built and handed off three static directions as layered Photoshop
+              files. The slot map stayed fixed, while type, color, texture, and
+              supporting graphics sat on separate layers so I could test what
+              could move within each direction.
             </p>
           </div>
           <TikTokTemplateSystem />
           <div className="project-section-body">
             <p>
-              I proposed that limited modularity while building the files. Most
-              parts stayed within their own visual system. Light Academia and
-              e-Boy/e-Girl shared enough structure for a few parts to cross
-              between them.
+              While building the files, I proposed a limited amount of
+              cross-direction modularity. Most parts stayed inside their own
+              visual system. Light Academia and e-Boy/e-Girl shared enough
+              structure for a few parts to cross between them.
             </p>
           </div>
           <div className="tt-preview-process">

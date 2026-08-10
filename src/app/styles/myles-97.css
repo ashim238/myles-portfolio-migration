@@ -349,7 +349,7 @@
 .myles97-welcome h1 {
   margin: 4px 0 8px;
   font: 700 clamp(2rem, 5vw, 3.8rem) / 0.96 var(--m97-ui-font);
-  letter-spacing: -0.055em;
+  letter-spacing: -0.025em;
 }
 
 .myles97-welcome-statement {
@@ -695,6 +695,7 @@
   left: 8px;
   display: grid;
   width: 296px;
+  max-height: calc(100svh - 66px);
   grid-template-columns: 46px minmax(0, 1fr);
   overflow: hidden;
   border: 2px solid var(--m97-ink);
@@ -728,7 +729,9 @@
 
 .myles97-start-menu-items {
   display: grid;
+  min-height: 0;
   padding: 6px;
+  overflow-y: auto;
 }
 
 .myles97-start-menu-items :is(button, a) {

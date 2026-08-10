@@ -348,6 +348,12 @@ describe("portfolio artifact accessibility styles", () => {
     expect(styles).toMatch(
       /@media \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.color-swatch\s*\{[\s\S]*?min-width: 44px;/,
     );
+    expect(styles).toMatch(
+      /@media \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.uf-chip,[\s\S]*?\.uf-segment,[\s\S]*?\.uf-lock-palette-swatch\s*\{[\s\S]*?min-height: 44px;/,
+    );
+    expect(styles).toMatch(
+      /@media \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.uf-lock-palette-swatch\s*\{[\s\S]*?min-width: 44px;/,
+    );
   });
 
   it("keeps pullquotes centered and contrast-critical labels fully opaque", () => {

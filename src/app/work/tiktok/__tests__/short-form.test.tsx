@@ -193,7 +193,7 @@ describe("TikTok short-form case study", () => {
       Node.DOCUMENT_POSITION_FOLLOWING,
     );
     expect(brief).toHaveTextContent(
-      "Dynamic Showcase Ads (DSA) used reusable templates with fixed product slots for brand catalog content.",
+      "DSA needed reusable brand catalog templates built around fixed product slots. I had to see how much visual range I could create without moving that structure.",
     );
 
     const facts = brief?.querySelector("dl");
@@ -231,7 +231,7 @@ describe("TikTok short-form case study", () => {
     expect(research).toHaveTextContent("WitchTok");
     expect(research).toHaveTextContent("Cottagecore");
     expect(research).toHaveTextContent(
-      "Three directions moved forward because they created clearly different visual systems inside the same slot map.",
+      "Dopamine Dressing, e-Boy/e-Girl, and Light Academia gave the fixed slot map three visibly different directions, so I moved them forward.",
     );
     expect(research).toHaveTextContent("Dopamine Dressing");
     expect(research).toHaveTextContent("e-Boy/e-Girl");
@@ -246,7 +246,13 @@ describe("TikTok short-form case study", () => {
     expect(within(system).getAllByText("Static template")).toHaveLength(3);
     expect(system).toHaveTextContent("layered Photoshop");
     expect(system).toHaveTextContent(
-      /most parts stayed within their own visual system/i,
+      "I built and handed off three static directions as layered Photoshop files.",
+    );
+    expect(system).toHaveTextContent(
+      /most parts stayed inside their own visual system/i,
+    );
+    expect(system).toHaveTextContent(
+      "While building the files, I proposed a limited amount of cross-direction modularity.",
     );
 
     const disclosure = within(system).getByText(/notes below paraphrase/i);
@@ -271,6 +277,12 @@ describe("TikTok short-form case study", () => {
     }
 
     expect(screen.getAllByText("Static template")).toHaveLength(3);
+    expect(
+      screen.getByRole("heading", {
+        level: 2,
+        name: "From critique to the launch library",
+      }),
+    ).toBeInTheDocument();
     expect(
       screen.getByText("Light Academia entered the launch library."),
     ).toBeInTheDocument();

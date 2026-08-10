@@ -89,7 +89,7 @@ export const CASE_STUDY_CHAPTERS = {
     {
       id: "tt-outcome",
       stage: "Deliver",
-      title: "Why Light Academia shipped",
+      title: "From critique to the launch library",
     },
   ],
   understandingfafsa: [

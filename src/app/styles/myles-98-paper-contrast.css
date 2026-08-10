@@ -6,11 +6,94 @@
 .myles98-system-document.myles98-system-document {
   --m98-paper-text: var(--m97-reader-ink);
   --m98-paper-muted: #5b5953;
+  --m98-paper-focus: #263cb8;
+  --m98-paper-panel: #ffffff;
   --m98-paper-rule: color-mix(
     in srgb,
     var(--m97-reader-ink) 28%,
     transparent
   );
+}
+
+.reader-mode.reader-mode :is(a, button, input, select, textarea):focus-visible {
+  outline: 3px solid var(--m98-context-focus, var(--m98-paper-focus));
+  outline-offset: 2px;
+}
+
+.reader-header .reader-return:focus-visible {
+  outline-color: #263cb8;
+}
+
+/* Interactive evidence can sit on project-owned dark or image surfaces. Let
+   those boundaries provide a light ring instead of inheriting paper blue. */
+.reader-mode.reader-mode :is(
+  .fg-phone-screen,
+  .fg-pulled-decision,
+  .nv-research-board,
+  .tt-cover--preview,
+  .tt-preview-sketch
+) {
+  --m98-context-focus: #fff;
+}
+
+.reader-mode.reader-mode .fg-phone-screen .expandable-trigger:focus-visible {
+  outline-offset: -4px;
+  box-shadow: inset 0 0 0 7px var(--m98-paper-focus);
+}
+
+.reader-mode.reader-mode .tt-preview-final .expandable-trigger:focus-visible {
+  outline-offset: -4px;
+  box-shadow: inset 0 0 0 7px #fff;
+}
+
+.reader-mode.reader-mode.fg-page .fg-arch-scroll:focus-visible {
+  /* Chromium restores its native scroller ring in reduced-motion mode. Keep
+     this one narrow override, with a theme-paired color for the architecture
+     canvas. */
+  outline: 2px solid var(--m98-paper-focus) !important;
+  outline-offset: 3px !important;
+}
+
+:root[data-theme="dark"]
+  .reader-mode.reader-mode.fg-page
+  .fg-arch-scroll:focus-visible {
+  outline-color: #fff !important;
+}
+
+.reader-mode.reader-mode.nv-page .nv-system-cta-link {
+  --m98-context-focus: var(--m98-paper-focus);
+}
+
+:root[data-theme="dark"]
+  .reader-mode.reader-mode.nv-page
+  .nv-system-cta-link {
+  --m98-context-focus: #fff;
+}
+
+.reader-mode.reader-mode.nv-page .nv-demo-embed-mobile-cta:focus-visible {
+  outline-offset: -4px;
+}
+
+:root[data-theme="dark"]
+  .reader-mode.reader-mode.nv-page
+  .nv-demo-embed-mobile-cta {
+  --m98-context-focus: #fff;
+}
+
+.reader-mode.reader-mode.uf-page .uf-switcher-preview--scroll {
+  --focus-ring: var(--m98-paper-focus);
+}
+
+.reader-mode.reader-mode.uf-page :is(
+  .uf-lock-stage,
+  .uf-switcher-preview--scroll
+) .expandable-trigger:focus-visible {
+  outline-offset: -4px;
+  box-shadow: inset 0 0 0 7px #fff;
+}
+
+.myles98-system-document :is(a, button, input, select, textarea):focus-visible {
+  outline-color: var(--m98-paper-focus);
 }
 
 .reader-mode.reader-mode :is(
@@ -27,13 +110,18 @@
   .project-toc-readout,
   .project-toc-help,
   .case-cut-row dt,
-  .case-cut-moves-label
+  .case-cut-moves-label,
+  .color-swatch-label,
+  .project-work-jump-label,
+  .project-work-jump-bridge,
+  .project-work-jump-view-all
 ) {
   color: var(--m98-paper-muted);
 }
 
 .reader-mode.reader-mode :is(
   .project-hero-title,
+  .case-section-lead,
   .project-section-body,
   .project-section-body a,
   .project-content,
@@ -48,7 +136,9 @@
   .case-cut-row dd,
   .case-cut-evidence-type,
   .case-cut-evidence-cta,
-  .case-cut-moves li
+  .case-cut-moves li,
+  .project-work-jump-title,
+  .project-work-jump-cta
 ) {
   color: var(--m98-paper-text);
 }
@@ -83,6 +173,275 @@
   .project-section-image-scroll
 ) {
   border-color: var(--m98-paper-rule);
+}
+
+/* Fresh Greens evidence keeps its green voice while paper-backed labels and
+   controls use stable light-surface ink. Phone screens remain project-owned. */
+.reader-mode.reader-mode.fg-page :is(
+  .fg-eyebrow,
+  .fg-evidence-label,
+  .fg-pulled-tab-number,
+  .fg-pulled-state,
+  .fg-mod-stage-label
+) {
+  color: #3d6447;
+}
+
+.reader-mode.reader-mode.fg-page :is(
+  .fg-pulled-reconstruction-title,
+  .fg-reminder-copy h3,
+  .fg-reminder-permission strong,
+  .fg-pulled-decision,
+  .fg-pulled-answer-legend,
+  .fg-mod-stage-text,
+  .fg-scope-label,
+  .fg-scope-list li,
+  .fg-evidence-boundary p:last-child
+) {
+  color: var(--m98-paper-text);
+}
+
+.reader-mode.reader-mode.fg-page :is(
+  .fg-pivot-step-label,
+  .fg-pivot-caption,
+  .fg-reminder-copy p:last-child,
+  .fg-reminder-decision > p,
+  .fg-reminder-permission p,
+  .fg-reminder-evidence > figcaption,
+  .fg-pulled-reconstruction-note,
+  .fg-pulled-detail,
+  .fg-pulled-progress,
+  .fg-pulled-answer-status,
+  .fg-pulled-contact-note,
+  .fg-mod-checks li,
+  .fg-scope-also-label,
+  .fg-scope-also-list,
+  .fg-scope-col:last-child .fg-scope-list li,
+  .fg-safety-visual-caption
+) {
+  color: var(--m98-paper-muted);
+}
+
+.reader-mode.reader-mode.fg-page :is(
+  .fg-evidence-boundaries,
+  .fg-illustrations,
+  .fg-reminder-evidence,
+  .fg-reminder-permission,
+  .fg-pulled-tab,
+  .fg-pulled-panel,
+  .fg-pulled-answer-choice,
+  .fg-mod-flow
+) {
+  border-color: var(--m98-paper-rule);
+  background: var(--m98-paper-panel);
+  color: var(--m98-paper-text);
+}
+
+.reader-mode.reader-mode.fg-page .fg-pulled-control {
+  border-color: var(--m98-paper-text);
+  background: var(--m98-paper-text);
+  color: var(--m98-paper-panel);
+}
+
+.reader-mode.reader-mode.fg-page .fg-pulled-control--back {
+  border-color: var(--m98-paper-rule);
+  background: transparent;
+  color: var(--m98-paper-text);
+}
+
+/* Navi's system specimens are light product evidence. The research board is
+   intentionally dark and owns its own explicit board tokens elsewhere. */
+.reader-mode.reader-mode.nv-page :is(
+  .nv-ring-value,
+  .nv-type-sample,
+  .nv-swatch-hex,
+  .nv-spacing-px,
+  .nv-composition-title,
+  .nv-composition-card h4,
+  .nv-heatmap-item,
+  .nv-validation-ledger h3,
+  .nv-closing-links a
+) {
+  color: var(--m98-paper-text);
+}
+
+.reader-mode.reader-mode.nv-page :is(
+  .nv-survey-note,
+  .nv-ring-caption,
+  .nv-type-label,
+  .nv-swatch-name,
+  .nv-spacing-token,
+  .nv-composition-eyebrow,
+  .nv-composition-card p,
+  .nv-heatmap-map-label,
+  .nv-heatmap-map-pos,
+  .nv-validation-ledger li
+) {
+  color: var(--m98-paper-muted);
+}
+
+.reader-mode.reader-mode.nv-page :is(
+  .nv-showroom,
+  .nv-type-cell,
+  .nv-swatch,
+  .nv-composition-strip,
+  .nv-composition-card,
+  .nv-form-column,
+  .nv-heatmap-map-wrap
+) {
+  border-color: var(--m98-paper-rule);
+  background: var(--m98-paper-panel);
+  color: var(--m98-paper-text);
+}
+
+.reader-mode.reader-mode.nv-page .nv-composition-card:hover {
+  background: color-mix(in srgb, var(--nv-accent) 7%, var(--m98-paper-panel));
+}
+
+.reader-mode.reader-mode.nv-page .nv-heatmap-item--active {
+  color: var(--nv-accent-text);
+}
+
+/* UnderstandingFAFSA keeps the newsletter palette but uses the palette's
+   darker ink variants for words and controls on Reader paper. */
+.reader-mode.reader-mode.uf-page {
+  --uf-accent-warm-text: var(--uf-accent-warm-fill);
+  --uf-accent-cool-text: var(--uf-accent-cool);
+  --uf-accent-soft: color-mix(
+    in srgb,
+    var(--uf-accent-warm) 10%,
+    var(--m98-paper-panel)
+  );
+}
+
+.reader-mode.reader-mode.uf-page :is(
+  .uf-eyebrow,
+  .uf-chip--active
+) {
+  color: var(--uf-accent-warm-text);
+}
+
+.reader-mode.reader-mode.uf-page :is(
+  .uf-before-after-label,
+  .uf-segment--active,
+  .uf-composer-eyebrow,
+  .uf-composer-weight--over
+) {
+  color: var(--uf-accent-cool-text);
+}
+
+.reader-mode.reader-mode.uf-page :is(
+  .uf-chip,
+  .uf-segment,
+  .uf-lock-legend strong,
+  .uf-composer-demo-trigger,
+  .uf-composer-btn,
+  .uf-composer-shelf-name,
+  .uf-composer-item-name
+) {
+  color: var(--m98-paper-text);
+}
+
+.reader-mode.reader-mode.uf-page :is(
+  .uf-before-after-hint,
+  .uf-before-after-evidence-note,
+  .uf-lock-hint,
+  .uf-switcher-descriptor,
+  .uf-lock-legend,
+  .uf-switcher-note,
+  .uf-lock-palette-caption,
+  .uf-composer-help,
+  .uf-composer-heading,
+  .uf-composer-shelf-role,
+  .uf-composer-weight,
+  .uf-composer-pinned-badge,
+  .uf-composer-empty,
+  .uf-composer-item-role,
+  .uf-composer-item-position
+) {
+  color: var(--m98-paper-muted);
+}
+
+/* These are normal-size text labels. Their base muted token passes AA, so do
+   not weaken the rendered color with component opacity. */
+.reader-mode.reader-mode :is(
+  .uf-composer-pinned-badge,
+  .uf-composer-item-position
+) {
+  opacity: 1;
+}
+
+.reader-mode.reader-mode.uf-page :is(
+  .uf-chip,
+  .uf-segment,
+  .uf-switcher-preview--scroll,
+  .uf-composer,
+  .uf-composer-canvas,
+  .uf-composer-pinned,
+  .uf-composer-item,
+  .uf-composer-item-body
+) {
+  border-color: var(--m98-paper-rule);
+  background: var(--m98-paper-panel);
+}
+
+/* TikTok's dark cover and source-asset cards keep their authored colors. The
+   surrounding template controls and iteration notes are paper-backed. */
+.reader-mode.reader-mode.tt-page :is(
+  [class*="briefFacts"] dd,
+  .tt-template-choice,
+  .tt-template-regions button,
+  .tt-template-selected-caption,
+  .tt-template-region-label,
+  .tt-template-region-source,
+  .tt-preview-process-card h3,
+  .tt-preview-iteration strong,
+  .tt-outcome-step-label
+) {
+  color: var(--m98-paper-text);
+}
+
+.reader-mode.reader-mode.tt-page :is(
+  [class*="briefFacts"] dt,
+  .tt-template-region-copy p,
+  .tt-preview-process-lede,
+  .tt-preview-process-media figcaption,
+  .tt-preview-iteration span,
+  .tt-outcome-step figcaption
+) {
+  color: var(--m98-paper-muted);
+}
+
+.reader-mode.reader-mode.tt-page :is(
+  .tt-template-choice,
+  .tt-template-region-source,
+  .tt-outcome-step-label,
+  .tt-outcome-step figure
+) {
+  border-color: var(--m98-paper-rule);
+  background: var(--m98-paper-panel);
+}
+
+.reader-mode.reader-mode.tt-page :is(
+  .tt-template-shipped,
+  .tt-preview-process-card > header > span
+) {
+  background: var(--m98-paper-text);
+  color: var(--m98-paper-panel);
+}
+
+.reader-mode.reader-mode.tt-page .tt-preview-sketch figcaption {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* TikTok's opening is project evidence on a dark art-directed surface, not
+   Reader paper. Restore its local ink after the shared paper correction. */
+.reader-mode.reader-mode.tt-page .tt-cover .tt-title {
+  color: #fff;
+}
+
+.reader-mode.reader-mode.tt-page .tt-cover .tt-lede {
+  color: rgba(255, 255, 255, 0.82);
 }
 
 /* Secondary Myles 98 documents: About, Resume, and Loose Parts. */
@@ -150,6 +509,12 @@
   .myles98-system-document.myles98-system-document {
     --m98-paper-text: CanvasText;
     --m98-paper-muted: CanvasText;
+    --m98-paper-focus: Highlight;
+    --m98-paper-panel: Canvas;
     --m98-paper-rule: CanvasText;
+  }
+
+  .reader-mode.reader-mode.tt-page .tt-cover :is(.tt-title, .tt-lede) {
+    color: CanvasText;
   }
 }

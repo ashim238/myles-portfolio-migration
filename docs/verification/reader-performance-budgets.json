@@ -1,11 +1,11 @@
 {
   "measurement": "uncompressed unique JavaScript and CSS bytes referenced by each route's generated Next.js client-reference manifest",
-  "baseline": "2026-08-09 closeout build on Next.js 16.2.10 with webpack",
+  "baseline": "2026-08-10 Gate D accessibility and fidelity build on Next.js 16.2.10 with webpack",
   "routes": {
     "/work/fresh-greens": {
       "totalBytes": 393216,
       "jsBytes": 139264,
-      "cssBytes": 253952,
+      "cssBytes": 262144,
       "fileCount": 15
     },
     "/work/navi": {
@@ -17,13 +17,13 @@
     "/work/understandingfafsa": {
       "totalBytes": 409600,
       "jsBytes": 155648,
-      "cssBytes": 253952,
+      "cssBytes": 262144,
       "fileCount": 13
     },
     "/work/tiktok": {
       "totalBytes": 385024,
       "jsBytes": 131072,
-      "cssBytes": 253952,
+      "cssBytes": 262144,
       "fileCount": 13
     }
   }

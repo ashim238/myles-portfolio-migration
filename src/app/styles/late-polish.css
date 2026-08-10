@@ -159,7 +159,6 @@
     html[data-reveal-ready="true"] :is(
       .project-highlight,
       .play-entry,
-      .about-detail,
       .home-page .about,
       .footer,
       .fg-features-heading,
@@ -175,7 +174,6 @@
 
     .project-highlight.sr-revealed,
     .play-entry.sr-revealed,
-    .about-detail.sr-revealed,
     .home-page .about.sr-revealed,
     .footer.sr-revealed,
     .fg-features-heading.sr-revealed,

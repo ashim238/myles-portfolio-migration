@@ -128,7 +128,7 @@ export function SurveyStatRings() {
 
 const COMPOSITION_CARDS = [
   { title: "Weekend in Harlem", copy: "Jazz history, local bakeries, and a sunset walk through St. Nicholas Park." },
-  { title: "Chinatown food crawl", copy: "Dim sum counters and tea shops curated by residents, not star ratings." },
+  { title: "Chinatown food crawl", copy: "Dim sum counters and tea shops, with context beyond star ratings." },
   { title: "LES art walk", copy: "Gallery openings and community murals, timed for quieter weekday mornings." },
 ] as const;
 
@@ -177,7 +177,7 @@ export function CompositionStrip() {
       <p className="nv-composition-eyebrow">Editorial homepage slice</p>
       <div className="nv-composition-strip">
         <div className="nv-composition-header">
-          <h3 className="nv-composition-title">Plan a trip that gives back</h3>
+          <h3 className="nv-composition-title">Plan with the neighborhood in view</h3>
           <div className="nv-trust-labels">
             <span className="nv-trust-label">Locally owned</span>
             <span className="nv-trust-label">Nature first</span>
@@ -202,7 +202,7 @@ export function CompositionStrip() {
 /* ── Heatmap explorer ────────────────────────────────── */
 
 const NAVI_LEARN_CONTEXT =
-  "Learn would open with the neighborhood’s inclusive history and local rhythm.";
+  "Learn would open with the neighborhood’s history and the context a visitor needs before arriving.";
 
 export function HeatmapExplorer() {
   const [activeId, setActiveId] = useState("");

@@ -52,6 +52,7 @@ describe("Myles 98 paper-surface contrast", () => {
     expect(paperStyles).toContain("--m98-paper-muted: #5b5953;");
 
     for (const selector of [
+      ".case-section-lead",
       ".about-heading",
       ".about-body",
       ".about-detail dd",
@@ -62,6 +63,10 @@ describe("Myles 98 paper-surface contrast", () => {
     ]) {
       expect(paperStyles).toContain(selector);
     }
+
+    expect(paperStyles).not.toMatch(/--foreground\s*:/);
+    expect(paperStyles).not.toMatch(/--muted\s*:/);
+    expect(paperStyles).not.toMatch(/--surface\s*:/);
 
     for (const selector of [
       ".about-kicker",
@@ -74,11 +79,103 @@ describe("Myles 98 paper-surface contrast", () => {
       expect(paperStyles).toContain(selector);
     }
 
-    expect(paperStyles).not.toMatch(/--foreground\s*:/);
-    expect(paperStyles).not.toMatch(/--muted\s*:/);
   });
 
   it("keeps muted paper copy above WCAG AA for normal text", () => {
     expect(contrastRatio("#5b5953", "#f5f3ea")).toBeGreaterThanOrEqual(4.5);
+    expect(paperStyles).toMatch(
+      /\.reader-mode\.reader-mode :is\(\s*\.uf-composer-pinned-badge,\s*\.uf-composer-item-position\s*\)\s*\{[^}]*opacity:\s*1;/,
+    );
+  });
+
+  it("uses a focus color that clears the 3 to 1 UI threshold on Reader paper", () => {
+    expect(contrastRatio("#263cb8", "#f5f3ea")).toBeGreaterThanOrEqual(3);
+    expect(paperStyles).toContain("--m98-paper-focus: #263cb8;");
+    expect(paperStyles).toMatch(
+      /\.reader-mode\.reader-mode :is\(a, button, input, select, textarea\):focus-visible\s*\{[^}]*outline:\s*3px solid var\(--m98-context-focus, var\(--m98-paper-focus\)\);/,
+    );
+  });
+
+  it("gives dark and art-directed evidence a locally contrasting focus ring", () => {
+    expect(contrastRatio("#ffffff", "#0a0a0a")).toBeGreaterThanOrEqual(3);
+    expect(contrastRatio("#ffffff", "#171717")).toBeGreaterThanOrEqual(3);
+    expect(contrastRatio("#ffffff", "#314951")).toBeGreaterThanOrEqual(3);
+    expect(paperStyles).toMatch(
+      /\.reader-mode\.reader-mode :is\(\s*\.fg-phone-screen,\s*\.fg-pulled-decision,\s*\.nv-research-board,\s*\.tt-cover--preview,\s*\.tt-preview-sketch\s*\)\s*\{[^}]*--m98-context-focus:\s*#fff;/,
+    );
+    expect(paperStyles).toMatch(
+      /\.reader-mode\.reader-mode \.fg-phone-screen \.expandable-trigger:focus-visible\s*\{[^}]*outline-offset:\s*-4px;[^}]*box-shadow:\s*inset 0 0 0 7px var\(--m98-paper-focus\);/,
+    );
+    expect(paperStyles).toMatch(
+      /\.reader-mode\.reader-mode \.tt-preview-final \.expandable-trigger:focus-visible\s*\{[^}]*outline-offset:\s*-4px;[^}]*box-shadow:\s*inset 0 0 0 7px #fff;/,
+    );
+    expect(paperStyles).toMatch(
+      /\.reader-header \.reader-return:focus-visible\s*\{[^}]*outline-color:\s*#263cb8;/,
+    );
+    expect(paperStyles).toMatch(
+      /\.reader-mode\.reader-mode\.fg-page \.fg-arch-scroll:focus-visible\s*\{[^}]*outline:\s*2px solid var\(--m98-paper-focus\) !important;[^}]*outline-offset:\s*3px !important;/,
+    );
+    expect(paperStyles).toMatch(
+      /:root\[data-theme="dark"\]\s+\.reader-mode\.reader-mode\.fg-page\s+\.fg-arch-scroll:focus-visible\s*\{[^}]*outline-color:\s*#fff !important;/,
+    );
+    expect(paperStyles).toMatch(
+      /\.reader-mode\.reader-mode\.nv-page \.nv-system-cta-link\s*\{[^}]*--m98-context-focus:\s*var\(--m98-paper-focus\);/,
+    );
+    expect(paperStyles).toMatch(
+      /:root\[data-theme="dark"\]\s+\.reader-mode\.reader-mode\.nv-page\s+\.nv-system-cta-link\s*\{[^}]*--m98-context-focus:\s*#fff;/,
+    );
+    expect(paperStyles).toMatch(
+      /\.reader-mode\.reader-mode\.nv-page \.nv-demo-embed-mobile-cta:focus-visible\s*\{[^}]*outline-offset:\s*-4px;/,
+    );
+    expect(paperStyles).toMatch(
+      /:root\[data-theme="dark"\]\s+\.reader-mode\.reader-mode\.nv-page\s+\.nv-demo-embed-mobile-cta\s*\{[^}]*--m98-context-focus:\s*#fff;/,
+    );
+    expect(paperStyles).toMatch(
+      /\.reader-mode\.reader-mode\.uf-page \.uf-switcher-preview--scroll\s*\{[^}]*--focus-ring:\s*var\(--m98-paper-focus\);/,
+    );
+    expect(paperStyles).toMatch(
+      /\.reader-mode\.reader-mode\.uf-page :is\(\s*\.uf-lock-stage,\s*\.uf-switcher-preview--scroll\s*\) \.expandable-trigger:focus-visible\s*\{[^}]*outline-offset:\s*-4px;[^}]*box-shadow:\s*inset 0 0 0 7px #fff;/,
+    );
+  });
+
+  it("assigns paper copy by semantic role without remapping global theme aliases", () => {
+    for (const selector of [
+      ".project-work-jump-label",
+      ".fg-pulled-reconstruction-note",
+      ".fg-reminder-evidence > figcaption",
+      ".nv-ring-caption",
+      ".uf-lock-palette-caption",
+      ".tt-preview-process-lede",
+    ]) {
+      expect(paperStyles).toContain(selector);
+    }
+
+    for (const selector of [
+      ".fg-pulled-reconstruction-title",
+      ".fg-pulled-decision",
+      ".fg-mod-stage-text",
+      ".fg-reminder-copy h3",
+      ".nv-ring-value",
+      ".uf-lock-legend strong",
+      ".tt-preview-process-card h3",
+    ]) {
+      expect(paperStyles).toContain(selector);
+    }
+
+    for (const selector of [
+      ".fg-pulled-detail",
+      ".fg-mod-checks li",
+    ]) {
+      expect(paperStyles).toContain(selector);
+    }
+  });
+
+  it("returns TikTok's art-directed cover copy to its project-owned dark-surface colors", () => {
+    expect(paperStyles).toMatch(
+      /\.reader-mode\.reader-mode\.tt-page \.tt-cover \.tt-title\s*\{\s*color:\s*#fff;/,
+    );
+    expect(paperStyles).toMatch(
+      /\.reader-mode\.reader-mode\.tt-page \.tt-cover \.tt-lede\s*\{\s*color:\s*rgba\(255, 255, 255, 0\.82\);/,
+    );
   });
 });

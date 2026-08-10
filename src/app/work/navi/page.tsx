@@ -217,32 +217,32 @@ export default async function NaviPage() {
               secondary research.
             </p>
             <p>
-              Digital nomads, ethical travelers, and visitors who already
-              contribute to or share with communities became a research-informed
-              target hypothesis, not a validated market segment.
+              I treated digital nomads, ethical travelers, and visitors who
+              already contributed to communities as an early audience hypothesis,
+              not a validated market segment.
             </p>
             <p>
               With no engineering resources and no implementation budget, the
-              studio ended with a responsible prototype, not a production website.
-              Its journeys and flows remained internal planning artifacts without
-              an engineering handoff.
+              studio ended with a Figma prototype, not a production website. The
+              journeys and flows stayed internal planning artifacts without an
+              engineering handoff.
             </p>
             <p>
               I used the archetypes, journey map, opportunity areas, and flows to
-              connect the survey findings to neighborhood exploration. The Airbnb
-              audit and secondary research shaped the booking flow. Cost,
-              requirements, and timing stayed visible at key decisions where a
-              lesser-known vendor needed to earn trust.
+              decide what Navi needed to do. The Airbnb audit and secondary
+              research shaped the booking path. I repeated cost, requirements, and
+              timing where a traveler had to decide whether to book with an
+              unfamiliar host.
             </p>
             <p>
-              The research changed the product question. Instead of treating
-              movement on the map as the outcome, I organized the next concept
-              around <mark className="case-highlight">Learn, Plan, Go</mark>:
+              The research shifted my focus from moving visitors on a map to
+              helping them understand and plan what they would do after arriving.
+              I organized that concept as <mark className="case-highlight">Learn, Plan, Go</mark>:
             </p>
             <ul>
-              <li><strong>Learn</strong> surfaces local context.</li>
+              <li><strong>Learn</strong> surfaces neighborhood context.</li>
               <li><strong>Plan</strong> helps users compare and organize.</li>
-              <li><strong>Go</strong> converts intent into bookings.</li>
+              <li><strong>Go</strong> carries a trip into an individual booking.</li>
             </ul>
           </div>
           <NaviResearchArtifacts />
@@ -258,19 +258,19 @@ export default async function NaviPage() {
           <div className="project-section-body">
             <p>
               My studio responsibilities included research and design-system work.
-              The graduate-studio project ended as a Figma concept. Later, working
-              alone, I rebuilt the concept by turning Learn, Plan, Go into a React
-              and TypeScript component system and a working individual booking
-              flow.
+              The graduate-studio project ended as a Figma concept. For the
+              portfolio rebuild, working alone, I rebuilt the concept as a React
+              and TypeScript component system and individual booking flow.
             </p>
             <p>
-              Jost echoes urban wayfinding. Orange distinguishes Navi from the
-              audited travel platforms, paired with Lato and a 4px spacing system.
+              I chose Jost for the wayfinding feel and orange to separate Navi
+              from the audited travel platforms. Lato handles UI text, and a 4px
+              spacing system keeps the screens consistent.
             </p>
             <p>
-              The portfolio rebuild includes brand primitives, semantic aliases,
-              variants, and an editable playground. <Link href="/work/navi/system">See the Navi
-              design system</Link>. The same components power the booking flow.{" "}
+              The same components and variants power both the editable system page
+              and the booking demo. <Link href="/work/navi/system">See the Navi
+              design system</Link>.{" "}
               <Link href="/work/navi/demo">Open the demo</Link>.
             </p>
           </div>
@@ -282,7 +282,7 @@ export default async function NaviPage() {
           aria-labelledby="nv-screens"
         >
           <h3 className="project-evidence-heading" id="nv-screens">A working booking flow</h3>
-          <p className="case-section-lead">The screens below come from the current React build.</p>
+          <p className="case-section-lead">The screens below come from the React build.</p>
           <div className="project-section-body">
             <p>
               In the current build, you can browse the feed, search by
@@ -298,15 +298,14 @@ export default async function NaviPage() {
         <div className="project-section nv-section nv-closing">
           <div className="project-section-body">
             <p>
-              I can now inspect the component states and individual booking flow in a browser. I
-              still need to test them with residents, travelers, and local hosts before treating
-              those choices as settled.
+              A plausible long-term path is to bring the evidence and prototype to
+              an institution such as NYC Tourism for further development. It
+              remains a future path, not a launch outcome.
             </p>
             <p>
-              A plausible long-term path for the studio concept was to present the
-              evidence and prototype to an institution such as NYC
-              Tourism for native integration or further development. That remained
-              a future path, not a launch outcome.
+              I can now inspect the component states and individual booking flow in
+              a browser. I still need to test it with residents, travelers, and
+              local hosts before treating those choices as settled.
             </p>
           </div>
           <div className="nv-validation-ledger">

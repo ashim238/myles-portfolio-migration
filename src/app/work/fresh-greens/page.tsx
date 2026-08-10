@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ExpandableImage } from "@/components/expandable-image";
 import { LeadMedia } from "@/components/lead-media";
+import { LeadVideo } from "@/components/lead-video";
 import { ReaderShell } from "@/components/myles-97/reader-shell";
 import { ProjectOpeningFacts } from "@/components/project-opening-facts";
 import { RecruiterCut } from "@/components/recruiter-cut";
@@ -10,6 +11,7 @@ import { ProjectToc } from "@/components/project-toc";
 import { ProjectChapter } from "@/components/project-chapter";
 import { ProjectWorkJump } from "@/components/project-work-jump";
 import { ArchitectureDiagram, PhoneFrame } from "@/components/fresh-greens";
+import { DepartureReminderEvidence } from "@/components/fresh-greens/departure-reminder-evidence";
 import { PivotJourney } from "@/components/fresh-greens/pivot-journey";
 import { PulledOverJourney } from "@/components/fresh-greens/pulled-over-journey";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
@@ -76,7 +78,7 @@ export default async function FreshGreensPage() {
 
       <ProjectOpeningFacts
         role="Solo, design and engineering"
-        scope="Six interviews became a prototype spanning route comparison, en-route guidance, stress-state support, community reporting, and moderation."
+        scope="Six interviews shaped route comparison, reminders, stress support, reporting, and moderation."
         outcome="Working React Native prototype across 26+ screens."
         proof={freshGreensProof}
       />
@@ -98,7 +100,7 @@ export default async function FreshGreensPage() {
           href: freshGreensProof.href,
         }}
         outcomeValue="Working"
-        outcomeLabel="React Native prototype across 26+ screens"
+        outcomeLabel="Route planning, reminders, stress support, reporting, and moderation"
         moves={[]}
       />
 
@@ -114,18 +116,16 @@ export default async function FreshGreensPage() {
               where asking for help might not feel safe.
             </p>
             <p>
-              I still used Google Maps or Apple Maps, then carried the rest
-              myself. At night, I avoided backroads, drove comfortably below the
-              speed limit, kept my wallet within reach, and watched the road
-              around me. That experience gave me a hypothesis, not proof. I
-              interviewed six Black drivers to see what carried beyond my own
-              route.
+              I still used Google Maps or Apple Maps, but at night I avoided
+              backroads, drove comfortably below the speed limit, and kept my wallet
+              within reach. That experience gave
+              me a hypothesis, not proof. I interviewed six Black drivers.
             </p>
             <p>
-              The Green Book used print to help Black travelers find places that
-              would serve them. I use that history as design lineage, not
-              evidence that Fresh Greens is its digital successor. I wanted to
-              see what that principle could mean inside navigation.{" "}
+              The Green Book helped Black travelers find places that would serve
+              them. I use that as design lineage, not evidence that Fresh Greens
+              is its digital successor. I wanted to explore what that principle
+              could look like inside navigation.{" "}
               <a href="https://nmaahc.si.edu/explore/stories/traveling-through-jim-crow-america" rel="noreferrer" target="_blank">
                 Source: Smithsonian National Museum of African American History
                 and Culture
@@ -139,8 +139,8 @@ export default async function FreshGreensPage() {
       <ProjectChapter entry={chapters[1]} index={2} total={chapters.length} variant="fresh-greens">
         <div className="project-section fg-section fg-section--wide">
           <p className="case-section-lead">
-            Participants already knew how to plan, prepare, and decide whom to
-            trust. Their answers widened my hypothesis into three problems.
+            Participants described three problems with planning, stress, and
+            trust.
           </p>
           <div className="fg-evidence-boundaries" aria-label="Three Fresh Greens product problems">
             <div className="fg-evidence-boundary">
@@ -157,7 +157,7 @@ export default async function FreshGreensPage() {
             </div>
           </div>
           <div className="project-section-body">
-            <p>These interviews widened my hypothesis. They don&apos;t represent every Black driver.</p>
+            <p>These interviews widened my hypothesis. Six interviews don&apos;t represent every Black driver.</p>
           </div>
         </div>
       </ProjectChapter>
@@ -165,10 +165,10 @@ export default async function FreshGreensPage() {
       <ProjectChapter entry={chapters[2]} index={3} total={chapters.length} variant="fresh-greens">
         <section className="project-section fg-section fg-section--wide">
           <div className="project-section-body">
-            <p>Participants timed trips around daylight, avoided roads, and compared clues outside maps that only optimized time and distance.</p>
-            <p>I moved from a Google Maps feature to a standalone route preview, then turned public and community inputs into route chips and source cards. The prototype can explain why it prefers one route. It doesn&apos;t prove that route is safer.</p>
+            <p>Participants timed trips around daylight and compared clues outside maps that optimize time and distance. I moved from a Google Maps feature to a standalone route preview. Then I turned public and community inputs into inspectable route chips and source cards. They explain a route preference without proving it safer.</p>
           </div>
           <PivotJourney />
+          <DepartureReminderEvidence />
           <ArchitectureDiagram />
         </section>
       </ProjectChapter>
@@ -176,11 +176,11 @@ export default async function FreshGreensPage() {
       <ProjectChapter entry={chapters[3]} index={4} total={chapters.length} variant="fresh-greens">
         <section className="project-section fg-section fg-section--wide">
           <div className="project-section-body">
-            <p>Once stress is high, a driver shouldn&apos;t have to search navigation controls or forceful copy. I hid four support paths behind one thumb-reachable control until requested.</p>
+            <p>High stress is the wrong time to search navigation. I hid four support paths behind one thumb-reachable control until requested.</p>
           </div>
           <PulledOverJourney />
           <div className="project-section-body">
-            <p>Pulled-over guidance starts recording, puts reassurance first, keeps questions in regular weight, and leaves trusted-contact actions visible. Roadside help, unfamiliar-area guidance, location sharing, and emergency steps work offline. This is prototype behavior, not evidence that it improves an encounter.</p>
+            <p>The flow starts recording, puts reassurance first, and leaves trusted-contact actions visible. Roadside help, location sharing, guidance, and emergency steps work offline. That is built behavior, not evidence of a better encounter.</p>
           </div>
         </section>
       </ProjectChapter>
@@ -188,9 +188,9 @@ export default async function FreshGreensPage() {
       <ProjectChapter entry={chapters[4]} index={5} total={chapters.length} variant="fresh-greens">
         <div className="project-section fg-section fg-section--wide">
           <div className="project-section-body">
-            <p>Public datasets still matter because their source and scope can be inspected, but they can&apos;t describe how a place felt to someone who moved through it. I kept each firsthand account specific instead of treating it as fact.</p>
-            <p>The intended trust model keeps every firsthand account visible as one person&apos;s account unless human review hides or removes it for violating contribution rules. Similar reports from separate community contributors across time gain more influence in ranking. A time-sensitive hazard can surface sooner when waiting would make it useless. Sparse coverage stays labeled as uncertainty, never as a positive safety signal.</p>
-            <p><strong>Current prototype limit:</strong> the prototype maps one report to one scored zone, so a single report can affect route ranking now. Corroboration-weighted ranking is an intended safeguard, not a built feature. The screens don&apos;t yet show visible contributor provenance or differentiated trust levels.</p>
+            <p>Public datasets are useful because their sources can be checked, but they can&apos;t describe how a place felt to the person who moved through it. I wanted each report to remain one person&apos;s account. Human review could hide or remove it only when it broke contribution rules.</p>
+            <p>Separate reports from different community contributors would carry more weight over time, while a time-sensitive hazard could appear sooner. Where coverage was thin, Fresh Greens would show uncertainty instead of reading silence as safety.</p>
+            <p><strong>Current prototype limit:</strong> one report maps to one scored zone, so it can affect route ranking on its own. Corroboration-weighted ranking is still an intended safeguard, not a built feature. Contributor provenance and trust levels aren&apos;t visible yet.</p>
           </div>
           <figure className="fg-safety-visual">
             <PhoneFrame variant="screenshot">
@@ -224,13 +224,13 @@ export default async function FreshGreensPage() {
       <ProjectChapter entry={chapters[5]} index={6} total={chapters.length} variant="fresh-greens">
         <div className="project-section fg-section fg-scope">
           <div className="project-section-body">
-            <p>Six interviews became a working React Native prototype spanning route comparison, en-route guidance, stress-state support, community reporting, and moderation. It can explain why it prefers one route without proving it safer.</p>
+            <p>I turned six interviews into a working React Native prototype across more than 26 screens: route comparison, reminders, en-route guidance, stress support, reporting, and moderation. It can explain why it prefers one route without proving it safer. Testing with more Black drivers comes next.</p>
           </div>
           <div className="fg-scope-grid">
             <div className="fg-scope-col">
               <p className="fg-scope-label">Built now</p>
               <ul className="fg-scope-list" role="list">
-                <li>Plan: route comparison explained through chips and source cards</li>
+                <li>Plan: route comparison explained through chips and source cards, plus local departure and refuel reminders</li>
                 <li>Respond: one-thumb, offline support across five stress states</li>
                 <li>Trust: contribution and moderation flows that keep reports reviewable</li>
               </ul>
@@ -244,9 +244,24 @@ export default async function FreshGreensPage() {
               </ul>
             </div>
           </div>
-          <div className="project-section-body fg-scope-closer">
-            <p>I can show where each interview theme changed the product, then test those decisions with more drivers instead of treating the prototype as the answer.</p>
-          </div>
+          <figure
+            className="fg-en-route-video"
+            data-evidence-proof="fresh-greens-en-route-video"
+            data-evidence-role="supporting"
+            data-evidence-kind="interaction"
+            data-evidence-chapter="fg-scope"
+          >
+            <LeadVideo
+              clip="/projects/fresh-greens/process/active-nav-flat-route.mp4"
+              poster="/projects/fresh-greens/v2/en-route.png"
+              width={1290}
+              height={2796}
+              alt="Fresh Greens running turn-by-turn navigation on a simulated downtown San Francisco route, with a turn card, moving route map, safety controls, current speed, and daylight arrival visible."
+            />
+            <figcaption className="fg-safety-visual-caption">
+              En-route prototype on a simulated route.
+            </figcaption>
+          </figure>
         </div>
       </ProjectChapter>
 

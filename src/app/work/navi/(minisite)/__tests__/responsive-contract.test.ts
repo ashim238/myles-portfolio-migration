@@ -10,6 +10,14 @@ const portfolioCss = readFileSync(
   join(process.cwd(), "src/app/styles/portfolio-surfaces.css"),
   "utf8",
 );
+const mapClient = readFileSync(
+  join(process.cwd(), "src/components/navi/demo/Map.client.tsx"),
+  "utf8",
+);
+const systemPage = readFileSync(
+  join(process.cwd(), "src/app/work/navi/(minisite)/system/page.tsx"),
+  "utf8",
+);
 
 describe("Navi responsive contract", () => {
   it("gives the compact header and bottom bar one exclusive through-720 breakpoint", () => {
@@ -84,6 +92,57 @@ describe("Navi responsive contract", () => {
     );
     expect(minisiteCss).toMatch(
       /@media \(max-width: 360px\)[\s\S]*?\.nv-playground-opt\s*\{[^}]*flex:/,
+    );
+  });
+
+  it("keeps coarse-pointer Navi controls and map targets at least 44px", () => {
+    expect(minisiteCss).toMatch(
+      /@media \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.nv-nav a,[\s\S]*?\.nv-cat-nav,[\s\S]*?\.nv-feed-select select,[\s\S]*?\.nv-feed-filters,[\s\S]*?\.nv-feed-clear\s*\{[^}]*min-height:\s*44px;/,
+    );
+    expect(minisiteCss).toMatch(
+      /\.nv-map-canvas \.leaflet-control-zoom a\s*\{[^}]*min-width:\s*44px;[^}]*min-height:\s*44px;/,
+    );
+    expect(mapClient).toContain("iconSize: [48, 44]");
+    expect(mapClient).toContain("iconSize: [44, 44]");
+    expect(minisiteCss.lastIndexOf("@media (pointer: coarse), (any-pointer: coarse)")).toBeGreaterThan(
+      minisiteCss.indexOf(".nv-feed-filters"),
+    );
+    expect(minisiteCss).toMatch(
+      /@media \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.nv-icon-btn--sm,[\s\S]*?\.nv-icon-btn--md\s*\{[^}]*width:\s*44px;[^}]*height:\s*44px;/,
+    );
+    expect(minisiteCss).toMatch(
+      /@media \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.nv-playground-opt\s*\{[^}]*min-width:\s*44px;[^}]*min-height:\s*44px;/,
+    );
+    expect(minisiteCss).toMatch(
+      /\.nv-booking-date:has\(input:focus-visible\)\s*\{[^}]*outline:\s*2px solid var\(--nv-focus\);[^}]*outline-offset:\s*2px;/,
+    );
+    expect(minisiteCss).toMatch(
+      /\.nv-map-canvas:focus-visible\s*\{[^}]*outline-offset:\s*-3px;/,
+    );
+    expect(minisiteCss).toMatch(
+      /\.leaflet-control-attribution a:focus-visible\s*\{[^}]*outline-offset:\s*-2px;/,
+    );
+  });
+
+  it("keeps the standalone system surface light and on Navi semantic ink", () => {
+    expect(systemPage).toContain('className="nv-system nv-ui"');
+    expect(portfolioCss).toMatch(
+      /:root\[data-theme="dark"\] \.reader-mode :is\(\s*\.nv-type-cell,\s*\.nv-swatch,\s*\.nv-composition-strip,\s*\.nv-composition-card,\s*\.nv-form-column\s*\)/,
+    );
+    expect(portfolioCss).toMatch(
+      /\.nv-type-label\s*\{[^}]*color:\s*var\(--nv-text-muted, var\(--muted\)\);/,
+    );
+    expect(portfolioCss).toMatch(
+      /\.nv-swatch-name\s*\{[^}]*color:\s*var\(--nv-text-muted, var\(--muted\)\);/,
+    );
+    expect(portfolioCss).toMatch(
+      /\.nv-spacing-token\s*\{[^}]*color:\s*var\(--nv-text-muted, var\(--muted\)\);/,
+    );
+    expect(minisiteCss).toContain("--nv-ui-bg: var(--nv-surface);");
+    expect(minisiteCss).toContain("--nv-ui-border: var(--nv-border);");
+    expect(minisiteCss).toContain("--nv-ink: var(--nv-text);");
+    expect(portfolioCss).toContain(
+      ':root[data-theme="dark"] .reader-mode .nv-type-sample',
     );
   });
 });

@@ -140,6 +140,17 @@ describe("Reader opening route contract", () => {
     );
   });
 
+  it("keeps Navi's hero and opening facts on one font-independent axis", () => {
+    const styles = readFileSync(
+      resolve(process.cwd(), "src/app/styles/portfolio-surfaces.css"),
+      "utf8",
+    );
+
+    expect(styles).toMatch(
+      /\.reader-mode\.reader-mode\.nv-page :is\(\s*\.project-hero,\s*\.project-opening-facts\s*\)\s*\{[^}]*width:\s*min\(100% - 32px, 48rem\);[^}]*margin-inline:\s*auto;/,
+    );
+  });
+
   it("keeps the rendered evidence matrix accountable for every locked Reader fold", () => {
     const reviewScript = readFileSync(
       resolve(process.cwd(), "scripts/capture-reader-evidence-review.mjs"),
@@ -152,6 +163,14 @@ describe("Reader opening route contract", () => {
     expect(reviewScript).toContain(
       "tabletWorkstation: { width: 1025, height: 768 }",
     );
+    expect(reviewScript).toContain(
+      "coarseTablet: { width: 1024, height: 768, hasTouch: true }",
+    );
+    expect(reviewScript).toContain("READER_EVIDENCE_REVIEW_VIEWPORTS");
+    expect(reviewScript).toContain("must select at least one viewport");
+    expect(reviewScript).toContain("must not contain duplicate viewports");
+    expect(reviewScript).toContain("contains unknown theme value(s)");
+    expect(reviewScript).toContain("must not contain duplicate themes");
     expect(reviewScript).toContain("openingFacts");
     expect(reviewScript).toMatch(
       /openingFactsBlock[\s\S]*?getBoundingClientRect\(\)/,
@@ -164,5 +183,51 @@ describe("Reader opening route contract", () => {
     expect(reviewScript).toContain(
       'const requiredOpeningFacts = ["Role", "Scope", "Outcome", "Proof"];',
     );
+    expect(reviewScript).toContain("textContrastFailures");
+    expect(reviewScript).toContain("effectiveOpacity");
+    expect(reviewScript).toMatch(
+      /rawForeground\[3\][\s\S]*effectiveOpacity/,
+    );
+    expect(reviewScript).toContain("element instanceof SVGTextElement");
+    expect(reviewScript).toContain("style.fill");
+    expect(reviewScript).toContain('element.getAttribute("class")');
+    expect(reviewScript).toContain("undersizedTargets");
+    expect(reviewScript).toContain("associatedLabel");
+    expect(reviewScript).toContain("effectiveTargetBox");
+    expect(reviewScript).toContain("focusIndicatorFailures");
+    expect(reviewScript).toContain("data-reader-focus-audit");
+    expect(reviewScript).toContain("transition: none !important");
+    expect(reviewScript).toContain("element.focus({ preventScroll: true })");
+    expect(reviewScript).toContain("outlineColor");
+    expect(reviewScript).toContain("focusIndicatorClipped");
+    expect(reviewScript).toContain("Text contrast");
+    expect(reviewScript).toContain("44px coarse-pointer target");
+    expect(reviewScript).toContain("3:1 focus indicator");
+  });
+
+  it("audits every public Navi proof surface directly instead of stopping at the Reader iframe", () => {
+    const reviewScript = readFileSync(
+      resolve(process.cwd(), "scripts/capture-reader-evidence-review.mjs"),
+      "utf8",
+    );
+
+    const directSurfaces = [
+      "/work/navi/demo",
+      "/work/navi/demo/search",
+      "/work/navi/demo/host",
+      "/work/navi/demo/host/paul-stein",
+      "/work/navi/demo/impact",
+      "/work/navi/system",
+      "/work/navi/demo/neighborhood/park-slope",
+      "/work/navi/demo/experience/prospect-park-carriage",
+    ];
+
+    for (const path of directSurfaces) {
+      expect(reviewScript).toContain(`path: "${path}"`);
+    }
+    expect(reviewScript).toContain("openingFactsRequired: false");
+    expect(reviewScript).toContain('viewportNames: ["desktop", "coarseTablet", "pocket"]');
+    expect(reviewScript).toContain("route.openingFactsRequired === false");
+    expect(reviewScript).toContain("route.viewportNames.includes(viewportName)");
   });
 });

@@ -40,6 +40,9 @@ describe("Myles 98 secondary route shell", () => {
 
   it("keeps secondary document details and actions comfortably usable", () => {
     const polish = read("src/app/styles/myles-98-polish.css");
+    const surfaces = read("src/app/styles/portfolio-surfaces.css");
+    const latePolish = read("src/app/styles/late-polish.css");
+    const revealObserver = read("src/components/scroll-reveal-fallback.tsx");
 
     expect(polish).toMatch(
       /\.myles98-system-document \.about-action\s*\{[\s\S]*?min-height:\s*44px;[\s\S]*?padding:\s*10px 12px;/,
@@ -52,5 +55,10 @@ describe("Myles 98 secondary route shell", () => {
     );
     expect(polish).not.toContain("#fff07a");
     expect(polish).not.toMatch(/color:\s*#444;/);
+    expect(surfaces).not.toMatch(
+      /\.about-detail\s*\{[^}]*animation-timeline:\s*view\(\);/,
+    );
+    expect(latePolish).not.toMatch(/\.about-detail(?:\.sr-revealed)?/);
+    expect(revealObserver).not.toContain('".about-detail"');
   });
 });

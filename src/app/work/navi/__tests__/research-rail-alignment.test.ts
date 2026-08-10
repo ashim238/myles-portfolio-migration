@@ -22,10 +22,13 @@ describe("Navi research rail alignment", () => {
 
   it("uses one shared mobile x-coordinate for the rail and markers", () => {
     expect(css).toMatch(
-      /\.nv-research-artifact\s*\{[^}]*--nv-mobile-rail-x:\s*1\.25rem;/,
+      /\.nv-research-artifact\s*\{[^}]*--nv-mobile-rail-x:\s*1rem;[^}]*--nv-mobile-rail-gutter:\s*2\.75rem;/,
     );
     expect(css).toMatch(
-      /\.nv-research-journey > li::before,[\s\S]*\.nv-research-booking > li::before\s*\{[^}]*left:\s*var\(--nv-mobile-rail-x\);/,
+      /\.nv-research-journey,[\s\S]*\.nv-research-booking\s*\{[^}]*padding-left:\s*var\(--nv-mobile-rail-gutter\);/,
+    );
+    expect(css).toMatch(
+      /\.nv-research-journey > li::before,[\s\S]*\.nv-research-booking > li::before\s*\{[^}]*left:\s*calc\(var\(--nv-mobile-rail-x\) - var\(--nv-mobile-rail-gutter\)\);/,
     );
     expect(css).toMatch(
       /\.nv-research-route\s*\{[^}]*margin-left:\s*var\(--nv-mobile-rail-x\);/,

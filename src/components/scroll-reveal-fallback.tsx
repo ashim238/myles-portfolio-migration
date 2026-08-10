@@ -6,7 +6,6 @@ const SELECTORS = [
   ".project-page .project-section",
   ".project-highlight",
   ".play-entry",
-  ".about-detail",
   ".home-page .about",
   ".footer",
   ".fg-features-heading",

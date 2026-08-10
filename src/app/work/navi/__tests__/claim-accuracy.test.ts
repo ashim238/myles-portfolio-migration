@@ -135,7 +135,7 @@ describe("Navi evidence claims", () => {
     const projectProse = projectPage.replace(/\s+/g, " ");
 
     expect(projectProse).toMatch(/digital nomads, ethical travelers/i);
-    expect(projectProse).toMatch(/research-informed target hypothesis/i);
+    expect(projectProse).toMatch(/early audience hypothesis/i);
     expect(projectProse).toMatch(/not a validated market segment/i);
     expect(projectProse).toMatch(/no engineering resources/i);
     expect(projectProse).toMatch(/no implementation budget/i);
@@ -257,11 +257,11 @@ describe("Navi evidence claims", () => {
       /What I learned redirected[\s\S]{0,160}neighborhood context/i,
     );
     expect(projectPage).toMatch(
-      /The research changed the product question/i,
+      /The research shifted my focus/i,
     );
     expect(artifactCopy).not.toContain("not the same ten default stops");
     expect(artifactCopy).toContain(
-      "Learn would open with the neighborhood’s inclusive history and local rhythm.",
+      "Learn would open with the neighborhood’s history and the context a visitor needs before arriving.",
     );
     expect(artifactCopy).toContain('className="nv-heatmap-map-selection"');
     expect(artifactCopy).toContain('className="nv-heatmap-map-context"');

@@ -7,6 +7,18 @@ import "leaflet.markercluster";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import type { MapMarker } from "./Map";
 
+const HTML_TEXT_ESCAPES: Record<string, string> = {
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
+  '"': "&quot;",
+  "'": "&#39;",
+};
+
+function escapeHtmlText(value: string): string {
+  return value.replace(/[&<>"']/g, (character) => HTML_TEXT_ESCAPES[character]);
+}
+
 export default function MapClient({
   center,
   zoom,
@@ -61,8 +73,8 @@ export default function MapClient({
         L.divIcon({
           className: "nv-cluster-leaflet",
           html: `<span class="nv-cluster">${c.getChildCount()}</span>`,
-          iconSize: [38, 38],
-          iconAnchor: [19, 19],
+          iconSize: [44, 44],
+          iconAnchor: [22, 22],
         }),
     }).addTo(map);
     clusterRef.current = cluster;
@@ -116,18 +128,19 @@ export default function MapClient({
     for (const m of markers) {
       // A labelled marker is a priced result (pill); an unlabelled one is a
       // single venue location (a dot, not a price tag).
+      const safeLabel = m.label ? escapeHtmlText(m.label) : "";
       const icon = m.label
         ? L.divIcon({
             className: "nv-pin-leaflet",
-            html: `<span class="nv-pin nv-pin--place"><span class="nv-pin-value">${m.label}</span></span>`,
-            iconSize: [48, 28],
-            iconAnchor: [24, 28],
+            html: `<span class="nv-pin nv-pin--place"><span class="nv-pin-value">${safeLabel}</span></span>`,
+            iconSize: [48, 44],
+            iconAnchor: [24, 44],
           })
         : L.divIcon({
             className: "nv-pin-leaflet",
             html: `<span class="nv-venue-pin" role="img" aria-label="Event location"></span>`,
-            iconSize: [24, 24],
-            iconAnchor: [12, 12],
+            iconSize: [44, 44],
+            iconAnchor: [22, 44],
           });
       const accessibleLabel =
         m.accessibleLabel ?? (m.label ? `${m.label}, select` : "Event location");

@@ -32,10 +32,15 @@ const pulledOverPath = resolve(
   process.cwd(),
   "src/components/fresh-greens/pulled-over-journey.tsx",
 );
+const reminderPath = resolve(
+  process.cwd(),
+  "src/components/fresh-greens/departure-reminder-evidence.tsx",
+);
 const primaryPathFiles = [
   pagePath,
   pivotPath,
   pulledOverPath,
+  reminderPath,
 ];
 
 const recruiterCutAttributes = new Set([
@@ -256,12 +261,12 @@ describe("Fresh Greens prose structure", () => {
       "PivotJourney",
       "ArchitectureDiagram",
       "PulledOverJourney",
+      "LeadVideo",
     ]) {
       expect(source).toContain(`<${component}`);
     }
     for (const retired of [
       "ResearchSynthesis",
-      "LeadVideo",
       "OnboardingIllustrationSequence",
       "TokenExhibit",
       "ReservedPalette",
@@ -273,6 +278,23 @@ describe("Fresh Greens prose structure", () => {
     expect(source).not.toContain('name="en-route"');
     expect(source).not.toContain('name="route-preview"');
     expect(source).not.toContain("thesis-zone-flow.png");
+    expect(source).toMatch(
+      /<LeadVideo[\s\S]*?clip="\/projects\/fresh-greens\/process\/active-nav-flat-route\.mp4"[\s\S]*?poster="\/projects\/fresh-greens\/v2\/en-route\.png"[\s\S]*?width=\{1290\}[\s\S]*?height=\{2796\}/,
+    );
+    expect(source).toContain("En-route prototype on a simulated route.");
+  });
+
+  it("names the second route-planning state as the final direction", () => {
+    const source = readFileSync(
+      resolve(
+        process.cwd(),
+        "src/components/fresh-greens/pivot-journey.tsx",
+      ),
+      "utf8",
+    );
+
+    expect(source).toContain(">The final<");
+    expect(source).not.toContain(">The break<");
   });
 
   it("names the tools used without turning them into validation claims", () => {
@@ -374,7 +396,10 @@ describe("Fresh Greens prose structure", () => {
       "Useful community knowledge lived outside navigation",
     );
     expect(copy).toContain(
-      "These interviews widened my hypothesis. They don't represent every Black driver.",
+      "Six interviews don't represent every Black driver.",
+    );
+    expect(copy).toContain(
+      "I wanted to explore what that principle could look like inside navigation.",
     );
   });
 
@@ -423,7 +448,7 @@ describe("Fresh Greens prose structure", () => {
     const summary = content.match(/^summary: (.+)$/m)?.[1];
 
     expect(summary).toBe(
-      "A working wayfinding prototype for Black drivers that brings community safety reports into route scoring alongside public map data.",
+      "A working wayfinding prototype for Black drivers that brings community safety reports and daylight reminders into route planning alongside public map data.",
     );
     expect(summary).not.toMatch(/\bapp\b|maximi[sz]/i);
   });

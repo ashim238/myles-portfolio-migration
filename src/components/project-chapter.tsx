@@ -56,6 +56,11 @@ export function ProjectChapter({
   const evidenceStateLabel = evidence
     ? getEvidenceStateLabel(evidence.evidenceState)
     : null;
+  const hasRedundantVisibleEvidenceState = Boolean(
+    evidenceStateLabel &&
+      entry.stage.toLocaleLowerCase() === "build" &&
+      evidenceStateLabel.toLocaleLowerCase() === "built",
+  );
   const chapterChildren = Children.toArray(children);
   const summaryAfterChildIndex = evidence
     ? FEATURED_EVIDENCE_PLACEMENTS.get(evidence.dominantProof.id)
@@ -83,11 +88,14 @@ export function ProjectChapter({
       <p className="project-chapter-meta">
         <span className="project-chapter-meta-primary">
           <span className="project-chapter-stage">{entry.stage}</span>
-          {evidenceStateLabel ? (
+          {evidenceStateLabel && !hasRedundantVisibleEvidenceState ? (
             <span className="project-chapter-evidence-state">
               <span className="sr-only">Evidence state: </span>
               {evidenceStateLabel}
             </span>
+          ) : null}
+          {evidenceStateLabel && hasRedundantVisibleEvidenceState ? (
+            <span className="sr-only">Evidence state: {evidenceStateLabel}</span>
           ) : null}
         </span>
         <span className="project-chapter-count">

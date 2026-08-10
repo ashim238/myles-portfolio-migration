@@ -1,7 +1,7 @@
 ---
 slug: fresh-greens
 title: Fresh Greens
-summary: A working wayfinding prototype for Black drivers that brings community safety reports into route scoring alongside public map data.
+summary: A working wayfinding prototype for Black drivers that brings community safety reports and daylight reminders into route planning alongside public map data.
 role: Product Designer · Solo build
 timeframe: 2025–2026
 status: published

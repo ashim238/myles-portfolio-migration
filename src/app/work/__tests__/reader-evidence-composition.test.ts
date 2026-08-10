@@ -30,4 +30,17 @@ describe("Reader evidence composition", () => {
     );
     expect(styles).toMatch(/border-color:\s*CanvasText;/);
   });
+
+  it("keeps evidence-state text on contrast-safe ink instead of decorative motif colors", () => {
+    expect(styles).toMatch(
+      /\.reader-mode\.reader-mode \.project-chapter-evidence-state\s*\{[^}]*color:\s*var\(--chapter-evidence-ink\);/,
+    );
+    expect(styles).not.toMatch(
+      /\.project-chapter-evidence-state\s*\{[^}]*color:\s*var\(--chapter-motif-accent\);/,
+    );
+    expect(styles).toContain("--chapter-evidence-ink: #3d6447;");
+    expect(styles).toContain("--chapter-evidence-ink: #9f3f0d;");
+    expect(styles).toContain("--chapter-evidence-ink: #164f73;");
+    expect(styles).toContain("--chapter-evidence-ink: #9d174d;");
+  });
 });

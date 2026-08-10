@@ -205,7 +205,7 @@ describe("Navi case-study structure", () => {
     expect(prose).toContain("internal planning artifacts");
     expect(prose).toContain("without an engineering handoff");
     expect(prose).toContain("The Airbnb audit and secondary research");
-    expect(prose).toContain("Cost, requirements, and timing stayed visible at key decisions");
+    expect(prose).toContain("I repeated cost, requirements, and timing");
     expect(prose).not.toContain(
       "A Manhattan heatmap turned the routing premise into an exploratory artifact.",
     );
@@ -223,6 +223,9 @@ describe("Navi case-study structure", () => {
     );
     expect(prose).toContain(
       "I can now inspect the component states and individual booking flow in a browser.",
+    );
+    expect(page.indexOf("future path, not a launch outcome")).toBeLessThan(
+      page.indexOf("I can now inspect the component states"),
     );
     expect(prose).not.toContain("The portfolio rebuild makes the concept easier to inspect");
     expect(prose).not.toContain("The graduate-studio concept did not ship");

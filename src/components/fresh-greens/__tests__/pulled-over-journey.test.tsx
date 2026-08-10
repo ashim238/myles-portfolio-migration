@@ -113,7 +113,7 @@ describe("Fresh Greens pulled-over journey", () => {
       "aria-selected",
       "true",
     );
-    expect(screen.getByText("Starts with the driver's question.")).toBeInTheDocument();
+    expect(screen.getByText("I started with the driver's question.")).toBeInTheDocument();
 
     await user.click(screen.getByRole("tab", { name: /Contact/i }));
 
@@ -122,7 +122,7 @@ describe("Fresh Greens pulled-over journey", () => {
       "true",
     );
     expect(
-      screen.getByText("Recording and trusted-contact actions remain visible."),
+      screen.getByText("I kept recording and trusted-contact actions visible."),
     ).toBeInTheDocument();
     expect(
       screen.getByText("The screen confirms that nothing has been sent."),
@@ -144,7 +144,7 @@ describe("Fresh Greens pulled-over journey", () => {
 
     expect(screen.getByRole("tab", { name: /Reassurance/i })).toHaveFocus();
     expect(
-      screen.getByText("Recording begins before the next decision."),
+      screen.getByText("I started recording before asking for another decision."),
     ).toBeInTheDocument();
   });
 

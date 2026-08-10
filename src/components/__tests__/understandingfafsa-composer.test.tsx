@@ -137,6 +137,17 @@ describe("UnderstandingFAFSA newsletter composer accessibility", () => {
     );
   });
 
+  it("explains the locked and swappable behavior directly", () => {
+    render(<NewsletterComposer />);
+
+    expect(
+      screen.getByText(
+        "Header and footer stay locked. Add middle blocks from the shelf, then drag or use the arrows to reorder them.",
+      ),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/exercise mirrors/i)).toBeNull();
+  });
+
   it("gives only the tall template a named keyboard-scroll region and accurate note", () => {
     render(<TemplateSwitcher />);
 

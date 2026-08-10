@@ -253,7 +253,7 @@ describe("UnderstandingFAFSA case-study structure", () => {
   it("orders the story from operating context through the supporting metric", () => {
     const storyMarkers = [
       "Where the old template broke down",
-      "compile and evaluate more than 120 newsletter examples",
+      "reviewed more than 120 newsletters",
       "Audit findings and system rules",
       "Three send types from the audit",
       "Gmail&apos;s 102 KB HTML clipping threshold",
@@ -273,7 +273,7 @@ describe("UnderstandingFAFSA case-study structure", () => {
     const brief =
       "The brief was to design a new email newsletter system the founder could update at a moment&apos;s notice without much technical know-how.";
     const feasibility =
-      "I moved the design from Figma into Mailchimp for feasibility checks and practice sends, creating a version ready for user testing.";
+      "I moved the design from Figma into Mailchimp for feasibility checks and practice sends, then built a version ready for user testing.";
     const result =
       "The founder now assembles each send from the Mailchimp-native kit without editing HTML.";
 
@@ -281,7 +281,7 @@ describe("UnderstandingFAFSA case-study structure", () => {
     expect(prose).toContain(feasibility);
     expect(prose).toContain(result);
     expect(page.indexOf(brief)).toBeLessThan(
-      page.indexOf("compile and evaluate more than 120 newsletter examples"),
+      page.indexOf("reviewed more than 120 newsletters"),
     );
     expect(page.indexOf(feasibility)).toBeLessThan(
       page.indexOf("Gmail&apos;s 102 KB HTML clipping threshold"),

@@ -163,14 +163,11 @@ export default async function UnderstandingFafsaPage() {
         <div className="project-section uf-section">
           <div className="project-section-body">
             <p>
-              To make that autonomy workable, one collaborator and I worked
-              together to compile and evaluate more than 120 newsletter examples.
-              We compared clarity, personalization, tone of voice, visual appeal,
-              and branding consistency.
-            </p>
-            <p>
-              We looked most closely at Revenews, The 74, Next by Jeff Selingo,
-              Medium, and Folderly as references for scanning, hierarchy, tone,
+              To decide what the system needed to lock, one collaborator and I
+              reviewed more than 120 newsletters. We looked at how each one
+              handled clarity, personalization, tone, visual appeal, and brand
+              consistency. Revenews, The 74, Next by Jeff Selingo, Medium, and
+              Folderly became the main references for scanning, hierarchy, tone,
               and brand structure.
             </p>
             <ol aria-label="Audit findings and system rules">
@@ -238,12 +235,12 @@ export default async function UnderstandingFafsaPage() {
           <div className="project-section-body">
             <p>
               I moved the design from Figma into Mailchimp for feasibility checks
-              and practice sends, creating a version ready for user testing. Those
-              checks showed how far I could push the visual design before
-              Figma&apos;s spacing created too many Mailchimp containers and wrappers.
-              I rebuilt the live system in Mailchimp so the founder could edit it
-              without touching HTML. Test sends showed which wrappers and dividers
-              could go.
+              and practice sends, then built a version ready for user testing.
+              That was where I learned what the medium would actually allow.
+              Figma&apos;s spacing quickly turned into too many Mailchimp containers
+              and wrappers, so I rebuilt the live system in Mailchimp with
+              simpler native blocks the founder could edit without touching
+              HTML. Test sends showed which wrappers and dividers could go.
             </p>
             <p>
               <mark className="case-highlight">
