@@ -61,4 +61,26 @@ describe("Myles 98 secondary route shell", () => {
     expect(latePolish).not.toMatch(/\.about-detail(?:\.sr-revealed)?/);
     expect(revealObserver).not.toContain('".about-detail"');
   });
+
+  it("uses one compact rhythm system inside the About facts panel", () => {
+    const polish = read("src/app/styles/myles-98-polish.css");
+
+    expect(polish).toMatch(
+      /\.myles98-system-document \.about-details\s*\{[^}]*gap:\s*0;/,
+    );
+    expect(polish).toMatch(
+      /\.myles98-system-document \.about-detail\s*\{[^}]*gap:\s*6px;/,
+    );
+    expect(polish).toMatch(
+      /\.myles98-system-document \.about-detail dt\s*\{[^}]*margin-bottom:\s*0;/,
+    );
+  });
+
+  it("keeps the Reminders widget clear of overlapping windows at the narrow workstation band", () => {
+    const pocket = read("src/app/styles/myles-97-pocket.css");
+
+    expect(pocket).toMatch(
+      /@media \(min-width: 1025px\) and \(max-width: 1080px\) and \(pointer: fine\)[\s\S]*?\.myles97-reminders-widget\s*\{[^}]*grid-column:\s*1;[^}]*align-self:\s*end;[^}]*justify-self:\s*start;/,
+    );
+  });
 });

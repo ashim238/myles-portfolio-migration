@@ -284,6 +284,18 @@
   margin-bottom: 4px;
 }
 
+.myles98-system-document .about-details {
+  gap: 0;
+}
+
+.myles98-system-document .about-detail {
+  gap: 6px;
+}
+
+.myles98-system-document .about-detail dt {
+  margin-bottom: 0;
+}
+
 .myles98-system-document .resume-body {
   margin-bottom: 0;
 }
@@ -345,9 +357,9 @@
   outline-offset: 2px;
 }
 
-/* Original crisp-edged pointer built from the Myles 98 system palette. */
+/* Public-domain Windows 95/98 pixel masters, recolored for Myles 98 states. */
 .dot-cursor {
-  width: 24px;
+  width: 32px;
   height: 32px;
   transform: translate3d(-40px, -40px, 0);
   transition: opacity 90ms linear;
@@ -367,8 +379,8 @@
 }
 
 .myles98-cursor-arrow {
-  transform: translate(-2px, -2px);
-  transform-origin: 2px 2px;
+  transform: translate(0, 0);
+  transform-origin: 0 0;
 }
 
 .myles98-cursor-outline {
@@ -379,28 +391,19 @@
   fill: #fff;
 }
 
-.myles98-cursor-accent {
-  fill: var(--m97-active);
-  opacity: 0;
-}
-
 .myles98-cursor-ibeam {
   display: none;
-  width: 18px;
-  height: 28px;
-  transform: translate(-8px, -13px);
+  width: 32px;
+  height: 32px;
+  transform: translate(-10px, -10px);
 }
 
 .dot-cursor--hover .myles98-cursor-fill {
   fill: var(--m97-signal);
 }
 
-.dot-cursor--hover .myles98-cursor-accent {
-  opacity: 1;
-}
-
 .dot-cursor--pressed .myles98-cursor-arrow {
-  transform: translate(-1px, -1px);
+  transform: translate(1px, 1px);
 }
 
 .dot-cursor--input .myles98-cursor-arrow {

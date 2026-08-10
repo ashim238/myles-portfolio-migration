@@ -65,7 +65,7 @@ describe("DotCursor", () => {
     );
     expect(declarationBlock(".dot-cursor")).toContain("pointer-events: none");
     expect(polishStyles).toMatch(
-      /\.dot-cursor\s*\{[\s\S]*?width:\s*24px;[\s\S]*?height:\s*32px;/,
+      /\.dot-cursor\s*\{[\s\S]*?width:\s*32px;[\s\S]*?height:\s*32px;/,
     );
     expect(polishStyles).toMatch(
       /\.myles98-cursor-outline\s*\{[\s\S]*?fill:\s*var\(--m97-ink\);/,
@@ -86,10 +86,48 @@ describe("DotCursor", () => {
       /\.dot-cursor--hover \.myles98-cursor-fill\s*\{[\s\S]*?fill:\s*var\(--m97-signal\);/,
     );
     expect(polishStyles).toMatch(
-      /\.dot-cursor--pressed \.myles98-cursor-arrow\s*\{[\s\S]*?transform:\s*translate\(-1px, -1px\);/,
+      /\.dot-cursor--pressed \.myles98-cursor-arrow\s*\{[\s\S]*?transform:\s*translate\(1px, 1px\);/,
     );
     expect(polishStyles).toMatch(
       /\.dot-cursor--input \.myles98-cursor-ibeam\s*\{[\s\S]*?display:\s*block;/,
+    );
+  });
+
+  it("locks the arrow to the public-domain Windows 95/98 32px pixel master", () => {
+    const { container } = render(<DotCursor />);
+    const arrow = container.querySelector(".myles98-cursor-arrow");
+
+    expect(arrow).toHaveAttribute("viewBox", "0 0 32 32");
+    expect(arrow).toHaveAttribute("data-m98-cursor-hotspot", "0 0");
+    expect(arrow).toHaveAttribute("data-m98-pixel-bounds", "0 0 11 19");
+    expect(arrow?.querySelector(".myles98-cursor-outline")).toHaveAttribute(
+      "d",
+      "M0 0h1v1H0ZM0 1h2v1H0ZM0 2h3v1H0ZM0 3h4v1H0ZM0 4h5v1H0ZM0 5h6v1H0ZM0 6h7v1H0ZM0 7h8v1H0ZM0 8h9v1H0ZM0 9h10v1H0ZM0 10h11v1H0ZM0 11h7v1H0ZM0 12h3v1H0ZM4 12h4v1H4ZM0 13h2v1H0ZM4 13h4v1H4ZM0 14h1v1H0ZM5 14h4v1H5ZM5 15h4v1H5ZM6 16h4v1H6ZM6 17h4v1H6ZM7 18h2v1H7Z",
+    );
+    expect(arrow?.querySelector(".myles98-cursor-fill")).toHaveAttribute(
+      "d",
+      "M1 2h1v1H1ZM1 3h2v1H1ZM1 4h3v1H1ZM1 5h4v1H1ZM1 6h5v1H1ZM1 7h6v1H1ZM1 8h7v1H1ZM1 9h8v1H1ZM1 10h5v1H1ZM1 11h2v1H1ZM4 11h2v1H4ZM1 12h1v1H1ZM5 12h2v1H5ZM5 13h2v1H5ZM6 14h2v1H6ZM6 15h2v1H6ZM7 16h2v1H7ZM7 17h2v1H7Z",
+    );
+    expect(arrow?.querySelector(".myles98-cursor-accent")).toBeNull();
+  });
+
+  it("aligns the matching I-beam through its declared center hotspot", () => {
+    const { container } = render(<DotCursor />);
+    const beam = container.querySelector(".myles98-cursor-ibeam");
+
+    expect(beam).toHaveAttribute("viewBox", "0 0 32 32");
+    expect(beam).toHaveAttribute("data-m98-cursor-hotspot", "10 10");
+    expect(beam).toHaveAttribute("data-m98-pixel-bounds", "6 1 9 18");
+    expect(beam?.querySelector(".myles98-cursor-outline")).toHaveAttribute(
+      "d",
+      "M6 1h9v3H6ZM9 4h3v12H9ZM6 16h9v3H6Z",
+    );
+    expect(beam?.querySelector(".myles98-cursor-fill")).toHaveAttribute(
+      "d",
+      "M7 2h3v1H7ZM11 2h3v1H11ZM10 3h1v14H10ZM7 17h3v1H7ZM11 17h3v1H11Z",
+    );
+    expect(polishStyles).toMatch(
+      /\.myles98-cursor-ibeam\s*\{[\s\S]*?width:\s*32px;[\s\S]*?height:\s*32px;[\s\S]*?transform:\s*translate\(-10px, -10px\);/,
     );
   });
 });

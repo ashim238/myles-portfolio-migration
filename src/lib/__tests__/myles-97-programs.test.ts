@@ -62,6 +62,7 @@ describe("Myles 98 program registry", () => {
   it("validates both project and system program ids", () => {
     expect(isProgramId("fresh-greens")).toBe(true);
     expect(isProgramId("display-properties")).toBe(true);
+    expect(isProgramId("reminders")).toBe(true);
     expect(isProgramId("not-a-program")).toBe(false);
   });
 });

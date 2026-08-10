@@ -13,6 +13,7 @@ export type SystemProgramId =
   | "loose-parts"
   | "resume"
   | "display-properties"
+  | "reminders"
   | "trini-roti";
 
 export type ProgramId = ProjectProgramId | SystemProgramId;
@@ -72,6 +73,7 @@ export const SYSTEM_PROGRAM_IDS = [
   "loose-parts",
   "resume",
   "display-properties",
+  "reminders",
   "trini-roti",
 ] as const satisfies readonly SystemProgramId[];
 

@@ -104,7 +104,7 @@ export function Pocket97Shell({
   }, [appsOpen, startOpen]);
 
   const recentPrograms = state.recentPrograms.filter(
-    (id) => id !== "welcome" && id !== "selected-work",
+    (id) => id !== "welcome" && id !== "selected-work" && id !== "reminders",
   );
 
   const activeProject = activeProgram

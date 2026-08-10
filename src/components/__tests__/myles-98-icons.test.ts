@@ -40,6 +40,7 @@ describe("Myles 98 program icon identity", () => {
     expect(iconForProgram("about")).toBe("profile");
     expect(iconForProgram("resume")).toBe("resume");
     expect(iconForProgram("trini-roti")).toBe("recipe");
+    expect(iconForProgram("reminders")).toBe("document");
   });
 
   it("maps rendered sizes onto explicit chrome, menu, and discovery drawings", () => {

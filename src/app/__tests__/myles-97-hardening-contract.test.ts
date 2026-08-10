@@ -93,6 +93,14 @@ describe("Myles 98 hardening contract", () => {
     expect(pocket).not.toMatch(/overflow-x:\s*(?:auto|scroll)/);
   });
 
+  it("hides the desktop-only Reminders widget in the Pocket server snapshot", () => {
+    const pocket = read("src/app/styles/myles-97-pocket.css");
+
+    expect(pocket).toMatch(
+      /\.myles97-shell\[data-m97-shell="workstation"\] \.myles97-desktop-shortcuts,[\s\S]*?\.myles97-shell\[data-m97-shell="workstation"\] \.myles97-reminders-widget,[\s\S]*?\.myles97-shell\[data-m97-shell="workstation"\] \.myles97-start-menu\s*\{\s*display:\s*none;/,
+    );
+  });
+
   it("declares the approved Reader prose measure and mobile typography", () => {
     const reader = read("src/app/styles/reader-mode.css");
     expect(reader).toMatch(/max-width:\s*68ch/);

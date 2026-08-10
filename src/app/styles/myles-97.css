@@ -876,6 +876,7 @@
   .myles97-program-card,
   .myles97-primary-button,
   .myles97-roti-note,
+  .myles97-reminders-widget,
   .myles97-boot,
   .myles97-boot-mark,
   .myles97-boot-progress,
@@ -893,6 +894,7 @@
   .myles97-window[data-focused="true"] .myles97-titlebar,
   .myles97-task-button[data-focused="true"],
   .myles97-start-menu-brand,
+  .myles97-reminders-widget-title,
   .myles97-start-menu-items :is(button, a):hover,
   .myles97-case-study-link:hover,
   .project-enter-program-titlebar {

@@ -127,6 +127,56 @@ describe("Myles 98 secondary programs", () => {
     expect(recipeTrigger).toHaveFocus();
   });
 
+  it("keeps Reminders as a project-agnostic desktop widget beside the recipe note", async () => {
+    const user = userEvent.setup();
+    render(<DesktopHarness />);
+
+    const selectedWork = screen.getByRole("region", { name: "Selected Work" });
+    const reminderTrigger = screen.getByRole("button", {
+      name: "Open Reminders",
+    });
+    const recipeTrigger = screen.getByRole("button", {
+      name: /Open recipe note: Buss Up Shut Paratha Roti/,
+    });
+
+    expect(
+      selectedWork.compareDocumentPosition(reminderTrigger) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(
+      reminderTrigger.compareDocumentPosition(recipeTrigger) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+
+    await user.click(reminderTrigger);
+    const reminderWindow = screen.getByRole("region", { name: "Reminders" });
+
+    expect(
+      within(reminderWindow).getByRole("heading", {
+        name: "A few things to see",
+      }),
+    ).toBeInTheDocument();
+    const selectedWorkReminder = within(reminderWindow).getByRole("link", {
+      name: /Open Selected Work/,
+    });
+    expect(selectedWorkReminder).toHaveAttribute("href", "/#selected-work");
+    expect(selectedWorkReminder).toHaveFocus();
+    expect(
+      within(reminderWindow).getByRole("link", { name: /Read About Myles/ }),
+    ).toHaveAttribute("href", "/about");
+    expect(
+      within(reminderWindow).getByRole("link", { name: /Send a note/ }),
+    ).toHaveAttribute("href", "mailto:mylesashitey@gmail.com");
+    expect(reminderWindow).not.toHaveTextContent(
+      /Fresh Greens|UnderstandingFAFSA|Navi|TikTok/,
+    );
+
+    await user.click(
+      within(reminderWindow).getByRole("button", { name: "Close Reminders" }),
+    );
+    expect(reminderTrigger).toHaveFocus();
+  });
+
   it("renders every existing Loose Parts entry with its canonical anchor", () => {
     render(<SecondaryProgram id="loose-parts" looseParts={looseParts} />);
 

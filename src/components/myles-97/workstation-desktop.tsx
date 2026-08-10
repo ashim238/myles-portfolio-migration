@@ -8,6 +8,10 @@ import { ProgramWindow } from "@/components/myles-97/program-window";
 import { ProjectProgram } from "@/components/myles-97/project-program";
 import { RecipeNote, RecipeNoteProgram } from "@/components/myles-97/recipe-note";
 import {
+  RemindersProgram,
+  RemindersWidget,
+} from "@/components/myles-97/reminders-widget";
+import {
   SecondaryProgram,
   type SecondaryProgramId,
 } from "@/components/myles-97/secondary-programs";
@@ -39,6 +43,7 @@ const defaultGeometry: Partial<Record<ProgramId, WindowGeometry>> = {
   about: { x: 312, y: 124, width: 540, height: 430 },
   "loose-parts": { x: 232, y: 92, width: 720, height: 520 },
   resume: { x: 344, y: 112, width: 560, height: 470 },
+  reminders: { x: 520, y: 126, width: 440, height: 390 },
   "trini-roti": { x: 472, y: 92, width: 520, height: 560 },
   "display-properties": { x: 504, y: 168, width: 448, height: 456 },
 };
@@ -82,6 +87,7 @@ export function WorkstationDesktop({
 }: WorkstationDesktopProps) {
   const [startOpen, setStartOpen] = useState(false);
   const startButtonRef = useRef<HTMLButtonElement>(null);
+  const remindersTriggerRef = useRef<HTMLButtonElement>(null);
   const recipeTriggerRef = useRef<HTMLButtonElement>(null);
   const minimized = new Set(state.minimizedPrograms);
   const projectById = new Map(programs.map((program) => [program.id, program]));
@@ -185,6 +191,22 @@ export function WorkstationDesktop({
           );
         }
 
+        if (id === "reminders") {
+          return (
+            <ProgramWindow
+              key={id}
+              {...props}
+              title="Reminders"
+              onClose={(programId) => {
+                dispatch({ type: "close", id: programId });
+                remindersTriggerRef.current?.focus();
+              }}
+            >
+              <RemindersProgram />
+            </ProgramWindow>
+          );
+        }
+
         if (isSecondaryProgram(id)) {
           return (
             <ProgramWindow key={id} {...props} title={secondaryTitles[id]}>
@@ -210,6 +232,11 @@ export function WorkstationDesktop({
           </ProgramWindow>
         );
       })}
+
+      <RemindersWidget
+        triggerRef={remindersTriggerRef}
+        onOpen={() => openProgram("reminders")}
+      />
 
       <RecipeNote
         triggerRef={recipeTriggerRef}

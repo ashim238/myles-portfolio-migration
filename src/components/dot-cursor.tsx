@@ -83,37 +83,34 @@ export function DotCursor() {
     <div ref={dotRef} className="dot-cursor" aria-hidden="true">
       <svg
         className="myles98-cursor-arrow"
-        viewBox="0 0 24 32"
+        viewBox="0 0 32 32"
+        data-m98-cursor-hotspot="0 0"
+        data-m98-pixel-bounds="0 0 11 19"
         focusable="false"
       >
         <path
           className="myles98-cursor-outline"
-          d="M1 1v26h5v-6h4l5 10h6l-5-11h8v-3h-3v-3h-3v-3h-3V8h-3V5H9V2H6V1H1Z"
+          d="M0 0h1v1H0ZM0 1h2v1H0ZM0 2h3v1H0ZM0 3h4v1H0ZM0 4h5v1H0ZM0 5h6v1H0ZM0 6h7v1H0ZM0 7h8v1H0ZM0 8h9v1H0ZM0 9h10v1H0ZM0 10h11v1H0ZM0 11h7v1H0ZM0 12h3v1H0ZM4 12h4v1H4ZM0 13h2v1H0ZM4 13h4v1H4ZM0 14h1v1H0ZM5 14h4v1H5ZM5 15h4v1H5ZM6 16h4v1H6ZM6 17h4v1H6ZM7 18h2v1H7Z"
         />
         <path
           className="myles98-cursor-fill"
-          d="M3 3v19h1v-5h7l5 10h1l-5-10h7v-1h-2v-3h-3v-3h-3V7H8V4H5V3H3Z"
-        />
-        <rect
-          className="myles98-cursor-accent"
-          x="4"
-          y="4"
-          width="3"
-          height="3"
+          d="M1 2h1v1H1ZM1 3h2v1H1ZM1 4h3v1H1ZM1 5h4v1H1ZM1 6h5v1H1ZM1 7h6v1H1ZM1 8h7v1H1ZM1 9h8v1H1ZM1 10h5v1H1ZM1 11h2v1H1ZM4 11h2v1H4ZM1 12h1v1H1ZM5 12h2v1H5ZM5 13h2v1H5ZM6 14h2v1H6ZM6 15h2v1H6ZM7 16h2v1H7ZM7 17h2v1H7Z"
         />
       </svg>
       <svg
         className="myles98-cursor-ibeam"
-        viewBox="0 0 18 28"
+        viewBox="0 0 32 32"
+        data-m98-cursor-hotspot="10 10"
+        data-m98-pixel-bounds="6 1 9 18"
         focusable="false"
       >
         <path
           className="myles98-cursor-outline"
-          d="M3 1h12v5h-4v16h4v5H3v-5h4V6H3V1Z"
+          d="M6 1h9v3H6ZM9 4h3v12H9ZM6 16h9v3H6Z"
         />
         <path
           className="myles98-cursor-fill"
-          d="M5 3h8v1H9v20h4v1H5v-1h4V4H5V3Z"
+          d="M7 2h3v1H7ZM11 2h3v1H11ZM10 3h1v14H10ZM7 17h3v1H7ZM11 17h3v1H11Z"
         />
       </svg>
     </div>

@@ -322,6 +322,7 @@
 
   .myles97-shell[data-m97-shell="workstation"] .myles97-desktop-shortcuts,
   .myles97-shell[data-m97-shell="workstation"] .myles97-taskbar,
+  .myles97-shell[data-m97-shell="workstation"] .myles97-reminders-widget,
   .myles97-shell[data-m97-shell="workstation"] .myles97-start-menu {
     display: none;
   }
@@ -398,6 +399,29 @@
 }
 
 @media (min-width: 1025px) and (max-width: 1080px) and (pointer: fine) {
+  .myles97-reminders-widget {
+    width: 116px;
+    min-height: 148px;
+    grid-column: 1;
+    align-self: end;
+    justify-self: start;
+    margin: 0 0 86px 8px;
+    padding-inline: 10px;
+  }
+
+  .myles97-reminders-widget-title {
+    margin-inline: -10px;
+    font-size: 11px;
+  }
+
+  .myles97-reminders-widget strong {
+    font-size: 14px;
+  }
+
+  .myles97-reminders-widget > span:last-child {
+    font-size: 11px;
+  }
+
   .myles97-roti-note {
     width: 116px;
     min-height: 176px;
