@@ -1,10 +1,10 @@
 # Portfolio closeout verification
 
-Date: 2026-08-09
+Date: 2026-08-09, updated 2026-08-10
 
 Branch: `codex/myles-97-design`
 
-Verified product build: `62563f1c4a81b42ec9c089ba9c83ca6d4cd69be8`
+Verified product build: `1d9e6deac1cda7ea1968cfa4436d828c5c93fd32`
 
 Starting remote-tracking head: `15e67a0`
 
@@ -20,7 +20,7 @@ The locked positioning line is:
 
 > Design, code, and everything in between.
 
-The six approved visual refinements are implemented. Both requested Impeccable gates and the user-requested corrective identity pass are complete. No case study has a narrative blocker.
+The six approved visual refinements are implemented. All requested Impeccable gates and the user-requested corrective identity, accessibility, and voice passes are complete. No case study has a narrative blocker.
 
 ## Product and visual fixes
 
@@ -35,6 +35,10 @@ The six approved visual refinements are implemented. Both requested Impeccable g
 | Secondary documents | About, Resume, and Loose Parts now use a complete Myles 98 document frame while keeping paper-backed copy readable in either surrounding theme. | About, Resume, and Loose Parts checked at 1440×900 and 390×844 in both themes; primary copy 16.13:1 and muted copy 6.30:1. |
 | Authored pointer | Fine-pointer contexts use an original crisp Myles 98 arrow, yellow hover state, pressed state, and input I-beam. | Rendered pointer lifecycle checks passed with zero console errors; touch/coarse-pointer suppression remains intact. |
 | Shortcut identity | Desktop shortcuts, Start, and Pocket use distinct color icons for projects and document types. Dense titlebar, taskbar, and Reader chrome intentionally remain monochrome. | Home desktop and Pocket captures in both themes plus SVG variant, callsite, and forced-colors regressions. |
+| Icon fidelity | Discovery, menu, and chrome icons use independent 32, 24, and 16 unit SVG drawings instead of one drawing scaled into every context. Navi uses a simplified pin silhouette and compact marks keep pixel-snapped geometry. | Eight icon regressions, forced-colors coverage, and final optical review at rendered size. No copied Windows assets or generated raster approximations were added. |
+| Reader and product readability | Paper copy, project-owned dark artifacts, direct Navi product routes, SVG text, effective opacity, focus indicators, and coarse targets now have explicit semantic ownership. | Final Gate D matrix reports zero contrast, focus, target, overflow, image, console, or page failures across 96 route frames. |
+| Fresh Greens reminders and video | The case study now connects daylight research to a departure reminder, keeps the safety claim bounded, and includes the recorded route prototype as supporting proof. | Grounded source regression, component tests, and the existing 10-second 1290×2796 prototype recording. |
+| Case-study voice | All four RecruiterCuts were revised around problem, action, and result without replacing project-specific structure or changing claim boundaries. | Full prose, ownership, claim, chronology, and content validation suites plus both final hiring reviews. |
 | Shell handoff | Pocket applies through 1024px and workstation begins at 1025px. | Exact JavaScript and CSS contracts plus both-theme boundary captures. |
 | 1024px Pocket identity | Large-Pocket preview height is capped so the first project identity and action clear the fixed dock. | Action ends at 645.8px, dock begins at 697.6px, leaving 51.8px. |
 | Compact Reader chrome | UnderstandingFAFSA uses the simplified dense-chrome mark in Reader, titlebar, and taskbar contexts. | Focused SVG and callsite tests plus rendered optical review. |
@@ -101,6 +105,19 @@ The user review exposed four surfaces that were outside the earlier primary home
 - All four Reader performance budgets remain under both byte and file-count thresholds after the icon work.
 
 Final Gate C disposition: go. P0/P1/P2 = 0, with no new P3 finding. Gate B's optional design-contract cleanup remains optional.
+
+### Gate D: readability, fidelity, and voice closeout
+
+The user review identified readability leaks and interaction details that were not represented by the earlier bounded checks. Gate D expanded the production audit to effective opacity, SVG text fill, keyboard-focus contrast and clipping, label-aware coarse targets, all four Reader routes, and eight direct Navi product routes. It also closed the user-observed About alignment, homepage tracking, Start-menu clipping, Navi rail alignment, duplicate visible evidence-state label, project surface contrast, and small-icon recognition issues.
+
+- Impeccable score: 94/100.
+- Severity: P0 0, P1 0, P2 0, P3 1.
+- 90-second verdict: Strong advance.
+- 10-minute verdict: Advance to a design interview.
+- The sole P3 is documentation maintenance: explicitly recording the Reader serif hierarchy and project-owned artifact type systems in the design contract. It is not a visible or accessibility release defect.
+- The deterministic detector was not rerun. Gate D used the existing one-shot results, focused source review, regression tests, and the exact production render matrix.
+
+Final Gate D disposition: pass. There is no visual, theme-fidelity, accessibility, or narrative release blocker.
 
 ### One-shot detector
 
@@ -171,6 +188,20 @@ Corrective evidence root: `/tmp/portfolio-corrective-evidence-20260809`
 - Horizontal overflow, broken images, console errors, and page errors: 0.
 - Paper primary contrast: 16.13:1. Paper muted contrast: 6.30:1.
 
+Gate D evidence root: `/tmp/reader-a11y-production-final-gate-d-pass-20260810`
+
+- Manifest: `/tmp/reader-a11y-production-final-gate-d-pass-20260810/manifest.json`
+- 96 route frames: 48 Reader frames and 48 direct Navi product frames.
+- 96 dominant-proof records.
+- Both surrounding themes and six viewport modes: 1440×900, 1024×768 Pocket, 1025×768 workstation boundary, 1024×768 coarse pointer, 820×900, and 390×844.
+- Text-contrast failures: 0.
+- Focus-indicator failures: 0.
+- Coarse-target failures: 0.
+- Horizontal overflow, broken images, console errors, page errors, and opening failures: 0.
+- Minimum whole opening-block clearance: 10.28px against an 8px requirement.
+- Minimum fact-row clearance: 20.45px.
+- 445 evidence files, 109 MB.
+
 ### Browser limitations
 
 - Verification used headless and in-app Chromium, not physical iOS or Android devices.
@@ -182,7 +213,7 @@ Corrective evidence root: `/tmp/portfolio-corrective-evidence-20260809`
 
 ### 90-second review
 
-Verdict: pass.
+Verdict: Strong advance.
 
 - The opening establishes Myles's name, exact design-and-code positioning, TikTok and UMG context, and all four project identities.
 - The compact Role, Scope, Outcome, and Proof grammar materially lowers retrieval cost without replacing the full RecruiterCut.
@@ -190,16 +221,18 @@ Verdict: pass.
 - Navi communicates the 14-response scope, Learn Plan Go decision, later solo React rebuild, and working booking flow while preserving studio and survey boundaries.
 - UnderstandingFAFSA leads with the founder-editable Mailchimp kit. Rules and feasibility remain supporting decisions.
 - TikTok communicates the internship role, three-template scope, fixed-slot system, and one-of-three shipped outcome. Its complete opening fact block remains inside the first fold without sacrificing the art-directed cover.
+- The authored cursor, size-specific icons, readable secondary documents, and distinct project surfaces make the portfolio feel intentional rather than templated.
 - Mobile Reader return, chapter navigation, homepage entry, Back and Forward, and project-shell return all pass.
 
 ### 10-minute review
 
-Verdict: pass.
+Verdict: Advance to a design interview.
 
 - Fresh Greens has the strongest end-to-end chain from personal hypothesis through research, product response, trust model, and validation limits.
 - Navi now reads causally from heatmap limitation through resident and stakeholder research, Learn Plan Go, and the clearly separated solo rebuild.
 - UnderstandingFAFSA centers the right outcome: a founder-editable Mailchimp system. The 120-example audit, modular rules, 102 KB constraint, practice sends, and final kit support that result.
 - TikTok is appropriately concise. Its cultural exploration, slot map, modularity, critique response, and shipped boundary form a complete arc without impact inflation.
+- The deeper pass now holds across working artifacts as well as prose. Direct Navi product routes, Fresh Greens reminder and video proof, FAFSA constraint evidence, and TikTok art direction remain readable and attributable.
 - Ownership, specificity, honesty, pacing, and memorability hold across all four projects.
 
 Narrative blockers:
@@ -220,14 +253,15 @@ No Grill Me answer is required before release. Optional future interviews remain
 
 | Gate | Result |
 | --- | --- |
-| Full Vitest suite | 172 files, 921 tests passed |
+| Full Vitest suite | 173 files, 949 tests passed |
 | ESLint | Passed |
 | TypeScript | Passed with `npx tsc --noEmit` |
 | Content validation | Passed for 4 project files |
 | Whitespace | Passed with `git diff --check` |
 | Production build | Passed on Next.js 16.2.10 with webpack |
-| Reader performance | All 4 route budgets passed |
-| Reader rendered matrix | 40 Reader frames, 80 dominant-proof records, and 160 first-fold fact rows passed |
+| Reader performance | All 4 route budgets passed. Gate D moved only the three affected CSS sub-budgets to the next established 8 KiB bucket while leaving every total-byte ceiling unchanged. |
+| Gate D rendered matrix | 96 route frames, 96 dominant-proof records, both themes, and six viewport modes passed with zero reported failures. |
+| Reader rendered matrix | 48 final Reader frames plus the earlier 40-frame opening matrix passed. |
 | Home rendered matrix | 8 viewport and theme frames passed |
 | Browser behavior | 22 interaction checks passed |
 | Rendered contrast | 12 checks passed |
@@ -235,6 +269,7 @@ No Grill Me answer is required before release. Optional future interviews remain
 | Impeccable Gate A | Passed after closing one 1024px P2 |
 | Impeccable Gate B | Go, P0/P1/P2 0, one optional P3 |
 | Impeccable Gate C | Go, P0/P1/P2 0, no new P3 |
+| Impeccable Gate D | 94/100, P0/P1/P2 0, one documentation-only P3 |
 
 The build script uses webpack because the Next.js 16.2.10 Turbopack compiler repeatedly stalled during local production compilation. The shared webpack path completed normally.
 
@@ -244,7 +279,7 @@ Current remote-tracking snapshot:
 
 | Ref | Commit | Relationship and recommendation |
 | --- | --- | --- |
-| `codex/myles-97-design` | This closeout commit will be fourteen commits ahead of `origin/codex/myles-97-design` at `15e67a0`. Verified product build: `62563f1`. | Push and review this branch first. It is the integration branch. |
+| `codex/myles-97-design` | Verified product build: `1d9e6de`. The branch is fifteen commits ahead of `origin/codex/myles-97-design` before this documentation commit and will be sixteen ahead after it. | Push and review this branch first. It is the integration branch. |
 | `origin/archive/reader-evidence-grammar-pre-cleanup-2026-08-07` | `08a9b71` | Retain as the canonical archive pointer through acceptance. |
 | `origin/codex/reader-evidence-grammar` | `08a9b71` | Exact commit duplicate of the archive. It becomes a deletion candidate after acceptance and a fresh fetch. |
 | `origin/codex/reader-evidence-grammar-cleanup` | `8ddbf01` | Different history but byte-identical tree `24d5539`. It becomes a deletion candidate after acceptance and a fresh tree comparison. |
@@ -255,7 +290,7 @@ Current remote-tracking snapshot:
 Safe consolidation sequence:
 
 1. Push `codex/myles-97-design` and complete review or acceptance.
-2. Copy `/tmp/portfolio-release-prep-evidence-20260809-d09b71c` and `/tmp/portfolio-corrective-evidence-20260809` to durable storage.
+2. Copy `/tmp/portfolio-release-prep-evidence-20260809-d09b71c`, `/tmp/portfolio-corrective-evidence-20260809`, and `/tmp/reader-a11y-production-final-gate-d-pass-20260810` to durable storage.
 3. Create a retained tag or archive pointer for the accepted integration commit.
 4. Run `git fetch --all --prune` and repeat commit, tree, ancestry, worktree, and stash checks.
 5. Delete `codex/reader-evidence-grammar` and `codex/reader-evidence-grammar-cleanup` only if the archive pointer still preserves their commit or byte-identical tree.
