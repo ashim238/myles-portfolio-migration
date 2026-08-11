@@ -1,8 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" data-m98-concept="reset-desktop" data-m98-grid="32">
-  <path fill="#8d211e" d="M5 2H23V3H27V2L31 6L27 10V7H23V6H5Z" />
-  <path fill="#f15a50" d="M6 3H24V4H27V4L29 6L27 8V6H24V5H6Z" />
-  <path fill="#8d211e" d="M27 30H9V29H5V30L1 26L5 22V25H9V26H27Z" />
-  <path fill="#f15a50" d="M26 29H8V28H5V28L3 26L5 24V26H8V27H26Z" />
+  <path fill="#8d211e" d="M20 3H26V4H28V9H26V8H24V6H20Z M23 9H28V10H27V12H23V11H22V10H23Z" />
+  <rect fill="#f15a50" x="21" y="3" width="5" height="1" />
+  <rect fill="#f15a50" x="24" y="9" width="4" height="1" />
   <path fill="#222323" d="M7 6H22V7H24V9H25V23H24V25H19V28H23V31H10V30H14V25H7V24H5V9H7Z" />
   <path fill="#746d62" d="M7 7H22V8H23V10H24V22H23V24H8V23H6V10H7Z" />
   <path fill="#d4ccbd" d="M8 7H21V8H23V10H23V22H22V23H8Z" />
