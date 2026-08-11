@@ -1,30 +1,35 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" data-m98-concept="tiktok-catalog" data-m98-grid="32">
-  <path fill="#202126" d="M2 7H5V3H22L27 8H28V7H29V8H30V27H29V29H3V28H1V9H2Z" />
-  <polygon fill="#66696d" points="2,8 28,8 29,9 29,27 28,28 3,28 2,27" />
-  <polygon fill="#a6a7a7" points="3,9 28,9 28,26 27,27 3,27" />
-  <rect fill="#e7d991" x="4" y="25" width="23" height="2" />
-  <rect fill="#6e6556" x="7" y="25" width="1" height="2" />
-  <rect fill="#6e6556" x="13" y="25" width="1" height="1" />
-  <rect fill="#6e6556" x="19" y="25" width="1" height="2" />
-  <rect fill="#6e6556" x="25" y="25" width="1" height="1" />
-  <path fill="#202126" d="M5 3H22L27 8V24H26V25H5Z" />
-  <polygon fill="#777a7c" points="7,5 23,5 26,8 26,24 7,24" />
-  <polygon fill="#d4cec4" points="6,4 22,4 25,7 25,23 6,23" />
-  <polygon fill="#f3eee4" points="6,4 21,4 24,7 24,22 6,22" />
-  <polygon fill="#ffffff" points="7,4 21,4 23,6 7,6" />
-  <polygon fill="#b8b2aa" points="21,4 24,7 21,7" />
-  <rect fill="#3d444b" x="8" y="6" width="9" height="2" />
-  <rect fill="#77746f" x="18" y="6" width="2" height="1" />
-  <rect fill="#dedad2" x="8" y="10" width="6" height="5" />
-  <path fill="#2f7773" d="M9 11H10V10H12V11H14V12H13V15H10V12H9Z" />
-  <rect fill="#77746f" x="9" y="15" width="5" height="1" />
-  <rect fill="#e3ded5" x="16" y="10" width="6" height="5" />
-  <path fill="#cf526d" d="M17 11H18V10H20V11H21V15H17Z" />
-  <rect fill="#77746f" x="16" y="15" width="5" height="1" />
-  <rect fill="#e3ded5" x="8" y="17" width="6" height="4" />
-  <path fill="#cf526d" d="M8 19H10V18H11V19H14V21H8Z" />
-  <rect fill="#dedad2" x="16" y="17" width="6" height="4" />
-  <path fill="#2f7773" d="M17 17H19V18H21V21H16V18H17Z" />
-  <polygon fill="#17181b" points="18,16 24,19 22,20 24,23 21,24 20,21 18,23" />
-  <polygon fill="#ffffff" points="19,18 23,19 21,20 23,22 22,23 20,20 19,22" />
+  <path fill="#202126" d="M1 7H3V5H13L16 7L19 5H29V7H31V28H30V30H2V29H1Z" />
+  <polygon fill="#66696d" points="2,8 30,8 30,28 29,29 3,29 2,28" />
+  <rect fill="#a6a7a7" x="3" y="9" width="26" height="18" />
+  <rect fill="#e7d991" x="4" y="26" width="24" height="2" />
+  <rect fill="#6e6556" x="7" y="26" width="1" height="2" />
+  <rect fill="#6e6556" x="13" y="26" width="1" height="1" />
+  <rect fill="#6e6556" x="19" y="26" width="1" height="2" />
+  <rect fill="#6e6556" x="25" y="26" width="1" height="1" />
+  <path fill="#202126" d="M3 3H13L16 5L19 3H29V23H28V26H19L16 25L13 26H4V24H3Z" />
+  <path fill="#315d5d" d="M4 4H13L16 6L19 4H28V23H19L16 24L13 23H4Z" />
+  <polygon fill="#898580" points="4,4 13,4 16,6 16,24 13,25 4,23" />
+  <polygon fill="#a7a19a" points="19,4 28,4 28,23 19,25 16,24 16,6" />
+  <polygon fill="#f3eee4" points="5,3 13,3 16,5 16,23 13,24 5,22" />
+  <polygon fill="#fffdf5" points="19,3 28,3 28,22 19,24 16,23 16,5" />
+  <polygon fill="#ffffff" points="6,3 13,3 15,4 6,4" />
+  <polygon fill="#ffffff" points="20,3 27,3 27,4 19,4" />
+  <rect fill="#77746f" x="15" y="5" width="2" height="18" />
+  <rect fill="#d9d3c9" x="6" y="6" width="8" height="7" />
+  <path fill="#2f7773" d="M8 9H9V7H11V9H13V12H7V9Z" />
+  <rect fill="#f3eee4" x="9" y="9" width="2" height="1" />
+  <rect fill="#5c5b59" x="7" y="13" width="5" height="1" />
+  <rect fill="#e3ded5" x="6" y="15" width="8" height="6" />
+  <path fill="#cf526d" d="M7 18H9V16H10V18H13V20H7Z" />
+  <rect fill="#5c5b59" x="7" y="21" width="5" height="1" />
+  <rect fill="#e3ded5" x="18" y="6" width="8" height="7" />
+  <path fill="#cf526d" d="M21 7H23V9L26 12H18L21 9Z" />
+  <rect fill="#5c5b59" x="19" y="13" width="5" height="1" />
+  <rect fill="#d9d3c9" x="18" y="15" width="8" height="6" />
+  <path fill="#2f7773" d="M20 16H22V15H24V18H25V20H19V18H20Z" />
+  <rect fill="#c5963a" x="25" y="15" width="1" height="2" />
+  <rect fill="#5c5b59" x="19" y="21" width="5" height="1" />
+  <path fill="#17181b" d="M23 18L26 20L25 21L26 23L24 24L23 21L22 22Z" />
+  <path fill="#ffffff" d="M24 19L25 20H24L25 22H24L23 20V19Z" />
 </svg>
