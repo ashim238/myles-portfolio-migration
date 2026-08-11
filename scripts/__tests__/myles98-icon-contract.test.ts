@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import {
+  APPROVED_ICON_METADATA,
   ICON_CONCEPTS,
   ICON_GRIDS,
   expectedMasterPath,
@@ -138,6 +139,39 @@ describe("Myles 98 icon master contract", () => {
         expect.stringContaining("must exactly match approved cue"),
       ]),
     );
+  });
+
+  it("locks the approved tier cue spelling and case into metadata and the manifest", () => {
+    const manifest = JSON.parse(
+      readFileSync("docs/design-assets/myles98-icons/manifest.json", "utf8"),
+    );
+    const approvedTiers = {
+      start: { "16": "Head-and-glasses silhouette", "24": "Locs and glasses within the portrait mark", "32": "Pixel adaptation of Myles's existing portrait mark" },
+      "selected-work": { "16": "Portfolio folder", "24": "One visible image thumbnail", "32": "Open portfolio folder containing a contact sheet" },
+      "about-myles": { "16": "Portrait card", "24": "ID-card frame and one information line", "32": "ID card with portrait and information lines" },
+      resume: { "16": "White document", "24": "Blue paperclip and two bullets", "32": "Professional profile sheet with paperclip and structured lines" },
+      email: { "16": "Sealed envelope", "24": "Yellow stamp", "32": "Dimensional sealed envelope with folded flap and stamp" },
+      reminders: { "16": "Yellow checklist pad", "24": "Spiral edge and two checks", "32": "Personal checklist pad with a short pencil" },
+      "trini-roti": { "16": "Warm recipe card", "24": "Wooden spoon", "32": "Recipe card crossed by a wooden spoon with restrained cooking detail" },
+      "loose-parts": { "16": "Wooden plank and wedge", "24": "Add one cube", "32": "Assorted wooden construction pieces: plank, cube, and triangular wedge" },
+      "display-properties": { "16": "CRT monitor", "24": "Color-test tiles", "32": "Beige CRT with color-test window, controls, and object-specific casing depth" },
+      "open-apps": { "16": "Two overlapping windows", "24": "Distinct titlebars", "32": "Two layered application windows with separate content panes" },
+      "reset-desktop": { "16": "Monitor with reset cue", "24": "Compact red reset arrow", "32": "CRT desktop with a clear, subordinate reset arrow" },
+      "generic-app": { "16": "Single application window", "24": "Blue titlebar and inner pane", "32": "Neutral program window with restrained chrome depth" },
+      "fresh-greens": { "16": "Folded road map", "24": "Green route and orange destination", "32": "Two-lane road map with route, folds, and destination flag" },
+      understandingfafsa: { "16": "Newsletter page", "24": "Blue masthead within open envelope", "32": "Modular newsletter emerging from an envelope with three content regions" },
+      navi: { "16": "Pocket guidebook", "24": "Orange bookmark and storefront marker", "32": "Open neighborhood guide with map, bookmark, and local storefront cue" },
+      "tiktok-catalog": { "16": "Catalog sheet", "24": "Product-card grid and cursor", "32": "Catalog layout on a drafting surface with product cards and selection cursor" },
+    };
+
+    expect(Object.fromEntries(Object.entries(APPROVED_ICON_METADATA).map(([id, metadata]) => [id, metadata.tiers]))).toEqual(approvedTiers);
+    expect(Object.fromEntries(manifest.icons.map((icon: { id: string; tiers: Record<string, string> }) => [icon.id, icon.tiers]))).toEqual(approvedTiers);
+  });
+
+  it("accepts a new segment after a closed path subpath", () => {
+    const valid = validSvg('<path fill="#111111" d="M2 2H13V13H2ZV3H4Z" />');
+
+    expect(validateMasterSource(valid, { concept: "start", grid: 16 })).toEqual([]);
   });
 
   it("normalizes per-master read failures and continues collection", () => {

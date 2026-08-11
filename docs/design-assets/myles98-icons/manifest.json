@@ -149,9 +149,9 @@
       "group": "projects",
       "intendedObject": "folded two-lane road map",
       "tiers": {
-        "16": "folded road map",
-        "24": "road map with green route and orange destination",
-        "32": "two-lane road map with route, folds, and destination flag"
+        "16": "Folded road map",
+        "24": "Green route and orange destination",
+        "32": "Two-lane road map with route, folds, and destination flag"
       },
       "acceptedReadings": ["road map", "route map", "navigation map"],
       "rejectedReadings": ["groceries", "leaf logo", "city guide"]

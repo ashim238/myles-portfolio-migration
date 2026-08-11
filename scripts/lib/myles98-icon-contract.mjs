@@ -56,7 +56,7 @@ export const APPROVED_ICON_METADATA = freezeMetadata({
   "open-apps": { group: "system", tiers: { "16": "Two overlapping windows", "24": "Distinct titlebars", "32": "Two layered application windows with separate content panes" } },
   "reset-desktop": { group: "system", tiers: { "16": "Monitor with reset cue", "24": "Compact red reset arrow", "32": "CRT desktop with a clear, subordinate reset arrow" } },
   "generic-app": { group: "system", tiers: { "16": "Single application window", "24": "Blue titlebar and inner pane", "32": "Neutral program window with restrained chrome depth" } },
-  "fresh-greens": { group: "projects", tiers: { "16": "folded road map", "24": "road map with green route and orange destination", "32": "two-lane road map with route, folds, and destination flag" } },
+  "fresh-greens": { group: "projects", tiers: { "16": "Folded road map", "24": "Green route and orange destination", "32": "Two-lane road map with route, folds, and destination flag" } },
   understandingfafsa: { group: "projects", tiers: { "16": "Newsletter page", "24": "Blue masthead within open envelope", "32": "Modular newsletter emerging from an envelope with three content regions" } },
   navi: { group: "projects", tiers: { "16": "Pocket guidebook", "24": "Orange bookmark and storefront marker", "32": "Open neighborhood guide with map, bookmark, and local storefront cue" } },
   "tiktok-catalog": { group: "projects", tiers: { "16": "Catalog sheet", "24": "Product-card grid and cursor", "32": "Catalog layout on a drafting surface with product cards and selection cursor" } },
@@ -205,6 +205,7 @@ function validatePathData(d, grid, errors) {
   let index = 0;
   let currentPoint = false;
   let subpathHasSegment = false;
+  let subpathClosed = false;
   let hasDrawableSegment = false;
   while (index < tokens.length) {
     const commandToken = tokens[index];
@@ -223,11 +224,10 @@ function validatePathData(d, grid, errors) {
     if (command === "Z") {
       if (!currentPoint) {
         errors.push("path Z requires a current point");
-      } else if (!subpathHasSegment) {
+      } else if (!subpathHasSegment || subpathClosed) {
         errors.push("path Z requires a drawable segment in its subpath");
       }
-      currentPoint = false;
-      subpathHasSegment = false;
+      subpathClosed = true;
       continue;
     }
     if (!currentPoint && command !== "M") {
@@ -244,10 +244,11 @@ function validatePathData(d, grid, errors) {
       errors.push(`path command "${command}" must have complete ${arity === 2 ? "x y pairs" : "coordinates"}`);
     }
     if (command === "M") {
-      if (currentPoint) errors.push("path has an incomplete subpath without Z");
+      if (currentPoint && !subpathClosed) errors.push("path has an incomplete subpath without Z");
       if (count >= 2) {
         currentPoint = true;
         subpathHasSegment = count > 2;
+        subpathClosed = false;
         if (count > 2) hasDrawableSegment = true;
       }
       continue;
@@ -258,10 +259,11 @@ function validatePathData(d, grid, errors) {
     }
     if (count >= arity && count % arity === 0) {
       subpathHasSegment = true;
+      subpathClosed = false;
       hasDrawableSegment = true;
     }
   }
-  if (currentPoint) errors.push("path has an incomplete subpath without Z");
+  if (currentPoint && !subpathClosed) errors.push("path has an incomplete subpath without Z");
   if (!hasDrawableSegment) errors.push("path must contain a drawable segment");
   return hasDrawableSegment;
 }
