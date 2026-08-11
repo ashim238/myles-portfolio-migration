@@ -14,7 +14,7 @@
   <path fill="#b4783f" d="M17 3H20V4H21V5H22V8H21V9H19V10H17V9H16V8H15V5H16V4H17Z" />
   <path fill="#e7b66f" d="M17 3H20V4H21V6H20V7H17V6H16V4H17Z" />
   <path fill="#82502e" d="M18 6H21V8H20V9H18V8H17V7H18Z" />
-  <polygon fill="#34241a" points="16,8 19,10 9,22 5,22" />
-  <polygon fill="#aa6d39" points="16,9 18,10 9,21 7,21" />
-  <polygon fill="#e1aa61" points="16,9 17,10 9,20 8,20" />
+  <polygon fill="#34241a" points="16,8 19,10 9,23 6,23" />
+  <polygon fill="#aa6d39" points="16,9 18,10 9,22 7,22" />
+  <polygon fill="#e1aa61" points="16,9 17,10 9,21 8,21" />
 </svg>

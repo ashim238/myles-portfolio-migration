@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges" data-m98-concept="loose-parts" data-m98-grid="16">
   <path fill="#302319" d="M2 3H10L12 5V8H3L1 6V4H2Z" />
   <polygon fill="#e0ae6a" points="3,4 9,4 11,5 4,5" />
+  <polygon fill="#a86d3c" points="2,4 3,5 3,7 2,6" />
   <rect fill="#bd8147" x="3" y="5" width="8" height="2" />
   <rect fill="#f3cd8d" x="4" y="5" width="5" height="1" />
   <rect fill="#81512f" x="10" y="6" width="1" height="1" />
