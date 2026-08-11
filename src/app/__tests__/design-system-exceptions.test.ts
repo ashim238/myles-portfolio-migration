@@ -22,6 +22,7 @@ const exceptionNames = [
   "The Project Color Rule",
   "The Hardware Radius Rule",
   "The Semantic Pill Rule",
+  "The Myles 98 System Chrome Depth Rule",
 ];
 
 function markdownRuleBody(name: string) {
@@ -147,5 +148,48 @@ describe("design-system exception register", () => {
     expect(designDocument).toContain("`device-bezel: 34px`");
     expect(designDocument).toContain("`device-screen: 27px`");
     expect(designDocument).toContain("`navi-pill: 999px`");
+  });
+
+  it("limits Myles 98 depth to system chrome and neutral hard-edge construction", () => {
+    const systemChromeDepth = normalizeRuleBody(
+      markdownRuleBody("The Myles 98 System Chrome Depth Rule"),
+    );
+
+    for (const allowedSurface of [
+      "Myles 98/Pocket 98 system, hardware, and program chrome",
+      "discrete 1px top-left highlights",
+      "right/bottom shadow bands",
+      "recessed wells",
+      "hard cast shadows",
+      "layered windows, menus, and authored paper objects",
+    ]) {
+      expect(systemChromeDepth).toContain(allowedSurface);
+    }
+
+    for (const excludedSurface of [
+      "Reader",
+      "case-study navigation",
+      "project evidence",
+      "generic cards",
+      "editorial surfaces",
+    ]) {
+      expect(systemChromeDepth).toContain(excludedSurface);
+    }
+
+    for (const constructionConstraint of [
+      "portfolio remains flat by default outside the discovery shell",
+      "--myles-98-edge-highlight",
+      "--myles-98-edge-shadow",
+      "square or low-radius geometry",
+      "flatten this depth in forced colors",
+      "never use blur, soft filters, or gradient-based elevation",
+    ]) {
+      expect(systemChromeDepth).toContain(constructionConstraint);
+    }
+
+    const sidecarRule = designSidecar.narrative.rules.find(
+      (rule) => rule.name === "The Myles 98 System Chrome Depth Rule",
+    );
+    expect(sidecarRule?.section).toBe("elevation");
   });
 });
