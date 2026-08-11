@@ -345,37 +345,6 @@ function renderDepthPlanePaths(
   ));
 }
 
-function renderDepthUnderlay(
-  name: Myles97IconName,
-  tier: Exclude<Myles97IconTier, "chrome">,
-): ReactNode {
-  const planes = depthPlaneSpec(name, tier);
-
-  return (
-    <g data-m98-icon-depth="shadow">
-      <g data-m98-icon-depth="cast-shadow">
-        {renderDepthPlanePaths(name, "cast-shadow", planes.castShadow, "#4a4a4a")}
-      </g>
-      <g data-m98-icon-depth="side">
-        {renderDepthPlanePaths(name, "side", planes.side, SIDE_TONE_BY_ICON[name])}
-      </g>
-    </g>
-  );
-}
-
-function renderDepthHighlight(
-  name: Myles97IconName,
-  tier: Exclude<Myles97IconTier, "chrome">,
-): ReactNode {
-  const planes = depthPlaneSpec(name, tier);
-
-  return (
-    <g data-m98-icon-depth="highlight">
-      {renderDepthPlanePaths(name, "highlight", planes.highlight, "#ffffff")}
-    </g>
-  );
-}
-
 function renderChromeGlyph(
   name: Myles97IconName,
   palette: IconPalette,
@@ -838,15 +807,26 @@ export function Myles97Icon({
         ? renderMenuGlyph
         : renderDiscoveryGlyph;
   const glyph = renderer(name, palette);
-  const hasPixelDepth = color && resolvedTier !== "chrome";
+  if (!color || resolvedTier === "chrome") {
+    return <svg {...common}>{glyph}</svg>;
+  }
 
-  if (!hasPixelDepth) return <svg {...common}>{glyph}</svg>;
+  const planes = depthPlaneSpec(name, resolvedTier);
 
   return (
     <svg {...common}>
-      {renderDepthUnderlay(name, resolvedTier)}
-      <g data-m98-icon-depth="face">{glyph}</g>
-      {renderDepthHighlight(name, resolvedTier)}
+      <g data-m98-icon-depth="shadow" data-m98-icon-layer="cast-shadow">
+        {renderDepthPlanePaths(name, "cast-shadow", planes.castShadow, "#4a4a4a")}
+      </g>
+      <g data-m98-icon-depth="face" data-m98-icon-layer="face">
+        {glyph}
+      </g>
+      <g data-m98-icon-depth="shadow" data-m98-icon-layer="side">
+        {renderDepthPlanePaths(name, "side", planes.side, SIDE_TONE_BY_ICON[name])}
+      </g>
+      <g data-m98-icon-depth="highlight" data-m98-icon-layer="highlight">
+        {renderDepthPlanePaths(name, "highlight", planes.highlight, "#ffffff")}
+      </g>
     </svg>
   );
 }

@@ -204,7 +204,7 @@ describe("Myles 98 program icon identity", () => {
       "navi",
       "tiktok",
     ];
-    const { container } = render(
+    render(
       createElement(
         "div",
         null,
@@ -237,6 +237,21 @@ describe("Myles 98 program icon identity", () => {
         expect(
           icon.querySelector("[data-m98-icon-silhouette]"),
         ).not.toBeInTheDocument();
+        expect(
+          Array.from(icon.children, (layer) =>
+            layer.getAttribute("data-m98-icon-layer"),
+          ),
+        ).toEqual(["cast-shadow", "face", "side", "highlight"]);
+
+        const visibleSide = icon.querySelector(
+          ':scope > [data-m98-icon-layer="side"]',
+        );
+        expect(visibleSide).toBeInTheDocument();
+        expect(
+          visibleSide?.querySelectorAll(
+            `[data-m98-icon-object="${name}"][data-m98-icon-plane="side"]`,
+          ).length,
+        ).toBeGreaterThan(0);
 
         for (const planeName of ["cast-shadow", "side", "highlight"]) {
           const geometry = icon.querySelectorAll(
@@ -276,9 +291,6 @@ describe("Myles 98 program icon identity", () => {
         .getByRole("img", { name: "mail-chrome" })
         .querySelector("[data-m98-icon-depth]"),
     ).not.toBeInTheDocument();
-    expect(container.querySelectorAll('[data-m98-icon-depth="shadow"]')).toHaveLength(
-      names.length * 3,
-    );
   });
 
   it("keeps every decorative depth plane inside its authored grid", () => {
@@ -425,9 +437,20 @@ describe("Myles 98 program icon identity", () => {
     expect(iconStyles).toMatch(
       /@media \(forced-colors: active\)[\s\S]*?\.myles98-icon-accent,[\s\S]*?fill:\s*CanvasText !important;/,
     );
-    expect(iconStyles).toMatch(
-      /@media \(forced-colors: active\)[\s\S]*?\[data-m98-icon-depth="shadow"\],[\s\S]*?display:\s*none;/,
+    const forcedColorStyles = iconStyles.slice(
+      iconStyles.indexOf("@media (forced-colors: active)"),
     );
+    const hiddenDepthRule = forcedColorStyles.match(
+      /((?:\s*\[data-m98-icon-depth="[^"]+"\]\s*,?)+)\s*\{([^}]*)\}/,
+    );
+
+    expect(hiddenDepthRule?.[1]).toContain(
+      '[data-m98-icon-depth="shadow"]',
+    );
+    expect(hiddenDepthRule?.[1]).toContain(
+      '[data-m98-icon-depth="highlight"]',
+    );
+    expect(hiddenDepthRule?.[2]).toMatch(/display:\s*none/);
     expect(iconStyles).not.toMatch(
       /\.myles97-desktop-shortcuts[\s\S]*?drop-shadow/,
     );
