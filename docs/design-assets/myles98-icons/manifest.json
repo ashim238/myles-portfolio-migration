@@ -99,14 +99,14 @@
     {
       "id": "trini-roti",
       "group": "personal",
-      "intendedObject": "recipe card crossed by a wooden spoon with restrained cooking detail",
+      "intendedObject": "single personal memo sheet with folded corner and handwritten lines",
       "tiers": {
-        "16": "Warm recipe card",
-        "24": "Wooden spoon",
-        "32": "Recipe card crossed by a wooden spoon with restrained cooking detail"
+        "16": "Single memo sheet",
+        "24": "Folded corner and handwritten lines",
+        "32": "Personal memo sheet with folded corner, handwritten lines, and paper depth"
       },
-      "acceptedReadings": ["recipe card", "cooking card", "spoon"],
-      "rejectedReadings": ["checklist", "resume", "envelope"]
+      "acceptedReadings": ["note", "memo", "note sheet"],
+      "rejectedReadings": ["checklist", "resume", "newsletter"]
     },
     {
       "id": "loose-parts",

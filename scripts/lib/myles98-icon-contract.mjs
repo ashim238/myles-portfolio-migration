@@ -50,7 +50,7 @@ export const APPROVED_ICON_METADATA = freezeMetadata({
   resume: { group: "personal", tiers: { "16": "White document", "24": "Blue paperclip and two bullets", "32": "Professional profile sheet with paperclip and structured lines" } },
   email: { group: "system", tiers: { "16": "Sealed envelope", "24": "Yellow stamp", "32": "Dimensional sealed envelope with folded flap and stamp" } },
   reminders: { group: "personal", tiers: { "16": "Yellow checklist pad", "24": "Spiral edge and two checks", "32": "Personal checklist pad with a short pencil" } },
-  "trini-roti": { group: "personal", tiers: { "16": "Warm recipe card", "24": "Wooden spoon", "32": "Recipe card crossed by a wooden spoon with restrained cooking detail" } },
+  "trini-roti": { group: "personal", tiers: { "16": "Single memo sheet", "24": "Folded corner and handwritten lines", "32": "Personal memo sheet with folded corner, handwritten lines, and paper depth" } },
   "loose-parts": { group: "personal", tiers: { "16": "Wooden plank and wedge", "24": "Add one cube", "32": "Assorted wooden construction pieces: plank, cube, and triangular wedge" } },
   "display-properties": { group: "system", tiers: { "16": "CRT monitor", "24": "Color-test tiles", "32": "Beige CRT with color-test window, controls, and object-specific casing depth" } },
   "open-apps": { group: "system", tiers: { "16": "Two overlapping windows", "24": "Distinct titlebars", "32": "Two layered application windows with separate content panes" } },
