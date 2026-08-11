@@ -44,6 +44,7 @@ type CueSpec = {
   height: number;
   nativePixels: number;
 };
+type SvgTagForm = "self-closing" | "paired";
 
 const CUE_SPECS = new Map<Grid, CueSpec | null>([
   [16, null],
@@ -60,7 +61,7 @@ function attribute(attributes: string, name: string) {
 }
 
 function allShapePrimitives(source: string) {
-  return [...source.matchAll(/<(path|polygon|rect)\b([^>]*)\/>/gi)];
+  return [...source.matchAll(/<(path|polygon|rect)\b([^>]*?)(?:\/\s*>|>\s*<\/\1\s*>)/gi)];
 }
 
 function shapesForFill(source: string, fill: string) {
@@ -134,12 +135,37 @@ async function hasAllowedSubordinateCue(source: string, grid: Grid) {
     (await nativeColorCount(source, grid, boundaryFill)) === spec.nativePixels;
 }
 
-function extraCueMutation(source: string, grid: Grid, fill: string) {
+function rectCue(
+  fill: string,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  tagForm: SvgTagForm,
+) {
+  const attributes = `fill="${fill}" x="${x}" y="${y}" width="${width}" height="${height}"`;
+  return tagForm === "paired" ? `<rect ${attributes}></rect>` : `<rect ${attributes} />`;
+}
+
+function extraCueMutation(
+  source: string,
+  grid: Grid,
+  fill: string,
+  tagForm: SvgTagForm = "self-closing",
+) {
   const spec = CUE_SPECS.get(grid) ?? { x: 7, y: 2, width: 1, height: 12 };
   const x = spec.x + spec.width + 1;
   return source.replace(
     "</svg>",
-    `<rect fill="${fill}" x="${x}" y="${spec.y}" width="${spec.width}" height="${spec.height}" />\n</svg>`,
+    `${rectCue(fill, x, spec.y, spec.width, spec.height, tagForm)}\n</svg>`,
+  );
+}
+
+function duplicateCueMutation(source: string, grid: Grid, fill: string, tagForm: SvgTagForm) {
+  const spec = CUE_SPECS.get(grid) ?? { x: 7, y: 2, width: 1, height: 12 };
+  return source.replace(
+    "</svg>",
+    `${rectCue(fill, spec.x, spec.y, spec.width, spec.height, tagForm)}\n</svg>`,
   );
 }
 
@@ -372,10 +398,28 @@ describe("Myles 98 Fresh Greens route-map refinement", () => {
     expect(await hasAllowedSubordinateCue(extraCueMutation(source, grid, boundaryFill), grid)).toBe(false);
   });
 
+  it.each(GRIDS)("rejects a paired boundary-fill cue outside the allowed cardinality at %ipx", async (grid) => {
+    const source = sourceFor("fresh-greens", grid);
+    const boundaryFill = BOUNDARY_FILLS.get(grid)!;
+    const mutation = duplicateCueMutation(source, grid, boundaryFill, "paired");
+
+    expect(shapesForFill(mutation, boundaryFill)).toHaveLength(grid === 16 ? 1 : 2);
+    expect(await hasAllowedSubordinateCue(mutation, grid)).toBe(false);
+  });
+
   it.each(GRIDS)("rejects an extra street-like opaque cue at %ipx", async (grid) => {
     const source = sourceFor("fresh-greens", grid);
 
     expect(await hasAllowedSubordinateCue(source, grid)).toBe(true);
     expect(await hasAllowedSubordinateCue(extraCueMutation(source, grid, "#8b9d84"), grid)).toBe(false);
+  });
+
+  it.each(GRIDS)("rejects a paired extra street-like opaque cue at %ipx", async (grid) => {
+    const source = sourceFor("fresh-greens", grid);
+    const cueFill = "#8b9d84";
+    const mutation = extraCueMutation(source, grid, cueFill, "paired");
+
+    expect(shapesForFill(mutation, cueFill)).toHaveLength(1);
+    expect(await hasAllowedSubordinateCue(mutation, grid)).toBe(false);
   });
 });
