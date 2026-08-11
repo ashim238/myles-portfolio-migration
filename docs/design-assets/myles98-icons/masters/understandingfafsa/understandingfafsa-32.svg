@@ -9,16 +9,17 @@
   <polygon fill="#f3efe7" points="5,3 18,3 20,5 20,28 5,28" />
   <polygon fill="#ffffff" points="6,3 18,3 19,4 6,4" />
   <polygon fill="#c9c6bf" points="18,3 20,5 18,5" />
-  <rect fill="#1f689f" x="7" y="6" width="11" height="4" />
-  <rect fill="#82c6f8" x="7" y="6" width="9" height="1" />
-  <rect fill="#354651" x="7" y="11" width="9" height="2" />
-  <rect fill="#9b9994" x="7" y="15" width="5" height="4" />
-  <rect fill="#f1b44a" x="13" y="15" width="5" height="2" />
-  <rect fill="#aaa7a1" x="13" y="18" width="5" height="1" />
-  <rect fill="#e46f3b" x="7" y="21" width="4" height="4" />
-  <rect fill="#aaa7a1" x="12" y="21" width="6" height="1" />
-  <rect fill="#8f8e89" x="12" y="23" width="6" height="1" />
-  <rect fill="#aaa7a1" x="12" y="25" width="6" height="1" />
+  <rect fill="#1f689f" x="7" y="6" width="11" height="5" />
+  <rect fill="#82c6f8" x="7" y="6" width="11" height="1" />
+  <rect fill="#f5f1e8" x="8" y="8" width="8" height="2" />
+  <rect fill="#354651" x="7" y="12" width="11" height="2" />
+  <rect fill="#9b9994" x="7" y="16" width="5" height="4" />
+  <rect fill="#f1b44a" x="13" y="16" width="5" height="2" />
+  <rect fill="#aaa7a1" x="13" y="19" width="5" height="1" />
+  <rect fill="#e46f3b" x="7" y="22" width="4" height="4" />
+  <rect fill="#aaa7a1" x="12" y="22" width="6" height="1" />
+  <rect fill="#8f8e89" x="12" y="24" width="6" height="1" />
+  <rect fill="#aaa7a1" x="12" y="26" width="6" height="1" />
   <rect fill="#4a4b4a" x="6" y="28" width="15" height="1" />
   <rect fill="#1d1e1e" x="6" y="29" width="15" height="1" />
 </svg>

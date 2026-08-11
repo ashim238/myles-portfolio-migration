@@ -1,19 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges" data-m98-concept="fresh-greens" data-m98-grid="16">
-  <polygon fill="#202621" points="2,4 6,2 10,4 14,2 15,3 15,12 11,14 7,12 3,14 1,13 1,5" />
-  <polygon fill="#d8dfc3" points="2,5 6,3 6,11 3,13 2,12" />
-  <polygon fill="#f1ebcf" points="6,3 10,5 10,13 7,11 6,11" />
-  <polygon fill="#b4c798" points="10,5 14,3 14,11 11,13 10,13" />
-  <polygon fill="#ffffff" points="2,5 6,3 6,4 2,6" />
-  <polygon fill="#e6e1c8" points="6,3 10,5 10,6 6,4" />
-  <polygon fill="#d4ddbf" points="10,5 14,3 14,4 10,6" />
-  <polygon fill="#5596b1" points="2,6 5,5 5,7 3,8 2,8" />
-  <polygon fill="#6fa65b" points="11,5 14,4 14,6 12,7 11,7" />
-  <polygon fill="#4d5552" points="2,9 4,6 6,7 3,12" />
-  <polygon fill="#4d5552" points="4,7 6,6 9,9 8,12" />
-  <polygon fill="#4d5552" points="7,9 9,11 12,7 11,5" />
-  <polygon fill="#4d5552" points="10,6 12,5 15,8 14,11" />
-  <polygon fill="#e8e0bf" points="2,10 5,7 6,8 3,11" />
-  <polygon fill="#e8e0bf" points="5,7 9,10 8,11 5,8" />
-  <polygon fill="#e8e0bf" points="8,10 11,6 12,7 9,11" />
-  <polygon fill="#e8e0bf" points="11,6 15,9 14,10 11,7" />
+  <path fill="#202621" d="M2 3H6V2H10V3H14V4H15V12H14V13H11V14H7V13H2V12H1V4H2Z" />
+  <rect fill="#d8dfc3" x="2" y="4" width="4" height="8" />
+  <rect fill="#f1ebcf" x="6" y="3" width="4" height="10" />
+  <rect fill="#b4c798" x="10" y="4" width="4" height="8" />
+  <rect fill="#ffffff" x="2" y="4" width="4" height="1" />
+  <rect fill="#e6e1c8" x="6" y="3" width="4" height="1" />
+  <rect fill="#d4ddbf" x="10" y="4" width="4" height="1" />
+  <polygon fill="#5596b1" points="2,5 5,5 5,7 3,8 2,8" />
+  <polygon fill="#6fa65b" points="11,5 14,5 14,7 12,7 11,8" />
+  <polygon fill="#4d5552" points="2,10 4,7 7,9 9,6 12,8 14,6 15,8 12,10 9,8 7,11 4,9 2,12" />
+  <polygon fill="#e8e0bf" points="2,10 4,8 7,10 9,7 12,9 14,7 14,8 12,10 9,8 7,11 4,9 2,11" />
+  <rect fill="#56635b" x="6" y="4" width="1" height="8" />
+  <rect fill="#7e8a74" x="10" y="5" width="1" height="7" />
 </svg>

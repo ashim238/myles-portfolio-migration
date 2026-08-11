@@ -4,12 +4,13 @@
   <polygon fill="#f2eee6" points="3,2 10,2 12,4 12,13 3,13" />
   <polygon fill="#ffffff" points="4,2 10,2 11,3 4,3" />
   <polygon fill="#c8c5bf" points="10,2 12,4 10,4" />
-  <rect fill="#2474af" x="4" y="4" width="7" height="2" />
-  <rect fill="#84c6f7" x="4" y="4" width="5" height="1" />
-  <rect fill="#3a4650" x="4" y="7" width="6" height="1" />
-  <rect fill="#d2a142" x="4" y="9" width="3" height="3" />
-  <rect fill="#9a9893" x="8" y="9" width="3" height="1" />
-  <rect fill="#aaa7a1" x="8" y="11" width="3" height="1" />
-  <rect fill="#666865" x="4" y="13" width="8" height="1" />
+  <rect fill="#2474af" x="4" y="4" width="7" height="3" />
+  <rect fill="#84c6f7" x="4" y="4" width="7" height="1" />
+  <rect fill="#f5f1e8" x="5" y="5" width="4" height="1" />
+  <rect fill="#3a4650" x="4" y="8" width="7" height="1" />
+  <rect fill="#d2a142" x="4" y="10" width="3" height="3" />
+  <rect fill="#9a9893" x="8" y="10" width="3" height="1" />
+  <rect fill="#aaa7a1" x="8" y="12" width="3" height="1" />
+  <rect fill="#666865" x="4" y="13" width="7" height="1" />
   <rect fill="#1f2021" x="4" y="14" width="9" height="1" />
 </svg>
