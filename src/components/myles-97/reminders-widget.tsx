@@ -1,23 +1,15 @@
 "use client";
 
-import { useEffect, useRef, type RefObject } from "react";
-import { siteConfig } from "@/lib/site-config";
+import { useEffect, useRef, useState, type RefObject } from "react";
 
-const VISITOR_REMINDERS = [
+const PERSONAL_REMINDERS = [
   {
-    title: "Open Selected Work",
-    detail: "Choose any case study and skim the opening facts.",
-    href: "/#selected-work",
+    title: "Catch up on World’s Finest",
+    detail: "See what Daniel Mora’s been drawing.",
   },
   {
-    title: "Read About Myles",
-    detail: "The short version of how I got here.",
-    href: "/about",
-  },
-  {
-    title: "Send a note",
-    detail: "Email me if something sparks a question.",
-    href: `mailto:${siteConfig.email}`,
+    title: "Plan the next hike",
+    detail: "Check the pollen count before choosing a trail.",
   },
 ] as const;
 
@@ -37,14 +29,17 @@ export function RemindersWidget({
       aria-label="Open Reminders"
     >
       <span className="myles97-reminders-widget-title">Reminders</span>
-      <strong>3 things to see</strong>
-      <span>Selected Work · About · E-mail</span>
+      <strong>2 things on my list</strong>
+      <span>World’s Finest · Next hike</span>
     </button>
   );
 }
 
 export function RemindersProgram() {
-  const firstReminderRef = useRef<HTMLAnchorElement>(null);
+  const firstReminderRef = useRef<HTMLInputElement>(null);
+  const [completed, setCompleted] = useState(() =>
+    PERSONAL_REMINDERS.map(() => false),
+  );
 
   useEffect(() => {
     firstReminderRef.current?.focus();
@@ -53,26 +48,36 @@ export function RemindersProgram() {
   return (
     <article className="myles97-reminders-program">
       <header>
-        <p className="myles97-eyebrow">Visitor checklist</p>
-        <h2>A few things to see</h2>
-        <p>Three shortcuts if you want the quick version.</p>
+        <p className="myles97-eyebrow">Personal notes</p>
+        <h2>A couple of notes</h2>
+        <p>The small stuff I keep meaning to get back to.</p>
       </header>
 
       <ol>
-        {VISITOR_REMINDERS.map((reminder, index) => (
-          <li key={reminder.title}>
-            <a
-              ref={index === 0 ? firstReminderRef : undefined}
-              href={reminder.href}
-            >
-              <span className="myles97-reminder-check" aria-hidden="true">
-                □
-              </span>
+        {PERSONAL_REMINDERS.map((reminder, index) => (
+          <li
+            key={reminder.title}
+            data-completed={completed[index] ? "true" : "false"}
+          >
+            <label>
+              <input
+                ref={index === 0 ? firstReminderRef : undefined}
+                className="myles97-reminder-checkbox"
+                type="checkbox"
+                checked={completed[index]}
+                onChange={() => {
+                  setCompleted((current) =>
+                    current.map((value, itemIndex) =>
+                      itemIndex === index ? !value : value,
+                    ),
+                  );
+                }}
+              />
               <span>
                 <strong>{reminder.title}</strong>
                 <span>{reminder.detail}</span>
               </span>
-            </a>
+            </label>
           </li>
         ))}
       </ol>

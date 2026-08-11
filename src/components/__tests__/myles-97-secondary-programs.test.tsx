@@ -127,7 +127,7 @@ describe("Myles 98 secondary programs", () => {
     expect(recipeTrigger).toHaveFocus();
   });
 
-  it("keeps Reminders as a project-agnostic desktop widget beside the recipe note", async () => {
+  it("keeps Reminders as a personal desktop note list beside the recipe note", async () => {
     const user = userEvent.setup();
     render(<DesktopHarness />);
 
@@ -153,23 +153,28 @@ describe("Myles 98 secondary programs", () => {
 
     expect(
       within(reminderWindow).getByRole("heading", {
-        name: "A few things to see",
+        name: "A couple of notes",
       }),
     ).toBeInTheDocument();
-    const selectedWorkReminder = within(reminderWindow).getByRole("link", {
-      name: /Open Selected Work/,
+    const comicReminder = within(reminderWindow).getByRole("checkbox", {
+      name: /Catch up on World’s Finest/,
     });
-    expect(selectedWorkReminder).toHaveAttribute("href", "/#selected-work");
-    expect(selectedWorkReminder).toHaveFocus();
+    expect(comicReminder).toHaveFocus();
     expect(
-      within(reminderWindow).getByRole("link", { name: /Read About Myles/ }),
-    ).toHaveAttribute("href", "/about");
+      within(reminderWindow).getByText("See what Daniel Mora’s been drawing."),
+    ).toBeInTheDocument();
     expect(
-      within(reminderWindow).getByRole("link", { name: /Send a note/ }),
-    ).toHaveAttribute("href", "mailto:mylesashitey@gmail.com");
+      within(reminderWindow).getByRole("checkbox", {
+        name: /Plan the next hike/,
+      }),
+    ).toBeInTheDocument();
+    expect(within(reminderWindow).queryAllByRole("link")).toHaveLength(0);
     expect(reminderWindow).not.toHaveTextContent(
       /Fresh Greens|UnderstandingFAFSA|Navi|TikTok/,
     );
+
+    await user.click(comicReminder);
+    expect(comicReminder).toBeChecked();
 
     await user.click(
       within(reminderWindow).getByRole("button", { name: "Close Reminders" }),

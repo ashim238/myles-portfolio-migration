@@ -188,7 +188,7 @@
   background: #fff;
 }
 
-.myles97-reminders-program li a {
+.myles97-reminders-program li label {
   display: grid;
   min-height: 58px;
   grid-template-columns: 24px minmax(0, 1fr);
@@ -196,29 +196,37 @@
   gap: 8px;
   padding: 10px;
   color: inherit;
-  text-decoration: none;
+  cursor: pointer;
 }
 
-.myles97-reminders-program li a:hover {
+.myles97-reminders-program li label:hover,
+.myles97-reminders-program li label:focus-within {
   background: var(--m97-signal);
 }
 
-.myles97-reminder-check {
-  font: 700 19px/1 var(--m97-ui-font);
+.myles97-reminder-checkbox {
+  width: 18px;
+  height: 18px;
+  margin: 1px 0 0;
+  accent-color: var(--m97-active);
 }
 
-.myles97-reminders-program li a > span:last-child {
+.myles97-reminders-program li label > span:last-child {
   display: grid;
   gap: 3px;
 }
 
-.myles97-reminders-program li a strong {
+.myles97-reminders-program li label strong {
   font-size: 13px;
 }
 
-.myles97-reminders-program li a span span {
+.myles97-reminders-program li label span span {
   font-size: 11px;
   line-height: 1.4;
+}
+
+.myles97-reminders-program li[data-completed="true"] strong {
+  text-decoration: line-through;
 }
 
 .myles97-secondary-program,
@@ -487,7 +495,8 @@
 
   .myles97-system-dialog-titlebar,
   .myles97-reminders-widget-title,
-  .myles97-reminders-program li a:hover,
+  .myles97-reminders-program li label:hover,
+  .myles97-reminders-program li label:focus-within,
   .myles97-system-dialog-actions a:first-child {
     background: Highlight;
     color: HighlightText;
