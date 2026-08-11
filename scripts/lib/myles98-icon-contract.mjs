@@ -35,8 +35,41 @@ const GROUPS = Object.freeze({
   projects: new Set(["fresh-greens", "understandingfafsa", "navi", "tiktok-catalog"]),
 });
 
+function freezeMetadata(metadata) {
+  return Object.freeze(
+    Object.fromEntries(
+      Object.entries(metadata).map(([id, value]) => [id, Object.freeze({ group: value.group, tiers: Object.freeze(value.tiers) })]),
+    ),
+  );
+}
+
+export const APPROVED_ICON_METADATA = freezeMetadata({
+  start: { group: "system", tiers: { "16": "Head-and-glasses silhouette", "24": "Locs and glasses within the portrait mark", "32": "Pixel adaptation of Myles's existing portrait mark" } },
+  "selected-work": { group: "system", tiers: { "16": "Portfolio folder", "24": "One visible image thumbnail", "32": "Open portfolio folder containing a contact sheet" } },
+  "about-myles": { group: "personal", tiers: { "16": "Portrait card", "24": "ID-card frame and one information line", "32": "ID card with portrait and information lines" } },
+  resume: { group: "personal", tiers: { "16": "White document", "24": "Blue paperclip and two bullets", "32": "Professional profile sheet with paperclip and structured lines" } },
+  email: { group: "system", tiers: { "16": "Sealed envelope", "24": "Yellow stamp", "32": "Dimensional sealed envelope with folded flap and stamp" } },
+  reminders: { group: "personal", tiers: { "16": "Yellow checklist pad", "24": "Spiral edge and two checks", "32": "Personal checklist pad with a short pencil" } },
+  "trini-roti": { group: "personal", tiers: { "16": "Warm recipe card", "24": "Wooden spoon", "32": "Recipe card crossed by a wooden spoon with restrained cooking detail" } },
+  "loose-parts": { group: "personal", tiers: { "16": "Wooden plank and wedge", "24": "Add one cube", "32": "Assorted wooden construction pieces: plank, cube, and triangular wedge" } },
+  "display-properties": { group: "system", tiers: { "16": "CRT monitor", "24": "Color-test tiles", "32": "Beige CRT with color-test window, controls, and object-specific casing depth" } },
+  "open-apps": { group: "system", tiers: { "16": "Two overlapping windows", "24": "Distinct titlebars", "32": "Two layered application windows with separate content panes" } },
+  "reset-desktop": { group: "system", tiers: { "16": "Monitor with reset cue", "24": "Compact red reset arrow", "32": "CRT desktop with a clear, subordinate reset arrow" } },
+  "generic-app": { group: "system", tiers: { "16": "Single application window", "24": "Blue titlebar and inner pane", "32": "Neutral program window with restrained chrome depth" } },
+  "fresh-greens": { group: "projects", tiers: { "16": "folded road map", "24": "road map with green route and orange destination", "32": "two-lane road map with route, folds, and destination flag" } },
+  understandingfafsa: { group: "projects", tiers: { "16": "Newsletter page", "24": "Blue masthead within open envelope", "32": "Modular newsletter emerging from an envelope with three content regions" } },
+  navi: { group: "projects", tiers: { "16": "Pocket guidebook", "24": "Orange bookmark and storefront marker", "32": "Open neighborhood guide with map, bookmark, and local storefront cue" } },
+  "tiktok-catalog": { group: "projects", tiers: { "16": "Catalog sheet", "24": "Product-card grid and cursor", "32": "Catalog layout on a drafting surface with product cards and selection cursor" } },
+});
+
 const ALLOWED_SHAPES = new Set(["path", "rect", "polygon"]);
-const BANNED_ATTRIBUTES = new Map([
+const ROOT_ATTRIBUTES = new Set(["xmlns", "viewBox", "shape-rendering", "data-m98-concept", "data-m98-grid"]);
+const SHAPE_ATTRIBUTES = Object.freeze({
+  path: new Set(["fill", "d", "shape-rendering"]),
+  rect: new Set(["fill", "x", "y", "width", "height", "shape-rendering"]),
+  polygon: new Set(["fill", "points", "shape-rendering"]),
+});
+const BANNED_ATTRIBUTE_MESSAGES = new Map([
   ["transform", "transforms are not allowed"],
   ["style", "style attributes are not allowed"],
   ["stroke", "strokes are not allowed; use filled contour bands"],
@@ -83,9 +116,10 @@ export function validateManifest(manifest) {
       errors.push(`duplicate icon id "${icon.id}"`);
     }
     byId.set(icon.id, icon);
+    const approved = APPROVED_ICON_METADATA[icon.id];
     if (!Object.hasOwn(GROUPS, icon.group)) {
       errors.push(`${label} has unknown group "${icon.group}"`);
-    } else if (!GROUPS[icon.group].has(icon.id)) {
+    } else if (!GROUPS[icon.group].has(icon.id) || approved?.group !== icon.group) {
       errors.push(`${label} assigns "${icon.id}" to group "${icon.group}", which is not its approved group`);
     }
     if (typeof icon.intendedObject !== "string" || icon.intendedObject.trim() === "") {
@@ -97,6 +131,8 @@ export function validateManifest(manifest) {
       for (const grid of ICON_GRIDS) {
         if (typeof icon.tiers[String(grid)] !== "string" || icon.tiers[String(grid)].trim() === "") {
           errors.push(`${label}.tiers.${grid} must be a non-empty string`);
+        } else if (approved && icon.tiers[String(grid)] !== approved.tiers[String(grid)]) {
+          errors.push(`${label}.tiers.${grid} must exactly match approved cue`);
         }
       }
     }
@@ -163,15 +199,18 @@ function tokenizePath(d, errors) {
 function validatePathData(d, grid, errors) {
   if (typeof d !== "string" || d.trim() === "") {
     errors.push("path must have non-empty d data");
-    return;
+    return false;
   }
   const tokens = tokenizePath(d, errors);
   let index = 0;
+  let currentPoint = false;
+  let subpathHasSegment = false;
+  let hasDrawableSegment = false;
   while (index < tokens.length) {
     const commandToken = tokens[index];
     if (commandToken.type !== "command") {
-      errors.push("path coordinates must begin with an absolute command");
-      return;
+      errors.push("path must begin with an absolute M command");
+      return false;
     }
     const command = commandToken.value;
     index += 1;
@@ -181,7 +220,19 @@ function validatePathData(d, grid, errors) {
       while (index < tokens.length && tokens[index].type !== "command") index += 1;
       continue;
     }
-    if (command === "Z") continue;
+    if (command === "Z") {
+      if (!currentPoint) {
+        errors.push("path Z requires a current point");
+      } else if (!subpathHasSegment) {
+        errors.push("path Z requires a drawable segment in its subpath");
+      }
+      currentPoint = false;
+      subpathHasSegment = false;
+      continue;
+    }
+    if (!currentPoint && command !== "M") {
+      errors.push("path must begin with an absolute M command");
+    }
     const arity = command === "M" || command === "L" ? 2 : 1;
     let count = 0;
     while (index < tokens.length && tokens[index].type === "number") {
@@ -192,7 +243,27 @@ function validatePathData(d, grid, errors) {
     if (count === 0 || count % arity !== 0) {
       errors.push(`path command "${command}" must have complete ${arity === 2 ? "x y pairs" : "coordinates"}`);
     }
+    if (command === "M") {
+      if (currentPoint) errors.push("path has an incomplete subpath without Z");
+      if (count >= 2) {
+        currentPoint = true;
+        subpathHasSegment = count > 2;
+        if (count > 2) hasDrawableSegment = true;
+      }
+      continue;
+    }
+    if (!currentPoint) {
+      errors.push(`path ${command} requires a current point from an absolute M command`);
+      continue;
+    }
+    if (count >= arity && count % arity === 0) {
+      subpathHasSegment = true;
+      hasDrawableSegment = true;
+    }
   }
+  if (currentPoint) errors.push("path has an incomplete subpath without Z");
+  if (!hasDrawableSegment) errors.push("path must contain a drawable segment");
+  return hasDrawableSegment;
 }
 
 function validateRect(element, grid, errors) {
@@ -241,6 +312,19 @@ function validateFill(element, errors) {
   return fill.toLowerCase();
 }
 
+function validateElementAttributes(element, isRoot, errors) {
+  const allowed = isRoot ? ROOT_ATTRIBUTES : SHAPE_ATTRIBUTES[element.localName];
+  for (const attribute of element.attributes) {
+    if (allowed?.has(attribute.name)) {
+      if (!isRoot && attribute.name === "shape-rendering" && attribute.value !== "crispEdges") {
+        errors.push(`${element.localName} shape-rendering must be "crispEdges" when declared`);
+      }
+      continue;
+    }
+    errors.push(`${element.localName} ${BANNED_ATTRIBUTE_MESSAGES.get(attribute.name) ?? `attribute "${attribute.name}" is not allowed`}`);
+  }
+}
+
 export function validateMasterSource(source, { concept, grid }) {
   const errors = [];
   if (!ICON_CONCEPTS.includes(concept)) errors.push(`unknown icon concept "${concept}"`);
@@ -270,21 +354,26 @@ export function validateMasterSource(source, { concept, grid }) {
   }
 
   const colors = new Set();
+  let drawablePrimitiveCount = 0;
   for (const element of document.querySelectorAll("*")) {
     if (element !== svg && !ALLOWED_SHAPES.has(element.localName)) {
       errors.push(`banned SVG element <${element.localName}>`);
     }
-    for (const attribute of element.attributes) {
-      const message = BANNED_ATTRIBUTES.get(attribute.name);
-      if (message) errors.push(`${element.localName} ${message}`);
-    }
+    validateElementAttributes(element, element === svg, errors);
     if (!ALLOWED_SHAPES.has(element.localName)) continue;
     const color = validateFill(element, errors);
     if (color) colors.add(color);
-    if (element.localName === "path") validatePathData(element.getAttribute("d"), grid, errors);
-    if (element.localName === "rect") validateRect(element, grid, errors);
-    if (element.localName === "polygon") validatePolygon(element, grid, errors);
+    if (element.localName === "path" && validatePathData(element.getAttribute("d"), grid, errors)) drawablePrimitiveCount += 1;
+    if (element.localName === "rect") {
+      validateRect(element, grid, errors);
+      drawablePrimitiveCount += 1;
+    }
+    if (element.localName === "polygon") {
+      validatePolygon(element, grid, errors);
+      drawablePrimitiveCount += 1;
+    }
   }
+  if (drawablePrimitiveCount === 0) errors.push("svg must contain at least one drawable primitive");
   if (colors.size > 24) errors.push(`icon uses ${colors.size} unique colors; maximum is 24`);
   return errors;
 }
