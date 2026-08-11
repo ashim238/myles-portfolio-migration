@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" shape-rendering="crispEdges" data-m98-concept="resume" data-m98-grid="24">
+  <path fill="#252524" d="M7 2H17L20 5V21H19V23H6V22H4V5H6V3H7Z" />
+  <path fill="#8c8982" d="M7 3H16L19 6V20H18V22H6V5H7Z" />
+  <path fill="#eeeae3" d="M7 3H16V6H19V20H18V21H6V5H7Z" />
+  <polygon fill="#bdb8b0" points="16,3 19,6 16,6" />
+  <polygon fill="#ffffff" points="16,3 18,5 16,5" />
+  <rect fill="#ffffff" x="6" y="5" width="1" height="14" />
+  <rect fill="#d0cbc3" x="18" y="7" width="1" height="13" />
+  <path fill="#174d82" d="M5 5H7V4H11V6H9V12H8V6H7V13H10V14H6V13H5Z" />
+  <path fill="#71a7d0" d="M6 6H7V5H10V6H8V12H9V13H7V12H6Z" />
+  <rect fill="#30536b" x="9" y="10" width="2" height="2" />
+  <rect fill="#817c74" x="12" y="10" width="5" height="2" />
+  <rect fill="#30536b" x="9" y="15" width="2" height="2" />
+  <rect fill="#a19b92" x="12" y="15" width="5" height="2" />
+  <rect fill="#55524e" x="7" y="21" width="11" height="1" />
+</svg>

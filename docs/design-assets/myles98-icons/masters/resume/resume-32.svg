@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" data-m98-concept="resume" data-m98-grid="32">
+  <path fill="#242423" d="M9 2H22L27 7V28H26V30H7V29H5V6H7V3H9Z" />
+  <path fill="#89867f" d="M9 3H21L26 8V27H25V29H7V6H9Z" />
+  <path fill="#eeeae3" d="M9 3H21V8H26V27H25V28H7V6H9Z" />
+  <polygon fill="#b9b4ac" points="21,3 26,8 21,8" />
+  <polygon fill="#ffffff" points="21,3 25,7 21,7" />
+  <rect fill="#ffffff" x="7" y="6" width="2" height="20" />
+  <rect fill="#ccc7bf" x="25" y="9" width="1" height="18" />
+  <path fill="#164b80" d="M6 6H9V4H15V7H12V16H10V7H9V17H13V19H8V18H6Z" />
+  <path fill="#75acd2" d="M7 7H9V5H14V6H11V16H12V17H9V16H8V8H7Z" />
+  <rect fill="#315c79" x="12" y="10" width="10" height="3" />
+  <rect fill="#7c7770" x="12" y="15" width="11" height="1" />
+  <rect fill="#33596f" x="11" y="18" width="2" height="2" />
+  <rect fill="#918b82" x="15" y="18" width="8" height="2" />
+  <rect fill="#33596f" x="11" y="22" width="2" height="2" />
+  <rect fill="#aaa49a" x="15" y="22" width="7" height="2" />
+  <rect fill="#bcb6ad" x="11" y="26" width="12" height="1" />
+  <rect fill="#504d49" x="8" y="28" width="17" height="1" />
+</svg>

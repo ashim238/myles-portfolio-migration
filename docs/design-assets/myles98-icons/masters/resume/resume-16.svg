@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges" data-m98-concept="resume" data-m98-grid="16">
+  <path fill="#282725" d="M4 1H11L14 4V14H13V15H3V14H2V3H4Z" />
+  <path fill="#8c8881" d="M4 2H10L13 5V13H12V14H3V4H4Z" />
+  <path fill="#eeeae3" d="M4 2H10V5H13V13H3V4H4Z" />
+  <polygon fill="#bab5ad" points="10,2 13,5 10,5" />
+  <polygon fill="#ffffff" points="10,2 12,4 10,4" />
+  <rect fill="#f8f5ef" x="4" y="3" width="5" height="1" />
+  <rect fill="#ffffff" x="3" y="4" width="1" height="8" />
+  <rect fill="#d5d0c8" x="12" y="6" width="1" height="7" />
+  <rect fill="#5a5752" x="4" y="13" width="8" height="1" />
+</svg>
