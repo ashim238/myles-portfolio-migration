@@ -2,21 +2,21 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking. Use `superpowers:test-driven-development` for every master change and `superpowers:verification-before-completion` before any completion claim.
 
-**Goal:** Improve the native-size noun, hierarchy, and late-1990s object construction of Resume, Loose Parts, Reset Desktop, Fresh Greens, and Navi while freezing the rest of the verified 48-master family.
+**Goal:** Improve the native-size noun, hierarchy, and late-1990s object construction of the initially scoped five icons, then the user-authorized recognition misses, while preserving the directly approved Start portrait and Navi destination concepts.
 
-**Architecture:** The five concepts remain standalone, hand-authored 16/24/32 SVG master families. Tasks 1–4 change disjoint SVG and focused test files so they can be reviewed independently. Task 5 is the only shared aggregation task: it updates exact semantic metadata, regenerates the canonical contact sheet, binds evidence to the new hashes, and performs the full visual/release review. Nothing in this plan changes the production `Myles97Icon` renderer or any live icon callsite.
+**Architecture:** Each concept remains a standalone, hand-authored 16/24/32 SVG master family. Tasks 1–4 and the user-authorized Tasks 6–10 change disjoint SVG and focused test files so they can be reviewed independently. Task 5 is the only shared aggregation task: it updates exact semantic metadata, regenerates the canonical contact sheet, binds evidence to the new hashes, and performs the full visual/release review. Nothing in this plan changes the production `Myles97Icon` renderer or any live icon callsite.
 
 **Tech Stack:** standalone SVG, Node.js, Sharp, Vitest, Playwright, npm, XML validation, deterministic contact-sheet generator.
 
 ## Global Constraints
 
 - Begin from the approved scope in `docs/superpowers/specs/2026-08-11-myles98-five-icon-refinement-design.md`.
-- Work only inside the five target master families until Task 5; do not redraw the locked eleven concepts.
+- Tasks 1–4 are limited to the initial five master families. After the documented 2026-08-11 user ruling, Tasks 6–10 may redraw only Fresh Greens, Reset Desktop, TikTok Catalog, Notes, Display Properties, UnderstandingFAFSA, Reminders, and Selected Work.
 - Use npm only. Do not run pnpm, yarn, dependency installation, or package-manager repair.
 - Every master keeps the exact `0 0 16 16`, `0 0 24 24`, or `0 0 32 32` viewBox; integer geometry; `shape-rendering="crispEdges"`; opaque fills; and a one-pixel transparent perimeter.
 - Use filled pixel bands, square/stepped geometry, upper-left light, and object-specific depth. Never use paths with curves, strokes, transforms, filters, masks, opacity, text, gradients, blur, rounded corners, nested SVG, or generic extrusion wrappers.
-- Preserve the `data-m98-concept` and `data-m98-grid` attributes and the stable concepts `resume`, `loose-parts`, `reset-desktop`, `fresh-greens`, and `navi`.
-- The pinned/stored relationship in Navi remains `pin above separate storefront`, never a shop inside a pin or an open book. TikTok remains a locked standalone shopping bag.
+- Preserve every `data-m98-concept` and `data-m98-grid` attribute and every stable concept ID. Do not rename the visible program or internal `trini-roti` identifier during this master pass.
+- The user-approved Start portrait and Navi relationship remain unchanged. Navi stays `pin above separate storefront`, never a shop inside a pin or an open book. TikTok remains a literal standalone shopping bag even when refined.
 - Keep the current `Buss Up Shut.txt` visible-name question out of this master pass.
 - Do not begin production integration until Myles approves the exact regenerated full sheet.
 
@@ -31,10 +31,19 @@
 | `docs/design-assets/myles98-icons/masters/reset-desktop/reset-desktop-{16,24,32}.svg` | CRT primary noun and compact restart action. |
 | `docs/design-assets/myles98-icons/masters/fresh-greens/fresh-greens-{16,24,32}.svg` | Solid map tile, asymmetric road, and distinct route endpoints. |
 | `docs/design-assets/myles98-icons/masters/navi/navi-{16,24,32}.svg` | Pin-to-store destination relationship. |
+| `docs/design-assets/myles98-icons/masters/trini-roti/trini-roti-{16,24,32}.svg` | Distinct personal memo-sheet silhouette. |
+| `docs/design-assets/myles98-icons/masters/reminders/reminders-{16,24,32}.svg` | Checklist/reminder noun without calendar cues. |
+| `docs/design-assets/myles98-icons/masters/display-properties/display-properties-{16,24,32}.svg` | CRT display-settings noun, not a television. |
+| `docs/design-assets/myles98-icons/masters/selected-work/selected-work-{16,24,32}.svg` | Project/work dossier rather than a generic photo folder. |
+| `docs/design-assets/myles98-icons/masters/understandingfafsa/understandingfafsa-{16,24,32}.svg` | Newsletter/information-page noun rather than an envelope. |
+| `docs/design-assets/myles98-icons/masters/tiktok-catalog/tiktok-catalog-{16,24,32}.svg` | Literal standalone shopping bag distinct from a wastebasket. |
 | `scripts/__tests__/myles98-resume-reset-refinement.test.ts` | Raster/source contracts for hierarchy of the two system/personal documents. |
 | `scripts/__tests__/myles98-loose-parts-refinement.test.ts` | Raster/source contracts for three-dimensional construction-block reading. |
 | `scripts/__tests__/myles98-fresh-greens-refinement.test.ts` | Raster/source contracts for the Fresh Greens route-map noun. |
 | `scripts/__tests__/myles98-navi-refinement.test.ts` | Raster/source contracts for the Navi pin-to-store destination relationship. |
+| `scripts/__tests__/myles98-notes-reminders-refinement.test.ts` | Raster/source contracts for memo and checklist nouns. |
+| `scripts/__tests__/myles98-display-selected-work-refinement.test.ts` | Raster/source contracts for display settings and project-dossier nouns. |
+| `scripts/__tests__/myles98-fafsa-tiktok-refinement.test.ts` | Raster/source contracts for newsletter and shopping-bag nouns. |
 | `docs/design-assets/myles98-icons/manifest.json` | Exact approved nouns, tiers, accepted readings, and rejected readings. |
 | `scripts/lib/myles98-icon-contract.mjs` | Fail-closed approved semantic and tier metadata. |
 | `scripts/__tests__/myles98-icon-contract.test.ts` | Regression proof that the revised semantic metadata cannot drift. |
@@ -401,6 +410,218 @@
 
 ---
 
+## User-approved post-review correction — 2026-08-11
+
+The first clean-context review correctly exposed literal recognition misses.
+The user then explicitly kept the Start portrait and Navi destination concept,
+while authorizing refinement of the other six reported family misses. This
+ruling supersedes Task 5 Step 4's recognition disposition only:
+
+- Preserve Start's portrait and the current Navi pin-above-store relationship.
+  Record their review results as user-approved exceptions, but do not redraw
+  either concept in this correction.
+- Refine the original unresolved Fresh Greens and Reset Desktop concepts, plus
+  TikTok Catalog, Notes, Display Properties, UnderstandingFAFSA, Reminders,
+  and Selected Work. TikTok may be simplified, but it must remain a literal
+  shopping bag, never a wastebasket, basket, catalog page, logo, or app mark.
+- After Tasks 6–10, rerun two clean-context reviews of an anonymous
+  target-only sheet containing Resume, Loose Parts, Fresh Greens, Reset
+  Desktop, TikTok Catalog, Notes, Display Properties, UnderstandingFAFSA,
+  Reminders, Selected Work, Navi, and Start. The direct approvals for Navi and
+  Start are recorded separately from the strict redraw-gate results.
+
+### Task 6: Make Fresh Greens unmistakably a route map at native size
+
+**Files:**
+- Modify: `docs/design-assets/myles98-icons/masters/fresh-greens/fresh-greens-16.svg`
+- Modify: `docs/design-assets/myles98-icons/masters/fresh-greens/fresh-greens-24.svg`
+- Modify: `docs/design-assets/myles98-icons/masters/fresh-greens/fresh-greens-32.svg`
+- Modify: `scripts/__tests__/myles98-fresh-greens-refinement.test.ts`
+
+**Consumes:** Task 3's asymmetric-road/endpoints contract and the failed
+clean-context reading `landscape image` / `landscape photograph` with only a
+secondary `map` / `road map` reading.
+
+**Produces:** Three independently authored road-map tiles in which the road is
+the visual subject, not a terrain or mountain silhouette.
+
+- [ ] Write RED native-raster/source checks that preserve the asymmetric route
+  and distinct endpoints while rejecting a broad connected diagonal/ridge that
+  can make the road read as scenery. The exact test should bind to the revised
+  road primitive and prove it remains a continuous directional road with a
+  compact start and a destination marker at all grids.
+- [ ] Redraw only the three Fresh masters. At 16px, prefer one visibly routed
+  road and compact endpoint relationship over background terrain. At 24/32,
+  keep exactly one subordinate boundary/street cue. Do not add folds, leaves,
+  grocery symbols, maze density, device frames, or scenery-like mountain
+  bands.
+- [ ] Run the focused Fresh test RED then GREEN, project verifier, shared Fresh
+  topology subset, XML validation, lint, and `git diff --check`. Capture true
+  1x/6x teal-gray-white evidence.
+- [ ] Commit only the three Fresh masters and focused test:
+
+  ```bash
+  git add docs/design-assets/myles98-icons/masters/fresh-greens scripts/__tests__/myles98-fresh-greens-refinement.test.ts
+  git commit -m "fix: strengthen Fresh Greens route-map silhouette"
+  ```
+
+### Task 7: Make Reset Desktop unmistakably a restart action
+
+**Files:**
+- Modify: `docs/design-assets/myles98-icons/masters/reset-desktop/reset-desktop-16.svg`
+- Modify: `docs/design-assets/myles98-icons/masters/reset-desktop/reset-desktop-24.svg`
+- Modify: `docs/design-assets/myles98-icons/masters/reset-desktop/reset-desktop-32.svg`
+- Modify: `scripts/__tests__/myles98-resume-reset-refinement.test.ts`
+
+**Consumes:** Task 1's CRT-primary and compact-action contract plus the failed
+clean-context reading `computer monitor with a red alert flag`.
+
+**Produces:** Three independently authored CRT icons where a single open,
+stepped return arrow is visibly a restart action rather than a status flag or
+notification badge.
+
+- [ ] Write RED checks that preserve CRT primacy and a compact red action while
+  requiring one open return-arrow geometry with an unmistakable arrowhead.
+  Reject closed red rectangles, banner/flag topology, and paired transfer/swap
+  arrows.
+- [ ] Redraw only the three Reset masters. Keep a full one-pixel transparent
+  perimeter and the exact intentional topology model used by Task 5. The red
+  return arrow must sit beside or orbit the CRT without becoming a full-size
+  alert badge.
+- [ ] Run the focused Resume/Reset test RED then GREEN, system verifier, shared
+  Reset topology subset, XML validation, lint, and `git diff --check`. Capture
+  true 1x/6x teal-gray-white evidence.
+- [ ] Commit only the three Reset masters and focused test:
+
+  ```bash
+  git add docs/design-assets/myles98-icons/masters/reset-desktop scripts/__tests__/myles98-resume-reset-refinement.test.ts
+  git commit -m "fix: strengthen Reset Desktop restart cue"
+  ```
+
+### Task 8: Separate Notes from Reminders at native size
+
+**Files:**
+- Modify: `docs/design-assets/myles98-icons/masters/trini-roti/trini-roti-16.svg`
+- Modify: `docs/design-assets/myles98-icons/masters/trini-roti/trini-roti-24.svg`
+- Modify: `docs/design-assets/myles98-icons/masters/trini-roti/trini-roti-32.svg`
+- Modify: `docs/design-assets/myles98-icons/masters/reminders/reminders-16.svg`
+- Modify: `docs/design-assets/myles98-icons/masters/reminders/reminders-24.svg`
+- Modify: `docs/design-assets/myles98-icons/masters/reminders/reminders-32.svg`
+- Create: `scripts/__tests__/myles98-notes-reminders-refinement.test.ts`
+
+**Consumes:** The stable internal `trini-roti` concept ID, the unchanged
+visible-name boundary, and the failed readings `document page` for Notes and
+`calendar` for Reminders.
+
+**Produces:** A memo sheet and a checklist pad that read as two different,
+literal paper objects without relying on labels or brand cues.
+
+- [ ] Write RED source/raster tests. Notes must retain one sheet, a folded
+  corner, and a small handwritten-line cluster without checklist boxes. Reminders
+  must contain at least two square checkbox/checkmark pairs and must not contain
+  calendar rings, date-grid columns, or a full calendar header band. At native
+  size, the two source palettes/silhouettes must not be interchangeable.
+- [ ] Redraw only the six masters. Make Notes a compact personal memo sheet,
+  not a generic report. Make Reminders a checklist pad, not a dated calendar.
+  Preserve filled pixel bands, opaque fills, the transparent perimeter, and
+  independent 16/24/32 detail decisions.
+- [ ] Run the new test RED then GREEN, personal/system group verification,
+  targeted topology checks, XML validation, lint, and `git diff --check`.
+  Capture true 1x/6x teal-gray-white evidence for the two siblings.
+- [ ] Commit only the six masters and focused test:
+
+  ```bash
+  git add docs/design-assets/myles98-icons/masters/trini-roti docs/design-assets/myles98-icons/masters/reminders scripts/__tests__/myles98-notes-reminders-refinement.test.ts
+  git commit -m "fix: separate Myles 98 notes and reminders icons"
+  ```
+
+### Task 9: Clarify Display Properties and Selected Work nouns
+
+**Files:**
+- Modify: `docs/design-assets/myles98-icons/masters/display-properties/display-properties-16.svg`
+- Modify: `docs/design-assets/myles98-icons/masters/display-properties/display-properties-24.svg`
+- Modify: `docs/design-assets/myles98-icons/masters/display-properties/display-properties-32.svg`
+- Modify: `docs/design-assets/myles98-icons/masters/selected-work/selected-work-16.svg`
+- Modify: `docs/design-assets/myles98-icons/masters/selected-work/selected-work-24.svg`
+- Modify: `docs/design-assets/myles98-icons/masters/selected-work/selected-work-32.svg`
+- Create: `scripts/__tests__/myles98-display-selected-work-refinement.test.ts`
+
+**Consumes:** The failed readings `television` for Display Properties and
+`photo/file folder` for Selected Work.
+
+**Produces:** A CRT display-settings object and a project dossier/work folder
+whose inner structure communicates their jobs without text.
+
+- [ ] Write RED source/raster tests. Display Properties must show a CRT plus a
+  compact settings-panel cue such as sliders or controls, with no antenna or
+  television-only silhouette. Selected Work must show a folder/dossier shell
+  containing at least two distinct project-card regions, not a single photo
+  landscape. Tests must preserve native one-component/transparent-perimeter
+  rules as applicable.
+- [ ] Redraw only the six masters. At 16px, prioritize the core noun and one
+  settings/dossier cue; at 24/32, add no more than two subordinate controls or
+  project cards. Do not add labels, logos, scenery, or generic dashboard grids.
+- [ ] Run the new test RED then GREEN, system/project group verification,
+  targeted topology checks, XML validation, lint, and `git diff --check`.
+  Capture true 1x/6x teal-gray-white evidence.
+- [ ] Commit only the six masters and focused test:
+
+  ```bash
+  git add docs/design-assets/myles98-icons/masters/display-properties docs/design-assets/myles98-icons/masters/selected-work scripts/__tests__/myles98-display-selected-work-refinement.test.ts
+  git commit -m "fix: clarify Myles 98 display and project icons"
+  ```
+
+### Task 10: Clarify UnderstandingFAFSA and TikTok Catalog objects
+
+**Files:**
+- Modify: `docs/design-assets/myles98-icons/masters/understandingfafsa/understandingfafsa-16.svg`
+- Modify: `docs/design-assets/myles98-icons/masters/understandingfafsa/understandingfafsa-24.svg`
+- Modify: `docs/design-assets/myles98-icons/masters/understandingfafsa/understandingfafsa-32.svg`
+- Modify: `docs/design-assets/myles98-icons/masters/tiktok-catalog/tiktok-catalog-16.svg`
+- Modify: `docs/design-assets/myles98-icons/masters/tiktok-catalog/tiktok-catalog-24.svg`
+- Modify: `docs/design-assets/myles98-icons/masters/tiktok-catalog/tiktok-catalog-32.svg`
+- Create: `scripts/__tests__/myles98-fafsa-tiktok-refinement.test.ts`
+
+**Consumes:** The failed readings `open envelope/letter` for UnderstandingFAFSA
+and `wastebasket` for TikTok Catalog.
+
+**Produces:** A modular newsletter/information page and a literal shopping bag
+that are visually distinct from the existing email, document, and basket nouns.
+
+- [ ] Write RED source/raster tests. UnderstandingFAFSA must make its upright
+  newsletter page and three modular content regions primary, while any envelope
+  cue is absent or strictly subordinate. TikTok must show a bag body with a
+  clearly separated handled opening and a depth plane, while rejecting basket
+  bars, open bins, catalog-page framing, cursors, TikTok marks, music notes,
+  or social-app imagery.
+- [ ] Redraw only the six masters. At 16px, favor a blue-masthead newsletter
+  and a handled shopping bag silhouette. At 24/32, add page modules and bag
+  gusset/fold planes only when they improve literal reading. Do not use text,
+  brand marks, translucent overlays, or decorative seams that look like gaps.
+- [ ] Run the new test RED then GREEN, project group verification, targeted
+  topology checks, XML validation, lint, and `git diff --check`. Capture true
+  1x/6x teal-gray-white evidence with sibling comparisons against Email and
+  Generic App.
+- [ ] Commit only the six masters and focused test:
+
+  ```bash
+  git add docs/design-assets/myles98-icons/masters/understandingfafsa docs/design-assets/myles98-icons/masters/tiktok-catalog scripts/__tests__/myles98-fafsa-tiktok-refinement.test.ts
+  git commit -m "fix: clarify Myles 98 newsletter and shopping bag icons"
+  ```
+
+### Task 5 continuation after Tasks 6–10
+
+Reopen the existing Task 5 shared candidate work. Reconcile the final semantics
+and topology with all refined masters, rebuild the canonical contact sheet,
+generate a new anonymous target-only evidence sheet, and obtain two new
+clean-context readings. The review documents and family spec must bind every
+claim to the new hashes, distinguish direct approvals for Start/Navi from the
+strict target-gate evidence, and retain the original all-48 reading records as
+transparent diagnostics. Then run Task 5's full repository verification and
+commit only its existing shared candidate file list.
+
+---
+
 ## Plan Self-Review
 
 ### Spec coverage
@@ -410,7 +631,12 @@
 - Reset as restart rather than transfer: Task 1.
 - Fresh Greens asymmetric route and geometric endpoints: Task 3.
 - Navi pin-to-store relationship with exact 24/32 dimensions: Task 4.
-- Metadata, topology, deterministic sheet, clean-context recognition, informed reviews, and renewed full-sheet approval: Task 5.
+- Metadata, topology, deterministic sheet, clean-context recognition, informed reviews, and renewed full-sheet approval: Task 5, continued after Tasks 6–10.
+- Fresh Greens route-map recognition: Task 6.
+- Reset Desktop restart-action recognition: Task 7.
+- Notes versus Reminders recognition: Task 8.
+- Display Properties versus television and Selected Work versus photo-folder recognition: Task 9.
+- UnderstandingFAFSA newsletter and TikTok Catalog shopping-bag recognition: Task 10.
 - Production integration and visible program naming are explicitly excluded.
 
 ### Placeholder scan
