@@ -6,13 +6,14 @@
   <path fill="#73432d" d="M10 6H19V7H22V10H23V20H22V23H20V25H18V27H14V26H11V24H9V22H8V10H9V7H10Z" />
   <path fill="#985d3d" d="M10 7H18V8H21V10H22V15H9V11H10Z" />
   <path fill="#2c1a16" d="M6 8H9V18H8V27H5V22H4V12H6ZM22 8H26V12H28V23H27V27H24V18H22Z" />
-  <rect fill="#14191d" x="6" y="14" width="11" height="7" />
-  <rect fill="#14191d" x="18" y="14" width="10" height="7" />
-  <rect fill="#a6cbcd" x="7" y="15" width="9" height="5" />
-  <rect fill="#a6cbcd" x="19" y="15" width="8" height="5" />
-  <rect fill="#efffff" x="7" y="15" width="3" height="2" />
-  <rect fill="#efffff" x="19" y="15" width="3" height="2" />
-  <rect fill="#14191d" x="17" y="16" width="1" height="2" />
+  <path fill="#14191d" d="M6 14H8V15H17V19H7V18H6ZM18 15H26V14H28V18H27V19H18Z" />
+  <rect fill="#a6cbcd" x="8" y="16" width="8" height="2" />
+  <rect fill="#a6cbcd" x="19" y="16" width="7" height="2" />
+  <rect fill="#efffff" x="8" y="16" width="3" height="1" />
+  <rect fill="#efffff" x="19" y="16" width="3" height="1" />
+  <rect fill="#14191d" x="17" y="16" width="1" height="1" />
+  <rect fill="#c39a4b" x="6" y="16" width="1" height="1" />
+  <rect fill="#c39a4b" x="27" y="16" width="1" height="1" />
   <rect fill="#2a1713" x="12" y="22" width="4" height="1" />
   <rect fill="#2a1713" x="18" y="22" width="4" height="1" />
   <rect fill="#3a1f18" x="14" y="24" width="6" height="1" />
