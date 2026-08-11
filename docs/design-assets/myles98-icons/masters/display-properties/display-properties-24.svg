@@ -4,11 +4,12 @@
   <path fill="#d6cec0" d="M4 3H20V4H21V14H20V16H4Z" />
   <rect fill="#273239" x="6" y="6" width="12" height="8" />
   <rect fill="#f2f0e8" x="7" y="7" width="10" height="6" />
-  <rect fill="#5c6262" x="7" y="7" width="3" height="6" />
-  <rect fill="#b57d28" x="10" y="7" width="7" height="2" />
-  <rect fill="#d7d3c8" x="10" y="9" width="4" height="2" />
-  <rect fill="#3f7188" x="14" y="9" width="3" height="4" />
-  <rect fill="#9ca4a1" x="10" y="11" width="4" height="2" />
+  <rect fill="#4a7d8e" x="7" y="7" width="10" height="2" />
+  <rect fill="#b9d9d4" x="8" y="8" width="4" height="1" />
+  <rect fill="#6f746e" x="8" y="10" width="8" height="1" />
+  <rect fill="#3f7188" x="10" y="10" width="2" height="1" />
+  <rect fill="#6f746e" x="8" y="12" width="8" height="1" />
+  <rect fill="#3f7188" x="14" y="12" width="1" height="1" />
   <rect fill="#f7f2e8" x="4" y="4" width="1" height="11" />
   <rect fill="#5c574f" x="18" y="6" width="1" height="8" />
   <rect fill="#49453f" x="5" y="16" width="14" height="1" />

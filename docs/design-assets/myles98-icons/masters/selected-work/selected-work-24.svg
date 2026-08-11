@@ -2,12 +2,16 @@
   <path fill="#3a2710" d="M3 4H10V7H21V20H19V22H4V21H2V7H3Z" />
   <path fill="#a86e19" d="M4 5H9V8H20V18H3V8H4Z" />
   <path fill="#f2c653" d="M4 6H9V9H19V16H3V9H4Z" />
-  <path fill="#402f25" d="M9 6H18V17H7V8H9Z" />
-  <rect fill="#f3eee0" x="8" y="7" width="9" height="9" />
-  <rect fill="#b8d9dc" x="9" y="8" width="7" height="5" />
-  <polygon fill="#4b8a67" points="9,13 12,10 14,12 16,10 16,13" />
-  <rect fill="#f2ad3e" x="13" y="9" width="2" height="2" />
-  <rect fill="#9c927d" x="9" y="14" width="5" height="1" />
+  <rect fill="#3d3028" x="6" y="6" width="6" height="10" />
+  <rect fill="#3d3028" x="12" y="6" width="6" height="10" />
+  <rect fill="#f4efe2" x="7" y="7" width="4" height="8" />
+  <rect fill="#f4efe2" x="13" y="7" width="4" height="8" />
+  <rect fill="#4a7d8e" x="7" y="7" width="4" height="2" />
+  <rect fill="#b57d28" x="13" y="7" width="4" height="2" />
+  <rect fill="#8e8578" x="7" y="10" width="3" height="1" />
+  <rect fill="#cfc6b7" x="7" y="12" width="2" height="2" />
+  <rect fill="#8e8578" x="13" y="10" width="3" height="1" />
+  <rect fill="#cfc6b7" x="13" y="12" width="3" height="1" />
   <path fill="#64400e" d="M2 12H22V15H21V19H19V21H5V20H3V17H2Z" />
   <path fill="#d8911f" d="M3 12H21V15H20V19H18V20H5V19H4V16H3Z" />
   <path fill="#ffd363" d="M3 12H20V13H6V15H5V17H4V15H3Z" />

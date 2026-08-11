@@ -3,8 +3,10 @@
   <path fill="#81796c" d="M2 2H14V11H13V12H3V11H2Z" />
   <path fill="#d3cbbd" d="M3 2H13V3H14V9H13V11H3Z" />
   <rect fill="#29363b" x="4" y="4" width="8" height="5" />
-  <rect fill="#9bb8b8" x="5" y="5" width="6" height="3" />
-  <rect fill="#d9f0ed" x="5" y="5" width="4" height="1" />
+  <rect fill="#f2f0e8" x="5" y="5" width="6" height="3" />
+  <rect fill="#4a7d8e" x="5" y="5" width="6" height="1" />
+  <rect fill="#6f746e" x="5" y="7" width="6" height="1" />
+  <rect fill="#3f7188" x="8" y="7" width="1" height="1" />
   <rect fill="#5e5950" x="12" y="4" width="1" height="5" />
   <rect fill="#f6f1e7" x="3" y="3" width="1" height="7" />
   <rect fill="#4a4640" x="4" y="11" width="8" height="1" />
