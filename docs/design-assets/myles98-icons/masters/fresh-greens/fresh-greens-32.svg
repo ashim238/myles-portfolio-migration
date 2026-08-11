@@ -3,20 +3,10 @@
   <rect fill="#d8dfc2" x="4" y="4" width="23" height="23" />
   <rect fill="#b4c798" x="17" y="4" width="10" height="9" />
   <rect fill="#5294b0" x="4" y="4" width="8" height="7" />
-  <rect fill="#c4ceac" x="12" y="4" width="2" height="23" />
-  <rect fill="#c4ceac" x="4" y="16" width="23" height="2" />
-  <rect fill="#4b5350" x="4" y="8" width="12" height="4" />
-  <rect fill="#4b5350" x="12" y="8" width="4" height="17" />
-  <rect fill="#4b5350" x="12" y="21" width="11" height="4" />
-  <rect fill="#4b5350" x="19" y="12" width="4" height="13" />
-  <rect fill="#4b5350" x="19" y="12" width="8" height="4" />
-  <rect fill="#285f45" x="5" y="9" width="10" height="2" />
-  <rect fill="#285f45" x="13" y="9" width="2" height="15" />
-  <rect fill="#285f45" x="13" y="22" width="9" height="2" />
-  <rect fill="#285f45" x="20" y="13" width="2" height="11" />
-  <rect fill="#285f45" x="20" y="13" width="7" height="2" />
-  <rect fill="#205a40" x="4" y="8" width="4" height="4" />
-  <rect fill="#f27524" x="23" y="11" width="4" height="4" />
-  <rect fill="#ffae43" x="23" y="11" width="3" height="1" />
-  <rect fill="#c84f18" x="26" y="12" width="1" height="3" />
+  <rect fill="#c4ceac" x="13" y="4" width="2" height="23" />
+  <path fill="#4b5350" d="M5 22H9L14 17H17V14H20L23 11H25V15H24L21 18H19V20H16L11 25H5Z" />
+  <rect fill="#205a40" x="4" y="21" width="5" height="5" />
+  <path fill="#f27524" d="M23 8H27V11H26L27 14H23Z" />
+  <rect fill="#ffae43" x="23" y="8" width="3" height="1" />
+  <rect fill="#c84f18" x="26" y="9" width="1" height="2" />
 </svg>
