@@ -1,26 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" data-m98-concept="start" data-m98-grid="32">
-  <path fill="#080a0c" d="M8 1H18V2H23V4H26V7H29V12H31V21H29V25H26V28H22V30H10V29H6V27H3V24H1V13H2V8H5V4H8Z" />
-  <path fill="#251b17" d="M8 2H18V3H22V5H25V8H28V13H29V20H27V24H25V27H21V29H11V28H7V26H4V23H3V13H4V8H6V5H8Z" />
-  <path fill="#6e402a" d="M10 6H20V7H23V10H25V14H27V21H25V24H22V27H19V29H12V28H9V26H7V23H5V14H7V10H8V7H10Z" />
-  <path fill="#a7633e" d="M11 6H19V7H22V10H24V14H25V21H23V24H21V26H18V28H13V27H10V25H8V22H7V14H8V10H9V7H11Z" />
-  <path fill="#d59059" d="M11 7H18V8H21V10H23V15H9V11H10V8H11Z" />
-  <path fill="#3f251b" d="M9 21H11V24H13V25H19V24H22V22H24V25H22V27H19V29H12V28H9V26H7V23H9Z" />
-  <rect fill="#15191d" x="7" y="14" width="10" height="7" />
-  <rect fill="#15191d" x="18" y="14" width="9" height="7" />
-  <rect fill="#aacfd2" x="8" y="15" width="8" height="5" />
-  <rect fill="#aacfd2" x="19" y="15" width="7" height="5" />
-  <rect fill="#edfefe" x="8" y="15" width="3" height="2" />
-  <rect fill="#edfefe" x="19" y="15" width="3" height="2" />
-  <rect fill="#15191d" x="17" y="16" width="1" height="2" />
-  <rect fill="#2d1c19" x="14" y="23" width="5" height="1" />
-  <rect fill="#0b0c0e" x="5" y="4" width="5" height="6" />
-  <rect fill="#171016" x="10" y="1" width="5" height="6" />
-  <rect fill="#0b0c0e" x="16" y="2" width="5" height="6" />
-  <rect fill="#171016" x="21" y="4" width="5" height="7" />
-  <rect fill="#0b0c0e" x="25" y="8" width="4" height="7" />
-  <rect fill="#171016" x="3" y="9" width="5" height="7" />
-  <rect fill="#0b0c0e" x="2" y="16" width="5" height="6" />
-  <rect fill="#171016" x="24" y="17" width="5" height="6" />
-  <rect fill="#6b362b" x="13" y="18" width="1" height="1" />
-  <rect fill="#6b362b" x="22" y="18" width="1" height="1" />
+  <path fill="#080a0c" d="M9 1H19V2H23V4H26V7H28V11H26V9H24V8H22V7H9V8H7V10H5V12H3V8H4V5H6V2H9Z" />
+  <path fill="#080a0c" d="M3 9H7V20H6V28H5V30H3V27H2V12H3ZM6 13H9V23H8V30H6ZM22 12H25V22H24V30H22ZM25 8H28V11H30V24H29V27H27V30H25Z" />
+  <path fill="#251614" d="M4 11H6V21H5V27H4ZM26 10H28V23H27V28H26Z" />
+  <path fill="#48281e" d="M9 6H20V7H23V10H25V20H24V23H22V25H20V28H18V30H13V29H10V27H8V25H7V22H6V10H7V7H9Z" />
+  <path fill="#73432d" d="M10 6H19V7H22V10H23V20H22V23H20V25H18V27H14V26H11V24H9V22H8V10H9V7H10Z" />
+  <path fill="#985d3d" d="M10 7H18V8H21V10H22V15H9V11H10Z" />
+  <path fill="#2c1a16" d="M6 8H9V18H8V27H5V22H4V12H6ZM22 8H26V12H28V23H27V27H24V18H22Z" />
+  <rect fill="#14191d" x="6" y="14" width="11" height="7" />
+  <rect fill="#14191d" x="18" y="14" width="10" height="7" />
+  <rect fill="#a6cbcd" x="7" y="15" width="9" height="5" />
+  <rect fill="#a6cbcd" x="19" y="15" width="8" height="5" />
+  <rect fill="#efffff" x="7" y="15" width="3" height="2" />
+  <rect fill="#efffff" x="19" y="15" width="3" height="2" />
+  <rect fill="#14191d" x="17" y="16" width="1" height="2" />
+  <rect fill="#2a1713" x="12" y="22" width="4" height="1" />
+  <rect fill="#2a1713" x="18" y="22" width="4" height="1" />
+  <rect fill="#3a1f18" x="14" y="24" width="6" height="1" />
+  <rect fill="#17100f" x="15" y="27" width="5" height="2" />
+  <rect fill="#4b2b23" x="4" y="16" width="2" height="9" />
+  <rect fill="#4b2b23" x="26" y="17" width="2" height="8" />
 </svg>
