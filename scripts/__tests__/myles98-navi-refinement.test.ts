@@ -123,6 +123,14 @@ function verticalGap(upper: Bounds, lower: Bounds) {
   return lower.minY - upper.maxY - 1;
 }
 
+function containsBounds(outer: Bounds, inner: Bounds | null) {
+  return inner !== null
+    && inner.minX >= outer.minX
+    && inner.maxX <= outer.maxX
+    && inner.minY >= outer.minY
+    && inner.maxY <= outer.maxY;
+}
+
 function pinTailX(raster: NativeRaster) {
   const component = opaqueComponents(raster)[0];
   const maxY = Math.max(...component.map((index) => Math.floor(index / raster.width)));
@@ -142,30 +150,17 @@ describe("Myles 98 Navi pin-to-store refinement", () => {
       (index) => Math.floor(index / navi16.width) === marker.maxY,
     ).length;
 
-    expect(await orangeCenterBounds(source)).toEqual({
-      minX: expect.any(Number),
-      minY: expect.any(Number),
-      maxX: expect.any(Number),
-      maxY: expect.any(Number),
-      width: expect.any(Number),
-      height: expect.any(Number),
-    });
+    expect(containsBounds(marker, await orangeCenterBounds(source))).toBe(true);
     expect(components).toHaveLength(1);
     expect(marker.height).toBeGreaterThan(marker.width);
     expect(bottomRowWidth).toBeLessThanOrEqual(2);
   });
 
-  it("restores the filled orange center to the 24px pin", async () => {
+  it("keeps the filled orange center inside the 24px pin", async () => {
     const source = sourceFor("navi", 24);
+    const navi24 = await nativeRaster(source);
 
-    expect(await orangeCenterBounds(source)).toEqual({
-      minX: expect.any(Number),
-      minY: expect.any(Number),
-      maxX: expect.any(Number),
-      maxY: expect.any(Number),
-      width: expect.any(Number),
-      height: expect.any(Number),
-    });
+    expect(containsBounds(pinBounds(navi24), await orangeCenterBounds(source))).toBe(true);
   });
 
   it("places the 24px pin one transparent row above a broad storefront", async () => {
@@ -179,13 +174,23 @@ describe("Myles 98 Navi pin-to-store refinement", () => {
     expect(pinTailX(navi24)).toBeLessThanOrEqual(storefront.maxX);
   });
 
-  it("keeps the 32px pin separate from a storefront at least 22 pixels wide", async () => {
+  it("keeps the 32px orange center inside a pin above a broad storefront", async () => {
     const source = sourceFor("navi", 32);
     const navi32 = await nativeRaster(source);
 
-    expect(await orangeCenterBounds(source)).not.toBeNull();
+    expect(containsBounds(pinBounds(navi32), await orangeCenterBounds(source))).toBe(true);
     expect(opaqueComponents(navi32)).toHaveLength(2);
     expect(verticalGap(pinBounds(navi32), storefrontBounds(navi32))).toBeGreaterThanOrEqual(1);
     expect(storefrontBounds(navi32).width).toBeGreaterThanOrEqual(22);
+  });
+
+  it("rejects an orange region relocated from the pin into the storefront", async () => {
+    const relocated = sourceFor("navi", 24)
+      .replaceAll("#f2a245", "#4f8ea6")
+      .replace("</svg>", '  <rect fill="#f2a245" x="6" y="19" width="2" height="2" />\n</svg>');
+    const raster = await nativeRaster(relocated);
+
+    expect(await orangeCenterBounds(relocated)).not.toBeNull();
+    expect(containsBounds(pinBounds(raster), await orangeCenterBounds(relocated))).toBe(false);
   });
 });
