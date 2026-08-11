@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" shape-rendering="crispEdges" data-m98-concept="reset-desktop" data-m98-grid="24">
-  <path fill="#232323" d="M3 3H14V4H16V16H15V18H11V20H14V22H4V21H7V18H3V17H2V4H3Z" />
-  <path fill="#746d62" d="M3 4H14V5H15V15H14V17H4V16H3Z" />
-  <path fill="#d5cdbf" d="M4 4H13V5H14V15H13V16H4Z" />
-  <rect fill="#fff7e9" x="4" y="5" width="1" height="10" />
-  <rect fill="#25343a" x="5" y="6" width="8" height="7" />
-  <rect fill="#4a7d8e" x="6" y="7" width="7" height="6" />
-  <rect fill="#b9d9d4" x="6" y="7" width="4" height="1" />
-  <rect fill="#514c45" x="5" y="14" width="8" height="1" />
-  <rect fill="#aaa194" x="8" y="17" width="3" height="4" />
-  <rect fill="#d8d0c3" x="9" y="18" width="2" height="3" />
-  <rect fill="#ece4d7" x="5" y="21" width="8" height="1" />
-  <path fill="#8e211e" d="M21 3H23V13H22V15H20V18L17 14L20 10V12H21Z" />
-  <rect fill="#f15a50" x="22" y="4" width="1" height="8" />
-  <rect fill="#f15a50" x="21" y="12" width="1" height="2" />
-  <polygon fill="#f15a50" points="18,14 20,11 20,17" />
+  <path fill="#8e211e" d="M4 2H17V3H20V2L23 5L20 8V6H17V5H4Z" />
+  <path fill="#f15a50" d="M5 3H18V4H20V4L21 5L20 6V5H18V4H5Z" />
+  <path fill="#8e211e" d="M20 22H7V21H4V22L1 19L4 16V18H7V19H20Z" />
+  <path fill="#f15a50" d="M19 21H6V20H4V20L3 19L4 18V19H6V20H19Z" />
+  <path fill="#232323" d="M6 5H17V6H19V17H18V19H14V21H17V23H7V22H10V19H6V18H5V6H6Z" />
+  <path fill="#746d62" d="M6 6H17V7H18V16H17V18H7V17H6Z" />
+  <path fill="#d5cdbf" d="M7 6H16V7H17V16H16V17H7Z" />
+  <rect fill="#fff7e9" x="7" y="7" width="1" height="9" />
+  <rect fill="#25343a" x="8" y="8" width="8" height="6" />
+  <rect fill="#4a7d8e" x="9" y="9" width="7" height="5" />
+  <rect fill="#b9d9d4" x="9" y="9" width="4" height="1" />
+  <rect fill="#514c45" x="8" y="15" width="8" height="1" />
+  <rect fill="#aaa194" x="11" y="17" width="3" height="5" />
+  <rect fill="#d8d0c3" x="12" y="18" width="2" height="4" />
+  <rect fill="#ece4d7" x="8" y="22" width="8" height="1" />
 </svg>

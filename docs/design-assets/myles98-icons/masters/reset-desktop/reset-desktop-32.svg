@@ -1,22 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" data-m98-concept="reset-desktop" data-m98-grid="32">
-  <path fill="#222323" d="M4 3H19V4H21V6H22V21H21V24H16V27H20V30H7V29H11V24H4V23H2V6H4Z" />
-  <path fill="#746d62" d="M4 4H19V5H20V7H21V20H20V23H5V22H3V7H4Z" />
-  <path fill="#d4ccbd" d="M5 4H18V5H20V7H20V20H19V21H5Z" />
-  <path fill="#eee8dc" d="M6 5H18V6H19V19H18V20H6Z" />
-  <rect fill="#25343a" x="7" y="7" width="11" height="11" />
-  <rect fill="#4a7d8e" x="8" y="8" width="10" height="9" />
-  <rect fill="#b9d9d4" x="8" y="8" width="6" height="1" />
-  <rect fill="#548798" x="9" y="9" width="8" height="1" />
-  <rect fill="#fff7e9" x="6" y="6" width="1" height="13" />
-  <rect fill="#514c45" x="7" y="19" width="11" height="2" />
-  <rect fill="#81796e" x="8" y="21" width="10" height="2" />
-  <rect fill="#aaa194" x="12" y="23" width="5" height="5" />
-  <rect fill="#d6cec1" x="13" y="24" width="3" height="4" />
-  <rect fill="#514c45" x="8" y="28" width="11" height="2" />
-  <rect fill="#ece4d7" x="9" y="28" width="9" height="1" />
-  <rect fill="#696259" x="18" y="19" width="2" height="2" />
-  <path fill="#8d211e" d="M29 4H31V18H30V20H28V24L23 19L28 14V17H29Z" />
-  <rect fill="#f15a50" x="30" y="5" width="1" height="12" />
-  <rect fill="#f15a50" x="29" y="17" width="1" height="2" />
-  <polygon fill="#f15a50" points="24,19 28,15 28,23" />
+  <path fill="#8d211e" d="M5 2H23V3H27V2L31 6L27 10V7H23V6H5Z" />
+  <path fill="#f15a50" d="M6 3H24V4H27V4L29 6L27 8V6H24V5H6Z" />
+  <path fill="#8d211e" d="M27 30H9V29H5V30L1 26L5 22V25H9V26H27Z" />
+  <path fill="#f15a50" d="M26 29H8V28H5V28L3 26L5 24V26H8V27H26Z" />
+  <path fill="#222323" d="M7 6H22V7H24V9H25V23H24V25H19V28H23V31H10V30H14V25H7V24H5V9H7Z" />
+  <path fill="#746d62" d="M7 7H22V8H23V10H24V22H23V24H8V23H6V10H7Z" />
+  <path fill="#d4ccbd" d="M8 7H21V8H23V10H23V22H22V23H8Z" />
+  <path fill="#eee8dc" d="M9 8H21V9H22V21H21V22H9Z" />
+  <rect fill="#25343a" x="10" y="10" width="11" height="10" />
+  <rect fill="#4a7d8e" x="11" y="11" width="10" height="8" />
+  <rect fill="#b9d9d4" x="11" y="11" width="6" height="1" />
+  <rect fill="#548798" x="12" y="12" width="8" height="1" />
+  <rect fill="#fff7e9" x="9" y="9" width="1" height="12" />
+  <rect fill="#514c45" x="10" y="21" width="11" height="2" />
+  <rect fill="#81796e" x="11" y="23" width="10" height="2" />
+  <rect fill="#aaa194" x="15" y="25" width="5" height="5" />
+  <rect fill="#d6cec1" x="16" y="26" width="3" height="4" />
+  <rect fill="#514c45" x="11" y="29" width="11" height="2" />
+  <rect fill="#ece4d7" x="12" y="29" width="9" height="1" />
+  <rect fill="#696259" x="21" y="21" width="2" height="2" />
 </svg>

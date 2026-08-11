@@ -1,16 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges" data-m98-concept="reset-desktop" data-m98-grid="16">
-  <path fill="#232323" d="M1 2H8V3H9V10H8V12H6V13H8V15H2V14H4V12H1Z" />
-  <path fill="#777065" d="M2 3H7V4H8V9H7V11H2Z" />
-  <path fill="#d4ccbd" d="M2 3H7V4H8V9H7V10H2Z" />
-  <rect fill="#fff7e9" x="2" y="4" width="1" height="5" />
-  <rect fill="#26353a" x="3" y="4" width="4" height="4" />
-  <rect fill="#4b7d8e" x="4" y="5" width="3" height="3" />
-  <rect fill="#b8d8d3" x="4" y="5" width="2" height="1" />
-  <rect fill="#514c45" x="3" y="9" width="4" height="1" />
-  <rect fill="#aaa194" x="5" y="11" width="1" height="3" />
-  <rect fill="#ece4d7" x="3" y="14" width="4" height="1" />
-  <path fill="#8e211e" d="M13 2H15V9H14V10H13V12L10 9L13 6V8H13Z" />
-  <rect fill="#f15a50" x="14" y="3" width="1" height="5" />
-  <rect fill="#f15a50" x="13" y="8" width="1" height="2" />
-  <polygon fill="#f15a50" points="11,9 13,7 13,11" />
+  <path fill="#8e211e" d="M3 1H11V2H13V1L15 3L13 5V4H11V3H3Z" />
+  <path fill="#f15a50" d="M4 2H12V3H13L14 3L13 4H12V3H4Z" />
+  <path fill="#8e211e" d="M13 15H5V14H3V15L1 13L3 11V12H5V13H13Z" />
+  <path fill="#f15a50" d="M12 14H4V13H3L2 13L3 12H4V13H12Z" />
+  <path fill="#232323" d="M4 4H11V5H12V11H11V12H9V13H10V15H5V14H7V12H4V11H3V5H4Z" />
+  <path fill="#777065" d="M4 5H10V6H11V10H10V11H4Z" />
+  <path fill="#d4ccbd" d="M5 5H10V6H11V10H10V10H5Z" />
+  <rect fill="#fff7e9" x="5" y="6" width="1" height="4" />
+  <rect fill="#26353a" x="6" y="6" width="4" height="3" />
+  <rect fill="#4b7d8e" x="7" y="7" width="3" height="2" />
+  <rect fill="#b8d8d3" x="7" y="7" width="2" height="1" />
+  <rect fill="#514c45" x="6" y="10" width="4" height="1" />
+  <rect fill="#aaa194" x="8" y="11" width="1" height="3" />
+  <rect fill="#ece4d7" x="6" y="14" width="3" height="1" />
 </svg>
