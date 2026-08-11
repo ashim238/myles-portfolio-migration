@@ -44,25 +44,44 @@ function seededRandom(seed) {
 }
 
 /**
- * Stable anonymous review order. Task 6 can import this function to map a
- * submitted review ID to the corresponding manifest record without exposing
- * that mapping in the blind sheet's visible content.
+ * Stable anonymous family order. Task 6 can use each family ID plus native
+ * grid to map a blind response to its concept/master without rendering that
+ * mapping as visible review content.
  */
-export function createBlindReviewEntries(masters) {
-  const shuffled = [...masters].sort((left, right) => {
-    if (left.concept < right.concept) return -1;
-    if (left.concept > right.concept) return 1;
-    return left.grid - right.grid;
-  });
+export function createBlindReviewFamilies(masters) {
+  const byConcept = new Map();
+  for (const master of masters) {
+    const family = byConcept.get(master.concept) ?? [];
+    family.push(master);
+    byConcept.set(master.concept, family);
+  }
+  const shuffled = [...byConcept.entries()]
+    .sort(([left], [right]) => (left < right ? -1 : left > right ? 1 : 0))
+    .map(([concept, familyMasters]) => ({
+      concept,
+      masters: [...familyMasters].sort((left, right) => left.grid - right.grid),
+    }));
+  for (const family of shuffled) {
+    if (family.masters.length !== ICON_GRIDS.length || family.masters.some((master, index) => master.grid !== ICON_GRIDS[index])) {
+      throw new Error(`Blind review family "${family.concept}" must contain exactly grids ${ICON_GRIDS.join(", ")}`);
+    }
+  }
   const random = seededRandom(BLIND_REVIEW_SEED);
   for (let index = shuffled.length - 1; index > 0; index -= 1) {
     const swapIndex = Math.floor(random() * (index + 1));
     [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
   }
-  return shuffled.map((master, index) => ({
-    ...master,
-    reviewId: `M98-${String(index + 1).padStart(3, "0")}`,
+  return shuffled.map((family, index) => ({
+    ...family,
+    familyId: `M98-F${String(index + 1).padStart(3, "0")}`,
   }));
+}
+
+export function createBlindReviewFamilyMapping(masters) {
+  return Object.fromEntries(createBlindReviewFamilies(masters).flatMap((family) => family.masters.map((master) => [
+    `${family.familyId}:${master.grid}`,
+    { concept: family.concept, master: master.key },
+  ])));
 }
 
 function readAndVerifyMasterSnapshots(manifest, root, fsApi) {
@@ -109,8 +128,8 @@ function renderLabeledCard(master) {
 
 function renderBlindCard(master) {
   return `
-            <article class="icon-card icon-card--blind" data-review-id="${master.reviewId}">
-              <div class="icon-card__blind-label"><span>${master.reviewId}</span> <span>${master.grid}px</span></div>${renderRenders(master)}
+            <article class="icon-card icon-card--blind" data-review-grid="${master.grid}">
+              <div class="icon-card__blind-label"><span>${master.grid}px</span></div>${renderRenders(master)}
             </article>`;
 }
 
@@ -123,16 +142,25 @@ function renderLabeledSurface(surface, masters) {
       </section>`;
 }
 
-function renderBlindSurface(surface, masters) {
+function renderBlindFamily(family) {
+  return `
+          <section class="icon-family" data-review-family-id="${family.familyId}">
+            <header class="icon-family__label"><span>${family.familyId}</span></header>
+            <div class="icon-family__tiers">${family.masters.map(renderBlindCard).join("\n")}
+            </div>
+          </section>`;
+}
+
+function renderBlindSurface(surface, families) {
   return `
       <section class="surface surface--blind" data-review-surface="${surface.id}" data-surface-color="${surface.color}" style="--surface:${surface.color}">
-        <div class="icon-grid">${masters.map(renderBlindCard).join("\n")}
+        <div class="family-grid">${families.map(renderBlindFamily).join("\n")}
         </div>
       </section>`;
 }
 
 function renderHtml(masters) {
-  const blindMasters = createBlindReviewEntries(masters);
+  const blindFamilies = createBlindReviewFamilies(masters);
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -154,6 +182,10 @@ function renderHtml(masters) {
     .surface__heading h2 { font-size:18px; }
     .surface__heading p { font-family:monospace; font-size:13px; }
     .icon-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:12px; align-items:start; }
+    .family-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(360px, 1fr)); gap:12px; align-items:start; }
+    .icon-family { padding:10px; background:#C0C0C0; border:2px outset #FFFFFF; }
+    .icon-family__label { min-height:22px; margin:0 0 8px; font-family:monospace; font-size:12px; font-weight:700; }
+    .icon-family__tiers { display:grid; gap:8px; }
     .icon-card { min-width:0; padding:10px; background:#C0C0C0; border:2px outset #FFFFFF; }
     .icon-card__label, .icon-card__blind-label { display:flex; align-items:baseline; justify-content:space-between; gap:8px; min-height:28px; margin:0 0 10px; }
     .icon-card__label h3, .icon-card__label p, .icon-card__blind-label span { margin:0; font-size:12px; line-height:1.2; }
@@ -166,7 +198,7 @@ function renderHtml(masters) {
     .icon-art, .icon-art > svg, .icon-render canvas { display:block; width:100%; height:100%; }
     html[data-review-mode="labeled"] main[data-review-mode="unlabeled"], html[data-review-mode="unlabeled"] main[data-review-mode="labeled"], html[data-review-mode="unlabeled"] .sheet__intro { display:none; }
     .surface--blind { margin-bottom:28px; }
-    @media (max-width:720px) { body { padding:12px; } .surface { padding:10px; } .icon-grid { grid-template-columns:1fr; } }
+    @media (max-width:720px) { body { padding:12px; } .surface { padding:10px; } .icon-grid, .family-grid { grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
@@ -176,7 +208,7 @@ function renderHtml(masters) {
 ${surfaces.map((surface) => renderLabeledSurface(surface, masters)).join("\n")}
     </main>
     <main data-review-mode="unlabeled">
-${surfaces.map((surface) => renderBlindSurface(surface, blindMasters)).join("\n")}
+${surfaces.map((surface) => renderBlindSurface(surface, blindFamilies)).join("\n")}
     </main>
   </div>
   <script>

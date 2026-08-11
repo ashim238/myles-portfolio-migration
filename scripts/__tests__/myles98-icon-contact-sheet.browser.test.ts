@@ -15,8 +15,8 @@ declare global {
 
 const outputPath = "docs/design-assets/myles98-icons/contact-sheet.html";
 const screenshotPaths = {
-  labeled: "/private/tmp/myles98-contact-labeled-fix1.png",
-  blind: "/private/tmp/myles98-contact-blind-fix1.png",
+  labeled: "/private/tmp/myles98-contact-labeled-fix2.png",
+  blind: "/private/tmp/myles98-contact-blind-fix2.png",
 };
 const surfaces = [
   ["teal", "rgb(0, 128, 128)"],
@@ -126,8 +126,14 @@ describe("Myles 98 icon contact sheet browser rendering", () => {
       return {
         mode: document.documentElement.dataset.reviewMode,
         bodyVisible: getComputedStyle(document.body).display !== "none",
-        blindCards: [...document.querySelectorAll('[data-review-mode="unlabeled"] [data-review-id]')]
+        blindCards: [...document.querySelectorAll('[data-review-mode="unlabeled"] [data-review-grid]')]
           .filter((card) => getComputedStyle(card).display !== "none" && card.getClientRects().length > 0).length,
+        blindFamilies: [...document.querySelectorAll<HTMLElement>('[data-review-mode="unlabeled"] [data-review-family-id]')]
+          .filter((family) => getComputedStyle(family).display !== "none" && family.getClientRects().length > 0)
+          .map((family) => ({
+            id: family.dataset.reviewFamilyId,
+            grids: [...family.querySelectorAll<HTMLElement>("[data-review-grid]")].map((card) => card.dataset.reviewGrid),
+          })),
         labeledCardsVisible: [...document.querySelectorAll('[data-review-mode="labeled"] [data-master]')]
           .filter((card) => getComputedStyle(card).display !== "none" && card.getClientRects().length > 0).length,
         labeledSheetVisible: labeledSheet ? getComputedStyle(labeledSheet).display !== "none" : false,
@@ -145,6 +151,12 @@ describe("Myles 98 icon contact sheet browser rendering", () => {
     expect(result.mode).toBe("unlabeled");
     expect(result.bodyVisible).toBe(true);
     expect(result.blindCards).toBe(144);
+    expect(result.blindFamilies).toHaveLength(48);
+    expect(new Set(result.blindFamilies.map((family) => family.id))).toHaveLength(16);
+    expect(result.blindFamilies.slice(0, 16).map((family) => family.id)).toEqual(
+      result.blindFamilies.slice(16, 32).map((family) => family.id),
+    );
+    for (const family of result.blindFamilies) expect(family.grids).toEqual(["16", "24", "32"]);
     expect(result.labeledCardsVisible).toBe(0);
     expect(result.labeledSheetVisible).toBe(false);
     expect(result.earlyLabeledStates).toHaveLength(1);

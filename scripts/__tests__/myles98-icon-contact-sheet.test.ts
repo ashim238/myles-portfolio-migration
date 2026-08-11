@@ -4,7 +4,11 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { ICON_GRIDS } from "../lib/myles98-icon-contract.mjs";
-import { buildIconContactSheet, createBlindReviewEntries } from "../build-myles98-icon-contact-sheet.mjs";
+import {
+  buildIconContactSheet,
+  createBlindReviewFamilies,
+  createBlindReviewFamilyMapping,
+} from "../build-myles98-icon-contact-sheet.mjs";
 
 const outputPath = "docs/design-assets/myles98-icons/contact-sheet.html";
 const surfaceColors = {
@@ -67,7 +71,7 @@ describe("Myles 98 icon contact sheet", () => {
     rmSync(root, { recursive: true, force: true });
   });
 
-  it("keeps blind review IDs and shuffled order deterministic without visible semantic leakage", () => {
+  it("keeps blind review families deterministic and visibly groups all three tiers without semantic leakage", () => {
     const firstOutput = generateContactSheetInTemporaryRoot();
     const secondOutput = generateContactSheetInTemporaryRoot();
     const { html: firstHtml } = firstOutput;
@@ -82,21 +86,25 @@ describe("Myles 98 icon contact sheet", () => {
     expect(blind?.querySelectorAll("[data-master]")).toHaveLength(0);
     expect(blind?.querySelectorAll("[alt], [aria-label], title")).toHaveLength(0);
 
-    const firstCards = [...first.querySelectorAll<HTMLElement>('[data-review-mode="unlabeled"] [data-review-id]')];
-    const secondCards = [...second.querySelectorAll<HTMLElement>('[data-review-mode="unlabeled"] [data-review-id]')];
-    const firstIds = firstCards.map((card) => card.dataset.reviewId);
-    const secondIds = secondCards.map((card) => card.dataset.reviewId);
+    const firstFamilies = [...first.querySelectorAll<HTMLElement>('[data-review-mode="unlabeled"] [data-review-family-id]')];
+    const secondFamilies = [...second.querySelectorAll<HTMLElement>('[data-review-mode="unlabeled"] [data-review-family-id]')];
+    const firstIds = firstFamilies.map((family) => family.dataset.reviewFamilyId);
+    const secondIds = secondFamilies.map((family) => family.dataset.reviewFamilyId);
 
-    expect(firstCards).toHaveLength(48 * 3);
+    expect(firstFamilies).toHaveLength(16 * 3);
     expect(firstIds).toEqual(secondIds);
-    expect(new Set(firstIds)).toHaveLength(48);
-    expect(firstIds).toEqual(expect.arrayContaining(["M98-001", "M98-048"]));
-    expect(firstCards.slice(0, 48).map((card) => card.dataset.reviewId)).toEqual(
-      firstCards.slice(48, 96).map((card) => card.dataset.reviewId),
+    expect(new Set(firstIds)).toHaveLength(16);
+    expect(firstIds).toEqual(expect.arrayContaining(["M98-F001", "M98-F016"]));
+    expect(firstFamilies.slice(0, 16).map((family) => family.dataset.reviewFamilyId)).toEqual(
+      firstFamilies.slice(16, 32).map((family) => family.dataset.reviewFamilyId),
     );
+    for (const family of firstFamilies) {
+      expect([...family.querySelectorAll<HTMLElement>("[data-review-grid]")].map((card) => card.dataset.reviewGrid))
+        .toEqual(["16", "24", "32"]);
+    }
 
     const blindText = blind?.textContent?.replace(/\s+/g, " ").trim() ?? "";
-    expect(blindText).toMatch(/^(?:M98-\d{3}(?: \d{2}px)? ?)+$/);
+    expect(blindText).toMatch(/^(?:M98-F\d{3}(?: \d{2}px){3} ?)+$/);
     expect(blind?.innerHTML).not.toMatch(/(?:masters\/|\.svg|docs\/)/i);
     for (const icon of manifest.icons) {
       expect(blindText.toLowerCase()).not.toContain(icon.id);
@@ -107,17 +115,32 @@ describe("Myles 98 icon contact sheet", () => {
     rmSync(secondOutput.root, { recursive: true, force: true });
   });
 
-  it("canonicalizes anonymous mapping before the seeded shuffle", () => {
+  it("canonicalizes anonymous families before the seeded shuffle with complete tier mapping", () => {
     const entries = [
       { concept: "selected-work", grid: 32 },
       { concept: "start", grid: 24 },
       { concept: "start", grid: 16 },
+      { concept: "start", grid: 32 },
       { concept: "selected-work", grid: 16 },
+      { concept: "selected-work", grid: 24 },
     ];
-    const identify = (items: typeof entries) => createBlindReviewEntries(items)
-      .map(({ reviewId, concept, grid }) => `${reviewId}:${concept}-${grid}`);
+    const identify = (items: typeof entries) => createBlindReviewFamilies(items)
+      .map(({ familyId, concept, masters }) => `${familyId}:${concept}:${masters.map((master) => master.grid).join(",")}`);
 
     expect(identify(entries)).toEqual(identify([...entries].reverse()));
+    const families = createBlindReviewFamilies(entries);
+    expect(families).toHaveLength(2);
+    expect(new Set(families.map((family) => family.concept))).toEqual(new Set(["start", "selected-work"]));
+    expect(families.map((family) => family.masters.map((master) => master.grid))).toEqual([[16, 24, 32], [16, 24, 32]]);
+    expect(createBlindReviewFamilyMapping(entries)).toEqual(createBlindReviewFamilyMapping([...entries].reverse()));
+
+    const manifest = JSON.parse(readFileSync("docs/design-assets/myles98-icons/manifest.json", "utf8"));
+    const completeFamilies = createBlindReviewFamilies(
+      manifest.icons.flatMap((icon: { id: string }) => ICON_GRIDS.map((grid) => ({ concept: icon.id, grid }))),
+    );
+    expect(completeFamilies).toHaveLength(16);
+    expect(new Set(completeFamilies.map((family) => family.concept))).toEqual(new Set(manifest.icons.map((icon: { id: string }) => icon.id)));
+    expect(completeFamilies.every((family) => family.masters.map((master) => master.grid).join(",") === "16,24,32")).toBe(true);
   });
 
   it("uses the single verified source snapshot for validation and embedding", () => {
