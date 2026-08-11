@@ -1,20 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" shape-rendering="crispEdges" data-m98-concept="trini-roti" data-m98-grid="24">
-  <path fill="#2d211b" d="M2 8H16V9H18V20H17V22H2V21H1V9H2Z" />
-  <rect fill="#5c3926" x="3" y="19" width="14" height="2" />
-  <rect fill="#9b6038" x="16" y="10" width="1" height="9" />
-  <path fill="#f1c98c" d="M3 9H15V10H16V19H15V20H2V10H3Z" />
-  <rect fill="#fff2cf" x="4" y="9" width="11" height="1" />
-  <rect fill="#9e3124" x="4" y="11" width="7" height="2" />
-  <path fill="#6f3b27" d="M5 13H6V15H5ZM8 13H9V15H8Z" />
-  <path fill="#5c3926" d="M3 15H4V14H5V15H9V14H10V15H11V18H10V19H4V18H3Z" />
-  <rect fill="#e97432" x="4" y="15" width="6" height="3" />
-  <rect fill="#ffb35f" x="5" y="15" width="4" height="1" />
-  <path fill="#a65f38" d="M12 14H15V15H12ZM12 17H15V18H12Z" />
-  <polygon fill="#2d211b" points="7,17 9,20 19,10 17,8" />
-  <polygon fill="#a76536" points="8,17 9,18 18,9 17,8" />
-  <polygon fill="#e0a25a" points="9,16 10,17 17,10 16,9" />
-  <path fill="#2d211b" d="M19 1H21V2H23V7H22V9H21V10H19V11H18V10H17V9H16V7H15V4H16V3H17V2H19Z" />
-  <path fill="#b8753e" d="M19 2H21V3H22V7H21V9H19V10H18V9H17V8H16V4H17V3H19Z" />
-  <path fill="#efc076" d="M18 2H20V3H21V4H18V5H17V3H18Z" />
-  <path fill="#89502f" d="M21 3H22V7H21V9H19V10H18V9H20V8H21Z" />
+  <path fill="#2d2832" d="M4 2H20V3H22V16H21V19H20V20H18V21H16V22H3V4H4Z" />
+  <rect fill="#806f8f" x="21" y="4" width="1" height="12" />
+  <rect fill="#51445d" x="4" y="21" width="12" height="1" />
+  <path fill="#d8c9e7" d="M4 3H20V4H21V16H20V18H18V20H16V21H4Z" />
+  <rect fill="#f4edfa" x="5" y="3" width="15" height="1" />
+  <rect fill="#c3b1d5" x="4" y="4" width="1" height="16" />
+  <path fill="#5b4773" d="M7 6H11V7H16V6H18V8H15V7H11V8H7ZM6 10H9V9H12V10H17V11H13V10H10V11H6ZM7 13H10V12H13V13H18V14H14V13H11V14H7ZM6 17H9V16H12V17H15V18H11V17H9V18H6Z" />
+  <path fill="#7f6995" d="M17 9H19V10H17ZM16 16H18V17H16Z" />
+  <path fill="#aa94bd" d="M15 15H21V17H20V19H19V20H17V22H15Z" />
+  <path fill="#eee4f7" d="M16 16H21V17H20V18H19V19H18V20H17V21H16Z" />
 </svg>

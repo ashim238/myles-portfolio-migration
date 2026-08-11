@@ -1,13 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges" data-m98-concept="trini-roti" data-m98-grid="16">
-  <path fill="#2d211b" d="M2 3H13V4H14V13H13V14H2V13H1V4H2Z" />
-  <rect fill="#5c3926" x="2" y="12" width="11" height="1" />
-  <rect fill="#9b6038" x="12" y="5" width="1" height="7" />
-  <rect fill="#f1c98c" x="2" y="4" width="10" height="8" />
-  <rect fill="#fff2cf" x="3" y="4" width="9" height="1" />
-  <rect fill="#9e3124" x="3" y="5" width="5" height="2" />
-  <path fill="#a65f38" d="M9 5H12V6H9ZM10 7H12V8H10Z" />
-  <path fill="#6f3b27" d="M6 7H7V8H6V9H5V8H6ZM8 8H9V9H8V10H7V9H8Z" />
-  <path fill="#5c3926" d="M4 9H5V8H6V9H9V8H10V9H11V11H10V12H5V11H4Z" />
-  <rect fill="#e97432" x="5" y="9" width="5" height="2" />
-  <rect fill="#ffb35f" x="6" y="9" width="3" height="1" />
+  <path fill="#2d2832" d="M3 2H13V3H14V10H13V12H12V13H10V14H2V3H3Z" />
+  <rect fill="#806f8f" x="13" y="4" width="1" height="6" />
+  <rect fill="#51445d" x="3" y="13" width="7" height="1" />
+  <path fill="#d8c9e7" d="M3 3H12V4H13V10H12V11H11V12H9V13H3Z" />
+  <rect fill="#f4edfa" x="4" y="3" width="8" height="1" />
+  <rect fill="#c3b1d5" x="3" y="4" width="1" height="8" />
+  <path fill="#5b4773" d="M5 5H8V6H11V7H8V6H5ZM4 8H6V7H8V8H10V9H7V8H6V9H4ZM5 10H8V11H5Z" />
+  <rect fill="#7f6995" x="10" y="8" width="2" height="1" />
+  <path fill="#aa94bd" d="M9 10H13V11H12V12H11V13H10V14H9Z" />
+  <path fill="#eee4f7" d="M10 10H13V11H12V12H11V13H10Z" />
 </svg>
