@@ -1,12 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" shape-rendering="crispEdges" data-m98-concept="trini-roti" data-m98-grid="24">
-  <path fill="#2d2832" d="M4 2H20V3H22V16H21V19H20V20H18V21H16V22H3V4H4Z" />
-  <rect fill="#806f8f" x="21" y="4" width="1" height="12" />
-  <rect fill="#51445d" x="4" y="21" width="12" height="1" />
-  <path fill="#d8c9e7" d="M4 3H20V4H21V16H20V18H18V20H16V21H4Z" />
-  <rect fill="#f4edfa" x="5" y="3" width="15" height="1" />
-  <rect fill="#c3b1d5" x="4" y="4" width="1" height="16" />
-  <path fill="#5b4773" d="M7 6H11V7H16V6H18V8H15V7H11V8H7ZM6 10H9V9H12V10H17V11H13V10H10V11H6ZM7 13H10V12H13V13H18V14H14V13H11V14H7ZM6 17H9V16H12V17H15V18H11V17H9V18H6Z" />
-  <path fill="#7f6995" d="M17 9H19V10H17ZM16 16H18V17H16Z" />
-  <path fill="#aa94bd" d="M15 15H21V17H20V19H19V20H17V22H15Z" />
-  <path fill="#eee4f7" d="M16 16H21V17H20V18H19V19H18V20H17V21H16Z" />
+  <path fill="#352b37" d="M6 2H16V3H17V4H18V5H19V21H18V22H5V3H6Z" />
+  <path fill="#e7d6c3" d="M6 3H15V7H18V20H17V21H6Z" />
+  <path fill="#f6eee3" d="M7 3H15V7H17V8H7Z" />
+  <path fill="#c49a78" d="M15 3H16V4H17V5H18V7H15Z" />
+  <path fill="#fff8ed" d="M16 3H17V4H18V5H19V7H18V6H17V5H16Z" />
+  <path fill="#7a536d" d="M8 9H11V8H15V9H14V10H8Z" />
+  <path fill="#7a536d" d="M7 12H10V11H16V12H13V13H7Z" />
+  <path fill="#7a536d" d="M9 15H12V14H16V15H15V16H9Z" />
+  <path fill="#7a536d" d="M7 18H9V17H13V18H11V19H7Z" />
 </svg>
