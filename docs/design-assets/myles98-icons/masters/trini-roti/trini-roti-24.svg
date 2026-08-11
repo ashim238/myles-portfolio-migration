@@ -1,16 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" shape-rendering="crispEdges" data-m98-concept="trini-roti" data-m98-grid="24">
-  <path fill="#30231b" d="M3 7H17V8H19V19H18V21H2V20H1V9H2V8H3Z" />
-  <rect fill="#8f5b3a" x="3" y="9" width="15" height="11" />
-  <path fill="#f1c891" d="M3 8H16V9H17V18H16V19H2V9H3Z" />
-  <rect fill="#fff3d7" x="3" y="9" width="11" height="2" />
-  <rect fill="#35251b" x="5" y="6" width="9" height="3" />
-  <rect fill="#9f6738" x="6" y="7" width="8" height="1" />
-  <polygon fill="#35251b" points="13,6 16,4 21,4 23,6 23,9 21,11 16,11 13,9" />
-  <polygon fill="#ad7441" points="15,6 17,5 21,5 22,6 22,9 21,10 17,10 15,9" />
-  <polygon fill="#edc57f" points="16,6 17,5 19,5 18,6" />
-  <polygon fill="#925f3c" points="18,6 20,6 21,7 20,9 18,9 17,8 17,7" />
-  <path fill="#8b4930" d="M5 10H6V13H5ZM8 11H9V13H8ZM11 10H12V13H11Z" />
-  <path fill="#653622" d="M4 13H12V14H13V15H14V17H12V19H10V20H6V19H4V17H2V15H3V14H4Z" />
-  <path fill="#d96f38" d="M4 14H12V17H11V18H5V17H4Z" />
-  <rect fill="#ffb75f" x="5" y="14" width="6" height="1" />
+  <path fill="#2d211b" d="M2 8H16V9H18V20H17V22H2V21H1V9H2Z" />
+  <rect fill="#5c3926" x="3" y="19" width="14" height="2" />
+  <rect fill="#9b6038" x="16" y="10" width="1" height="9" />
+  <path fill="#f1c98c" d="M3 9H15V10H16V19H15V20H2V10H3Z" />
+  <rect fill="#fff2cf" x="4" y="9" width="11" height="1" />
+  <rect fill="#9e3124" x="4" y="11" width="7" height="2" />
+  <path fill="#6f3b27" d="M5 13H6V15H5ZM8 13H9V15H8Z" />
+  <path fill="#5c3926" d="M3 15H4V14H5V15H9V14H10V15H11V18H10V19H4V18H3Z" />
+  <rect fill="#e97432" x="4" y="15" width="6" height="3" />
+  <rect fill="#ffb35f" x="5" y="15" width="4" height="1" />
+  <path fill="#a65f38" d="M12 14H15V15H12ZM12 17H15V18H12Z" />
+  <polygon fill="#2d211b" points="7,17 9,20 19,10 17,8" />
+  <polygon fill="#a76536" points="8,17 9,18 18,9 17,8" />
+  <polygon fill="#e0a25a" points="9,16 10,17 17,10 16,9" />
+  <path fill="#2d211b" d="M19 1H21V2H23V7H22V9H21V10H19V11H18V10H17V9H16V7H15V4H16V3H17V2H19Z" />
+  <path fill="#b8753e" d="M19 2H21V3H22V7H21V9H19V10H18V9H17V8H16V4H17V3H19Z" />
+  <path fill="#efc076" d="M18 2H20V3H21V4H18V5H17V3H18Z" />
+  <path fill="#89502f" d="M21 3H22V7H21V9H19V10H18V9H20V8H21Z" />
 </svg>
