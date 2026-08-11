@@ -35,10 +35,41 @@ const GROUPS = Object.freeze({
   projects: new Set(["fresh-greens", "understandingfafsa", "navi", "tiktok-catalog"]),
 });
 
+const APPROVED_ICON_SEMANTICS = Object.freeze({
+  start: ["pixel adaptation of Myles's existing portrait mark", ["portrait", "head", "person"], ["folder", "generic user", "app window"]],
+  "selected-work": ["open portfolio folder containing a contact sheet", ["portfolio folder", "project folder", "work folder"], ["document", "envelope", "generic app window"]],
+  "about-myles": ["ID card with portrait and information lines", ["ID card", "profile card", "portrait card"], ["resume", "checklist", "folder"]],
+  resume: ["professional profile sheet with paperclip and structured lines", ["resume", "document", "profile sheet"], ["checklist", "newsletter", "envelope"]],
+  email: ["sealed envelope with one subordinate stamp", ["envelope", "mail", "sealed message"], ["newsletter", "document", "folder"]],
+  reminders: ["personal spiral checklist pad", ["checklist", "notepad", "reminders"], ["resume", "newsletter", "recipe card"]],
+  "trini-roti": ["single personal memo sheet with folded corner and handwritten lines", ["note", "memo", "note sheet"], ["checklist", "resume", "newsletter"]],
+  "loose-parts": ["three generic colored construction blocks arranged in a compact pyramid", ["building blocks", "construction blocks", "toy blocks"], ["LEGO", "food", "table"]],
+  "display-properties": ["beige CRT with color-test window, controls, and object-specific casing depth", ["monitor", "CRT", "display"], ["overlapping windows", "reset icon", "television"]],
+  "open-apps": ["two layered application windows with separate content panes", ["overlapping windows", "open apps", "application windows"], ["monitor", "single app window", "folder"]],
+  "reset-desktop": ["CRT desktop with a clear, subordinate reset arrow", ["reset monitor", "reset desktop", "monitor with reset arrow"], ["display properties", "open apps", "reload browser"]],
+  "generic-app": ["neutral program window with restrained chrome depth", ["application window", "program window", "generic app"], ["overlapping windows", "monitor", "folder"]],
+  "fresh-greens": ["solid road-map tile with one route and destination", ["road map", "route map", "navigation map"], ["groceries", "leaf logo", "city guide"]],
+  understandingfafsa: ["modular newsletter emerging from an envelope with three content regions", ["newsletter", "newsletter envelope", "information page"], ["sealed email", "resume", "folder"]],
+  navi: ["location marker above a neighborhood storefront", ["location marker", "map pin", "neighborhood destination"], ["book", "guidebook", "leaf"]],
+  "tiktok-catalog": ["standalone retail shopping bag", ["shopping bag", "retail bag", "product bag"], ["purse", "catalog page", "TikTok logo", "music note", "social media app", "book", "dashboard"]],
+});
+
 function freezeMetadata(metadata) {
   return Object.freeze(
     Object.fromEntries(
-      Object.entries(metadata).map(([id, value]) => [id, Object.freeze({ group: value.group, tiers: Object.freeze(value.tiers) })]),
+      Object.entries(metadata).map(([id, value]) => {
+        const [intendedObject, acceptedReadings, rejectedReadings] = APPROVED_ICON_SEMANTICS[id];
+        return [
+          id,
+          Object.freeze({
+            group: value.group,
+            intendedObject,
+            tiers: Object.freeze(value.tiers),
+            acceptedReadings: Object.freeze(acceptedReadings),
+            rejectedReadings: Object.freeze(rejectedReadings),
+          }),
+        ];
+      }),
     ),
   );
 }
@@ -47,19 +78,19 @@ export const APPROVED_ICON_METADATA = freezeMetadata({
   start: { group: "system", tiers: { "16": "Head-and-glasses silhouette", "24": "Locs and glasses within the portrait mark", "32": "Pixel adaptation of Myles's existing portrait mark" } },
   "selected-work": { group: "system", tiers: { "16": "Portfolio folder", "24": "One visible image thumbnail", "32": "Open portfolio folder containing a contact sheet" } },
   "about-myles": { group: "personal", tiers: { "16": "Portrait card", "24": "ID-card frame and one information line", "32": "ID card with portrait and information lines" } },
-  resume: { group: "personal", tiers: { "16": "White document", "24": "Blue paperclip and two bullets", "32": "Professional profile sheet with paperclip and structured lines" } },
-  email: { group: "system", tiers: { "16": "Sealed envelope", "24": "Yellow stamp", "32": "Dimensional sealed envelope with folded flap and stamp" } },
-  reminders: { group: "personal", tiers: { "16": "Yellow checklist pad", "24": "Spiral edge and two checks", "32": "Personal checklist pad with a short pencil" } },
+  resume: { group: "personal", tiers: { "16": "Profile sheet with blue header", "24": "Blue paperclip and two bullets", "32": "Professional profile sheet with paperclip and structured lines" } },
+  email: { group: "system", tiers: { "16": "Sealed envelope", "24": "Sealed envelope with one yellow stamp", "32": "Dimensional sealed envelope with one subordinate stamp" } },
+  reminders: { group: "personal", tiers: { "16": "Spiral checklist pad", "24": "Two checks and a bound paper edge", "32": "Personal checklist pad with checks and paper depth" } },
   "trini-roti": { group: "personal", tiers: { "16": "Single memo sheet", "24": "Folded corner and handwritten lines", "32": "Personal memo sheet with folded corner, handwritten lines, and paper depth" } },
-  "loose-parts": { group: "personal", tiers: { "16": "Wooden plank and wedge", "24": "Add one cube", "32": "Assorted wooden construction pieces: plank, cube, and triangular wedge" } },
+  "loose-parts": { group: "personal", tiers: { "16": "Three stacked construction blocks", "24": "Three colored cubes with face shading", "32": "Three colored building blocks in a compact pyramid" } },
   "display-properties": { group: "system", tiers: { "16": "CRT monitor", "24": "Color-test tiles", "32": "Beige CRT with color-test window, controls, and object-specific casing depth" } },
   "open-apps": { group: "system", tiers: { "16": "Two overlapping windows", "24": "Distinct titlebars", "32": "Two layered application windows with separate content panes" } },
-  "reset-desktop": { group: "system", tiers: { "16": "Monitor with reset cue", "24": "Compact red reset arrow", "32": "CRT desktop with a clear, subordinate reset arrow" } },
+  "reset-desktop": { group: "system", tiers: { "16": "Desktop screen with two reset arrows", "24": "Compact red reset arrow", "32": "CRT desktop with a clear, subordinate reset arrow" } },
   "generic-app": { group: "system", tiers: { "16": "Single application window", "24": "Blue titlebar and inner pane", "32": "Neutral program window with restrained chrome depth" } },
-  "fresh-greens": { group: "projects", tiers: { "16": "Folded road map", "24": "Green route and orange destination", "32": "Two-lane road map with route, folds, and destination flag" } },
+  "fresh-greens": { group: "projects", tiers: { "16": "Road-map tile with one route", "24": "One route with start and destination", "32": "Road-map tile with one non-monotonic road, start point, and orange destination" } },
   understandingfafsa: { group: "projects", tiers: { "16": "Newsletter page", "24": "Blue masthead within open envelope", "32": "Modular newsletter emerging from an envelope with three content regions" } },
-  navi: { group: "projects", tiers: { "16": "Pocket guidebook", "24": "Orange bookmark and storefront marker", "32": "Open neighborhood guide with map, bookmark, and local storefront cue" } },
-  "tiktok-catalog": { group: "projects", tiers: { "16": "Catalog sheet", "24": "Product-card grid and cursor", "32": "Catalog layout on a drafting surface with product cards and selection cursor" } },
+  navi: { group: "projects", tiers: { "16": "Location marker", "24": "Location marker above a storefront", "32": "Location marker above a neighborhood storefront with one depth cue" } },
+  "tiktok-catalog": { group: "projects", tiers: { "16": "Standalone retail shopping bag", "24": "Shopping bag with a top opening and one side plane", "32": "Dimensional shopping bag with gusset, lower plane, and restrained contact depth" } },
 });
 
 const ALLOWED_SHAPES = new Set(["path", "rect", "polygon"]);
@@ -95,6 +126,12 @@ function checkStringList(value, field, errors) {
   }
 }
 
+function stringListsMatch(actual, approved) {
+  return Array.isArray(actual)
+    && actual.length === approved.length
+    && actual.every((value, index) => value === approved[index]);
+}
+
 export function validateManifest(manifest) {
   const errors = [];
   if (!isPlainObject(manifest) || !Array.isArray(manifest.icons)) {
@@ -124,6 +161,8 @@ export function validateManifest(manifest) {
     }
     if (typeof icon.intendedObject !== "string" || icon.intendedObject.trim() === "") {
       errors.push(`${label}.intendedObject must be a non-empty string`);
+    } else if (approved && icon.intendedObject !== approved.intendedObject) {
+      errors.push(`${label}.intendedObject must exactly match approved object`);
     }
     if (!isPlainObject(icon.tiers)) {
       errors.push(`${label}.tiers must be an object`);
@@ -138,6 +177,12 @@ export function validateManifest(manifest) {
     }
     checkStringList(icon.acceptedReadings, `${label}.acceptedReadings`, errors);
     checkStringList(icon.rejectedReadings, `${label}.rejectedReadings`, errors);
+    if (approved && !stringListsMatch(icon.acceptedReadings, approved.acceptedReadings)) {
+      errors.push(`${label}.acceptedReadings must exactly match approved readings`);
+    }
+    if (approved && !stringListsMatch(icon.rejectedReadings, approved.rejectedReadings)) {
+      errors.push(`${label}.rejectedReadings must exactly match approved readings`);
+    }
   });
 
   for (const concept of ICON_CONCEPTS) {

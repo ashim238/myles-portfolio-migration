@@ -65,7 +65,7 @@
       "group": "personal",
       "intendedObject": "professional profile sheet with paperclip and structured lines",
       "tiers": {
-        "16": "White document",
+        "16": "Profile sheet with blue header",
         "24": "Blue paperclip and two bullets",
         "32": "Professional profile sheet with paperclip and structured lines"
       },
@@ -75,11 +75,11 @@
     {
       "id": "email",
       "group": "system",
-      "intendedObject": "dimensional sealed envelope with folded flap and stamp",
+      "intendedObject": "sealed envelope with one subordinate stamp",
       "tiers": {
         "16": "Sealed envelope",
-        "24": "Yellow stamp",
-        "32": "Dimensional sealed envelope with folded flap and stamp"
+        "24": "Sealed envelope with one yellow stamp",
+        "32": "Dimensional sealed envelope with one subordinate stamp"
       },
       "acceptedReadings": ["envelope", "mail", "sealed message"],
       "rejectedReadings": ["newsletter", "document", "folder"]
@@ -87,11 +87,11 @@
     {
       "id": "reminders",
       "group": "personal",
-      "intendedObject": "personal checklist pad with a short pencil",
+      "intendedObject": "personal spiral checklist pad",
       "tiers": {
-        "16": "Yellow checklist pad",
-        "24": "Spiral edge and two checks",
-        "32": "Personal checklist pad with a short pencil"
+        "16": "Spiral checklist pad",
+        "24": "Two checks and a bound paper edge",
+        "32": "Personal checklist pad with checks and paper depth"
       },
       "acceptedReadings": ["checklist", "notepad", "reminders"],
       "rejectedReadings": ["resume", "newsletter", "recipe card"]
@@ -111,14 +111,14 @@
     {
       "id": "loose-parts",
       "group": "personal",
-      "intendedObject": "assorted wooden construction pieces: plank, cube, and triangular wedge",
+      "intendedObject": "three generic colored construction blocks arranged in a compact pyramid",
       "tiers": {
-        "16": "Wooden plank and wedge",
-        "24": "Add one cube",
-        "32": "Assorted wooden construction pieces: plank, cube, and triangular wedge"
+        "16": "Three stacked construction blocks",
+        "24": "Three colored cubes with face shading",
+        "32": "Three colored building blocks in a compact pyramid"
       },
-      "acceptedReadings": ["wooden blocks", "construction pieces", "wooden shapes"],
-      "rejectedReadings": ["LEGO", "toy bricks", "toolbox"]
+      "acceptedReadings": ["building blocks", "construction blocks", "toy blocks"],
+      "rejectedReadings": ["LEGO", "food", "table"]
     },
     {
       "id": "display-properties",
@@ -149,7 +149,7 @@
       "group": "system",
       "intendedObject": "CRT desktop with a clear, subordinate reset arrow",
       "tiers": {
-        "16": "Monitor with reset cue",
+        "16": "Desktop screen with two reset arrows",
         "24": "Compact red reset arrow",
         "32": "CRT desktop with a clear, subordinate reset arrow"
       },
@@ -171,11 +171,11 @@
     {
       "id": "fresh-greens",
       "group": "projects",
-      "intendedObject": "folded two-lane road map",
+      "intendedObject": "solid road-map tile with one route and destination",
       "tiers": {
-        "16": "Folded road map",
-        "24": "Green route and orange destination",
-        "32": "Two-lane road map with route, folds, and destination flag"
+        "16": "Road-map tile with one route",
+        "24": "One route with start and destination",
+        "32": "Road-map tile with one non-monotonic road, start point, and orange destination"
       },
       "acceptedReadings": ["road map", "route map", "navigation map"],
       "rejectedReadings": ["groceries", "leaf logo", "city guide"]
@@ -195,26 +195,26 @@
     {
       "id": "navi",
       "group": "projects",
-      "intendedObject": "open neighborhood guide with map, bookmark, and local storefront cue",
+      "intendedObject": "location marker above a neighborhood storefront",
       "tiers": {
-        "16": "Pocket guidebook",
-        "24": "Orange bookmark and storefront marker",
-        "32": "Open neighborhood guide with map, bookmark, and local storefront cue"
+        "16": "Location marker",
+        "24": "Location marker above a storefront",
+        "32": "Location marker above a neighborhood storefront with one depth cue"
       },
-      "acceptedReadings": ["guidebook", "neighborhood guide", "local guide"],
-      "rejectedReadings": ["road map", "city map", "navigation arrow"]
+      "acceptedReadings": ["location marker", "map pin", "neighborhood destination"],
+      "rejectedReadings": ["book", "guidebook", "leaf"]
     },
     {
       "id": "tiktok-catalog",
       "group": "projects",
-      "intendedObject": "catalog layout on a drafting surface with product cards and selection cursor",
+      "intendedObject": "standalone retail shopping bag",
       "tiers": {
-        "16": "Catalog sheet",
-        "24": "Product-card grid and cursor",
-        "32": "Catalog layout on a drafting surface with product cards and selection cursor"
+        "16": "Standalone retail shopping bag",
+        "24": "Shopping bag with a top opening and one side plane",
+        "32": "Dimensional shopping bag with gusset, lower plane, and restrained contact depth"
       },
-      "acceptedReadings": ["catalog", "product catalog", "catalog layout"],
-      "rejectedReadings": ["TikTok logo", "music note", "social media app"]
+      "acceptedReadings": ["shopping bag", "retail bag", "product bag"],
+      "rejectedReadings": ["purse", "catalog page", "TikTok logo", "music note", "social media app", "book", "dashboard"]
     }
   ]
 }

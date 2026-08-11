@@ -1,0 +1,522 @@
+{
+  "reviewer": "K",
+  "uninformed": true,
+  "reviewStatus": "historical-pre-simplification",
+  "appliesToCurrentCandidate": false,
+  "reviewedSnapshot": null,
+  "provenanceLimitation": "The exact rendered snapshot hash was not recorded. This review describes an earlier candidate and does not evidence the final 48-master set.",
+  "families": [
+    {
+      "familyId": "M98-F001",
+      "tiers": [
+        {
+          "size": 16,
+          "firstReading": "open book",
+          "alternatives": ["open magazine", "two-page brochure"],
+          "confidence": 0.78
+        },
+        {
+          "size": 24,
+          "firstReading": "open product catalog",
+          "alternatives": ["open magazine", "illustrated reference book"],
+          "confidence": 0.91
+        },
+        {
+          "size": 32,
+          "firstReading": "open product catalog",
+          "alternatives": ["open magazine", "illustrated reference book"],
+          "confidence": 0.95
+        }
+      ],
+      "brandReading": "editorial catalog or publishing product",
+      "sameObject": true,
+      "sameObjectReason": "All three tiers preserve a facing-page publication with small illustrated content blocks.",
+      "sameObjectConfidence": 0.94,
+      "siblingCollision": {
+        "familyId": "M98-F013",
+        "reason": "Both families read as open two-page publications, especially at 16px where the pencil and page-content distinctions are weak."
+      },
+      "backgroundAmbiguity": "Low. The dark page outlines hold on all three backgrounds, though the white page fields flatten slightly on white."
+    },
+    {
+      "familyId": "M98-F002",
+      "tiers": [
+        {
+          "size": 16,
+          "firstReading": "folded road map",
+          "alternatives": ["folded tourist brochure", "route chart"],
+          "confidence": 0.7
+        },
+        {
+          "size": 24,
+          "firstReading": "folded road map",
+          "alternatives": ["topographic map", "folded tourist brochure"],
+          "confidence": 0.93
+        },
+        {
+          "size": 32,
+          "firstReading": "folded road map",
+          "alternatives": ["topographic map", "folded tourist brochure"],
+          "confidence": 0.96
+        }
+      ],
+      "brandReading": "mapping or navigation product",
+      "sameObject": true,
+      "sameObjectReason": "The folded panels, green terrain marks, and orange corner marker remain consistent across tiers.",
+      "sameObjectConfidence": 0.97,
+      "siblingCollision": {
+        "familyId": null,
+        "reason": "No other family presents the same folded-map silhouette."
+      },
+      "backgroundAmbiguity": "Low. The cream, green, and dark contour remain distinct on teal, chrome, and white."
+    },
+    {
+      "familyId": "M98-F003",
+      "tiers": [
+        {
+          "size": 16,
+          "firstReading": "written note",
+          "alternatives": ["sticky note", "index card"],
+          "confidence": 0.58
+        },
+        {
+          "size": 24,
+          "firstReading": "written note",
+          "alternatives": ["text document", "sticky note"],
+          "confidence": 0.89
+        },
+        {
+          "size": 32,
+          "firstReading": "written note",
+          "alternatives": ["text document", "memo sheet"],
+          "confidence": 0.94
+        }
+      ],
+      "brandReading": "none",
+      "sameObject": true,
+      "sameObjectReason": "Each tier shows a single lavender sheet with horizontal writing and a folded lower corner.",
+      "sameObjectConfidence": 0.95,
+      "siblingCollision": {
+        "familyId": "M98-F007",
+        "reason": "At 16px both can read as a small single sheet of paper before the writing and attachment details resolve."
+      },
+      "backgroundAmbiguity": "Low. The lavender fill keeps the note separate from every background, with only the 16px writing becoming indistinct."
+    },
+    {
+      "familyId": "M98-F004",
+      "tiers": [
+        {
+          "size": 16,
+          "firstReading": "person's head",
+          "alternatives": ["helmeted face", "animal mask"],
+          "confidence": 0.61
+        },
+        {
+          "size": 24,
+          "firstReading": "person wearing glasses",
+          "alternatives": ["profile avatar", "helmeted face"],
+          "confidence": 0.9
+        },
+        {
+          "size": 32,
+          "firstReading": "person wearing glasses",
+          "alternatives": ["profile avatar", "portrait head"],
+          "confidence": 0.97
+        }
+      ],
+      "brandReading": "personal profile or author avatar",
+      "sameObject": true,
+      "sameObjectReason": "The same frontal head, brown skin, dark hair, and glasses become progressively more explicit at larger tiers.",
+      "sameObjectConfidence": 0.97,
+      "siblingCollision": {
+        "familyId": null,
+        "reason": "No other family uses a standalone human-head silhouette."
+      },
+      "backgroundAmbiguity": "Low. The face remains outlined and distinct across backgrounds, although facial identity is not reliable at 16px."
+    },
+    {
+      "familyId": "M98-F005",
+      "tiers": [
+        {
+          "size": 16,
+          "firstReading": "CRT computer monitor",
+          "alternatives": ["old television", "computer terminal"],
+          "confidence": 0.84
+        },
+        {
+          "size": 24,
+          "firstReading": "CRT computer monitor",
+          "alternatives": ["old television", "computer terminal"],
+          "confidence": 0.96
+        },
+        {
+          "size": 32,
+          "firstReading": "CRT computer monitor",
+          "alternatives": ["old television", "desktop computer"],
+          "confidence": 0.98
+        }
+      ],
+      "brandReading": "retro personal computing",
+      "sameObject": true,
+      "sameObjectReason": "All tiers retain the beige display casing, glass screen, base, and small indicator.",
+      "sameObjectConfidence": 0.99,
+      "siblingCollision": {
+        "familyId": "M98-F016",
+        "reason": "Both families center on a beige CRT monitor; F016 separates only when its red audio marks are noticed."
+      },
+      "backgroundAmbiguity": "Low. The dark outline preserves the monitor silhouette on teal, chrome, and white."
+    },
+    {
+      "familyId": "M98-F006",
+      "tiers": [
+        {
+          "size": 16,
+          "firstReading": "stacked computer windows",
+          "alternatives": ["stacked photographs", "overlapping cards"],
+          "confidence": 0.67
+        },
+        {
+          "size": 24,
+          "firstReading": "stacked computer windows",
+          "alternatives": ["overlapping documents", "stacked photographs"],
+          "confidence": 0.89
+        },
+        {
+          "size": 32,
+          "firstReading": "stacked computer windows",
+          "alternatives": ["overlapping documents", "layered web pages"],
+          "confidence": 0.95
+        }
+      ],
+      "brandReading": "desktop multitasking or window management",
+      "sameObject": true,
+      "sameObjectReason": "The overlapping rectangular frames and front content panel remain in the same arrangement at every tier.",
+      "sameObjectConfidence": 0.96,
+      "siblingCollision": {
+        "familyId": "M98-F009",
+        "reason": "Both use blue-topped application-window imagery; the stacked rear windows are the main distinction."
+      },
+      "backgroundAmbiguity": "Medium. Teal separates the layered backs most clearly, while pale frame edges merge more with chrome and white."
+    },
+    {
+      "familyId": "M98-F007",
+      "tiers": [
+        {
+          "size": 16,
+          "firstReading": "blank document",
+          "alternatives": ["sheet of paper", "file page"],
+          "confidence": 0.55
+        },
+        {
+          "size": 24,
+          "firstReading": "document with paperclip",
+          "alternatives": ["clipped form", "resume page"],
+          "confidence": 0.85
+        },
+        {
+          "size": 32,
+          "firstReading": "document with paperclip",
+          "alternatives": ["clipped resume", "attached report"],
+          "confidence": 0.95
+        }
+      ],
+      "brandReading": "document or resume workflow",
+      "sameObject": true,
+      "sameObjectReason": "The page silhouette is stable; the blue paperclip and document lines are omitted or compressed at the smallest tier.",
+      "sameObjectConfidence": 0.9,
+      "siblingCollision": {
+        "familyId": "M98-F003",
+        "reason": "The 16px forms are both single paper sheets, with neither the clip nor writing pattern strong enough for immediate separation."
+      },
+      "backgroundAmbiguity": "Medium. The blank 16px page has little internal signal, and white reduces its fill contrast despite the dark outline."
+    },
+    {
+      "familyId": "M98-F008",
+      "tiers": [
+        {
+          "size": 16,
+          "firstReading": "employee ID badge",
+          "alternatives": ["press pass", "contact card"],
+          "confidence": 0.79
+        },
+        {
+          "size": 24,
+          "firstReading": "employee ID badge",
+          "alternatives": ["press pass", "profile card on clipboard"],
+          "confidence": 0.9
+        },
+        {
+          "size": 32,
+          "firstReading": "employee ID badge",
+          "alternatives": ["press pass", "profile card on clipboard"],
+          "confidence": 0.95
+        }
+      ],
+      "brandReading": "identity, profile, or staff-directory product",
+      "sameObject": true,
+      "sameObjectReason": "Every tier shows a horizontal credential with a portrait block and text lines; the top clip becomes clearer at larger sizes.",
+      "sameObjectConfidence": 0.95,
+      "siblingCollision": {
+        "familyId": "M98-F009",
+        "reason": "Both contain a small blue-accented profile/content panel, especially similar before the badge clip resolves."
+      },
+      "backgroundAmbiguity": "Medium. The badge outline survives all backgrounds, but the portrait is nearly unreadable at 16px and weak on chrome."
+    },
+    {
+      "familyId": "M98-F009",
+      "tiers": [
+        {
+          "size": 16,
+          "firstReading": "computer window",
+          "alternatives": ["floppy disk", "small monitor"],
+          "confidence": 0.54
+        },
+        {
+          "size": 24,
+          "firstReading": "profile webpage",
+          "alternatives": ["application window", "digital contact card"],
+          "confidence": 0.84
+        },
+        {
+          "size": 32,
+          "firstReading": "profile webpage",
+          "alternatives": ["browser window", "application window"],
+          "confidence": 0.93
+        }
+      ],
+      "brandReading": "web profile or browser-based application",
+      "sameObject": true,
+      "sameObjectReason": "The dark rectangular frame, blue title bar, and white profile-content panel are progressively simplified versions of one window.",
+      "sameObjectConfidence": 0.9,
+      "siblingCollision": {
+        "familyId": "M98-F006",
+        "reason": "Both read as blue-topped desktop windows; F009 is distinguished mainly by having one frame rather than a visible stack."
+      },
+      "backgroundAmbiguity": "Medium. The single-window shape is clearest on teal; its pale body and frame flatten somewhat on chrome and white, especially at 16px."
+    },
+    {
+      "familyId": "M98-F010",
+      "tiers": [
+        {
+          "size": 16,
+          "firstReading": "framed photograph",
+          "alternatives": ["mail envelope", "blank image frame"],
+          "confidence": 0.43
+        },
+        {
+          "size": 24,
+          "firstReading": "framed landscape photograph",
+          "alternatives": ["picture postcard", "image thumbnail"],
+          "confidence": 0.88
+        },
+        {
+          "size": 32,
+          "firstReading": "framed landscape photograph",
+          "alternatives": ["picture postcard", "image thumbnail"],
+          "confidence": 0.96
+        }
+      ],
+      "brandReading": "photo or image product",
+      "sameObject": true,
+      "sameObjectReason": "The framed rectangle persists, while the pale mountain forms and yellow sun appear clearly only at the larger tiers.",
+      "sameObjectConfidence": 0.87,
+      "siblingCollision": {
+        "familyId": "M98-F012",
+        "reason": "At 16px the pale triangular landscape can read as an envelope flap, making it resemble the mail family."
+      },
+      "backgroundAmbiguity": "Medium. The 16px noun is ambiguous on all backgrounds, and white further reduces contrast in the pale landscape area."
+    },
+    {
+      "familyId": "M98-F011",
+      "tiers": [
+        {
+          "size": 16,
+          "firstReading": "set of wooden blocks",
+          "alternatives": ["scattered puzzle pieces", "assorted UI buttons"],
+          "confidence": 0.21
+        },
+        {
+          "size": 24,
+          "firstReading": "set of wooden blocks",
+          "alternatives": ["scattered puzzle pieces", "assorted desk parts"],
+          "confidence": 0.3
+        },
+        {
+          "size": 32,
+          "firstReading": "set of wooden blocks",
+          "alternatives": ["scattered puzzle pieces", "assorted UI buttons"],
+          "confidence": 0.36
+        }
+      ],
+      "brandReading": "none",
+      "sameObject": true,
+      "sameObjectReason": "The same three tan forms recur in matching positions, but their shared object identity remains unclear at every tier.",
+      "sameObjectConfidence": 0.72,
+      "siblingCollision": {
+        "familyId": null,
+        "reason": "The disconnected tan forms do not closely match another family, even though their own noun is unclear."
+      },
+      "backgroundAmbiguity": "High. Without a containing silhouette, the tan forms look like unrelated fragments on chrome and white and only slightly more grouped on teal."
+    },
+    {
+      "familyId": "M98-F012",
+      "tiers": [
+        {
+          "size": 16,
+          "firstReading": "open envelope with letter",
+          "alternatives": ["mailed newsletter", "invitation envelope"],
+          "confidence": 0.66
+        },
+        {
+          "size": 24,
+          "firstReading": "open envelope with letter",
+          "alternatives": ["mailed newsletter", "invitation envelope"],
+          "confidence": 0.92
+        },
+        {
+          "size": 32,
+          "firstReading": "open envelope with letter",
+          "alternatives": ["mailed newsletter", "paper form in envelope"],
+          "confidence": 0.97
+        }
+      ],
+      "brandReading": "email, newsletter, or postal-message product",
+      "sameObject": true,
+      "sameObjectReason": "The envelope, raised paper insert, and blue header remain consistent, with detail increasing by tier.",
+      "sameObjectConfidence": 0.98,
+      "siblingCollision": {
+        "familyId": "M98-F010",
+        "reason": "The tiny envelope and the tiny landscape image both contain a pale rectangle crossed by diagonal forms."
+      },
+      "backgroundAmbiguity": "Low. The dark envelope outline carries across backgrounds, though the inserted letter is difficult to parse at 16px."
+    },
+    {
+      "familyId": "M98-F013",
+      "tiers": [
+        {
+          "size": 16,
+          "firstReading": "open workbook",
+          "alternatives": ["open magazine", "open map book"],
+          "confidence": 0.67
+        },
+        {
+          "size": 24,
+          "firstReading": "open workbook with pencil",
+          "alternatives": ["open sketchbook", "open magazine with bookmark"],
+          "confidence": 0.9
+        },
+        {
+          "size": 32,
+          "firstReading": "open workbook with pencil",
+          "alternatives": ["open sketchbook", "illustrated notebook"],
+          "confidence": 0.95
+        }
+      ],
+      "brandReading": "learning, sketching, or workbook product",
+      "sameObject": true,
+      "sameObjectReason": "All tiers preserve the open spread and orange writing tool along the center fold, with page graphics added at size.",
+      "sameObjectConfidence": 0.96,
+      "siblingCollision": {
+        "familyId": "M98-F001",
+        "reason": "Both use an open-book silhouette and small page graphics; the central pencil is not fully separating at 16px."
+      },
+      "backgroundAmbiguity": "Medium. The dark contour keeps the book visible, but its white pages blend into white and the center tool is tiny on chrome."
+    },
+    {
+      "familyId": "M98-F014",
+      "tiers": [
+        {
+          "size": 16,
+          "firstReading": "spiral notepad",
+          "alternatives": ["desk calendar", "checklist pad"],
+          "confidence": 0.74
+        },
+        {
+          "size": 24,
+          "firstReading": "spiral notepad",
+          "alternatives": ["checklist pad", "desk calendar"],
+          "confidence": 0.91
+        },
+        {
+          "size": 32,
+          "firstReading": "spiral notepad with pencil",
+          "alternatives": ["checklist pad", "memo book"],
+          "confidence": 0.97
+        }
+      ],
+      "brandReading": "notes, planning, or task-list product",
+      "sameObject": true,
+      "sameObjectReason": "The yellow spiral-bound pad and teal writing marks persist, while the pencil becomes explicit at 32px.",
+      "sameObjectConfidence": 0.98,
+      "siblingCollision": {
+        "familyId": "M98-F013",
+        "reason": "Both imply writing in a book with an orange tool, though the spiral-bound single pad separates well at 24px and 32px."
+      },
+      "backgroundAmbiguity": "Low. The saturated yellow notepad remains distinct on every background; only the 16px writing marks compress."
+    },
+    {
+      "familyId": "M98-F015",
+      "tiers": [
+        {
+          "size": 16,
+          "firstReading": "file folder",
+          "alternatives": ["document tray", "toolbox"],
+          "confidence": 0.75
+        },
+        {
+          "size": 24,
+          "firstReading": "folder holding a photograph",
+          "alternatives": ["portfolio case", "document inbox"],
+          "confidence": 0.9
+        },
+        {
+          "size": 32,
+          "firstReading": "folder holding photographs",
+          "alternatives": ["portfolio case", "photo archive"],
+          "confidence": 0.96
+        }
+      ],
+      "brandReading": "file manager, portfolio, or photo archive",
+      "sameObject": true,
+      "sameObjectReason": "The yellow folder silhouette is constant, with inserted image sheets appearing more explicitly at larger tiers.",
+      "sameObjectConfidence": 0.97,
+      "siblingCollision": {
+        "familyId": null,
+        "reason": "No sibling combines the same tabbed yellow container with papers protruding from it."
+      },
+      "backgroundAmbiguity": "Low. The saturated folder remains readable on teal, chrome, and white; only its contents disappear at 16px."
+    },
+    {
+      "familyId": "M98-F016",
+      "tiers": [
+        {
+          "size": 16,
+          "firstReading": "computer playing music",
+          "alternatives": ["digital jukebox", "audio workstation"],
+          "confidence": 0.76
+        },
+        {
+          "size": 24,
+          "firstReading": "computer playing music",
+          "alternatives": ["digital jukebox", "music workstation"],
+          "confidence": 0.9
+        },
+        {
+          "size": 32,
+          "firstReading": "computer playing music",
+          "alternatives": ["digital jukebox", "music workstation"],
+          "confidence": 0.95
+        }
+      ],
+      "brandReading": "desktop audio or music-player product",
+      "sameObject": true,
+      "sameObjectReason": "Every tier combines the same CRT monitor with red musical notes to its right.",
+      "sameObjectConfidence": 0.98,
+      "siblingCollision": {
+        "familyId": "M98-F005",
+        "reason": "The base monitor is nearly the same noun; recognition depends on noticing the red musical notes."
+      },
+      "backgroundAmbiguity": "Low. The monitor outline and red notes stay visible across all three backgrounds, though the smallest notes are easy to miss."
+    }
+  ]
+}

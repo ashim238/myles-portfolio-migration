@@ -141,6 +141,39 @@ describe("Myles 98 icon master contract", () => {
     );
   });
 
+  it("fails closed when approved object and recognition readings drift", () => {
+    const manifest = JSON.parse(
+      readFileSync("docs/design-assets/myles98-icons/manifest.json", "utf8"),
+    );
+    const freshGreens = manifest.icons.find((icon: { id: string }) => icon.id === "fresh-greens");
+    freshGreens.intendedObject = "proprietary folded-map logo";
+    freshGreens.acceptedReadings = ["leaf logo"];
+    freshGreens.rejectedReadings = ["road map"];
+
+    expect(validateManifest(manifest)).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("intendedObject must exactly match approved object"),
+        expect.stringContaining("acceptedReadings must exactly match approved readings"),
+        expect.stringContaining("rejectedReadings must exactly match approved readings"),
+      ]),
+    );
+  });
+
+  it.each(["blind-review-1.json", "blind-review-2.json"])(
+    "marks %s as historical evidence that does not apply to the final candidate",
+    (filename) => {
+      const review = JSON.parse(
+        readFileSync(`docs/design-assets/myles98-icons/reviews/${filename}`, "utf8"),
+      );
+
+      expect(review.uninformed).toBe(true);
+      expect(review.reviewStatus).toBe("historical-pre-simplification");
+      expect(review.appliesToCurrentCandidate).toBe(false);
+      expect(review.reviewedSnapshot).toBeNull();
+      expect(review.provenanceLimitation).toContain("does not evidence the final 48-master set");
+    },
+  );
+
   it("accepts a generic personal-note metaphor under the stable trini-roti program id", () => {
     const manifest = JSON.parse(
       readFileSync("docs/design-assets/myles98-icons/manifest.json", "utf8"),
@@ -158,6 +191,23 @@ describe("Myles 98 icon master contract", () => {
     expect(validateManifest(manifest)).toEqual([]);
   });
 
+  it("locks Loose Parts to a brand-neutral three-block construction noun", () => {
+    const manifest = JSON.parse(
+      readFileSync("docs/design-assets/myles98-icons/manifest.json", "utf8"),
+    );
+    const looseParts = manifest.icons.find((icon: { id: string }) => icon.id === "loose-parts");
+
+    expect(looseParts.intendedObject).toBe(
+      "three generic colored construction blocks arranged in a compact pyramid",
+    );
+    expect(looseParts.acceptedReadings).toEqual([
+      "building blocks",
+      "construction blocks",
+      "toy blocks",
+    ]);
+    expect(looseParts.rejectedReadings).toEqual(["LEGO", "food", "table"]);
+  });
+
   it("locks the approved tier cue spelling and case into metadata and the manifest", () => {
     const manifest = JSON.parse(
       readFileSync("docs/design-assets/myles98-icons/manifest.json", "utf8"),
@@ -166,23 +216,58 @@ describe("Myles 98 icon master contract", () => {
       start: { "16": "Head-and-glasses silhouette", "24": "Locs and glasses within the portrait mark", "32": "Pixel adaptation of Myles's existing portrait mark" },
       "selected-work": { "16": "Portfolio folder", "24": "One visible image thumbnail", "32": "Open portfolio folder containing a contact sheet" },
       "about-myles": { "16": "Portrait card", "24": "ID-card frame and one information line", "32": "ID card with portrait and information lines" },
-      resume: { "16": "White document", "24": "Blue paperclip and two bullets", "32": "Professional profile sheet with paperclip and structured lines" },
-      email: { "16": "Sealed envelope", "24": "Yellow stamp", "32": "Dimensional sealed envelope with folded flap and stamp" },
-      reminders: { "16": "Yellow checklist pad", "24": "Spiral edge and two checks", "32": "Personal checklist pad with a short pencil" },
+      resume: { "16": "Profile sheet with blue header", "24": "Blue paperclip and two bullets", "32": "Professional profile sheet with paperclip and structured lines" },
+      email: { "16": "Sealed envelope", "24": "Sealed envelope with one yellow stamp", "32": "Dimensional sealed envelope with one subordinate stamp" },
+      reminders: { "16": "Spiral checklist pad", "24": "Two checks and a bound paper edge", "32": "Personal checklist pad with checks and paper depth" },
       "trini-roti": { "16": "Single memo sheet", "24": "Folded corner and handwritten lines", "32": "Personal memo sheet with folded corner, handwritten lines, and paper depth" },
-      "loose-parts": { "16": "Wooden plank and wedge", "24": "Add one cube", "32": "Assorted wooden construction pieces: plank, cube, and triangular wedge" },
+      "loose-parts": { "16": "Three stacked construction blocks", "24": "Three colored cubes with face shading", "32": "Three colored building blocks in a compact pyramid" },
       "display-properties": { "16": "CRT monitor", "24": "Color-test tiles", "32": "Beige CRT with color-test window, controls, and object-specific casing depth" },
       "open-apps": { "16": "Two overlapping windows", "24": "Distinct titlebars", "32": "Two layered application windows with separate content panes" },
-      "reset-desktop": { "16": "Monitor with reset cue", "24": "Compact red reset arrow", "32": "CRT desktop with a clear, subordinate reset arrow" },
+      "reset-desktop": { "16": "Desktop screen with two reset arrows", "24": "Compact red reset arrow", "32": "CRT desktop with a clear, subordinate reset arrow" },
       "generic-app": { "16": "Single application window", "24": "Blue titlebar and inner pane", "32": "Neutral program window with restrained chrome depth" },
-      "fresh-greens": { "16": "Folded road map", "24": "Green route and orange destination", "32": "Two-lane road map with route, folds, and destination flag" },
+      "fresh-greens": { "16": "Road-map tile with one route", "24": "One route with start and destination", "32": "Road-map tile with one non-monotonic road, start point, and orange destination" },
       understandingfafsa: { "16": "Newsletter page", "24": "Blue masthead within open envelope", "32": "Modular newsletter emerging from an envelope with three content regions" },
-      navi: { "16": "Pocket guidebook", "24": "Orange bookmark and storefront marker", "32": "Open neighborhood guide with map, bookmark, and local storefront cue" },
-      "tiktok-catalog": { "16": "Catalog sheet", "24": "Product-card grid and cursor", "32": "Catalog layout on a drafting surface with product cards and selection cursor" },
+      navi: { "16": "Location marker", "24": "Location marker above a storefront", "32": "Location marker above a neighborhood storefront with one depth cue" },
+      "tiktok-catalog": { "16": "Standalone retail shopping bag", "24": "Shopping bag with a top opening and one side plane", "32": "Dimensional shopping bag with gusset, lower plane, and restrained contact depth" },
     };
 
     expect(Object.fromEntries(Object.entries(APPROVED_ICON_METADATA).map(([id, metadata]) => [id, metadata.tiers]))).toEqual(approvedTiers);
     expect(Object.fromEntries(manifest.icons.map((icon: { id: string; tiers: Record<string, string> }) => [icon.id, icon.tiers]))).toEqual(approvedTiers);
+  });
+
+  it("keeps branded TikTok and generic social-app symbols out of the catalog icon", () => {
+    const manifest = JSON.parse(
+      readFileSync("docs/design-assets/myles98-icons/manifest.json", "utf8"),
+    );
+    const catalog = manifest.icons.find((icon: { id: string }) => icon.id === "tiktok-catalog");
+
+    expect(catalog.rejectedReadings).toEqual(
+      expect.arrayContaining(["TikTok logo", "music note", "social media app"]),
+    );
+  });
+
+  it("locks Navi to a marker above a separate neighborhood storefront", () => {
+    const manifest = JSON.parse(
+      readFileSync("docs/design-assets/myles98-icons/manifest.json", "utf8"),
+    );
+    const navi = manifest.icons.find((icon: { id: string }) => icon.id === "navi");
+
+    expect(navi.intendedObject).toBe("location marker above a neighborhood storefront");
+    expect(navi.tiers["24"]).toBe("Location marker above a storefront");
+    expect(navi.tiers["32"]).toBe("Location marker above a neighborhood storefront with one depth cue");
+  });
+
+  it("locks TikTok to one standalone retail shopping bag", () => {
+    const manifest = JSON.parse(
+      readFileSync("docs/design-assets/myles98-icons/manifest.json", "utf8"),
+    );
+    const catalog = manifest.icons.find((icon: { id: string }) => icon.id === "tiktok-catalog");
+
+    expect(catalog.intendedObject).toBe("standalone retail shopping bag");
+    expect(catalog.acceptedReadings).toEqual(["shopping bag", "retail bag", "product bag"]);
+    expect(catalog.rejectedReadings).toEqual(
+      expect.arrayContaining(["purse", "catalog page", "TikTok logo", "music note", "social media app"]),
+    );
   });
 
   it("locks Myles's likeness cues and assigns them realistic tier burdens", () => {

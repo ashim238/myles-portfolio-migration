@@ -3,14 +3,10 @@
   <path fill="#f15a50" d="M4 2H12V3H13L14 3L13 4H12V3H4Z" />
   <path fill="#8e211e" d="M13 15H5V14H3V15L1 13L3 11V12H5V13H13Z" />
   <path fill="#f15a50" d="M12 14H4V13H3L2 13L3 12H4V13H12Z" />
-  <path fill="#232323" d="M4 4H11V5H12V11H11V12H9V13H10V15H5V14H7V12H4V11H3V5H4Z" />
-  <path fill="#777065" d="M4 5H10V6H11V10H10V11H4Z" />
-  <path fill="#d4ccbd" d="M5 5H10V6H11V10H10V10H5Z" />
-  <rect fill="#fff7e9" x="5" y="6" width="1" height="4" />
-  <rect fill="#26353a" x="6" y="6" width="4" height="3" />
-  <rect fill="#4b7d8e" x="7" y="7" width="3" height="2" />
-  <rect fill="#b8d8d3" x="7" y="7" width="2" height="1" />
-  <rect fill="#514c45" x="6" y="10" width="4" height="1" />
-  <rect fill="#aaa194" x="8" y="11" width="1" height="3" />
-  <rect fill="#ece4d7" x="6" y="14" width="3" height="1" />
+  <path fill="#232323" d="M4 4H11V5H12V11H11V12H4V11H3V5H4Z" />
+  <rect fill="#26353a" x="5" y="5" width="6" height="6" />
+  <rect fill="#4b7d8e" x="6" y="6" width="5" height="4" />
+  <rect fill="#b8d8d3" x="6" y="6" width="4" height="1" />
+  <rect fill="#315f69" x="10" y="7" width="1" height="3" />
+  <rect fill="#315f69" x="6" y="10" width="5" height="1" />
 </svg>

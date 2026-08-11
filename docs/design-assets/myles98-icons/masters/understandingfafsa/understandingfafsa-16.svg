@@ -1,7 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges" data-m98-concept="understandingfafsa" data-m98-grid="16">
-  <path fill="#29282a" d="M1 6L4 4V1H12V4L15 6V14H1Z" />
-  <polygon fill="#9d8e82" points="2,7 8,3 14,7 14,13 2,13" />
-  <polygon fill="#f2e8dd" points="2,7 8,4 14,7 8,11" />
+  <path fill="#29282a" d="M4 1H12V3H13V10H15V15H1V10H3V3H4Z" />
   <rect fill="#898a87" x="5" y="2" width="8" height="10" />
   <rect fill="#d2cec6" x="4" y="1" width="8" height="11" />
   <rect fill="#f3efe7" x="5" y="2" width="6" height="9" />
@@ -12,8 +10,7 @@
   <rect fill="#c5963a" x="5" y="9" width="2" height="2" />
   <rect fill="#8d8d88" x="8" y="9" width="3" height="1" />
   <rect fill="#aaa7a1" x="8" y="10" width="2" height="1" />
-  <polygon fill="#ddd0c2" points="2,8 8,13 14,8 14,13 2,13" />
-  <polygon fill="#f2e8dd" points="3,9 8,12 13,9 13,13 3,13" />
-  <polygon fill="#8b7d72" points="2,13 8,10 14,13 14,14 2,14" />
-  <polygon fill="#fff6ea" points="3,13 8,11 13,13" />
+  <polygon fill="#8b7d72" points="2,10 8,13 14,10 14,14 2,14" />
+  <polygon fill="#f2e8dd" points="3,11 8,13 13,11 13,14 3,14" />
+  <rect fill="#9d8e82" x="2" y="14" width="12" height="1" />
 </svg>

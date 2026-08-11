@@ -1,18 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" shape-rendering="crispEdges" data-m98-concept="tiktok-catalog" data-m98-grid="24">
-  <path fill="#202126" d="M5 2H19V3H21V21H20V23H4V22H3V4H5Z" />
-  <path fill="#315d5d" d="M4 3H20V4H21V21H19V22H4Z" />
-  <rect fill="#a7a19a" x="4" y="3" width="16" height="19" />
-  <rect fill="#f3eee4" x="5" y="3" width="14" height="18" />
-  <rect fill="#ffffff" x="6" y="3" width="13" height="1" />
-  <rect fill="#77746f" x="4" y="4" width="3" height="18" />
-  <rect fill="#aaa49b" x="6" y="5" width="1" height="15" />
-  <rect fill="#5c5b59" x="19" y="4" width="1" height="17" />
-  <rect fill="#17181b" x="5" y="21" width="14" height="1" />
-  <path fill="#202126" d="M10 7H16V8H18V10H19V11H20V18H8V11H9V8H10Z" />
-  <rect fill="#f3eee4" x="11" y="8" width="4" height="2" />
-  <polygon fill="#cf526d" points="9,12 19,12 18,17 10,17" />
-  <polygon fill="#f07b91" points="9,12 19,12 18,13 10,13" />
-  <polygon fill="#8d3349" points="10,16 18,16 18,17 10,17" />
-  <rect fill="#2f7773" x="13" y="13" width="2" height="2" />
-  <rect fill="#69a49d" x="13" y="13" width="1" height="1" />
+  <rect fill="#202126" x="8" y="2" width="8" height="1" />
+  <rect fill="#202126" x="7" y="3" width="10" height="5" />
+  <rect fill="#f3eee4" x="9" y="4" width="6" height="3" />
+  <polygon fill="#202126" points="3,7 21,7 19,22 5,22" />
+  <polygon fill="#6f293d" points="4,8 20,8 18,10 4,10" />
+  <polygon fill="#cf526d" points="4,10 18,10 17,20 6,20" />
+  <polygon fill="#f07b91" points="4,10 18,10 18,12 4,12" />
+  <polygon fill="#8d3349" points="18,10 20,8 18,21 17,20" />
+  <polygon fill="#a84059" points="18,10 19,9 18,19 17,20" />
+  <polygon fill="#8d3349" points="6,19 18,19 17,20 6,20" />
 </svg>
