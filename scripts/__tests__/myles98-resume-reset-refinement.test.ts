@@ -6,6 +6,11 @@ import { expectedMasterPath } from "../lib/myles98-icon-contract.mjs";
 const ROOT = "docs/design-assets/myles98-icons";
 const resumeClipColors = new Set(["#164b80", "#75acd2"]);
 const resetActionColors = new Set(["#8e211e", "#8d211e", "#f15a50"]);
+const resetArrowContract = new Map([
+  [16, { tip: [8, 7], stemX: 13, maximumWidth: 8 }],
+  [24, { tip: [14, 9], stemX: 20, maximumWidth: 10 }],
+  [32, { tip: [18, 11], stemX: 27, maximumWidth: 13 }],
+] as const);
 
 type Pixel = { red: number; green: number; blue: number; alpha: number };
 type Bounds = { minX: number; minY: number; maxX: number; maxY: number; width: number; height: number };
@@ -60,6 +65,72 @@ function boundsFor(
   const minY = Math.min(...ys);
   const maxY = Math.max(...ys);
   return { minX, minY, maxX, maxY, width: maxX - minX + 1, height: maxY - minY + 1 };
+}
+
+function colorMask(data: Buffer, channels: number, colors: Set<string>) {
+  const targets = [...colors].map(hexToPixel);
+  return Array.from({ length: data.length / channels }, (_, index) => {
+    const offset = index * channels;
+    return targets.some(
+      ({ red, green, blue, alpha }) =>
+        data[offset] === red &&
+        data[offset + 1] === green &&
+        data[offset + 2] === blue &&
+        data[offset + 3] === alpha,
+    );
+  });
+}
+
+function maskTopology(mask: boolean[], width: number) {
+  const height = mask.length / width;
+  const neighbors = (index: number) => {
+    const x = index % width;
+    const y = Math.floor(index / width);
+    return [
+      x > 0 ? index - 1 : -1,
+      x < width - 1 ? index + 1 : -1,
+      y > 0 ? index - width : -1,
+      y < height - 1 ? index + width : -1,
+    ].filter((candidate) => candidate >= 0);
+  };
+  const flood = (seed: number, value: boolean, visited: Set<number>) => {
+    const queue = [seed];
+    visited.add(seed);
+    while (queue.length > 0) {
+      const index = queue.shift()!;
+      for (const candidate of neighbors(index)) {
+        if (visited.has(candidate) || mask[candidate] !== value) continue;
+        visited.add(candidate);
+        queue.push(candidate);
+      }
+    }
+  };
+
+  const outside = new Set<number>();
+  for (let x = 0; x < width; x += 1) {
+    for (const y of [0, height - 1]) {
+      const index = y * width + x;
+      if (!mask[index] && !outside.has(index)) flood(index, false, outside);
+    }
+  }
+  for (let y = 0; y < height; y += 1) {
+    for (const x of [0, width - 1]) {
+      const index = y * width + x;
+      if (!mask[index] && !outside.has(index)) flood(index, false, outside);
+    }
+  }
+
+  const filled = new Set<number>();
+  let components = 0;
+  mask.forEach((isFilled, index) => {
+    if (!isFilled || filled.has(index)) return;
+    components += 1;
+    flood(index, true, filled);
+  });
+  return {
+    components,
+    enclosedOpenings: mask.filter((isFilled, index) => !isFilled && !outside.has(index)).length,
+  };
 }
 
 function rectCoverage(source: string, grid: number, colors: Set<string>) {
@@ -148,19 +219,49 @@ describe("Myles 98 Resume and Reset Desktop refinement", () => {
     expect(resume32Bounds.height).toBeLessThanOrEqual(8);
   });
 
-  it("uses one compact reset cycle instead of opposing red arrow paths", () => {
+  it("uses one dark restart path instead of a flag or opposing transfer arrows", () => {
     for (const grid of [16, 24, 32]) {
       const source = sourceFor("reset-desktop", grid);
       const darkArrowPaths = source.match(/<path fill="#8(?:e|d)211e" d="[^"]+"\s*\/>/gi) ?? [];
       expect(darkArrowPaths).toHaveLength(1);
+      expect(source).not.toMatch(/<rect fill="#8(?:e|d)211e"/i);
     }
   });
 
-  it("keeps Reset Desktop's action cue subordinate to the CRT at native size", async () => {
-    for (const [grid, maximumWidth] of [[16, 8], [24, 10], [32, 13]] as const) {
+  it("renders one open stepped return arrow with a single left-facing head", async () => {
+    for (const [grid, { tip, stemX, maximumWidth }] of resetArrowContract) {
       const reset = await nativeRaster(sourceFor("reset-desktop", grid), grid);
+      const mask = colorMask(reset.data, reset.info.channels, resetActionColors);
       const actionBounds = boundsFor(reset.data, reset.info.width, reset.info.channels, resetActionColors);
+      const [tipX, tipY] = tip;
+      const at = (x: number, y: number) => mask[y * grid + x];
+
+      expect(maskTopology(mask, grid)).toEqual({ components: 1, enclosedOpenings: 0 });
+      expect(actionBounds.minX).toBe(tipX);
+      expect(mask.filter((filled, index) => filled && index % grid === tipX)).toHaveLength(1);
+      expect(at(tipX, tipY)).toBe(true);
+      expect(at(tipX + 1, tipY - 1)).toBe(true);
+      expect(at(tipX + 1, tipY + 1)).toBe(true);
+      expect(
+        Array.from({ length: stemX - tipX + 1 }, (_, offset) => at(tipX + offset, tipY)).every(Boolean),
+      ).toBe(true);
+      expect(mask.filter((filled, index) => filled && index % grid === stemX).length).toBeGreaterThanOrEqual(4);
       expect(actionBounds.width).toBeLessThanOrEqual(maximumWidth);
+      expect(mask.filter(Boolean).length / (actionBounds.width * actionBounds.height)).toBeLessThan(0.7);
+    }
+  });
+
+  it("keeps Reset Desktop's CRT larger than its red action cue at native size", async () => {
+    for (const grid of [16, 24, 32]) {
+      const reset = await nativeRaster(sourceFor("reset-desktop", grid), grid);
+      const actionMask = colorMask(reset.data, reset.info.channels, resetActionColors);
+      const opaquePixels = Array.from(
+        { length: reset.data.length / reset.info.channels },
+        (_, index) => reset.data[index * reset.info.channels + 3] === 255,
+      );
+      expect(actionMask.filter(Boolean).length).toBeLessThan(
+        opaquePixels.filter(Boolean).length - actionMask.filter(Boolean).length,
+      );
     }
   });
 });
