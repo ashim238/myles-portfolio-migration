@@ -7,6 +7,16 @@
   --m97-ink: #111111;
   --m97-paper: #f5f3ea;
   --m97-reader-ink: #171717;
+  --m97-bevel-highlight: #fff;
+  --m97-bevel-light: #dfdfdf;
+  --m97-bevel-shadow: #808080;
+  --m97-bevel-dark: #0a0a0a;
+  --m97-bevel-raised:
+    inset 1px 1px 0 var(--m97-bevel-light),
+    inset -1px -1px 0 var(--m97-bevel-shadow);
+  --m97-bevel-recessed:
+    inset 1px 1px 0 var(--m97-bevel-shadow),
+    inset -1px -1px 0 var(--m97-bevel-light);
   --m97-ui-font: Tahoma, Verdana, Geneva, sans-serif;
   --m97-reader-font: Georgia, "Times New Roman", serif;
   --m97-space-1: 4px;
@@ -30,6 +40,10 @@
   --m97-desktop: #00565c;
   --m97-chrome: #fff;
   --m97-active: #000;
+  --m97-bevel-highlight: #fff;
+  --m97-bevel-light: #fff;
+  --m97-bevel-shadow: #000;
+  --m97-bevel-dark: #000;
 }
 
 .myles97-shell[data-m97-contrast="high"] :is(
@@ -160,12 +174,16 @@
   flex-direction: column;
   overflow: hidden;
   border: 2px solid var(--m97-ink);
+  border-color: var(--m97-bevel-highlight) var(--m97-bevel-dark)
+    var(--m97-bevel-dark) var(--m97-bevel-highlight);
   background: var(--m97-chrome);
   color: var(--m97-ink);
   font-family: var(--m97-ui-font);
   font-size: 12px;
   line-height: 1.35;
-  box-shadow: 4px 4px 0 rgb(17 17 17 / 28%);
+  box-shadow:
+    var(--m97-bevel-raised),
+    4px 4px 0 rgb(17 17 17 / 28%);
   will-change: transform;
 }
 
@@ -229,11 +247,20 @@
   height: 22px;
   place-items: center;
   border: 1px solid currentColor;
+  border-color: var(--m97-bevel-highlight) var(--m97-bevel-dark)
+    var(--m97-bevel-dark) var(--m97-bevel-highlight);
   background: var(--m97-chrome);
   color: var(--m97-ink);
   font-size: 16px;
   font-weight: 700;
   line-height: 1;
+  box-shadow: var(--m97-bevel-raised);
+}
+
+.myles97-hit-target:active .myles97-window-control {
+  border-color: var(--m97-bevel-dark) var(--m97-bevel-highlight)
+    var(--m97-bevel-highlight) var(--m97-bevel-dark);
+  box-shadow: var(--m97-bevel-recessed);
 }
 
 .myles97-window-content {
@@ -243,7 +270,10 @@
   margin: 0 var(--m97-space-1);
   padding: var(--m97-space-3);
   border: 1px solid var(--m97-ink);
+  border-color: var(--m97-bevel-dark) var(--m97-bevel-highlight)
+    var(--m97-bevel-highlight) var(--m97-bevel-dark);
   background: #fff;
+  box-shadow: var(--m97-bevel-recessed);
 }
 
 .myles97-window-status {
@@ -251,8 +281,11 @@
   margin: var(--m97-space-1);
   padding: var(--m97-space-1) var(--m97-space-2);
   border: 1px solid var(--m97-ink);
+  border-color: var(--m97-bevel-dark) var(--m97-bevel-highlight)
+    var(--m97-bevel-highlight) var(--m97-bevel-dark);
   background: #d7d7d7;
   font-size: 12px;
+  box-shadow: var(--m97-bevel-recessed);
 }
 
 .myles97-window :is(button, a, input, select, textarea):focus-visible,
@@ -285,10 +318,6 @@
   text-align: center;
   text-decoration: none;
   text-shadow: 1px 1px 0 rgb(17 17 17 / 65%);
-}
-
-.myles97-desktop-shortcuts svg {
-  filter: drop-shadow(1px 1px 0 rgb(17 17 17 / 60%));
 }
 
 .myles97-roti-note {
@@ -372,17 +401,20 @@
   justify-content: center;
   padding: 8px 14px;
   border: 2px solid var(--m97-ink);
+  border-color: var(--m97-bevel-highlight) var(--m97-bevel-dark)
+    var(--m97-bevel-dark) var(--m97-bevel-highlight);
   background: var(--m97-chrome);
   color: var(--m97-ink);
   cursor: pointer;
   font: 700 12px/1.2 var(--m97-ui-font);
   text-decoration: none;
-  box-shadow: 2px 2px 0 var(--m97-ink);
+  box-shadow: var(--m97-bevel-raised);
 }
 
 .myles97-primary-button:active {
-  box-shadow: none;
-  transform: translate(2px, 2px);
+  border-color: var(--m97-bevel-dark) var(--m97-bevel-highlight)
+    var(--m97-bevel-highlight) var(--m97-bevel-dark);
+  box-shadow: var(--m97-bevel-recessed);
 }
 
 .myles97-explorer {
@@ -581,10 +613,20 @@
   min-height: 44px;
   padding: 8px 12px;
   border: 1px solid var(--m97-ink);
+  border-color: var(--m97-bevel-highlight) var(--m97-bevel-dark)
+    var(--m97-bevel-dark) var(--m97-bevel-highlight);
   background: var(--m97-chrome);
   color: var(--m97-ink);
   cursor: pointer;
   font: 700 12px/1.2 var(--m97-ui-font);
+  box-shadow: var(--m97-bevel-raised);
+}
+
+.myles97-display-preview button:active,
+.myles97-reset-confirmation button:active {
+  border-color: var(--m97-bevel-dark) var(--m97-bevel-highlight)
+    var(--m97-bevel-highlight) var(--m97-bevel-dark);
+  box-shadow: var(--m97-bevel-recessed);
 }
 
 .myles97-reset-confirmation {
@@ -627,11 +669,13 @@
   gap: 7px;
   padding: 5px 10px;
   border: 1px solid #555;
+  border-color: var(--m97-bevel-highlight) var(--m97-bevel-dark)
+    var(--m97-bevel-dark) var(--m97-bevel-highlight);
   background: #d3d3d3;
   color: var(--m97-ink);
   cursor: pointer;
   font: 700 12px/1.2 var(--m97-ui-font);
-  box-shadow: 1px 1px 0 var(--m97-ink);
+  box-shadow: var(--m97-bevel-raised);
 }
 
 .myles97-start-button {
@@ -668,24 +712,38 @@
 }
 
 .myles97-task-button[data-focused="true"] {
-  border-color: var(--m97-active);
   background: var(--m97-active);
   color: #fff;
-  box-shadow: inset 0 0 0 1px #fff;
 }
 
 .myles97-task-button[data-minimized="true"] {
   color: #555;
-  box-shadow: inset 1px 1px 0 #777;
+}
+
+.myles97-start-button:active,
+.myles97-start-button[aria-expanded="true"] {
+  border-color: var(--m97-bevel-dark) var(--m97-bevel-highlight)
+    var(--m97-bevel-highlight) var(--m97-bevel-dark);
+  box-shadow: var(--m97-bevel-recessed);
+}
+
+.myles97-task-button:active,
+.myles97-task-button[data-focused="true"] {
+  border-color: var(--m97-bevel-dark) var(--m97-bevel-highlight)
+    var(--m97-bevel-highlight) var(--m97-bevel-dark);
+  box-shadow: var(--m97-bevel-recessed);
 }
 
 .myles97-clock {
   min-width: 82px;
   padding: 8px 10px;
   border: 1px solid #777;
+  border-color: var(--m97-bevel-dark) var(--m97-bevel-highlight)
+    var(--m97-bevel-highlight) var(--m97-bevel-dark);
   background: #d8d8d8;
   text-align: center;
   font: 700 12px/1.2 var(--m97-ui-font);
+  box-shadow: var(--m97-bevel-recessed);
 }
 
 .myles97-start-menu {
@@ -699,8 +757,12 @@
   grid-template-columns: 46px minmax(0, 1fr);
   overflow: hidden;
   border: 2px solid var(--m97-ink);
+  border-color: var(--m97-bevel-highlight) var(--m97-bevel-dark)
+    var(--m97-bevel-dark) var(--m97-bevel-highlight);
   background: var(--m97-chrome);
-  box-shadow: 5px 5px 0 rgb(17 17 17 / 30%);
+  box-shadow:
+    var(--m97-bevel-raised),
+    5px 5px 0 rgb(17 17 17 / 30%);
   font-family: var(--m97-ui-font);
 }
 
@@ -872,9 +934,14 @@
   .myles97-titlebar,
   .myles97-window[data-focused="true"] .myles97-titlebar,
   .myles97-taskbar,
+  .myles97-start-button,
+  .myles97-task-button,
+  .myles97-clock,
   .myles97-start-menu,
   .myles97-program-card,
   .myles97-primary-button,
+  .myles97-display-preview button,
+  .myles97-reset-confirmation button,
   .myles97-roti-note,
   .myles97-reminders-widget,
   .myles97-boot,
