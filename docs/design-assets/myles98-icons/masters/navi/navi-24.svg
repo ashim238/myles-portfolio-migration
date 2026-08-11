@@ -1,26 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" shape-rendering="crispEdges" data-m98-concept="navi" data-m98-grid="24">
-  <path fill="#252321" d="M2 4H8L12 7L16 4H22V19H16L12 22L8 19H2Z" />
-  <path fill="#7e361d" d="M3 5H8L12 8L16 5H21V18H16L12 21L8 18H3Z" />
-  <polygon fill="#ede4d5" points="3,5 8,5 11,8 11,20 8,18 3,18" />
-  <polygon fill="#f6efe3" points="13,8 16,5 21,5 21,18 16,18 13,20" />
-  <polygon fill="#ffffff" points="3,5 8,5 11,8 11,9 8,6 3,6" />
-  <polygon fill="#fffaf2" points="13,8 16,5 21,5 21,6 16,6 13,9" />
-  <rect fill="#74675a" x="11" y="8" width="2" height="11" />
-  <rect fill="#79a0b2" x="5" y="8" width="1" height="7" />
-  <rect fill="#79a0b2" x="5" y="10" width="5" height="1" />
-  <rect fill="#79a0b2" x="8" y="7" width="1" height="9" />
-  <rect fill="#79a0b2" x="5" y="14" width="5" height="1" />
-  <rect fill="#365f72" x="6" y="16" width="4" height="1" />
-  <rect fill="#7b4a2e" x="15" y="8" width="5" height="8" />
-  <rect fill="#e66c29" x="15" y="8" width="5" height="2" />
-  <rect fill="#f7ad68" x="16" y="8" width="1" height="2" />
-  <rect fill="#f7ad68" x="18" y="8" width="1" height="2" />
-  <rect fill="#fff0d6" x="15" y="10" width="5" height="5" />
-  <rect fill="#4c829f" x="16" y="11" width="2" height="3" />
-  <rect fill="#8b5633" x="19" y="11" width="1" height="4" />
-  <rect fill="#c49a72" x="15" y="15" width="5" height="1" />
-  <path fill="#8f3b18" d="M10 15H14V22H12L11 21L10 22Z" />
-  <polygon fill="#ef742d" points="11,15 13,15 13,21 12,20 11,21" />
-  <rect fill="#1d1c1a" x="4" y="18" width="4" height="1" />
-  <rect fill="#1d1c1a" x="16" y="18" width="4" height="1" />
+  <path fill="#162329" d="M8 2H16V3H18V4H20V6H21V9H22V12H21V15H20V17H19V18H18V20H17V21H15V23H12V22H10V21H9V20H8V18H7V17H6V15H5V12H4V9H5V6H6V4H8Z" />
+  <path fill="#234e62" d="M9 3H16V4H18V5H19V7H20V9H21V12H20V15H19V16H18V18H17V19H16V21H14V22H12V21H11V20H10V18H9V17H8V15H7V12H6V9H7V6H9Z" />
+  <path fill="#4c8ba5" d="M8 6H9V5H15V6H18V8H19V13H18V15H17V17H16V18H15V20H13V21H12V20H11V18H10V17H9V15H8V14H7V9H8Z" />
+  <path fill="#97c6d1" d="M8 7H9V6H15V7H17V8H18V10H10V15H8V13H7V9H8Z" />
+  <rect fill="#743d26" x="8" y="8" width="10" height="9" />
+  <rect fill="#e56d2b" x="8" y="8" width="10" height="3" />
+  <rect fill="#f8b05d" x="9" y="8" width="2" height="3" />
+  <rect fill="#f8b05d" x="14" y="8" width="2" height="3" />
+  <rect fill="#f3d8ae" x="9" y="11" width="8" height="5" />
+  <rect fill="#4d839a" x="10" y="12" width="3" height="2" />
+  <rect fill="#603722" x="14" y="12" width="2" height="4" />
+  <rect fill="#be8e61" x="9" y="16" width="8" height="1" />
 </svg>
