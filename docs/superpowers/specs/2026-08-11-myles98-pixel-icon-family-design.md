@@ -61,6 +61,24 @@ This tiering resolves the small-size complexity concern by changing what each ic
 | Navi | Pocket guidebook | Orange bookmark and storefront marker | Open neighborhood guide with map, bookmark, and local storefront cue |
 | TikTok catalog studio | Catalog sheet | Product-card grid and cursor | Catalog layout on a drafting surface with product cards and selection cursor |
 
+## Portrait likeness contract
+
+Start and About Myles depict Myles, not a generic user. `public/logomark.svg` is the canonical portrait-mark reference and confirms the glasses. The user-provided likeness correction governs the features that the pixel adaptations must preserve:
+
+- Dark skin.
+- Long locs with the hair tapered on the sides.
+- Glasses.
+- A moustache and separated chin hair.
+- No continuous full-beard mass across the cheeks or jaw.
+
+The likeness contract follows the semantic burden of each native tier instead of forcing every feature into every grid:
+
+- At 16 units, Start carries the primary portrait noun with dark skin and the essential head, glasses, and long-locs/tapered-sides silhouette. About Myles carries the primary ID-card noun with a dark portrait and the essential long-locs/tapered-sides silhouette. Facial-hair and interior likeness microdetail must be removed before either primary noun is weakened.
+- At 24 units, both concepts resolve the defining likeness cues: long locs with tapered sides, glasses, moustache, and separated chin hair. About Myles still retains the ID-card frame and one information line.
+- At 32 units, each concept carries its complete approved object and every likeness cue. The moustache and chin hair remain visually separated; cheek or jaw pixels must not close them into a full beard.
+
+Blind recognition still evaluates the portrait or ID-card noun without coaching. The later informed specialist review additionally compares Start and About Myles against this likeness contract and confirms that both concepts depict the same person across all three tiers.
+
 ## Collision rules
 
 - Fresh Greens owns movement along a road. Navi owns learning about a neighborhood.

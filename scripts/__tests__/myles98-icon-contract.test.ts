@@ -168,6 +168,37 @@ describe("Myles 98 icon master contract", () => {
     expect(Object.fromEntries(manifest.icons.map((icon: { id: string; tiers: Record<string, string> }) => [icon.id, icon.tiers]))).toEqual(approvedTiers);
   });
 
+  it("locks Myles's likeness cues and assigns them realistic tier burdens", () => {
+    const manifest = JSON.parse(
+      readFileSync("docs/design-assets/myles98-icons/manifest.json", "utf8"),
+    );
+    const portraitLikeness = {
+      skin: "dark skin",
+      hair: "long locs with tapered sides",
+      eyewear: "glasses",
+      facialHair: "moustache and separated chin hair",
+      prohibited: ["full-beard mass"],
+    };
+    const likenessTiers = {
+      start: {
+        "16": "Primary portrait noun with dark skin and the essential head, glasses, and long-locs/tapered-sides silhouette; omit facial-hair microdetail before weakening the noun",
+        "24": "Resolve long locs with tapered sides, glasses, moustache, and separated chin hair while preserving the portrait silhouette",
+        "32": "Complete pixel portrait with dark skin and every approved likeness cue; no full-beard mass",
+      },
+      "about-myles": {
+        "16": "Primary ID-card noun with a dark portrait and essential long-locs/tapered-sides silhouette; omit small likeness details before weakening the card",
+        "24": "Resolve glasses, moustache, and separated chin hair within the card while preserving dark skin and the long-locs/tapered-sides silhouette",
+        "32": "Complete ID card plus dark skin and every approved likeness cue; no full-beard mass",
+      },
+    };
+
+    for (const id of ["start", "about-myles"] as const) {
+      const icon = manifest.icons.find((candidate: { id: string }) => candidate.id === id);
+      expect(icon.portraitLikeness).toEqual(portraitLikeness);
+      expect(icon.likenessTiers).toEqual(likenessTiers[id]);
+    }
+  });
+
   it("accepts a new segment after a closed path subpath", () => {
     const valid = validSvg('<path fill="#111111" d="M2 2H13V13H2ZV3H4Z" />');
 
