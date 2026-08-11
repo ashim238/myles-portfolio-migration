@@ -37,6 +37,19 @@ const MIN_ROUTE_PIXELS = new Map([
 type Grid = (typeof GRIDS)[number];
 type Point = [number, number];
 type Endpoint = keyof typeof ENDPOINT_FILLS;
+type CueSpec = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  nativePixels: number;
+};
+
+const CUE_SPECS = new Map<Grid, CueSpec | null>([
+  [16, null],
+  [24, { x: 7, y: 3, width: 1, height: 17, nativePixels: 14 }],
+  [32, { x: 8, y: 4, width: 2, height: 23, nativePixels: 37 }],
+]);
 
 function sourceFor(concept: string, grid: number) {
   return readFileSync(expectedMasterPath(ROOT, concept, grid), "utf8");
@@ -46,9 +59,87 @@ function attribute(attributes: string, name: string) {
   return attributes.match(new RegExp(`\\b${name}="([^"]+)"`, "i"))?.[1];
 }
 
-function shapeForFill(source: string, fill: string) {
-  return [...source.matchAll(/<(path|polygon|rect)\b([^>]*)\/>/gi)].find(
+function allShapePrimitives(source: string) {
+  return [...source.matchAll(/<(path|polygon|rect)\b([^>]*)\/>/gi)];
+}
+
+function shapesForFill(source: string, fill: string) {
+  return allShapePrimitives(source).filter(
     ([, , attributes]) => attribute(attributes, "fill")?.toLowerCase() === fill,
+  );
+}
+
+function shapeForFill(source: string, fill: string) {
+  return shapesForFill(source, fill)[0];
+}
+
+function cueBounds(attributes: string) {
+  return {
+    x: Number(attribute(attributes, "x")),
+    y: Number(attribute(attributes, "y")),
+    width: Number(attribute(attributes, "width")),
+    height: Number(attribute(attributes, "height")),
+  };
+}
+
+function cueMatchesSpec(shape: RegExpMatchArray | undefined, spec: CueSpec) {
+  if (shape?.[1].toLowerCase() !== "rect") return false;
+  const bounds = cueBounds(shape[2]);
+  return bounds.x === spec.x &&
+    bounds.y === spec.y &&
+    bounds.width === spec.width &&
+    bounds.height === spec.height;
+}
+
+function shapeBounds(shape: RegExpMatchArray) {
+  const primitive = shape[1].toLowerCase();
+  const vertices = verticesForShape(primitive, shape[2]);
+  const xs = vertices.map(([x]) => x);
+  const ys = vertices.map(([, y]) => y);
+  return {
+    width: Math.max(...xs) - Math.min(...xs),
+    height: Math.max(...ys) - Math.min(...ys),
+  };
+}
+
+function isStreetLikeCue(shape: RegExpMatchArray, grid: Grid) {
+  const fill = attribute(shape[2], "fill");
+  if (!fill || fill.toLowerCase() === "none") return false;
+  const { width, height } = shapeBounds(shape);
+  const longSide = Math.max(width, height);
+  const shortSide = Math.min(width, height);
+  return longSide >= Math.ceil(grid * 0.65) && shortSide <= Math.ceil(grid / 16);
+}
+
+function sameShape(left: RegExpMatchArray, right: RegExpMatchArray) {
+  return left[1] === right[1] && left[2] === right[2];
+}
+
+async function hasAllowedSubordinateCue(source: string, grid: Grid) {
+  const boundaryFill = BOUNDARY_FILLS.get(grid)!;
+  const spec = CUE_SPECS.get(grid)!;
+  const boundaryCues = shapesForFill(source, boundaryFill);
+  const streetLikeCues = allShapePrimitives(source).filter((shape) => isStreetLikeCue(shape, grid));
+
+  if (!spec) {
+    return boundaryCues.length === 0 &&
+      streetLikeCues.length === 0 &&
+      (await nativeColorCount(source, grid, boundaryFill)) === 0;
+  }
+
+  if (boundaryCues.length !== 1 || streetLikeCues.length !== 1) return false;
+  const cue = boundaryCues[0];
+  return cueMatchesSpec(cue, spec) &&
+    sameShape(cue, streetLikeCues[0]) &&
+    (await nativeColorCount(source, grid, boundaryFill)) === spec.nativePixels;
+}
+
+function extraCueMutation(source: string, grid: Grid, fill: string) {
+  const spec = CUE_SPECS.get(grid) ?? { x: 7, y: 2, width: 1, height: 12 };
+  const x = spec.x + spec.width + 1;
+  return source.replace(
+    "</svg>",
+    `<rect fill="${fill}" x="${x}" y="${spec.y}" width="${spec.width}" height="${spec.height}" />\n</svg>`,
   );
 }
 
@@ -267,16 +358,24 @@ describe("Myles 98 Fresh Greens route-map refinement", () => {
     expect(destination!.height).toBeGreaterThan(destination!.width);
   });
 
-  it.each(GRIDS)("uses only the allowed subordinate map cue at %ipx", async (grid) => {
+  it.each(GRIDS)("uses exactly the allowed subordinate map cue at %ipx", async (grid) => {
     const source = sourceFor("fresh-greens", grid);
-    const boundaryFill = BOUNDARY_FILLS.get(grid);
 
-    if (grid === 16) {
-      expect(shapeForFill(source, boundaryFill!)).toBeUndefined();
-      return;
-    }
+    expect(await hasAllowedSubordinateCue(source, grid)).toBe(true);
+  });
 
-    expect(shapeForFill(source, boundaryFill!)?.[1].toLowerCase()).toBe("rect");
-    expect(await nativeColorCount(source, grid, boundaryFill!)).toBeGreaterThan(0);
+  it.each(GRIDS)("rejects a duplicate boundary-fill cue at %ipx", async (grid) => {
+    const source = sourceFor("fresh-greens", grid);
+    const boundaryFill = BOUNDARY_FILLS.get(grid)!;
+
+    expect(await hasAllowedSubordinateCue(source, grid)).toBe(true);
+    expect(await hasAllowedSubordinateCue(extraCueMutation(source, grid, boundaryFill), grid)).toBe(false);
+  });
+
+  it.each(GRIDS)("rejects an extra street-like opaque cue at %ipx", async (grid) => {
+    const source = sourceFor("fresh-greens", grid);
+
+    expect(await hasAllowedSubordinateCue(source, grid)).toBe(true);
+    expect(await hasAllowedSubordinateCue(extraCueMutation(source, grid, "#8b9d84"), grid)).toBe(false);
   });
 });
