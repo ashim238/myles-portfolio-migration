@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges" data-m98-concept="email" data-m98-grid="16">
+  <path fill="#2f2a24" d="M2 3H14V4H15V13H14V15H2V14H1V4H2Z" />
+  <rect fill="#b8aea0" x="2" y="4" width="12" height="9" />
+  <rect fill="#eee6d8" x="3" y="4" width="10" height="8" />
+  <polygon fill="#fffaf0" points="3,4 13,4 8,10" />
+  <polygon fill="#8f8578" points="3,12 7,8 8,10 9,8 13,12" />
+  <polygon fill="#d6cdbf" points="3,12 7,8 8,10 9,8 13,12 13,13 3,13" />
+  <rect fill="#ffffff" x="3" y="5" width="1" height="5" />
+  <rect fill="#645d55" x="13" y="5" width="1" height="7" />
+  <rect fill="#1b1917" x="3" y="13" width="10" height="1" />
+</svg>
