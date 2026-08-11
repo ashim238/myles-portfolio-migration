@@ -1,14 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges" data-m98-concept="reset-desktop" data-m98-grid="16">
-  <path fill="#202327" d="M2 1H14V2H15V11H14V13H10V14H13V15H3V14H6V13H2V12H1V2H2Z" />
-  <path fill="#68727b" d="M2 2H14V11H13V12H3V11H2Z" />
-  <rect fill="#b5c0c4" x="3" y="3" width="10" height="7" />
-  <rect fill="#28546d" x="4" y="4" width="8" height="5" />
-  <rect fill="#ed4b43" x="7" y="5" width="3" height="1" />
-  <rect fill="#ed4b43" x="10" y="6" width="1" height="2" />
-  <rect fill="#ed4b43" x="8" y="8" width="2" height="1" />
-  <polygon fill="#ed4b43" points="4,7 7,5 7,8" />
-  <rect fill="#edf5f2" x="4" y="4" width="2" height="1" />
-  <rect fill="#42494f" x="4" y="10" width="8" height="1" />
-  <rect fill="#8c969b" x="7" y="12" width="2" height="2" />
-  <rect fill="#e0e7e4" x="5" y="14" width="6" height="1" />
+  <path fill="#1f2428" d="M2 1H11V2H13V10H12V12H9V13H11V15H3V14H5V12H2V11H1V2H2Z" />
+  <path fill="#59656d" d="M2 2H11V3H12V9H11V11H3V10H2Z" />
+  <path fill="#aeb9bc" d="M3 2H10V3H11V9H10V10H3Z" />
+  <rect fill="#e2e9e7" x="3" y="3" width="1" height="6" />
+  <rect fill="#213d4b" x="4" y="4" width="6" height="4" />
+  <rect fill="#3d7188" x="5" y="5" width="5" height="3" />
+  <rect fill="#b9dcdb" x="5" y="5" width="3" height="1" />
+  <rect fill="#424b50" x="4" y="9" width="6" height="1" />
+  <rect fill="#818d91" x="6" y="11" width="3" height="3" />
+  <rect fill="#dce4e2" x="4" y="14" width="6" height="1" />
+  <rect fill="#bd2e2b" x="12" y="4" width="2" height="1" />
+  <rect fill="#bd2e2b" x="11" y="5" width="1" height="1" />
+  <rect fill="#bd2e2b" x="14" y="5" width="1" height="4" />
+  <rect fill="#bd2e2b" x="11" y="8" width="1" height="1" />
+  <rect fill="#bd2e2b" x="12" y="9" width="2" height="1" />
+  <polygon fill="#bd2e2b" points="7,7 9,5 9,9" />
+  <rect fill="#f15b50" x="12" y="4" width="2" height="1" />
+  <rect fill="#f15b50" x="14" y="5" width="1" height="2" />
+  <rect fill="#f15b50" x="12" y="9" width="2" height="1" />
+  <polygon fill="#f15b50" points="7,7 9,6 9,8" />
 </svg>
