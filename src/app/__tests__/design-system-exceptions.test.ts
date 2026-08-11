@@ -155,6 +155,16 @@ describe("design-system exception register", () => {
       markdownRuleBody("The Myles 98 System Chrome Depth Rule"),
     );
 
+    expect(systemChromeDepth).toContain(
+      "exception is limited to discrete 1px top-left highlights, right/bottom shadow bands, recessed wells, and hard cast shadows",
+    );
+    expect(systemChromeDepth).toContain(
+      "It must not enter Reader, case-study navigation, project evidence, generic cards, or editorial surfaces",
+    );
+    expect(systemChromeDepth).toContain(
+      "Depth must use the named neutral edge tokens --m97-bevel-highlight, --m97-bevel-light, --m97-bevel-shadow, and --m97-bevel-dark",
+    );
+
     for (const allowedSurface of [
       "Myles 98/Pocket 98 system, hardware, and program chrome",
       "discrete 1px top-left highlights",
@@ -178,8 +188,10 @@ describe("design-system exception register", () => {
 
     for (const constructionConstraint of [
       "portfolio remains flat by default outside the discovery shell",
-      "--myles-98-edge-highlight",
-      "--myles-98-edge-shadow",
+      "--m97-bevel-highlight",
+      "--m97-bevel-light",
+      "--m97-bevel-shadow",
+      "--m97-bevel-dark",
       "square or low-radius geometry",
       "flatten this depth in forced colors",
       "never use blur, soft filters, or gradient-based elevation",
