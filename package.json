@@ -11,6 +11,7 @@
     "validate:content": "node scripts/validate-content.mjs",
     "resume:pdf": "node scripts/export-resume-pdf.mjs",
     "resume:pdf:verify": "node scripts/verify-resume-pdf.mjs public/myles-ashitey-resume.pdf",
+    "icons:verify": "node scripts/verify-myles98-icon-masters.mjs",
     "test": "vitest run",
     "test:watch": "vitest"
   },

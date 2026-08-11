@@ -1,0 +1,196 @@
+{
+  "icons": [
+    {
+      "id": "start",
+      "group": "system",
+      "intendedObject": "pixel adaptation of Myles's existing portrait mark",
+      "tiers": {
+        "16": "Head-and-glasses silhouette",
+        "24": "Locs and glasses within the portrait mark",
+        "32": "Pixel adaptation of Myles's existing portrait mark"
+      },
+      "acceptedReadings": ["portrait", "head", "person"],
+      "rejectedReadings": ["folder", "generic user", "app window"]
+    },
+    {
+      "id": "selected-work",
+      "group": "system",
+      "intendedObject": "open portfolio folder containing a contact sheet",
+      "tiers": {
+        "16": "Portfolio folder",
+        "24": "One visible image thumbnail",
+        "32": "Open portfolio folder containing a contact sheet"
+      },
+      "acceptedReadings": ["portfolio folder", "project folder", "work folder"],
+      "rejectedReadings": ["document", "envelope", "generic app window"]
+    },
+    {
+      "id": "about-myles",
+      "group": "personal",
+      "intendedObject": "ID card with portrait and information lines",
+      "tiers": {
+        "16": "Portrait card",
+        "24": "ID-card frame and one information line",
+        "32": "ID card with portrait and information lines"
+      },
+      "acceptedReadings": ["ID card", "profile card", "portrait card"],
+      "rejectedReadings": ["resume", "checklist", "folder"]
+    },
+    {
+      "id": "resume",
+      "group": "personal",
+      "intendedObject": "professional profile sheet with paperclip and structured lines",
+      "tiers": {
+        "16": "White document",
+        "24": "Blue paperclip and two bullets",
+        "32": "Professional profile sheet with paperclip and structured lines"
+      },
+      "acceptedReadings": ["resume", "document", "profile sheet"],
+      "rejectedReadings": ["checklist", "newsletter", "envelope"]
+    },
+    {
+      "id": "email",
+      "group": "system",
+      "intendedObject": "dimensional sealed envelope with folded flap and stamp",
+      "tiers": {
+        "16": "Sealed envelope",
+        "24": "Yellow stamp",
+        "32": "Dimensional sealed envelope with folded flap and stamp"
+      },
+      "acceptedReadings": ["envelope", "mail", "sealed message"],
+      "rejectedReadings": ["newsletter", "document", "folder"]
+    },
+    {
+      "id": "reminders",
+      "group": "personal",
+      "intendedObject": "personal checklist pad with a short pencil",
+      "tiers": {
+        "16": "Yellow checklist pad",
+        "24": "Spiral edge and two checks",
+        "32": "Personal checklist pad with a short pencil"
+      },
+      "acceptedReadings": ["checklist", "notepad", "reminders"],
+      "rejectedReadings": ["resume", "newsletter", "recipe card"]
+    },
+    {
+      "id": "trini-roti",
+      "group": "personal",
+      "intendedObject": "recipe card crossed by a wooden spoon with restrained cooking detail",
+      "tiers": {
+        "16": "Warm recipe card",
+        "24": "Wooden spoon",
+        "32": "Recipe card crossed by a wooden spoon with restrained cooking detail"
+      },
+      "acceptedReadings": ["recipe card", "cooking card", "spoon"],
+      "rejectedReadings": ["checklist", "resume", "envelope"]
+    },
+    {
+      "id": "loose-parts",
+      "group": "personal",
+      "intendedObject": "assorted wooden construction pieces: plank, cube, and triangular wedge",
+      "tiers": {
+        "16": "Wooden plank and wedge",
+        "24": "Add one cube",
+        "32": "Assorted wooden construction pieces: plank, cube, and triangular wedge"
+      },
+      "acceptedReadings": ["wooden blocks", "construction pieces", "wooden shapes"],
+      "rejectedReadings": ["LEGO", "toy bricks", "toolbox"]
+    },
+    {
+      "id": "display-properties",
+      "group": "system",
+      "intendedObject": "beige CRT with color-test window, controls, and object-specific casing depth",
+      "tiers": {
+        "16": "CRT monitor",
+        "24": "Color-test tiles",
+        "32": "Beige CRT with color-test window, controls, and object-specific casing depth"
+      },
+      "acceptedReadings": ["monitor", "CRT", "display"],
+      "rejectedReadings": ["overlapping windows", "reset icon", "television"]
+    },
+    {
+      "id": "open-apps",
+      "group": "system",
+      "intendedObject": "two layered application windows with separate content panes",
+      "tiers": {
+        "16": "Two overlapping windows",
+        "24": "Distinct titlebars",
+        "32": "Two layered application windows with separate content panes"
+      },
+      "acceptedReadings": ["overlapping windows", "open apps", "application windows"],
+      "rejectedReadings": ["monitor", "single app window", "folder"]
+    },
+    {
+      "id": "reset-desktop",
+      "group": "system",
+      "intendedObject": "CRT desktop with a clear, subordinate reset arrow",
+      "tiers": {
+        "16": "Monitor with reset cue",
+        "24": "Compact red reset arrow",
+        "32": "CRT desktop with a clear, subordinate reset arrow"
+      },
+      "acceptedReadings": ["reset monitor", "reset desktop", "monitor with reset arrow"],
+      "rejectedReadings": ["display properties", "open apps", "reload browser"]
+    },
+    {
+      "id": "generic-app",
+      "group": "system",
+      "intendedObject": "neutral program window with restrained chrome depth",
+      "tiers": {
+        "16": "Single application window",
+        "24": "Blue titlebar and inner pane",
+        "32": "Neutral program window with restrained chrome depth"
+      },
+      "acceptedReadings": ["application window", "program window", "generic app"],
+      "rejectedReadings": ["overlapping windows", "monitor", "folder"]
+    },
+    {
+      "id": "fresh-greens",
+      "group": "projects",
+      "intendedObject": "folded two-lane road map",
+      "tiers": {
+        "16": "folded road map",
+        "24": "road map with green route and orange destination",
+        "32": "two-lane road map with route, folds, and destination flag"
+      },
+      "acceptedReadings": ["road map", "route map", "navigation map"],
+      "rejectedReadings": ["groceries", "leaf logo", "city guide"]
+    },
+    {
+      "id": "understandingfafsa",
+      "group": "projects",
+      "intendedObject": "modular newsletter emerging from an envelope with three content regions",
+      "tiers": {
+        "16": "Newsletter page",
+        "24": "Blue masthead within open envelope",
+        "32": "Modular newsletter emerging from an envelope with three content regions"
+      },
+      "acceptedReadings": ["newsletter", "newsletter envelope", "information page"],
+      "rejectedReadings": ["sealed email", "resume", "folder"]
+    },
+    {
+      "id": "navi",
+      "group": "projects",
+      "intendedObject": "open neighborhood guide with map, bookmark, and local storefront cue",
+      "tiers": {
+        "16": "Pocket guidebook",
+        "24": "Orange bookmark and storefront marker",
+        "32": "Open neighborhood guide with map, bookmark, and local storefront cue"
+      },
+      "acceptedReadings": ["guidebook", "neighborhood guide", "local guide"],
+      "rejectedReadings": ["road map", "city map", "navigation arrow"]
+    },
+    {
+      "id": "tiktok-catalog",
+      "group": "projects",
+      "intendedObject": "catalog layout on a drafting surface with product cards and selection cursor",
+      "tiers": {
+        "16": "Catalog sheet",
+        "24": "Product-card grid and cursor",
+        "32": "Catalog layout on a drafting surface with product cards and selection cursor"
+      },
+      "acceptedReadings": ["catalog", "product catalog", "catalog layout"],
+      "rejectedReadings": ["TikTok logo", "music note", "social media app"]
+    }
+  ]
+}
