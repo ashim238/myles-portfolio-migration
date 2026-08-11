@@ -5,8 +5,8 @@ import {
   ICON_GRIDS,
   expectedMasterPath,
   validateManifest,
+  validateMasterSource,
 } from "./lib/myles98-icon-contract.mjs";
-import { verifyMasterFiles } from "./verify-myles98-icon-masters.mjs";
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const assetRoot = "docs/design-assets/myles98-icons";
@@ -49,7 +49,11 @@ function seededRandom(seed) {
  * that mapping in the blind sheet's visible content.
  */
 export function createBlindReviewEntries(masters) {
-  const shuffled = [...masters];
+  const shuffled = [...masters].sort((left, right) => {
+    if (left.concept < right.concept) return -1;
+    if (left.concept > right.concept) return 1;
+    return left.grid - right.grid;
+  });
   const random = seededRandom(BLIND_REVIEW_SEED);
   for (let index = shuffled.length - 1; index > 0; index -= 1) {
     const swapIndex = Math.floor(random() * (index + 1));
@@ -61,23 +65,38 @@ export function createBlindReviewEntries(masters) {
   }));
 }
 
-function readVerifiedMasters(manifest, root, fsApi) {
-  return manifest.icons.flatMap((icon) => ICON_GRIDS.map((grid) => {
-    const relativePath = expectedMasterPath(assetRoot, icon.id, grid);
-    return {
-      concept: icon.id,
-      grid,
-      key: `${icon.id}-${grid}`,
-      source: fsApi.readFileSync(path.join(root, relativePath), "utf8"),
-    };
-  }));
+function readAndVerifyMasterSnapshots(manifest, root, fsApi) {
+  const masters = [];
+  const errors = [];
+  for (const icon of manifest.icons ?? []) {
+    for (const grid of ICON_GRIDS) {
+      const relativePath = expectedMasterPath(assetRoot, icon.id, grid);
+      const absolutePath = path.join(root, relativePath);
+      if (!fsApi.existsSync(absolutePath)) {
+        errors.push(`MISSING ${relativePath}`);
+        continue;
+      }
+      let source;
+      try {
+        source = fsApi.readFileSync(absolutePath, "utf8");
+      } catch {
+        errors.push(`INVALID ${relativePath}: unable to read master`);
+        continue;
+      }
+      for (const error of validateMasterSource(source, { concept: icon.id, grid })) {
+        errors.push(`INVALID ${relativePath}: ${error}`);
+      }
+      masters.push({ concept: icon.id, grid, key: `${icon.id}-${grid}`, source });
+    }
+  }
+  return { errors, masters };
 }
 
 function renderRenders(master) {
   return `
     <div class="icon-renders">
       <div class="icon-render icon-render--native" data-render="native" data-scale="1" style="--render-size:${master.grid}px"><span class="icon-art" aria-hidden="true">${master.source}</span></div>
-      <div class="icon-render icon-render--magnified" data-render="magnified" data-scale="${ZOOM_SCALE}" style="--render-size:${master.grid * ZOOM_SCALE}px"><span class="icon-art" aria-hidden="true">${master.source}</span></div>
+      <div class="icon-render icon-render--magnified" data-render="magnified" data-scale="${ZOOM_SCALE}" style="--render-size:${master.grid * ZOOM_SCALE}px"><canvas width="${master.grid * ZOOM_SCALE}" height="${master.grid * ZOOM_SCALE}" aria-hidden="true"></canvas></div>
     </div>`;
 }
 
@@ -120,6 +139,7 @@ function renderHtml(masters) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Myles 98 icon contact sheet</title>
+  <script>document.documentElement.dataset.reviewMode = new URLSearchParams(window.location.search).get("mode") === "blind" ? "unlabeled" : "labeled";</script>
   <style>
     :root { color-scheme: light; font-family: "MS Sans Serif", Geneva, sans-serif; background:#202020; color:#111111; }
     * { box-sizing:border-box; }
@@ -140,19 +160,16 @@ function renderHtml(masters) {
     .icon-card__label h3, .icon-card__blind-label span:first-child { font-weight:700; }
     .icon-card__label p, .icon-card__blind-label span:last-child { font-family:monospace; white-space:nowrap; }
     .icon-renders { display:grid; grid-template-columns:minmax(32px, 1fr) minmax(0, auto); align-items:center; gap:12px; min-height:calc(var(--render-size) + 4px); }
-    .icon-render { display:grid; place-items:center; overflow:hidden; line-height:0; }
+    .icon-render { display:grid; place-items:center; overflow:hidden; line-height:0; background:var(--surface); }
     .icon-render--native { justify-self:center; width:var(--render-size); height:var(--render-size); }
     .icon-render--magnified { justify-self:end; width:var(--render-size); height:var(--render-size); image-rendering: crisp-edges; image-rendering: pixelated; }
-    .icon-art, .icon-art > svg { display:block; width:100%; height:100%; }
-    [data-review-mode="unlabeled"] { display:none; }
-    body[data-review-mode="unlabeled"] .sheet__intro, body[data-review-mode="unlabeled"] [data-review-mode="labeled"] { display:none; }
-    body[data-review-mode="unlabeled"] [data-review-mode="unlabeled"] { display:block; }
-    body[data-review-mode="unlabeled"] { padding-top:28px; }
+    .icon-art, .icon-art > svg, .icon-render canvas { display:block; width:100%; height:100%; }
+    html[data-review-mode="labeled"] main[data-review-mode="unlabeled"], html[data-review-mode="unlabeled"] main[data-review-mode="labeled"], html[data-review-mode="unlabeled"] .sheet__intro { display:none; }
     .surface--blind { margin-bottom:28px; }
     @media (max-width:720px) { body { padding:12px; } .surface { padding:10px; } .icon-grid { grid-template-columns:1fr; } }
   </style>
 </head>
-<body data-review-mode="labeled">
+<body>
   <div class="sheet">
     <header class="sheet__intro"><h1>Myles 98 icon contact sheet</h1><p>Verified native masters and 6× nearest-neighbor review renders. Append <code>?mode=blind</code> to this file URL for anonymized review.</p></header>
     <main data-review-mode="labeled">
@@ -163,7 +180,32 @@ ${surfaces.map((surface) => renderBlindSurface(surface, blindMasters)).join("\n"
     </main>
   </div>
   <script>
-    if (new URLSearchParams(window.location.search).get("mode") === "blind") document.body.dataset.reviewMode = "unlabeled";
+    const scale = ${ZOOM_SCALE};
+    const rasterize = async (well) => {
+      const source = well.previousElementSibling.querySelector("svg");
+      const grid = Number(source.getAttribute("data-m98-grid"));
+      const target = well.querySelector("canvas");
+      const nativeCanvas = document.createElement("canvas");
+      nativeCanvas.width = grid;
+      nativeCanvas.height = grid;
+      const nativeContext = nativeCanvas.getContext("2d", { alpha: true });
+      const targetContext = target.getContext("2d", { alpha: true });
+      nativeContext.imageSmoothingEnabled = false;
+      targetContext.imageSmoothingEnabled = false;
+      const blob = new Blob([new XMLSerializer().serializeToString(source)], { type: "image/svg+xml" });
+      const url = URL.createObjectURL(blob);
+      try {
+        const image = new Image();
+        image.src = url;
+        await image.decode();
+        nativeContext.drawImage(image, 0, 0, grid, grid);
+        targetContext.drawImage(nativeCanvas, 0, 0, grid, grid, 0, 0, grid * scale, grid * scale);
+      } finally {
+        URL.revokeObjectURL(url);
+      }
+    };
+    window.myles98ContactSheetReady = Promise.all([...document.querySelectorAll(".icon-render--magnified")].map(rasterize))
+      .then(() => { document.documentElement.dataset.myles98Rasterized = "true"; });
   </script>
 </body>
 </html>
@@ -183,13 +225,11 @@ export function buildIconContactSheet({ root = repositoryRoot, fsApi = fs } = {}
     throw new Error(`MANIFEST ${assetRoot}/manifest.json: ${error.message}`);
   }
 
-  const errors = [
-    ...validateManifest(manifest).map((error) => `MANIFEST: ${error}`),
-    ...verifyMasterFiles(manifest.icons ?? [], { root, fsApi }),
-  ];
+  const snapshot = readAndVerifyMasterSnapshots(manifest, root, fsApi);
+  const errors = [...validateManifest(manifest).map((error) => `MANIFEST: ${error}`), ...snapshot.errors];
   if (errors.length > 0) throw new Error(errors.join("\n"));
 
-  const masters = readVerifiedMasters(manifest, root, fsApi);
+  const masters = snapshot.masters;
   const outputPath = path.join(root, outputRelativePath);
   fsApi.mkdirSync(path.dirname(outputPath), { recursive: true });
   fsApi.writeFileSync(outputPath, renderHtml(masters), "utf8");

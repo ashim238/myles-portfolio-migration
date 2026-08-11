@@ -1,22 +1,26 @@
-import { execFileSync } from "node:child_process";
 import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import * as fileSystem from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { ICON_GRIDS } from "../lib/myles98-icon-contract.mjs";
-import { buildIconContactSheet } from "../build-myles98-icon-contact-sheet.mjs";
+import { buildIconContactSheet, createBlindReviewEntries } from "../build-myles98-icon-contact-sheet.mjs";
 
 const outputPath = "docs/design-assets/myles98-icons/contact-sheet.html";
-const generatorPath = "scripts/build-myles98-icon-contact-sheet.mjs";
 const surfaceColors = {
   teal: "#008080",
   chrome: "#C0C0C0",
   white: "#FFFFFF",
 };
 
-function generateContactSheet() {
-  execFileSync(process.execPath, [generatorPath], { stdio: "pipe" });
-  return readFileSync(outputPath, "utf8");
+function generateContactSheetInTemporaryRoot() {
+  const root = mkdtempSync(join(tmpdir(), "myles98-contact-sheet-output-"));
+  cpSync("docs/design-assets/myles98-icons", join(root, "docs/design-assets/myles98-icons"), { recursive: true });
+  buildIconContactSheet({ root });
+  return {
+    html: readFileSync(join(root, outputPath), "utf8"),
+    root,
+  };
 }
 
 function parse(html: string) {
@@ -25,7 +29,7 @@ function parse(html: string) {
 
 describe("Myles 98 icon contact sheet", () => {
   it("generates every verified master unchanged at native and nearest-neighbor magnification on three exact surfaces", () => {
-    const html = generateContactSheet();
+    const { html, root } = generateContactSheetInTemporaryRoot();
     const document = parse(html);
     const manifest = JSON.parse(readFileSync("docs/design-assets/myles98-icons/manifest.json", "utf8"));
     const labeled = document.querySelector<HTMLElement>('[data-review-mode="labeled"]');
@@ -50,7 +54,7 @@ describe("Myles 98 icon contact sheet", () => {
         const cards = [...document.querySelectorAll<HTMLElement>(`[data-master="${master}"]`)];
 
         expect(cards).toHaveLength(3);
-        expect(html.split(rawSvg)).toHaveLength(1 + 3 * 2 * 2);
+        expect(html.split(rawSvg)).toHaveLength(1 + 3 * 2);
         for (const card of cards) {
           expect(card.querySelectorAll('[data-render="native"][data-scale="1"]')).toHaveLength(1);
           expect(card.querySelectorAll('[data-render="magnified"][data-scale="6"]')).toHaveLength(1);
@@ -60,11 +64,14 @@ describe("Myles 98 icon contact sheet", () => {
 
     expect(html).toContain("image-rendering: pixelated");
     expect(html).toContain("image-rendering: crisp-edges");
+    rmSync(root, { recursive: true, force: true });
   });
 
   it("keeps blind review IDs and shuffled order deterministic without visible semantic leakage", () => {
-    const firstHtml = generateContactSheet();
-    const secondHtml = generateContactSheet();
+    const firstOutput = generateContactSheetInTemporaryRoot();
+    const secondOutput = generateContactSheetInTemporaryRoot();
+    const { html: firstHtml } = firstOutput;
+    const { html: secondHtml } = secondOutput;
     const first = parse(firstHtml);
     const second = parse(secondHtml);
     const blind = first.querySelector<HTMLElement>('[data-review-mode="unlabeled"]');
@@ -96,6 +103,64 @@ describe("Myles 98 icon contact sheet", () => {
       expect(blindText.toLowerCase()).not.toContain(icon.group);
       expect(blindText.toLowerCase()).not.toContain(icon.intendedObject.toLowerCase());
     }
+    rmSync(firstOutput.root, { recursive: true, force: true });
+    rmSync(secondOutput.root, { recursive: true, force: true });
+  });
+
+  it("canonicalizes anonymous mapping before the seeded shuffle", () => {
+    const entries = [
+      { concept: "selected-work", grid: 32 },
+      { concept: "start", grid: 24 },
+      { concept: "start", grid: 16 },
+      { concept: "selected-work", grid: 16 },
+    ];
+    const identify = (items: typeof entries) => createBlindReviewEntries(items)
+      .map(({ reviewId, concept, grid }) => `${reviewId}:${concept}-${grid}`);
+
+    expect(identify(entries)).toEqual(identify([...entries].reverse()));
+  });
+
+  it("uses the single verified source snapshot for validation and embedding", () => {
+    const root = mkdtempSync(join(tmpdir(), "myles98-contact-sheet-snapshot-"));
+    const startPath = join(root, "docs/design-assets/myles98-icons/masters/start/start-16.svg");
+
+    try {
+      cpSync("docs/design-assets/myles98-icons", join(root, "docs/design-assets/myles98-icons"), { recursive: true });
+      const verifiedStart = readFileSync(startPath, "utf8");
+      let startReadCount = 0;
+      const fsApi = {
+        ...fileSystem,
+        readFileSync(filePath: string, encoding: "utf8") {
+          if (filePath === startPath) {
+            startReadCount += 1;
+            if (startReadCount > 1) return '<svg xmlns="http://www.w3.org/2000/svg"></svg>';
+          }
+          return fileSystem.readFileSync(filePath, encoding);
+        },
+      } as unknown as typeof fileSystem;
+
+      buildIconContactSheet({ root, fsApi });
+      const html = readFileSync(join(root, outputPath), "utf8");
+
+      expect(startReadCount).toBe(1);
+      expect(html).toContain(verifiedStart);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it("compares untouched artifact bytes with two temporary regenerations", () => {
+    const committedBytes = readFileSync(outputPath, "utf8");
+    const first = generateContactSheetInTemporaryRoot();
+    const second = generateContactSheetInTemporaryRoot();
+
+    expect(readFileSync(outputPath, "utf8")).toBe(committedBytes);
+    expect(first.html).toBe(committedBytes);
+    expect(second.html).toBe(committedBytes);
+    expect(second.html).toBe(first.html);
+
+    rmSync(first.root, { recursive: true, force: true });
+    rmSync(second.root, { recursive: true, force: true });
   });
 
   it("stops before writing when any master fails validation", () => {
