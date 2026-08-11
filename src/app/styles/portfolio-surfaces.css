@@ -331,7 +331,7 @@
 
 .fg-page .fg-reminder-permission {
   padding: 0.95rem 1rem;
-  border-left: 3px solid #3d6447;
+  border: 1px solid var(--fg-accent-line);
   background: color-mix(in srgb, #3d6447 7%, var(--m98-paper-panel, #ffffff));
 }
 
@@ -5696,6 +5696,16 @@
 
   .uf-lock-palette-swatch {
     min-width: 44px;
+  }
+
+  .about-detail dd a,
+  .nv-page .project-section-body a,
+  .nv-closing-links a,
+  .uf-before-after-item a,
+  .uf-switcher > a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
   }
 }
 

@@ -101,6 +101,17 @@ describe("portfolio hardening style contract", () => {
     expect(stage).toMatch(/env\(safe-area-inset-bottom, 0px\)/);
   });
 
+  it("keeps the Pocket Start sheet aligned to the centered 46rem stage", () => {
+    const sheet = cssBlock(".pocket97-sheet", pocketStyles);
+
+    expect(sheet).toMatch(
+      /left:\s*max\(12px, calc\(\(100% - 46rem\) \/ 2\)\);/,
+    );
+    expect(sheet).toMatch(
+      /right:\s*max\(12px, calc\(\(100% - 46rem\) \/ 2\)\);/,
+    );
+  });
+
   it("caps Pocket project previews below the dock on short tablet viewports", () => {
     const shortTablet = cssBlock(
       "@media (min-width: 768px) and (max-width: 1024px)",

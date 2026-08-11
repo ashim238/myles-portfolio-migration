@@ -214,9 +214,9 @@ function depthPlaneSpec(
         };
       case "loose-parts":
         return {
-          castShadow: ["M7 10H11V11H7Z", "M16 10H22V11H16Z", "M5 21H12V22H5Z"],
-          side: ["M5 8H10V10H5Z", "M15 9H21V10H15Z", "M4 20H11V21H4Z"],
-          highlight: ["M5 4H8V5H5Z", "M14 4H20V5H14Z", "M7 14H8V16H7Z"],
+          castShadow: ["M4 21H23V23H4Z", "M21 7H23V21H21Z"],
+          side: ["M3 20H22V21H3Z", "M20 6H22V20H20Z"],
+          highlight: ["M2 5H21V6H2Z", "M2 6H3V20H2Z"],
         };
       case "fresh-greens":
         return {
@@ -296,9 +296,9 @@ function depthPlaneSpec(
       };
     case "loose-parts":
       return {
-        castShadow: ["M8 14H15V16H8Z", "M21 13H30V15H21Z", "M6 29H16V31H6Z"],
-        side: ["M6 12H14V14H6Z", "M20 11H29V13H20Z", "M5 27H15V29H5Z"],
-        highlight: ["M6 5H10V6H6Z", "M19 4H28V5H19Z", "M9 18H10V21H9Z"],
+        castShadow: ["M5 29H31V31H5Z", "M30 7H31V29H30Z"],
+        side: ["M3 28H30V29H3Z", "M28 6H30V28H28Z"],
+        highlight: ["M2 5H29V6H2Z", "M2 6H3V28H2Z"],
       };
     case "fresh-greens":
       return {
@@ -420,10 +420,34 @@ function renderChromeGlyph(
     case "loose-parts":
       return (
         <>
-          <circle cx="5" cy="5" r="2" {...accent(palette, palette.yellow)} />
-          <rect x="10" y="3" width="4" height="4" {...secondaryAccent(palette, palette.blue)} />
-          <path d="M2 14h5l-2-4z" {...tertiaryAccent(palette, palette.teal)} />
-          <path d="m10 10 4 4m0-4-4 4" {...line(palette, palette.orange)} />
+          <rect
+            x="1"
+            y="3"
+            width="14"
+            height="12"
+            data-m98-loose-parts-object="tray"
+            {...surface(palette, palette.chrome)}
+          />
+          <circle
+            cx="5"
+            cy="8"
+            r="2"
+            data-m98-loose-parts-object="part"
+            {...accent(palette, palette.yellow)}
+          />
+          <rect
+            x="9"
+            y="6"
+            width="3"
+            height="3"
+            data-m98-loose-parts-object="part"
+            {...secondaryAccent(palette, palette.blue)}
+          />
+          <path
+            d="M5 13h5l-2-3z"
+            data-m98-loose-parts-object="part"
+            {...tertiaryAccent(palette, palette.teal)}
+          />
         </>
       );
     case "fresh-greens":
@@ -557,10 +581,35 @@ function renderMenuGlyph(
     case "loose-parts":
       return (
         <>
-          <circle cx="7" cy="7" r="3" {...accent(palette, palette.yellow)} />
-          <rect x="14" y="4" width="6" height="6" {...secondaryAccent(palette, palette.blue)} />
-          <path d="M3 21h8l-4-7z" {...tertiaryAccent(palette, palette.teal)} />
-          <path d="m15 15 5 5m0-5-5 5" {...line(palette, palette.orange)} />
+          <rect
+            x="2"
+            y="5"
+            width="20"
+            height="16"
+            data-m98-loose-parts-object="tray"
+            {...surface(palette, palette.chrome)}
+          />
+          <path d="M3 10h18" />
+          <circle
+            cx="7"
+            cy="15"
+            r="3"
+            data-m98-loose-parts-object="part"
+            {...accent(palette, palette.yellow)}
+          />
+          <rect
+            x="13"
+            y="12"
+            width="5"
+            height="5"
+            data-m98-loose-parts-object="part"
+            {...secondaryAccent(palette, palette.blue)}
+          />
+          <path
+            d="M10 20h8l-4-5z"
+            data-m98-loose-parts-object="part"
+            {...tertiaryAccent(palette, palette.teal)}
+          />
         </>
       );
     case "fresh-greens":
@@ -698,10 +747,35 @@ function renderDiscoveryGlyph(
     case "loose-parts":
       return (
         <>
-          <circle cx="9" cy="9" r="5" {...accent(palette, palette.yellow)} />
-          <rect x="19" y="4" width="9" height="9" {...secondaryAccent(palette, palette.blue)} />
-          <path d="M3 29h12L9 18z" {...tertiaryAccent(palette, palette.teal)} />
-          <path d="m20 20 8 8m0-8-8 8" {...line(palette, palette.orange)} />
+          <rect
+            x="2"
+            y="5"
+            width="28"
+            height="23"
+            data-m98-loose-parts-object="tray"
+            {...surface(palette, palette.chrome)}
+          />
+          <path d="M3 13h26" />
+          <circle
+            cx="9"
+            cy="20"
+            r="4"
+            data-m98-loose-parts-object="part"
+            {...accent(palette, palette.yellow)}
+          />
+          <rect
+            x="18"
+            y="16"
+            width="7"
+            height="7"
+            data-m98-loose-parts-object="part"
+            {...secondaryAccent(palette, palette.blue)}
+          />
+          <path
+            d="M12 27h13l-7-8z"
+            data-m98-loose-parts-object="part"
+            {...tertiaryAccent(palette, palette.teal)}
+          />
         </>
       );
     case "fresh-greens":

@@ -354,6 +354,20 @@ describe("portfolio artifact accessibility styles", () => {
     expect(styles).toMatch(
       /@media \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.uf-lock-palette-swatch\s*\{[\s\S]*?min-width: 44px;/,
     );
+    const evidenceLinkTargets = styles.match(
+      /@media \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.about-detail dd a,[\s\S]*?\.nv-page \.project-section-body a,[\s\S]*?\.nv-closing-links a,[\s\S]*?\.uf-before-after-item a,[\s\S]*?\.uf-switcher > a\s*\{([^}]*)\}/,
+    )?.[1];
+
+    expect(evidenceLinkTargets).toContain("display: inline-flex");
+    expect(evidenceLinkTargets).toContain("min-height: 44px");
+    expect(evidenceLinkTargets).toContain("align-items: center");
+  });
+
+  it("uses a complete boundary instead of a colored side stripe on the reminder permission", () => {
+    const permission = declarationBlock(".fg-page .fg-reminder-permission");
+
+    expect(permission).toContain("border: 1px solid var(--fg-accent-line)");
+    expect(permission).not.toContain("border-left");
   });
 
   it("keeps pullquotes centered and contrast-critical labels fully opaque", () => {

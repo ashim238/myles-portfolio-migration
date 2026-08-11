@@ -343,6 +343,101 @@ describe("Myles 98 program icon identity", () => {
     }
   });
 
+  it("groups Loose Parts into one recognizable parts tray at menu and discovery sizes", () => {
+    render(
+      createElement(
+        "div",
+        null,
+        createElement(Myles97Icon, {
+          name: "loose-parts",
+          size: 20,
+          title: "Loose Parts menu",
+        }),
+        createElement(Myles97Icon, {
+          name: "loose-parts",
+          size: 32,
+          title: "Loose Parts desktop",
+        }),
+      ),
+    );
+
+    for (const label of ["Loose Parts menu", "Loose Parts desktop"]) {
+      const icon = screen.getByRole("img", { name: label });
+      const tray = icon.querySelector<SVGRectElement>(
+        'rect[data-m98-loose-parts-object="tray"]',
+      );
+      const parts = Array.from(
+        icon.querySelectorAll<SVGGraphicsElement>(
+          '[data-m98-loose-parts-object="part"]',
+        ),
+      );
+
+      expect(tray).toBeInTheDocument();
+      expect(parts).toHaveLength(3);
+
+      const trayBounds = {
+        left: Number(tray?.getAttribute("x")),
+        top: Number(tray?.getAttribute("y")),
+        right:
+          Number(tray?.getAttribute("x")) +
+          Number(tray?.getAttribute("width")),
+        bottom:
+          Number(tray?.getAttribute("y")) +
+          Number(tray?.getAttribute("height")),
+      };
+
+      for (const part of parts) {
+        let bounds: typeof trayBounds;
+
+        if (part.tagName.toLowerCase() === "circle") {
+          const radius = Number(part.getAttribute("r"));
+          const cx = Number(part.getAttribute("cx"));
+          const cy = Number(part.getAttribute("cy"));
+          bounds = {
+            left: cx - radius,
+            top: cy - radius,
+            right: cx + radius,
+            bottom: cy + radius,
+          };
+        } else if (part.tagName.toLowerCase() === "rect") {
+          const left = Number(part.getAttribute("x"));
+          const top = Number(part.getAttribute("y"));
+          bounds = {
+            left,
+            top,
+            right: left + Number(part.getAttribute("width")),
+            bottom: top + Number(part.getAttribute("height")),
+          };
+        } else {
+          const triangle = part
+            .getAttribute("d")
+            ?.match(/^M(\d+) (\d+)h(\d+)l(-?\d+)(-?\d+)z$/);
+          expect(triangle).not.toBeNull();
+          const [, xValue, yValue, widthValue, dxValue, dyValue] =
+            triangle ?? [];
+          const x = Number(xValue);
+          const y = Number(yValue);
+          const width = Number(widthValue);
+          const dx = Number(dxValue);
+          const dy = Number(dyValue);
+          const xValues = [x, x + width, x + width + dx];
+          const yValues = [y, y, y + dy];
+          bounds = {
+            left: Math.min(...xValues),
+            top: Math.min(...yValues),
+            right: Math.max(...xValues),
+            bottom: Math.max(...yValues),
+          };
+        }
+
+        expect(bounds.left).toBeGreaterThanOrEqual(trayBounds.left);
+        expect(bounds.top).toBeGreaterThanOrEqual(trayBounds.top);
+        expect(bounds.right).toBeLessThanOrEqual(trayBounds.right);
+        expect(bounds.bottom).toBeLessThanOrEqual(trayBounds.bottom);
+      }
+    }
+  });
+
   it("constructs the mail glyph from a paper inset and balanced envelope planes", () => {
     const { container } = render(
       createElement(

@@ -219,9 +219,9 @@
 .pocket97-sheet {
   position: fixed;
   z-index: 145;
-  right: 12px;
+  right: max(12px, calc((100% - 46rem) / 2));
   bottom: calc(4.4rem + env(safe-area-inset-bottom, 0px) + 10px);
-  left: 12px;
+  left: max(12px, calc((100% - 46rem) / 2));
   display: grid;
   max-height: min(60svh, 30rem);
   overflow-y: auto;
