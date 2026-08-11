@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges" data-m98-concept="loose-parts" data-m98-grid="16">
-  <polygon fill="#20242a" points="1,10 2,10 2,9 3,9 3,8 8,8 8,14 7,14 7,15 1,15" />
-  <rect fill="#1d9f98" x="2" y="10" width="5" height="4" />
-  <polygon fill="#76d5ce" points="2,10 2,9 3,9 3,8 7,8 7,9 6,9 6,10" />
-  <rect fill="#12645f" x="6" y="10" width="1" height="4" />
-  <rect fill="#0d4d49" x="2" y="13" width="4" height="1" />
-  <polygon fill="#20242a" points="7,10 8,10 8,9 9,9 9,8 14,8 14,14 13,14 13,15 7,15" />
-  <rect fill="#7651ad" x="8" y="10" width="5" height="4" />
-  <polygon fill="#c3a8e8" points="8,10 8,9 9,9 9,8 13,8 13,9 12,9 12,10" />
-  <rect fill="#4c3473" x="12" y="10" width="1" height="4" />
-  <rect fill="#382754" x="8" y="13" width="4" height="1" />
-  <polygon fill="#20242a" points="4,3 5,3 5,2 6,2 6,1 11,1 11,7 10,7 10,9 4,9" />
-  <rect fill="#d94f83" x="5" y="3" width="5" height="5" />
-  <polygon fill="#f5a4c2" points="5,3 5,2 6,2 6,1 10,1 10,2 9,2 9,3" />
-  <rect fill="#913155" x="9" y="3" width="1" height="5" />
-  <rect fill="#70243f" x="5" y="7" width="4" height="1" />
+  <polygon fill="#20242a" points="2,5 3,4 8,4 8,8 7,8 7,9 2,9" />
+  <rect fill="#1d9f98" x="3" y="5" width="4" height="3" />
+  <polygon fill="#76d5ce" points="3,5 4,4 7,4 7,5" />
+  <rect fill="#12645f" x="7" y="5" width="1" height="3" />
+  <rect fill="#0d4d49" x="3" y="8" width="4" height="1" />
+  <polygon fill="#20242a" points="9,2 10,1 15,1 15,6 14,6 14,7 9,7" />
+  <rect fill="#7651ad" x="10" y="2" width="4" height="3" />
+  <polygon fill="#c3a8e8" points="10,2 11,1 14,1 14,2" />
+  <rect fill="#4c3473" x="14" y="2" width="1" height="3" />
+  <rect fill="#382754" x="10" y="5" width="4" height="1" />
+  <polygon fill="#20242a" points="5,11 6,10 13,10 13,13 12,13 12,14 5,14" />
+  <rect fill="#d94f83" x="6" y="11" width="6" height="2" />
+  <polygon fill="#f5a4c2" points="6,11 7,10 12,10 12,11" />
+  <rect fill="#913155" x="12" y="11" width="1" height="2" />
+  <rect fill="#70243f" x="6" y="13" width="6" height="1" />
 </svg>

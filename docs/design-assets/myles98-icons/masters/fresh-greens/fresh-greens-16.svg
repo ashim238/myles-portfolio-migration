@@ -1,7 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges" data-m98-concept="fresh-greens" data-m98-grid="16">
-  <path fill="#202621" d="M2 2H13V3H14V13H13V14H2V13H1V3H2Z" />
-  <rect fill="#d8dfc3" x="2" y="3" width="11" height="10" />
-  <path fill="#4d5552" d="M4 10H11V12H4ZM8 7H10V12H8ZM5 7H10V9H5ZM5 5H7V9H5ZM5 5H12V7H5Z" />
-  <rect fill="#205a40" x="2" y="9" width="3" height="3" />
-  <path fill="#f27524" d="M11 3H14V5H12V8H11Z" />
+  <path fill="#202621" d="M1 1H15V15H1Z" />
+  <rect fill="#d8dfc3" x="2" y="2" width="12" height="12" />
+  <rect fill="#4d5552" x="4" y="11" width="3" height="1" />
+  <rect fill="#4d5552" x="6" y="10" width="2" height="2" />
+  <rect fill="#4d5552" x="7" y="9" width="2" height="2" />
+  <rect fill="#4d5552" x="8" y="8" width="3" height="2" />
+  <rect fill="#4d5552" x="10" y="6" width="2" height="3" />
+  <rect fill="#205a40" x="2" y="11" width="2" height="2" />
+  <path fill="#f27524" d="M11 2H13V3H14V5H13V6H11V5H10V3H11Z" />
 </svg>
