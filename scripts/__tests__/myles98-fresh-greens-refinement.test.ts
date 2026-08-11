@@ -18,6 +18,21 @@ const ENDPOINT_FILLS = {
   ]),
   destination: new Map(GRIDS.map((grid) => [grid, "#f27524"])),
 };
+const BOUNDARY_FILLS = new Map([
+  [16, "#c4ceac"],
+  [24, "#c4ceac"],
+  [32, "#c4ceac"],
+]);
+const BROAD_RIDGE_PATHS = new Map([
+  [16, "M3 10H5L7 8H9V7H11V9H12V11H10V9H8L6 11H3Z"],
+  [24, "M4 16H7L11 12H13V10H17V8H19V12H17V13H14V15H12L8 19H4Z"],
+  [32, "M5 22H9L14 17H17V14H20L23 11H25V15H24L21 18H19V20H16L11 25H5Z"],
+]);
+const MIN_ROUTE_PIXELS = new Map([
+  [16, 24],
+  [24, 58],
+  [32, 112],
+]);
 
 type Grid = (typeof GRIDS)[number];
 type Point = [number, number];
@@ -84,11 +99,18 @@ function verticesForShape(primitive: string, attributes: string) {
 function routeTurns(source: string, grid: Grid) {
   const route = shapeForFill(source, ROUTE_FILLS.get(grid)!);
   if (!route || !["path", "polygon"].includes(route[1].toLowerCase())) return [];
-  const vertices = verticesForShape(route[1].toLowerCase(), route[2]);
-  const vectors = vertices.slice(1).map<Point>(([x, y], index) => [
-    x - vertices[index][0],
-    y - vertices[index][1],
-  ]);
+  const primitive = route[1].toLowerCase();
+  const subpaths = primitive === "path"
+    ? (attribute(route[2], "d") ?? "").split(/(?=M)/i).filter(Boolean)
+    : [attribute(route[2], "points") ?? ""];
+  const vectors = subpaths.flatMap((subpath) => {
+    const attributes = primitive === "path" ? `d="${subpath}"` : `points="${subpath}"`;
+    const vertices = verticesForShape(primitive, attributes);
+    return vertices.slice(1).map<Point>(([x, y], index) => [
+      x - vertices[index][0],
+      y - vertices[index][1],
+    ]);
+  });
   const hasDiagonal = vectors.some(([x, y]) => x !== 0 && y !== 0);
   const hasAsymmetricStep = vectors.some(([x, y], index) => {
     const next = vectors[index + 1];
@@ -114,8 +136,14 @@ function endpointShape(source: string, grid: Grid, endpoint: Endpoint) {
 }
 
 async function nativeColorCount(source: string, grid: Grid, fill: string) {
-  const value = Number.parseInt(fill.slice(1), 16);
-  const target = [value >> 16, (value >> 8) & 0xff, value & 0xff, 255];
+  return (await nativePixelsForFills(source, grid, [fill])).size;
+}
+
+async function nativePixelsForFills(source: string, grid: Grid, fills: string[]) {
+  const targets = fills.map((fill) => {
+    const value = Number.parseInt(fill.slice(1), 16);
+    return [value >> 16, (value >> 8) & 0xff, value & 0xff, 255];
+  });
   const { data, info } = await sharp(
     Buffer.from(source.replace("<svg ", `<svg width="${grid}" height="${grid}" `)),
   )
@@ -123,9 +151,56 @@ async function nativeColorCount(source: string, grid: Grid, fill: string) {
     .raw()
     .toBuffer({ resolveWithObject: true });
 
-  return Array.from({ length: data.length / info.channels }, (_, index) => index).filter(
-    (index) => target.every((channel, offset) => data[index * info.channels + offset] === channel),
-  ).length;
+  return new Set(
+    Array.from({ length: data.length / info.channels }, (_, index) => index)
+      .filter((index) =>
+        targets.some((target) =>
+          target.every((channel, offset) => data[index * info.channels + offset] === channel),
+        ),
+      )
+      .map((index) => `${index % info.width},${Math.floor(index / info.width)}`),
+  );
+}
+
+function opaqueComponents(pixels: Set<string>) {
+  const remaining = new Set(pixels);
+  let count = 0;
+
+  while (remaining.size > 0) {
+    count += 1;
+    const queue = [remaining.values().next().value as string];
+    remaining.delete(queue[0]);
+
+    while (queue.length > 0) {
+      const [x, y] = queue.shift()!.split(",").map(Number);
+      for (const neighbor of [`${x - 1},${y}`, `${x + 1},${y}`, `${x},${y - 1}`, `${x},${y + 1}`]) {
+        if (!remaining.delete(neighbor)) continue;
+        queue.push(neighbor);
+      }
+    }
+  }
+
+  return count;
+}
+
+function hasOnlyOrthogonalRuns(d: string) {
+  return d
+    .split(/(?=M)/i)
+    .filter(Boolean)
+    .every((subpath) => {
+      const vertices = verticesForPath(subpath);
+      return vertices.slice(1).every(([x, y], index) => {
+        const [previousX, previousY] = vertices[index];
+        return x === previousX || y === previousY;
+      });
+    });
+}
+
+function replaceRoutePath(source: string, grid: Grid, replacement: string) {
+  const route = shapeForFill(source, ROUTE_FILLS.get(grid)!);
+  if (!route) return source;
+  const current = attribute(route[2], "d");
+  return current ? source.replace(`d="${current}"`, `d="${replacement}"`) : source;
 }
 
 describe("Myles 98 Fresh Greens route-map refinement", () => {
@@ -148,5 +223,60 @@ describe("Myles 98 Fresh Greens route-map refinement", () => {
     expect(await nativeColorCount(source, grid, ROUTE_FILLS.get(grid)!)).toBeGreaterThan(0);
     expect(await nativeColorCount(source, grid, ENDPOINT_FILLS.start.get(grid)!)).toBeGreaterThan(0);
     expect(await nativeColorCount(source, grid, ENDPOINT_FILLS.destination.get(grid)!)).toBeGreaterThan(0);
+  });
+
+  it.each(GRIDS)("makes one continuous directional road the %ipx visual subject", async (grid) => {
+    const source = sourceFor("fresh-greens", grid);
+    const route = shapeForFill(source, ROUTE_FILLS.get(grid)!);
+
+    expect(route?.[1].toLowerCase()).toBe("path");
+    expect(hasOnlyOrthogonalRuns(attribute(route?.[2] ?? "", "d") ?? "")).toBe(true);
+
+    const routePixels = await nativePixelsForFills(source, grid, [ROUTE_FILLS.get(grid)!]);
+    const connectedRoute = await nativePixelsForFills(source, grid, [
+      ROUTE_FILLS.get(grid)!,
+      ENDPOINT_FILLS.start.get(grid)!,
+      ENDPOINT_FILLS.destination.get(grid)!,
+    ]);
+
+    expect(routePixels.size).toBeGreaterThanOrEqual(MIN_ROUTE_PIXELS.get(grid)!);
+    expect(routePixels.size).toBeLessThan(grid * grid * 0.18);
+    expect(opaqueComponents(routePixels)).toBe(1);
+    expect(opaqueComponents(connectedRoute)).toBe(1);
+  });
+
+  it.each(GRIDS)("rejects the former broad %ipx diagonal ridge", async (grid) => {
+    const source = sourceFor("fresh-greens", grid);
+    const ridgeMutation = replaceRoutePath(source, grid, BROAD_RIDGE_PATHS.get(grid)!);
+    const ridgePixels = await nativePixelsForFills(ridgeMutation, grid, [ROUTE_FILLS.get(grid)!]);
+
+    expect(ridgePixels.size).toBeLessThan(MIN_ROUTE_PIXELS.get(grid)!);
+  });
+
+  it.each(GRIDS)("keeps compact directional endpoints attached at %ipx", async (grid) => {
+    const source = sourceFor("fresh-greens", grid);
+    const startPixels = await nativePixelsForFills(source, grid, [ENDPOINT_FILLS.start.get(grid)!]);
+    const destinationPixels = await nativePixelsForFills(source, grid, [
+      ENDPOINT_FILLS.destination.get(grid)!,
+    ]);
+    const destination = endpointShape(source, grid, "destination");
+
+    expect(startPixels.size).toBeLessThanOrEqual(Math.ceil(grid * grid * 0.04));
+    expect(destinationPixels.size).toBeLessThanOrEqual(Math.ceil(grid * grid * 0.04));
+    expect(destination?.primitive).toBe("path");
+    expect(destination!.height).toBeGreaterThan(destination!.width);
+  });
+
+  it.each(GRIDS)("uses only the allowed subordinate map cue at %ipx", async (grid) => {
+    const source = sourceFor("fresh-greens", grid);
+    const boundaryFill = BOUNDARY_FILLS.get(grid);
+
+    if (grid === 16) {
+      expect(shapeForFill(source, boundaryFill!)).toBeUndefined();
+      return;
+    }
+
+    expect(shapeForFill(source, boundaryFill!)?.[1].toLowerCase()).toBe("rect");
+    expect(await nativeColorCount(source, grid, boundaryFill!)).toBeGreaterThan(0);
   });
 });
