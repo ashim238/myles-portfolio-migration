@@ -13,9 +13,23 @@ const EXPECTED_CONTROLS = new Map([[16, 1], [24, 2], [32, 2]]);
 
 type Grid = (typeof GRIDS)[number];
 type Bounds = { minX: number; minY: number; maxX: number; maxY: number };
+type Raster = Awaited<ReturnType<typeof nativeRaster>>;
+
+const FOLDER_LIP_FILLS = new Map<Grid, string>([
+  [16, "#f8db76"],
+  [24, "#f6dd8a"],
+  [32, "#ffe394"],
+]);
+
+function masterSourceFor(concept: "display-properties" | "selected-work", grid: Grid) {
+  return readFileSync(expectedMasterPath(ROOT, concept, grid), "utf8");
+}
 
 function sourceFor(concept: "display-properties" | "selected-work", grid: Grid) {
-  return readFileSync(expectedMasterPath(ROOT, concept, grid), "utf8");
+  const source = masterSourceFor(concept, grid);
+  return concept === "selected-work" && process.env.M98_TEST_BREAK_FOLDER_LIP === "1"
+    ? withBrokenFolderLip(source, grid)
+    : source;
 }
 
 function attribute(attributes: string, name: string) {
@@ -51,6 +65,11 @@ function contains(outer: Bounds, inner: Bounds) {
     && inner.maxY <= outer.maxY;
 }
 
+function hexChannels(hex: string) {
+  const value = Number.parseInt(hex.slice(1), 16);
+  return [value >> 16, (value >> 8) & 0xff, value & 0xff, 0xff];
+}
+
 async function nativeRaster(source: string, grid: Grid) {
   const { data, info } = await sharp(
     Buffer.from(source.replace(/<svg\s+/, `<svg width="${grid}" height="${grid}" `)),
@@ -61,7 +80,7 @@ async function nativeRaster(source: string, grid: Grid) {
   return { data, width: info.width, height: info.height, channels: info.channels };
 }
 
-function alphaTopology(raster: Awaited<ReturnType<typeof nativeRaster>>) {
+function alphaTopology(raster: Raster) {
   const alphas = Array.from(
     { length: raster.width * raster.height },
     (_, index) => raster.data[index * raster.channels + 3],
@@ -106,6 +125,41 @@ function alphaTopology(raster: Awaited<ReturnType<typeof nativeRaster>>) {
   return { alphas, opaqueComponents, perimeter, topRowWidth, opaqueBoundsWidth };
 }
 
+function continuousFolderLip(raster: Raster, cards: Bounds[], headers: Bounds[], fill: string) {
+  const [red, green, blue, alpha] = hexChannels(fill);
+  const minimumX = Math.min(...cards.map((card) => card.minX));
+  const maximumX = Math.max(...cards.map((card) => card.maxX));
+  const firstLipRow = Math.max(...headers.map((header) => header.maxY)) + 1;
+
+  return Array.from({ length: raster.height - firstLipRow - 1 }, (_, offset) => firstLipRow + offset)
+    .some((y) => Array.from({ length: maximumX - minimumX + 1 }, (_, offset) => minimumX + offset)
+      .every((x) => {
+        const pixel = (y * raster.width + x) * raster.channels;
+        return raster.data[pixel] === red
+          && raster.data[pixel + 1] === green
+          && raster.data[pixel + 2] === blue
+          && raster.data[pixel + 3] === alpha;
+      }));
+}
+
+function withBrokenFolderLip(source: string, grid: Grid) {
+  const fill = FOLDER_LIP_FILLS.get(grid)!;
+  const [lip] = rectsForFill(source, fill);
+  const width = lip.maxX - lip.minX + 1;
+  const splitX = lip.minX + Math.floor(width / 2);
+  const leftWidth = splitX - lip.minX;
+  const rightX = splitX + 1;
+  const rightWidth = lip.maxX - rightX + 1;
+  const original = `<rect fill="${fill}" x="${lip.minX}" y="${lip.minY}" width="${width}" height="1" />`;
+  const replacement = [
+    `<rect fill="${fill}" x="${lip.minX}" y="${lip.minY}" width="${leftWidth}" height="1" />`,
+    `<rect fill="${fill}" x="${rightX}" y="${lip.minY}" width="${rightWidth}" height="1" />`,
+  ].join("\n  ");
+  const broken = source.replace(original, replacement);
+  if (broken === source) throw new Error(`${grid}px folder-lip fixture could not be split`);
+  return broken;
+}
+
 describe("Myles 98 Display Properties and Selected Work refinement", () => {
   it.each(GRIDS)("gives Display Properties %ipx literal in-screen controls without detached TV anatomy", async (grid) => {
     const source = sourceFor("display-properties", grid);
@@ -136,12 +190,28 @@ describe("Myles 98 Display Properties and Selected Work refinement", () => {
     expect(headers.every((header) => cards.some((card) => contains(card, header)))).toBe(true);
     expect(cards.every((card) => headers.filter((header) => contains(card, header)).length === 1)).toBe(true);
     expect(new Set(headers.map((header) => `${header.minX},${header.minY}`)).size).toBe(2);
-    expect(source).not.toContain("<polygon");
+    expect(source).not.toMatch(/<polygon\b/i);
 
     const raster = await nativeRaster(source, grid);
+    expect(
+      continuousFolderLip(raster, cards, headers, FOLDER_LIP_FILLS.get(grid)!),
+      "folder front/lip must be one continuous opaque row spanning beneath both project cards",
+    ).toBe(true);
     const topology = alphaTopology(raster);
     expect(topology.opaqueComponents, "folder, dossier, and project cards must stay one object").toBe(1);
     expect(topology.alphas.every((alpha) => alpha === 0 || alpha === 0xff)).toBe(true);
     expect(topology.perimeter.every((alpha) => alpha === 0)).toBe(true);
+  });
+
+  it.each(GRIDS)("rejects Selected Work %ipx when the folder-front lip is split between its project cards", async (grid) => {
+    const source = masterSourceFor("selected-work", grid);
+    const cards = rectsForFill(source, PROJECT_CARD_FILL);
+    const headers = [...PROJECT_HEADER_FILLS].flatMap((fill) => rectsForFill(source, fill));
+    const brokenRaster = await nativeRaster(withBrokenFolderLip(source, grid), grid);
+
+    expect(
+      continuousFolderLip(brokenRaster, cards, headers, FOLDER_LIP_FILLS.get(grid)!),
+      "a split folder-front lip must not satisfy the dossier-shell contract",
+    ).toBe(false);
   });
 });
