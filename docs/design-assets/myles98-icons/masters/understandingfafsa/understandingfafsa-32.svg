@@ -1,25 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" data-m98-concept="understandingfafsa" data-m98-grid="32">
-  <path fill="#28272a" d="M3 21H29V22H30V28H29V30H3V29H2V22H3Z" />
-  <rect fill="#aa9a8c" x="3" y="22" width="26" height="7" />
-  <path fill="#292a2b" d="M8 2H22L25 5V25H24V27H7V3H8Z" />
-  <polygon fill="#898a89" points="8,3 22,3 24,5 24,26 8,26" />
-  <polygon fill="#f3efe7" points="8,3 21,3 23,5 23,25 8,25" />
-  <polygon fill="#ffffff" points="9,3 21,3 22,4 9,4" />
-  <polygon fill="#c9c6bf" points="21,3 23,5 21,5" />
-  <rect fill="#1f689f" x="10" y="6" width="11" height="4" />
-  <rect fill="#82c6f8" x="10" y="6" width="9" height="1" />
-  <rect fill="#354651" x="10" y="11" width="9" height="2" />
-  <rect fill="#9b9994" x="10" y="15" width="5" height="4" />
-  <rect fill="#f1b44a" x="16" y="15" width="5" height="2" />
-  <rect fill="#aaa7a1" x="16" y="18" width="5" height="1" />
-  <rect fill="#e46f3b" x="10" y="21" width="4" height="3" />
-  <rect fill="#aaa7a1" x="15" y="21" width="6" height="1" />
-  <rect fill="#8f8e89" x="15" y="23" width="6" height="1" />
-  <polygon fill="#e2d6c8" points="3,23 16,27 29,23 29,28 3,28" />
-  <polygon fill="#8f8175" points="4,24 16,28 28,24 28,25 16,30 4,25" />
-  <polygon fill="#f2e9df" points="5,24 16,27 27,24 27,25 16,29 5,25" />
-  <rect fill="#ffffff" x="3" y="23" width="1" height="4" />
-  <rect fill="#665e57" x="29" y="23" width="1" height="5" />
-  <rect fill="#47423e" x="4" y="29" width="25" height="1" />
-  <rect fill="#1b1a1a" x="6" y="30" width="22" height="1" />
+  <path fill="#29282a" d="M18 12H29V13H30V25H29V27H18V26H17V14H18Z" />
+  <rect fill="#aa9a8c" x="18" y="13" width="11" height="13" />
+  <rect fill="#e2d6c8" x="18" y="13" width="10" height="12" />
+  <polygon fill="#8f8175" points="18,14 23,19 28,14 28,16 23,21 18,16" />
+  <polygon fill="#f2e9df" points="19,14 23,18 27,14 27,15 23,20 19,15" />
+  <path fill="#292a2b" d="M5 2H19L22 5V28H21V30H4V3H5Z" />
+  <polygon fill="#898a89" points="5,3 19,3 21,5 21,29 5,29" />
+  <polygon fill="#f3efe7" points="5,3 18,3 20,5 20,28 5,28" />
+  <polygon fill="#ffffff" points="6,3 18,3 19,4 6,4" />
+  <polygon fill="#c9c6bf" points="18,3 20,5 18,5" />
+  <rect fill="#1f689f" x="7" y="6" width="11" height="4" />
+  <rect fill="#82c6f8" x="7" y="6" width="9" height="1" />
+  <rect fill="#354651" x="7" y="11" width="9" height="2" />
+  <rect fill="#9b9994" x="7" y="15" width="5" height="4" />
+  <rect fill="#f1b44a" x="13" y="15" width="5" height="2" />
+  <rect fill="#aaa7a1" x="13" y="18" width="5" height="1" />
+  <rect fill="#e46f3b" x="7" y="21" width="4" height="4" />
+  <rect fill="#aaa7a1" x="12" y="21" width="6" height="1" />
+  <rect fill="#8f8e89" x="12" y="23" width="6" height="1" />
+  <rect fill="#aaa7a1" x="12" y="25" width="6" height="1" />
+  <rect fill="#4a4b4a" x="6" y="28" width="15" height="1" />
+  <rect fill="#1d1e1e" x="6" y="29" width="15" height="1" />
 </svg>
