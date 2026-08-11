@@ -960,6 +960,7 @@
 
   .myles97-window[data-focused="true"] .myles97-titlebar,
   .myles97-task-button[data-focused="true"],
+  .myles97-start-button[aria-expanded="true"],
   .myles97-start-menu-brand,
   .myles97-reminders-widget-title,
   .myles97-start-menu-items :is(button, a):hover,
@@ -967,6 +968,11 @@
   .project-enter-program-titlebar {
     background: Highlight;
     color: HighlightText;
+  }
+
+  .myles97-window :is(button, a, input, select, textarea):focus-visible,
+  .myles97-shell :is(button, a, input, select, textarea):focus-visible {
+    outline-color: Highlight;
   }
 
   .myles97-desktop-shortcuts :is(button, a) {

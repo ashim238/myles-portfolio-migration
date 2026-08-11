@@ -8,52 +8,86 @@ const stylesheet = readFileSync(
 );
 
 type RuleContract = {
+  authored: string;
   declarations: Map<string, string>;
+  media: string | null;
+  order: number;
   selector: string;
 };
 
-const rules: RuleContract[] = [];
-const styleElement = document.createElement("style");
-styleElement.textContent = stylesheet;
-document.head.append(styleElement);
-expect(styleElement.sheet, "Myles 98 stylesheet did not parse").not.toBeNull();
+function normalizeWhitespace(value: string) {
+  return value.replace(/\s+/g, " ").trim();
+}
 
 function normalizeSelector(selector: string) {
-  return selector.replace(/\s+/g, " ").replace(/\s*,\s*/g, ",").trim();
+  return normalizeWhitespace(selector).replace(/\s*,\s*/g, ",");
 }
 
-function collectRules(ruleList: CSSRuleList) {
-  for (const cssRule of ruleList) {
-    if (cssRule instanceof CSSStyleRule) {
-      const declarations = new Map<string, string>();
+function declarationsFor(style: CSSStyleDeclaration) {
+  const declarations = new Map<string, string>();
 
-      for (let index = 0; index < cssRule.style.length; index += 1) {
-        const property = cssRule.style.item(index);
-        declarations.set(
-          property,
-          cssRule.style.getPropertyValue(property).replace(/\s+/g, " ").trim(),
-        );
+  for (let index = 0; index < style.length; index += 1) {
+    const property = style.item(index);
+    declarations.set(
+      property,
+      normalizeWhitespace(style.getPropertyValue(property)),
+    );
+  }
+
+  return declarations;
+}
+
+function parseRules(source: string) {
+  const rules: RuleContract[] = [];
+  const styleElement = document.createElement("style");
+  styleElement.textContent = source;
+  document.head.append(styleElement);
+  const sheet = styleElement.sheet;
+
+  function collectRules(ruleList: CSSRuleList, media: string | null = null) {
+    for (const cssRule of ruleList) {
+      if (cssRule instanceof CSSStyleRule) {
+        rules.push({
+          authored: normalizeWhitespace(cssRule.style.cssText),
+          declarations: declarationsFor(cssRule.style),
+          media,
+          order: rules.length,
+          selector: normalizeSelector(cssRule.selectorText),
+        });
+        continue;
       }
 
-      rules.push({
-        declarations,
-        selector: normalizeSelector(cssRule.selectorText),
-      });
-      continue;
-    }
+      if (cssRule instanceof CSSMediaRule) {
+        collectRules(cssRule.cssRules, normalizeWhitespace(cssRule.conditionText));
+        continue;
+      }
 
-    if ("cssRules" in cssRule) {
-      collectRules((cssRule as CSSGroupingRule).cssRules);
+      if ("cssRules" in cssRule) {
+        collectRules((cssRule as CSSGroupingRule).cssRules, media);
+      }
     }
   }
+
+  if (sheet) collectRules(sheet.cssRules);
+  styleElement.remove();
+
+  return { rules, sheet };
 }
 
-collectRules(styleElement.sheet?.cssRules ?? ([] as unknown as CSSRuleList));
+const parsed = parseRules(stylesheet);
+const rules = parsed.rules;
 
-function rule(selector: string): RuleContract {
-  const match = rules.find((candidate) => candidate.selector === selector);
-  expect(match, `Missing CSS rule for ${selector}`).toBeDefined();
-  return match as RuleContract;
+function rule(selector: string, media: string | null = null): RuleContract {
+  const normalized = normalizeSelector(selector);
+  const matches = rules.filter(
+    (candidate) =>
+      candidate.selector === normalized && candidate.media === media,
+  );
+  expect(
+    matches,
+    `Expected exactly one ${media ? `${media} ` : ""}rule for ${selector}`,
+  ).toHaveLength(1);
+  return matches[0];
 }
 
 function expectBevel(
@@ -71,8 +105,203 @@ function expectBevel(
   );
 }
 
+function resolveM97Variables(source: string) {
+  const tokens = rule(":root").declarations;
+
+  function resolveValue(value: string, seen: string[] = []): string {
+    return value.replace(/var\((--m97-[\w-]+)\)/g, (reference, name: string) => {
+      if (seen.includes(name) || !tokens.has(name)) return reference;
+      return resolveValue(tokens.get(name) ?? reference, [...seen, name]);
+    });
+  }
+
+  return source.replace(
+    /var\((--m97-[\w-]+)\)/g,
+    (reference, name: string) => resolveValue(tokens.get(name) ?? reference, [name]),
+  );
+}
+
+const cascadeStyle = document.createElement("style");
+cascadeStyle.textContent = resolveM97Variables(stylesheet).replace(
+  /:active/g,
+  '[data-test-active="true"]',
+);
+document.head.append(cascadeStyle);
+
+const geometryProperties = [
+  "borderTopWidth",
+  "borderRightWidth",
+  "borderBottomWidth",
+  "borderLeftWidth",
+  "borderBlockStartWidth",
+  "borderBlockEndWidth",
+  "borderInlineStartWidth",
+  "borderInlineEndWidth",
+  "paddingTop",
+  "paddingRight",
+  "paddingBottom",
+  "paddingLeft",
+  "paddingBlockStart",
+  "paddingBlockEnd",
+  "paddingInlineStart",
+  "paddingInlineEnd",
+  "minWidth",
+  "minHeight",
+  "width",
+  "height",
+  "inlineSize",
+  "blockSize",
+] as const;
+
+type ComputedSnapshot = Record<(typeof geometryProperties)[number], string> & {
+  borderBottomColor: string;
+  borderLeftColor: string;
+  borderRightColor: string;
+  borderTopColor: string;
+  boxShadow: string;
+};
+
+function computedSnapshot(markup: string, subjectSelector: string) {
+  const host = document.createElement("div");
+  host.innerHTML = markup;
+  document.body.append(host);
+  const subject = host.querySelector<HTMLElement>(subjectSelector);
+  expect(subject, `Missing fixture subject ${subjectSelector}`).not.toBeNull();
+  const computed = getComputedStyle(subject as HTMLElement);
+  const snapshot = Object.fromEntries(
+    geometryProperties.map((property) => [property, computed[property]]),
+  ) as ComputedSnapshot;
+  snapshot.borderTopColor = computed.borderTopColor;
+  snapshot.borderRightColor = computed.borderRightColor;
+  snapshot.borderBottomColor = computed.borderBottomColor;
+  snapshot.borderLeftColor = computed.borderLeftColor;
+  snapshot.boxShadow = normalizeWhitespace(computed.boxShadow);
+  host.remove();
+  return snapshot;
+}
+
+const protectedStateProperties = [
+  "border",
+  "border-width",
+  "border-top-width",
+  "border-right-width",
+  "border-bottom-width",
+  "border-left-width",
+  "border-block-width",
+  "border-block-start-width",
+  "border-block-end-width",
+  "border-inline-width",
+  "border-inline-start-width",
+  "border-inline-end-width",
+  "padding",
+  "padding-top",
+  "padding-right",
+  "padding-bottom",
+  "padding-left",
+  "padding-block",
+  "padding-block-start",
+  "padding-block-end",
+  "padding-inline",
+  "padding-inline-start",
+  "padding-inline-end",
+  "min-width",
+  "min-height",
+  "width",
+  "height",
+  "inline-size",
+  "block-size",
+  "transform",
+  "translate",
+] as const;
+
+const pressedRules = [
+  ".myles97-primary-button:active",
+  ".myles97-hit-target:active .myles97-window-control",
+  ".myles97-display-preview button:active,.myles97-reset-confirmation button:active",
+  '.myles97-start-button:active,.myles97-start-button[aria-expanded="true"]',
+  '.myles97-task-button:active,.myles97-task-button[data-focused="true"]',
+] as const;
+
+const stateFixtures = [
+  {
+    base: '<button class="myles97-primary-button">Open</button>',
+    name: "primary pressed",
+    selector: ".myles97-primary-button",
+    state:
+      '<button class="myles97-primary-button" data-test-active="true">Open</button>',
+  },
+  {
+    base:
+      '<button class="myles97-hit-target"><span class="myles97-window-control">x</span></button>',
+    name: "titlebar control pressed",
+    selector: ".myles97-window-control",
+    state:
+      '<button class="myles97-hit-target" data-test-active="true"><span class="myles97-window-control">x</span></button>',
+    targetSelector: ".myles97-hit-target",
+  },
+  {
+    base:
+      '<div class="myles97-display-preview"><button type="button">Apply</button></div>',
+    name: "Display button pressed",
+    selector: "button",
+    state:
+      '<div class="myles97-display-preview"><button type="button" data-test-active="true">Apply</button></div>',
+  },
+  {
+    base:
+      '<div class="myles97-reset-confirmation"><button type="button">Reset</button></div>',
+    name: "reset button pressed",
+    selector: "button",
+    state:
+      '<div class="myles97-reset-confirmation"><button type="button" data-test-active="true">Reset</button></div>',
+  },
+  {
+    base:
+      '<button class="myles97-start-button" aria-expanded="false">Start</button>',
+    name: "Start pressed",
+    selector: ".myles97-start-button",
+    state:
+      '<button class="myles97-start-button" aria-expanded="false" data-test-active="true">Start</button>',
+  },
+  {
+    base:
+      '<button class="myles97-start-button" aria-expanded="false">Start</button>',
+    name: "Start open",
+    selector: ".myles97-start-button",
+    state:
+      '<button class="myles97-start-button" aria-expanded="true">Start</button>',
+  },
+  {
+    base:
+      '<button class="myles97-task-button" data-focused="false">Window</button>',
+    name: "task pressed",
+    selector: ".myles97-task-button",
+    state:
+      '<button class="myles97-task-button" data-focused="false" data-test-active="true">Window</button>',
+  },
+  {
+    base:
+      '<button class="myles97-task-button" data-focused="false">Window</button>',
+    name: "task focused",
+    selector: ".myles97-task-button",
+    state:
+      '<button class="myles97-task-button" data-focused="true">Window</button>',
+  },
+] as const;
+
+function specificity(selector: string) {
+  return [
+    (selector.match(/#[\w-]+/g) ?? []).length,
+    (selector.match(/\.[\w-]+|\[[^\]]+\]|:(?!:)[\w-]+/g) ?? []).length,
+    (selector.match(/(^|[\s>+~])(?:[a-z][\w-]*|\*)/gi) ?? []).filter(
+      (match) => !match.trim().startsWith("*"),
+    ).length,
+  ];
+}
+
 describe("Myles 98 workstation depth system", () => {
-  it("defines one discrete top-left bevel grammar and applies it to chrome", () => {
+  it("parses one discrete top-left bevel grammar and applies it to chrome", () => {
+    expect(parsed.sheet, "Myles 98 stylesheet did not parse").not.toBeNull();
     const tokens = rule(":root").declarations;
 
     expect(tokens.get("--m97-bevel-highlight")).toBe("#fff");
@@ -107,15 +336,8 @@ describe("Myles 98 workstation depth system", () => {
     expectBevel(".myles97-clock", "recessed");
   });
 
-  it("recesses pressed and open controls without changing their geometry", () => {
-    const pressedSelectors = [
-      ".myles97-primary-button:active",
-      ".myles97-hit-target:active .myles97-window-control",
-      '.myles97-start-button:active,.myles97-start-button[aria-expanded="true"]',
-      '.myles97-task-button:active,.myles97-task-button[data-focused="true"]',
-    ];
-
-    for (const selector of pressedSelectors) {
+  it("uses the effective cascade to recess every state without geometry shifts", () => {
+    for (const selector of pressedRules) {
       const declarations = rule(selector).declarations;
       expect(declarations.get("border-color"), selector).toBe(
         "var(--m97-bevel-dark) var(--m97-bevel-highlight) var(--m97-bevel-highlight) var(--m97-bevel-dark)",
@@ -124,32 +346,117 @@ describe("Myles 98 workstation depth system", () => {
         "var(--m97-bevel-recessed)",
       );
       expect([...declarations.keys()], selector).not.toEqual(
-        expect.arrayContaining([
-          "block-size",
-          "height",
-          "inset",
-          "margin",
-          "padding",
-          "transform",
-          "translate",
-          "width",
-        ]),
+        expect.arrayContaining([...protectedStateProperties]),
       );
     }
 
-    expect(rule(".myles97-primary-button").declarations.get("min-height")).toBe(
-      "44px",
-    );
-    expect(
-      rule(".myles97-start-button,.myles97-task-button").declarations.get(
-        "min-height",
-      ),
-    ).toBe("44px");
-    expect(rule(".myles97-hit-target").declarations.get("width")).toBe("44px");
-    expect(rule(".myles97-hit-target").declarations.get("height")).toBe("44px");
+    for (const fixture of stateFixtures) {
+      const base = computedSnapshot(fixture.base, fixture.selector);
+      const state = computedSnapshot(fixture.state, fixture.selector);
+
+      expect(
+        Object.fromEntries(geometryProperties.map((property) => [property, state[property]])),
+        `${fixture.name} geometry`,
+      ).toEqual(
+        Object.fromEntries(geometryProperties.map((property) => [property, base[property]])),
+      );
+      expect(state.boxShadow, `${fixture.name} recessed shadow`).toBe(
+        "inset 1px 1px 0 #808080,inset -1px -1px 0 #dfdfdf",
+      );
+      expect(
+        [
+          state.borderTopColor,
+          state.borderRightColor,
+          state.borderBottomColor,
+          state.borderLeftColor,
+        ],
+        `${fixture.name} inverted edges`,
+      ).toEqual([
+        "rgb(10, 10, 10)",
+        "rgb(255, 255, 255)",
+        "rgb(255, 255, 255)",
+        "rgb(10, 10, 10)",
+      ]);
+
+      if ("targetSelector" in fixture) {
+        expect(
+          computedSnapshot(fixture.state, fixture.targetSelector),
+          `${fixture.name} 44px target`,
+        ).toMatchObject({ height: "44px", width: "44px" });
+      }
+    }
   });
 
-  it("keeps cast shadows on layered windows only and flattens depth in forced colors", () => {
+  it("parses exact forced-colors flattening, selection, and focus rules", () => {
+    const media = "(forced-colors: active)";
+    const flattenSelector = normalizeSelector(`
+      .myles97-shell,
+      .myles97-desktop,
+      .myles97-window,
+      .myles97-window-content,
+      .myles97-window-status,
+      .myles97-window-control,
+      .myles97-titlebar,
+      .myles97-window[data-focused="true"] .myles97-titlebar,
+      .myles97-taskbar,
+      .myles97-start-button,
+      .myles97-task-button,
+      .myles97-clock,
+      .myles97-start-menu,
+      .myles97-program-card,
+      .myles97-primary-button,
+      .myles97-display-preview button,
+      .myles97-reset-confirmation button,
+      .myles97-roti-note,
+      .myles97-reminders-widget,
+      .myles97-boot,
+      .myles97-boot-mark,
+      .myles97-boot-progress,
+      .project-enter-frame--program,
+      .project-enter-program,
+      .project-enter-program-titlebar,
+      .project-enter-program-cover,
+      .project-enter-program-control
+    `);
+    const selectedSelector = normalizeSelector(`
+      .myles97-window[data-focused="true"] .myles97-titlebar,
+      .myles97-task-button[data-focused="true"],
+      .myles97-start-button[aria-expanded="true"],
+      .myles97-start-menu-brand,
+      .myles97-reminders-widget-title,
+      .myles97-start-menu-items :is(button, a):hover,
+      .myles97-case-study-link:hover,
+      .project-enter-program-titlebar
+    `);
+    const focusSelector = normalizeSelector(`
+      .myles97-window :is(button, a, input, select, textarea):focus-visible,
+      .myles97-shell :is(button, a, input, select, textarea):focus-visible
+    `);
+
+    const flatten = rule(flattenSelector, media);
+    const focus = rule(focusSelector, media);
+    const selected = rule(selectedSelector, media);
+    const baseFocus = rule(focusSelector);
+
+    expect(flatten.authored).toBe(
+      "border-color: canvastext; background: canvas; color: canvastext; box-shadow: none;",
+    );
+    expect(selected.authored).toBe(
+      "background: highlight; color: highlighttext;",
+    );
+    expect(focus.authored).toBe("outline-color: highlight;");
+    expect(baseFocus.authored).toBe(
+      "outline: 3px solid var(--m97-signal); outline-offset: 2px;",
+    );
+    expect(selected.order).toBeGreaterThan(flatten.order);
+    expect(focus.order).toBeGreaterThan(selected.order);
+    expect(specificity('.myles97-start-button[aria-expanded="true"]')).toEqual([
+      0, 2, 0,
+    ]);
+    expect(specificity(".myles97-start-button")).toEqual([0, 1, 0]);
+  });
+
+  it("keeps cast shadows on layered surfaces and avoids generic filters", () => {
     expect(stylesheet).not.toContain("drop-shadow(");
     expect(rule(".myles97-window").declarations.get("box-shadow")).toContain(
       "4px 4px 0 rgb(17 17 17 / 28%)",
@@ -165,9 +472,5 @@ describe("Myles 98 workstation depth system", () => {
         "box-shadow",
       ),
     ).toBe("var(--m97-bevel-raised)");
-
-    expect(stylesheet).toMatch(
-      /@media\s*\(forced-colors:\s*active\)[\s\S]*?\.myles97-start-button,[\s\S]*?\.myles97-task-button,[\s\S]*?\.myles97-clock,[\s\S]*?box-shadow:\s*none/,
-    );
   });
 });
