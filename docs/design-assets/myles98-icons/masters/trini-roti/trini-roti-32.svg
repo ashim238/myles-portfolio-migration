@@ -1,23 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" data-m98-concept="trini-roti" data-m98-grid="32">
   <path fill="#2f221a" d="M4 7H24V8H27V26H26V28H3V27H1V9H3V8H4Z" />
   <rect fill="#8d5939" x="4" y="9" width="22" height="18" />
-  <path fill="#f2c98e" d="M4 8H23V9H25V24H24V26H3V9H4Z" />
-  <rect fill="#fff3d6" x="4" y="9" width="18" height="2" />
-  <rect fill="#b94f30" x="6" y="11" width="12" height="3" />
-  <path fill="#713723" d="M6 17H11V18H13V21H12V23H6V22H5V18H6Z" />
-  <path fill="#dc783a" d="M7 17H11V18H12V21H11V22H7V21H6V18H7Z" />
-  <rect fill="#ffbe68" x="7" y="17" width="4" height="2" />
-  <path fill="#995534" d="M7 15H8V17H7ZM10 15H11V17H10Z" />
-  <rect fill="#855235" x="15" y="17" width="7" height="2" />
-  <rect fill="#a96f46" x="15" y="21" width="6" height="2" />
-  <rect fill="#bf8756" x="15" y="24" width="4" height="1" />
+  <path fill="#f1c890" d="M4 8H23V9H25V24H24V26H3V9H4Z" />
+  <rect fill="#fff3d7" x="4" y="9" width="18" height="2" />
+  <rect fill="#b84d30" x="6" y="12" width="13" height="2" />
+  <path fill="#8b4930" d="M7 12H8V16H7ZM10 11H11V16H10ZM13 12H14V16H13Z" />
+  <path fill="#663622" d="M5 16H16V20H15V23H13V24H8V23H6V20H5Z" />
+  <path fill="#d96f38" d="M6 17H15V20H14V22H7V20H6Z" />
+  <rect fill="#ffb75f" x="7" y="17" width="7" height="2" />
+  <rect fill="#855237" x="18" y="17" width="5" height="2" />
+  <rect fill="#a96f46" x="18" y="21" width="4" height="2" />
+  <rect fill="#bf8756" x="18" y="24" width="3" height="1" />
   <rect fill="#68412c" x="4" y="26" width="21" height="1" />
-  <path fill="#33231a" d="M23 2H27V3H29V4H30V10H29V12H27V13H23V12H21V10H20V5H21V3H23Z" />
-  <path fill="#b3763e" d="M23 3H27V4H28V5H29V10H28V11H26V12H23V11H22V10H21V5H22V4H23Z" />
-  <path fill="#e7b66f" d="M23 3H27V4H28V7H27V8H23V7H22V4H23Z" />
-  <path fill="#80502f" d="M24 7H28V10H27V11H24V10H23V8H24Z" />
-  <rect fill="#5f3b27" x="25" y="8" width="2" height="2" />
-  <polygon fill="#33231a" points="22,10 26,12 12,30 7,30" />
-  <polygon fill="#aa6c38" points="22,11 25,12 12,29 9,29" />
-  <polygon fill="#e1aa61" points="22,11 23,12 12,28 11,28" />
+  <polygon fill="#33231a" points="24,10 26,12 11,31 8,31" />
+  <polygon fill="#9f6638" points="25,11 26,12 11,30 10,30" />
+  <path fill="#33231a" d="M27 2H29V3H27ZM26 3H30V4H26ZM25 4H31V6H25ZM24 6H31V8H24ZM24 8H30V10H24ZM23 10H29V11H23ZM23 11H28V12H23ZM24 12H27V13H24ZM25 13H27V14H25Z" />
+  <path fill="#ad7441" d="M27 3H29V4H27ZM26 4H30V6H26ZM25 6H30V8H25ZM25 8H29V10H25ZM24 10H28V11H24ZM24 11H27V12H24ZM25 12H26V13H25Z" />
+  <path fill="#edc57f" d="M27 3H28V4H27ZM26 4H27V6H26ZM25 6H26V8H25ZM24 10H25V11H24Z" />
+  <path fill="#785033" d="M28 5H29V6H28ZM27 6H29V8H27ZM26 8H28V9H26ZM25 9H27V10H25ZM25 10H26V11H25Z" />
 </svg>
