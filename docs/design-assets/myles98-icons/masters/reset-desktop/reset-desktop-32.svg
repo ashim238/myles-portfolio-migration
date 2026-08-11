@@ -1,29 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" data-m98-concept="reset-desktop" data-m98-grid="32">
-  <path fill="#1c2023" d="M4 2H23V3H25V5H27V22H26V24H20V27H23V30H8V29H11V24H4V23H2V5H4Z" />
-  <path fill="#566169" d="M4 3H23V4H25V6H26V21H25V23H5V22H3V6H4Z" />
-  <path fill="#adb8bb" d="M5 4H22V5H24V7H25V20H24V22H5Z" />
-  <path fill="#dfe7e5" d="M6 5H21V6H23V19H22V20H6Z" />
-  <rect fill="#1f3c4b" x="7" y="7" width="16" height="12" />
-  <rect fill="#3d7188" x="8" y="8" width="14" height="10" />
-  <rect fill="#b9dcdb" x="8" y="8" width="7" height="1" />
-  <rect fill="#487c90" x="9" y="9" width="12" height="1" />
-  <rect fill="#424a4f" x="7" y="20" width="16" height="2" />
-  <rect fill="#2d3337" x="8" y="22" width="15" height="1" />
-  <rect fill="#6f7b80" x="20" y="20" width="2" height="1" />
-  <rect fill="#879398" x="12" y="23" width="7" height="5" />
-  <rect fill="#c7d0ce" x="13" y="24" width="5" height="4" />
-  <rect fill="#4a5256" x="9" y="28" width="13" height="2" />
-  <rect fill="#dce4e2" x="10" y="28" width="11" height="1" />
-  <rect fill="#b72d2a" x="26" y="9" width="3" height="1" />
-  <rect fill="#b72d2a" x="25" y="10" width="1" height="1" />
-  <rect fill="#b72d2a" x="29" y="10" width="1" height="1" />
-  <rect fill="#b72d2a" x="30" y="11" width="1" height="8" />
-  <rect fill="#b72d2a" x="25" y="19" width="1" height="1" />
-  <rect fill="#b72d2a" x="29" y="19" width="1" height="1" />
-  <rect fill="#b72d2a" x="26" y="20" width="3" height="1" />
-  <polygon fill="#b72d2a" points="18,15 23,11 23,19" />
-  <rect fill="#f15b50" x="26" y="9" width="3" height="1" />
-  <rect fill="#f15b50" x="30" y="11" width="1" height="4" />
-  <rect fill="#f15b50" x="26" y="20" width="3" height="1" />
-  <polygon fill="#f15b50" points="19,15 23,12 23,18" />
+  <path fill="#222323" d="M4 3H19V4H21V6H22V21H21V24H16V27H20V30H7V29H11V24H4V23H2V6H4Z" />
+  <path fill="#746d62" d="M4 4H19V5H20V7H21V20H20V23H5V22H3V7H4Z" />
+  <path fill="#d4ccbd" d="M5 4H18V5H20V7H20V20H19V21H5Z" />
+  <path fill="#eee8dc" d="M6 5H18V6H19V19H18V20H6Z" />
+  <rect fill="#25343a" x="7" y="7" width="11" height="11" />
+  <rect fill="#4a7d8e" x="8" y="8" width="10" height="9" />
+  <rect fill="#b9d9d4" x="8" y="8" width="6" height="1" />
+  <rect fill="#548798" x="9" y="9" width="8" height="1" />
+  <rect fill="#fff7e9" x="6" y="6" width="1" height="13" />
+  <rect fill="#514c45" x="7" y="19" width="11" height="2" />
+  <rect fill="#81796e" x="8" y="21" width="10" height="2" />
+  <rect fill="#aaa194" x="12" y="23" width="5" height="5" />
+  <rect fill="#d6cec1" x="13" y="24" width="3" height="4" />
+  <rect fill="#514c45" x="8" y="28" width="11" height="2" />
+  <rect fill="#ece4d7" x="9" y="28" width="9" height="1" />
+  <rect fill="#696259" x="18" y="19" width="2" height="2" />
+  <path fill="#8d211e" d="M29 4H31V18H30V20H28V24L23 19L28 14V17H29Z" />
+  <rect fill="#f15a50" x="30" y="5" width="1" height="12" />
+  <rect fill="#f15a50" x="29" y="17" width="1" height="2" />
+  <polygon fill="#f15a50" points="24,19 28,15 28,23" />
 </svg>

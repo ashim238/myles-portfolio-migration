@@ -1,23 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" shape-rendering="crispEdges" data-m98-concept="reset-desktop" data-m98-grid="24">
-  <path fill="#1f2428" d="M3 2H17V3H19V16H18V18H14V20H17V22H5V21H8V18H3V17H2V3H3Z" />
-  <path fill="#59656d" d="M3 3H17V4H18V15H17V17H4V16H3Z" />
-  <path fill="#aeb9bc" d="M4 3H16V4H17V15H16V16H4Z" />
-  <rect fill="#e2e9e7" x="4" y="4" width="1" height="11" />
-  <rect fill="#213d4b" x="5" y="5" width="11" height="9" />
-  <rect fill="#3d7188" x="6" y="6" width="10" height="8" />
-  <rect fill="#b9dcdb" x="6" y="6" width="5" height="1" />
-  <rect fill="#424b50" x="5" y="15" width="11" height="1" />
-  <rect fill="#818d91" x="9" y="17" width="5" height="4" />
-  <rect fill="#c8d1cf" x="10" y="18" width="3" height="3" />
-  <rect fill="#dce4e2" x="6" y="21" width="10" height="1" />
-  <rect fill="#bd2e2b" x="20" y="6" width="2" height="1" />
-  <rect fill="#bd2e2b" x="19" y="7" width="1" height="1" />
-  <rect fill="#bd2e2b" x="22" y="7" width="1" height="8" />
-  <rect fill="#bd2e2b" x="19" y="14" width="1" height="1" />
-  <rect fill="#bd2e2b" x="20" y="15" width="2" height="1" />
-  <polygon fill="#bd2e2b" points="13,11 17,8 17,14" />
-  <rect fill="#f15b50" x="20" y="6" width="2" height="1" />
-  <rect fill="#f15b50" x="22" y="7" width="1" height="4" />
-  <rect fill="#f15b50" x="20" y="15" width="2" height="1" />
-  <polygon fill="#f15b50" points="14,11 17,9 17,13" />
+  <path fill="#232323" d="M3 3H14V4H16V16H15V18H11V20H14V22H4V21H7V18H3V17H2V4H3Z" />
+  <path fill="#746d62" d="M3 4H14V5H15V15H14V17H4V16H3Z" />
+  <path fill="#d5cdbf" d="M4 4H13V5H14V15H13V16H4Z" />
+  <rect fill="#fff7e9" x="4" y="5" width="1" height="10" />
+  <rect fill="#25343a" x="5" y="6" width="8" height="7" />
+  <rect fill="#4a7d8e" x="6" y="7" width="7" height="6" />
+  <rect fill="#b9d9d4" x="6" y="7" width="4" height="1" />
+  <rect fill="#514c45" x="5" y="14" width="8" height="1" />
+  <rect fill="#aaa194" x="8" y="17" width="3" height="4" />
+  <rect fill="#d8d0c3" x="9" y="18" width="2" height="3" />
+  <rect fill="#ece4d7" x="5" y="21" width="8" height="1" />
+  <path fill="#8e211e" d="M21 3H23V13H22V15H20V18L17 14L20 10V12H21Z" />
+  <rect fill="#f15a50" x="22" y="4" width="1" height="8" />
+  <rect fill="#f15a50" x="21" y="12" width="1" height="2" />
+  <polygon fill="#f15a50" points="18,14 20,11 20,17" />
 </svg>
