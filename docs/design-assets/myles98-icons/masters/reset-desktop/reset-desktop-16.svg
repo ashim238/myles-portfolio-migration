@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges" data-m98-concept="reset-desktop" data-m98-grid="16">
-  <path fill="#232323" d="M4 4H11V5H12V11H11V12H4V11H3V5H4Z" />
-  <rect fill="#26353a" x="5" y="5" width="6" height="6" />
-  <rect fill="#4b7d8e" x="6" y="6" width="5" height="4" />
-  <rect fill="#b8d8d3" x="6" y="6" width="4" height="1" />
-  <rect fill="#315f69" x="10" y="7" width="1" height="3" />
-  <rect fill="#315f69" x="6" y="10" width="5" height="1" />
-  <path fill="#8e211e" d="M13 2H15V7H13Z M9 6H11V7H9Z M8 7H15V8H8Z M9 8H11V9H9Z" />
-  <rect fill="#f15a50" x="14" y="2" width="1" height="3" />
+  <rect fill="#232323" x="6" y="6" width="5" height="4" />
+  <rect fill="#26353a" x="6" y="10" width="5" height="1" />
+  <rect fill="#4b7d8e" x="7" y="7" width="3" height="2" />
+  <rect fill="#b8d8d3" x="7" y="7" width="2" height="1" />
+  <rect fill="#315f69" x="9" y="8" width="1" height="1" />
+  <path fill="#8e211e" d="M3 4H4V3H5V2H7V5H5V6H4V5H3Z M5 2H11V4H5Z M11 3H13V11H11Z M5 11H12V13H5Z M4 9H6V12H4Z" />
+  <rect fill="#f15a50" x="6" y="2" width="4" height="1" />
+  <rect fill="#f15a50" x="12" y="4" width="1" height="6" />
 </svg>

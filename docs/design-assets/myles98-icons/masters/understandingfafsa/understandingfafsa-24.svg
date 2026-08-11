@@ -4,14 +4,16 @@
   <rect fill="#d2cec6" x="6" y="2" width="12" height="19" />
   <rect fill="#f3efe7" x="6" y="2" width="12" height="18" />
   <rect fill="#ffffff" x="6" y="2" width="12" height="1" />
-  <rect fill="#1f679f" x="6" y="3" width="12" height="4" />
-  <rect fill="#82c4f4" x="6" y="3" width="12" height="1" />
-  <rect fill="#f5f1e8" x="9" y="5" width="6" height="1" />
-  <rect fill="#5f889f" x="6" y="8" width="12" height="5" />
-  <rect fill="#9dc3d1" x="7" y="9" width="5" height="3" />
-  <rect fill="#e4b65d" x="14" y="9" width="3" height="2" />
+  <rect fill="#29282a" x="9" y="2" width="6" height="1" />
+  <rect fill="#1f679f" x="6" y="4" width="12" height="1" />
+  <rect fill="#5f889f" x="6" y="6" width="12" height="1" />
+  <rect fill="#5f889f" x="6" y="6" width="1" height="5" />
+  <rect fill="#9dc3d1" x="7" y="8" width="7" height="1" />
+  <rect fill="#5f889f" x="6" y="10" width="12" height="1" />
+  <rect fill="#8d8d88" x="15" y="8" width="3" height="1" />
   <rect fill="#c5963a" x="6" y="14" width="5" height="5" />
   <rect fill="#fff6ea" x="7" y="15" width="3" height="2" />
+  <rect fill="#f3efe7" x="7" y="18" width="2" height="1" />
   <rect fill="#d8d4cc" x="12" y="14" width="6" height="5" />
   <rect fill="#8d8d88" x="13" y="15" width="4" height="1" />
   <rect fill="#aaa7a1" x="13" y="17" width="3" height="1" />

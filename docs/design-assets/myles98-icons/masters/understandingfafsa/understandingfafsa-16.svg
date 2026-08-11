@@ -4,10 +4,13 @@
   <rect fill="#d2cec6" x="4" y="2" width="7" height="11" />
   <rect fill="#f3efe7" x="4" y="2" width="7" height="10" />
   <rect fill="#ffffff" x="4" y="2" width="7" height="1" />
-  <rect fill="#1f679f" x="4" y="3" width="7" height="2" />
-  <rect fill="#82c4f4" x="4" y="3" width="7" height="1" />
-  <rect fill="#5f889f" x="4" y="6" width="7" height="3" />
-  <rect fill="#9dc3d1" x="5" y="7" width="3" height="1" />
+  <rect fill="#29282a" x="5" y="2" width="4" height="1" />
+  <rect fill="#1f679f" x="4" y="4" width="7" height="1" />
+  <rect fill="#5f889f" x="4" y="6" width="7" height="1" />
+  <rect fill="#5f889f" x="4" y="6" width="1" height="3" />
+  <rect fill="#9dc3d1" x="5" y="7" width="5" height="1" />
+  <rect fill="#5f889f" x="4" y="8" width="5" height="1" />
+  <rect fill="#8d8d88" x="9" y="8" width="2" height="1" />
   <rect fill="#c5963a" x="4" y="10" width="3" height="2" />
   <rect fill="#d8d4cc" x="8" y="10" width="3" height="2" />
   <rect fill="#8d8d88" x="9" y="10" width="2" height="1" />
