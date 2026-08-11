@@ -12,6 +12,16 @@ const REMINDER_CHECK_FILL = "#15906f";
 const REMINDER_LINE_FILL = "#63766c";
 const EXPECTED_NOTE_LINES = new Map([[16, 3], [24, 4], [32, 5]]);
 const EXPECTED_REMINDER_PAIRS = new Map([[16, 2], [24, 3], [32, 3]]);
+const PAGE_TURN_OUTLINES = new Map([
+  [16, "M3 3H9V4H10V5H11V6H14V14H13V15H2V4H3Z"],
+  [24, "M4 4H15V5H16V6H17V7H21V21H20V23H3V5H4Z"],
+  [32, "M5 5H20V6H21V7H22V8H28V28H27V30H4V6H5Z"],
+]);
+const FULL_PAGE_HEADER_STRIPS = new Map([
+  [16, "M4 5H12V6H4Z"],
+  [24, "M5 6H19V8H5Z"],
+  [32, "M6 7H26V9H6Z"],
+]);
 
 type Grid = (typeof GRIDS)[number];
 type Bounds = { minX: number; minY: number; maxX: number; maxY: number };
@@ -137,6 +147,69 @@ function topRowWidth(mask: Set<number>, width: number) {
   return [...mask].filter((index) => Math.floor(index / width) === topY).length;
 }
 
+function appendBeforeClose(source: string, markup: string) {
+  return source.replace("</svg>", `  ${markup}\n</svg>`);
+}
+
+function fullWidthHeaderMutation(source: string, grid: Grid) {
+  return appendBeforeClose(
+    source,
+    `<path fill="#203e3a" d="${FULL_PAGE_HEADER_STRIPS.get(grid)}" />`,
+  );
+}
+
+function upperRightPageTurnMutation(source: string, grid: Grid) {
+  return source.replace(
+    /(<path fill="#203e3a" d=")[^"]+(" \/>)/,
+    `$1${PAGE_TURN_OUTLINES.get(grid)}$2`,
+  );
+}
+
+async function reminderAvoidsCalendarAndPageTurn(source: string, grid: Grid, boxBounds: Bounds[]) {
+  const allRects = [...source.matchAll(/<rect\b([^>]*)\/>/gi)].map(([, attributes]) => rectBounds(attributes));
+  const rectOnlyCalendarFree = allRects.every((bounds) => {
+    if (bounds.maxX - bounds.minX > bounds.maxY - bounds.minY) return true;
+    return boxBounds.some((box) => containsBounds(box, bounds));
+  });
+  const raster = await nativeRaster(source, grid);
+  const opaque = [...alphaMask(raster)];
+  const pageBounds = boundsFor(opaque, grid);
+  const primitives = [...source.matchAll(/<(path|rect|polygon)\b([^>]*)\/>/gi)]
+    .map(([markup], index) => ({ markup, index }));
+  const primitiveCoverage = await Promise.all(primitives.map(async (primitive) => {
+    const root = source.match(/<svg\b[^>]*>/i)?.[0];
+    if (!root) throw new Error("Reminders mutation is missing its SVG root");
+    const primitiveRaster = await nativeRaster(`${root}${primitive.markup}</svg>`, grid);
+    const pixels = [...alphaMask(primitiveRaster)];
+    return { ...primitive, pixels, bounds: pixels.length > 0 ? boundsFor(pixels, grid) : null };
+  }));
+  const structuralPrimitiveIndexes = new Set(
+    [...primitiveCoverage]
+      .sort((left, right) => right.pixels.length - left.pixels.length)
+      .slice(0, 3)
+      .map(({ index }) => index),
+  );
+  const innerPageWidth = Math.min(
+    ...primitiveCoverage
+      .filter(({ index, bounds }) => structuralPrimitiveIndexes.has(index) && bounds !== null)
+      .map(({ bounds }) => bounds!.maxX - bounds!.minX + 1),
+  );
+  const headerStrip = primitiveCoverage.some(({ index, pixels }) => {
+    if (structuralPrimitiveIndexes.has(index) || pixels.length === 0) return false;
+    const bounds = boundsFor(pixels, grid);
+    const width = bounds.maxX - bounds.minX + 1;
+    const height = bounds.maxY - bounds.minY + 1;
+    return width >= innerPageWidth
+      && height <= Math.max(2, Math.ceil(grid / 12))
+      && bounds.minY <= pageBounds.minY + Math.floor(grid / 4);
+  });
+  const topRow = opaque.filter((pixel) => Math.floor(pixel / grid) === pageBounds.minY);
+  const topRight = Math.max(...topRow.map((pixel) => pixel % grid));
+  const upperRightPageTurn = pageBounds.maxX - topRight > 1;
+
+  return rectOnlyCalendarFree && !headerStrip && !upperRightPageTurn;
+}
+
 describe("Myles 98 Notes and Reminders native-size separation", () => {
   it.each(GRIDS)("keeps Notes %ipx to one folded memo with a compact handwritten cluster", async (grid) => {
     const source = sourceFor("trini-roti", grid);
@@ -182,14 +255,21 @@ describe("Myles 98 Notes and Reminders native-size separation", () => {
       return expandedIntersects(point, box);
     }))).toBe(true);
 
-    const allRects = [...source.matchAll(/<rect\b([^>]*)\/>/gi)].map(([, attributes]) => ({
-      fill: attribute(attributes, "fill")?.toLowerCase(),
-      bounds: rectBounds(attributes),
-    }));
-    expect(allRects.every(({ bounds }) => {
-      if (bounds.maxX - bounds.minX > bounds.maxY - bounds.minY) return true;
-      return boxBounds.some((box) => containsBounds(box, bounds));
-    }), "Reminders must not contain ring stems or date-grid columns").toBe(true);
+    expect(await reminderAvoidsCalendarAndPageTurn(source, grid, boxBounds), "Reminders must not contain calendar or page-turn anatomy").toBe(true);
+  });
+
+  it.each(GRIDS)("rejects a full-width opaque header-strip mutation at %ipx", async (grid) => {
+    const source = sourceFor("reminders", grid);
+    const boxBounds = shapesForFill(source, REMINDER_BOX_FILL).map(({ attributes }) => rectBounds(attributes));
+
+    expect(await reminderAvoidsCalendarAndPageTurn(fullWidthHeaderMutation(source, grid), grid, boxBounds)).toBe(false);
+  });
+
+  it.each(GRIDS)("rejects an upper-right page-turn silhouette mutation at %ipx", async (grid) => {
+    const source = sourceFor("reminders", grid);
+    const boxBounds = shapesForFill(source, REMINDER_BOX_FILL).map(({ attributes }) => rectBounds(attributes));
+
+    expect(await reminderAvoidsCalendarAndPageTurn(upperRightPageTurnMutation(source, grid), grid, boxBounds)).toBe(false);
   });
 
   it.each(GRIDS)("keeps the %ipx memo and checklist silhouettes and palettes non-interchangeable", async (grid) => {
