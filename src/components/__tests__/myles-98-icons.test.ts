@@ -188,7 +188,100 @@ describe("Myles 98 program icon identity", () => {
     }
   });
 
-  it("builds color menu and discovery icons from explicit pixel-depth planes", () => {
+  it("builds color menu and discovery icons from object-specific pixel-depth planes", () => {
+    const names: Myles97IconName[] = [
+      "folder",
+      "document",
+      "profile",
+      "resume",
+      "recipe",
+      "display",
+      "mail",
+      "app",
+      "loose-parts",
+      "fresh-greens",
+      "fafsa",
+      "navi",
+      "tiktok",
+    ];
+    const { container } = render(
+      createElement(
+        "div",
+        null,
+        ...names.flatMap((name) =>
+          [20, 32, 40].map((size) =>
+            createElement(Myles97Icon, {
+              key: `${name}-${size}`,
+              name,
+              size,
+              variant: "color",
+              title: `${name}-${size}`,
+            }),
+          ),
+        ),
+        createElement(Myles97Icon, {
+          name: "mail",
+          size: 16,
+          variant: "color",
+          title: "mail-chrome",
+        }),
+      ),
+    );
+
+    for (const name of names) {
+      for (const size of [20, 32, 40]) {
+        const icon = screen.getByRole("img", { name: `${name}-${size}` });
+        expect(icon).toHaveAttribute("width", String(size));
+        expect(icon).toHaveAttribute("height", String(size));
+        expect(icon.querySelector("[transform]")).not.toBeInTheDocument();
+        expect(
+          icon.querySelector("[data-m98-icon-silhouette]"),
+        ).not.toBeInTheDocument();
+
+        for (const planeName of ["cast-shadow", "side", "highlight"]) {
+          const geometry = icon.querySelectorAll(
+            `[data-m98-icon-plane="${planeName}"]`,
+          );
+          expect(geometry.length).toBeGreaterThan(0);
+
+          for (const element of geometry) {
+            expect(element).toHaveAttribute("data-m98-icon-object", name);
+            expect(element).toHaveAttribute("stroke", "none");
+            expect(element.getAttribute("fill")).not.toBe("none");
+            expect(element).not.toHaveClass("myles98-icon-line");
+            expect(element).not.toHaveAttribute("data-m98-mail-part");
+            expect(
+              element.closest(
+                `[data-m98-icon-depth="${planeName === "highlight" ? "highlight" : "shadow"}"]`,
+              ),
+            ).toBeInTheDocument();
+          }
+        }
+      }
+    }
+
+    for (const size of [20, 32]) {
+      const objectSignatures = names.map((name) => {
+        const icon = screen.getByRole("img", { name: `${name}-${size}` });
+        return Array.from(icon.querySelectorAll("[data-m98-icon-plane]"), (plane) =>
+          `${plane.getAttribute("data-m98-icon-plane")}:${plane.getAttribute("d")}`,
+        ).join("|");
+      });
+
+      expect(new Set(objectSignatures).size).toBe(names.length);
+    }
+
+    expect(
+      screen
+        .getByRole("img", { name: "mail-chrome" })
+        .querySelector("[data-m98-icon-depth]"),
+    ).not.toBeInTheDocument();
+    expect(container.querySelectorAll('[data-m98-icon-depth="shadow"]')).toHaveLength(
+      names.length * 3,
+    );
+  });
+
+  it("keeps every decorative depth plane inside its authored grid", () => {
     const names: Myles97IconName[] = [
       "folder",
       "document",
@@ -215,59 +308,27 @@ describe("Myles 98 program icon identity", () => {
               name,
               size,
               variant: "color",
-              title: `${name}-${size}`,
+              title: `${name}-bounds-${size}`,
             }),
           ),
         ),
-        createElement(Myles97Icon, {
-          name: "mail",
-          size: 16,
-          variant: "color",
-          title: "mail-chrome",
-        }),
       ),
     );
 
-    for (const name of names) {
-      for (const size of [20, 32]) {
-        const icon = screen.getByRole("img", { name: `${name}-${size}` });
-        const shadow = icon.querySelector('[data-m98-icon-depth="shadow"]');
-        const highlight = icon.querySelector(
-          '[data-m98-icon-depth="highlight"]',
+    for (const icon of container.querySelectorAll("svg")) {
+      const grid = Number(icon.getAttribute("data-m98-icon-grid"));
+      for (const plane of icon.querySelectorAll<SVGPathElement>(
+        "path[data-m98-icon-plane]",
+      )) {
+        const data = plane.getAttribute("d") ?? "";
+        expect(data).toMatch(/^[MLHVZ0-9\s]+$/);
+        const coordinates = data.match(/\d+/g)?.map(Number) ?? [];
+        expect(coordinates.length).toBeGreaterThan(0);
+        expect(coordinates.every((value) => value >= 0 && value <= grid)).toBe(
+          true,
         );
-
-        expect(shadow).toBeInTheDocument();
-        expect(highlight).toBeInTheDocument();
-        expect(shadow?.querySelector(".myles98-icon-line")).not.toBeInTheDocument();
-        expect(
-          highlight?.querySelector(".myles98-icon-line"),
-        ).not.toBeInTheDocument();
-        expect(
-          shadow?.querySelector("[data-m98-mail-part]"),
-        ).not.toBeInTheDocument();
-        expect(
-          highlight?.querySelector("[data-m98-mail-part]"),
-        ).not.toBeInTheDocument();
-
-        for (const plane of [shadow, highlight]) {
-          const geometry = plane?.querySelectorAll("path, rect, circle") ?? [];
-          expect(geometry.length).toBeGreaterThan(0);
-          for (const element of geometry) {
-            expect(element).toHaveAttribute("data-m98-icon-silhouette", name);
-            expect(element).toHaveAttribute("stroke", "none");
-          }
-        }
       }
     }
-
-    expect(
-      screen
-        .getByRole("img", { name: "mail-chrome" })
-        .querySelector("[data-m98-icon-depth]"),
-    ).not.toBeInTheDocument();
-    expect(container.querySelectorAll('[data-m98-icon-depth="shadow"]')).toHaveLength(
-      names.length * 2,
-    );
   });
 
   it("constructs the mail glyph from a paper inset and balanced envelope planes", () => {
@@ -302,24 +363,17 @@ describe("Myles 98 program icon identity", () => {
         icon.querySelector('[data-m98-mail-part="fold"]'),
       ).toBeInTheDocument();
       expect(
-        icon.querySelector('[data-m98-mail-part="shadow"]'),
+        icon.querySelector('[data-m98-icon-plane="cast-shadow"]'),
       ).toBeInTheDocument();
-      expect(icon.querySelectorAll('[data-m98-mail-part="shadow"]')).toHaveLength(
-        1,
-      );
       expect(
-        icon.querySelectorAll(
-          '[data-m98-icon-depth] [data-m98-icon-silhouette="mail"]',
-        ),
-      ).toHaveLength(4);
+        icon.querySelector('[data-m98-mail-part="shadow"]'),
+      ).not.toBeInTheDocument();
+      expect(icon.querySelector("[transform]")).not.toBeInTheDocument();
 
       const grid = Number(icon.getAttribute("data-m98-icon-grid"));
       for (const rect of icon.querySelectorAll("rect")) {
-        const group = rect.closest("[data-m98-icon-depth]");
-        const offset = group?.getAttribute("transform") === "translate(1 1)" ? 1 :
-          group?.getAttribute("transform") === "translate(-1 -1)" ? -1 : 0;
-        const x = Number(rect.getAttribute("x")) + offset;
-        const y = Number(rect.getAttribute("y")) + offset;
+        const x = Number(rect.getAttribute("x"));
+        const y = Number(rect.getAttribute("y"));
         const right = x + Number(rect.getAttribute("width"));
         const bottom = y + Number(rect.getAttribute("height"));
 

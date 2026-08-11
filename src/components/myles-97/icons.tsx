@@ -134,126 +134,246 @@ function line(palette: IconPalette, color = palette.ink) {
   };
 }
 
-function renderDepthSilhouette(
+type DepthPlaneName = "cast-shadow" | "side" | "highlight";
+
+type DepthPlaneSpec = {
+  castShadow: readonly string[];
+  side: readonly string[];
+  highlight: readonly string[];
+};
+
+const SIDE_TONE_BY_ICON: Record<Myles97IconName, string> = {
+  folder: "#b58c00",
+  document: "#aaa69b",
+  profile: "#7e8584",
+  resume: "#aaa69b",
+  recipe: "#b58b6e",
+  display: "#777777",
+  mail: "#78929a",
+  app: "#777777",
+  "loose-parts": "#8b6b26",
+  "fresh-greens": "#0d5432",
+  fafsa: "#788190",
+  navi: "#b74624",
+  tiktok: "#3a3a3a",
+};
+
+function depthPlaneSpec(
   name: Myles97IconName,
   tier: Exclude<Myles97IconTier, "chrome">,
-  tone: string,
-): ReactNode {
-  const plane = {
-    "data-m98-icon-silhouette": name,
-    fill: tone,
-    stroke: "none",
-  };
-
+): DepthPlaneSpec {
   if (tier === "menu") {
     switch (name) {
       case "folder":
-        return <path d="M2 7h8l3 3h9v11H2zM2 7V4h8l3 3" {...plane} />;
+        return {
+          castShadow: ["M4 22H23V23H4Z"],
+          side: ["M3 20H22V22H3Z", "M20 10H22V20H20Z"],
+          highlight: ["M2 4H10V5H2Z", "M2 7H3V20H2Z", "M3 7H10V8H3Z"],
+        };
       case "document":
-      case "resume":
-      case "recipe":
-        return <path d="M5 2h10l4 4v16H5z" {...plane} />;
+        return {
+          castShadow: ["M7 22H20V23H7Z", "M19 7H20V22H19Z"],
+          side: ["M6 21H19V22H6Z", "M18 8H19V21H18Z"],
+          highlight: ["M5 2H15V3H5Z", "M5 3H6V21H5Z"],
+        };
       case "profile":
-        return <rect x="2" y="4" width="20" height="16" {...plane} />;
+        return {
+          castShadow: ["M4 21H23V22H4Z", "M22 6H23V21H22Z"],
+          side: ["M3 19H22V21H3Z", "M21 5H22V19H21Z"],
+          highlight: ["M2 4H21V5H2Z", "M2 5H3V19H2Z"],
+        };
+      case "resume":
+        return {
+          castShadow: ["M8 22H20V23H8Z", "M19 8H20V22H19Z"],
+          side: ["M6 20H19V22H6Z", "M18 9H19V20H18Z"],
+          highlight: ["M5 2H14V3H5Z", "M5 3H6V20H5Z"],
+        };
+      case "recipe":
+        return {
+          castShadow: ["M7 22H21V23H7Z", "M19 7H21V22H19Z"],
+          side: ["M6 21H19V22H6Z", "M18 8H19V21H18Z"],
+          highlight: ["M5 2H15V3H5Z", "M5 3H6V21H5Z", "M15 3H16V6H15Z"],
+        };
       case "display":
-        return (
-          <>
-            <rect x="2" y="3" width="20" height="14" {...plane} />
-            <rect x="11" y="17" width="2" height="4" {...plane} />
-            <rect x="8" y="21" width="8" height="1" {...plane} />
-          </>
-        );
+        return {
+          castShadow: ["M4 18H23V19H4Z", "M21 5H23V18H21Z", "M9 22H17V23H9Z"],
+          side: ["M3 16H22V18H3Z", "M20 4H22V16H20Z", "M13 17H14V21H13Z"],
+          highlight: ["M2 3H21V4H2Z", "M2 4H3V16H2Z"],
+        };
       case "mail":
-        return (
-          <>
-            <rect x="6" y="2" width="13" height="6" {...plane} />
-            <rect x="2" y="6" width="19" height="14" {...plane} />
-          </>
-        );
+        return {
+          castShadow: ["M5 21H23V23H5Z", "M21 9H23V21H21Z"],
+          side: ["M3 19H21V21H3Z", "M20 8H21V19H20Z", "M18 3H20V9H18Z"],
+          highlight: ["M6 2H19V3H6Z", "M6 3H7V7H6Z", "M2 6H20V7H2Z", "M2 7H3V19H2Z"],
+        };
       case "app":
-        return <rect x="3" y="3" width="18" height="18" {...plane} />;
+        return {
+          castShadow: ["M5 21H22V23H5Z", "M21 5H23V21H21Z"],
+          side: ["M4 20H21V21H4Z", "M20 4H21V20H20Z"],
+          highlight: ["M3 3H20V4H3Z", "M3 4H4V20H3Z"],
+        };
       case "loose-parts":
-        return (
-          <>
-            <circle cx="7" cy="7" r="3" {...plane} />
-            <rect x="14" y="4" width="6" height="6" {...plane} />
-            <path d="M3 21h8l-4-7z" {...plane} />
-          </>
-        );
+        return {
+          castShadow: ["M7 10H11V11H7Z", "M16 10H22V11H16Z", "M5 21H12V22H5Z"],
+          side: ["M5 8H10V10H5Z", "M15 9H21V10H15Z", "M4 20H11V21H4Z"],
+          highlight: ["M5 4H8V5H5Z", "M14 4H20V5H14Z", "M7 14H8V16H7Z"],
+        };
       case "fresh-greens":
-        return <rect x="2" y="2" width="20" height="20" {...plane} />;
+        return {
+          castShadow: ["M4 22H23V23H4Z", "M22 4H23V22H22Z"],
+          side: ["M3 21H22V22H3Z", "M21 3H22V21H21Z"],
+          highlight: ["M2 2H21V3H2Z", "M2 3H3V21H2Z"],
+        };
       case "fafsa":
-        return (
-          <>
-            <rect x="2" y="5" width="15" height="13" {...plane} />
-            <rect x="19" y="4" width="3" height="16" {...plane} />
-          </>
-        );
+        return {
+          castShadow: ["M4 19H18V21H4Z", "M20 20H23V22H20Z"],
+          side: ["M3 17H17V19H3Z", "M21 4H23V20H21Z"],
+          highlight: ["M2 5H17V6H2Z", "M2 6H3V17H2Z", "M19 4H22V5H19Z"],
+        };
       case "navi":
-        return (
-          <path
-            d="M12 21s7-6 7-13a7 7 0 1 0-14 0c0 7 7 13 7 13Z"
-            {...plane}
-          />
-        );
+        return {
+          castShadow: ["M11 20H14V22H11Z", "M18 8H20V12H18Z"],
+          side: ["M12 18H15V21H12Z", "M17 9H19V13H17Z"],
+          highlight: ["M8 3H13V4H8Z", "M6 5H7V10H6Z"],
+        };
       case "tiktok":
-        return <rect x="2" y="4" width="20" height="16" {...plane} />;
+        return {
+          castShadow: ["M4 20H23V22H4Z", "M22 6H23V20H22Z"],
+          side: ["M3 19H22V20H3Z", "M21 5H22V19H21Z"],
+          highlight: ["M2 4H21V5H2Z", "M2 5H3V19H2Z"],
+        };
     }
   }
 
   switch (name) {
     case "folder":
-      return <path d="M2 9h11l4 4h13v16H2zM2 9V5h11l4 4" {...plane} />;
+      return {
+        castShadow: ["M5 30H31V31H5Z"],
+        side: ["M3 27H30V30H3Z", "M28 13H30V27H28Z"],
+        highlight: ["M2 5H13V6H2Z", "M2 9H3V27H2Z", "M3 9H13V10H3Z"],
+      };
     case "document":
-    case "resume":
-    case "recipe":
-      return <path d="M7 2h13l6 6v22H7z" {...plane} />;
+      return {
+        castShadow: ["M9 30H27V31H9Z", "M26 9H27V30H26Z"],
+        side: ["M8 28H26V30H8Z", "M24 10H26V28H24Z"],
+        highlight: ["M7 2H20V3H7Z", "M7 3H8V28H7Z"],
+      };
     case "profile":
-      return <rect x="2" y="5" width="28" height="23" {...plane} />;
+      return {
+        castShadow: ["M5 29H31V31H5Z", "M30 7H31V29H30Z"],
+        side: ["M3 27H30V29H3Z", "M28 6H30V27H28Z"],
+        highlight: ["M2 5H29V6H2Z", "M2 6H3V27H2Z"],
+      };
+    case "resume":
+      return {
+        castShadow: ["M10 30H27V31H10Z", "M26 10H27V30H26Z"],
+        side: ["M8 28H26V30H8Z", "M24 11H26V28H24Z"],
+        highlight: ["M7 2H19V3H7Z", "M7 3H8V28H7Z"],
+      };
+    case "recipe":
+      return {
+        castShadow: ["M9 30H28V31H9Z", "M26 9H28V30H26Z"],
+        side: ["M8 29H26V30H8Z", "M24 10H26V29H24Z"],
+        highlight: ["M7 2H20V3H7Z", "M7 3H8V29H7Z", "M20 3H21V7H20Z"],
+      };
     case "display":
-      return (
-        <>
-          <rect x="2" y="4" width="28" height="20" {...plane} />
-          <rect x="15" y="24" width="2" height="5" {...plane} />
-          <rect x="10" y="29" width="12" height="1" {...plane} />
-        </>
-      );
+      return {
+        castShadow: ["M5 25H31V27H5Z", "M30 6H31V25H30Z", "M11 30H23V31H11Z"],
+        side: ["M3 23H30V25H3Z", "M28 5H30V23H28Z", "M17 24H18V29H17Z"],
+        highlight: ["M2 4H29V5H2Z", "M2 5H3V23H2Z"],
+      };
     case "mail":
-      return (
-        <>
-          <rect x="8" y="2" width="18" height="7" {...plane} />
-          <rect x="2" y="7" width="27" height="20" {...plane} />
-        </>
-      );
+      return {
+        castShadow: ["M5 28H31V30H5Z", "M29 10H31V28H29Z"],
+        side: ["M3 26H29V28H3Z", "M27 9H29V26H27Z", "M24 3H27V11H24Z"],
+        highlight: ["M8 2H26V3H8Z", "M8 3H9V8H8Z", "M2 7H28V8H2Z", "M2 8H3V26H2Z"],
+      };
     case "app":
-      return <rect x="4" y="4" width="24" height="24" {...plane} />;
+      return {
+        castShadow: ["M6 28H30V30H6Z", "M28 6H30V28H28Z"],
+        side: ["M5 27H28V28H5Z", "M27 5H28V27H27Z"],
+        highlight: ["M4 4H27V5H4Z", "M4 5H5V27H4Z"],
+      };
     case "loose-parts":
-      return (
-        <>
-          <circle cx="9" cy="9" r="5" {...plane} />
-          <rect x="19" y="4" width="9" height="9" {...plane} />
-          <path d="M3 29h12L9 18z" {...plane} />
-        </>
-      );
+      return {
+        castShadow: ["M8 14H15V16H8Z", "M21 13H30V15H21Z", "M6 29H16V31H6Z"],
+        side: ["M6 12H14V14H6Z", "M20 11H29V13H20Z", "M5 27H15V29H5Z"],
+        highlight: ["M6 5H10V6H6Z", "M19 4H28V5H19Z", "M9 18H10V21H9Z"],
+      };
     case "fresh-greens":
-      return <rect x="2" y="2" width="28" height="28" {...plane} />;
+      return {
+        castShadow: ["M5 30H31V31H5Z", "M30 5H31V30H30Z"],
+        side: ["M3 29H30V30H3Z", "M29 3H30V29H29Z"],
+        highlight: ["M2 2H29V3H2Z", "M2 3H3V29H2Z"],
+      };
     case "fafsa":
-      return (
-        <>
-          <rect x="2" y="8" width="21" height="18" {...plane} />
-          <rect x="25" y="5" width="5" height="22" {...plane} />
-        </>
-      );
+      return {
+        castShadow: ["M5 27H24V29H5Z", "M27 27H31V29H27Z"],
+        side: ["M3 25H23V27H3Z", "M29 5H31V27H29Z"],
+        highlight: ["M2 8H23V9H2Z", "M2 9H3V25H2Z", "M25 5H30V6H25Z"],
+      };
     case "navi":
-      return (
-        <path
-          d="M16 29s9-8 9-17a9 9 0 1 0-18 0c0 9 9 17 9 17Z"
-          {...plane}
-        />
-      );
+      return {
+        castShadow: ["M15 28H18V31H15Z", "M24 11H27V16H24Z"],
+        side: ["M16 25H19V29H16Z", "M23 12H25V17H23Z"],
+        highlight: ["M11 4H17V5H11Z", "M8 7H9V13H8Z"],
+      };
     case "tiktok":
-      return <rect x="2" y="5" width="28" height="23" {...plane} />;
+      return {
+        castShadow: ["M5 28H31V30H5Z", "M30 7H31V28H30Z"],
+        side: ["M3 27H30V28H3Z", "M28 6H30V27H28Z"],
+        highlight: ["M2 5H29V6H2Z", "M2 6H3V27H2Z"],
+      };
   }
+}
+
+function renderDepthPlanePaths(
+  name: Myles97IconName,
+  plane: DepthPlaneName,
+  paths: readonly string[],
+  tone: string,
+) {
+  return paths.map((data, index) => (
+    <path
+      key={`${plane}-${index}`}
+      d={data}
+      data-m98-icon-object={name}
+      data-m98-icon-plane={plane}
+      fill={tone}
+      stroke="none"
+    />
+  ));
+}
+
+function renderDepthUnderlay(
+  name: Myles97IconName,
+  tier: Exclude<Myles97IconTier, "chrome">,
+): ReactNode {
+  const planes = depthPlaneSpec(name, tier);
+
+  return (
+    <g data-m98-icon-depth="shadow">
+      <g data-m98-icon-depth="cast-shadow">
+        {renderDepthPlanePaths(name, "cast-shadow", planes.castShadow, "#4a4a4a")}
+      </g>
+      <g data-m98-icon-depth="side">
+        {renderDepthPlanePaths(name, "side", planes.side, SIDE_TONE_BY_ICON[name])}
+      </g>
+    </g>
+  );
+}
+
+function renderDepthHighlight(
+  name: Myles97IconName,
+  tier: Exclude<Myles97IconTier, "chrome">,
+): ReactNode {
+  const planes = depthPlaneSpec(name, tier);
+
+  return (
+    <g data-m98-icon-depth="highlight">
+      {renderDepthPlanePaths(name, "highlight", planes.highlight, "#ffffff")}
+    </g>
+  );
 }
 
 function renderChromeGlyph(
@@ -442,14 +562,6 @@ function renderMenuGlyph(
           />
           <path d="M8 5h8M8 8h6" {...line(palette, palette.blue)} />
           <rect
-            x="4"
-            y="8"
-            width="19"
-            height="14"
-            data-m98-mail-part="shadow"
-            {...surface(palette, "#5c5c5c")}
-          />
-          <rect
             x="2"
             y="6"
             width="19"
@@ -590,14 +702,6 @@ function renderDiscoveryGlyph(
             {...surface(palette, "#d8edf2")}
           />
           <path d="M11 6h11M11 9h8" {...line(palette, palette.blue)} />
-          <rect
-            x="4"
-            y="9"
-            width="27"
-            height="20"
-            data-m98-mail-part="shadow"
-            {...surface(palette, "#5c5c5c")}
-          />
           <rect
             x="2"
             y="7"
@@ -740,13 +844,9 @@ export function Myles97Icon({
 
   return (
     <svg {...common}>
-      <g data-m98-icon-depth="shadow" transform="translate(1 1)">
-        {renderDepthSilhouette(name, resolvedTier, "#4a4a4a")}
-      </g>
-      <g data-m98-icon-depth="highlight" transform="translate(-1 -1)">
-        {renderDepthSilhouette(name, resolvedTier, "#ffffff")}
-      </g>
+      {renderDepthUnderlay(name, resolvedTier)}
       <g data-m98-icon-depth="face">{glyph}</g>
+      {renderDepthHighlight(name, resolvedTier)}
     </svg>
   );
 }
