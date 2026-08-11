@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges" data-m98-concept="tiktok-catalog" data-m98-grid="16">
+  <path fill="#232427" d="M2 3H13V4H15V13H14V15H3V14H1V4H2Z" />
+  <rect fill="#76777b" x="2" y="4" width="12" height="9" />
+  <rect fill="#eeeae4" x="2" y="4" width="11" height="8" />
+  <rect fill="#ffffff" x="3" y="4" width="9" height="1" />
+  <rect fill="#47525c" x="3" y="6" width="8" height="1" />
+  <rect fill="#66c9c3" x="3" y="8" width="3" height="3" />
+  <rect fill="#d65a78" x="8" y="8" width="3" height="3" />
+  <rect fill="#b4b0aa" x="3" y="12" width="8" height="1" />
+  <rect fill="#57585b" x="13" y="5" width="1" height="8" />
+  <rect fill="#191a1c" x="3" y="13" width="10" height="1" />
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" shape-rendering="crispEdges" data-m98-concept="fresh-greens" data-m98-grid="24">
+  <path fill="#1d241f" d="M3 6L8 3L15 6L21 3L22 4V18L16 21L9 18L3 22L2 21V7Z" />
+  <polygon fill="#74786e" points="3,7 8,4 15,7 21,4 21,17 16,20 9,17 3,20" />
+  <polygon fill="#d8dfc3" points="3,7 8,4 8,17 3,20" />
+  <polygon fill="#f3edcf" points="8,4 15,7 15,19 9,17 8,17" />
+  <polygon fill="#a7bd88" points="15,7 21,4 21,17 16,20 15,19" />
+  <polygon fill="#ffffff" points="3,7 8,4 8,6 3,9" />
+  <polygon fill="#c7c5b2" points="3,13 8,10 8,13 3,16" />
+  <polygon fill="#8c9187" points="8,10 15,13 15,16 8,13" />
+  <polygon fill="#d4d0b9" points="15,13 21,10 21,13 15,16" />
+  <path fill="#1e4e2c" d="M4 16L7 14H10L12 12H16L18 9H20V11H19L17 14H13L11 16H8L5 18H4Z" />
+  <path fill="#4f9b4e" d="M4 15L7 13H10L12 11H16L18 8H20V9H19L17 13H13L11 15H8L5 17H4Z" />
+  <rect fill="#6fc061" x="6" y="13" width="2" height="1" />
+  <path fill="#633518" d="M17 5H22V10H20V8H18V12H17Z" />
+  <polygon fill="#e66f22" points="18,5 22,5 22,8 18,8" />
+  <rect fill="#ffad42" x="18" y="5" width="3" height="1" />
+  <polygon fill="#343a34" points="4,20 9,17 16,20 16,21 9,18 4,22" />
+</svg>
