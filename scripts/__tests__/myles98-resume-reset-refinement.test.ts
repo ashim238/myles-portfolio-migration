@@ -6,34 +6,39 @@ import { expectedMasterPath } from "../lib/myles98-icon-contract.mjs";
 const ROOT = "docs/design-assets/myles98-icons";
 const resumeClipColors = new Set(["#164b80", "#75acd2"]);
 const resetActionColors = new Set(["#8e211e", "#8d211e", "#f15a50"]);
-const resetDesktopContextColors = new Set(["#4a7d8e", "#75acd2", "#29282a"]);
 const resetRestartArrowContract = new Map([
   [16, {
-    tip: [13, 4],
-    gap: [9, 4],
+    tip: [13, 5],
+    gap: [9, 3],
+    tail: [7, 3],
     leftArc: [3, 8],
-    lowerArc: [8, 12],
-    rightArc: [12, 8],
+    lowerArc: [7, 12],
+    rightArc: [11, 8],
+    innerNegative: [8, 8],
     minimumWidth: 11,
     minimumHeight: 10,
   }],
   [24, {
-    tip: [20, 5],
-    gap: [14, 5],
-    leftArc: [3, 10],
-    lowerArc: [10, 19],
-    rightArc: [19, 10],
-    minimumWidth: 18,
-    minimumHeight: 17,
+    tip: [20, 7],
+    gap: [15, 5],
+    tail: [11, 4],
+    leftArc: [4, 11],
+    lowerArc: [11, 19],
+    rightArc: [18, 12],
+    innerNegative: [12, 12],
+    minimumWidth: 17,
+    minimumHeight: 16,
   }],
   [32, {
-    tip: [28, 8],
-    gap: [20, 7],
-    leftArc: [5, 15],
-    lowerArc: [15, 26],
-    rightArc: [25, 15],
+    tip: [28, 10],
+    gap: [21, 6],
+    tail: [16, 5],
+    leftArc: [5, 16],
+    lowerArc: [16, 26],
+    rightArc: [25, 17],
+    innerNegative: [16, 16],
     minimumWidth: 24,
-    minimumHeight: 24,
+    minimumHeight: 23,
   }],
 ] as const);
 
@@ -244,17 +249,20 @@ describe("Myles 98 Resume and Reset Desktop refinement", () => {
     expect(resume32Bounds.height).toBeLessThanOrEqual(8);
   });
 
-  it("uses one bounded restart action instead of a flag or opposing transfer arrows", () => {
+  it("maps every visible Reset Desktop pixel to the restart action, with no device companion", async () => {
     for (const grid of [16, 24, 32]) {
-      const source = sourceFor("reset-desktop", grid);
-      const darkArrowPaths = source.match(/<path fill="#8(?:e|d)211e" d="[^"]+"\s*\/>/gi) ?? [];
-      expect(darkArrowPaths).toHaveLength(1);
-      expect(source).not.toMatch(/<rect fill="#8(?:e|d)211e"/i);
+      const reset = await nativeRaster(sourceFor("reset-desktop", grid), grid);
+      const action = colorMask(reset.data, reset.info.channels, resetActionColors);
+      const opaque = Array.from(
+        { length: reset.data.length / reset.info.channels },
+        (_, index) => reset.data[index * reset.info.channels + 3] === 0xff,
+      );
+      expect(action).toEqual(opaque);
     }
   });
 
   it("renders one stepped restart arrow with a directional tip, circular arc, and intentional gap", async () => {
-    for (const [grid, { tip, gap, leftArc, lowerArc, rightArc, minimumWidth, minimumHeight }] of resetRestartArrowContract) {
+    for (const [grid, { tip, gap, tail, leftArc, lowerArc, rightArc, innerNegative, minimumWidth, minimumHeight }] of resetRestartArrowContract) {
       const reset = await nativeRaster(sourceFor("reset-desktop", grid), grid);
       const mask = colorMask(reset.data, reset.info.channels, resetActionColors);
       const actionBounds = boundsFor(reset.data, reset.info.width, reset.info.channels, resetActionColors);
@@ -263,36 +271,16 @@ describe("Myles 98 Resume and Reset Desktop refinement", () => {
       expect(maskTopology(mask, grid)).toEqual({ components: 1, enclosedOpenings: 0 });
       expect(at(...tip)).toBe(true);
       expect(at(...gap)).toBe(false);
+      expect(at(...tail)).toBe(true);
       expect(at(...leftArc)).toBe(true);
       expect(at(...lowerArc)).toBe(true);
       expect(at(...rightArc)).toBe(true);
+      expect(at(...innerNegative)).toBe(false);
       expect(actionBounds.maxX).toBe(tip[0]);
-      expect(mask.filter((filled, index) => filled && index % grid === tip[0]).length).toBeLessThanOrEqual(2);
+      expect(mask.filter((filled, index) => filled && index % grid === tip[0])).toHaveLength(1);
       expect(actionBounds.width).toBeGreaterThanOrEqual(minimumWidth);
       expect(actionBounds.height).toBeGreaterThanOrEqual(minimumHeight);
-      expect(mask.filter(Boolean).length / (actionBounds.width * actionBounds.height)).toBeLessThan(0.7);
-    }
-  });
-
-  it("tiers desktop context beneath the restart action only where the grid can support it", async () => {
-    for (const grid of [16, 24, 32]) {
-      const reset = await nativeRaster(sourceFor("reset-desktop", grid), grid);
-      const context = colorMask(reset.data, reset.info.channels, resetDesktopContextColors);
-
-      if (grid === 16) {
-        expect(context.some(Boolean)).toBe(false);
-        continue;
-      }
-
-      const actionBounds = boundsFor(reset.data, reset.info.width, reset.info.channels, resetActionColors);
-      const contextBounds = boundsFor(reset.data, reset.info.width, reset.info.channels, resetDesktopContextColors);
-      expect(maskTopology(context, grid)).toEqual({ components: 1, enclosedOpenings: 0 });
-      expect(contextBounds.width).toBeLessThan(actionBounds.width / 2);
-      expect(contextBounds.height).toBeLessThan(actionBounds.height / 2);
-      expect(contextBounds.minX).toBeGreaterThan(actionBounds.minX);
-      expect(contextBounds.maxX).toBeLessThan(actionBounds.maxX);
-      expect(contextBounds.minY).toBeGreaterThan(actionBounds.minY);
-      expect(contextBounds.maxY).toBeLessThan(actionBounds.maxY);
+      expect(mask.filter(Boolean).length / (actionBounds.width * actionBounds.height)).toBeLessThan(0.56);
     }
   });
 });

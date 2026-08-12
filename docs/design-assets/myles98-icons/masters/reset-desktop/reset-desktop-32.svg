@@ -1,11 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" data-m98-concept="reset-desktop" data-m98-grid="32">
-  <path fill="#8d211e" d="M22 5H25V7H27V8H29V9H27V10H25V12H22V10H23V8H21V7H22Z M11 3H20V6H11Z M8 5H13V9H8Z M6 7H10V13H6Z M5 11H9V21H5Z M6 19H11V25H6Z M9 23H22V27H9Z M20 20H27V26H20Z M23 12H26V23H23Z" />
-  <rect fill="#f15a50" x="12" y="3" width="6" height="1" />
-  <rect fill="#f15a50" x="6" y="11" width="1" height="7" />
-  <rect fill="#f15a50" x="10" y="26" width="10" height="1" />
-  <rect fill="#f15a50" x="25" y="13" width="1" height="8" />
-  <rect fill="#f15a50" x="23" y="6" width="2" height="1" />
-  <rect fill="#4a7d8e" x="13" y="15" width="7" height="4" />
-  <rect fill="#75acd2" x="14" y="16" width="5" height="1" />
-  <rect fill="#29282a" x="15" y="19" width="3" height="1" />
+  <path fill="#8d211e" d="M12 5H21V9H12Z M8 7H14V12H8Z M5 11H10V22H5Z M8 20H14V26H8Z M12 24H22V28H12Z M20 21H26V27H20Z M23 13H27V23H23Z M23 6H25V8H27V10H29V11H27V13H25V15H23V14H24V12H23Z" />
+  <rect fill="#f15a50" x="13" y="5" width="4" height="1" />
+  <rect fill="#f15a50" x="24" y="10" width="4" height="1" />
 </svg>

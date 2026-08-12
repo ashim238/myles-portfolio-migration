@@ -11,7 +11,6 @@ const FEATURE_INK = "#5f889f";
 const LOWER_LEFT_MODULE = "#c5963a";
 const LOWER_RIGHT_MODULE = "#d8d4cc";
 const RESTART_COLORS = new Set(["#8e211e", "#8d211e", "#f15a50"]);
-const CRT_COLORS = new Set(["#4a7d8e", "#75acd2", "#29282a"]);
 
 type Grid = (typeof GRIDS)[number];
 type Bounds = { minX: number; minY: number; maxX: number; maxY: number; width: number; height: number };
@@ -143,36 +142,24 @@ describe("Myles 98 final FAFSA and Reset icon metaphors", () => {
     expect(lowerLeft.maxX + 1).toBeLessThan(lowerRight.minX);
   });
 
-  it.each(GRIDS)("renders Reset Desktop %ipx as an open restart arrow with tiered desktop context", async (grid) => {
+  it.each(GRIDS)("renders Reset Desktop %ipx as one open circular restart arrow, not a device", async (grid) => {
     const raster = await nativeRaster(sourceFor("reset-desktop", grid), grid);
     const action = maskFor(raster, RESTART_COLORS);
     const opaque = opaqueMask(raster);
     const bounds = boundsFor(action, raster.width);
     const tipPixels = action.filter((filled, index) => filled && index % grid === bounds.maxX).length;
+    const center = Math.floor(grid / 2);
+    const density = action.filter(Boolean).length / (bounds.width * bounds.height);
 
+    expect(action).toEqual(opaque);
     expect(hasOpenTopology(action, grid)).toEqual({ components: 1, enclosedTransparentPixels: 0 });
-    expect(Math.abs(bounds.width - bounds.height)).toBeLessThanOrEqual(3);
-    expect(tipPixels).toBeLessThanOrEqual(2);
+    expect(Math.abs(bounds.width - bounds.height)).toBeLessThanOrEqual(2);
+    expect(tipPixels).toBe(1);
+    expect(action[center * grid + center]).toBe(false);
+    expect(density).toBeLessThan(0.56);
     expect(bounds.minX).toBeGreaterThanOrEqual(2);
     expect(bounds.minY).toBeGreaterThanOrEqual(2);
     expect(bounds.maxX).toBeLessThanOrEqual(grid - 3);
     expect(bounds.maxY).toBeLessThanOrEqual(grid - 3);
-
-    const crt = maskFor(raster, CRT_COLORS);
-    if (grid === 16) {
-      expect(action).toEqual(opaque);
-      expect(crt.some(Boolean)).toBe(false);
-      return;
-    }
-
-    const crtBounds = boundsFor(crt, raster.width);
-    expect(action).not.toEqual(opaque);
-    expect(hasOpenTopology(crt, grid)).toEqual({ components: 1, enclosedTransparentPixels: 0 });
-    expect(crtBounds.width).toBeLessThan(bounds.width / 2);
-    expect(crtBounds.height).toBeLessThan(bounds.height / 2);
-    expect(crtBounds.minX).toBeGreaterThan(bounds.minX);
-    expect(crtBounds.maxX).toBeLessThan(bounds.maxX);
-    expect(crtBounds.minY).toBeGreaterThan(bounds.minY);
-    expect(crtBounds.maxY).toBeLessThan(bounds.maxY);
   });
 });
