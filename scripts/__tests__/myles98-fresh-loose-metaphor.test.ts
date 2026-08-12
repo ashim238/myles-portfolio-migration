@@ -9,7 +9,7 @@ const STREET_FILL = "#aebc9a";
 const ROUTE_FILL = "#4d5552";
 const START_FILL = "#205a40";
 const DESTINATION_FILL = "#f27524";
-const LOOSE_FRONT_FILLS = ["#5f8d73", "#bd7654", "#667d91"];
+const LOOSE_FRONT_FILLS = ["#c58c45", "#d6a45c", "#c89149"];
 const MIN_LOOSE_VISIBLE_COLORS = new Map([[16, 8], [24, 10], [32, 10]]);
 
 type Pixel = {
@@ -179,7 +179,8 @@ describe("Fresh Greens and Loose Parts native-size metaphors", () => {
     expect(upperWidth).toBe(leftWidth);
     expect(upperWidth).toBe(rightWidth);
     expect(upperWidth / upperHeight).toBeLessThanOrEqual(1.35);
-    expect(upper!.minX).toBeLessThanOrEqual(left!.maxX);
-    expect(upper!.maxX).toBeGreaterThanOrEqual(right!.minX);
+    const stackDepth = Math.ceil((left!.minY - upper!.maxY) / 2) + 1;
+    expect(upper!.minX - stackDepth).toBeLessThanOrEqual(left!.maxX);
+    expect(upper!.maxX + stackDepth).toBeGreaterThanOrEqual(right!.minX);
   });
 });

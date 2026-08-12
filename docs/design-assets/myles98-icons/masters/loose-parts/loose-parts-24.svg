@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" shape-rendering="crispEdges" data-m98-concept="loose-parts" data-m98-grid="24">
-  <polygon fill="#20242a" points="2,15 4,13 10,13 12,15 12,22 2,22" />
-  <rect fill="#5f8d73" x="4" y="15" width="6" height="6" />
-  <polygon fill="#a9c7a5" points="4,15 6,13 10,13 10,15" />
-  <rect fill="#3c624e" x="10" y="15" width="2" height="6" />
-  <polygon fill="#20242a" points="12,15 14,13 20,13 22,15 22,22 12,22" />
-  <rect fill="#bd7654" x="14" y="15" width="6" height="6" />
-  <polygon fill="#e5af8d" points="14,15 16,13 20,13 20,15" />
-  <rect fill="#814633" x="20" y="15" width="2" height="6" />
-  <polygon fill="#20242a" points="7,8 9,6 15,6 17,8 17,15 7,15" />
-  <rect fill="#667d91" x="9" y="8" width="6" height="6" />
-  <polygon fill="#b3c2ce" points="9,8 11,6 15,6 15,8" />
-  <rect fill="#42586b" x="15" y="8" width="2" height="6" />
-  <path fill="#90a7b5" d="M11 9H13V10H14V12H13V13H11V12H10V10H11Z" />
-  <path fill="#8eaf8d" d="M6 16H8V17H9V19H8V20H6V19H5V17H6Z" />
-  <path fill="#d69c78" d="M16 16H18V17H19V19H18V20H16V19H15V17H16Z" />
+  <polygon fill="#20242a" points="2,15 4,13 9,13 11,15 11,20 9,22 4,22 2,20" />
+  <polygon fill="#f4d99a" points="4,15 6,13 9,13 9,15" />
+  <rect fill="#fff0c4" x="7" y="14" width="2" height="1" />
+  <rect fill="#d6a45c" x="4" y="15" width="5" height="5" />
+  <polygon fill="#8e5d2a" points="9,15 11,13 11,18 9,20" />
+  <polygon fill="#20242a" points="13,15 15,13 20,13 22,15 22,20 20,22 15,22 13,20" />
+  <polygon fill="#f0ce85" points="15,15 17,13 20,13 20,15" />
+  <rect fill="#fff0c4" x="18" y="14" width="2" height="1" />
+  <rect fill="#c89149" x="15" y="15" width="5" height="5" />
+  <polygon fill="#71451f" points="20,15 22,13 22,18 20,20" />
+  <polygon fill="#20242a" points="8,8 10,6 15,6 17,8 17,13 15,15 10,15 8,13" />
+  <polygon fill="#ffe8b0" points="10,8 12,6 15,6 15,8" />
+  <rect fill="#fff6d3" x="13" y="7" width="2" height="1" />
+  <rect fill="#c58c45" x="10" y="8" width="5" height="5" />
+  <polygon fill="#805224" points="15,8 17,6 17,11 15,13" />
 </svg>

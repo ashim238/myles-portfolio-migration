@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges" data-m98-concept="loose-parts" data-m98-grid="16">
-  <polygon fill="#20242a" points="1,10 2,9 6,9 7,10 7,15 1,15" />
-  <rect fill="#5f8d73" x="2" y="10" width="4" height="4" />
-  <polygon fill="#a9c7a5" points="2,10 3,9 6,9 6,10" />
-  <rect fill="#3c624e" x="6" y="10" width="1" height="4" />
-  <polygon fill="#20242a" points="7,10 8,9 12,9 13,10 13,15 7,15" />
-  <rect fill="#bd7654" x="8" y="10" width="4" height="4" />
-  <polygon fill="#e5af8d" points="8,10 9,9 12,9 12,10" />
-  <rect fill="#814633" x="12" y="10" width="1" height="4" />
-  <polygon fill="#20242a" points="4,5 5,4 9,4 10,5 10,10 4,10" />
-  <rect fill="#667d91" x="5" y="5" width="4" height="4" />
-  <polygon fill="#b3c2ce" points="5,5 6,4 9,4 9,5" />
-  <rect fill="#42586b" x="9" y="5" width="1" height="4" />
+  <polygon fill="#20242a" points="1,10 2,9 5,9 6,10 6,13 5,14 2,14 1,13" />
+  <polygon fill="#f4d99a" points="2,10 3,9 5,9 5,10" />
+  <rect fill="#d6a45c" x="2" y="10" width="3" height="3" />
+  <polygon fill="#8e5d2a" points="5,10 6,9 6,12 5,13" />
+  <polygon fill="#20242a" points="8,10 9,9 12,9 13,10 13,13 12,14 9,14 8,13" />
+  <polygon fill="#f0ce85" points="9,10 10,9 12,9 12,10" />
+  <rect fill="#c89149" x="9" y="10" width="3" height="3" />
+  <polygon fill="#71451f" points="12,10 13,9 13,12 12,13" />
+  <polygon fill="#20242a" points="5,6 6,5 9,5 10,6 10,9 9,10 6,10 5,9" />
+  <polygon fill="#ffe8b0" points="6,6 7,5 9,5 9,6" />
+  <rect fill="#c58c45" x="6" y="6" width="3" height="3" />
+  <polygon fill="#805224" points="9,6 10,5 10,8 9,9" />
 </svg>
