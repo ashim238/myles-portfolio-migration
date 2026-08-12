@@ -8,36 +8,51 @@ const resumeClipColors = new Set(["#164b80", "#75acd2"]);
 const resetActionColors = new Set(["#8e211e", "#8d211e", "#f15a50"]);
 const resetRestartArrowContract = new Map([
   [16, {
-    tip: [13, 5],
+    tip: [13, 6],
     gap: [9, 3],
     tail: [7, 3],
     leftArc: [3, 8],
     lowerArc: [7, 12],
-    rightArc: [11, 8],
+    rightArc: [10, 8],
     innerNegative: [8, 8],
+    arrowhead: [[11, 4], [11, 5], [12, 5], [10, 6], [11, 6], [12, 6], [13, 6], [10, 7], [11, 7], [12, 7]],
+    arrowheadNegative: [[12, 4], [13, 5], [13, 7], [12, 8]],
+    gapCorridor: [[9, 3], [10, 3], [11, 3], [9, 4], [10, 4], [9, 5], [10, 5]],
+    headHighlight: [[11, 4], [12, 5], [13, 6]],
+    headHighlightMinX: 11,
     minimumWidth: 11,
     minimumHeight: 10,
   }],
   [24, {
-    tip: [20, 7],
-    gap: [15, 5],
+    tip: [21, 4],
+    gap: [15, 4],
     tail: [11, 4],
     leftArc: [4, 11],
     lowerArc: [11, 19],
     rightArc: [18, 12],
     innerNegative: [12, 12],
-    minimumWidth: 17,
+    arrowhead: [[20, 4], [21, 4], [20, 5], [19, 6], [18, 7], [18, 8]],
+    arrowheadNegative: [[21, 5], [19, 5], [18, 5], [17, 6]],
+    gapCorridor: [[15, 4], [16, 4], [17, 4], [18, 4], [19, 4], [15, 5], [16, 5], [17, 5], [18, 5], [19, 5], [15, 6], [16, 6], [17, 6], [18, 6]],
+    headHighlight: [[21, 4], [20, 5], [19, 6], [18, 7], [18, 9], [18, 12]],
+    headHighlightMinX: 18,
+    minimumWidth: 18,
     minimumHeight: 16,
   }],
   [32, {
-    tip: [28, 10],
-    gap: [21, 6],
+    tip: [29, 5],
+    gap: [21, 5],
     tail: [16, 5],
     leftArc: [5, 16],
     lowerArc: [16, 26],
     rightArc: [25, 17],
     innerNegative: [16, 16],
-    minimumWidth: 24,
+    arrowhead: [[28, 5], [29, 5], [28, 6], [27, 7], [26, 8], [25, 9], [25, 10]],
+    arrowheadNegative: [[29, 6], [27, 6], [26, 6], [24, 8]],
+    gapCorridor: [[21, 5], [22, 5], [23, 5], [24, 5], [25, 5], [26, 5], [27, 5], [21, 6], [22, 6], [23, 6], [24, 6], [25, 6], [26, 6], [27, 6], [21, 7], [22, 7], [23, 7], [24, 7], [25, 7], [26, 7]],
+    headHighlight: [[29, 5], [28, 6], [27, 7], [26, 8], [25, 9], [25, 12], [25, 17]],
+    headHighlightMinX: 25,
+    minimumWidth: 25,
     minimumHeight: 23,
   }],
 ] as const);
@@ -261,12 +276,29 @@ describe("Myles 98 Resume and Reset Desktop refinement", () => {
     }
   });
 
-  it("renders one stepped restart arrow with a directional tip, circular arc, and intentional gap", async () => {
-    for (const [grid, { tip, gap, tail, leftArc, lowerArc, rightArc, innerNegative, minimumWidth, minimumHeight }] of resetRestartArrowContract) {
+  it("renders a classic open restart sweep with a directional arrowhead instead of a chain link", async () => {
+    for (const [grid, {
+      tip,
+      gap,
+      tail,
+      leftArc,
+      lowerArc,
+      rightArc,
+      innerNegative,
+      arrowhead,
+      arrowheadNegative,
+      gapCorridor,
+      headHighlight,
+      headHighlightMinX,
+      minimumWidth,
+      minimumHeight,
+    }] of resetRestartArrowContract) {
       const reset = await nativeRaster(sourceFor("reset-desktop", grid), grid);
       const mask = colorMask(reset.data, reset.info.channels, resetActionColors);
+      const highlight = colorMask(reset.data, reset.info.channels, new Set(["#f15a50"]));
       const actionBounds = boundsFor(reset.data, reset.info.width, reset.info.channels, resetActionColors);
       const at = (x: number, y: number) => mask[y * grid + x];
+      const highlightedAt = (x: number, y: number) => highlight[y * grid + x];
 
       expect(maskTopology(mask, grid)).toEqual({ components: 1, enclosedOpenings: 0 });
       expect(at(...tip)).toBe(true);
@@ -276,6 +308,11 @@ describe("Myles 98 Resume and Reset Desktop refinement", () => {
       expect(at(...lowerArc)).toBe(true);
       expect(at(...rightArc)).toBe(true);
       expect(at(...innerNegative)).toBe(false);
+      expect(arrowhead.every(([x, y]) => at(x, y))).toBe(true);
+      expect(arrowheadNegative.every(([x, y]) => !at(x, y))).toBe(true);
+      expect(gapCorridor.every(([x, y]) => !at(x, y))).toBe(true);
+      expect(headHighlight.every(([x, y]) => highlightedAt(x, y))).toBe(true);
+      expect(highlight.every((isHighlighted, index) => !isHighlighted || index % grid >= headHighlightMinX)).toBe(true);
       expect(actionBounds.maxX).toBe(tip[0]);
       expect(mask.filter((filled, index) => filled && index % grid === tip[0])).toHaveLength(1);
       expect(actionBounds.width).toBeGreaterThanOrEqual(minimumWidth);
