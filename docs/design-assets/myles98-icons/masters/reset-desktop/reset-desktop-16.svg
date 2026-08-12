@@ -1,10 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges" data-m98-concept="reset-desktop" data-m98-grid="16">
-  <path fill="#8e211e" d="M6 3H9V5H6Z M4 4H7V7H4Z M3 6H5V10H3Z M4 9H7V12H4Z M6 11H10V13H6Z M9 10H12V12H9Z M10 7H12V11H10Z" />
-  <rect fill="#8e211e" x="11" y="4" width="1" height="1" />
-  <rect fill="#8e211e" x="11" y="5" width="2" height="1" />
-  <rect fill="#8e211e" x="10" y="6" width="4" height="1" />
+  <rect fill="#8e211e" x="6" y="2" width="4" height="1" />
+  <rect fill="#8e211e" x="5" y="3" width="4" height="1" />
+  <rect fill="#8e211e" x="4" y="4" width="3" height="1" />
+  <rect fill="#8e211e" x="3" y="5" width="3" height="2" />
+  <rect fill="#8e211e" x="2" y="7" width="3" height="3" />
+  <rect fill="#8e211e" x="3" y="10" width="3" height="2" />
+  <rect fill="#8e211e" x="4" y="12" width="3" height="1" />
+  <rect fill="#8e211e" x="5" y="12" width="6" height="2" />
+  <rect fill="#8e211e" x="10" y="12" width="3" height="2" />
+  <rect fill="#8e211e" x="11" y="10" width="2" height="3" />
+  <rect fill="#8e211e" x="12" y="7" width="1" height="4" />
+  <rect fill="#8e211e" x="10" y="4" width="2" height="1" />
+  <rect fill="#8e211e" x="10" y="5" width="3" height="1" />
+  <rect fill="#8e211e" x="9" y="6" width="5" height="1" />
   <rect fill="#8e211e" x="10" y="7" width="3" height="1" />
-  <rect fill="#f15a50" x="11" y="4" width="1" height="1" />
-  <rect fill="#f15a50" x="12" y="5" width="1" height="1" />
-  <rect fill="#f15a50" x="13" y="6" width="1" height="1" />
+  <rect fill="#8e211e" x="11" y="8" width="2" height="1" />
+  <rect fill="#f15a50" x="6" y="2" width="3" height="1" />
+  <rect fill="#f15a50" x="5" y="3" width="3" height="1" />
+  <rect fill="#f15a50" x="3" y="7" width="1" height="2" />
+  <rect fill="#f15a50" x="5" y="12" width="5" height="1" />
+  <rect fill="#f15a50" x="12" y="10" width="1" height="2" />
+  <rect fill="#f15a50" x="10" y="5" width="2" height="1" />
+  <rect fill="#f15a50" x="10" y="6" width="3" height="1" />
 </svg>
