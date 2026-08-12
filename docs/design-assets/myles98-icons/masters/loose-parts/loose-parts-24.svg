@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" shape-rendering="crispEdges" data-m98-concept="loose-parts" data-m98-grid="24">
-  <polygon fill="#20242a" points="2,14 4,12 12,12 12,19 10,19 10,21 2,21" />
-  <rect fill="#5f8d73" x="4" y="14" width="6" height="5" />
-  <polygon fill="#a9c7a5" points="4,14 6,12 10,12 10,14" />
-  <rect fill="#3c624e" x="10" y="14" width="2" height="5" />
-  <polygon fill="#20242a" points="11,14 13,12 21,12 21,19 19,19 19,21 11,21" />
-  <rect fill="#bd7654" x="13" y="14" width="6" height="5" />
-  <polygon fill="#e5af8d" points="13,14 15,12 19,12 19,14" />
-  <rect fill="#814633" x="19" y="14" width="2" height="5" />
-  <polygon fill="#20242a" points="6,7 8,5 16,5 16,12 14,12 14,14 6,14" />
-  <rect fill="#667d91" x="8" y="7" width="6" height="5" />
-  <polygon fill="#b3c2ce" points="8,7 10,5 14,5 14,7" />
-  <rect fill="#42586b" x="14" y="7" width="2" height="5" />
-  <path fill="#90a7b5" d="M10 9H12V11H10Z" />
-  <path fill="#8eaf8d" d="M5 16H7V18H5Z" />
-  <path fill="#d69c78" d="M16 15H18V17H16Z" />
+  <polygon fill="#20242a" points="2,15 4,13 10,13 12,15 12,22 2,22" />
+  <rect fill="#5f8d73" x="4" y="15" width="6" height="6" />
+  <polygon fill="#a9c7a5" points="4,15 6,13 10,13 10,15" />
+  <rect fill="#3c624e" x="10" y="15" width="2" height="6" />
+  <polygon fill="#20242a" points="12,15 14,13 20,13 22,15 22,22 12,22" />
+  <rect fill="#bd7654" x="14" y="15" width="6" height="6" />
+  <polygon fill="#e5af8d" points="14,15 16,13 20,13 20,15" />
+  <rect fill="#814633" x="20" y="15" width="2" height="6" />
+  <polygon fill="#20242a" points="7,8 9,6 15,6 17,8 17,15 7,15" />
+  <rect fill="#667d91" x="9" y="8" width="6" height="6" />
+  <polygon fill="#b3c2ce" points="9,8 11,6 15,6 15,8" />
+  <rect fill="#42586b" x="15" y="8" width="2" height="6" />
+  <path fill="#90a7b5" d="M11 9H13V10H14V12H13V13H11V12H10V10H11Z" />
+  <path fill="#8eaf8d" d="M6 16H8V17H9V19H8V20H6V19H5V17H6Z" />
+  <path fill="#d69c78" d="M16 16H18V17H19V19H18V20H16V19H15V17H16Z" />
 </svg>
