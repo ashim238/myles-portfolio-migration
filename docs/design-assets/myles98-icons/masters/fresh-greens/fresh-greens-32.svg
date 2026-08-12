@@ -1,17 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" data-m98-concept="fresh-greens" data-m98-grid="32">
   <path fill="#202621" d="M1 1H31V31H1Z" />
   <rect fill="#d8dfc3" x="2" y="2" width="28" height="28" />
-  <path fill="#c4ceac" d="M4 6H10V7H8V10H6V9H4Z" />
-  <rect fill="#4d5552" x="7" y="23" width="4" height="2" />
-  <rect fill="#4d5552" x="10" y="21" width="2" height="3" />
-  <rect fill="#4d5552" x="11" y="20" width="3" height="2" />
-  <rect fill="#4d5552" x="13" y="18" width="2" height="3" />
-  <rect fill="#4d5552" x="14" y="16" width="3" height="2" />
-  <rect fill="#4d5552" x="16" y="14" width="2" height="3" />
-  <rect fill="#4d5552" x="17" y="13" width="6" height="2" />
-  <rect fill="#4d5552" x="22" y="11" width="2" height="3" />
-  <rect fill="#4d5552" x="23" y="10" width="3" height="2" />
-  <rect fill="#4d5552" x="25" y="8" width="2" height="3" />
-  <rect fill="#205a40" x="4" y="23" width="4" height="4" />
-  <path fill="#f27524" d="M25 4H28V5H29V8H28V9H25V8H24V5H25Z" />
+  <rect fill="#c4ceac" x="4" y="4" width="6" height="4" />
+  <rect fill="#c4ceac" x="16" y="4" width="4" height="4" />
+  <rect fill="#c4ceac" x="4" y="27" width="5" height="2" />
+  <rect fill="#c4ceac" x="16" y="25" width="5" height="4" />
+  <rect fill="#4d5552" x="7" y="22" width="7" height="2" />
+  <rect fill="#4d5552" x="12" y="10" width="2" height="14" />
+  <rect fill="#4d5552" x="12" y="10" width="12" height="2" />
+  <rect fill="#4d5552" x="22" y="10" width="2" height="11" />
+  <rect fill="#4d5552" x="22" y="19" width="5" height="2" />
+  <rect fill="#205a40" x="4" y="21" width="4" height="4" />
+  <path fill="#f27524" d="M26 16H30V20H29V22H26Z" />
 </svg>

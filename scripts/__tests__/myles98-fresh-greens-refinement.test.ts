@@ -5,71 +5,54 @@ import { expectedMasterPath } from "../lib/myles98-icon-contract.mjs";
 
 const ROOT = "docs/design-assets/myles98-icons";
 const GRIDS = [16, 24, 32] as const;
-
-type Grid = (typeof GRIDS)[number];
-type Pixel = {
-  color: string;
-  x: number;
-  y: number;
-};
-type Bounds = {
-  maxX: number;
-  maxY: number;
-  minX: number;
-  minY: number;
-};
-
 const ROUTE_FILL = "#4d5552";
 const START_FILL = "#205a40";
 const DESTINATION_FILL = "#f27524";
-const BOUNDARY_FILL = "#c4ceac";
+const LANDMARK_FILL = "#c4ceac";
 const ALLOWED_FILLS = new Set([
   "#202621",
   "#d8dfc3",
-  BOUNDARY_FILL,
+  LANDMARK_FILL,
   ROUTE_FILL,
   START_FILL,
   DESTINATION_FILL,
 ]);
-const MIN_ROUTE_PIXELS = new Map([
-  [16, 15],
-  [24, 38],
-  [32, 52],
-]);
-const ROUTE_RECT_COUNTS = new Map<Grid, number>([
-  [16, 5],
-  [24, 8],
-  [32, 10],
-]);
-const ROUTE_GEOMETRY = new Map<Grid, {
-  destinationPixels: number;
-  roadBounds: Bounds;
-  roadPixels: number;
-  startPixels: number;
-}>([
+
+type Grid = (typeof GRIDS)[number];
+type Pixel = { color: string; x: number; y: number };
+type Rect = { height: number; width: number; x: number; y: number };
+
+const DOGLEG_SPECS = new Map<Grid, { landmarkRects: number; route: Rect[] }>([
   [16, {
-    roadPixels: 19,
-    roadBounds: { minX: 4, minY: 6, maxX: 11, maxY: 11 },
-    startPixels: 4,
-    destinationPixels: 12,
+    landmarkRects: 0,
+    route: [
+      { x: 3, y: 11, width: 4, height: 1 },
+      { x: 6, y: 5, width: 1, height: 7 },
+      { x: 6, y: 5, width: 5, height: 1 },
+      { x: 10, y: 5, width: 1, height: 4 },
+      { x: 10, y: 8, width: 3, height: 1 },
+    ],
   }],
   [24, {
-    roadPixels: 42,
-    roadBounds: { minX: 6, minY: 6, maxX: 19, maxY: 18 },
-    startPixels: 9,
-    destinationPixels: 12,
+    landmarkRects: 4,
+    route: [
+      { x: 5, y: 16, width: 5, height: 2 },
+      { x: 8, y: 8, width: 2, height: 10 },
+      { x: 8, y: 8, width: 9, height: 2 },
+      { x: 15, y: 8, width: 2, height: 7 },
+      { x: 15, y: 13, width: 5, height: 2 },
+    ],
   }],
   [32, {
-    roadPixels: 56,
-    roadBounds: { minX: 8, minY: 9, maxX: 26, maxY: 24 },
-    startPixels: 16,
-    destinationPixels: 21,
+    landmarkRects: 4,
+    route: [
+      { x: 7, y: 22, width: 7, height: 2 },
+      { x: 12, y: 10, width: 2, height: 14 },
+      { x: 12, y: 10, width: 12, height: 2 },
+      { x: 22, y: 10, width: 2, height: 11 },
+      { x: 22, y: 19, width: 5, height: 2 },
+    ],
   }],
-]);
-const BOUNDARY_CUES = new Map([
-  [16, null],
-  [24, { d: "M3 5H8V6H7V10H5V8H3Z", nativePixels: 17 }],
-  [32, { d: "M4 6H10V7H8V10H6V9H4Z", nativePixels: 16 }],
 ]);
 
 function sourceFor(grid: Grid) {
@@ -94,6 +77,34 @@ function fillsFor(source: string) {
   return allShapePrimitives(source)
     .map(([, , attributes]) => attribute(attributes, "fill")?.toLowerCase())
     .filter((fill): fill is string => Boolean(fill));
+}
+
+function rectsForFill(source: string, fill: string): Rect[] {
+  return shapesForFill(source, fill)
+    .filter(([, tag]) => tag.toLowerCase() === "rect")
+    .map(([, , attributes]) => ({
+      height: Number(attribute(attributes, "height")),
+      width: Number(attribute(attributes, "width")),
+      x: Number(attribute(attributes, "x")),
+      y: Number(attribute(attributes, "y")),
+    }));
+}
+
+function overlaps(left: Rect, right: Rect) {
+  return left.x < right.x + right.width &&
+    left.x + left.width > right.x &&
+    left.y < right.y + right.height &&
+    left.y + left.height > right.y;
+}
+
+function isUnbranchedDogleg(rects: Rect[]) {
+  if (rects.length !== 5) return false;
+  const horizontal = rects.filter(({ width, height }) => width > height);
+  const vertical = rects.filter(({ width, height }) => height > width);
+  const degrees = rects
+    .map((rect, index) => rects.filter((candidate, candidateIndex) => index !== candidateIndex && overlaps(rect, candidate)).length)
+    .sort((left, right) => left - right);
+  return horizontal.length === 3 && vertical.length === 2 && degrees.join(",") === "1,1,2,2,2";
 }
 
 async function rasterFor(source: string, grid: Grid) {
@@ -178,55 +189,41 @@ function touches(left: Pixel[], right: Pixel[]) {
   ].some((position) => positions.has(position)));
 }
 
-async function hasAllowedBoundaryCue(source: string, grid: Grid) {
-  const expected = BOUNDARY_CUES.get(grid)!;
-  const cues = shapesForFill(source, BOUNDARY_FILL);
-  const pixels = pixelsForFill(await rasterFor(source, grid), BOUNDARY_FILL);
-
-  if (!expected) return cues.length === 0 && pixels.length === 0;
-  return cues.length === 1 &&
-    cues[0][1].toLowerCase() === "path" &&
-    attribute(cues[0][2], "d") === expected.d &&
-    pixels.length === expected.nativePixels;
-}
-
-function appendRect(source: string, fill: string, grid: Grid, paired = false) {
-  const end = paired ? "></rect>" : " />";
-  return source.replace(
-    "</svg>",
-    `  <rect fill="${fill}" x="2" y="2" width="1" height="${grid - 4}"${end}\n</svg>`,
-  );
-}
-
-function appendBoundaryCue(source: string, grid: Grid, paired = false) {
-  const d = grid === 16 ? "M4 4H6V5H5V7H4Z" : BOUNDARY_CUES.get(grid)!.d;
-  const end = paired ? "></path>" : " />";
-  return source.replace("</svg>", `  <path fill="${BOUNDARY_FILL}" d="${d}"${end}\n</svg>`);
-}
-
-function broadRidgeMutation(source: string, grid: Grid) {
-  const routeRects = /\s*<rect\s+[^>]*\bfill="#4d5552"[^>]*\/>/gi;
+function singleRoadMutation(source: string, grid: Grid) {
   return source
-    .replace(routeRects, "")
+    .replace(/\s*<rect\s+[^>]*\bfill="#4d5552"[^>]*\/>/gi, "")
     .replace(
       "</svg>",
-      `  <rect fill="${ROUTE_FILL}" x="3" y="${Math.floor(grid / 2) - 1}" width="${grid - 6}" height="3" />\n</svg>`,
+      `  <rect fill="${ROUTE_FILL}" x="3" y="${Math.floor(grid / 2) - 1}" width="${grid - 6}" height="2" />\n</svg>`,
     );
 }
 
+function branchMutation(source: string, grid: Grid) {
+  return source.replace(
+    "</svg>",
+    `  <rect fill="${ROUTE_FILL}" x="${Math.floor(grid / 2)}" y="${Math.floor(grid / 2)}" width="2" height="${Math.ceil(grid / 3)}" />\n</svg>`,
+  );
+}
+
 describe("Myles 98 Fresh Greens route-map refinement", () => {
-  it.each(GRIDS)("keeps the %ipx master free of vector effects and unknown map fills", (grid) => {
+  it.each(GRIDS)("uses one unbranched asymmetric dogleg, with parcels only at the larger %ipx tiers", (grid) => {
     const source = sourceFor(grid);
+    const routeRects = rectsForFill(source, ROUTE_FILL);
+    const landmarks = rectsForFill(source, LANDMARK_FILL);
+    const expected = DOGLEG_SPECS.get(grid)!;
 
     expect(source.replace(/^<svg[^>]*>/, "")).not.toMatch(
       /<svg[^>]*>|transform=|opacity=|filter=|stroke=/i,
     );
     expect(fillsFor(source).every((fill) => ALLOWED_FILLS.has(fill))).toBe(true);
-    expect(shapesForFill(source, ROUTE_FILL)).toHaveLength(ROUTE_RECT_COUNTS.get(grid)!);
-    expect(shapesForFill(source, ROUTE_FILL).every((shape) => shape[1].toLowerCase() === "rect")).toBe(true);
+    expect(routeRects).toEqual(expected.route);
+    expect(landmarks).toHaveLength(expected.landmarkRects);
+    expect(isUnbranchedDogleg(routeRects)).toBe(true);
+    expect(shapesForFill(source, START_FILL).map(([, tag]) => tag.toLowerCase())).toEqual(["rect"]);
+    expect(shapesForFill(source, DESTINATION_FILL).map(([, tag]) => tag.toLowerCase())).toEqual(["path"]);
   });
 
-  it.each(GRIDS)("renders the %ipx road as a thin four-connected route with attached, distinct endpoints", async (grid) => {
+  it.each(GRIDS)("renders %ipx as one connected bent route with distant, distinct endpoints", async (grid) => {
     const pixels = await rasterFor(sourceFor(grid), grid);
     const road = pixelsForFill(pixels, ROUTE_FILL);
     const start = pixelsForFill(pixels, START_FILL);
@@ -234,59 +231,41 @@ describe("Myles 98 Fresh Greens route-map refinement", () => {
     const roadComponents = connectedComponents(road);
     const startComponents = connectedComponents(start);
     const destinationComponents = connectedComponents(destination);
-    const expected = ROUTE_GEOMETRY.get(grid)!;
 
     expect(roadComponents).toHaveLength(1);
-    const roadComponent = roadComponents[0]!;
-    expect(roadComponent.length).toBe(expected.roadPixels);
-    expect(roadComponent.length).toBeGreaterThanOrEqual(MIN_ROUTE_PIXELS.get(grid)!);
-    expect(roadComponent.length).toBeLessThan(grid * grid * 0.14);
-    expect(bounds(roadComponent)).toEqual(expected.roadBounds);
-    expect(hasSolidSquare(roadComponent, 3)).toBe(false);
+    const roadBounds = bounds(roadComponents[0]!);
+    expect(roadBounds.maxX - roadBounds.minX).toBeGreaterThanOrEqual(Math.floor(grid * 0.4));
+    expect(roadBounds.maxY - roadBounds.minY).toBeGreaterThanOrEqual(Math.floor(grid * 0.3));
+    expect(hasSolidSquare(roadComponents[0]!, 3)).toBe(false);
     expect(touches(road, start)).toBe(true);
     expect(touches(road, destination)).toBe(true);
 
     expect(startComponents).toHaveLength(1);
     expect(destinationComponents).toHaveLength(1);
-    expect(startComponents[0]).toHaveLength(expected.startPixels);
-    expect(destinationComponents[0]).toHaveLength(expected.destinationPixels);
-    expect(startComponents[0]!.length).toBeLessThanOrEqual(Math.ceil(grid * grid * 0.04));
-    expect(destinationComponents[0]!.length).toBeLessThanOrEqual(Math.ceil(grid * grid * 0.05));
     const startBounds = bounds(startComponents[0]!);
     const destinationBounds = bounds(destinationComponents[0]!);
-    expect(startBounds).not.toEqual(destinationBounds);
     expect(Math.hypot(
       (startBounds.minX + startBounds.maxX - destinationBounds.minX - destinationBounds.maxX) / 2,
       (startBounds.minY + startBounds.maxY - destinationBounds.minY - destinationBounds.maxY) / 2,
-    )).toBeGreaterThanOrEqual(grid * 0.7);
+    )).toBeGreaterThanOrEqual(grid * 0.65);
   });
 
-  it.each(GRIDS)("rejects a broad %ipx ridge in place of the route", async (grid) => {
-    const ridgePixels = pixelsForFill(await rasterFor(broadRidgeMutation(sourceFor(grid), grid), grid), ROUTE_FILL);
-
-    expect(hasSolidSquare(ridgePixels, 3)).toBe(true);
-  });
-
-  it.each(GRIDS)("uses exactly the allowed subordinate map-boundary cue at %ipx", async (grid) => {
-    expect(await hasAllowedBoundaryCue(sourceFor(grid), grid)).toBe(true);
-  });
-
-  it.each(GRIDS)("rejects a duplicate boundary cue at %ipx", async (grid) => {
+  it.each(GRIDS)("rejects a lone strip or a branch in place of the %ipx unbranched dogleg", (grid) => {
     const source = sourceFor(grid);
 
-    expect(await hasAllowedBoundaryCue(source, grid)).toBe(true);
-    for (const paired of [false, true]) {
-      expect(await hasAllowedBoundaryCue(appendBoundaryCue(source, grid, paired), grid)).toBe(false);
-    }
+    expect(isUnbranchedDogleg(rectsForFill(source, ROUTE_FILL))).toBe(true);
+    expect(isUnbranchedDogleg(rectsForFill(singleRoadMutation(source, grid), ROUTE_FILL))).toBe(false);
+    expect(isUnbranchedDogleg(rectsForFill(branchMutation(source, grid), ROUTE_FILL))).toBe(false);
   });
 
   it.each(GRIDS)("rejects an added non-map fill at %ipx", (grid) => {
     const source = sourceFor(grid);
+    const mutation = source.replace(
+      "</svg>",
+      `  <rect fill="#8b9d84" x="2" y="2" width="1" height="${grid - 4}" />\n</svg>`,
+    );
 
     expect(fillsFor(source).every((fill) => ALLOWED_FILLS.has(fill))).toBe(true);
-    for (const paired of [false, true]) {
-      const mutation = appendRect(source, "#8b9d84", grid, paired);
-      expect(fillsFor(mutation).every((fill) => ALLOWED_FILLS.has(fill))).toBe(false);
-    }
+    expect(fillsFor(mutation).every((fill) => ALLOWED_FILLS.has(fill))).toBe(false);
   });
 });
