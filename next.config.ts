@@ -33,6 +33,13 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // The local preview is commonly opened through the numeric loopback host.
+  // Next otherwise blocks its dev-only HMR endpoint, which prevents React
+  // hydration and leaves the workstation controls non-interactive.
+  allowedDevOrigins: ["127.0.0.1"],
+  // The default bottom-left Next indicator overlaps this app's fixed Start
+  // button during local review. Errors still surface in the development UI.
+  devIndicators: false,
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];
   },

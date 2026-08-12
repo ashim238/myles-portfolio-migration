@@ -20,6 +20,14 @@ afterEach(() => {
 });
 
 describe("release security headers", () => {
+  it("permits the loopback origin used by the local interactive preview", () => {
+    expect(nextConfig.allowedDevOrigins).toContain("127.0.0.1");
+  });
+
+  it("keeps the development indicator from covering desktop controls", () => {
+    expect(nextConfig.devIndicators).toBe(false);
+  });
+
   it("removes framework disclosure and applies baseline headers globally", async () => {
     expect(nextConfig.poweredByHeader).toBe(false);
     expect(nextConfig.headers).toBeTypeOf("function");
