@@ -29,15 +29,16 @@ export function ProjectOpeningFacts({
             <dd>{fact.value}</dd>
           </div>
         ))}
-        <div className="project-opening-facts-row">
-          <dt>Proof</dt>
-          <dd className="project-opening-facts-proof">
-            <a aria-label={`Proof: ${proof.label}`} href={proof.href}>
-              {proof.label}
-            </a>
-          </dd>
-        </div>
       </dl>
+      <a
+        className="project-opening-facts-action"
+        aria-label={`Open proof: ${proof.label}`}
+        href={proof.href}
+      >
+        <span className="project-opening-facts-action-label">Open proof</span>
+        <span className="project-opening-facts-action-text">{proof.label}</span>
+        <span aria-hidden="true">→</span>
+      </a>
     </section>
   );
 }
