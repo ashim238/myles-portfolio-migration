@@ -7,12 +7,25 @@ const ROOT = "docs/design-assets/myles98-icons";
 const GRIDS = [16, 24, 32] as const;
 const OUTLINE_FILL = "#20242a";
 
+type Grid = (typeof GRIDS)[number];
+type Pixel = {
+  color: string;
+  x: number;
+  y: number;
+};
 type FillBounds = {
   kind: "front-face" | "top-or-side-plane";
   minX: number;
   minY: number;
   maxX: number;
   maxY: number;
+};
+type Rect = {
+  fill: string;
+  height: number;
+  width: number;
+  x: number;
+  y: number;
 };
 
 function attribute(source: string, name: string) {
@@ -29,43 +42,47 @@ function polygonArea(points: Array<[number, number]>) {
 }
 
 function nonBackgroundFillBounds(source: string): FillBounds[] {
-  const shapes = [...source.matchAll(/<(rect|polygon)\b([^>]*)\/>/gi)].flatMap(
-    ([, element, attributes]) => {
-      const fill = attribute(attributes, "fill")?.toLowerCase();
-      if (!fill || fill === OUTLINE_FILL) return [];
+  const shapes: Array<{
+    element: "rect" | "polygon";
+    area: number;
+    minX: number;
+    minY: number;
+    maxX: number;
+    maxY: number;
+  }> = [];
 
-      if (element.toLowerCase() === "rect") {
-        const x = Number(attribute(attributes, "x"));
-        const y = Number(attribute(attributes, "y"));
-        const width = Number(attribute(attributes, "width"));
-        const height = Number(attribute(attributes, "height"));
-        return [{ element: "rect" as const, area: width * height, minX: x, minY: y, maxX: x + width, maxY: y + height }];
-      }
+  for (const match of source.matchAll(/<(rect|polygon)\b([^>]*)\/>/gi)) {
+    const [, elementName, attributes] = match;
+    const fill = attribute(attributes, "fill")?.toLowerCase();
+    if (!fill || fill === OUTLINE_FILL) continue;
 
-      const points = (attribute(attributes, "points")?.match(/-?\d+(?:\.\d+)?/g) ?? [])
-        .map(Number)
-        .reduce<Array<[number, number]>>((pairs, coordinate, index, coordinates) => {
-          if (index % 2 === 0) pairs.push([coordinate, coordinates[index + 1]]);
-          return pairs;
-        }, []);
-      if (points.length < 3 || points.some(([, y]) => !Number.isFinite(y))) return [];
+    if (elementName.toLowerCase() === "rect") {
+      const x = Number(attribute(attributes, "x"));
+      const y = Number(attribute(attributes, "y"));
+      const width = Number(attribute(attributes, "width"));
+      const height = Number(attribute(attributes, "height"));
+      shapes.push({ element: "rect", area: width * height, minX: x, minY: y, maxX: x + width, maxY: y + height });
+      continue;
+    }
 
-      const xs = points.map(([x]) => x);
-      const ys = points.map(([, y]) => y);
-      const minX = Math.min(...xs);
-      const minY = Math.min(...ys);
-      const maxX = Math.max(...xs);
-      const maxY = Math.max(...ys);
-      return [{
-        element: "polygon" as const,
-        area: polygonArea(points),
-        minX,
-        minY,
-        maxX,
-        maxY,
-      }];
-    },
-  );
+    const coordinates = (attribute(attributes, "points")?.match(/-?\d+(?:\.\d+)?/g) ?? []).map(Number);
+    const points: Array<[number, number]> = [];
+    for (let index = 0; index < coordinates.length; index += 2) {
+      points.push([coordinates[index]!, coordinates[index + 1]!]);
+    }
+    if (points.length < 3 || points.some(([x, y]) => !Number.isFinite(x) || !Number.isFinite(y))) continue;
+
+    const xs = points.map(([x]) => x);
+    const ys = points.map(([, y]) => y);
+    shapes.push({
+      element: "polygon",
+      area: polygonArea(points),
+      minX: Math.min(...xs),
+      minY: Math.min(...ys),
+      maxX: Math.max(...xs),
+      maxY: Math.max(...ys),
+    });
+  }
 
   const frontFaces = shapes.filter(({ element }) => element === "rect");
   return shapes.map(({ element, area, ...bounds }) => {
@@ -87,44 +104,77 @@ function nonBackgroundFillBounds(source: string): FillBounds[] {
   });
 }
 
-async function alphaFor(source: string, grid: number) {
-  const { data, info } = await sharp(
-    Buffer.from(source.replace("<svg ", `<svg width="${grid}" height="${grid}" `)),
-  )
+function frontFacesFor(source: string): Rect[] {
+  return [...source.matchAll(/<rect\b([^>]*)\/>/gi)]
+    .map(([, attributes]) => ({
+      fill: attribute(attributes, "fill")?.toLowerCase(),
+      height: Number(attribute(attributes, "height")),
+      width: Number(attribute(attributes, "width")),
+      x: Number(attribute(attributes, "x")),
+      y: Number(attribute(attributes, "y")),
+    }))
+    .filter((rect): rect is Rect =>
+      Boolean(rect.fill) &&
+      rect.fill !== OUTLINE_FILL &&
+      Number.isFinite(rect.x) &&
+      Number.isFinite(rect.y) &&
+      rect.width > 1 &&
+      rect.height > 1,
+    );
+}
+
+function outlinePolygonsFor(source: string) {
+  return [...source.matchAll(/<polygon\b([^>]*)\/>/gi)]
+    .filter(([, attributes]) => attribute(attributes, "fill")?.toLowerCase() === OUTLINE_FILL);
+}
+
+async function rasterFor(source: string, grid: Grid) {
+  const rendered = source.replace(/<svg\s+/, `<svg width="${grid}" height="${grid}" `);
+  const { data, info } = await sharp(Buffer.from(rendered))
     .ensureAlpha()
     .raw()
     .toBuffer({ resolveWithObject: true });
-  return Array.from({ length: grid * grid }, (_, index) => data[index * info.channels + 3]);
+  const pixels: Pixel[] = [];
+
+  for (let y = 0; y < info.height; y += 1) {
+    for (let x = 0; x < info.width; x += 1) {
+      const offset = (y * info.width + x) * info.channels;
+      if (data[offset + 3] === 0) continue;
+      const color = `#${[0, 1, 2]
+        .map((channel) => data[offset + channel].toString(16).padStart(2, "0"))
+        .join("")}`;
+      pixels.push({ color, x, y });
+    }
+  }
+
+  return pixels;
 }
 
-function analyzeAlphaTopology(alphas: number[], width: number, height: number) {
-  const visited = new Set<number>();
-  let opaqueComponents = 0;
+function connectedComponents(pixels: Pixel[]) {
+  const remaining = new Map(pixels.map((pixel) => [`${pixel.x},${pixel.y}`, pixel]));
+  const components: Pixel[][] = [];
 
-  alphas.forEach((alpha, seed) => {
-    if (alpha !== 255 || visited.has(seed)) return;
-    opaqueComponents += 1;
+  while (remaining.size > 0) {
+    const seed = remaining.values().next().value as Pixel;
+    const component: Pixel[] = [];
     const queue = [seed];
-    visited.add(seed);
+    remaining.delete(`${seed.x},${seed.y}`);
+
     while (queue.length > 0) {
-      const index = queue.shift()!;
-      const x = index % width;
-      const y = Math.floor(index / width);
-      const neighbors = [
-        x > 0 ? index - 1 : -1,
-        x < width - 1 ? index + 1 : -1,
-        y > 0 ? index - width : -1,
-        y < height - 1 ? index + width : -1,
-      ];
-      for (const candidate of neighbors) {
-        if (candidate < 0 || visited.has(candidate) || alphas[candidate] !== 255) continue;
-        visited.add(candidate);
-        queue.push(candidate);
+      const pixel = queue.pop()!;
+      component.push(pixel);
+      for (const [x, y] of [[pixel.x - 1, pixel.y], [pixel.x + 1, pixel.y], [pixel.x, pixel.y - 1], [pixel.x, pixel.y + 1]]) {
+        const neighbor = remaining.get(`${x},${y}`);
+        if (!neighbor) continue;
+        remaining.delete(`${x},${y}`);
+        queue.push(neighbor);
       }
     }
-  });
 
-  return { opaqueComponents };
+    components.push(component);
+  }
+
+  return components;
 }
 
 describe("Myles 98 Loose Parts volume refinement", () => {
@@ -141,16 +191,34 @@ describe("Myles 98 Loose Parts volume refinement", () => {
     );
   });
 
-  it.each(GRIDS)("gives all three %ipx blocks a real offset plane in one cluster", async (grid) => {
+  it.each(GRIDS)("renders a literal 2+1 stack of three non-branded blocks at %ipx", async (grid) => {
     const source = readFileSync(expectedMasterPath(ROOT, "loose-parts", grid), "utf8");
     const planes = nonBackgroundFillBounds(source).filter(({ kind }) => kind === "top-or-side-plane");
+    const cluster = connectedComponents(await rasterFor(source, grid));
+    const frontFaces = frontFacesFor(source).sort((left, right) => left.y - right.y || left.x - right.x);
+    const [top, ...lowerRow] = frontFaces;
+    const [left, right] = lowerRow;
 
-    expect(source).not.toMatch(/stud|lego|#(?:ff0000|ffff00|0000ff)/i);
-    expect(source).toMatch(/<(?:path|polygon)\b/);
+    expect(source).not.toMatch(/<(?:circle|ellipse)\b|stud|lego|#(?:ff0000|ffff00|0000ff)/i);
+    expect(outlinePolygonsFor(source)).toHaveLength(3);
     expect(planes).toHaveLength(3);
-    expect(nonBackgroundFillBounds(source)).toContainEqual(
-      expect.objectContaining({ kind: "top-or-side-plane" }),
-    );
-    expect(analyzeAlphaTopology(await alphaFor(source, grid), grid, grid).opaqueComponents).toBe(1);
+    expect(cluster).toHaveLength(1);
+    expect(new Set(cluster[0]!.map((pixel) => pixel.color)).size).toBeGreaterThanOrEqual(10);
+
+    expect(frontFaces).toHaveLength(3);
+    expect(top).toBeDefined();
+    expect(left).toBeDefined();
+    expect(right).toBeDefined();
+    expect(left!.y).toBe(right!.y);
+    expect(top!.y + top!.height).toBeLessThanOrEqual(left!.y);
+    expect([top!.width, left!.width, right!.width]).toEqual([
+      left!.width,
+      left!.width,
+      left!.width,
+    ]);
+    expect(top!.x).toBeGreaterThan(left!.x);
+    expect(top!.x).toBeLessThanOrEqual(left!.x + left!.width);
+    expect(top!.x + top!.width).toBeGreaterThanOrEqual(right!.x);
+    expect(top!.x + top!.width).toBeLessThan(right!.x + right!.width);
   });
 });

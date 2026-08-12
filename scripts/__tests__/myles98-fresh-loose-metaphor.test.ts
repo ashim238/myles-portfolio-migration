@@ -5,6 +5,7 @@ import { expectedMasterPath } from "../lib/myles98-icon-contract.mjs";
 
 const ROOT = "docs/design-assets/myles98-icons";
 const GRIDS = [16, 24, 32] as const;
+const LOOSE_FRONT_FILLS = ["#5f8d73", "#bd7654", "#667d91"];
 
 type Pixel = {
   color: string;
@@ -123,21 +124,23 @@ describe("Fresh Greens and Loose Parts native-size metaphors", () => {
     expect(endpointDistance).toBeGreaterThanOrEqual(grid * 0.7);
   });
 
-  it.each(GRIDS)("renders Loose Parts %ipx as three scattered, dimensional pieces instead of a connected stair or chart", async (grid) => {
+  it.each(GRIDS)("renders Loose Parts %ipx as a literal 2+1 block stack instead of a stair or chart", async (grid) => {
     const raster = await rasterFor("loose-parts", grid);
-    const pieces = connectedComponents(raster.pixels);
+    const cluster = connectedComponents(raster.pixels);
+    const blockFronts = LOOSE_FRONT_FILLS.map((fill) => {
+      const fronts = connectedComponents(raster.pixels.filter((pixel) => pixel.color === fill));
+      expect(fronts).toHaveLength(1);
+      return bounds(fronts[0]!);
+    }).sort((left, right) => left.minY - right.minY || left.minX - right.minX);
+    const [top, left, right] = blockFronts;
 
-    expect(pieces).toHaveLength(3);
-    expect(pieces.every((piece) => new Set(piece.map((pixel) => pixel.color)).size >= 4)).toBe(true);
-
-    const orderedBounds = pieces
-      .map(bounds)
-      .sort((left, right) => (left.minX + left.maxX) - (right.minX + right.maxX));
-    expect(new Set(orderedBounds.map((piece) => piece.maxY)).size).toBe(3);
-    const verticalSteps = [
-      orderedBounds[1].minY + orderedBounds[1].maxY - orderedBounds[0].minY - orderedBounds[0].maxY,
-      orderedBounds[2].minY + orderedBounds[2].maxY - orderedBounds[1].minY - orderedBounds[1].maxY,
-    ];
-    expect(verticalSteps[0] * verticalSteps[1]).toBeLessThan(0);
+    expect(cluster).toHaveLength(1);
+    expect(new Set(cluster[0]!.map((pixel) => pixel.color)).size).toBeGreaterThanOrEqual(10);
+    expect(left!.minY).toBe(right!.minY);
+    expect(top!.maxY).toBeLessThan(left!.minY);
+    expect(top!.minX).toBeGreaterThan(left!.minX);
+    expect(top!.minX).toBeLessThanOrEqual(left!.maxX + 1);
+    expect(top!.maxX).toBeGreaterThanOrEqual(right!.minX);
+    expect(top!.maxX).toBeLessThan(right!.maxX);
   });
 });

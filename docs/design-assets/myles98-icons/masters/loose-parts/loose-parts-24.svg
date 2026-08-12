@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" shape-rendering="crispEdges" data-m98-concept="loose-parts" data-m98-grid="24">
-  <polygon fill="#20242a" points="3,8 5,6 13,6 13,13 12,13 12,14 3,14" />
-  <rect fill="#1d9f98" x="5" y="8" width="7" height="5" />
-  <polygon fill="#76d5ce" points="5,8 7,6 12,6 12,8" />
-  <rect fill="#12645f" x="12" y="8" width="1" height="5" />
-  <rect fill="#0d4d49" x="5" y="13" width="7" height="1" />
-  <polygon fill="#20242a" points="14,3 16,1 23,1 23,10 22,10 22,11 14,11" />
-  <rect fill="#7651ad" x="16" y="3" width="6" height="6" />
-  <polygon fill="#c3a8e8" points="16,3 18,1 22,1 22,3" />
-  <rect fill="#4c3473" x="22" y="3" width="1" height="6" />
-  <rect fill="#382754" x="16" y="9" width="6" height="1" />
-  <polygon fill="#20242a" points="7,17 9,15 20,15 20,21 19,21 19,22 7,22" />
-  <rect fill="#d94f83" x="9" y="17" width="10" height="4" />
-  <polygon fill="#f5a4c2" points="9,17 11,15 19,15 19,17" />
-  <rect fill="#913155" x="19" y="17" width="1" height="4" />
-  <rect fill="#70243f" x="9" y="21" width="10" height="1" />
+  <polygon fill="#20242a" points="2,12 4,10 12,10 12,17 11,17 11,18 2,18" />
+  <rect fill="#5f8d73" x="4" y="12" width="7" height="5" />
+  <polygon fill="#a9c7a5" points="4,12 6,10 11,10 11,12" />
+  <rect fill="#3c624e" x="11" y="12" width="1" height="5" />
+  <rect fill="#2c493a" x="4" y="17" width="7" height="1" />
+  <polygon fill="#20242a" points="12,12 14,10 22,10 22,17 21,17 21,18 12,18" />
+  <rect fill="#bd7654" x="14" y="12" width="7" height="5" />
+  <polygon fill="#e5af8d" points="14,12 16,10 21,10 21,12" />
+  <rect fill="#814633" x="21" y="12" width="1" height="5" />
+  <rect fill="#613023" x="14" y="17" width="7" height="1" />
+  <polygon fill="#20242a" points="8,4 10,2 18,2 18,10 17,10 17,11 8,11" />
+  <rect fill="#667d91" x="10" y="4" width="7" height="5" />
+  <polygon fill="#b3c2ce" points="10,4 12,2 17,2 17,4" />
+  <rect fill="#42586b" x="17" y="4" width="1" height="5" />
+  <rect fill="#304352" x="10" y="9" width="7" height="1" />
 </svg>
