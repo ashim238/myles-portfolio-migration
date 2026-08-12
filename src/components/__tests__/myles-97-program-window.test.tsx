@@ -32,6 +32,10 @@ describe("ProgramWindow", () => {
       "data-focused",
       "true",
     );
+    expect(screen.getByRole("region", { name: "Fresh Greens.exe" })).toHaveAttribute(
+      "data-m97-default-position",
+      "true",
+    );
     expect(screen.getByText("Program content")).toBeInTheDocument();
 
     const minimize = screen.getByRole("button", { name: "Minimize Fresh Greens.exe" });
@@ -59,6 +63,7 @@ describe("ProgramWindow", () => {
         title="Fresh Greens.exe"
         geometry={{ x: 40, y: 64, width: 720, height: 520 }}
         focused={false}
+        isDefaultPosition={false}
         onFocus={onFocus}
         onMove={onMove}
         onMinimize={vi.fn()}
@@ -70,6 +75,8 @@ describe("ProgramWindow", () => {
 
     const region = screen.getByRole("region", { name: "Fresh Greens.exe" });
     const titlebar = container.querySelector<HTMLElement>(".myles97-titlebar")!;
+
+    expect(region).toHaveAttribute("data-m97-default-position", "false");
 
     fireEvent.pointerDown(region, { pointerId: 4, button: 0 });
     expect(onFocus).toHaveBeenCalledWith("fresh-greens");

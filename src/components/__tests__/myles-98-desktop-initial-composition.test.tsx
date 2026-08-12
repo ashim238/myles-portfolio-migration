@@ -50,7 +50,17 @@ function DesktopHarness({ bootCompleted = false }: { bootCompleted?: boolean }) 
   const [state, dispatch] = useReducer(
     workstationReducer,
     undefined,
-    () => ({ ...createInitialWorkstationState(), bootCompleted }),
+    () => {
+      const initial = createInitialWorkstationState();
+      return bootCompleted
+        ? {
+            ...initial,
+            bootCompleted: true,
+            openPrograms: ["selected-work", "welcome"],
+            focusedProgram: "welcome",
+          }
+        : initial;
+    },
   );
 
   return (
@@ -90,6 +100,7 @@ describe("Myles 98 desktop initial composition", () => {
     const taskbar = screen.getByRole("navigation", { name: "Open programs" });
 
     expect(overlaps(windowRect(selectedWork), windowRect(welcome))).toBe(false);
+    expect(windowRect(welcome).bottom - windowRect(welcome).top).toBeGreaterThanOrEqual(300);
     expect(selectedWork.getAttribute("data-focused")).toBe("true");
     expect(
       within(taskbar)
@@ -131,7 +142,16 @@ describe("Myles 98 desktop initial composition", () => {
 
   it("keeps the compact welcome lane inside narrow desktop canvases", () => {
     expect(desktopStyles).toMatch(
-      /@media \(min-width: 1025px\) and \(max-width: 1279px\) \{[\s\S]*?\[data-m97-program-window="selected-work"\] \{[\s\S]*?width: calc\(100vw - 521px\) !important;[\s\S]*?\[data-m97-program-window="welcome"\] \{[\s\S]*?left: calc\(100vw - 368px\) !important;/,
+      /@media \(min-width: 1025px\) and \(max-width: 1279px\) \{[\s\S]*?\[data-m97-program-window="selected-work"\] \{[\s\S]*?width: calc\(100vw - 521px\) !important;[\s\S]*?\[data-m97-default-position="true"\]\[data-m97-program-window="welcome"\] \{[\s\S]*?left: calc\(100vw - 368px\) !important;/,
+    );
+  });
+
+  it("uses a compact welcome composition that leaves room for its full introduction", () => {
+    expect(desktopStyles).toMatch(
+      /\.myles97-window\[data-m97-program-window="welcome"\] \.myles97-welcome \{[\s\S]*?grid-template-columns: 48px minmax\(0, 1fr\);[\s\S]*?gap: 14px;/,
+    );
+    expect(desktopStyles).toMatch(
+      /\.myles97-window\[data-m97-program-window="welcome"\] \.myles97-welcome-mark \{[\s\S]*?width: 48px;[\s\S]*?height: 48px;/,
     );
   });
 });

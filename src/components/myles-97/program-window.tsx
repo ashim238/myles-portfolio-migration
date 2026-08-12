@@ -11,6 +11,7 @@ type ProgramWindowProps = PropsWithChildren<{
   title: string;
   geometry: WindowGeometry;
   focused: boolean;
+  isDefaultPosition?: boolean;
   stackIndex?: number;
   status?: ReactNode;
   onFocus: (id: ProgramId) => void;
@@ -29,6 +30,7 @@ export function ProgramWindow({
   title,
   geometry,
   focused,
+  isDefaultPosition = true,
   stackIndex,
   status,
   onFocus,
@@ -40,6 +42,7 @@ export function ProgramWindow({
 }: ProgramWindowProps) {
   const { dragHandleProps, dragging, previewTransform } = useWindowDrag({
     geometry,
+    useRenderedOrigin: isDefaultPosition,
     onCommit: (nextGeometry) => onMove(id, nextGeometry),
   });
   const titleId = `${id}-window-title`;
@@ -60,6 +63,7 @@ export function ProgramWindow({
       aria-labelledby={titleId}
       data-focused={focused ? "true" : "false"}
       data-dragging={dragging ? "true" : "false"}
+      data-m97-default-position={isDefaultPosition ? "true" : "false"}
       data-draggable-window="true"
       data-m97-program-window={id}
       style={style}

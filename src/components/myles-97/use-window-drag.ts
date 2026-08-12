@@ -10,6 +10,7 @@ import {
 
 type WindowDragOptions = {
   geometry: WindowGeometry;
+  useRenderedOrigin?: boolean;
   onCommit: (geometry: WindowGeometry) => void;
 };
 
@@ -17,6 +18,8 @@ type DragSession = {
   pointerId: number;
   startX: number;
   startY: number;
+  originX: number;
+  originY: number;
   deltaX: number;
   deltaY: number;
 };
@@ -28,7 +31,7 @@ function browserViewport(): ViewportBounds {
   };
 }
 
-export function useWindowDrag({ geometry, onCommit }: WindowDragOptions) {
+export function useWindowDrag({ geometry, useRenderedOrigin = false, onCommit }: WindowDragOptions) {
   const drag = useRef<DragSession | null>(null);
   const [preview, setPreview] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
@@ -52,11 +55,14 @@ export function useWindowDrag({ geometry, onCommit }: WindowDragOptions) {
     if (event.button !== 0) return;
     const target = event.target as HTMLElement;
     if (target.closest("button, a, input, select, textarea")) return;
+    const windowElement = event.currentTarget.closest<HTMLElement>(".myles97-window");
 
     drag.current = {
       pointerId: event.pointerId,
       startX: event.clientX,
       startY: event.clientY,
+      originX: useRenderedOrigin ? (windowElement?.offsetLeft ?? geometry.x) : geometry.x,
+      originY: useRenderedOrigin ? (windowElement?.offsetTop ?? geometry.y) : geometry.y,
       deltaX: 0,
       deltaY: 0,
     };
@@ -67,7 +73,7 @@ export function useWindowDrag({ geometry, onCommit }: WindowDragOptions) {
     } catch {
       // Dragging still works when pointer capture is unavailable.
     }
-  }, []);
+  }, [geometry, useRenderedOrigin]);
 
   const onPointerMove = useCallback<PointerEventHandler<HTMLElement>>((event) => {
     const session = drag.current;
@@ -86,8 +92,8 @@ export function useWindowDrag({ geometry, onCommit }: WindowDragOptions) {
       const next = clampWindowGeometry(
         {
           ...geometry,
-          x: geometry.x + session.deltaX,
-          y: geometry.y + session.deltaY,
+          x: session.originX + session.deltaX,
+          y: session.originY + session.deltaY,
         },
         browserViewport(),
       );

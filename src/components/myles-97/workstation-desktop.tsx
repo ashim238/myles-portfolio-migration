@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type Dispatch } from "react";
+import { useCallback, useRef, useState, type Dispatch } from "react";
 import { DisplayProperties } from "@/components/myles-97/display-properties";
 import { Myles97Icon } from "@/components/myles-97/icons";
 import type { LoosePartSummary } from "@/components/myles-97/loose-parts-program";
@@ -39,7 +39,7 @@ export type WorkstationDesktopProps = {
 
 const defaultGeometry: Partial<Record<ProgramId, WindowGeometry>> = {
   "selected-work": { x: 136, y: 112, width: 744, height: 536 },
-  welcome: { x: 896, y: 160, width: 352, height: 200 },
+  welcome: { x: 896, y: 160, width: 352, height: 312 },
   about: { x: 312, y: 124, width: 540, height: 430 },
   "loose-parts": { x: 232, y: 92, width: 720, height: 520 },
   resume: { x: 344, y: 112, width: 560, height: 470 },
@@ -91,27 +91,6 @@ export function WorkstationDesktop({
   const recipeTriggerRef = useRef<HTMLButtonElement>(null);
   const minimized = new Set(state.minimizedPrograms);
   const projectById = new Map(programs.map((program) => [program.id, program]));
-  const shouldPromoteInitialSelectedWork =
-    !state.bootCompleted &&
-    state.focusedProgram === "welcome" &&
-    state.openPrograms.length === 2 &&
-    state.openPrograms[0] === "selected-work" &&
-    state.openPrograms[1] === "welcome" &&
-    state.minimizedPrograms.length === 0 &&
-    Object.keys(state.windowGeometry).length === 0;
-  const presentedOpenPrograms: readonly ProgramId[] = shouldPromoteInitialSelectedWork
-    ? ["welcome", "selected-work"]
-    : state.openPrograms;
-  const presentedFocusedProgram: ProgramId | null = shouldPromoteInitialSelectedWork
-    ? "selected-work"
-    : state.focusedProgram;
-
-  useEffect(() => {
-    if (shouldPromoteInitialSelectedWork) {
-      dispatch({ type: "focus", id: "selected-work" });
-    }
-  }, [dispatch, shouldPromoteInitialSelectedWork]);
-
   const openProgram = useCallback(
     (id: ProgramId) => dispatch({ type: "open", id }),
     [dispatch],
@@ -124,7 +103,8 @@ export function WorkstationDesktop({
   const commonWindowProps = (id: ProgramId, stackIndex: number) => ({
     id,
     geometry: state.windowGeometry[id] ?? fallbackGeometry(id, stackIndex),
-    focused: presentedFocusedProgram === id,
+    focused: state.focusedProgram === id,
+    isDefaultPosition: state.windowGeometry[id] === undefined,
     stackIndex: 10 + stackIndex,
     onFocus: (programId: ProgramId) => dispatch({ type: "focus", id: programId }),
     onMove: (programId: ProgramId, geometry: WindowGeometry) =>
@@ -155,7 +135,7 @@ export function WorkstationDesktop({
         </button>
       </nav>
 
-      {presentedOpenPrograms.map((id, stackIndex) => {
+      {state.openPrograms.map((id, stackIndex) => {
         if (minimized.has(id)) return null;
         const props = commonWindowProps(id, stackIndex);
 
@@ -271,9 +251,9 @@ export function WorkstationDesktop({
       />
       <Taskbar
         programs={programs}
-        openPrograms={presentedOpenPrograms}
+        openPrograms={state.openPrograms}
         minimizedPrograms={state.minimizedPrograms}
-        focusedProgram={presentedFocusedProgram}
+        focusedProgram={state.focusedProgram}
         startOpen={startOpen}
         startButtonRef={startButtonRef}
         onToggleStart={() => setStartOpen((open) => !open)}

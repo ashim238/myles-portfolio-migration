@@ -47,10 +47,10 @@ export function createInitialWorkstationState(): WorkstationState {
   return {
     version: 1,
     bootCompleted: false,
-    openPrograms: ["selected-work", "welcome"],
+    openPrograms: ["welcome", "selected-work"],
     minimizedPrograms: [],
-    focusedProgram: "welcome",
-    recentPrograms: ["selected-work", "welcome"],
+    focusedProgram: "selected-work",
+    recentPrograms: ["welcome", "selected-work"],
     windowGeometry: {},
     desktopScrollY: 0,
     displayPreferences: {
