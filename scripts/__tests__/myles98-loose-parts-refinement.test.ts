@@ -6,21 +6,39 @@ import { expectedMasterPath } from "../lib/myles98-icon-contract.mjs";
 const ROOT = "docs/design-assets/myles98-icons";
 const GRIDS = [16, 24, 32] as const;
 const OUTLINE_FILL = "#20242a";
-const MIN_VISIBLE_COLORS = new Map([[16, 8], [24, 10], [32, 10]]);
+const FRONT_FILLS = ["#667d91", "#5f8d73", "#bd7654"];
+const TOP_FILLS = ["#b3c2ce", "#a9c7a5", "#e5af8d"];
+const SIDE_FILLS = ["#42586b", "#3c624e", "#814633"];
+const INLAY_FILLS = ["#90a7b5", "#8eaf8d", "#d69c78"];
+const MIN_VISIBLE_COLORS = new Map([[16, 8], [24, 13], [32, 13]]);
 
 type Grid = (typeof GRIDS)[number];
-type Pixel = {
-  color: string;
-  x: number;
-  y: number;
-};
-type Rect = {
-  fill: string;
-  height: number;
-  width: number;
-  x: number;
-  y: number;
-};
+type Pixel = { color: string; x: number; y: number };
+type Rect = { fill: string; height: number; width: number; x: number; y: number };
+
+const CUBE_SPECS = new Map<Grid, { fronts: Rect[] }>([
+  [16, {
+    fronts: [
+      { fill: "#667d91", x: 5, y: 6, width: 4, height: 3 },
+      { fill: "#5f8d73", x: 2, y: 10, width: 4, height: 3 },
+      { fill: "#bd7654", x: 8, y: 10, width: 4, height: 3 },
+    ],
+  }],
+  [24, {
+    fronts: [
+      { fill: "#667d91", x: 8, y: 7, width: 6, height: 5 },
+      { fill: "#5f8d73", x: 4, y: 14, width: 6, height: 5 },
+      { fill: "#bd7654", x: 13, y: 14, width: 6, height: 5 },
+    ],
+  }],
+  [32, {
+    fronts: [
+      { fill: "#667d91", x: 11, y: 9, width: 8, height: 7 },
+      { fill: "#5f8d73", x: 6, y: 18, width: 8, height: 7 },
+      { fill: "#bd7654", x: 18, y: 18, width: 8, height: 7 },
+    ],
+  }],
+]);
 
 function attribute(source: string, name: string) {
   return source.match(new RegExp(`\\b${name}="([^"]+)"`, "i"))?.[1];
@@ -53,14 +71,16 @@ function coloredRectsFor(source: string): Rect[] {
 }
 
 function frontFacesFor(source: string) {
-  return coloredRectsFor(source).filter(({ width, height }) => width > 1 && height > 1);
+  return coloredRectsFor(source)
+    .filter((rect) => FRONT_FILLS.includes(rect.fill))
+    .sort((left, right) => left.y - right.y || left.x - right.x);
 }
 
 function topPlanesFor(source: string) {
   return [...source.matchAll(/<polygon\b([^>]*)\/>/gi)]
     .filter(([, attributes]) => {
       const fill = attribute(attributes, "fill")?.toLowerCase();
-      if (!fill || fill === OUTLINE_FILL) return false;
+      if (!fill || !TOP_FILLS.includes(fill)) return false;
       const coordinates = (attribute(attributes, "points")?.match(/-?\d+(?:\.\d+)?/g) ?? []).map(Number);
       const points: Array<[number, number]> = [];
       for (let index = 0; index < coordinates.length; index += 2) {
@@ -71,6 +91,15 @@ function topPlanesFor(source: string) {
       const ys = points.map(([, y]) => y);
       return polygonArea(points) < (Math.max(...xs) - Math.min(...xs)) * (Math.max(...ys) - Math.min(...ys));
     });
+}
+
+function sidePlanesFor(source: string) {
+  return coloredRectsFor(source).filter((rect) => SIDE_FILLS.includes(rect.fill));
+}
+
+function inlaidJointMarksFor(source: string) {
+  return [...source.matchAll(/<path\b([^>]*)\/>/gi)]
+    .filter(([, attributes]) => INLAY_FILLS.includes(attribute(attributes, "fill")?.toLowerCase() ?? ""));
 }
 
 function outlinePolygonsFor(source: string) {
@@ -164,38 +193,37 @@ function enclosedTransparentPixels(pixels: Pixel[], grid: Grid) {
   return pockets;
 }
 
-describe("Myles 98 Loose Parts bridge-block refinement", () => {
-  it.each(GRIDS)("renders a literal 2+1 construction-block bridge at %ipx without boots, people, or branded studs", async (grid) => {
+describe("Myles 98 Loose Parts stacked-cube refinement", () => {
+  it.each(GRIDS)("renders three equal-ish material cuboids with construction-joint marks at %ipx, never books, people, or branded studs", async (grid) => {
     const source = readFileSync(expectedMasterPath(ROOT, "loose-parts", grid), "utf8");
     const coloredRects = coloredRectsFor(source);
-    const frontFaces = frontFacesFor(source).sort((left, right) => left.y - right.y || left.x - right.x);
-    const [bridge, ...lowerRow] = frontFaces;
-    const [left, right] = lowerRow;
+    const fronts = frontFacesFor(source);
+    const [upper, left, right] = fronts;
     const cluster = connectedComponents(await rasterFor(source, grid));
 
-    expect(source).not.toMatch(/<(?:circle|ellipse)\b|stud|lego|#(?:ff0000|ffff00|0000ff)/i);
+    expect(source).not.toMatch(/<(?:circle|ellipse|line)\b|stud|lego|book|page|#(?:ff0000|ffff00|0000ff)/i);
     expect(outlinePolygonsFor(source)).toHaveLength(3);
     expect(topPlanesFor(source)).toHaveLength(3);
+    expect(sidePlanesFor(source)).toHaveLength(3);
     expect(coloredRects).toHaveLength(6);
-    expect(coloredRects.filter((rect) => rect.width > 1 && rect.height === 1)).toHaveLength(0);
+    expect(fronts).toEqual(CUBE_SPECS.get(grid)!.fronts);
+    expect(coloredRects.filter(({ width, height }) => width > height * 1.45)).toHaveLength(0);
+    expect(fronts.every(({ width, height }) => width / height <= 1.35)).toBe(true);
+    expect(inlaidJointMarksFor(source)).toHaveLength(grid === 16 ? 0 : 3);
     expect(cluster).toHaveLength(1);
     expect(enclosedTransparentPixels(cluster[0]!, grid)).toEqual([]);
     expect(new Set(cluster[0]!.map((pixel) => pixel.color)).size).toBeGreaterThanOrEqual(
       MIN_VISIBLE_COLORS.get(grid)!,
     );
 
-    expect(frontFaces).toHaveLength(3);
-    expect(bridge).toBeDefined();
+    expect(upper).toBeDefined();
     expect(left).toBeDefined();
     expect(right).toBeDefined();
     expect(left!.y).toBe(right!.y);
-    expect(bridge!.y + bridge!.height).toBeLessThanOrEqual(left!.y);
-    expect(bridge!.width).toBeGreaterThan(Math.max(left!.width, right!.width) * 1.8);
-    expect(bridge!.width).toBeGreaterThanOrEqual(left!.width + right!.width - 1);
-    expect(bridge!.width).toBeGreaterThan(bridge!.height * 2);
-    expect(bridge!.x).toBeGreaterThan(left!.x);
-    expect(bridge!.x).toBeLessThanOrEqual(left!.x + left!.width);
-    expect(bridge!.x + bridge!.width).toBeGreaterThanOrEqual(right!.x);
-    expect(bridge!.x + bridge!.width).toBeLessThanOrEqual(right!.x + right!.width);
+    expect(upper!.y + upper!.height).toBeLessThanOrEqual(left!.y);
+    expect(upper!.width).toBe(left!.width);
+    expect(upper!.width).toBe(right!.width);
+    expect(upper!.x).toBeLessThan(left!.x + left!.width);
+    expect(upper!.x + upper!.width).toBeGreaterThan(right!.x);
   });
 });

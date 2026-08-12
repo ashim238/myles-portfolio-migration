@@ -5,6 +5,7 @@ import { expectedMasterPath } from "../lib/myles98-icon-contract.mjs";
 
 const ROOT = "docs/design-assets/myles98-icons";
 const GRIDS = [16, 24, 32] as const;
+const STREET_FILL = "#aebc9a";
 const ROUTE_FILL = "#4d5552";
 const START_FILL = "#205a40";
 const DESTINATION_FILL = "#f27524";
@@ -122,8 +123,9 @@ function touches(left: Pixel[], right: Pixel[]) {
 }
 
 describe("Fresh Greens and Loose Parts native-size metaphors", () => {
-  it.each(GRIDS)("renders Fresh Greens %ipx as one bent map-route dogleg with route markers, not a wand or notebook band", async (grid) => {
+  it.each(GRIDS)("renders Fresh Greens %ipx as a street-block map with a highlighted route, not a music note or folded map", async (grid) => {
     const raster = await rasterFor("fresh-greens", grid);
+    const streets = raster.filter((pixel) => pixel.color === STREET_FILL);
     const road = raster.filter((pixel) => pixel.color === ROUTE_FILL);
     const start = raster.filter((pixel) => pixel.color === START_FILL);
     const destination = raster.filter((pixel) => pixel.color === DESTINATION_FILL);
@@ -132,6 +134,9 @@ describe("Fresh Greens and Loose Parts native-size metaphors", () => {
     const destinationComponents = connectedComponents(destination);
 
     expect(roadComponents).toHaveLength(1);
+    expect(streets.length).toBeGreaterThan(road.length);
+    expect(longStreetRuns(streets, grid, "horizontal")).toBeGreaterThanOrEqual(2);
+    expect(longStreetRuns(streets, grid, "vertical")).toBeGreaterThanOrEqual(1);
     expect(longStreetRuns(road, grid, "horizontal")).toBeGreaterThanOrEqual(1);
     expect(longStreetRuns(road, grid, "vertical")).toBeGreaterThanOrEqual(1);
     const roadBounds = bounds(roadComponents[0]!);
@@ -151,7 +156,7 @@ describe("Fresh Greens and Loose Parts native-size metaphors", () => {
     )).toBeGreaterThanOrEqual(grid * 0.65);
   });
 
-  it.each(GRIDS)("renders Loose Parts %ipx as a wide bridge block resting across two lower blocks, not boots or people", async (grid) => {
+  it.each(GRIDS)("renders Loose Parts %ipx as three equal-ish stacked cuboids, not books, boots, or people", async (grid) => {
     const raster = await rasterFor("loose-parts", grid);
     const cluster = connectedComponents(raster);
     const frontBounds = LOOSE_FRONT_FILLS.map((fill) => {
@@ -159,24 +164,22 @@ describe("Fresh Greens and Loose Parts native-size metaphors", () => {
       expect(front).toHaveLength(1);
       return bounds(front[0]!);
     }).sort((left, right) => left.minY - right.minY || left.minX - right.minX);
-    const [bridge, left, right] = frontBounds;
+    const [upper, left, right] = frontBounds;
 
     expect(cluster).toHaveLength(1);
     expect(new Set(cluster[0]!.map((pixel) => pixel.color)).size).toBeGreaterThanOrEqual(
       MIN_LOOSE_VISIBLE_COLORS.get(grid)!,
     );
     expect(left!.minY).toBe(right!.minY);
-    expect(bridge!.maxY).toBeLessThan(left!.minY);
-    const bridgeWidth = bridge!.maxX - bridge!.minX + 1;
+    expect(upper!.maxY).toBeLessThan(left!.minY);
+    const upperWidth = upper!.maxX - upper!.minX + 1;
     const leftWidth = left!.maxX - left!.minX + 1;
     const rightWidth = right!.maxX - right!.minX + 1;
-    const bridgeHeight = bridge!.maxY - bridge!.minY + 1;
-    expect(bridgeWidth).toBeGreaterThan(Math.max(leftWidth, rightWidth) * 1.8);
-    expect(bridgeWidth).toBeGreaterThanOrEqual(leftWidth + rightWidth - 1);
-    expect(bridgeWidth).toBeGreaterThan(bridgeHeight * 2);
-    expect(bridge!.minX).toBeGreaterThan(left!.minX);
-    expect(bridge!.minX).toBeLessThanOrEqual(left!.maxX + 1);
-    expect(bridge!.maxX).toBeGreaterThanOrEqual(right!.minX);
-    expect(bridge!.maxX).toBeLessThanOrEqual(right!.maxX);
+    const upperHeight = upper!.maxY - upper!.minY + 1;
+    expect(upperWidth).toBe(leftWidth);
+    expect(upperWidth).toBe(rightWidth);
+    expect(upperWidth / upperHeight).toBeLessThanOrEqual(1.35);
+    expect(upper!.minX).toBeLessThanOrEqual(left!.maxX);
+    expect(upper!.maxX).toBeGreaterThanOrEqual(right!.minX);
   });
 });
