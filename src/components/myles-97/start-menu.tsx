@@ -43,27 +43,27 @@ export function StartMenu({
       </div>
       <div className="myles97-start-menu-items">
         <button type="button" onClick={() => openThenClose("selected-work")}>
-          <Myles97Icon name="folder" size={20} variant="color" aria-hidden="true" />
+          <Myles97Icon name="folder" size={24} variant="color" aria-hidden="true" />
           <span>Selected Work</span>
         </button>
         <button type="button" onClick={() => openThenClose("about")}>
-          <Myles97Icon name="profile" size={20} variant="color" aria-hidden="true" />
+          <Myles97Icon name="profile" size={24} variant="color" aria-hidden="true" />
           <span>About Myles</span>
         </button>
         <button type="button" onClick={() => openThenClose("loose-parts")}>
-          <Myles97Icon name="loose-parts" size={20} variant="color" aria-hidden="true" />
+          <Myles97Icon name="loose-parts" size={24} variant="color" aria-hidden="true" />
           <span>Loose Parts</span>
         </button>
         <button type="button" onClick={() => openThenClose("resume")}>
-          <Myles97Icon name="resume" size={20} variant="color" aria-hidden="true" />
+          <Myles97Icon name="resume" size={24} variant="color" aria-hidden="true" />
           <span>Résumé</span>
         </button>
         <a href={`mailto:${siteConfig.email}`} onClick={onClose}>
-          <Myles97Icon name="mail" size={20} variant="color" aria-hidden="true" />
+          <Myles97Icon name="mail" size={24} variant="color" aria-hidden="true" />
           <span>E-mail</span>
         </a>
         <button type="button" onClick={() => openThenClose("display-properties")}>
-          <Myles97Icon name="display" size={20} variant="color" aria-hidden="true" />
+          <Myles97Icon name="display" size={24} variant="color" aria-hidden="true" />
           <span>Display Properties</span>
         </button>
         <div className="myles97-start-menu-separator" aria-hidden="true" />
@@ -74,7 +74,7 @@ export function StartMenu({
             onClose();
           }}
         >
-          <Myles97Icon name="display" size={20} variant="color" aria-hidden="true" />
+          <Myles97Icon name="reset-desktop" size={24} variant="color" aria-hidden="true" />
           <span>Reset Desktop…</span>
         </button>
       </div>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges" data-m98-concept="about-myles" data-m98-grid="16">
+  <path fill="#242322" d="M6 2H10V4H14V5H15V12H14V14H2V13H1V5H2V4H6Z" />
+  <rect fill="#8c8881" x="7" y="2" width="2" height="1" />
+  <rect fill="#625f58" x="2" y="5" width="12" height="8" />
+  <path fill="#d8ccb9" d="M2 5H13V6H14V12H13V13H2Z" />
+  <rect fill="#78a1a6" x="3" y="6" width="6" height="6" />
+  <path fill="#111214" d="M5 6H7V7H8V8H9V12H8V11H7V10H5V11H4V12H3V8H4V7H5Z" />
+  <path fill="#73432e" d="M5 8H7V9H8V11H7V12H5V11H4V9H5Z" />
+  <rect fill="#9a5e3e" x="5" y="8" width="2" height="1" />
+  <path fill="#14191c" d="M4 7H5V8H6V9H4ZM7 8H8V7H9V9H7ZM6 8H7V9H6Z" />
+  <rect fill="#a9ced0" x="5" y="8" width="1" height="1" />
+  <rect fill="#a9ced0" x="8" y="8" width="1" height="1" />
+  <rect fill="#14191c" x="5" y="10" width="2" height="1" />
+  <rect fill="#14191c" x="6" y="11" width="1" height="1" />
+  <rect fill="#3f7087" x="10" y="6" width="3" height="1" />
+  <rect fill="#7d776f" x="10" y="9" width="3" height="1" />
+  <rect fill="#7d776f" x="10" y="11" width="3" height="1" />
+</svg>

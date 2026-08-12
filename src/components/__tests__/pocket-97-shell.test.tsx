@@ -117,6 +117,24 @@ describe("Pocket 98", () => {
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
 
     const dock = await screen.findByRole("navigation", { name: "Pocket 98 dock" });
+    const dockMasters = Array.from(
+      dock.querySelectorAll<SVGImageElement>("image[data-m98-icon-master]"),
+    );
+
+    expect(dockMasters).toHaveLength(4);
+    expect(dockMasters.map((master) => master.getAttribute("href"))).toEqual([
+      "/myles98-icons/generic-app/generic-app-24.svg",
+      "/myles98-icons/selected-work/selected-work-24.svg",
+      "/myles98-icons/loose-parts/loose-parts-24.svg",
+      "/myles98-icons/open-apps/open-apps-24.svg",
+    ]);
+    for (const master of dockMasters) {
+      expect(master).toHaveAttribute("data-m98-icon-master-grid", "24");
+      expect(master).toHaveAttribute("width", "24");
+      expect(master).toHaveAttribute("height", "24");
+      expect(master).not.toHaveAttribute("transform");
+    }
+
     expect(dock).toBeInTheDocument();
     expect(document.querySelector("[data-draggable-window]")).toBeNull();
     expect(screen.getAllByRole("link", { name: /Open .* case study/ })).toHaveLength(4);

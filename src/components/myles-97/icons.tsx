@@ -9,6 +9,8 @@ export type Myles97IconName =
   | "display"
   | "mail"
   | "app"
+  | "open-apps"
+  | "reset-desktop"
   | "loose-parts"
   | "fresh-greens"
   | "fafsa"
@@ -91,6 +93,38 @@ export function iconForProgram(id: string): Myles97IconName {
   }
 }
 
+const MASTER_CONCEPT_BY_ICON: Record<Myles97IconName, string> = {
+  folder: "selected-work",
+  document: "reminders",
+  profile: "about-myles",
+  resume: "resume",
+  recipe: "trini-roti",
+  display: "display-properties",
+  mail: "email",
+  app: "generic-app",
+  "open-apps": "open-apps",
+  "reset-desktop": "reset-desktop",
+  "loose-parts": "loose-parts",
+  "fresh-greens": "fresh-greens",
+  fafsa: "understandingfafsa",
+  navi: "navi",
+  tiktok: "tiktok-catalog",
+};
+
+function masterSourceFor(
+  name: Myles97IconName,
+  tier: Myles97IconTier,
+) {
+  const concept = MASTER_CONCEPT_BY_ICON[name];
+  const grid = GRID_BY_TIER[tier];
+
+  return {
+    concept,
+    grid,
+    source: `/myles98-icons/${concept}/${concept}-${grid}.svg`,
+  };
+}
+
 function fill(palette: IconPalette, value: string) {
   return palette.color ? value : "none";
 }
@@ -151,6 +185,8 @@ const SIDE_TONE_BY_ICON: Record<Myles97IconName, string> = {
   display: "#777777",
   mail: "#78929a",
   app: "#777777",
+  "open-apps": "#777777",
+  "reset-desktop": "#7d5d27",
   "loose-parts": "#8b6b26",
   "fresh-greens": "#0d5432",
   fafsa: "#788190",
@@ -211,6 +247,18 @@ function depthPlaneSpec(
           castShadow: ["M5 21H22V23H5Z", "M21 5H23V21H21Z"],
           side: ["M4 20H21V21H4Z", "M20 4H21V20H20Z"],
           highlight: ["M3 3H20V4H3Z", "M3 4H4V20H3Z"],
+        };
+      case "open-apps":
+        return {
+          castShadow: ["M5 21H23V23H5Z", "M21 7H23V21H21Z"],
+          side: ["M4 20H22V21H4Z", "M20 6H22V20H20Z"],
+          highlight: ["M2 4H18V5H2Z", "M2 5H3V18H2Z", "M6 8H21V9H6Z"],
+        };
+      case "reset-desktop":
+        return {
+          castShadow: ["M5 20H20V22H5Z"],
+          side: ["M4 19H19V21H4Z", "M18 7H21V19H18Z"],
+          highlight: ["M4 4H16V5H4Z", "M3 5H4V15H3Z"],
         };
       case "loose-parts":
         return {
@@ -293,6 +341,18 @@ function depthPlaneSpec(
         castShadow: ["M6 28H30V30H6Z", "M28 6H30V28H28Z"],
         side: ["M5 27H28V28H5Z", "M27 5H28V27H27Z"],
         highlight: ["M4 4H27V5H4Z", "M4 5H5V27H4Z"],
+      };
+    case "open-apps":
+      return {
+        castShadow: ["M6 28H31V30H6Z", "M29 9H31V28H29Z"],
+        side: ["M5 27H30V28H5Z", "M28 8H30V27H28Z"],
+        highlight: ["M3 5H24V6H3Z", "M3 6H4V25H3Z", "M8 10H29V11H8Z"],
+      };
+    case "reset-desktop":
+      return {
+        castShadow: ["M6 27H27V30H6Z"],
+        side: ["M5 26H26V28H5Z", "M25 9H29V26H25Z"],
+        highlight: ["M5 5H22V6H5Z", "M4 6H5V21H4Z"],
       };
     case "loose-parts":
       return {
@@ -415,6 +475,22 @@ function renderChromeGlyph(
           <path d="M3 3h10v3H3z" {...accent(palette, palette.blue)} />
           <path d="M2 6h12M6 6v8" />
           <rect x="3" y="8" width="2" height="4" {...secondaryAccent(palette, palette.yellow)} />
+        </>
+      );
+    case "open-apps":
+      return (
+        <>
+          <rect x="1" y="2" width="10" height="8" {...surface(palette, palette.chrome)} />
+          <path d="M2 3h8v2H2z" {...accent(palette, palette.blue)} />
+          <rect x="5" y="6" width="10" height="8" {...surface(palette)} />
+          <path d="M6 7h8v2H6z" {...secondaryAccent(palette, palette.teal)} />
+        </>
+      );
+    case "reset-desktop":
+      return (
+        <>
+          <path d="M5 3h7v3M12 3v3H9M12 7v4l-2 2H5l-2-2V7l2-2" {...line(palette)} />
+          <path d="M2 6h4l-2 3z" {...accent(palette, palette.orange)} />
         </>
       );
     case "loose-parts":
@@ -576,6 +652,23 @@ function renderMenuGlyph(
           <path d="M3 9h18M9 9v12" />
           <rect x="5" y="12" width="3" height="6" {...secondaryAccent(palette, palette.yellow)} />
           <rect x="6" y="6" width="3" height="1" fill={fill(palette, palette.paper)} stroke="none" />
+        </>
+      );
+    case "open-apps":
+      return (
+        <>
+          <rect x="2" y="3" width="15" height="12" {...surface(palette, palette.chrome)} />
+          <path d="M3 4h13v3H3z" {...accent(palette, palette.blue)} />
+          <rect x="7" y="9" width="15" height="12" {...surface(palette)} />
+          <path d="M8 10h13v3H8z" {...secondaryAccent(palette, palette.teal)} />
+          <path d="M10 15h8M10 18h6" {...line(palette, palette.blue)} />
+        </>
+      );
+    case "reset-desktop":
+      return (
+        <>
+          <path d="M7 3h10v4M17 3v4h-4M18 8v7l-3 3H8l-3-3V8l3-3" {...line(palette)} />
+          <path d="M3 7h6l-3 4z" {...accent(palette, palette.orange)} />
         </>
       );
     case "loose-parts":
@@ -744,6 +837,23 @@ function renderDiscoveryGlyph(
           <rect x="8" y="8" width="4" height="2" fill={fill(palette, palette.paper)} stroke="none" />
         </>
       );
+    case "open-apps":
+      return (
+        <>
+          <rect x="3" y="4" width="20" height="16" {...surface(palette, palette.chrome)} />
+          <path d="M4 5h18v4H4z" {...accent(palette, palette.blue)} />
+          <rect x="10" y="11" width="20" height="16" {...surface(palette)} />
+          <path d="M11 12h18v4H11z" {...secondaryAccent(palette, palette.teal)} />
+          <path d="M14 19h11M14 23h8" {...line(palette, palette.blue)} />
+        </>
+      );
+    case "reset-desktop":
+      return (
+        <>
+          <path d="M9 4h14v5M23 4v5h-5M25 10v10l-4 4H10l-4-4V10l4-4" {...line(palette)} />
+          <path d="M4 9h8l-4 5z" {...accent(palette, palette.orange)} />
+        </>
+      );
     case "loose-parts":
       return (
         <>
@@ -881,25 +991,55 @@ export function Myles97Icon({
         ? renderMenuGlyph
         : renderDiscoveryGlyph;
   const glyph = renderer(name, palette);
-  if (!color || resolvedTier === "chrome") {
+  if (!color || compact) {
     return <svg {...common}>{glyph}</svg>;
+  }
+
+  const master = masterSourceFor(name, resolvedTier);
+  const masterLayer = (
+    <image
+      x="0"
+      y="0"
+      width={master.grid}
+      height={master.grid}
+      href={master.source}
+      preserveAspectRatio="none"
+      data-m98-icon-master="true"
+      data-m98-icon-master-concept={master.concept}
+      data-m98-icon-master-grid={String(master.grid)}
+      aria-hidden="true"
+    />
+  );
+
+  if (resolvedTier === "chrome") {
+    return (
+      <svg {...common}>
+        {masterLayer}
+        <g className="myles98-icon-fallback" aria-hidden="true">
+          {glyph}
+        </g>
+      </svg>
+    );
   }
 
   const planes = depthPlaneSpec(name, resolvedTier);
 
   return (
     <svg {...common}>
-      <g data-m98-icon-depth="shadow" data-m98-icon-layer="cast-shadow">
-        {renderDepthPlanePaths(name, "cast-shadow", planes.castShadow, "#4a4a4a")}
-      </g>
-      <g data-m98-icon-depth="face" data-m98-icon-layer="face">
-        {glyph}
-      </g>
-      <g data-m98-icon-depth="shadow" data-m98-icon-layer="side">
-        {renderDepthPlanePaths(name, "side", planes.side, SIDE_TONE_BY_ICON[name])}
-      </g>
-      <g data-m98-icon-depth="highlight" data-m98-icon-layer="highlight">
-        {renderDepthPlanePaths(name, "highlight", planes.highlight, "#ffffff")}
+      {masterLayer}
+      <g className="myles98-icon-fallback" aria-hidden="true">
+        <g data-m98-icon-depth="shadow" data-m98-icon-layer="cast-shadow">
+          {renderDepthPlanePaths(name, "cast-shadow", planes.castShadow, "#4a4a4a")}
+        </g>
+        <g data-m98-icon-depth="face" data-m98-icon-layer="face">
+          {glyph}
+        </g>
+        <g data-m98-icon-depth="shadow" data-m98-icon-layer="side">
+          {renderDepthPlanePaths(name, "side", planes.side, SIDE_TONE_BY_ICON[name])}
+        </g>
+        <g data-m98-icon-depth="highlight" data-m98-icon-layer="highlight">
+          {renderDepthPlanePaths(name, "highlight", planes.highlight, "#ffffff")}
+        </g>
       </g>
     </svg>
   );

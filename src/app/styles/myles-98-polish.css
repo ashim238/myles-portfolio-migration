@@ -22,6 +22,15 @@
   color: #111;
 }
 
+.myles98-icon-master {
+  display: block;
+  image-rendering: pixelated;
+}
+
+.myles98-icon-fallback {
+  display: none;
+}
+
 :is(
   .myles97-start-menu-items,
   .pocket97-sheet,
@@ -494,6 +503,14 @@
 @media (forced-colors: active) {
   .myles98-icon--color {
     filter: none;
+  }
+
+  .myles98-icon-master {
+    display: none;
+  }
+
+  .myles98-icon-fallback {
+    display: block;
   }
 
   [data-m98-icon-depth="shadow"],

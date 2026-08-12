@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges" data-m98-concept="trini-roti" data-m98-grid="16">
+  <path fill="#352b37" d="M4 2H10V3H11V4H12V5H13V14H12V15H3V3H4Z" />
+  <path fill="#e8d8c6" d="M4 3H9V6H12V13H11V14H4Z" />
+  <path fill="#f6eee3" d="M5 3H9V6H11V7H5Z" />
+  <path fill="#c49a78" d="M9 3H10V4H11V5H12V6H9Z" />
+  <path fill="#fff8ed" d="M10 3H11V4H12V5H13V6H12V5H11V4H10Z" />
+  <path fill="#7a536d" d="M5 8H7V7H10V8H9V9H5Z" />
+  <path fill="#7a536d" d="M4 11H6V10H11V11H9V12H4Z" />
+  <path fill="#7a536d" d="M5 13H9V14H5Z" />
+</svg>

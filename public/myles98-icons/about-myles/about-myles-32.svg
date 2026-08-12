@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" data-m98-concept="about-myles" data-m98-grid="32">
+  <path fill="#222322" d="M14 2H18V3H19V6H13V3H14Z" />
+  <rect fill="#8f8a82" x="15" y="3" width="3" height="2" />
+  <path fill="#202221" d="M4 5H28V6H30V26H28V28H4V27H2V7H4Z" />
+  <rect fill="#625f58" x="4" y="6" width="24" height="21" />
+  <path fill="#d8cbb7" d="M4 6H27V7H28V25H27V26H4Z" />
+  <rect fill="#fff7e8" x="5" y="7" width="21" height="2" />
+  <path fill="#34484d" d="M6 9H15V10H16V23H15V24H6V23H5V10H6Z" />
+  <rect fill="#78a1a6" x="6" y="10" width="9" height="13" />
+  <path fill="#0f1113" d="M9 10H12V11H14V13H15V17H16V23H14V19H13V13H9V19H8V24H6V22H5V14H6V12H8V11H9Z" />
+  <path fill="#48281e" d="M9 12H12V13H14V19H13V21H12V23H9V22H8V20H7V14H9Z" />
+  <path fill="#75442d" d="M9 12H12V13H13V19H12V21H9V20H8V14H9Z" />
+  <rect fill="#985d3d" x="9" y="13" width="3" height="2" />
+  <path fill="#14191c" d="M6 14H8V15H12V19H7V18H6ZM13 15H15V14H16V18H15V19H13Z" />
+  <rect fill="#a8cccd" x="8" y="16" width="3" height="2" />
+  <rect fill="#a8cccd" x="14" y="16" width="1" height="2" />
+  <rect fill="#fff7e8" x="8" y="16" width="1" height="1" />
+  <rect fill="#14191c" x="12" y="16" width="1" height="1" />
+  <rect fill="#c39a4b" x="6" y="16" width="1" height="1" />
+  <rect fill="#c39a4b" x="15" y="16" width="1" height="1" />
+  <rect fill="#281613" x="9" y="19" width="2" height="1" />
+  <rect fill="#281613" x="12" y="19" width="2" height="1" />
+  <rect fill="#3b2019" x="10" y="21" width="3" height="1" />
+  <rect fill="#17100f" x="10" y="23" width="3" height="1" />
+  <rect fill="#3f7087" x="18" y="10" width="8" height="4" />
+  <rect fill="#f5eee1" x="18" y="15" width="8" height="8" />
+  <rect fill="#7d776e" x="18" y="16" width="7" height="2" />
+  <rect fill="#aaa195" x="18" y="20" width="6" height="1" />
+  <rect fill="#c0b5a4" x="18" y="22" width="7" height="1" />
+  <rect fill="#7d776e" x="27" y="9" width="1" height="15" />
+  <rect fill="#2b2926" x="5" y="26" width="22" height="1" />
+</svg>

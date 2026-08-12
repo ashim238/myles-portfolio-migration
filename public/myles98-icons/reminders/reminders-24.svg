@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" shape-rendering="crispEdges" data-m98-concept="reminders" data-m98-grid="24">
+  <path fill="#203e3a" d="M4 4H20V5H21V21H20V23H3V5H4Z" />
+  <path fill="#3d7f73" d="M4 5H20V21H19V22H4Z" />
+  <path fill="#e7f0da" d="M5 5H19V21H5Z" />
+  <path fill="#f7faeb" d="M6 5H10V6H6Z" />
+  <rect fill="#285c55" x="6" y="8" width="4" height="4" />
+  <rect fill="#e7f0da" x="7" y="9" width="2" height="2" />
+  <path fill="#15906f" d="M6 10H7V11H6ZM7 11H8V12H7ZM8 10H9V11H8ZM9 9H10V10H9ZM10 8H11V9H10Z" />
+  <rect fill="#63766c" x="13" y="9" width="5" height="2" />
+  <rect fill="#285c55" x="6" y="13" width="4" height="4" />
+  <rect fill="#e7f0da" x="7" y="14" width="2" height="2" />
+  <path fill="#15906f" d="M6 15H7V16H6ZM7 16H8V17H7ZM8 15H9V16H8ZM9 14H10V15H9ZM10 13H11V14H10Z" />
+  <rect fill="#63766c" x="13" y="14" width="4" height="2" />
+  <rect fill="#285c55" x="6" y="18" width="4" height="4" />
+  <rect fill="#e7f0da" x="7" y="19" width="2" height="2" />
+  <path fill="#15906f" d="M6 20H7V21H6ZM7 21H8V22H7ZM8 20H9V21H8ZM9 19H10V20H9ZM10 18H11V19H10Z" />
+  <rect fill="#63766c" x="13" y="19" width="5" height="2" />
+</svg>

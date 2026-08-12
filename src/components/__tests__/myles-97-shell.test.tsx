@@ -162,6 +162,31 @@ describe("Myles98 product shell", () => {
 
     await user.click(screen.getByRole("button", { name: "Start" }));
     const startMenu = screen.getByRole("group", { name: "Start menu" });
+    const startMenuMasters = Array.from(
+      startMenu.querySelectorAll<SVGImageElement>(
+        "image[data-m98-icon-master]",
+      ),
+    );
+
+    expect(startMenuMasters).toHaveLength(7);
+    expect(
+      startMenuMasters.map((master) => master.getAttribute("href")),
+    ).toEqual([
+      "/myles98-icons/selected-work/selected-work-24.svg",
+      "/myles98-icons/about-myles/about-myles-24.svg",
+      "/myles98-icons/loose-parts/loose-parts-24.svg",
+      "/myles98-icons/resume/resume-24.svg",
+      "/myles98-icons/email/email-24.svg",
+      "/myles98-icons/display-properties/display-properties-24.svg",
+      "/myles98-icons/reset-desktop/reset-desktop-24.svg",
+    ]);
+    for (const master of startMenuMasters) {
+      expect(master).toHaveAttribute("data-m98-icon-master-grid", "24");
+      expect(master).toHaveAttribute("width", "24");
+      expect(master).toHaveAttribute("height", "24");
+      expect(master).not.toHaveAttribute("transform");
+    }
+
     expect(within(startMenu).getByRole("button", { name: "Selected Work" })).toBeInTheDocument();
     expect(within(startMenu).getByRole("button", { name: "About Myles" })).toBeInTheDocument();
     expect(within(startMenu).getByRole("button", { name: "Loose Parts" })).toBeInTheDocument();

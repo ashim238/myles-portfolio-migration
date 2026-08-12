@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" data-m98-concept="trini-roti" data-m98-grid="32">
+  <path fill="#352b37" d="M7 3H21V4H22V5H23V6H24V7H25V28H24V30H6V4H7Z" />
+  <path fill="#e6d4c0" d="M7 4H20V8H24V27H23V29H7Z" />
+  <path fill="#f6eee3" d="M8 4H20V8H23V10H8Z" />
+  <path fill="#c49a78" d="M20 4H21V5H22V6H23V7H24V8H20Z" />
+  <path fill="#fff8ed" d="M21 4H22V5H23V6H24V7H25V8H24V7H23V6H22V5H21Z" />
+  <path fill="#7a536d" d="M10 11H14V10H19V11H17V12H10Z" />
+  <path fill="#7a536d" d="M9 14H13V13H21V14H18V15H9Z" />
+  <path fill="#7a536d" d="M11 17H15V16H21V17H19V18H11Z" />
+  <path fill="#7a536d" d="M9 20H12V19H19V20H16V21H9Z" />
+  <path fill="#7a536d" d="M10 23H13V22H17V23H15V24H10Z" />
+</svg>

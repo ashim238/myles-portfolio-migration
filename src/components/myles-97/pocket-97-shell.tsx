@@ -124,7 +124,7 @@ export function Pocket97Shell({
               <span className="pocket97-app-identity">
                 <Myles97Icon
                   name={iconForProgram(activeProgram)}
-                  size={20}
+                  size={24}
                   variant="color"
                   aria-hidden="true"
                 />
@@ -198,19 +198,19 @@ export function Pocket97Shell({
       {startOpen ? (
         <div className="pocket97-sheet" role="group" aria-label="Pocket 98 Start">
           <button type="button" onClick={() => openProgram("about")}>
-            <Myles97Icon name="profile" size={20} variant="color" aria-hidden="true" />
+            <Myles97Icon name="profile" size={24} variant="color" aria-hidden="true" />
             About Myles
           </button>
           <button type="button" onClick={() => openProgram("resume")}>
-            <Myles97Icon name="resume" size={20} variant="color" aria-hidden="true" />
+            <Myles97Icon name="resume" size={24} variant="color" aria-hidden="true" />
             Résumé
           </button>
           <button type="button" onClick={() => openProgram("display-properties")}>
-            <Myles97Icon name="display" size={20} variant="color" aria-hidden="true" />
+            <Myles97Icon name="display" size={24} variant="color" aria-hidden="true" />
             Display Properties
           </button>
           <a href={`mailto:${siteConfig.email}`}>
-            <Myles97Icon name="mail" size={20} variant="color" aria-hidden="true" />
+            <Myles97Icon name="mail" size={24} variant="color" aria-hidden="true" />
             E-mail
           </a>
         </div>
@@ -226,7 +226,7 @@ export function Pocket97Shell({
                 <button key={id} type="button" onClick={() => openProgram(id)}>
                   <Myles97Icon
                     name={iconForProgram(id)}
-                    size={20}
+                    size={24}
                     variant="color"
                     aria-hidden="true"
                   />
@@ -249,15 +249,15 @@ export function Pocket97Shell({
             setStartOpen((open) => !open);
           }}
         >
-          <Myles97Icon name="app" size={20} variant="color" aria-hidden="true" />
+          <Myles97Icon name="app" size={24} variant="color" aria-hidden="true" />
           <span>Start</span>
         </button>
         <button ref={workButtonRef} type="button" onClick={returnHome}>
-          <Myles97Icon name="folder" size={20} variant="color" aria-hidden="true" />
+          <Myles97Icon name="folder" size={24} variant="color" aria-hidden="true" />
           <span>Work</span>
         </button>
         <button type="button" onClick={() => openProgram("loose-parts")}>
-          <Myles97Icon name="loose-parts" size={20} variant="color" aria-hidden="true" />
+          <Myles97Icon name="loose-parts" size={24} variant="color" aria-hidden="true" />
           <span>Loose Parts</span>
         </button>
         <button
@@ -269,7 +269,7 @@ export function Pocket97Shell({
             setAppsOpen((open) => !open);
           }}
         >
-          <Myles97Icon name="display" size={20} variant="color" aria-hidden="true" />
+          <Myles97Icon name="open-apps" size={24} variant="color" aria-hidden="true" />
           <span>Open Apps</span>
         </button>
       </nav>

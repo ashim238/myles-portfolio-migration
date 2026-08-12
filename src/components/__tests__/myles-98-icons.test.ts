@@ -1,7 +1,7 @@
 import { createElement } from "react";
 import { render, screen } from "@testing-library/react";
-import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { readdirSync, readFileSync } from "node:fs";
+import { relative, resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   iconForProgram,
@@ -19,6 +19,35 @@ const workstationStyles = readFileSync(
   resolve(process.cwd(), "src/app/styles/myles-97.css"),
   "utf8",
 );
+
+const MASTER_CONCEPT_BY_ICON: Record<Myles97IconName, string> = {
+  folder: "selected-work",
+  document: "reminders",
+  profile: "about-myles",
+  resume: "resume",
+  recipe: "trini-roti",
+  display: "display-properties",
+  mail: "email",
+  app: "generic-app",
+  "open-apps": "open-apps",
+  "reset-desktop": "reset-desktop",
+  "loose-parts": "loose-parts",
+  "fresh-greens": "fresh-greens",
+  fafsa: "understandingfafsa",
+  navi: "navi",
+  tiktok: "tiktok-catalog",
+};
+
+const COLOR_ICON_NAMES = Object.keys(MASTER_CONCEPT_BY_ICON) as Myles97IconName[];
+
+function svgFiles(directory: string): string[] {
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const path = resolve(directory, entry.name);
+
+    if (entry.isDirectory()) return svgFiles(path);
+    return entry.isFile() && entry.name.endsWith(".svg") ? [path] : [];
+  });
+}
 
 describe("Myles 98 program icon identity", () => {
   it("gives every project program a distinct original glyph", () => {
@@ -121,6 +150,89 @@ describe("Myles 98 program icon identity", () => {
     ).toBeInTheDocument();
   });
 
+  it("uses the audited public SVG master at each color tier without an interior scale", () => {
+    const nativeSizes = [16, 24, 32] as const;
+    const { container } = render(
+      createElement(
+        "div",
+        null,
+        ...COLOR_ICON_NAMES.flatMap((name) =>
+          nativeSizes.map((size) =>
+            createElement(Myles97Icon, {
+              key: `${name}-${size}`,
+              name,
+              size,
+              variant: "color",
+              title: `${name}-${size}-master`,
+            }),
+          ),
+        ),
+      ),
+    );
+
+    for (const name of COLOR_ICON_NAMES) {
+      const concept = MASTER_CONCEPT_BY_ICON[name];
+
+      for (const size of nativeSizes) {
+        const icon = screen.getByRole("img", { name: `${name}-${size}-master` });
+        const master = icon.querySelector<SVGImageElement>(
+          "image[data-m98-icon-master]",
+        );
+        const source = `/myles98-icons/${concept}/${concept}-${size}.svg`;
+
+        expect(master).toBeInTheDocument();
+        expect(master).toHaveAttribute("href", source);
+        expect(master).toHaveAttribute("data-m98-icon-master-concept", concept);
+        expect(master).toHaveAttribute("data-m98-icon-master-grid", String(size));
+        expect(master).toHaveAttribute("x", "0");
+        expect(master).toHaveAttribute("y", "0");
+        expect(master).toHaveAttribute("width", String(size));
+        expect(master).toHaveAttribute("height", String(size));
+        expect(master).toHaveAttribute("preserveAspectRatio", "none");
+        expect(master).not.toHaveAttribute("transform");
+
+        const publicMaster = resolve(process.cwd(), "public", source.slice(1));
+        const documentedMaster = resolve(
+          process.cwd(),
+          "docs/design-assets/myles98-icons/masters",
+          concept,
+          `${concept}-${size}.svg`,
+        );
+
+        expect(readFileSync(publicMaster, "utf8")).toBe(
+          readFileSync(documentedMaster, "utf8"),
+        );
+      }
+    }
+
+    expect(
+      container.querySelectorAll("image[data-m98-icon-master]"),
+    ).toHaveLength(COLOR_ICON_NAMES.length * nativeSizes.length);
+  });
+
+  it("keeps the public master directory byte-identical to the audited family", () => {
+    const documentedRoot = resolve(
+      process.cwd(),
+      "docs/design-assets/myles98-icons/masters",
+    );
+    const publicRoot = resolve(process.cwd(), "public/myles98-icons");
+    const documentedFiles = svgFiles(documentedRoot).map((path) =>
+      relative(documentedRoot, path),
+    );
+    const publicFiles = svgFiles(publicRoot).map((path) =>
+      relative(publicRoot, path),
+    );
+
+    expect(publicFiles.sort()).toEqual(documentedFiles.sort());
+    expect(publicFiles).toHaveLength(48);
+
+    for (const path of publicFiles) {
+      expect(readFileSync(resolve(publicRoot, path), "utf8")).toBe(
+        readFileSync(resolve(documentedRoot, path), "utf8"),
+      );
+    }
+  });
+
   it("keeps every tier on integer-authored geometry", () => {
     const names: Myles97IconName[] = [
       "folder",
@@ -131,6 +243,8 @@ describe("Myles 98 program icon identity", () => {
       "display",
       "mail",
       "app",
+      "open-apps",
+      "reset-desktop",
       "loose-parts",
       "fresh-greens",
       "fafsa",
@@ -198,6 +312,8 @@ describe("Myles 98 program icon identity", () => {
       "display",
       "mail",
       "app",
+      "open-apps",
+      "reset-desktop",
       "loose-parts",
       "fresh-greens",
       "fafsa",
@@ -238,13 +354,17 @@ describe("Myles 98 program icon identity", () => {
           icon.querySelector("[data-m98-icon-silhouette]"),
         ).not.toBeInTheDocument();
         expect(
-          Array.from(icon.children, (layer) =>
-            layer.getAttribute("data-m98-icon-layer"),
+          icon.querySelector('[data-m98-icon-master]'),
+        ).toBeInTheDocument();
+        expect(
+          Array.from(
+            icon.querySelectorAll(":scope > .myles98-icon-fallback > [data-m98-icon-layer]"),
+            (layer) => layer.getAttribute("data-m98-icon-layer"),
           ),
         ).toEqual(["cast-shadow", "face", "side", "highlight"]);
 
         const visibleSide = icon.querySelector(
-          ':scope > [data-m98-icon-layer="side"]',
+          '[data-m98-icon-layer="side"]',
         );
         expect(visibleSide).toBeInTheDocument();
         expect(
@@ -303,6 +423,8 @@ describe("Myles 98 program icon identity", () => {
       "display",
       "mail",
       "app",
+      "open-apps",
+      "reset-desktop",
       "loose-parts",
       "fresh-greens",
       "fafsa",
@@ -511,7 +633,7 @@ describe("Myles 98 program icon identity", () => {
     expect(labelRule).toMatch(/transform:\s*rotate\(180deg\)/);
   });
 
-  it("uses color icons on discovery surfaces and preserves forced-color recovery", () => {
+  it("uses native-size color masters on live surfaces and preserves forced-color recovery", () => {
     const workstation = readFileSync(
       resolve(process.cwd(), "src/components/myles-97/workstation-desktop.tsx"),
       "utf8",
@@ -527,8 +649,16 @@ describe("Myles 98 program icon identity", () => {
 
     expect(workstation).toContain('name="profile" size={32} variant="color"');
     expect(workstation).toContain('name="resume" size={32} variant="color"');
-    expect(startMenu).toContain('name="folder" size={20} variant="color"');
-    expect(pocket).toContain('variant="color"');
+    expect(startMenu).toContain('name="folder" size={24} variant="color"');
+    expect(startMenu).toContain(
+      'name="reset-desktop" size={24} variant="color"',
+    );
+    expect(startMenu).not.toMatch(/size=\{20\}\s+variant="color"/);
+    expect(pocket).toContain('name="open-apps" size={24} variant="color"');
+    expect(pocket).toMatch(
+      /name=\{iconForProgram\([^)]*\)\}\s+size=\{24\}\s+variant="color"/,
+    );
+    expect(pocket).not.toMatch(/size=\{20\}\s+variant="color"/);
     expect(iconStyles).toMatch(
       /@media \(forced-colors: active\)[\s\S]*?\.myles98-icon-accent,[\s\S]*?fill:\s*CanvasText !important;/,
     );
@@ -546,6 +676,14 @@ describe("Myles 98 program icon identity", () => {
       '[data-m98-icon-depth="highlight"]',
     );
     expect(hiddenDepthRule?.[2]).toMatch(/display:\s*none/);
+    expect(iconStyles).toMatch(/\.myles98-icon-master\s*\{[^}]*display:\s*block;/);
+    expect(iconStyles).toMatch(/\.myles98-icon-fallback\s*\{[^}]*display:\s*none;/);
+    expect(forcedColorStyles).toMatch(
+      /\.myles98-icon-master\s*\{[^}]*display:\s*none;/,
+    );
+    expect(forcedColorStyles).toMatch(
+      /\.myles98-icon-fallback\s*\{[^}]*display:\s*block;/,
+    );
     expect(iconStyles).not.toMatch(
       /\.myles97-desktop-shortcuts[\s\S]*?drop-shadow/,
     );
