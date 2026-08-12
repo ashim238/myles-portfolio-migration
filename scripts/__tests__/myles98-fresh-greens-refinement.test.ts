@@ -281,6 +281,21 @@ describe("Myles 98 Fresh Greens street-block route-map refinement", () => {
     )).toBeGreaterThanOrEqual(grid * 0.55);
   });
 
+  it("renders the 16px destination as a four-pixel hook beside the visible final route cell", async () => {
+    const pixels = await rasterFor(sourceFor(16), 16);
+    const route = pixelsForFill(pixels, ROUTE_FILL);
+    const destination = pixelsForFill(pixels, DESTINATION_FILL);
+
+    expect(destination.map(({ x, y }) => `${x},${y}`).sort()).toEqual([
+      "10,13",
+      "11,11",
+      "11,12",
+      "11,13",
+    ]);
+    expect(route).toContainEqual({ color: ROUTE_FILL, x: 10, y: 12 });
+    expect(touches(route, destination)).toBe(true);
+  });
+
   it.each(GRIDS)("rejects a lone route stroke or a route stripped of its %ipx street map", (grid) => {
     const source = sourceFor(grid);
 

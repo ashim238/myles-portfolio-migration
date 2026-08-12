@@ -11,5 +11,5 @@
   <rect fill="#4d5552" x="6" y="8" width="5" height="1" />
   <rect fill="#4d5552" x="10" y="8" width="1" height="5" />
   <rect fill="#205a40" x="2" y="3" width="2" height="2" />
-  <path fill="#f27524" d="M9 11H12V14H11V13H9Z" />
+  <path fill="#f27524" d="M11 11H12V14H10V13H11Z" />
 </svg>
