@@ -6,36 +6,33 @@ import { expectedMasterPath } from "../lib/myles98-icon-contract.mjs";
 const ROOT = "docs/design-assets/myles98-icons";
 const resumeClipColors = new Set(["#164b80", "#75acd2"]);
 const resetActionColors = new Set(["#8e211e", "#8d211e", "#f15a50"]);
-const resetScreenColors = new Set(["#4a7d8e", "#4b7d8e"]);
-const resetRestartLoopContract = new Map([
+const resetDesktopContextColors = new Set(["#4a7d8e", "#75acd2", "#29282a"]);
+const resetRestartArrowContract = new Map([
   [16, {
-    head: [3, 4],
-    crown: [8, 2],
-    farSide: [12, 6],
-    returnBase: [8, 12],
-    tail: [4, 10],
-    gap: [4, 7],
-    minimumWidth: 10,
-    minimumHeight: 11,
+    tip: [13, 4],
+    gap: [9, 4],
+    leftArc: [3, 8],
+    lowerArc: [8, 12],
+    rightArc: [12, 8],
+    minimumWidth: 11,
+    minimumHeight: 10,
   }],
   [24, {
-    head: [4, 5],
-    crown: [11, 2],
-    farSide: [19, 9],
-    returnBase: [12, 18],
-    tail: [6, 15],
-    gap: [5, 9],
-    minimumWidth: 16,
+    tip: [20, 5],
+    gap: [14, 5],
+    leftArc: [3, 10],
+    lowerArc: [10, 19],
+    rightArc: [19, 10],
+    minimumWidth: 18,
     minimumHeight: 17,
   }],
   [32, {
-    head: [5, 7],
-    crown: [15, 2],
-    farSide: [26, 12],
-    returnBase: [16, 25],
-    tail: [7, 20],
-    gap: [7, 13],
-    minimumWidth: 22,
+    tip: [28, 8],
+    gap: [20, 7],
+    leftArc: [5, 15],
+    lowerArc: [15, 26],
+    rightArc: [25, 15],
+    minimumWidth: 24,
     minimumHeight: 24,
   }],
 ] as const);
@@ -256,40 +253,46 @@ describe("Myles 98 Resume and Reset Desktop refinement", () => {
     }
   });
 
-  it("renders a broad open restart loop with a left-facing head, rather than a cable-like pointer", async () => {
-    for (const [grid, { head, crown, farSide, returnBase, tail, gap, minimumWidth, minimumHeight }] of resetRestartLoopContract) {
+  it("renders one stepped restart arrow with a directional tip, circular arc, and intentional gap", async () => {
+    for (const [grid, { tip, gap, leftArc, lowerArc, rightArc, minimumWidth, minimumHeight }] of resetRestartArrowContract) {
       const reset = await nativeRaster(sourceFor("reset-desktop", grid), grid);
       const mask = colorMask(reset.data, reset.info.channels, resetActionColors);
       const actionBounds = boundsFor(reset.data, reset.info.width, reset.info.channels, resetActionColors);
-      const [headX, headY] = head;
       const at = (x: number, y: number) => mask[y * grid + x];
 
       expect(maskTopology(mask, grid)).toEqual({ components: 1, enclosedOpenings: 0 });
-      expect(actionBounds.minX).toBe(headX);
-      expect(mask.filter((filled, index) => filled && index % grid === headX)).toHaveLength(1);
-      expect(at(headX, headY)).toBe(true);
-      expect(at(headX + 1, headY - 1)).toBe(true);
-      expect(at(headX + 1, headY + 1)).toBe(true);
-      expect(at(...crown)).toBe(true);
-      expect(at(...farSide)).toBe(true);
-      expect(at(...returnBase)).toBe(true);
-      expect(at(...tail)).toBe(true);
+      expect(at(...tip)).toBe(true);
       expect(at(...gap)).toBe(false);
+      expect(at(...leftArc)).toBe(true);
+      expect(at(...lowerArc)).toBe(true);
+      expect(at(...rightArc)).toBe(true);
+      expect(actionBounds.maxX).toBe(tip[0]);
+      expect(mask.filter((filled, index) => filled && index % grid === tip[0]).length).toBeLessThanOrEqual(2);
       expect(actionBounds.width).toBeGreaterThanOrEqual(minimumWidth);
       expect(actionBounds.height).toBeGreaterThanOrEqual(minimumHeight);
       expect(mask.filter(Boolean).length / (actionBounds.width * actionBounds.height)).toBeLessThan(0.7);
     }
   });
 
-  it("nests Reset Desktop's CRT inside the restart loop at native size", async () => {
+  it("tiers desktop context beneath the restart action only where the grid can support it", async () => {
     for (const grid of [16, 24, 32]) {
       const reset = await nativeRaster(sourceFor("reset-desktop", grid), grid);
+      const context = colorMask(reset.data, reset.info.channels, resetDesktopContextColors);
+
+      if (grid === 16) {
+        expect(context.some(Boolean)).toBe(false);
+        continue;
+      }
+
       const actionBounds = boundsFor(reset.data, reset.info.width, reset.info.channels, resetActionColors);
-      const screenBounds = boundsFor(reset.data, reset.info.width, reset.info.channels, resetScreenColors);
-      expect(actionBounds.minX).toBeLessThan(screenBounds.minX);
-      expect(actionBounds.maxX).toBeGreaterThan(screenBounds.maxX);
-      expect(actionBounds.minY).toBeLessThan(screenBounds.minY);
-      expect(actionBounds.maxY).toBeGreaterThan(screenBounds.maxY);
+      const contextBounds = boundsFor(reset.data, reset.info.width, reset.info.channels, resetDesktopContextColors);
+      expect(maskTopology(context, grid)).toEqual({ components: 1, enclosedOpenings: 0 });
+      expect(contextBounds.width).toBeLessThan(actionBounds.width / 2);
+      expect(contextBounds.height).toBeLessThan(actionBounds.height / 2);
+      expect(contextBounds.minX).toBeGreaterThan(actionBounds.minX);
+      expect(contextBounds.maxX).toBeLessThan(actionBounds.maxX);
+      expect(contextBounds.minY).toBeGreaterThan(actionBounds.minY);
+      expect(contextBounds.maxY).toBeLessThan(actionBounds.maxY);
     }
   });
 });

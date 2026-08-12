@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" data-m98-concept="reset-desktop" data-m98-grid="32">
-  <rect fill="#222323" x="10" y="10" width="13" height="9" />
-  <rect fill="#746d62" x="10" y="19" width="13" height="3" />
-  <rect fill="#4a7d8e" x="12" y="12" width="9" height="5" />
-  <rect fill="#b9d9d4" x="12" y="12" width="6" height="1" />
-  <rect fill="#548798" x="13" y="13" width="8" height="1" />
-  <rect fill="#315f69" x="20" y="14" width="1" height="3" />
-  <path fill="#8d211e" d="M5 7H6V6H8V5H10V7H11V8H10V9H6V8H5Z M9 2H23V5H9Z M23 4H27V23H23Z M9 22H25V26H9Z M6 16H10V25H6Z" />
-  <rect fill="#f15a50" x="11" y="2" width="10" height="1" />
-  <rect fill="#f15a50" x="26" y="5" width="1" height="16" />
+  <path fill="#8d211e" d="M22 5H25V7H27V8H29V9H27V10H25V12H22V10H23V8H21V7H22Z M11 3H20V6H11Z M8 5H13V9H8Z M6 7H10V13H6Z M5 11H9V21H5Z M6 19H11V25H6Z M9 23H22V27H9Z M20 20H27V26H20Z M23 12H26V23H23Z" />
+  <rect fill="#f15a50" x="12" y="3" width="6" height="1" />
+  <rect fill="#f15a50" x="6" y="11" width="1" height="7" />
+  <rect fill="#f15a50" x="10" y="26" width="10" height="1" />
+  <rect fill="#f15a50" x="25" y="13" width="1" height="8" />
+  <rect fill="#f15a50" x="23" y="6" width="2" height="1" />
+  <rect fill="#4a7d8e" x="13" y="15" width="7" height="4" />
+  <rect fill="#75acd2" x="14" y="16" width="5" height="1" />
+  <rect fill="#29282a" x="15" y="19" width="3" height="1" />
 </svg>
