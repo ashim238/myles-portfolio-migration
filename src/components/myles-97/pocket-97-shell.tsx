@@ -163,7 +163,7 @@ export function Pocket97Shell({
                 <p className="myles97-eyebrow">Pocket 98</p>
                 <h1>Myles Ashitey</h1>
                 <p className="pocket97-statement">
-                  I design systems, then build them in code.
+                  Design, code, and everything in between.
                 </p>
                 <p className="pocket97-context">
                   Previously TikTok and UMG. Latest project: Fresh Greens.

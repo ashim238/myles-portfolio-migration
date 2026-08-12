@@ -14,7 +14,7 @@ export function WelcomeProgram({ onSelectedWork }: WelcomeProgramProps) {
         <p className="myles97-eyebrow">Welcome to Myles 98</p>
         <h1>Myles Ashitey</h1>
         <p className="myles97-welcome-statement">
-          I design systems, then build them in code.
+          Design, code, and everything in between.
         </p>
         <p className="myles97-welcome-context">
           Previously TikTok and UMG. Latest project: Fresh Greens.
