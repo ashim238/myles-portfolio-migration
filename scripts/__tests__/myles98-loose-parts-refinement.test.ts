@@ -177,6 +177,43 @@ function connectedComponents(pixels: Pixel[]) {
   return components;
 }
 
+function enclosedTransparentPixels(pixels: Pixel[], grid: Grid) {
+  const opaque = new Set(pixels.map((pixel) => `${pixel.x},${pixel.y}`));
+  const exterior = new Set<string>();
+  const queue: Array<[number, number]> = [];
+
+  for (let coordinate = 0; coordinate < grid; coordinate += 1) {
+    for (const [x, y] of [[coordinate, 0], [coordinate, grid - 1], [0, coordinate], [grid - 1, coordinate]]) {
+      const position = `${x},${y}`;
+      if (opaque.has(position) || exterior.has(position)) continue;
+      exterior.add(position);
+      queue.push([x, y]);
+    }
+  }
+
+  while (queue.length > 0) {
+    const [x, y] = queue.shift()!;
+    for (const [nextX, nextY] of [[x - 1, y], [x + 1, y], [x, y - 1], [x, y + 1]]) {
+      const position = `${nextX},${nextY}`;
+      if (
+        nextX < 0 || nextY < 0 || nextX >= grid || nextY >= grid ||
+        opaque.has(position) || exterior.has(position)
+      ) continue;
+      exterior.add(position);
+      queue.push([nextX, nextY]);
+    }
+  }
+
+  const pockets: string[] = [];
+  for (let y = 0; y < grid; y += 1) {
+    for (let x = 0; x < grid; x += 1) {
+      const position = `${x},${y}`;
+      if (!opaque.has(position) && !exterior.has(position)) pockets.push(position);
+    }
+  }
+  return pockets;
+}
+
 describe("Myles 98 Loose Parts volume refinement", () => {
   it("does not mistake an inset highlight for an offset material plane", () => {
     const insetHighlight = [
@@ -204,6 +241,7 @@ describe("Myles 98 Loose Parts volume refinement", () => {
     expect(planes).toHaveLength(3);
     expect(cluster).toHaveLength(1);
     expect(new Set(cluster[0]!.map((pixel) => pixel.color)).size).toBeGreaterThanOrEqual(10);
+    expect(enclosedTransparentPixels(cluster[0]!, grid)).toEqual([]);
 
     expect(frontFaces).toHaveLength(3);
     expect(top).toBeDefined();
