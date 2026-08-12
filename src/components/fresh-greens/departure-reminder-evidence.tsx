@@ -17,9 +17,9 @@ export function DepartureReminderEvidence() {
           Bring the daylight plan back at the right time.
         </h3>
         <p>
-          Every participant connected timing and safety with daylight.
-          Participants described leaving in the morning and avoiding night
-          driving.
+          All six participants connected trip timing to daylight. I built the
+          reminder around that timing and waited to request notification access
+          until someone tapped Schedule.
         </p>
       </div>
 

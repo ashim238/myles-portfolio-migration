@@ -193,7 +193,10 @@ describe("TikTok short-form case study", () => {
       Node.DOCUMENT_POSITION_FOLLOWING,
     );
     expect(brief).toHaveTextContent(
-      "DSA needed reusable brand catalog templates built around fixed product slots. I had to see how much visual range I could create without moving that structure.",
+      "The brief was to make static catalog templates that could work across product categories while keeping the product slots fixed.",
+    );
+    expect(brief).toHaveTextContent(
+      "I used type, color, and supporting graphics to give each direction its own visual logic.",
     );
 
     const facts = brief?.querySelector("dl");
@@ -231,7 +234,7 @@ describe("TikTok short-form case study", () => {
     expect(research).toHaveTextContent("WitchTok");
     expect(research).toHaveTextContent("Cottagecore");
     expect(research).toHaveTextContent(
-      "Dopamine Dressing, e-Boy/e-Girl, and Light Academia gave the fixed slot map three visibly different directions, so I moved them forward.",
+      "The final directions had to make sense for their audiences.",
     );
     expect(research).toHaveTextContent("Dopamine Dressing");
     expect(research).toHaveTextContent("e-Boy/e-Girl");
@@ -246,13 +249,13 @@ describe("TikTok short-form case study", () => {
     expect(within(system).getAllByText("Static template")).toHaveLength(3);
     expect(system).toHaveTextContent("layered Photoshop");
     expect(system).toHaveTextContent(
-      "I built and handed off three static directions as layered Photoshop files.",
+      "I built each direction as a layered Photoshop file around the same product-slot map.",
     );
     expect(system).toHaveTextContent(
-      /most parts stayed inside their own visual system/i,
+      /most parts stayed within their own direction/i,
     );
     expect(system).toHaveTextContent(
-      "While building the files, I proposed a limited amount of cross-direction modularity.",
+      "I only proposed sharing a few pieces between Light Academia and e-Boy/e-Girl where the structure already aligned.",
     );
 
     const disclosure = within(system).getByText(/notes below paraphrase/i);

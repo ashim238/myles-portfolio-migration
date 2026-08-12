@@ -97,7 +97,7 @@ describe("Myles98 product shell", () => {
 
     expect(screen.getByRole("heading", { name: "Myles Ashitey" })).toBeInTheDocument();
     expect(
-      screen.getByText("Design, code, and everything in between."),
+      screen.getByText("I design systems, then build them in code."),
     ).toBeInTheDocument();
     expect(
       screen.getByText("Previously TikTok and UMG. Latest project: Fresh Greens."),

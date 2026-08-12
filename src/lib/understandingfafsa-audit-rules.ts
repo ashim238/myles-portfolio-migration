@@ -22,7 +22,7 @@ export const UNDERSTANDING_FAFSA_AUDIT_RULES = [
     id: "brand-structure",
     finding: "Weekly content changed while the brand structure should not",
     response:
-      "Locked spacing, type, dividers, and section order with swappable copy and imagery",
+      "Locked spacing, type, and dividers with swappable content, copy, and module order",
   },
   {
     id: "founder-workflow",

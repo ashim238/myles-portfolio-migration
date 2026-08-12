@@ -271,11 +271,11 @@ describe("UnderstandingFAFSA case-study structure", () => {
 
   it("centers founder autonomy before the rules and feasibility work that enabled it", () => {
     const brief =
-      "The brief was to design a new email newsletter system the founder could update at a moment&apos;s notice without much technical know-how.";
+      "During the rebrand, I built a newsletter system the founder can run independently in Mailchimp.";
     const feasibility =
       "I moved the design from Figma into Mailchimp for feasibility checks and practice sends, then built a version ready for user testing.";
     const result =
-      "The founder now assembles each send from the Mailchimp-native kit without editing HTML.";
+      "The founder now handles weekly sends and ICYMI in Mailchimp, swapping content, copy, and module order without editing HTML.";
 
     expect(prose).toContain(brief);
     expect(prose).toContain(feasibility);
@@ -287,7 +287,7 @@ describe("UnderstandingFAFSA case-study structure", () => {
       page.indexOf("Gmail&apos;s 102 KB HTML clipping threshold"),
     );
     expect(page).toContain(
-      '"Outcome: I designed and rebuilt a Mailchimp-native newsletter kit the founder can update without editing HTML.",',
+      '"Outcome: I designed and rebuilt a Mailchimp-native kit the founder uses for weekly sends and ICYMI without editing HTML.",',
     );
   });
 
@@ -330,9 +330,9 @@ describe("UnderstandingFAFSA case-study structure", () => {
 
   it("names the three templates and the Mailchimp tradeoff without abstract system language", () => {
     expect(prose).toContain(
-      "The audit led to three templates: a welcome email, the weekly newsletter, and a shorter version for event invites and recaps.",
+      "The audit led to three templates: a welcome email, the weekly newsletter, and a shorter ICYMI version for event invites and recaps.",
     );
-    expect(prose).toMatch(/I designed the modular rules around a fixed section order/i);
+    expect(prose).toMatch(/I locked the visual rules that needed to hold/i);
     expect(prose).not.toContain("The shared framework");
     expect(prose).not.toContain("same vocabulary");
     expect(prose).not.toContain("modular rhythm");

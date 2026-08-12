@@ -176,7 +176,7 @@ describe("Fresh Greens rendered narrative ownership", () => {
     const frame = chapter(container, "fg-problem");
     const research = chapter(container, "fg-research");
 
-    expect(frame).toHaveTextContent("drove comfortably below the speed limit");
+    expect(frame).toHaveTextContent("drove below the speed limit");
     expect(research).toHaveTextContent(
       "Drivers couldn't inspect conditions on each route before choosing.",
     );
@@ -195,22 +195,22 @@ describe("Fresh Greens rendered narrative ownership", () => {
     expect(trust).toHaveTextContent("community contributors");
     expect(`${respond.textContent} ${trustCopy}`).not.toMatch(/trusted agents/i);
     expect(trust).toHaveTextContent(
-      "I wanted each report to remain one person's account",
+      "Each report remained one person's account",
     );
     expect(
-      trustCopy.indexOf("I wanted each report"),
+      trustCopy.indexOf("Each report remained"),
     ).toBeLessThan(trustCopy.indexOf("Current prototype limit:"));
     expect(trust).not.toHaveTextContent(
       "A single account is never hidden or treated as proof",
     );
     expect(trust).toHaveTextContent(
-      "Separate reports from different community contributors would carry more weight over time",
+      "Over time, separate reports should carry more weight",
     );
     expect(trust).toHaveTextContent(
-      "a time-sensitive hazard could appear sooner",
+      "time-sensitive hazards could appear sooner",
     );
     expect(trust).toHaveTextContent(
-      "show uncertainty instead of reading silence as safety",
+      "Fresh Greens shows uncertainty where coverage is thin",
     );
     expect(trust).toHaveTextContent(/one report maps to one scored zone/i);
     expect(trust).toHaveTextContent(
@@ -232,7 +232,7 @@ describe("Fresh Greens rendered narrative ownership", () => {
       scopeCopy.indexOf("What remains"),
     );
     expect(scope).toHaveTextContent(
-      "a working React Native prototype across more than 26 screens",
+      "I turned six interviews into a working React Native prototype for route comparison",
     );
     expect(scope).toHaveTextContent("can explain why it prefers one route");
     expect(scope).toHaveTextContent(

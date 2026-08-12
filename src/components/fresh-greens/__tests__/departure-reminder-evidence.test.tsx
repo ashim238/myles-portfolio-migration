@@ -35,10 +35,10 @@ describe("Fresh Greens departure reminder evidence", () => {
       }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/every participant connected timing and safety with daylight/i),
+      screen.getByText(/all six participants connected trip timing to daylight/i),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/participants described leaving in the morning and avoiding night driving/i),
+      screen.getByText(/waited to request notification access until someone tapped schedule/i),
     ).toBeInTheDocument();
     expect(screen.getByText("Time to head out")).toBeInTheDocument();
     expect(

@@ -88,7 +88,7 @@ export default async function UnderstandingFafsaPage() {
       <ProjectOpeningFacts
         role="Product Designer"
         scope="I designed the modular rules and rebuilt the live system in Mailchimp."
-        outcome="A Mailchimp-native newsletter kit the founder can update without editing HTML."
+        outcome="A Mailchimp-native kit the founder uses for weekly sends and ICYMI without editing HTML."
         proof={understandingFafsaProof}
       />
       <LeadMedia
@@ -110,7 +110,7 @@ export default async function UnderstandingFafsaPage() {
         outcomeValue={project?.outcomeMetricValue}
         outcomeLabel={project?.outcomeMetricLabel}
         moves={[
-          "Outcome: I designed and rebuilt a Mailchimp-native newsletter kit the founder can update without editing HTML.",
+          "Outcome: I designed and rebuilt a Mailchimp-native kit the founder uses for weekly sends and ICYMI without editing HTML.",
           "Rules: I defined the fixed and swappable parts across three send types.",
           "Feasibility: I tested the Figma direction through Mailchimp practice sends.",
         ]}
@@ -128,11 +128,13 @@ export default async function UnderstandingFafsaPage() {
           <div className="project-section-body">
             <p>
               UnderstandingFAFSA helps students, parents, and counselors navigate
-              the Free Application for Federal Student Aid (FAFSA). The brief was
-              to design a new email newsletter system the founder could update at
-              a moment&apos;s notice without much technical know-how. The website had
-              already adopted Saans and a refreshed palette. The scope was
-              email-only, with guidance for students, parents, and counselors.
+              the Free Application for Federal Student Aid (FAFSA). During the
+              rebrand, I built a newsletter system the founder can run
+              independently in Mailchimp. She handles weekly sends and ICYMI,
+              swapping content, copy, and module order. I come back in when the
+              work needs to scale, like a specialized college-counselor toolkit.
+              The website had already adopted Saans and a refreshed palette. The
+              scope was email-only.
             </p>
           </div>
         </div>
@@ -198,8 +200,8 @@ export default async function UnderstandingFafsaPage() {
           <div className="project-section-body">
             <p>
               The audit led to three templates: a welcome email, the weekly
-              newsletter, and a shorter version for event invites and recaps.
-              A counselor toolkit is still in progress.
+              newsletter, and a shorter ICYMI version for event invites and
+              recaps. A counselor toolkit is still in progress.
             </p>
             <p>
               The welcome email sets expectations in a fixed order: a banner,
@@ -215,9 +217,9 @@ export default async function UnderstandingFafsaPage() {
         <div className="project-section uf-section project-section--wide uf-section--wide">
           <div className="project-section-body">
             <p>
-              I designed the modular rules around a fixed section order, spacing,
-              type, and dividers. The founder can swap weekly copy and imagery
-              without changing that structure.
+              I locked the visual rules that needed to hold: spacing, type, and
+              dividers. The founder can swap content and copy, then rearrange
+              middle modules for weekly sends and ICYMI without touching HTML.
             </p>
           </div>
           <LockedSwappableView />
@@ -280,11 +282,11 @@ export default async function UnderstandingFafsaPage() {
           <div className="project-section-body">
             <p>
               I shipped a master template, modular blocks,
-              locked-versus-swappable rules, and three template variants.
-            </p>
-            <p>
-              The founder now assembles each send from the Mailchimp-native kit
-              without editing HTML.
+              locked-versus-swappable rules, three template variants, and a
+              Mailchimp-native kit. The founder now handles weekly sends and
+              ICYMI in Mailchimp, swapping content, copy, and module order
+              without editing HTML. I come back in when the work needs to scale,
+              like a specialized college-counselor toolkit.
             </p>
             <p>
               The first redesigned send went out November 4, 2025. Mailchimp

@@ -916,7 +916,7 @@ export function LockedSwappableView() {
           <span className="uf-lock-key uf-lock-key--swap" aria-hidden="true" />
           <span>
             <strong>Swappable</strong>: editors change each send (headlines, body copy, emoji icons,
-            article links).
+            article links, and middle-module order).
           </span>
         </li>
         <li>

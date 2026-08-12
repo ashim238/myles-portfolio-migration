@@ -111,15 +111,15 @@ export default async function FreshGreensPage() {
           <div className="project-section-body">
             <p>
               I grew up in Brooklyn and moved to rural South Jersey around age
-              ten. Confederate flags on front lawns made night driving feel
-              exposing. I worried about a police stop or car trouble in a place
-              where asking for help might not feel safe.
+              ten. At night, Confederate flags, worsening roads, and spotty
+              reception made driving feel exposed. I worried about a police
+              stop, car trouble, or being stranded somewhere people might not
+              be welcoming.
             </p>
             <p>
-              I still used Google Maps or Apple Maps, but at night I avoided
-              backroads, drove comfortably below the speed limit, and kept my wallet
-              within reach. That experience gave
-              me a hypothesis, not proof. I interviewed six Black drivers.
+              I still used Google Maps or Apple Maps, but avoided backroads,
+              drove below the speed limit, and kept my wallet within reach. That
+              was a hypothesis, not proof, so I interviewed six Black drivers.
             </p>
             <p>
               The Green Book helped Black travelers find places that would serve
@@ -165,7 +165,13 @@ export default async function FreshGreensPage() {
       <ProjectChapter entry={chapters[2]} index={3} total={chapters.length} variant="fresh-greens">
         <section className="project-section fg-section fg-section--wide">
           <div className="project-section-body">
-            <p>Participants timed trips around daylight and compared clues outside maps that optimize time and distance. I moved from a Google Maps feature to a standalone route preview. Then I turned public and community inputs into inspectable route chips and source cards. They explain a route preference without proving it safer.</p>
+            <p>
+              At first, I added a safety layer to Google Maps. It left route
+              comparison in the background. The interviews pushed me toward a
+              standalone route preview, where public and community inputs became
+              route chips and source cards. The prototype can explain a route
+              preference without calling that route safer.
+            </p>
           </div>
           <PivotJourney />
           <DepartureReminderEvidence />
@@ -188,8 +194,8 @@ export default async function FreshGreensPage() {
       <ProjectChapter entry={chapters[4]} index={5} total={chapters.length} variant="fresh-greens">
         <div className="project-section fg-section fg-section--wide">
           <div className="project-section-body">
-            <p>Public datasets are useful because their sources can be checked, but they can&apos;t describe how a place felt to the person who moved through it. I wanted each report to remain one person&apos;s account. Human review could hide or remove it only when it broke contribution rules.</p>
-            <p>Separate reports from different community contributors would carry more weight over time, while a time-sensitive hazard could appear sooner. Where coverage was thin, Fresh Greens would show uncertainty instead of reading silence as safety.</p>
+            <p>Public datasets have checkable sources, but not felt experience. Each report remained one person&apos;s account, reviewed only for rule breaks.</p>
+            <p>Over time, separate reports should carry more weight, and time-sensitive hazards could appear sooner. Fresh Greens shows uncertainty where coverage is thin.</p>
             <p><strong>Current prototype limit:</strong> one report maps to one scored zone, so it can affect route ranking on its own. Corroboration-weighted ranking is still an intended safeguard, not a built feature. Contributor provenance and trust levels aren&apos;t visible yet.</p>
           </div>
           <figure className="fg-safety-visual">
@@ -224,7 +230,22 @@ export default async function FreshGreensPage() {
       <ProjectChapter entry={chapters[5]} index={6} total={chapters.length} variant="fresh-greens">
         <div className="project-section fg-section fg-scope">
           <div className="project-section-body">
-            <p>I turned six interviews into a working React Native prototype across more than 26 screens: route comparison, reminders, en-route guidance, stress support, reporting, and moderation. It can explain why it prefers one route without proving it safer. Testing with more Black drivers comes next.</p>
+            <p>
+              I turned six interviews into a working React Native prototype for
+              route comparison, reminders, en-route guidance, stress support,
+              reporting, and moderation. It can explain why it prefers one route
+              without proving it safer.
+            </p>
+            <p>
+              Early tests exposed a technical issue. People onboarded, typed a
+              residential address, and waited as search returned places only.
+              Recent searches masked it.
+            </p>
+            <p>
+              Next, I&apos;d test Black drivers 55 and older, including people in my
+              parents&apos; cohort. Their driving routines and Siri use may surface
+              different expectations.
+            </p>
           </div>
           <div className="fg-scope-grid">
             <div className="fg-scope-col">

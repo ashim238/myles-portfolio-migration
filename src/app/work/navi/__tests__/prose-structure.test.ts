@@ -194,7 +194,7 @@ describe("Navi case-study structure", () => {
       );
     }
 
-    expect(page.match(/rebuilt the concept/gi) ?? []).toHaveLength(1);
+    expect(page.match(/solo portfolio\s+rebuild/gi) ?? []).toHaveLength(1);
     expect(page).toContain('href="/work/navi/demo"');
     expect(page).toContain('href="/work/navi/system"');
   });

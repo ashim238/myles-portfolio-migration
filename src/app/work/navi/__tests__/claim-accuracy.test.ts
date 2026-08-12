@@ -72,7 +72,7 @@ describe("Navi evidence claims", () => {
       /I collected[\s\S]{0,120}resident and stakeholder responses/i,
     );
     expect(projectPage).toMatch(
-      /It doesn&apos;t\s+stand in for all NYC residents\./,
+      /It informed the concept, but it doesn&apos;t\s+stand in for all NYC residents\./,
     );
     expect(projectPage).not.toContain(
       "It does not stand in for all NYC residents.",
@@ -115,15 +115,15 @@ describe("Navi evidence claims", () => {
     );
     expect(projectProse).toMatch(/many college-aged/i);
     expect(projectProse).toMatch(/rising costs/i);
-    expect(projectProse).toMatch(/displacement of local businesses/i);
+    expect(projectProse).toMatch(/local-business displacement/i);
     expect(projectProse).toMatch(/repeat visitor relationships/i);
     expect(projectProse).toMatch(/outside traditional social platforms/i);
     expect(projectProse).toMatch(/regenerative work already happening/i);
     expect(projectProse).toMatch(
-      /Survey responses.{0,120}rising costs.{0,120}displacement of local businesses/i,
+      /Survey responses.{0,120}rising costs.{0,120}local-business\s+displacement/i,
     );
     expect(projectProse).toMatch(
-      /Other stakeholder input.{0,120}repeat visitor relationships/i,
+      /Survey responses.{0,120}repeat visitor relationships/i,
     );
     expect(projectProse).toMatch(
       /Tourism professionals.{0,120}regenerative work already happening/i,
@@ -218,7 +218,7 @@ describe("Navi evidence claims", () => {
 
     expect(content).toContain(`summary: ${summary}`);
     expect(projectPage).toMatch(
-      /I collected 14 resident and stakeholder responses/i,
+      /I collected 14 resident\s+and\s+stakeholder responses/i,
     );
     expect(projectPage).not.toContain("{project?.summary ??");
     expect(content).not.toMatch(/local heartbeat/i);
@@ -229,7 +229,7 @@ describe("Navi evidence claims", () => {
     const projectPage = readSource("src/app/work/navi/page.tsx");
     const resume = readSource("src/app/resume/page.tsx");
 
-    expect(projectPage).toMatch(/portfolio rebuild/i);
+    expect(projectPage).toMatch(/portfolio\s+rebuild/i);
     expect(projectPage).not.toContain("This is the prototype that would have shipped on day one.");
     expect(projectPage).not.toContain("Every design decision linked back to research findings");
     expect(projectPage).not.toContain("Journey mapping validated");
@@ -254,7 +254,7 @@ describe("Navi evidence claims", () => {
       /Navi&apos;s proposed alternative connected trip planning/,
     );
     expect(projectPage).toMatch(
-      /What I learned redirected[\s\S]{0,160}neighborhood context/i,
+      /NYC Tourism\s+conversations[\s\S]{0,160}Learn, Plan,\s+Go/i,
     );
     expect(projectPage).toMatch(
       /The research shifted my focus/i,

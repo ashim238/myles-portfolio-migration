@@ -369,11 +369,11 @@ describe("Fresh Greens prose structure", () => {
     );
     expect(copy).toContain("I grew up in Brooklyn");
     expect(copy).toContain("moved to rural South Jersey around age ten");
-    expect(copy).toContain("Confederate flags on front lawns");
-    expect(copy).toContain("a police stop or car trouble");
+    expect(copy).toContain("Confederate flags, worsening roads, and spotty reception");
+    expect(copy).toContain("a police stop, car trouble, or being stranded");
     expect(copy).toContain("Google Maps or Apple Maps");
-    expect(copy).toContain("drove comfortably below the speed limit");
-    expect(copy).toContain("That experience gave me a hypothesis, not proof.");
+    expect(copy).toContain("drove below the speed limit");
+    expect(copy).toContain("That was a hypothesis, not proof");
     expect(copy).toContain("I interviewed six Black drivers");
 
     expect(source).toContain(

@@ -84,10 +84,9 @@ export default async function NaviPage() {
         <p className="nv-eyebrow">Graduate studio · 2025</p>
         <h1 id="nv-title" className="project-hero-title nv-title">Navi</h1>
         <p className="project-hero-lede nv-lede">
-          I collected 14 resident and stakeholder responses, including two local
-          businesses. What I learned redirected the team&apos;s early Manhattan
-          heatmap toward neighborhood context and into Learn, Plan, Go, a concept
-          for what happens after someone chooses a place.
+          Fourteen responses, two Manhattan businesses, and NYC Tourism
+          conversations took the work beyond an early heatmap toward Learn, Plan,
+          Go.
         </p>
       </section>
 
@@ -132,17 +131,14 @@ export default async function NaviPage() {
           </p>
           <div className="project-section-body">
             <p>
-              The studio brief asked how NYC tourism could become more
-              regenerative, meaning participatory and contributive for visitors,
-              local businesses and artisans, and longtime residents.
+              The studio brief framed regenerative tourism as participatory and
+              contributive for visitors, local businesses and artisans, and
+              longtime residents.
             </p>
             <p>
-              The team used a Manhattan heatmap as an exploratory hypothesis to
-              test whether redirecting visitors could distribute attention across
-              more neighborhoods.
-            </p>
-            <p>
-              The survey tested what the map could not.
+              The team used a Manhattan heatmap as an exploratory hypothesis:
+              could redirecting visitors spread attention across more
+              neighborhoods?
             </p>
           </div>
         </div>
@@ -167,11 +163,13 @@ export default async function NaviPage() {
           <h3 className="project-evidence-heading" id="nv-research">Platform audits and resident research</h3>
           <div className="project-section-body">
             <p>
-              I collected 14 resident and stakeholder responses, including two
-              local businesses. The limited sample included longtime residents and
-              many college-aged people. Separately, tourism-industry professionals
-              added context about the NYC tourism website and sustainability. This
-              research informed the concept. It doesn&apos;t stand in for all NYC residents.
+              Thirty-minute interviews with random New Yorkers were hard to
+              recruit, so surveys became the primary method and interviews
+              supplied context. I collected 14 resident and
+              stakeholder responses, including two Manhattan businesses, and
+              spoke with NYC Tourism. The sample included longtime residents and
+              many college-aged people. It informed the concept, but it doesn&apos;t
+              stand in for all NYC residents.
             </p>
             <p>
               The team audited six travel platforms. I evaluated Airbnb with Kaori
@@ -193,11 +191,16 @@ export default async function NaviPage() {
               experiences.
             </p>
             <p>
-              Survey responses also raised rising costs and displacement of local
-              businesses. Other stakeholder input raised repeat visitor
-              relationships and discovery outside traditional social platforms.
-              Tourism professionals pointed to regenerative work already happening
-              citywide.
+              Survey responses also raised rising costs, local-business
+              displacement, repeat visitor relationships, and discovery outside
+              traditional social platforms. Tourism professionals pointed to
+              regenerative work already happening citywide.
+            </p>
+            <p>
+              The Manhattan businesses I spoke with stressed a strong social
+              presence across available channels. Survey respondents wanted
+              deeper engagement with communities and what they offer. Learn,
+              Plan, Go was meant to respond to both.
             </p>
             <p className="nv-survey-note">
               Highlights from {NAVI_SURVEY_META.responseCount} responses,
@@ -257,15 +260,15 @@ export default async function NaviPage() {
           <h3 className="project-evidence-heading" id="nv-system">Rebuilding Navi as a working system</h3>
           <div className="project-section-body">
             <p>
-              My studio responsibilities included research and design-system work.
-              The graduate-studio project ended as a Figma concept. For the
-              portfolio rebuild, working alone, I rebuilt the concept as a React
-              and TypeScript component system and individual booking flow.
+              My largest studio contribution was the Figma system. I built
+              Button and Field first, then used variants for the category-chip
+              rail. That specificity saved time and made the React conversion
+              straightforward.
             </p>
             <p>
-              I chose Jost for the wayfinding feel and orange to separate Navi
-              from the audited travel platforms. Lato handles UI text, and a 4px
-              spacing system keeps the screens consistent.
+              The studio ended as a Figma concept. In a later solo portfolio
+              rebuild, working alone, I turned Learn, Plan, Go into React and
+              TypeScript components and an individual booking flow.
             </p>
             <p>
               The same components and variants power both the editable system page

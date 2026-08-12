@@ -101,7 +101,7 @@ export const TIKTOK_TEMPLATES = [
     shipped: true,
     palette: AESTHETICS[2].palette,
     iterationNote:
-      "The simplicity was working. GCL encouraged me to make it feel more upbeat and more deliberate.",
+      "I kept the spare editorial structure and pushed the title, color, and supporting details further.",
     regionOverlays: {
       title: { left: 61.11, top: 13.28, width: 35.91, height: 13.98 },
       catalog: { left: 10.84, top: 18.75, width: 66.94, height: 42.71 },

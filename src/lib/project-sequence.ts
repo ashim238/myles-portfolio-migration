@@ -14,7 +14,7 @@ const PROJECT_SEQUENCE = {
   understandingfafsa: {
     nextSlug: "tiktok",
     bridge:
-      "At TikTok, I worked within a fixed catalog structure to build visual templates for fashion brands.",
+      "At TikTok, I designed static catalog templates for different product categories, keeping the product slots fixed while the visual systems changed.",
   },
   tiktok: {
     nextSlug: "fresh-greens",
