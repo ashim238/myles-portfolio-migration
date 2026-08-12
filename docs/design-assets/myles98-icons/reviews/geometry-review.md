@@ -1,13 +1,13 @@
 # Myles 98 Icon Geometry Review
 
-**Verdict:** PENDING fresh informed review
+**Verdict:** CLEAN-CONTEXT RECOGNITION PASS; PENDING fresh informed geometry review
 
 **Phase A status:** v7 replaces only UnderstandingFAFSA's v6 master with the
 wide folded printed-newsletter master in `f65e88bd5a81677f4945230b5f572de402780441`.
 The canonical sheet and source-free batches below were regenerated from that
-exact aggregate. The controller-only v7 clean-context disposition is complete
-and recorded exclusively in the ignored Task 5 report; informed visual review
-and P0–P3 counts remain unassessed.
+exact aggregate. The versioned de-identified v7 recognition PASS is recorded
+in the family-consistency review's release ledger; informed visual review and
+P0–P3 counts remain unassessed.
 
 **Review date:** 2026-08-11
 
@@ -28,6 +28,11 @@ and P0–P3 counts remain unassessed.
 
 Any master, manifest, contact-sheet, or render change invalidates this
 evidence lock.
+
+**Recognition boundary:** the hash-bound de-identified ledger in
+`family-consistency-review.md` records the v7 PASS, including F712's
+`refresh / restart arrow` reading. It does not replace the still-pending
+informed geometry review or its P0–P3 assessment.
 
 ## Mechanical geometry evidence
 
@@ -91,5 +96,8 @@ its only failing target was F608 UnderstandingFAFSA, for which a reviewer
 primarily read `webpage`. The v6 result is superseded for that concept by
 `f65e88bd5a81677f4945230b5f572de402780441`; it is not invalid. No historical
 record evidences this aggregate or the F701–F712 batches.
+
+The current aggregate instead has the v7 recognition PASS recorded in the
+de-identified family-consistency ledger above.
 
 Production integration remains out of scope for this review document.

@@ -1,13 +1,13 @@
 # Myles 98 Icon Family Consistency Review
 
-**Verdict:** CLEAN-CONTEXT DISPOSITION COMPLETE; PENDING informed family review
+**Verdict:** CLEAN-CONTEXT RECOGNITION PASS; PENDING informed family review
 
 **Phase A status:** v7 replaces only UnderstandingFAFSA with the wide folded
 printed-newsletter master in `f65e88bd5a81677f4945230b5f572de402780441`.
 The source-free evidence below was regenerated for that aggregate. The
-controller-only v7 clean-context disposition is complete and held exclusively
-in the ignored Task 5 report. Family P0–P3 counts and informed approval remain
-unassessed.
+versioned de-identified v7 recognition ledger below records the completed PASS
+without evaluator identities or private rationale. Family P0–P3 counts and
+informed approval remain unassessed.
 
 **Review date:** 2026-08-11
 
@@ -30,6 +30,49 @@ white. Each visible group has only a large arbitrary `M98-F###` identifier and
 `16px`, `24px`, and `32px` tier labels. No batch contains filenames, concept
 names, semantic labels, review conclusions, or labeled cards.
 
+## v7 de-identified clean-context recognition ledger
+
+**Release disposition:** `PASS` for the exact v7 asset aggregate. Two
+independent clean-context reviewers received only the three source-free PNG
+batches above. This release ledger deliberately omits evaluator identities,
+reasoning, and alternative-reading narratives. It records only the
+controller-normalized primary-reading outcome and disposition needed to audit
+the release decision.
+
+**Hash binding:** aggregate
+`644b72a13e1362e8b7781436d502254047dadc1b64e79f014a4d9df248d098e8`; batch
+01 `dd6c8303034cb196968a2a3d97dd423c6aeb29dea69ca1fdec3f4ddf6a03c4b3`; batch
+02 `8aa2074971250d71efc9d834f07e0f6df1a5cd4b6ff2bffabefa961a71b9fbb0`; batch
+03 `64fe294a8813d7a39bf996729ee800834364fba64f4f49bd9203091769bc4e8d`.
+
+| Anonymous group | De-identified primary-reading result | Release disposition |
+| --- | --- | --- |
+| M98-F701 | shopping bag | PASS |
+| M98-F702 | route map | PASS |
+| M98-F703 | note / text document | PASS |
+| M98-F704 | portrait | PASS — user-locked direct approval |
+| M98-F705 | CRT monitor | PASS |
+| M98-F706 | résumé document | PASS |
+| M98-F707 | stacked wooden building blocks | PASS |
+| M98-F708 | newsletter / news page | PASS |
+| M98-F709 | location pin above storefront | PASS — user-locked direct approval |
+| M98-F710 | checklist | PASS |
+| M98-F711 | folder / documents | PASS |
+| M98-F712 | refresh / restart arrow | PASS |
+
+The three previously contested outcomes retain the controller-supplied
+readings above: F707 `stacked wooden building blocks`, F708 `newsletter / news
+page`, and F712 `refresh / restart arrow`. The remaining entries are concise,
+controller-normalized noun labels, not verbatim reviewer transcripts. The
+controller compared the completed results against the current manifest's
+accepted and rejected readings and recorded no gate-blocking collision, brand
+implication, or tier-consistency failure. The deterministic pre-review
+F701–F712 mapping remains controller-held; this post-disposition ledger is the
+versioned release evidence.
+
+This recognition PASS does not claim a completed informed family review, zero
+P0–P3 findings, production integration, or a live-integration audit.
+
 ## Mechanical family baseline
 
 The exact candidate must pass:
@@ -44,10 +87,10 @@ npm exec vitest -- run scripts/__tests__/myles98-icon-contact-sheet.browser.test
 Each batch DOM integrity check must find 12 visible family panels, 36 visible
 tier cards, four unique group IDs, and zero visible labeled cards.
 
-## Required fresh-review protocol
+## Completed clean-context recognition protocol
 
-Two reviewers who have not seen filenames, source, manifest semantics, earlier
-reviews, or prior conclusions receive only the three current anonymous batches
+Two reviewers who had not seen filenames, source, manifest semantics, earlier
+reviews, or prior conclusions received only the three current anonymous batches
 and this question set for every group:
 
 1. What is the intended noun?
@@ -55,17 +98,17 @@ and this question set for every group:
 3. Does it imply a recognizable brand or product?
 4. Does it remain the same object across 16px, 24px, and 32px?
 
-Each response must state all three artifact SHA-256 values above and confirm
-clean context. The controller maps group IDs only after both records are
-complete, using the report-held mapping bound to the manifest digest.
+Each response stated all three artifact SHA-256 values above and confirmed
+clean context. The controller mapped group IDs only after both records were
+complete, using the mapping bound to the manifest digest.
 
-The strict disposition compares each primary reading and material alternative
+The strict disposition compared each primary reading and material alternative
 with the current manifest's accepted and rejected readings. A rejected
 collision, an unaccepted primary noun, a brand implication, lack of tier
-consistency, or material reviewer disagreement fails the affected redrawn
-family. Start's portrait and Navi's pin-above-separate-storefront relationship
-are user-locked direct approvals, recorded separately from strict redraw-gate
-results. Neither may be redrawn in Task 5.
+consistency, or material reviewer disagreement would have failed the affected
+redrawn family. Start's portrait and Navi's pin-above-separate-storefront
+relationship remain user-locked direct approvals, recorded separately from
+strict redraw-gate results. Neither may be redrawn in Task 5.
 
 ## Historical diagnostics — not current evidence
 

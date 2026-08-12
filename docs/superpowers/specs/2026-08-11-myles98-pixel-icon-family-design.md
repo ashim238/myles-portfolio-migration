@@ -2,12 +2,12 @@
 
 **Date:** 2026-08-11
 
-**Status:** Phase A v7 mechanical candidate prepared after the
-UnderstandingFAFSA wide folded print-newsletter redraw
-`f65e88bd5a81677f4945230b5f572de402780441`. The controller-only target-only
-clean-context disposition is complete in the ignored Task 5 report. Informed
-reviews and renewed full-sheet approval remain pending; production integration
-remains out of scope.
+**Status:** Phase A v7 candidate passed the de-identified clean-context
+recognition gate after the UnderstandingFAFSA wide folded print-newsletter
+redraw `f65e88bd5a81677f4945230b5f572de402780441`. The hash-bound release
+ledger is versioned in `docs/design-assets/myles98-icons/reviews/family-consistency-review.md`.
+Informed reviews and renewed full-sheet approval remain pending; production
+integration remains out of scope.
 
 **Reference boundary:** Windows 98 is a construction reference only. Every Myles 98 metaphor, silhouette, palette arrangement, and pixel layout remains original.
 
@@ -94,13 +94,13 @@ The shared fill-integrity suite rasterizes all 48 masters and mutation-tests eve
 - **Anonymous batch 02:** `/private/tmp/myles98-icon-anonymous-v7-batch-02.png`; SHA-256 `8aa2074971250d71efc9d834f07e0f6df1a5cd4b6ff2bffabefa961a71b9fbb0`
 - **Anonymous batch 03:** `/private/tmp/myles98-icon-anonymous-v7-batch-03.png`; SHA-256 `64fe294a8813d7a39bf996729ee800834364fba64f4f49bd9203091769bc4e8d`
 
-The exact candidate passed `npm run icons:verify`, `npm run icons:contact-sheet`, the named focused non-browser suite, and 2/2 browser tests after the required authorized sandbox retry. The controller-only clean-context disposition is now complete in the ignored Task 5 report. Informed review remains separately unassessed.
+The exact candidate passed `npm run icons:verify`, `npm run icons:contact-sheet`, the named focused non-browser suite, and 2/2 browser tests after the required authorized sandbox retry. Its hash-bound de-identified v7 clean-context recognition result is `PASS`; the tracked family-consistency release ledger records the aggregate, all three batch hashes, normalized primary-reading outcomes, and disposition. Informed review remains separately unassessed.
 
-## Fresh recognition protocol
+## Completed recognition protocol and release ledger
 
-Two clean-context reviewers receive only the three flattened four-family batches. For each anonymous group they provide an intended noun, two plausible alternatives, brand/product implication, and tier consistency. Each record must bind to all three exact batch SHA-256 values and confirm the reviewer has not seen filenames, source, semantic metadata, prior reviews, or conclusions.
+Two clean-context reviewers received only the three flattened four-family batches. For each anonymous group they provided an intended noun, two plausible alternatives, brand/product implication, and tier consistency. Each record bound to all three exact batch SHA-256 values and confirmed the reviewer had not seen filenames, source, semantic metadata, prior reviews, or conclusions.
 
-Only after both responses are complete does the controller map group IDs through the deterministic current manifest mapping. The durable controller-only F701–F712 mapping is held in the Task 5 report and has SHA-256 `d5d219aeefb9aa1023fcdc89a499410f08e40b4274a024a2c651fbf91eec4608`. The current manifest's accepted and rejected readings are then applied strictly. Direct approvals for Start and Navi remain distinct from strict redraw-gate evidence.
+Only after both responses were complete did the controller map group IDs through the deterministic current manifest mapping. The controller-held F701–F712 mapping has SHA-256 `d5d219aeefb9aa1023fcdc89a499410f08e40b4274a024a2c651fbf91eec4608`. The current manifest's accepted and rejected readings were then applied strictly. The tracked family-consistency release ledger de-identifies the resulting primary noun and PASS disposition without publishing evaluator identities or private rationale. Direct approvals for Start and Navi remain distinct from strict redraw-gate evidence.
 
 ## Historical diagnostics
 
@@ -108,9 +108,9 @@ The former all-48 artifact `/private/tmp/anonymous-icon-groups-candidate.png` wi
 
 ## Acceptance and release boundary
 
-The clean-context requirement is complete and its exact disposition is held in
-the ignored Task 5 report. Informed geometry/period/family reviews remain
-separately unassessed. Per the controller's explicit final-integration
-authorization, Task 5 may run repository verification and create its single
-shared-candidate commit. Production renderer changes, production callsites,
-and case-study prose remain out of scope.
+The clean-context requirement is complete and its hash-bound de-identified
+PASS ledger is tracked in the family-consistency review. Informed
+geometry/period/family reviews and any live-integration audit remain separately
+unassessed. The recognition PASS does not claim either of those reviews, a
+zero P0–P3 count, or production release. Production renderer changes,
+production callsites, and case-study prose remain out of scope.

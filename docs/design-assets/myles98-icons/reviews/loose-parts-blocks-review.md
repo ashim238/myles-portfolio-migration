@@ -1,12 +1,12 @@
 # Loose Parts Literal 2+1 Construction-Block Review
 
-**Verdict:** CLEAN-CONTEXT DISPOSITION COMPLETE; PENDING informed review
+**Verdict:** CLEAN-CONTEXT RECOGNITION PASS; PENDING informed review
 
 **Phase A status:** The v6 wooden construction-block redraw in `7d28ea68`
 remains mechanically locked in the v7 candidate. v7 changes only
 UnderstandingFAFSA, so the aggregate evidence below is fresh even though Loose
-Parts' master is unchanged. The controller-only v7 clean-context disposition
-is complete and recorded exclusively in the ignored Task 5 report.
+Parts' master is unchanged. The versioned de-identified v7 recognition PASS
+is recorded in the family-consistency review's release ledger.
 
 **Review date:** 2026-08-11
 
@@ -43,9 +43,10 @@ mechanical source/raster guards, not a clean-context judgment.
 ## Fresh-review queue
 
 The completed source-free review used the three anonymous batches without
-identifiers beyond their group IDs and tier labels. Its controller-only
-disposition is retained in the ignored Task 5 report. An informed reviewer
-must now confirm:
+identifiers beyond their group IDs and tier labels. The hash-bound release
+ledger records F707's primary reading as `stacked wooden building blocks` and
+its PASS disposition without evaluator identities or private rationale. An
+informed reviewer must now confirm:
 
 1. all three blocks remain visibly distinct at 16px, 24px, and 32px;
 2. square fronts, top/right planes, warm wood palette, and upper-face
@@ -66,5 +67,8 @@ Every one of those Loose Parts results is superseded by `7d28ea68`; none can
 evidence the v6 or v7 aggregate. The v6 F601–F612 gate remains a valid
 historical record for its own aggregate, but only its F608 UnderstandingFAFSA
 result triggered the v7 redraw. It cannot certify the F701–F712 batches.
+
+The current aggregate instead has the v7 recognition PASS recorded in the
+de-identified family-consistency ledger.
 
 Production integration remains out of scope during this Phase A handoff.

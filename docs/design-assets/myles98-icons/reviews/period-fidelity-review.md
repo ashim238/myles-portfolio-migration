@@ -1,11 +1,11 @@
 # Myles 98 Icon Period-Fidelity and Originality Review
 
-**Verdict:** PENDING fresh informed review
+**Verdict:** CLEAN-CONTEXT RECOGNITION PASS; PENDING fresh informed period review
 
 **Phase A status:** v7 replaces only UnderstandingFAFSA with the wide folded
 printed-newsletter master in `f65e88bd5a81677f4945230b5f572de402780441`.
-The controller-only v7 clean-context disposition is complete and recorded
-exclusively in the ignored Task 5 report. Period-fidelity, originality, and
+The versioned de-identified v7 recognition PASS is recorded in the
+family-consistency review's release ledger. Period-fidelity, originality, and
 P0–P3 judgments remain pending informed review.
 
 **Review date:** 2026-08-11
@@ -24,6 +24,11 @@ P0–P3 judgments remain pending informed review.
 The current reviewer material is the three-PNG flattened batch set. Each PNG
 visibly contains only four large arbitrary anonymous IDs and the `16px`,
 `24px`, and `32px` tiers on teal, system gray, and white.
+
+**Recognition boundary:** the hash-bound de-identified ledger in
+`family-consistency-review.md` records the v7 PASS, including F708's
+`newsletter / news page` reading. It is not an informed period-fidelity or
+originality verdict, and it does not set P0–P3 counts to zero.
 
 ## Mechanical baseline
 
@@ -90,5 +95,8 @@ F601–F612 gate is a valid historical BLOCK for aggregate
 F608 UnderstandingFAFSA primary reading `webpage` blocks that candidate and is
 superseded for the changed concept by `f65e88bd5a81677f4945230b5f572de402780441`.
 No earlier evidence applies to this aggregate or the F701–F712 batches.
+
+The current aggregate instead has the v7 recognition PASS recorded in the
+de-identified family-consistency ledger.
 
 This review document does not authorize production integration.
