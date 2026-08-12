@@ -7,9 +7,9 @@ const ROOT = "docs/design-assets/myles98-icons";
 const GRIDS = [16, 24, 32] as const;
 const PRINT_INK = "#29282a";
 const MASTHEAD_RULE = "#1f679f";
-const FEATURE_INK = "#5f889f";
+const FEATURE_INK = "#a7bcc2";
 const LOWER_LEFT_MODULE = "#c5963a";
-const LOWER_RIGHT_MODULE = "#d8d4cc";
+const LOWER_RIGHT_MODULE = "#eeeae3";
 const RESTART_COLORS = new Set(["#8e211e", "#8d211e", "#f15a50"]);
 
 type Grid = (typeof GRIDS)[number];
@@ -117,7 +117,7 @@ function hasOpenTopology(mask: boolean[], width: number) {
 }
 
 describe("Myles 98 final FAFSA and Reset icon metaphors", () => {
-  it.each(GRIDS)("renders UnderstandingFAFSA %ipx as a printed page, not a framed web surface", async (grid) => {
+  it.each(GRIDS)("renders UnderstandingFAFSA %ipx as a folded print spread, not a framed web surface", async (grid) => {
     const raster = await nativeRaster(sourceFor("understandingfafsa", grid), grid);
     const page = boundsFor(opaqueMask(raster), raster.width);
     const ink = boundsFor(maskFor(raster, [PRINT_INK]), raster.width);
@@ -126,20 +126,20 @@ describe("Myles 98 final FAFSA and Reset icon metaphors", () => {
     const lowerLeft = boundsFor(maskFor(raster, [LOWER_LEFT_MODULE]), raster.width);
     const lowerRight = boundsFor(maskFor(raster, [LOWER_RIGHT_MODULE]), raster.width);
 
-    expect(page.height / page.width).toBeGreaterThan(1.3);
+    expect(page.width / page.height).toBeGreaterThanOrEqual(1.2);
     expect(ink.minX).toBeGreaterThan(page.minX);
     expect(ink.maxX).toBeLessThan(page.maxX);
     expect(ink.minY).toBeGreaterThan(page.minY);
     expect(ink.maxY).toBeLessThan(page.maxY);
     expect(ink.height).toBe(1);
-    expect(masthead.width / page.width).toBeGreaterThan(0.6);
+    expect(masthead.width / page.width).toBeLessThan(0.6);
     expect(masthead.height).toBe(1);
     expect(ink.maxY).toBeLessThan(feature.minY);
     expect(masthead.maxY).toBeLessThan(feature.minY);
-    expect(feature.width).toBeGreaterThan(lowerLeft.width);
-    expect(feature.maxY).toBeLessThan(lowerLeft.minY);
-    expect(feature.maxY).toBeLessThan(lowerRight.minY);
-    expect(lowerLeft.maxX + 1).toBeLessThan(lowerRight.minX);
+    expect(feature.width).toBeLessThan(page.width / 2);
+    expect(lowerLeft.maxY).toBeGreaterThan(feature.maxY);
+    expect(lowerRight.width / page.width).toBeGreaterThan(0.55);
+    expect(lowerRight.minY).toBeLessThan(lowerLeft.maxY);
   });
 
   it.each(GRIDS)("renders Reset Desktop %ipx as one open circular restart arrow, not a device", async (grid) => {

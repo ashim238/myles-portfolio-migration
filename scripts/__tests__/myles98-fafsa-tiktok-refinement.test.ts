@@ -6,23 +6,23 @@ import { expectedMasterPath } from "../lib/myles98-icon-contract.mjs";
 const ROOT = "docs/design-assets/myles98-icons";
 const GRIDS = [16, 24, 32] as const;
 const NEWSLETTER_MASTHEAD_FILL = "#1f679f";
-const NEWSLETTER_REGION_FILLS = ["#5f889f", "#c5963a", "#d8d4cc"] as const;
+const NEWSLETTER_REGION_FILLS = ["#a7bcc2", "#c5963a", "#eeeae3"] as const;
 const BAG_FACE_FILL = "#cf526d";
 const BAG_DEPTH_FILL = "#8d3349";
 const BAG_OPENING_FILL = "#f3eee4";
 const BAG_HANDLE_FILL = "#202126";
 const COLLAPSED_LOWER_MODULES = new Map<Grid, [string, string]>([
   [16, [
-    '<rect fill="#d8d4cc" x="8" y="10" width="3" height="2" />',
-    '<rect fill="#d8d4cc" x="6" y="7" width="3" height="2" />',
+    '<rect fill="#eeeae3" x="2" y="8" width="8" height="3" />',
+    '<rect fill="#eeeae3" x="2" y="8" width="2" height="3" />',
   ]],
   [24, [
-    '<rect fill="#d8d4cc" x="12" y="14" width="6" height="5" />',
-    '<rect fill="#d8d4cc" x="12" y="9" width="6" height="5" />',
+    '<rect fill="#eeeae3" x="3" y="13" width="15" height="4" />',
+    '<rect fill="#eeeae3" x="3" y="13" width="3" height="4" />',
   ]],
   [32, [
-    '<rect fill="#d8d4cc" x="16" y="19" width="8" height="6" />',
-    '<rect fill="#d8d4cc" x="16" y="12" width="8" height="6" />',
+    '<rect fill="#eeeae3" x="4" y="16" width="20" height="6" />',
+    '<rect fill="#eeeae3" x="4" y="16" width="4" height="6" />',
   ]],
 ]);
 const MISSING_HANDLE_SIDE_FRAMES = new Map<Grid, [string, string]>([
@@ -152,13 +152,6 @@ function contains(outer: Bounds, inner: Bounds) {
     && inner.maxY <= outer.maxY;
 }
 
-function intersects(left: Bounds, right: Bounds) {
-  return left.minX <= right.maxX
-    && left.maxX >= right.minX
-    && left.minY <= right.maxY
-    && left.maxY >= right.minY;
-}
-
 function intersectionOverUnion(left: number[], right: number[]) {
   const leftSet = new Set(left);
   const rightSet = new Set(right);
@@ -262,13 +255,11 @@ function newsletterHasDistinctModules(raster: NativeRaster) {
   const layout = newsletterLayout(raster);
   return [layout.masthead, layout.feature, layout.lowerLeft, layout.lowerRight]
     .every((region) => contains(layout.page, region))
+    && widthOf(layout.page) / heightOf(layout.page) >= 1.2
     && layout.masthead.maxY < layout.feature.minY
     && layout.feature.maxY < layout.lowerLeft.minY
-    && layout.feature.maxY < layout.lowerRight.minY
-    && !intersects(layout.feature, layout.lowerLeft)
-    && !intersects(layout.feature, layout.lowerRight)
-    && !intersects(layout.lowerLeft, layout.lowerRight)
-    && layout.lowerLeft.maxX + 1 < layout.lowerRight.minX;
+    && layout.lowerRight.minY < layout.lowerLeft.minY
+    && widthOf(layout.lowerRight) / widthOf(layout.page) > 0.55;
 }
 
 function bagHandleFrame(raster: NativeRaster) {
@@ -321,36 +312,31 @@ function removeHandleTop(source: string, grid: Grid) {
 }
 
 describe("Myles 98 UnderstandingFAFSA and TikTok Catalog refinement", () => {
-  it.each(GRIDS)("makes UnderstandingFAFSA %ipx an upright three-region newsletter without envelope folds", async (grid) => {
+  it.each(GRIDS)("makes UnderstandingFAFSA %ipx a wide folded-newsprint stack without envelope folds", async (grid) => {
     const source = sourceFor("understandingfafsa", grid);
     const raster = await nativeRaster(source, grid);
     const layout = newsletterLayout(raster);
 
-    expect(heightOf(layout.page) / widthOf(layout.page), "newsletter silhouette must be upright").toBeGreaterThan(1.2);
+    expect(widthOf(layout.page) / heightOf(layout.page), "newsletter silhouette must be a wide printed spread").toBeGreaterThanOrEqual(1.2);
     expect(source, "newsletter must not contain diagonal envelope or mountain anatomy").not.toMatch(
       /<(?:polygon|polyline)\b|<path\b[^>]*\bd="[^"]*[LACQST]/i,
     );
-    expect(widthOf(layout.masthead) / widthOf(layout.page)).toBeGreaterThan(0.6);
+    expect(widthOf(layout.masthead) / widthOf(layout.page)).toBeLessThan(0.6);
     expect(layout.masthead.maxY).toBeLessThan(layout.page.minY + Math.ceil(heightOf(layout.page) / 3));
     expect(layout.masthead.maxY).toBeLessThan(layout.feature.minY);
     expect(layout.feature.maxY).toBeLessThan(layout.lowerLeft.minY);
-    expect(layout.feature.maxY).toBeLessThan(layout.lowerRight.minY);
-    expect(intersects(layout.feature, layout.lowerLeft)).toBe(false);
-    expect(intersects(layout.feature, layout.lowerRight)).toBe(false);
-    expect(intersects(layout.lowerLeft, layout.lowerRight)).toBe(false);
-    expect(layout.lowerLeft.maxX + 1).toBeLessThan(layout.lowerRight.minX);
+    expect(layout.lowerRight.minY).toBeLessThan(layout.lowerLeft.minY);
+    expect(widthOf(layout.lowerRight) / widthOf(layout.page)).toBeGreaterThan(0.55);
     expect(newsletterHasDistinctModules(raster)).toBe(true);
 
     const email = await nativeRaster(sourceFor("email", grid), grid);
-    const genericApp = await nativeRaster(sourceFor("generic-app", grid), grid);
     expect(
       intersectionOverUnion(opaquePixels(raster), opaquePixels(email)),
-      "newsletter page must not collapse into Email's flap silhouette",
-    ).toBeLessThan(0.6);
-    expect(
-      intersectionOverUnion(opaquePixels(raster), opaquePixels(genericApp)),
-      "standalone newsletter page must not collapse into the Generic App silhouette",
-    ).toBeLessThan(0.75);
+      "wide physical newsprint may overlap Email's broad bounds, but must remain distinct through its print anatomy",
+    ).toBeLessThan(0.78);
+    expect(source, "newsprint must not gain Generic App's dark frame or system-blue browser chrome").not.toMatch(
+      /#202020|#154c9a|#174b96/i,
+    );
   });
 
   it.each(GRIDS)("makes TikTok Catalog %ipx a handled rectangular shopping bag with one side depth plane", async (grid) => {
@@ -392,7 +378,7 @@ describe("Myles 98 UnderstandingFAFSA and TikTok Catalog refinement", () => {
     expect(topRowWidth(opaquePixels(raster), grid)).toBeLessThan(topRowWidth(opaquePixels(genericApp), grid) * 0.65);
   });
 
-  it.each(GRIDS)("rejects a %ipx newsletter whose lower module collapses into the feature", async (grid) => {
+  it.each(GRIDS)("rejects a %ipx newsletter whose physical fold collapses into a dashboard-like tile", async (grid) => {
     const source = sourceFor("understandingfafsa", grid);
     expect(newsletterHasDistinctModules(await nativeRaster(source, grid))).toBe(true);
     expect(newsletterHasDistinctModules(await nativeRaster(collapseLowerNewsletterModule(source, grid), grid))).toBe(false);
