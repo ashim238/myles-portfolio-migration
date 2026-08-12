@@ -45,6 +45,33 @@ describe("Myles 98 homepage layout", () => {
     expect(explorer).toMatch(/grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/);
   });
 
+  it("keeps the welcome mark compact so identity copy remains dominant", () => {
+    const welcome = block(".myles97-welcome");
+    const mark = block(".myles97-welcome-mark");
+    const artwork = block(".myles97-welcome-mark img");
+
+    expect(welcome).toMatch(/grid-template-columns:\s*64px minmax\(0, 1fr\)/);
+    expect(mark).toMatch(/width:\s*64px/);
+    expect(mark).toMatch(/height:\s*64px/);
+    expect(artwork).toMatch(/width:\s*48px/);
+    expect(artwork).toMatch(/height:\s*48px/);
+  });
+
+  it("fits 16:9 program covers inside their fixed well without vertical crop", () => {
+    const launch = block(".myles97-program-launch");
+    const cover = block(".myles97-program-cover");
+    const image = block(".myles97-program-cover img");
+
+    expect(launch).toMatch(/grid-template-rows:\s*116px auto/);
+    expect(cover).toMatch(/position:\s*relative/);
+    expect(cover).toMatch(/background:\s*#dfdfdf/);
+    expect(image).toMatch(/position:\s*absolute/);
+    expect(image).toMatch(/inset:\s*0/);
+    expect(image).toMatch(/width:\s*100%/);
+    expect(image).toMatch(/height:\s*100%/);
+    expect(image).toMatch(/object-fit:\s*contain/);
+  });
+
   it("keeps the large name open enough to preserve letter shapes", () => {
     const name = block(".myles97-welcome h1");
 

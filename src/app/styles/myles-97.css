@@ -352,23 +352,23 @@
 
 .myles97-welcome {
   display: grid;
-  grid-template-columns: 88px minmax(0, 1fr);
+  grid-template-columns: 64px minmax(0, 1fr);
   gap: 20px;
   align-items: start;
 }
 
 .myles97-welcome-mark {
   display: grid;
-  width: 88px;
-  height: 88px;
+  width: 64px;
+  height: 64px;
   place-items: center;
   border: 1px solid var(--m97-ink);
   background: var(--m97-signal);
 }
 
 .myles97-welcome-mark img {
-  width: 72px;
-  height: 72px;
+  width: 48px;
+  height: 48px;
 }
 
 .myles97-welcome-copy {
@@ -470,6 +470,7 @@
 }
 
 .myles97-program-cover {
+  position: relative;
   display: grid;
   min-height: 0;
   place-items: center;
@@ -479,9 +480,11 @@
 }
 
 .myles97-program-cover img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .myles97-program-card-copy {
