@@ -1,115 +1,103 @@
-# Myles 98 icon family consistency review
+# Myles 98 Icon Family Consistency Review
 
-**Final verdict: PASS**
+**Verdict:** CLEAN-CONTEXT DISPOSITION COMPLETE; PENDING informed family review
 
-**Severity summary:** P0: 0 | P1: 0 | P2: 0 | P3: 2 non-blocking observations
+**Phase A status:** v7 replaces only UnderstandingFAFSA with the wide folded
+printed-newsletter master in `f65e88bd5a81677f4945230b5f572de402780441`.
+The source-free evidence below was regenerated for that aggregate. The
+controller-only v7 clean-context disposition is complete and held exclusively
+in the ignored Task 5 report. Family P0–P3 counts and informed approval remain
+unassessed.
 
-## Scope and evidence
+**Review date:** 2026-08-11
 
-This review covers the exact current set of 48 SVG masters: 16 families at purpose-drawn 16px, 24px, and 32px tiers. Every master was inspected directly and then compared in the canonical labeled contact sheet at native size and 6× nearest-neighbor magnification on teal, system gray, and white.
+## Current evidence lock
 
-- Canonical source: `docs/design-assets/myles98-icons/contact-sheet.html`
-- Canonical source SHA-256: `177db7abce08f9229ba87b4e9e2819bc15c9ad64baa6facdee8fdba028e92d7a`
-- Inspected labeled render: `/private/tmp/myles98-contact-labeled-fix2.png`
-- Inspected labeled-render SHA-256: `d643d8b9fba918b493465166073ac8c3e9f67417bc6dc86fdb60472af028e105`
+- **Candidate HEAD:** `f65e88bd5a81677f4945230b5f572de402780441`
+- **Sorted path-bearing 48-master aggregate SHA-256:** `644b72a13e1362e8b7781436d502254047dadc1b64e79f014a4d9df248d098e8`
+- **Manifest SHA-256:** `6e33848ebcc6db7adbd934c528affe81411a580e6c3880c0b400bfd0d3f8f187`
+- **Canonical contact-sheet HTML SHA-256:** `a72a8c524e5a1e8c2bd90a8b2fe4056324185fa9f7fdea05aa789d0093e9fd2b`
+- **Labeled render:** `/private/tmp/myles98-contact-labeled-v7.png`; SHA-256 `6e7637b868570c85030961796d3cb7cac02771d0763ec59135035a50497d785e`
+- **Anonymous batch 01:** `/private/tmp/myles98-icon-anonymous-v7-batch-01.png`; SHA-256 `dd6c8303034cb196968a2a3d97dd423c6aeb29dea69ca1fdec3f4ddf6a03c4b3`
+- **Anonymous batch 02:** `/private/tmp/myles98-icon-anonymous-v7-batch-02.png`; SHA-256 `8aa2074971250d71efc9d834f07e0f6df1a5cd4b6ff2bffabefa961a71b9fbb0`
+- **Anonymous batch 03:** `/private/tmp/myles98-icon-anonymous-v7-batch-03.png`; SHA-256 `64fe294a8813d7a39bf996729ee800834364fba64f4f49bd9203091769bc4e8d`
+- **Controller-only F701–F712 mapping:** `.superpowers/sdd/2026-08-11-myles98-five-icon-refinement/task-5-report.md`, canonical mapping SHA-256 `d5d219aeefb9aa1023fcdc89a499410f08e40b4274a024a2c651fbf91eec4608`. It is not reviewer material.
+- **Each batch geometry:** 1440 × 4868, device scale factor 1.
 
-This is an informed review, not a blind recognition study. Family names, tier labels, the manifest, and the intended nouns were visible during inspection. The conclusions therefore address internal family consistency, native-size legibility, visual weight, and known sibling collisions; they do not claim independent unlabeled recognition rates.
+The three anonymous batches are the only assets to give a clean-context
+reviewer. Each batch contains four groups repeated on teal, system gray, and
+white. Each visible group has only a large arbitrary `M98-F###` identifier and
+`16px`, `24px`, and `32px` tier labels. No batch contains filenames, concept
+names, semantic labels, review conclusions, or labeled cards.
 
-## Decision
+## Mechanical family baseline
 
-All 16 families preserve a stable primary noun across tiers. Added detail at 24px and 32px clarifies the same object rather than replacing it. Every 16px master retains a recognizable native-size silhouette, and no sibling pair collapses into the same outer geometry or dominant internal mark.
+The exact candidate must pass:
 
-The two changed project families are now clean:
+```text
+npm run icons:verify
+npm run icons:contact-sheet
+npm test -- scripts/__tests__/myles98-icon-contract.test.ts scripts/__tests__/myles98-icon-fill-integrity.test.ts scripts/__tests__/myles98-resume-reset-refinement.test.ts scripts/__tests__/myles98-reset-arrow-v6.test.ts scripts/__tests__/myles98-loose-parts-refinement.test.ts scripts/__tests__/myles98-loose-parts-v6-precision.test.ts scripts/__tests__/myles98-fafsa-editorial-v6.test.ts scripts/__tests__/myles98-fresh-greens-refinement.test.ts scripts/__tests__/myles98-navi-refinement.test.ts scripts/__tests__/myles98-notes-reminders-refinement.test.ts scripts/__tests__/myles98-display-selected-work-refinement.test.ts scripts/__tests__/myles98-fafsa-tiktok-refinement.test.ts scripts/__tests__/myles98-fafsa-reset-final.test.ts scripts/__tests__/myles98-fresh-loose-metaphor.test.ts scripts/__tests__/myles98-icon-contact-sheet.test.ts
+npm exec vitest -- run scripts/__tests__/myles98-icon-contact-sheet.browser.test.ts
+```
 
-- Navi is a location marker above a separate storefront, not a storefront fused into a map badge. It no longer collides with Fresh Greens' square route-map tile.
-- TikTok Catalog is a standalone shopping bag at every tier. It no longer borrows document, envelope, newsletter, note, or checklist framing from Email, UnderstandingFAFSA, Resume, Trini Roti / Notes, or Reminders.
+Each batch DOM integrity check must find 12 visible family panels, 36 visible
+tier cards, four unique group IDs, and zero visible labeled cards.
 
-No P0, P1, or P2 issue remains.
+## Required fresh-review protocol
 
-## Priority findings
+Two reviewers who have not seen filenames, source, manifest semantics, earlier
+reviews, or prior conclusions receive only the three current anonymous batches
+and this question set for every group:
 
-### P0
+1. What is the intended noun?
+2. What are two plausible alternative readings?
+3. Does it imply a recognizable brand or product?
+4. Does it remain the same object across 16px, 24px, and 32px?
 
-None.
+Each response must state all three artifact SHA-256 values above and confirm
+clean context. The controller maps group IDs only after both records are
+complete, using the report-held mapping bound to the manifest digest.
 
-### P1
+The strict disposition compares each primary reading and material alternative
+with the current manifest's accepted and rejected readings. A rejected
+collision, an unaccepted primary noun, a brand implication, lack of tier
+consistency, or material reviewer disagreement fails the affected redrawn
+family. Start's portrait and Navi's pin-above-separate-storefront relationship
+are user-locked direct approvals, recorded separately from strict redraw-gate
+results. Neither may be redrawn in Task 5.
 
-None.
+## Historical diagnostics — not current evidence
 
-### P2
+The dense all-48 one-sheet and its two initial reader records are invalid and
+unusable because their labels did not yield reliable group association. The
+F101–F112, F201–F212, F301–F312, and F401–F412 gates remain valid only for
+their own earlier aggregates. The F501–F512 v5 gate is valid only for aggregate
+`a4ecbf16ec6dd7d62f7e65176baf0e0e81b71e90652bb3052c91d6249eaa8c46`.
+Its F507 Loose Parts, F508 UnderstandingFAFSA, and F512 Reset Desktop failures
+are superseded by later master changes. The v6 F601–F612 gate is a valid
+historical BLOCK for aggregate
+`5484181525aa995e6cdb66ef55228a04603a54c9a09a7b578a8cbd44715e4dd4` because
+F608 UnderstandingFAFSA received primary reading `webpage`. The v6 result is
+superseded for that concept by `f65e88bd5a81677f4945230b5f572de402780441`,
+not relabeled invalid. No earlier reading can evidence this aggregate or the
+F701–F712 batches.
 
-None.
+## Fresh informed family-review queue
 
-### P3
+With the clean-context disposition complete, inspect the current labeled sheet
+and record:
 
-1. **Navi's 16px tier carries only the primary marker noun.** The neighborhood storefront enters at 24px and 32px. This is a sound tiered simplification because the same teal pin remains dominant in all three masters, but the neighborhood-destination specificity at 16px still depends on the launcher label or surrounding context.
+- native-size silhouette continuity and hierarchy across all 12 target
+  families;
+- sibling separation for paper, monitor, folder, map, and bag nouns;
+- Fresh's street-block route, Loose's wooden 2+1 construction-block stack,
+  FAFSA's wide folded printed-newsletter paper depth and crease, and Reset's
+  C-loop plus compact wedge;
+- palette ownership, contour grammar, optical mass, and 16px/24px/32px
+  progression;
+- user-locked Start and Navi construction without changing their masters; and
+- P0–P3 counts plus any approval or blocking disposition.
 
-2. **The family intentionally spans a broad mass range.** Start, Selected Work, Reminders, Reset Desktop, Navi at 32px, and TikTok Catalog at 32px are denser than Email, Resume, and Trini Roti / Notes. Hard one-pixel outlines, stable color blocks, and distinct silhouettes keep that range from becoming a weight or collision defect.
-
-## Changed-family review
-
-### Navi versus Fresh Greens
-
-**Tier continuity:** PASS.
-
-- 16px: a compact teal teardrop pin with a small orange center. The pin is complete without relying on storefront microdetail.
-- 24px: the same pin sits above a discrete orange-awning storefront. A visible blank gap keeps the two nouns separate.
-- 32px: the same stack gains storefront window, door, sill, and depth cues without changing the pin silhouette or making the store part of the marker body.
-
-**Native 16px recognition:** PASS. The pointed tail and rounded shoulders establish a location marker before color or interior detail is considered.
-
-**Collision check:** PASS. Fresh Greens remains a near-square green map tile containing one non-monotonic route and orange destination. Navi remains a free-standing teardrop marker, then a vertically stacked marker-plus-store at the larger tiers. The shared orange accent is subordinate and does not create a sibling collision.
-
-**Density and weight:** PASS. The 24px and 32px compositions are tall, but the air gap prevents a fused emblem and keeps the marker visually dominant. The storefront is wider and lower, so the hierarchy reads marker first, place second.
-
-### TikTok Catalog versus document and task siblings
-
-**Tier continuity:** PASS.
-
-- 16px: a standalone magenta shopping bag with a rectangular handle, tapered body, top lip, and lower plane.
-- 24px: the same bag adds a clearer opening and right-side gusset.
-- 32px: the same bag adds a stronger side plane and restrained lower contact depth. No catalog page, app frame, logo, or music-note cue returns.
-
-**Native 16px recognition:** PASS. The raised handle plus tapered body establishes a shopping bag without borrowing evidence from the larger tiers.
-
-**Collision check:** PASS.
-
-- Email is a low beige sealed envelope led by its flap geometry.
-- UnderstandingFAFSA is a tall blue-header information sheet emerging from an open envelope.
-- Resume is a white portrait-oriented profile sheet with a folded corner or paperclip and structured lines.
-- Trini Roti / Notes is a lilac memo sheet with a folded corner and handwritten marks.
-- Reminders is a yellow spiral-bound checklist led by binding and checks.
-- TikTok Catalog is the only handle-led, tapered magenta container.
-
-**Density and weight:** PASS. The bag is deliberately simpler than the newsletter and document families. Its dark perimeter is strong enough to survive native size, while the open handle and flat interior keep the 16px and 24px tiers from becoming an undifferentiated block.
-
-## Full 16-family regression
-
-| Family | Same noun across 16/24/32 | Native 16px read | Closest sibling separation | Result |
-| --- | --- | --- | --- | --- |
-| Start | Portrait at every tier; likeness detail increases with size. | Head, locs, and glasses silhouette. | Bare portrait versus About Myles' framed ID card. | PASS |
-| Selected Work | Portfolio folder throughout; thumbnails are additive. | Open yellow work folder. | Folder mouth and tab separate it from documents and app windows. | PASS |
-| About Myles | ID / profile card throughout. | Wide clipped card with portrait-left, information-right split. | Wider card frame and portrait separate it from Resume and Generic App. | PASS |
-| Resume | Structured professional profile sheet throughout. | Tall white page with blue header and content lines. | Portrait page, paperclip language, and no binding separate it from Notes and Reminders. | PASS |
-| Email | Sealed envelope throughout; stamp is additive. | Low horizontal envelope with central flap. | Flat sealed silhouette separates it from FAFSA's tall page-in-envelope construction. | PASS |
-| Reminders | Spiral checklist pad throughout. | Yellow bound pad with checks. | Top binding and check marks separate it from Resume and Notes. | PASS |
-| Trini Roti / Notes | Single handwritten memo sheet throughout. | Lilac sheet with folded lower corner and writing. | No clip, binding, envelope, or masthead; distinct from all document siblings. | PASS |
-| Loose Parts | Three generic construction blocks in the same pyramid throughout. | Three colored blocks, two below and one above. | Unique component count, color triad, and stepped pyramid silhouette. | PASS |
-| Display Properties | Beige CRT throughout; color-test detail increases with size. | Monitor body with stand. | Stand and single casing separate it from Open Apps, Reset Desktop, and Generic App. | PASS |
-| Open Apps | Two layered application windows throughout. | Overlapping double-window silhouette. | Layer count separates it from the single Generic App window and CRT families. | PASS |
-| Reset Desktop | Screen / CRT with opposing reset arrows throughout. | Teal screen between red directional arrows. | Red arrows dominate before the display casing, preventing a Display Properties collision. | PASS |
-| Generic App | One neutral application window throughout. | Single square program frame. | One blue-titlebar window, with no stand or overlap, separates it from system siblings. | PASS |
-| Fresh Greens | Square road-map tile with one route throughout. | Green square tile with a bent route and orange endpoint. | Tile boundary and embedded route separate it from Navi's free pin. | PASS |
-| UnderstandingFAFSA | Information sheet emerging from an envelope throughout. | Tall blue-header page above a shallow mail pocket. | Tall page-to-pocket ratio separates it from Email and Resume. | PASS |
-| Navi | Location marker throughout; storefront is additive at 24px and 32px. | Teardrop map pin. | Free marker and separate store do not collide with Fresh Greens' square map tile. | PASS |
-| TikTok Catalog | Standalone retail shopping bag throughout. | Handle-led tapered magenta bag. | Handle, taper, and saturated body separate it from every document, mail, note, and checklist sibling. | PASS |
-
-## Verification
-
-- `npm run icons:verify`: PASS, 48 masters verified.
-- Focused non-browser icon suites: PASS, 83 tests across contact-sheet generation, icon contracts, and fill integrity.
-- Focused browser contact-sheet suite: PASS, 2 tests. The first sandboxed Chromium launch was denied by the macOS Mach-port boundary; the unchanged npm test passed when rerun outside that sandbox.
-
-## Release boundary
-
-The exact current 48-master family passes this informed consistency and collision regression. The new Navi and TikTok Catalog silhouettes close the requested semantic ambiguities, and no P0-P2 issue blocks the set.
+Until then, all current family-review severities are **unassessed**. Production
+integration remains out of scope for this Phase A document.

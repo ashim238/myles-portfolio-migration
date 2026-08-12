@@ -219,7 +219,7 @@ describe("Myles 98 Notes and Reminders native-size separation", () => {
       .map(([, attributes]) => rectBounds(attributes))
       .filter(({ minX, minY, maxX, maxY }) => maxX - minX === maxY - minY);
 
-    expect(handwritten).toHaveLength(EXPECTED_NOTE_LINES.get(grid));
+    expect(handwritten).toHaveLength(EXPECTED_NOTE_LINES.get(grid)!);
     expect(handwritten.every((line) => {
       const bounds = boundsFor(line, grid);
       return bounds.maxX - bounds.minX > bounds.maxY - bounds.minY;
@@ -238,8 +238,8 @@ describe("Myles 98 Notes and Reminders native-size separation", () => {
     const checks = shapesForFill(source, REMINDER_CHECK_FILL);
     const lineRects = shapesForFill(source, REMINDER_LINE_FILL);
 
-    expect(boxes).toHaveLength(EXPECTED_REMINDER_PAIRS.get(grid));
-    expect(checks).toHaveLength(EXPECTED_REMINDER_PAIRS.get(grid));
+    expect(boxes).toHaveLength(EXPECTED_REMINDER_PAIRS.get(grid)!);
+    expect(checks).toHaveLength(EXPECTED_REMINDER_PAIRS.get(grid)!);
     expect(boxes.every(({ element, attributes }) => {
       if (element !== "rect") return false;
       const bounds = rectBounds(attributes);

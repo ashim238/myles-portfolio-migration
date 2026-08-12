@@ -1,67 +1,70 @@
-# Loose Parts three-cube pyramid review
+# Loose Parts Literal 2+1 Construction-Block Review
 
-**Review status: PASS**
+**Verdict:** CLEAN-CONTEXT DISPOSITION COMPLETE; PENDING informed review
 
-This review covers only the independently authored `loose-parts` masters at 16, 24, and 32 units. It is an informed geometry, period-fidelity, and sibling-collision review, not a blind-recognition result.
+**Phase A status:** The v6 wooden construction-block redraw in `7d28ea68`
+remains mechanically locked in the v7 candidate. v7 changes only
+UnderstandingFAFSA, so the aggregate evidence below is fresh even though Loose
+Parts' master is unchanged. The controller-only v7 clean-context disposition
+is complete and recorded exclusively in the ignored Task 5 report.
 
-## Metaphor contract
+**Review date:** 2026-08-11
 
-The three masters now depict one brand-neutral construction at every tier: two square cubes on the bottom with one square cube centered above them. The compact pyramid replaces both the prior detached wooden pieces and the rejected studded-block and block-arch drafts.
+## Current evidence lock
 
-- Accepted readings: construction blocks, toy cubes, three-block stack, pyramid of blocks.
-- Rejected readings: LEGO or another commercial building system, table, gate, pi symbol, food, loose wood scraps, letters, tools, scattered pieces, or flat interface tiles.
-- Stable count: three cubes at 16, 24, and 32 units.
-- Stable pose: teal lower-left cube, violet lower-right cube, magenta upper cube.
-- Stable topology: the upper cube touches both lower cubes, and the lower cubes touch each other, producing one connected cluster without loose components.
+- **Candidate HEAD:** `f65e88bd5a81677f4945230b5f572de402780441`
+- **48-master aggregate SHA-256:** `644b72a13e1362e8b7781436d502254047dadc1b64e79f014a4d9df248d098e8`
+- **Manifest SHA-256:** `6e33848ebcc6db7adbd934c528affe81411a580e6c3880c0b400bfd0d3f8f187`
+- **Canonical contact-sheet SHA-256:** `a72a8c524e5a1e8c2bd90a8b2fe4056324185fa9f7fdea05aa789d0093e9fd2b`
+- **Labeled-render SHA-256:** `6e7637b868570c85030961796d3cb7cac02771d0763ec59135035a50497d785e`
+- **Current anonymous batch 01 SHA-256:** `dd6c8303034cb196968a2a3d97dd423c6aeb29dea69ca1fdec3f4ddf6a03c4b3`
+- **Current anonymous batch 02 SHA-256:** `8aa2074971250d71efc9d834f07e0f6df1a5cd4b6ff2bffabefa961a71b9fbb0`
+- **Current anonymous batch 03 SHA-256:** `64fe294a8813d7a39bf996729ee800834364fba64f4f49bd9203091769bc4e8d`
 
-## Native-size construction
+## Mechanical construction contract
 
-### 16 units
+All three Loose Parts masters must continue to depict a literal non-branded
+compact 2+1 stack of three wooden construction blocks with square front faces,
+visible top/right planes, and no branded studs. The three front faces are
+3×3, 5×5, and 7×7 by tier. Each block has a dark six-corner outline, a warm
+wooden front, a lit upper-left top plane, and a dark right plane. The 24px and
+32px tiers add only narrow upper-face highlights.
 
-The smallest master uses three equal seven-unit square silhouettes. Each cube keeps a square colored face, one-pixel upper highlight, one-pixel dark right plane, and one-pixel lower plane. The compact pyramid contains no studs, gaps, accessories, or fourth shape.
+- Accepted readings: `building blocks`, `construction blocks`, `toy blocks`.
+- Rejected readings: `books`, `stack of books`, `book stack`, `boots`, `pair
+  of boots`, `people`, `group of people`, `bottle`, `clothing`, `branded
+  studs`, `LEGO`, `food`, `table`, `furniture`, `steps`, `bar chart`.
+- Topology: one connected opaque cluster, zero enclosed transparency, binary
+  alpha, and a transparent one-pixel perimeter at all three tiers.
 
-### 24 units
+The focused v6 precision suite and the family-wide fill-integrity suite are
+mechanical source/raster guards, not a clean-context judgment.
 
-The middle master uses three equal ten-unit square silhouettes. Eight-unit square faces stay visually dominant while two-unit orthogonal highlight, right, and lower planes add depth. The composition grows through independently authored geometry without changing count, pose, or color ownership.
+## Fresh-review queue
 
-### 32 units
+The completed source-free review used the three anonymous batches without
+identifiers beyond their group IDs and tier labels. Its controller-only
+disposition is retained in the ignored Task 5 report. An informed reviewer
+must now confirm:
 
-The largest master uses three equal thirteen-unit square silhouettes. Eleven-unit square faces remain dominant while three-unit orthogonal upper, right, and lower tonal planes add native-grid depth. No extra detail changes the three-cube noun.
+1. all three blocks remain visibly distinct at 16px, 24px, and 32px;
+2. square fronts, top/right planes, warm wood palette, and upper-face
+   highlights create volume without book, branded-stud, boot, people, bottle,
+   clothing, food, furniture, stair, or bar-chart readings;
+3. the literal 2+1 block stack stays separate from the paper, portrait, and
+   checklist siblings; and
+4. P0–P3 findings, if any, are bound to the current aggregate hash.
 
-## Period and brand-fidelity check
+## Historical limitation
 
-- Integer-aligned filled rectangles only.
-- `shape-rendering="crispEdges"` at every tier.
-- Binary transparency with one transparent perimeter pixel.
-- Upper-left lighting expressed through pale upper planes and darker right and lower planes.
-- Restrained indexed-style palette with near-black contours and teal, violet, and magenta faces.
-- No strokes, transforms, opacity, gradients, filters, masks, rounded geometry, or antialiasing effects.
-- No studs, red-yellow-blue primary palette, proprietary proportions, logos, or other commercial construction-toy cues.
-- No open arch, separated supports, or lintel, which removes the prior table, gate, and pi-symbol reading.
+The dense all-48 artifact and its two records are invalid and unusable for
+disposition because their labels did not support reliable family association.
+The later F107/F207, F301/F307, and F401/F407 readings remain valid only for
+their earlier aggregates. The valid v5 F507 failure is also historical for
+aggregate `a4ecbf16ec6dd7d62f7e65176baf0e0e81b71e90652bb3052c91d6249eaa8c46`.
+Every one of those Loose Parts results is superseded by `7d28ea68`; none can
+evidence the v6 or v7 aggregate. The v6 F601–F612 gate remains a valid
+historical record for its own aggregate, but only its F608 UnderstandingFAFSA
+result triggered the v7 redraw. It cannot certify the F701–F712 batches.
 
-## Topology and fill integrity
-
-The native raster audit reports one opaque connected component at all three tiers. The focused fill-integrity suite reports binary alpha, a transparent perimeter, and zero unapproved enclosed transparent pixels for 16, 24, and 32 units.
-
-## Sibling-collision review
-
-The personal-family comparison places the three-cube pyramid beside About Myles, Resume, Reminders, and the personal note at all three native tiers. Its compact three-square silhouette, saturated cube faces, and stacked topology do not reuse the badge, paper, bound-pad, or folded-note anatomy. The stable block count and pyramid pose also remove the former food, key, lever, scrap-wood, table, gate, and pi-symbol collisions.
-
-## Rendered evidence
-
-- Canonical three-surface family sheet: `docs/design-assets/myles98-icons/contact-sheet.html`
-- Exact reviewed contact-sheet SHA-256: `177db7abce08f9229ba87b4e9e2819bc15c9ad64baa6facdee8fdba028e92d7a`
-
-The canonical artifact embeds the verified 16, 24, and 32 masters byte-for-byte, then renders each at its native grid and at 6× with nearest-neighbor sampling on teal `#008080`, system gray `#C0C0C0`, and white. Browser verification confirms the magnified raster uses uniform 6×6 pixel blocks.
-
-## Verification
-
-- `npm run icons:verify -- --group personal`: 15 personal masters verified.
-- `npm exec vitest -- run scripts/__tests__/myles98-icon-fill-integrity.test.ts -t 'loose-parts'`: 3 passed, 47 skipped.
-- `xmllint --noout` on all three Loose Parts masters: passed.
-- Custom native-alpha audit: binary alpha and exactly one opaque connected component at all three tiers.
-- `git diff --check -- docs/design-assets/myles98-icons/masters/loose-parts docs/design-assets/myles98-icons/reviews/loose-parts-blocks-review.md`: passed.
-
-## Integration boundary
-
-The parent integration now locks the three-cube-pyramid noun in the manifest and semantic contract, tests the accepted and rejected readings, and regenerates the canonical contact sheet from all 48 verified masters. Production `Myles97Icon` integration remains a separate step after final design-master approval.
+Production integration remains out of scope during this Phase A handoff.

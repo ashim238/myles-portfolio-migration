@@ -287,9 +287,10 @@ function bagHandleFrame(raster: NativeRaster) {
 
 function bagHasFramedHandle(raster: NativeRaster) {
   const handle = bagHandleFrame(raster);
+  const grid = raster.width as Grid;
   return handle.opening.maxY < handle.face.minY
-    && widthOf(handle.opening) / widthOf(handle.face) < MAX_HANDLE_OPENING_WIDTH_RATIO.get(raster.width)!
-    && heightOf(handle.opening) / heightOf(handle.face) < MAX_HANDLE_OPENING_HEIGHT_RATIO.get(raster.width)!
+    && widthOf(handle.opening) / widthOf(handle.face) < MAX_HANDLE_OPENING_WIDTH_RATIO.get(grid)!
+    && heightOf(handle.opening) / heightOf(handle.face) < MAX_HANDLE_OPENING_HEIGHT_RATIO.get(grid)!
     && handle.topFrame
     && handle.leftFrame
     && handle.rightFrame

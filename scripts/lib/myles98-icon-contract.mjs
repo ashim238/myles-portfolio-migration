@@ -37,21 +37,21 @@ const GROUPS = Object.freeze({
 
 const APPROVED_ICON_SEMANTICS = Object.freeze({
   start: ["pixel adaptation of Myles's existing portrait mark", ["portrait", "head", "person"], ["folder", "generic user", "app window"]],
-  "selected-work": ["open portfolio folder containing a contact sheet", ["portfolio folder", "project folder", "work folder"], ["document", "envelope", "generic app window"]],
+  "selected-work": ["open project dossier folder containing two project cards", ["portfolio folder", "project folder", "work folder"], ["document", "envelope", "generic app window", "photo landscape", "photo folder"]],
   "about-myles": ["ID card with portrait and information lines", ["ID card", "profile card", "portrait card"], ["resume", "checklist", "folder"]],
   resume: ["professional profile sheet with paperclip and structured lines", ["resume", "document", "profile sheet"], ["checklist", "newsletter", "envelope"]],
   email: ["sealed envelope with one subordinate stamp", ["envelope", "mail", "sealed message"], ["newsletter", "document", "folder"]],
-  reminders: ["personal spiral checklist pad", ["checklist", "notepad", "reminders"], ["resume", "newsletter", "recipe card"]],
+  reminders: ["personal checklist pad with checkbox/checkmark pairs", ["checklist", "notepad", "reminders"], ["calendar", "spiral-bound calendar", "resume", "newsletter", "recipe card"]],
   "trini-roti": ["single personal memo sheet with folded corner and handwritten lines", ["note", "memo", "note sheet"], ["checklist", "resume", "newsletter"]],
-  "loose-parts": ["three generic colored construction blocks arranged in a compact pyramid", ["building blocks", "construction blocks", "toy blocks"], ["LEGO", "food", "table"]],
-  "display-properties": ["beige CRT with color-test window, controls, and object-specific casing depth", ["monitor", "CRT", "display"], ["overlapping windows", "reset icon", "television"]],
+  "loose-parts": ["literal non-branded compact 2+1 stack of three independent wooden construction blocks with square front faces, visible top/right planes, and upper-face highlights at 24/32", ["building blocks", "construction blocks", "toy blocks"], ["boots", "pair of boots", "people", "group of people", "branded studs", "LEGO", "food", "table", "furniture", "steps", "bar chart", "books", "stack of books", "book stack", "bottle", "clothing"]],
+  "display-properties": ["beige CRT display-settings monitor with in-screen controls and casing depth", ["monitor", "CRT", "display"], ["overlapping windows", "reset icon", "television"]],
   "open-apps": ["two layered application windows with separate content panes", ["overlapping windows", "open apps", "application windows"], ["monitor", "single app window", "folder"]],
-  "reset-desktop": ["CRT desktop with a clear, subordinate reset arrow", ["reset monitor", "reset desktop", "monitor with reset arrow"], ["display properties", "open apps", "reload browser"]],
+  "reset-desktop": ["one connected open restart C-loop with a compact directional wedge and intentional gap", ["restart arrow", "reset arrow", "reset desktop", "restart loop", "reset symbol"], ["fuel pump", "instant camera", "display properties", "open apps", "reload browser", "monitor alert", "monitor with alert", "alert flag", "opposing transfer arrows", "transfer control", "monitor cable", "pointer", "monitor with restart arrow", "monitor with restart loop", "reset monitor", "red telephone handset", "telephone handset", "alarm clock", "chain link", "paperclip", "pencil"]],
   "generic-app": ["neutral program window with restrained chrome depth", ["application window", "program window", "generic app"], ["overlapping windows", "monitor", "folder"]],
-  "fresh-greens": ["solid road-map tile with one route and destination", ["road map", "route map", "navigation map"], ["groceries", "leaf logo", "city guide"]],
-  understandingfafsa: ["modular newsletter emerging from an envelope with three content regions", ["newsletter", "newsletter envelope", "information page"], ["sealed email", "resume", "folder"]],
+  "fresh-greens": ["route-map tile with a compact street-block network, one highlighted unbranched three-turn route, and distinct route markers", ["road map", "route map", "navigation map"], ["magic wand", "wand", "notebook band", "folded page", "landscape image", "landscape photograph", "groceries", "leaf logo", "city guide", "music note", "musical note", "folded map", "circuit"]],
+  understandingfafsa: ["wide folded printed newsletter with paper depth, a tangible horizontal crease, and editorial print anatomy", ["newsletter", "printed newsletter", "folded newsletter", "newsprint", "printed newsprint", "newspaper"], ["web page layout", "webpage", "framed web surface", "dashboard", "browser chrome", "browser window", "web application", "app window", "flat screen", "dashboard tile", "open envelope", "letter", "sealed email", "folded map", "mountain", "resume", "folder"]],
   navi: ["location marker above a neighborhood storefront", ["location marker", "map pin", "neighborhood destination"], ["book", "guidebook", "leaf"]],
-  "tiktok-catalog": ["standalone retail shopping bag", ["shopping bag", "retail bag", "product bag"], ["purse", "catalog page", "TikTok logo", "music note", "social media app", "book", "dashboard"]],
+  "tiktok-catalog": ["handled rectangular shopping bag with one side depth plane", ["shopping bag", "retail bag", "product bag"], ["wastebasket", "basket", "shopping basket", "small tote", "purse", "catalog page", "TikTok logo", "music note", "social media app", "book", "dashboard"]],
 });
 
 function freezeMetadata(metadata) {
@@ -76,21 +76,21 @@ function freezeMetadata(metadata) {
 
 export const APPROVED_ICON_METADATA = freezeMetadata({
   start: { group: "system", tiers: { "16": "Head-and-glasses silhouette", "24": "Locs and glasses within the portrait mark", "32": "Pixel adaptation of Myles's existing portrait mark" } },
-  "selected-work": { group: "system", tiers: { "16": "Portfolio folder", "24": "One visible image thumbnail", "32": "Open portfolio folder containing a contact sheet" } },
+  "selected-work": { group: "system", tiers: { "16": "Project dossier folder", "24": "Two visible project cards", "32": "Open project dossier folder containing two project cards" } },
   "about-myles": { group: "personal", tiers: { "16": "Portrait card", "24": "ID-card frame and one information line", "32": "ID card with portrait and information lines" } },
-  resume: { group: "personal", tiers: { "16": "Profile sheet with blue header", "24": "Blue paperclip and two bullets", "32": "Professional profile sheet with paperclip and structured lines" } },
+  resume: { group: "personal", tiers: { "16": "Profile sheet with blue header", "24": "Subordinate blue paperclip and two bullets", "32": "Professional profile sheet with compact paperclip and structured lines" } },
   email: { group: "system", tiers: { "16": "Sealed envelope", "24": "Sealed envelope with one yellow stamp", "32": "Dimensional sealed envelope with one subordinate stamp" } },
-  reminders: { group: "personal", tiers: { "16": "Spiral checklist pad", "24": "Two checks and a bound paper edge", "32": "Personal checklist pad with checks and paper depth" } },
+  reminders: { group: "personal", tiers: { "16": "Checklist pad with two checkbox/checkmark pairs", "24": "Checklist pad with three checkbox/checkmark pairs and a bound paper edge", "32": "Personal checklist pad with three checks and paper depth" } },
   "trini-roti": { group: "personal", tiers: { "16": "Single memo sheet", "24": "Folded corner and handwritten lines", "32": "Personal memo sheet with folded corner, handwritten lines, and paper depth" } },
-  "loose-parts": { group: "personal", tiers: { "16": "Three stacked construction blocks", "24": "Three colored cubes with face shading", "32": "Three colored building blocks in a compact pyramid" } },
-  "display-properties": { group: "system", tiers: { "16": "CRT monitor", "24": "Color-test tiles", "32": "Beige CRT with color-test window, controls, and object-specific casing depth" } },
+  "loose-parts": { group: "personal", tiers: { "16": "Compact 2+1 stack of three wooden construction blocks", "24": "Compact 2+1 stack of three wooden construction blocks with visible top/right planes and upper-face highlights", "32": "Compact 2+1 stack of three wooden construction blocks with visible top/right planes and upper-face highlights" } },
+  "display-properties": { group: "system", tiers: { "16": "CRT monitor with a settings cue", "24": "CRT monitor with in-screen slider controls", "32": "Beige CRT with in-screen controls and object-specific casing depth" } },
   "open-apps": { group: "system", tiers: { "16": "Two overlapping windows", "24": "Distinct titlebars", "32": "Two layered application windows with separate content panes" } },
-  "reset-desktop": { group: "system", tiers: { "16": "Desktop screen with two reset arrows", "24": "Compact red reset arrow", "32": "CRT desktop with a clear, subordinate reset arrow" } },
+  "reset-desktop": { group: "system", tiers: { "16": "Open restart C-loop with a compact directional wedge", "24": "Open restart C-loop with a compact directional wedge and intentional gap", "32": "Stepped open restart C-loop with a compact directional wedge and intentional gap" } },
   "generic-app": { group: "system", tiers: { "16": "Single application window", "24": "Blue titlebar and inner pane", "32": "Neutral program window with restrained chrome depth" } },
-  "fresh-greens": { group: "projects", tiers: { "16": "Road-map tile with one route", "24": "One route with start and destination", "32": "Road-map tile with one non-monotonic road, start point, and orange destination" } },
-  understandingfafsa: { group: "projects", tiers: { "16": "Newsletter page", "24": "Blue masthead within open envelope", "32": "Modular newsletter emerging from an envelope with three content regions" } },
-  navi: { group: "projects", tiers: { "16": "Location marker", "24": "Location marker above a storefront", "32": "Location marker above a neighborhood storefront with one depth cue" } },
-  "tiktok-catalog": { group: "projects", tiers: { "16": "Standalone retail shopping bag", "24": "Shopping bag with a top opening and one side plane", "32": "Dimensional shopping bag with gusset, lower plane, and restrained contact depth" } },
+  "fresh-greens": { group: "projects", tiers: { "16": "Street-block road map with a highlighted three-turn route and distinct endpoint markers", "24": "Street-block route map with a highlighted three-turn route, markers, and four parcel cues", "32": "Road-map tile with a street-block network, highlighted three-turn route, distinct markers, and four parcel cues" } },
+  understandingfafsa: { group: "projects", tiers: { "16": "Wide folded printed newsletter with a visible paper stack, segmented masthead, headline, and horizontal crease", "24": "Wide folded printed newsletter with rear sheet and shadow, segmented blue masthead, headline, photo, copy columns, and a tangible horizontal crease", "32": "Wide folded printed newsletter with offset rear sheet and shadow, segmented blue masthead, headline, photo, copy columns, horizontal crease, and broad folded lower face" } },
+  navi: { group: "projects", tiers: { "16": "Location marker", "24": "Location marker with orange center above storefront", "32": "Location marker above a widened neighborhood storefront" } },
+  "tiktok-catalog": { group: "projects", tiers: { "16": "Handled shopping bag silhouette", "24": "Handled rectangular shopping bag with one side plane", "32": "Handled dimensional shopping bag with framed opening and side depth plane" } },
 });
 
 const ALLOWED_SHAPES = new Set(["path", "rect", "polygon"]);

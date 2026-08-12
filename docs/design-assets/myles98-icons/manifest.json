@@ -27,14 +27,14 @@
     {
       "id": "selected-work",
       "group": "system",
-      "intendedObject": "open portfolio folder containing a contact sheet",
+      "intendedObject": "open project dossier folder containing two project cards",
       "tiers": {
-        "16": "Portfolio folder",
-        "24": "One visible image thumbnail",
-        "32": "Open portfolio folder containing a contact sheet"
+        "16": "Project dossier folder",
+        "24": "Two visible project cards",
+        "32": "Open project dossier folder containing two project cards"
       },
       "acceptedReadings": ["portfolio folder", "project folder", "work folder"],
-      "rejectedReadings": ["document", "envelope", "generic app window"]
+      "rejectedReadings": ["document", "envelope", "generic app window", "photo landscape", "photo folder"]
     },
     {
       "id": "about-myles",
@@ -66,8 +66,8 @@
       "intendedObject": "professional profile sheet with paperclip and structured lines",
       "tiers": {
         "16": "Profile sheet with blue header",
-        "24": "Blue paperclip and two bullets",
-        "32": "Professional profile sheet with paperclip and structured lines"
+        "24": "Subordinate blue paperclip and two bullets",
+        "32": "Professional profile sheet with compact paperclip and structured lines"
       },
       "acceptedReadings": ["resume", "document", "profile sheet"],
       "rejectedReadings": ["checklist", "newsletter", "envelope"]
@@ -87,14 +87,14 @@
     {
       "id": "reminders",
       "group": "personal",
-      "intendedObject": "personal spiral checklist pad",
+      "intendedObject": "personal checklist pad with checkbox/checkmark pairs",
       "tiers": {
-        "16": "Spiral checklist pad",
-        "24": "Two checks and a bound paper edge",
-        "32": "Personal checklist pad with checks and paper depth"
+        "16": "Checklist pad with two checkbox/checkmark pairs",
+        "24": "Checklist pad with three checkbox/checkmark pairs and a bound paper edge",
+        "32": "Personal checklist pad with three checks and paper depth"
       },
       "acceptedReadings": ["checklist", "notepad", "reminders"],
-      "rejectedReadings": ["resume", "newsletter", "recipe card"]
+      "rejectedReadings": ["calendar", "spiral-bound calendar", "resume", "newsletter", "recipe card"]
     },
     {
       "id": "trini-roti",
@@ -111,23 +111,23 @@
     {
       "id": "loose-parts",
       "group": "personal",
-      "intendedObject": "three generic colored construction blocks arranged in a compact pyramid",
+      "intendedObject": "literal non-branded compact 2+1 stack of three independent wooden construction blocks with square front faces, visible top/right planes, and upper-face highlights at 24/32",
       "tiers": {
-        "16": "Three stacked construction blocks",
-        "24": "Three colored cubes with face shading",
-        "32": "Three colored building blocks in a compact pyramid"
+        "16": "Compact 2+1 stack of three wooden construction blocks",
+        "24": "Compact 2+1 stack of three wooden construction blocks with visible top/right planes and upper-face highlights",
+        "32": "Compact 2+1 stack of three wooden construction blocks with visible top/right planes and upper-face highlights"
       },
       "acceptedReadings": ["building blocks", "construction blocks", "toy blocks"],
-      "rejectedReadings": ["LEGO", "food", "table"]
+      "rejectedReadings": ["boots", "pair of boots", "people", "group of people", "branded studs", "LEGO", "food", "table", "furniture", "steps", "bar chart", "books", "stack of books", "book stack", "bottle", "clothing"]
     },
     {
       "id": "display-properties",
       "group": "system",
-      "intendedObject": "beige CRT with color-test window, controls, and object-specific casing depth",
+      "intendedObject": "beige CRT display-settings monitor with in-screen controls and casing depth",
       "tiers": {
-        "16": "CRT monitor",
-        "24": "Color-test tiles",
-        "32": "Beige CRT with color-test window, controls, and object-specific casing depth"
+        "16": "CRT monitor with a settings cue",
+        "24": "CRT monitor with in-screen slider controls",
+        "32": "Beige CRT with in-screen controls and object-specific casing depth"
       },
       "acceptedReadings": ["monitor", "CRT", "display"],
       "rejectedReadings": ["overlapping windows", "reset icon", "television"]
@@ -147,14 +147,14 @@
     {
       "id": "reset-desktop",
       "group": "system",
-      "intendedObject": "CRT desktop with a clear, subordinate reset arrow",
+      "intendedObject": "one connected open restart C-loop with a compact directional wedge and intentional gap",
       "tiers": {
-        "16": "Desktop screen with two reset arrows",
-        "24": "Compact red reset arrow",
-        "32": "CRT desktop with a clear, subordinate reset arrow"
+        "16": "Open restart C-loop with a compact directional wedge",
+        "24": "Open restart C-loop with a compact directional wedge and intentional gap",
+        "32": "Stepped open restart C-loop with a compact directional wedge and intentional gap"
       },
-      "acceptedReadings": ["reset monitor", "reset desktop", "monitor with reset arrow"],
-      "rejectedReadings": ["display properties", "open apps", "reload browser"]
+      "acceptedReadings": ["restart arrow", "reset arrow", "reset desktop", "restart loop", "reset symbol"],
+      "rejectedReadings": ["fuel pump", "instant camera", "display properties", "open apps", "reload browser", "monitor alert", "monitor with alert", "alert flag", "opposing transfer arrows", "transfer control", "monitor cable", "pointer", "monitor with restart arrow", "monitor with restart loop", "reset monitor", "red telephone handset", "telephone handset", "alarm clock", "chain link", "paperclip", "pencil"]
     },
     {
       "id": "generic-app",
@@ -171,26 +171,26 @@
     {
       "id": "fresh-greens",
       "group": "projects",
-      "intendedObject": "solid road-map tile with one route and destination",
+      "intendedObject": "route-map tile with a compact street-block network, one highlighted unbranched three-turn route, and distinct route markers",
       "tiers": {
-        "16": "Road-map tile with one route",
-        "24": "One route with start and destination",
-        "32": "Road-map tile with one non-monotonic road, start point, and orange destination"
+        "16": "Street-block road map with a highlighted three-turn route and distinct endpoint markers",
+        "24": "Street-block route map with a highlighted three-turn route, markers, and four parcel cues",
+        "32": "Road-map tile with a street-block network, highlighted three-turn route, distinct markers, and four parcel cues"
       },
       "acceptedReadings": ["road map", "route map", "navigation map"],
-      "rejectedReadings": ["groceries", "leaf logo", "city guide"]
+      "rejectedReadings": ["magic wand", "wand", "notebook band", "folded page", "landscape image", "landscape photograph", "groceries", "leaf logo", "city guide", "music note", "musical note", "folded map", "circuit"]
     },
     {
       "id": "understandingfafsa",
       "group": "projects",
-      "intendedObject": "modular newsletter emerging from an envelope with three content regions",
+      "intendedObject": "wide folded printed newsletter with paper depth, a tangible horizontal crease, and editorial print anatomy",
       "tiers": {
-        "16": "Newsletter page",
-        "24": "Blue masthead within open envelope",
-        "32": "Modular newsletter emerging from an envelope with three content regions"
+        "16": "Wide folded printed newsletter with a visible paper stack, segmented masthead, headline, and horizontal crease",
+        "24": "Wide folded printed newsletter with rear sheet and shadow, segmented blue masthead, headline, photo, copy columns, and a tangible horizontal crease",
+        "32": "Wide folded printed newsletter with offset rear sheet and shadow, segmented blue masthead, headline, photo, copy columns, horizontal crease, and broad folded lower face"
       },
-      "acceptedReadings": ["newsletter", "newsletter envelope", "information page"],
-      "rejectedReadings": ["sealed email", "resume", "folder"]
+      "acceptedReadings": ["newsletter", "printed newsletter", "folded newsletter", "newsprint", "printed newsprint", "newspaper"],
+      "rejectedReadings": ["web page layout", "webpage", "framed web surface", "dashboard", "browser chrome", "browser window", "web application", "app window", "flat screen", "dashboard tile", "open envelope", "letter", "sealed email", "folded map", "mountain", "resume", "folder"]
     },
     {
       "id": "navi",
@@ -198,8 +198,8 @@
       "intendedObject": "location marker above a neighborhood storefront",
       "tiers": {
         "16": "Location marker",
-        "24": "Location marker above a storefront",
-        "32": "Location marker above a neighborhood storefront with one depth cue"
+        "24": "Location marker with orange center above storefront",
+        "32": "Location marker above a widened neighborhood storefront"
       },
       "acceptedReadings": ["location marker", "map pin", "neighborhood destination"],
       "rejectedReadings": ["book", "guidebook", "leaf"]
@@ -207,14 +207,14 @@
     {
       "id": "tiktok-catalog",
       "group": "projects",
-      "intendedObject": "standalone retail shopping bag",
+      "intendedObject": "handled rectangular shopping bag with one side depth plane",
       "tiers": {
-        "16": "Standalone retail shopping bag",
-        "24": "Shopping bag with a top opening and one side plane",
-        "32": "Dimensional shopping bag with gusset, lower plane, and restrained contact depth"
+        "16": "Handled shopping bag silhouette",
+        "24": "Handled rectangular shopping bag with one side plane",
+        "32": "Handled dimensional shopping bag with framed opening and side depth plane"
       },
       "acceptedReadings": ["shopping bag", "retail bag", "product bag"],
-      "rejectedReadings": ["purse", "catalog page", "TikTok logo", "music note", "social media app", "book", "dashboard"]
+      "rejectedReadings": ["wastebasket", "basket", "shopping basket", "small tote", "purse", "catalog page", "TikTok logo", "music note", "social media app", "book", "dashboard"]
     }
   ]
 }

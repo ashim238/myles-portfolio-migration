@@ -14,6 +14,105 @@ const validSvg = (artwork: string) => `<svg xmlns="http://www.w3.org/2000/svg" v
   ${artwork}
 </svg>`;
 
+const REFINED_TARGET_METADATA = {
+  "selected-work": {
+    intendedObject: "open project dossier folder containing two project cards",
+    tiers: {
+      "16": "Project dossier folder",
+      "24": "Two visible project cards",
+      "32": "Open project dossier folder containing two project cards",
+    },
+    acceptedReadings: ["portfolio folder", "project folder", "work folder"],
+    rejectedReadings: ["document", "envelope", "generic app window", "photo landscape", "photo folder"],
+  },
+  reminders: {
+    intendedObject: "personal checklist pad with checkbox/checkmark pairs",
+    tiers: {
+      "16": "Checklist pad with two checkbox/checkmark pairs",
+      "24": "Checklist pad with three checkbox/checkmark pairs and a bound paper edge",
+      "32": "Personal checklist pad with three checks and paper depth",
+    },
+    acceptedReadings: ["checklist", "notepad", "reminders"],
+    rejectedReadings: ["calendar", "spiral-bound calendar", "resume", "newsletter", "recipe card"],
+  },
+  "display-properties": {
+    intendedObject: "beige CRT display-settings monitor with in-screen controls and casing depth",
+    tiers: {
+      "16": "CRT monitor with a settings cue",
+      "24": "CRT monitor with in-screen slider controls",
+      "32": "Beige CRT with in-screen controls and object-specific casing depth",
+    },
+    acceptedReadings: ["monitor", "CRT", "display"],
+    rejectedReadings: ["overlapping windows", "reset icon", "television"],
+  },
+  "reset-desktop": {
+    intendedObject: "one connected open restart C-loop with a compact directional wedge and intentional gap",
+    tiers: {
+      "16": "Open restart C-loop with a compact directional wedge",
+      "24": "Open restart C-loop with a compact directional wedge and intentional gap",
+      "32": "Stepped open restart C-loop with a compact directional wedge and intentional gap",
+    },
+    acceptedReadings: ["restart arrow", "reset arrow", "reset desktop", "restart loop", "reset symbol"],
+    rejectedReadings: ["fuel pump", "instant camera", "display properties", "open apps", "reload browser", "monitor alert", "monitor with alert", "alert flag", "opposing transfer arrows", "transfer control", "monitor cable", "pointer", "monitor with restart arrow", "monitor with restart loop", "reset monitor", "red telephone handset", "telephone handset", "alarm clock", "chain link", "paperclip", "pencil"],
+  },
+  "fresh-greens": {
+    intendedObject: "route-map tile with a compact street-block network, one highlighted unbranched three-turn route, and distinct route markers",
+    tiers: {
+      "16": "Street-block road map with a highlighted three-turn route and distinct endpoint markers",
+      "24": "Street-block route map with a highlighted three-turn route, markers, and four parcel cues",
+      "32": "Road-map tile with a street-block network, highlighted three-turn route, distinct markers, and four parcel cues",
+    },
+    acceptedReadings: ["road map", "route map", "navigation map"],
+    rejectedReadings: ["magic wand", "wand", "notebook band", "folded page", "landscape image", "landscape photograph", "groceries", "leaf logo", "city guide", "music note", "musical note", "folded map", "circuit"],
+  },
+  understandingfafsa: {
+    intendedObject: "wide folded printed newsletter with paper depth, a tangible horizontal crease, and editorial print anatomy",
+    tiers: {
+      "16": "Wide folded printed newsletter with a visible paper stack, segmented masthead, headline, and horizontal crease",
+      "24": "Wide folded printed newsletter with rear sheet and shadow, segmented blue masthead, headline, photo, copy columns, and a tangible horizontal crease",
+      "32": "Wide folded printed newsletter with offset rear sheet and shadow, segmented blue masthead, headline, photo, copy columns, horizontal crease, and broad folded lower face",
+    },
+    acceptedReadings: ["newsletter", "printed newsletter", "folded newsletter", "newsprint", "printed newsprint", "newspaper"],
+    rejectedReadings: ["web page layout", "webpage", "framed web surface", "dashboard", "browser chrome", "browser window", "web application", "app window", "flat screen", "dashboard tile", "open envelope", "letter", "sealed email", "folded map", "mountain", "resume", "folder"],
+  },
+  "loose-parts": {
+    intendedObject: "literal non-branded compact 2+1 stack of three independent wooden construction blocks with square front faces, visible top/right planes, and upper-face highlights at 24/32",
+    tiers: {
+      "16": "Compact 2+1 stack of three wooden construction blocks",
+      "24": "Compact 2+1 stack of three wooden construction blocks with visible top/right planes and upper-face highlights",
+      "32": "Compact 2+1 stack of three wooden construction blocks with visible top/right planes and upper-face highlights",
+    },
+    acceptedReadings: ["building blocks", "construction blocks", "toy blocks"],
+    rejectedReadings: ["boots", "pair of boots", "people", "group of people", "branded studs", "LEGO", "food", "table", "furniture", "steps", "bar chart", "books", "stack of books", "book stack", "bottle", "clothing"],
+  },
+  "tiktok-catalog": {
+    intendedObject: "handled rectangular shopping bag with one side depth plane",
+    tiers: {
+      "16": "Handled shopping bag silhouette",
+      "24": "Handled rectangular shopping bag with one side plane",
+      "32": "Handled dimensional shopping bag with framed opening and side depth plane",
+    },
+    acceptedReadings: ["shopping bag", "retail bag", "product bag"],
+    rejectedReadings: ["wastebasket", "basket", "shopping basket", "small tote", "purse", "catalog page", "TikTok logo", "music note", "social media app", "book", "dashboard"],
+  },
+} as const;
+
+function manifestWithRefinedTargetMetadata() {
+  const manifest = JSON.parse(
+    readFileSync("docs/design-assets/myles98-icons/manifest.json", "utf8"),
+  );
+  for (const [id, approved] of Object.entries(REFINED_TARGET_METADATA)) {
+    const icon = manifest.icons.find((candidate: { id: string }) => candidate.id === id);
+    Object.assign(icon, {
+      intendedObject: approved.intendedObject,
+      tiers: { ...approved.tiers },
+      acceptedReadings: [...approved.acceptedReadings],
+      rejectedReadings: [...approved.rejectedReadings],
+    });
+  }
+  return manifest;
+}
+
 describe("Myles 98 icon master contract", () => {
   it("locks the complete family and three native grids", () => {
     expect(ICON_GRIDS).toEqual([16, 24, 32]);
@@ -191,21 +290,21 @@ describe("Myles 98 icon master contract", () => {
     expect(validateManifest(manifest)).toEqual([]);
   });
 
-  it("locks Loose Parts to a brand-neutral three-block construction noun", () => {
+  it("locks Loose Parts to literal wooden construction blocks rather than books, boots, people, a stair, or a chart", () => {
     const manifest = JSON.parse(
       readFileSync("docs/design-assets/myles98-icons/manifest.json", "utf8"),
     );
     const looseParts = manifest.icons.find((icon: { id: string }) => icon.id === "loose-parts");
 
     expect(looseParts.intendedObject).toBe(
-      "three generic colored construction blocks arranged in a compact pyramid",
+      "literal non-branded compact 2+1 stack of three independent wooden construction blocks with square front faces, visible top/right planes, and upper-face highlights at 24/32",
     );
     expect(looseParts.acceptedReadings).toEqual([
       "building blocks",
       "construction blocks",
       "toy blocks",
     ]);
-    expect(looseParts.rejectedReadings).toEqual(["LEGO", "food", "table"]);
+    expect(looseParts.rejectedReadings).toEqual(["boots", "pair of boots", "people", "group of people", "branded studs", "LEGO", "food", "table", "furniture", "steps", "bar chart", "books", "stack of books", "book stack", "bottle", "clothing"]);
   });
 
   it("locks the approved tier cue spelling and case into metadata and the manifest", () => {
@@ -214,25 +313,91 @@ describe("Myles 98 icon master contract", () => {
     );
     const approvedTiers = {
       start: { "16": "Head-and-glasses silhouette", "24": "Locs and glasses within the portrait mark", "32": "Pixel adaptation of Myles's existing portrait mark" },
-      "selected-work": { "16": "Portfolio folder", "24": "One visible image thumbnail", "32": "Open portfolio folder containing a contact sheet" },
+      "selected-work": REFINED_TARGET_METADATA["selected-work"].tiers,
       "about-myles": { "16": "Portrait card", "24": "ID-card frame and one information line", "32": "ID card with portrait and information lines" },
-      resume: { "16": "Profile sheet with blue header", "24": "Blue paperclip and two bullets", "32": "Professional profile sheet with paperclip and structured lines" },
+      resume: { "16": "Profile sheet with blue header", "24": "Subordinate blue paperclip and two bullets", "32": "Professional profile sheet with compact paperclip and structured lines" },
       email: { "16": "Sealed envelope", "24": "Sealed envelope with one yellow stamp", "32": "Dimensional sealed envelope with one subordinate stamp" },
-      reminders: { "16": "Spiral checklist pad", "24": "Two checks and a bound paper edge", "32": "Personal checklist pad with checks and paper depth" },
+      reminders: REFINED_TARGET_METADATA.reminders.tiers,
       "trini-roti": { "16": "Single memo sheet", "24": "Folded corner and handwritten lines", "32": "Personal memo sheet with folded corner, handwritten lines, and paper depth" },
-      "loose-parts": { "16": "Three stacked construction blocks", "24": "Three colored cubes with face shading", "32": "Three colored building blocks in a compact pyramid" },
-      "display-properties": { "16": "CRT monitor", "24": "Color-test tiles", "32": "Beige CRT with color-test window, controls, and object-specific casing depth" },
+      "loose-parts": REFINED_TARGET_METADATA["loose-parts"].tiers,
+      "display-properties": REFINED_TARGET_METADATA["display-properties"].tiers,
       "open-apps": { "16": "Two overlapping windows", "24": "Distinct titlebars", "32": "Two layered application windows with separate content panes" },
-      "reset-desktop": { "16": "Desktop screen with two reset arrows", "24": "Compact red reset arrow", "32": "CRT desktop with a clear, subordinate reset arrow" },
+      "reset-desktop": REFINED_TARGET_METADATA["reset-desktop"].tiers,
       "generic-app": { "16": "Single application window", "24": "Blue titlebar and inner pane", "32": "Neutral program window with restrained chrome depth" },
-      "fresh-greens": { "16": "Road-map tile with one route", "24": "One route with start and destination", "32": "Road-map tile with one non-monotonic road, start point, and orange destination" },
-      understandingfafsa: { "16": "Newsletter page", "24": "Blue masthead within open envelope", "32": "Modular newsletter emerging from an envelope with three content regions" },
-      navi: { "16": "Location marker", "24": "Location marker above a storefront", "32": "Location marker above a neighborhood storefront with one depth cue" },
-      "tiktok-catalog": { "16": "Standalone retail shopping bag", "24": "Shopping bag with a top opening and one side plane", "32": "Dimensional shopping bag with gusset, lower plane, and restrained contact depth" },
+      "fresh-greens": REFINED_TARGET_METADATA["fresh-greens"].tiers,
+      understandingfafsa: REFINED_TARGET_METADATA.understandingfafsa.tiers,
+      navi: { "16": "Location marker", "24": "Location marker with orange center above storefront", "32": "Location marker above a widened neighborhood storefront" },
+      "tiktok-catalog": REFINED_TARGET_METADATA["tiktok-catalog"].tiers,
     };
 
     expect(Object.fromEntries(Object.entries(APPROVED_ICON_METADATA).map(([id, metadata]) => [id, metadata.tiers]))).toEqual(approvedTiers);
     expect(Object.fromEntries(manifest.icons.map((icon: { id: string; tiers: Record<string, string> }) => [icon.id, icon.tiers]))).toEqual(approvedTiers);
+  });
+
+  it("binds every post-review target noun, tier cue, and recognition disposition to the current candidate", () => {
+    const manifest = JSON.parse(
+      readFileSync("docs/design-assets/myles98-icons/manifest.json", "utf8"),
+    );
+    const current = Object.fromEntries(
+      Object.keys(REFINED_TARGET_METADATA).map((id) => {
+        const icon = manifest.icons.find((candidate: { id: string }) => candidate.id === id);
+        return [id, {
+          intendedObject: icon.intendedObject,
+          tiers: icon.tiers,
+          acceptedReadings: icon.acceptedReadings,
+          rejectedReadings: icon.rejectedReadings,
+        }];
+      }),
+    );
+
+    expect(current).toEqual(REFINED_TARGET_METADATA);
+  });
+
+  it("fails closed when each post-review object, tier, or reading contract is mutated", () => {
+    type MutationCase = {
+      id: string;
+      label: string;
+      mutate: (icon: Record<string, unknown>) => void;
+      expectedError: string;
+    };
+    const cases: MutationCase[] = Object.entries(REFINED_TARGET_METADATA).flatMap(([id, approved]) => [
+      {
+        id,
+        label: "intended object",
+        mutate: (icon) => { icon.intendedObject = `${approved.intendedObject} drift`; },
+        expectedError: "intendedObject must exactly match approved object",
+      },
+      ...Object.entries(approved.tiers).map(([grid, cue]) => ({
+        id,
+        label: `${grid}px tier`,
+        mutate: (icon: Record<string, unknown>) => { (icon.tiers as Record<string, string>)[grid] = `${cue} drift`; },
+        expectedError: `.tiers.${grid} must exactly match approved cue`,
+      })),
+      {
+        id,
+        label: "accepted readings",
+        mutate: (icon) => { icon.acceptedReadings = [...approved.acceptedReadings, "drift"]; },
+        expectedError: "acceptedReadings must exactly match approved readings",
+      },
+      {
+        id,
+        label: "rejected readings",
+        mutate: (icon) => { icon.rejectedReadings = [...approved.rejectedReadings, "drift"]; },
+        expectedError: "rejectedReadings must exactly match approved readings",
+      },
+    ]);
+
+    for (const { id, label, mutate, expectedError } of cases) {
+      const manifest = manifestWithRefinedTargetMetadata();
+      expect(validateManifest(manifest), `${id} ${label} baseline`).toEqual([]);
+
+      const icon = manifest.icons.find((candidate: { id: string }) => candidate.id === id);
+      mutate(icon);
+
+      expect(validateManifest(manifest), `${id} ${label} mutation`).toEqual(
+        expect.arrayContaining([expect.stringContaining(expectedError)]),
+      );
+    }
   });
 
   it("keeps branded TikTok and generic social-app symbols out of the catalog icon", () => {
@@ -253,20 +418,20 @@ describe("Myles 98 icon master contract", () => {
     const navi = manifest.icons.find((icon: { id: string }) => icon.id === "navi");
 
     expect(navi.intendedObject).toBe("location marker above a neighborhood storefront");
-    expect(navi.tiers["24"]).toBe("Location marker above a storefront");
-    expect(navi.tiers["32"]).toBe("Location marker above a neighborhood storefront with one depth cue");
+    expect(navi.tiers["24"]).toBe("Location marker with orange center above storefront");
+    expect(navi.tiers["32"]).toBe("Location marker above a widened neighborhood storefront");
   });
 
-  it("locks TikTok to one standalone retail shopping bag", () => {
+  it("locks TikTok to a handled shopping bag rather than a bin, basket, or branded app mark", () => {
     const manifest = JSON.parse(
       readFileSync("docs/design-assets/myles98-icons/manifest.json", "utf8"),
     );
     const catalog = manifest.icons.find((icon: { id: string }) => icon.id === "tiktok-catalog");
 
-    expect(catalog.intendedObject).toBe("standalone retail shopping bag");
+    expect(catalog.intendedObject).toBe("handled rectangular shopping bag with one side depth plane");
     expect(catalog.acceptedReadings).toEqual(["shopping bag", "retail bag", "product bag"]);
     expect(catalog.rejectedReadings).toEqual(
-      expect.arrayContaining(["purse", "catalog page", "TikTok logo", "music note", "social media app"]),
+      expect.arrayContaining(["wastebasket", "basket", "small tote", "purse", "catalog page", "TikTok logo", "music note", "social media app"]),
     );
   });
 
