@@ -320,6 +320,16 @@
   text-shadow: 1px 1px 0 rgb(17 17 17 / 65%);
 }
 
+@media (min-width: 1025px) and (max-width: 1279px) {
+  .myles97-window[data-m97-program-window="selected-work"] {
+    width: calc(100vw - 521px) !important;
+  }
+
+  .myles97-window[data-m97-program-window="welcome"] {
+    left: calc(100vw - 368px) !important;
+  }
+}
+
 .myles97-roti-note {
   position: absolute;
   z-index: 3;
