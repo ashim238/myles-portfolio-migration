@@ -181,6 +181,7 @@ describe("Myles 98 program icon identity", () => {
         const source = `/myles98-icons/${concept}/${concept}-${size}.svg`;
 
         expect(master).toBeInTheDocument();
+        expect(master).toHaveClass("myles98-icon-master");
         expect(master).toHaveAttribute("href", source);
         expect(master).toHaveAttribute("data-m98-icon-master-concept", concept);
         expect(master).toHaveAttribute("data-m98-icon-master-grid", String(size));
@@ -678,6 +679,26 @@ describe("Myles 98 program icon identity", () => {
     expect(hiddenDepthRule?.[2]).toMatch(/display:\s*none/);
     expect(iconStyles).toMatch(/\.myles98-icon-master\s*\{[^}]*display:\s*block;/);
     expect(iconStyles).toMatch(/\.myles98-icon-fallback\s*\{[^}]*display:\s*none;/);
+    expect(forcedColorStyles).toMatch(
+      /\.myles98-icon-master\s*\{[^}]*display:\s*none;/,
+    );
+    expect(forcedColorStyles).toMatch(
+      /\.myles98-icon-fallback\s*\{[^}]*display:\s*block;/,
+    );
+
+    const { container } = render(
+      createElement(Myles97Icon, {
+        name: "reset-desktop",
+        size: 24,
+        variant: "color",
+        title: "Reset Desktop color master",
+      }),
+    );
+    const master = container.querySelector("image[data-m98-icon-master]");
+    const fallback = container.querySelector(".myles98-icon-fallback");
+
+    expect(master).toHaveClass("myles98-icon-master");
+    expect(fallback).toBeInTheDocument();
     expect(forcedColorStyles).toMatch(
       /\.myles98-icon-master\s*\{[^}]*display:\s*none;/,
     );

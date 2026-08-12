@@ -1004,6 +1004,7 @@ export function Myles97Icon({
       height={master.grid}
       href={master.source}
       preserveAspectRatio="none"
+      className="myles98-icon-master"
       data-m98-icon-master="true"
       data-m98-icon-master-concept={master.concept}
       data-m98-icon-master-grid={String(master.grid)}
