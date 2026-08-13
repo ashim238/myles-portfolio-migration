@@ -5,31 +5,65 @@ import { describe, expect, it } from "vitest";
 import { RecruiterCut } from "@/components/recruiter-cut";
 
 describe("RecruiterCut", () => {
-  it("renders an optional interaction-evidence trailhead", () => {
+  it("renders only Team, Timeline, and Tools facts when optional facts are provided", () => {
     const { container } = render(
       <RecruiterCut
-        role="Solo, design and engineering"
-        timeline="Sep 2025 – Jun 2026"
-        moves={[]}
-        evidence={{
-          type: "Working mobile prototype",
-          cta: "Try the safety-flow reconstruction",
-          href: "#fg-pulled-over",
-        }}
+        team="Two-person product team"
+        timeline="September 2025 – June 2026"
+        tools="Figma, React Native"
+        moves={["Mapped the service flow."]}
       />,
     );
 
-    const evidence = container.querySelector(".case-cut-evidence");
-    expect(evidence).not.toBeNull();
-    expect(screen.getByText("Working mobile prototype")).toHaveClass(
-      "case-cut-evidence-type",
+    expect(
+      Array.from(
+        container.querySelectorAll(".case-cut-row dt"),
+        (term) => term.textContent,
+      ),
+    ).toEqual(["Team", "Timeline", "Tools"]);
+    expect(screen.getByText("Two-person product team")).toBeInTheDocument();
+    expect(screen.getByText("September 2025 – June 2026")).toBeInTheDocument();
+    expect(screen.getByText("Figma, React Native")).toBeInTheDocument();
+    expect(screen.queryByText("Role")).not.toBeInTheDocument();
+    expect(screen.queryByText("Contribution")).not.toBeInTheDocument();
+    expect(screen.queryByText("Outcome")).not.toBeInTheDocument();
+    expect(container.querySelector(".case-cut-evidence")).not.toBeInTheDocument();
+  });
+
+  it("keeps Timeline as the only required fact", () => {
+    const { container } = render(
+      <RecruiterCut timeline="May – August 2021" moves={[]} />,
     );
+
     expect(
-      screen.getByRole("link", { name: "Try the safety-flow reconstruction" }),
-    ).toHaveClass("case-cut-evidence-cta");
+      Array.from(
+        container.querySelectorAll(".case-cut-row dt"),
+        (term) => term.textContent,
+      ),
+    ).toEqual(["Timeline"]);
+    expect(screen.queryByText("Team")).not.toBeInTheDocument();
+    expect(screen.queryByText("Tools")).not.toBeInTheDocument();
+    expect(screen.queryByText("Key moves")).not.toBeInTheDocument();
+  });
+
+  it("preserves Key moves in their authored order", () => {
+    render(
+      <RecruiterCut
+        timeline="January 2025 – June 2025"
+        moves={[
+          "Graduate studio: tested the first concept.",
+          "Solo rebuild: built the booking flow.",
+        ]}
+      />,
+    );
+
+    expect(screen.getByText("Key moves")).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: "Try the safety-flow reconstruction" }),
-    ).toHaveAttribute("href", "#fg-pulled-over");
+      screen.getAllByRole("listitem").map((item) => item.textContent),
+    ).toEqual([
+      "Graduate studio: tested the first concept.",
+      "Solo rebuild: built the booking flow.",
+    ]);
   });
 
   it("uses sentence-case labels rather than tracked uppercase metadata", () => {
@@ -48,56 +82,5 @@ describe("RecruiterCut", () => {
     expect(movesLabel).toBeDefined();
     expect(movesLabel).not.toMatch(/text-transform:\s*uppercase/);
     expect(movesLabel).not.toMatch(/letter-spacing:\s*0\.1em/);
-  });
-
-  it("keeps the at-a-glance scan to four project-specific facts", () => {
-    const { container } = render(
-      <RecruiterCut
-        role="Solo, design and engineering"
-        contribution="Built the research and product system end to end."
-        team="Independent project with five research participants."
-        timeline="Sep 2025 – Jun 2026"
-        stack="React Native, Supabase"
-        outcomeValue="78%"
-        outcomeLabel="preferred it"
-        moves={["Did the first thing.", "Did the second thing."]}
-      />,
-    );
-    expect(screen.getByText("Team").tagName).toBe("DT");
-    expect(screen.getByText("Independent project with five research participants.")).toBeInTheDocument();
-    expect(Array.from(container.querySelectorAll(".case-cut-row dt"), (term) => term.textContent))
-      .toEqual(["Role", "Team", "Timeline", "Outcome"]);
-    expect(container.querySelectorAll(".case-cut-row")).toHaveLength(4);
-    expect(screen.queryByText("Problem")).toBeNull();
-    expect(screen.queryByText("Contribution")).toBeNull();
-    expect(screen.queryByText("Feedback")).toBeNull();
-    expect(screen.queryByText("Stack")).toBeNull();
-    expect(screen.getByText("Key moves")).toBeInTheDocument();
-    expect(screen.getByText("Did the second thing.")).toBeInTheDocument();
-  });
-
-  it("omits the outcome row when value/label absent", () => {
-    render(
-      <RecruiterCut role="r" timeline="t" stack="s" moves={["m"]} />,
-    );
-    expect(screen.getByText("Role")).toBeInTheDocument();
-    expect(screen.getByText("Timeline")).toBeInTheDocument();
-    expect(screen.getByText("Stack")).toBeInTheDocument();
-    expect(screen.queryByText("Outcome")).toBeNull();
-  });
-
-  it("uses contribution when a team is not provided", () => {
-    render(
-      <RecruiterCut
-        role="r"
-        contribution="Designed and built the system."
-        timeline="t"
-        stack="s"
-        moves={[]}
-      />,
-    );
-
-    expect(screen.getByText("Contribution")).toBeInTheDocument();
-    expect(screen.getByText("Designed and built the system.")).toBeInTheDocument();
   });
 });

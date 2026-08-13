@@ -140,7 +140,7 @@ describe("portfolio hardening style contract", () => {
 
   it("normalizes inline arrow spacing without baked-in text spaces", () => {
     const forwardArrowRule = cssBlock(
-      ':where(\n  .about-action,\n  .project-work-jump-cta,\n  .project-work-jump-view-all,\n  .case-cut-evidence-cta,\n  .nv-demo-embed-mobile-cta,\n  .nv-system-cta-link,\n  .uf-before-after-item a,\n  .uf-switcher-preview a,\n  .play-embed-fallback a\n) > span[aria-hidden="true"]:last-child',
+      ':where(\n  .about-action,\n  .project-work-jump-cta,\n  .project-work-jump-view-all,\n  .nv-demo-embed-mobile-cta,\n  .nv-system-cta-link,\n  .uf-before-after-item a,\n  .uf-switcher-preview a,\n  .play-embed-fallback a\n) > span[aria-hidden="true"]:last-child',
     );
     const backArrowRule = cssBlock(
       '.project-topbar a > span[aria-hidden="true"]:first-child',

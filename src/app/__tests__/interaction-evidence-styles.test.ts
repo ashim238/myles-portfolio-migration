@@ -25,20 +25,6 @@ function declarationBlock(styles: string, selector: string): string {
 }
 
 describe("interaction evidence styling", () => {
-  it("keeps recruiter trailheads line-based and able to wrap", () => {
-    const trailhead = declarationBlock(latePolishStyles, ".case-cut-evidence");
-    const type = declarationBlock(latePolishStyles, ".case-cut-evidence-type");
-
-    expect(trailhead).toContain("display: flex");
-    expect(trailhead).toContain("flex-wrap: wrap");
-    expect(trailhead).toContain("border-block: 1px solid var(--line)");
-    expect(trailhead).toContain("gap: 0.45rem 0.9rem");
-    expect(trailhead).toContain("padding-block: 0.9rem");
-    expect(trailhead).not.toContain("box-shadow");
-    expect(type).toContain("margin: 0");
-    expect(type).toContain("font-size: 0.85rem");
-  });
-
   it("gives homepage evidence a distinct compact reading line", () => {
     const label = declarationBlock(baseStyles, ".work-card-evidence");
 

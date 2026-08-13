@@ -90,17 +90,8 @@ export default async function FreshGreensPage() {
         presentation="fresh-greens"
       />
       <RecruiterCut
-        role="Solo, design and engineering"
         timeline="Sep 2025 – Jun 2026"
-        stackLabel="Tools"
-        stack="Figma, Illustrator, Claude, React Native, Expo, TypeScript, Supabase"
-        evidence={{
-          type: "Working mobile prototype",
-          cta: freshGreensProof.label,
-          href: freshGreensProof.href,
-        }}
-        outcomeValue="Working"
-        outcomeLabel="Route planning, reminders, stress support, reporting, and moderation"
+        tools="Figma, Illustrator, Claude, React Native, Expo, TypeScript, Supabase"
         moves={[]}
       />
 

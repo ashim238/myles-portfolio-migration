@@ -117,7 +117,6 @@ describe("dedicated project route visibility", () => {
       name: "Fresh Greens",
       slug: "fresh-greens",
       render: FreshGreensPage,
-      type: "Working mobile prototype",
       cta: "Try the safety-flow reconstruction",
       href: "#fg-pulled-over",
       artifactName: "Interactive case-study reconstruction",
@@ -127,23 +126,20 @@ describe("dedicated project route visibility", () => {
       name: "UnderstandingFAFSA",
       slug: "understandingfafsa",
       render: UnderstandingFafsaPage,
-      type: "Interactive case-study explanation",
       cta: "Build a sample send",
       href: "#uf-locked",
       artifactName: "Try the system",
       artifactRole: "button" as const,
     },
   ])(
-    "links the $name evidence trailhead to its rendered artifact",
+    "links the $name canonical opening proof to its rendered artifact",
     async (surface) => {
       getProjectBySlug.mockResolvedValue(makeProject(surface.slug, "published"));
       const { container } = render(await surface.render());
 
-      expect(screen.getByText(surface.type)).toBeInTheDocument();
-      expect(screen.getByRole("link", { name: surface.cta })).toHaveAttribute(
-        "href",
-        surface.href,
-      );
+      expect(
+        screen.getByRole("link", { name: `Open proof: ${surface.cta}` }),
+      ).toHaveAttribute("href", surface.href);
 
       const target = container.querySelector(surface.href);
       expect(target).not.toBeNull();
@@ -157,14 +153,12 @@ describe("dedicated project route visibility", () => {
     },
   );
 
-  it("renders Navi's evidence trailhead as a direct product-demo link", async () => {
+  it("renders Navi's canonical opening proof as a direct product-demo link", async () => {
     getProjectBySlug.mockResolvedValue(makeProject("navi", "published"));
     render(await NaviPage());
 
-    expect(screen.getByText("Working product demo")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Try the booking flow" })).toHaveAttribute(
-      "href",
-      "/work/navi/demo",
-    );
+    expect(
+      screen.getByRole("link", { name: "Open proof: Try the booking flow" }),
+    ).toHaveAttribute("href", "/work/navi/demo");
   });
 });

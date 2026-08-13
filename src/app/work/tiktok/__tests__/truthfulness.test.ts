@@ -7,12 +7,14 @@ const read = (path: string) =>
   readFileSync(resolve(process.cwd(), path), "utf8");
 
 describe("TikTok public truthfulness contract", () => {
-  it("uses the confirmed role, team, and original template names", () => {
+  it("uses the confirmed canonical role and original template names", () => {
     const page = read("src/app/work/tiktok/page.tsx");
     const content = read("content/projects/tiktok.md");
 
-    expect(page).toContain('role="Creative Strategist Intern"');
-    expect(page).toContain('team="Global Creative Lab"');
+    expect(page).toContain(
+      'role="Creative Strategist Intern · Global Creative Lab"',
+    );
+    expect(page).not.toContain('team="Global Creative Lab"');
     expect(content).toContain("role: Creative Strategist Intern · Global Creative Lab");
     expect(page).not.toContain('role="Creative Strategy Intern"');
     expect(content).not.toContain("role: Creative Strategy Intern · Global Creative Lab");

@@ -80,16 +80,13 @@ describe("TikTok short-form case study", () => {
     getPublishedProjects.mockResolvedValue([project]);
   });
 
-  it("links the evidence trailhead to the rendered template-system explanation", async () => {
+  it("links the canonical opening proof to the rendered template-system explanation", async () => {
     const { container } = render(await TikTokPage());
 
     expect(
-      screen.getByText(
-        "Static shipped deliverable with an interactive explanation",
-      ),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("link", { name: "Inspect the template system" }),
+      screen.getByRole("link", {
+        name: "Open proof: Inspect the template system",
+      }),
     ).toHaveAttribute("href", "#tt-system");
 
     const target = container.querySelector("#tt-system");

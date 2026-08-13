@@ -1,72 +1,32 @@
-import { CountUp } from "@/components/count-up";
-
 type RecruiterCutProps = {
-  role: string;
-  contribution?: string;
   team?: string;
   timeline: string;
-  stack?: string;
-  stackLabel?: string;
-  outcomeValue?: string;
-  outcomeLabel?: string;
+  tools?: string;
   moves: string[];
-  evidence?: {
-    type: string;
-    cta: string;
-    href: string;
-  };
 };
 
 export function RecruiterCut({
-  role, contribution, team, timeline, stack, stackLabel = "Stack", outcomeValue, outcomeLabel, moves, evidence,
+  team,
+  timeline,
+  tools,
+  moves,
 }: RecruiterCutProps) {
-  const supportingFact = team
-    ? { label: "Team", value: team }
-    : contribution
-      ? { label: "Contribution", value: contribution }
-      : stack
-        ? { label: stackLabel, value: stack }
-        : null;
   const facts = [
-    { label: "Role", value: role },
-    supportingFact,
+    team ? { label: "Team", value: team } : null,
     { label: "Timeline", value: timeline },
-    outcomeValue && outcomeLabel
-      ? {
-          label: "Outcome",
-          value: (
-            <>
-              <span className="case-cut-metric"><CountUp value={outcomeValue} /></span>{" "}
-              {outcomeLabel}
-            </>
-          ),
-        }
-      : supportingFact?.label !== stackLabel && stack
-        ? { label: stackLabel, value: stack }
-        : null,
+    tools ? { label: "Tools", value: tools } : null,
   ].filter((fact): fact is NonNullable<typeof fact> => fact !== null);
 
   return (
     <section className="case-cut" aria-label="At a glance">
       <dl className="case-cut-facts">
         {facts.map((fact) => (
-          <div
-            className={`case-cut-row${fact.label === "Outcome" ? " case-cut-outcome" : ""}`}
-            key={fact.label}
-          >
+          <div className="case-cut-row" key={fact.label}>
             <dt>{fact.label}</dt>
             <dd>{fact.value}</dd>
           </div>
         ))}
       </dl>
-      {evidence ? (
-        <div className="case-cut-evidence">
-          <p className="case-cut-evidence-type">{evidence.type}</p>
-          <a className="case-cut-evidence-cta" href={evidence.href}>
-            {evidence.cta}
-          </a>
-        </div>
-      ) : null}
       {moves.length > 0 ? (
         <div className="case-cut-moves">
           <p className="case-cut-moves-label">Key moves</p>

@@ -98,17 +98,8 @@ export default async function UnderstandingFafsaPage() {
         height={3000}
       />
       <RecruiterCut
-        role="Product Designer"
         timeline="February 2025 – Ongoing"
-        stack="Figma, Mailchimp"
-        stackLabel="Tools"
-        evidence={{
-          type: "Interactive case-study explanation",
-          cta: understandingFafsaProof.label,
-          href: understandingFafsaProof.href,
-        }}
-        outcomeValue={project?.outcomeMetricValue}
-        outcomeLabel={project?.outcomeMetricLabel}
+        tools="Figma, Mailchimp"
         moves={[
           "Outcome: I designed and rebuilt a Mailchimp-native kit the founder uses for weekly sends and ICYMI without editing HTML.",
           "Rules: I defined the fixed and swappable parts across three send types.",

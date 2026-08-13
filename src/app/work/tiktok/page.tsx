@@ -96,16 +96,7 @@ export default async function TikTokPage() {
         proof={tiktokProof}
       />
       <RecruiterCut
-        role="Creative Strategist Intern"
-        team="Global Creative Lab"
         timeline="May – August 2021"
-        evidence={{
-          type: "Static shipped deliverable with an interactive explanation",
-          cta: tiktokProof.label,
-          href: tiktokProof.href,
-        }}
-        outcomeValue="1"
-        outcomeLabel="of 3 templates shipped in the launch library"
         moves={[
           "Studied Y2K, Maximalism, Dark Academia, WitchTok, and Cottagecore before choosing the final directions.",
           "Used one product slot map across Dopamine Dressing, e-Boy/e-Girl, and Light Academia.",

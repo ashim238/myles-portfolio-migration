@@ -96,7 +96,7 @@ describe("Navi evidence claims", () => {
     const projectPage = readSource("src/app/work/navi/page.tsx");
 
     expect(projectPage).toContain(
-      'stack="Figma, FigJam, React, TypeScript"',
+      'tools="Figma, FigJam, React, TypeScript"',
     );
     expect(projectPage).toMatch(/Graduate studio:[\s\S]{0,180}The team/i);
     expect(projectPage).toMatch(/My contribution:[\s\S]{0,220}I collected/i);

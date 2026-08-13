@@ -179,14 +179,8 @@
   text-decoration-color: currentColor;
 }
 
-.reader-mode.reader-mode .case-cut-evidence {
-  border-color: var(--m97-reader-line);
-}
-
 .reader-mode.reader-mode :is(
   .case-cut-row dd,
-  .case-cut-evidence-type,
-  .case-cut-evidence-cta,
   .case-cut-moves li
 ) {
   color: var(--m97-reader-ink);

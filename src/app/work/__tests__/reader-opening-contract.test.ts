@@ -78,14 +78,12 @@ describe("Reader opening route contract", () => {
   );
 
   it.each(routes)(
-    "reuses $route proof values for the opening and RecruiterCut evidence",
+    "keeps $route proof values canonical in the opening facts",
     ({ route, proofName, proofLabel, proofHref }) => {
       const source = sourceFor(route);
 
       expect(source).toContain(`const ${proofName} = {`);
       expect(source).toContain(`proof={${proofName}}`);
-      expect(source).toContain(`cta: ${proofName}.label`);
-      expect(source).toContain(`href: ${proofName}.href`);
       expect(source).toMatch(
         new RegExp(
           `const ${proofName} = \\{[\\s\\S]*label: "${proofLabel}",[\\s\\S]*href: "${proofHref}",`,

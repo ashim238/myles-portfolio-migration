@@ -103,17 +103,8 @@ export default async function NaviPage() {
         height={1365}
       />
       <RecruiterCut
-        role="UI/UX Designer"
         timeline="January 2025 – June 2025"
-        stack="Figma, FigJam, React, TypeScript"
-        stackLabel="Tools"
-        evidence={{
-          type: "Working product demo",
-          cta: naviProof.label,
-          href: naviProof.href,
-        }}
-        outcomeValue={project?.outcomeMetricValue}
-        outcomeLabel={project?.outcomeMetricLabel}
+        tools="Figma, FigJam, React, TypeScript"
         moves={[
           "Graduate studio: the team tested an early Manhattan redirection concept and audited six travel platforms.",
           "My contribution: I collected and synthesized the 14 responses, then created research-informed archetypes, journeys, opportunity areas, flows, and studio design-system work.",

@@ -499,38 +499,6 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 .case-cut-row dt { font-size: 0.84rem; font-weight: 600; letter-spacing: normal;
   color: var(--muted); margin: 0; }
 .case-cut-row dd { margin: 0; color: var(--foreground); font-size: 1rem; line-height: 1.5; }
-.case-cut-metric { font-weight: 600; font-variant-numeric: tabular-nums; }
-.case-cut-evidence {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.45rem 0.9rem;
-  padding-block: 0.9rem;
-  border-block: 1px solid var(--line);
-}
-.case-cut-evidence-type {
-  margin: 0;
-  color: var(--foreground);
-  font-size: 0.85rem;
-  font-weight: 600;
-  line-height: 1.45;
-}
-.case-cut-evidence-cta {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  color: var(--foreground);
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, currentColor 42%, transparent);
-  text-underline-offset: 0.22em;
-  transition: text-decoration-color 180ms ease;
-}
-.case-cut-evidence-cta:hover,
-.case-cut-evidence-cta:focus-visible {
-  text-decoration-color: currentColor;
-}
 .count-up-fact {
   background-image: linear-gradient(
     to top,
@@ -561,7 +529,6 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
     transition: none;
   }
 }
-.case-cut-outcome dd { font-size: 1.05rem; }
 .case-cut-moves-label { font-size: 0.84rem; font-weight: 600; letter-spacing: normal;
   color: var(--muted); margin: 0 0 0.5rem; }
 .case-cut-moves ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }

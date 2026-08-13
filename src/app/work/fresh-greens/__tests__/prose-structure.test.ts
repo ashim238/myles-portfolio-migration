@@ -44,15 +44,10 @@ const primaryPathFiles = [
 ];
 
 const recruiterCutAttributes = new Set([
-  "role",
   "timeline",
-  "stackLabel",
-  "stack",
-  "outcomeValue",
-  "outcomeLabel",
+  "tools",
   "moves",
 ]);
-const recruiterCutEvidenceProperties = new Set(["type", "cta"]);
 const pulledOverDisplayProperties = new Set([
   "label",
   "decision",
@@ -69,15 +64,6 @@ function normalizeCopy(copy: string) {
     .replace(/&apos;/g, "'")
     .replace(/\s+/g, " ")
     .trim();
-}
-
-function enclosingJsxAttribute(node: ts.Node) {
-  let current: ts.Node | undefined = node.parent;
-  while (current) {
-    if (ts.isJsxAttribute(current)) return current;
-    current = current.parent;
-  }
-  return undefined;
 }
 
 function jsxAttributeOwner(
@@ -119,16 +105,10 @@ function primaryPathWordCount(
 
       if (ts.isPropertyAssignment(node)) {
         const property = node.name.getText(sourceFile).replace(/["']/g, "");
-        const attribute = enclosingJsxAttribute(node);
-        const isRecruiterEvidence =
-          path === pagePath &&
-          attribute?.name.getText(sourceFile) === "evidence" &&
-          jsxAttributeOwner(attribute, sourceFile) === "RecruiterCut" &&
-          recruiterCutEvidenceProperties.has(property);
         const isPulledOverDisplayCopy =
           path === pulledOverPath && pulledOverDisplayProperties.has(property);
 
-        if (isRecruiterEvidence || isPulledOverDisplayCopy) {
+        if (isPulledOverDisplayCopy) {
           if (ts.isStringLiteralLike(node.initializer)) {
             add(node.initializer.text);
           } else if (ts.isArrayLiteralExpression(node.initializer)) {
@@ -208,8 +188,9 @@ describe("Fresh Greens prose structure", () => {
       const page = (
         <>
           <RecruiterCut
-            role="Solo"
-            evidence={{ type: "Working prototype", cta: "Try flow" }}
+            timeline="Six months"
+            tools="Figma"
+            moves={[]}
           />
           <ul role="list">
             <Shot name="report-detail" />
@@ -218,7 +199,7 @@ describe("Fresh Greens prose structure", () => {
       );
     `;
 
-    expect(primaryPathWordCount([pagePath], () => fixture)).toBe(5);
+    expect(primaryPathWordCount([pagePath], () => fixture)).toBe(3);
   });
 
   it("keeps chapter metadata spaced, separated, and mobile-wrappable", () => {
@@ -300,9 +281,8 @@ describe("Fresh Greens prose structure", () => {
   it("names the tools used without turning them into validation claims", () => {
     const source = readPage();
 
-    expect(source).toContain('stackLabel="Tools"');
     expect(source).toContain(
-      'stack="Figma, Illustrator, Claude, React Native, Expo, TypeScript, Supabase"',
+      'tools="Figma, Illustrator, Claude, React Native, Expo, TypeScript, Supabase"',
     );
     expect(source).not.toMatch(/validated safety through Figma/i);
     expect(source).not.toMatch(/proved safety through React Native/i);
