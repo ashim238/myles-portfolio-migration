@@ -10,6 +10,20 @@ Starting remote-tracking head: `15e67a0`
 
 Last green product-code reference before closeout: `a5bc9f4`
 
+## 2026-08-13 Impeccable sequence addendum
+
+Verified product candidate: `763650a7106d0d2d713afa3a48dc0d78aaf507cb`
+
+Candidate tree: `37983bc015135a011d53694bb5960cb6b7acc2e3`
+
+Build ID: `w21AZ1Byde7KrfAG5jVnC`
+
+The final production build generated 19 static pages. A rebuilt audit covered seven routes and nine viewports. Result: 63 of 63 route and viewport frames passed with no predicate failures. Manifest SHA-256: `972effddf9f28c52d970f45e50c25efc7cadbbea32cf10d293a53f6c86d86f5a`.
+
+The matrix checks visible headings, horizontal overflow, first-screen image failures, page errors, About action placement and target height, and TikTok copy containment. The focused TikTok browser regression separately requires visible, nonzero art inside the cover and no overlap with the eyebrow, title, or lede at 430, 390, and 320 CSS pixels.
+
+The 63-frame matrix uses dark-theme, script-stripped static output. Hydrated Pocket and Reader interaction coverage comes from the dedicated browser suites. Icon recognition evidence comes from the current hash-bound family review. Physical-device Safari remains untested.
+
 ## Closeout result
 
 Release verdict: go.

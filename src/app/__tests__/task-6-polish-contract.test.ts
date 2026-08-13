@@ -52,4 +52,27 @@ describe("Task 6 polish contracts", () => {
       "Reader chrome retains its compact monochrome mark",
     );
   });
+
+  it("binds the final Impeccable sequence evidence to the verified product candidate", () => {
+    const closeout = read("docs/verification/2026-08-09-portfolio-closeout.md");
+
+    expect(closeout).toContain(
+      "Verified product candidate: `763650a7106d0d2d713afa3a48dc0d78aaf507cb`",
+    );
+    expect(closeout).toContain(
+      "Candidate tree: `37983bc015135a011d53694bb5960cb6b7acc2e3`",
+    );
+    expect(closeout).toContain(
+      "Build ID: `w21AZ1Byde7KrfAG5jVnC`",
+    );
+    expect(closeout).toContain(
+      "63 of 63 route and viewport frames passed",
+    );
+    expect(closeout).toContain(
+      "Manifest SHA-256: `972effddf9f28c52d970f45e50c25efc7cadbbea32cf10d293a53f6c86d86f5a`",
+    );
+    expect(closeout).toContain(
+      "The focused TikTok browser regression separately requires visible, nonzero art inside the cover and no overlap with the eyebrow, title, or lede",
+    );
+  });
 });
