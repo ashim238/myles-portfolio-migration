@@ -9,6 +9,7 @@ const OUTLINE_FILL = "#20242a";
 const FRONT_FILLS = ["#c58c45", "#d6a45c", "#c89149"];
 const TOP_FILLS = ["#ffe8b0", "#f4d99a", "#f0ce85"];
 const SIDE_FILLS = ["#805224", "#8e5d2a", "#71451f"];
+const GRAIN_FILL = "#6b4325";
 const LEGACY_V5_FILLS = ["#667d91", "#5f8d73", "#bd7654", "#90a7b5", "#8eaf8d", "#d69c78"];
 
 type Grid = (typeof GRIDS)[number];
@@ -45,6 +46,26 @@ const HIGHLIGHTS = new Map<Grid, Rect[]>([
     { fill: "#fff6d3", x: 12, y: 10, width: 3, height: 1 },
     { fill: "#fff0c4", x: 10, y: 19, width: 3, height: 1 },
     { fill: "#fff0c4", x: 21, y: 19, width: 3, height: 1 },
+  ]],
+]);
+
+const GRAIN_MARKS = new Map<Grid, Rect[]>([
+  [16, []],
+  [24, [
+    { fill: GRAIN_FILL, x: 6, y: 10, width: 2, height: 1 },
+    { fill: GRAIN_FILL, x: 8, y: 11, width: 1, height: 1 },
+    { fill: GRAIN_FILL, x: 5, y: 17, width: 2, height: 1 },
+    { fill: GRAIN_FILL, x: 13, y: 17, width: 2, height: 1 },
+    { fill: GRAIN_FILL, x: 7, y: 18, width: 1, height: 1 },
+    { fill: GRAIN_FILL, x: 15, y: 18, width: 1, height: 1 },
+  ]],
+  [32, [
+    { fill: GRAIN_FILL, x: 9, y: 13, width: 3, height: 1 },
+    { fill: GRAIN_FILL, x: 12, y: 15, width: 2, height: 1 },
+    { fill: GRAIN_FILL, x: 7, y: 22, width: 3, height: 1 },
+    { fill: GRAIN_FILL, x: 18, y: 22, width: 3, height: 1 },
+    { fill: GRAIN_FILL, x: 10, y: 24, width: 2, height: 1 },
+    { fill: GRAIN_FILL, x: 21, y: 24, width: 2, height: 1 },
   ]],
 ]);
 
@@ -135,6 +156,7 @@ function hasV6WoodenBlockAnatomy(source: string, grid: Grid) {
   const cubes = CUBES.get(grid)!;
   const fronts = rectsFor(source, FRONT_FILLS).sort((left, right) => left.y - right.y || left.x - right.x);
   const highlights = rectsFor(source, ["#fff6d3", "#fff0c4"]).sort((left, right) => left.y - right.y || left.x - right.x);
+  const grain = rectsFor(source, [GRAIN_FILL]).sort((left, right) => left.y - right.y || left.x - right.x);
   const outlines = polygonsFor(source, [OUTLINE_FILL]);
   const tops = polygonsFor(source, TOP_FILLS);
   const sides = polygonsFor(source, SIDE_FILLS);
@@ -148,6 +170,7 @@ function hasV6WoodenBlockAnatomy(source: string, grid: Grid) {
     cubes: cubeChecks.every(Boolean),
     forbidden: !/<(?:path|circle|ellipse|line)\b|stud|lego|book|page|boot|shoe|toe|sole|person|people|head|leg|arm/i.test(source),
     fronts: fronts.length === cubes.length && fronts.every((front, index) => sameRect(front, cubes[index]!.front)),
+    grain: grain.length === GRAIN_MARKS.get(grid)!.length && grain.every((mark, index) => sameRect(mark, GRAIN_MARKS.get(grid)![index]!)),
     highlights: highlights.length === HIGHLIGHTS.get(grid)!.length && highlights.every((highlight, index) => sameRect(highlight, HIGHLIGHTS.get(grid)![index]!)),
     legacy: !new RegExp(LEGACY_V5_FILLS.join("|"), "i").test(source),
     outline: outlines.length === 3,

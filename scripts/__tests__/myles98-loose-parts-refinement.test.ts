@@ -94,8 +94,10 @@ describe("Myles 98 Loose Parts wooden construction blocks", () => {
     expect(upper!.width).toBe(right!.width);
     expect(left!.y).toBe(right!.y);
     expect(upper!.y + upper!.height).toBeLessThanOrEqual(left!.y);
-    expect(upper!.x - Math.ceil((left!.y - upper!.y - upper!.height) / 2)).toBeLessThanOrEqual(left!.x + left!.width);
-    expect(upper!.x + upper!.width + Math.ceil((left!.y - upper!.y - upper!.height) / 2)).toBeGreaterThanOrEqual(right!.x);
+    const upperDepth = Math.ceil((left!.y - upper!.y - upper!.height) / 2);
+    expect(upper!.x - upperDepth).toBeLessThan(left!.x + left!.width);
+    expect(upper!.x + upper!.width + upperDepth).toBeGreaterThan(left!.x);
+    expect(upper!.x + upper!.width + upperDepth).toBeLessThan(right!.x + upperDepth);
     expect(raster.alpha.every((value) => value === 0 || value === 0xff)).toBe(true);
     expect(hasClearPerimeter(raster.alpha, grid)).toBe(true);
     expect(components(raster.opaque)).toBe(1);
