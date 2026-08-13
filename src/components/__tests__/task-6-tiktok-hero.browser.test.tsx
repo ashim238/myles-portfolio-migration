@@ -123,13 +123,21 @@ describe("Task 6 TikTok mobile hero polish", () => {
         const title = document.querySelector<HTMLElement>(
           "header.tt-cover--preview .tt-title",
         )!;
+        const eyebrow = document.querySelector<HTMLElement>(
+          "header.tt-cover--preview .tt-eyebrow",
+        )!;
         const lede = document.querySelector<HTMLElement>(
           "header.tt-cover--preview .tt-lede",
         )!;
+        const cover = document.querySelector<HTMLElement>(
+          "header.tt-cover--preview",
+        )!;
         const clusterRect = cluster.getBoundingClientRect();
         const posterRect = poster.getBoundingClientRect();
+        const eyebrowRect = eyebrow.getBoundingClientRect();
         const titleRect = title.getBoundingClientRect();
         const ledeRect = lede.getBoundingClientRect();
+        const coverRect = cover.getBoundingClientRect();
         const clusterStyle = getComputedStyle(cluster);
         const posterStyle = getComputedStyle(poster);
         const overlaps = (a: DOMRect, b: DOMRect) =>
@@ -156,6 +164,19 @@ describe("Task 6 TikTok mobile hero polish", () => {
             right: posterRect.right,
             bottom: posterRect.bottom,
           },
+          posterInsideCover:
+            Math.min(posterRect.right, coverRect.right) -
+              Math.max(posterRect.left, coverRect.left) >=
+              8 &&
+            Math.min(posterRect.bottom, coverRect.bottom) -
+              Math.max(posterRect.top, coverRect.top) >=
+              8,
+          eyebrow: {
+            left: eyebrowRect.left,
+            top: eyebrowRect.top,
+            right: eyebrowRect.right,
+            bottom: eyebrowRect.bottom,
+          },
           title: {
             left: titleRect.left,
             top: titleRect.top,
@@ -169,6 +190,7 @@ describe("Task 6 TikTok mobile hero polish", () => {
             bottom: ledeRect.bottom,
           },
           overlapsTitle: overlaps(posterRect, titleRect),
+          overlapsEyebrow: overlaps(posterRect, eyebrowRect),
           overlapsLede: overlaps(posterRect, ledeRect),
         };
       });
@@ -176,6 +198,8 @@ describe("Task 6 TikTok mobile hero polish", () => {
       expect(geometry, JSON.stringify(geometry, null, 2)).toMatchObject({
         clusterVisible: true,
         posterVisible: true,
+        posterInsideCover: true,
+        overlapsEyebrow: false,
         overlapsTitle: false,
         overlapsLede: false,
       });

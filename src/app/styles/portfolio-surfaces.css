@@ -1624,6 +1624,10 @@
     padding-bottom: 1rem;
   }
 
+  .reader-mode.reader-mode.tt-page .tt-cover--preview .tt-eyebrow {
+    max-width: calc(100% - 5.25rem);
+  }
+
   .reader-mode.reader-mode.tt-page .project-opening-facts {
     margin-block: 0.5rem;
     padding-block: 0.5rem;
