@@ -33,4 +33,23 @@ describe("Task 6 polish contracts", () => {
       "[Current family-consistency review](../design-assets/myles98-icons/reviews/family-consistency-review.md)",
     );
   });
+
+  it("keeps the closeout aligned with the current chrome and case-study structure", () => {
+    const closeout = read("docs/verification/2026-08-09-portfolio-closeout.md");
+
+    expect(closeout).not.toContain("retaining the full RecruiterCut");
+    expect(closeout).not.toContain("without replacing the full RecruiterCut");
+    expect(closeout).not.toContain("titlebar, taskbar, and Reader chrome intentionally remain monochrome");
+    expect(closeout).not.toContain("dense chrome stays monochrome");
+    expect(closeout).not.toContain("simplified dense-chrome mark in Reader, titlebar, and taskbar contexts");
+    expect(closeout).toContain(
+      "At a glance retains only Team, Timeline, Tools, and Key moves",
+    );
+    expect(closeout).toContain(
+      "titlebar and taskbar use the exact audited 16px color masters",
+    );
+    expect(closeout).toContain(
+      "Reader chrome retains its compact monochrome mark",
+    );
+  });
 });

@@ -29,19 +29,19 @@ The six approved visual refinements are implemented. All requested Impeccable ga
 | Shared Reader body copy | Reader paragraphs own Reader ink instead of inheriting the surrounding theme. | 16.13:1 rendered contrast in dark and light surroundings. |
 | Navi research board | The board owns surface, card, ink, muted, line, border, and accent tokens. | Heading 18:1 and muted copy 11.35:1 across final theme and viewport checks. |
 | Navi research rails | Desktop formulas and the Pocket rail share one coordinate system. | Geometry regression plus rendered desktop and Pocket evidence. |
-| Opening hiring scan | Every project now exposes Role, Scope, Outcome, and Proof in its first fold while retaining the full RecruiterCut after dominant media. | Shared semantic component, route contracts, 40 Reader frames, 160 opening-fact rows, and final hiring review. |
+| Opening hiring scan | Every project exposes Role, Scope, Outcome, and Proof in its first fold. At a glance retains only Team, Timeline, Tools, and Key moves after dominant media. | Shared semantic component, route contracts, 40 Reader frames, 160 opening-fact rows, and final hiring review. |
 | Mobile Reader exits | The redundant project breadcrumb is hidden at every Reader viewport. Reader Return and the fixed chapter control remain. | One visible route exit on all four Readers at 1440×900 and 390×844, with a 44px Return target and 44.73px mobile chapter control. |
 | Desktop discovery | Welcome uses the approved compact geometry and leaves the full project lane visible. | At 1440px, all four project identities are visible in both themes. |
 | Secondary documents | About, Resume, and Loose Parts now use a complete Myles 98 document frame while keeping paper-backed copy readable in either surrounding theme. | About, Resume, and Loose Parts checked at 1440×900 and 390×844 in both themes; primary copy 16.13:1 and muted copy 6.30:1. |
 | Authored pointer | Fine-pointer contexts use an original crisp Myles 98 arrow, yellow hover state, pressed state, and input I-beam. | Rendered pointer lifecycle checks passed with zero console errors; touch/coarse-pointer suppression remains intact. |
-| Shortcut identity | Desktop shortcuts, Start, and Pocket use distinct color icons for projects and document types. Dense titlebar, taskbar, and Reader chrome intentionally remain monochrome. | Home desktop and Pocket captures in both themes plus SVG variant, callsite, and forced-colors regressions. |
+| Shortcut identity | Desktop shortcuts, Start, and Pocket use distinct size-specific color icons. The titlebar and taskbar use the exact audited 16px color masters. Reader chrome retains its compact monochrome mark. | Home desktop and Pocket captures in both themes plus SVG variant, callsite, and forced-colors regressions. |
 | Icon fidelity | Discovery, menu, and chrome icons use independent 32, 24, and 16 unit SVG drawings instead of one drawing scaled into every context. The current family is mechanically valid. Strict source-free noun recognition remains mixed for four targeted families. | [Current family-consistency review](../design-assets/myles98-icons/reviews/family-consistency-review.md), icon verifier and contracts, forced-colors coverage, and rendered-size optical review. No copied Windows assets or generated raster approximations were added. |
 | Reader and product readability | Paper copy, project-owned dark artifacts, direct Navi product routes, SVG text, effective opacity, focus indicators, and coarse targets now have explicit semantic ownership. | Final Gate D matrix reports zero contrast, focus, target, overflow, image, console, or page failures across 96 route frames. |
 | Fresh Greens reminders and video | The case study now connects daylight research to a departure reminder, keeps the safety claim bounded, and includes the recorded route prototype as supporting proof. | Grounded source regression, component tests, and the existing 10-second 1290×2796 prototype recording. |
-| Case-study voice | All four RecruiterCuts were revised around problem, action, and result without replacing project-specific structure or changing claim boundaries. | Full prose, ownership, claim, chronology, and content validation suites plus both final hiring reviews. |
+| Case-study scan | Later At a glance blocks retain only new Team, Timeline, Tools, and Key moves without changing project prose or claim boundaries. | Full prose, ownership, claim, chronology, and content validation suites plus both final hiring reviews. |
 | Shell handoff | Pocket applies through 1024px and workstation begins at 1025px. | Exact JavaScript and CSS contracts plus both-theme boundary captures. |
 | 1024px Pocket identity | Large-Pocket preview height is capped so the first project identity and action clear the fixed dock. | Action ends at 645.8px, dock begins at 697.6px, leaving 51.8px. |
-| Compact Reader chrome | UnderstandingFAFSA uses the simplified dense-chrome mark in Reader, titlebar, and taskbar contexts. | Focused SVG and callsite tests plus rendered optical review. |
+| Compact chrome | UnderstandingFAFSA uses its exact audited 16px color master in titlebar and taskbar. Reader chrome retains its compact monochrome mark. | Focused SVG and callsite tests plus rendered optical review. |
 | UnderstandingFAFSA composer | Toolbar, actions, shelf rows, and preview heading use corrected alignment and 44px controls. | Focused artifact-style contracts and Gate A review. |
 | Design exception register | Three-Layer Ownership, Project Color, Hardware Radius, and Semantic Pill rules are mirrored in `DESIGN.md` and `.impeccable/design.json`. | Normalized parity and misuse-boundary tests. |
 | Mobile chapter pointer | Focus no longer expands the fixed chapter bar between pointer-down and pointer-up. | Mouse and touch keep the target at the same geometry, open the list, and close with Escape while preserving focus. |
@@ -100,7 +100,7 @@ The user review exposed four surfaces that were outside the earlier primary home
 
 - About, Resume, and Loose Parts retain paper-safe text contrast inside a complete Myles 98 document frame.
 - The custom cursor now has authored arrow, hover, press, and input I-beam states on fine pointers.
-- Discovery surfaces use distinct color icons while dense chrome stays monochrome.
+- Discovery surfaces, titlebar, and taskbar use size-specific color masters. Reader chrome remains compact monochrome, and forced colors retains the inline fallback.
 - Reader pages use the header Return control as the sole visible route exit at every viewport.
 - All four Reader performance budgets remain under both byte and file-count thresholds after the icon work.
 
@@ -216,7 +216,7 @@ Gate D evidence root: `/tmp/reader-a11y-production-final-gate-d-pass-20260810`
 Verdict: Strong advance.
 
 - The opening establishes Myles's name, exact design-and-code positioning, TikTok and UMG context, and all four project identities.
-- The compact Role, Scope, Outcome, and Proof grammar materially lowers retrieval cost without replacing the full RecruiterCut.
+- The compact Role, Scope, Outcome, and Proof grammar lowers retrieval cost, while the later At a glance block keeps only Team, Timeline, Tools, and Key moves.
 - Fresh Greens quickly communicates solo design and engineering, six interviews, a 26+ screen prototype, and safety-flow proof.
 - Navi communicates the 14-response scope, Learn Plan Go decision, later solo React rebuild, and working booking flow while preserving studio and survey boundaries.
 - UnderstandingFAFSA leads with the founder-editable Mailchimp kit. Rules and feasibility remain supporting decisions.
