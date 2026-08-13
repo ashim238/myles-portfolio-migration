@@ -60,5 +60,7 @@ The focused object-rendering, project-metaphor, contract, and fill-integrity
 tests passed after deliberate negative mutations that remove Fresh Greens'
 control or flatten UnderstandingFAFSA's packet. The project master verifier,
 XML parsing, contact-sheet generation, and contact-sheet browser checks also
-passed. These checks support the review but do not replace a future fresh
-uninformed recognition test if the metaphors change again.
+passed. The later v10 source-free recognition record confirms the newsletter
+packet but requires a Fresh Greens redraw. See
+[`family-consistency-review.md`](family-consistency-review.md) for the
+hash-bound disposition. Any later metaphor change requires a fresh review.

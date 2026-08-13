@@ -3,9 +3,10 @@
 **Date:** 2026-08-12
 
 **Status:** Task 5 mechanical verification and internal informed review pass
-for the current 48-master aggregate. Fresh clean-context recognition remains
-the only open release gate. Production rendering is separately integrated and
-out of scope for this asset-family acceptance document.
+for the historical 48-master aggregate. The current v10 clean-context review
+has four noun-clarity failures, recorded below. Production rendering is
+separately integrated and out of scope for this asset-family acceptance
+document.
 
 **Reference boundary:** Windows 98 is a construction reference only. Every
 metaphor, silhouette, palette arrangement, and pixel layout is original.
@@ -111,10 +112,10 @@ focused tests, two contact-sheet browser tests, mirror parity, binary-alpha
 and perimeter audits, and an internal informed geometry, period, and family
 review with P0–P3 all at zero.
 
-The historical v7 clean-context ledger is not evidence for this aggregate:
-later Email, Fresh Greens, Notes, portrait, and FAFSA edits changed master
-source. The final remaining gate is two new clean-context reviewers using only
-the three v8 anonymous batches. Each must name the object, give two plausible
-alternatives, flag brand implication, and confirm tier continuity. Map IDs to
-concepts only after both records are complete. A rejected reading, unaccepted
-primary noun, brand implication, or tier mismatch blocks that family.
+The historical v7 clean-context ledger is not evidence for the current
+aggregate because later Email, Fresh Greens, Notes, portrait, and FAFSA edits
+changed master source. The v10 clean-context gate is recorded in the family
+consistency review. It identified noun-recognition failures for the TikTok bag,
+Fresh Greens GPS, Loose Parts blocks, and Navi marker/storefront. Each must be
+redrawn and re-reviewed from new anonymous batches before family-wide
+recognition can pass.

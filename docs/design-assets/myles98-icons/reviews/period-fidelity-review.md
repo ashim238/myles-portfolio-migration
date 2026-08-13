@@ -3,7 +3,10 @@
 **Verdict:** INTERNAL INFORMED REVIEW PASS for the candidate locked below.
 Later Fresh Greens and UnderstandingFAFSA masters are separately reviewed in
 [`fresh-fafsa-object-rendering-review.md`](fresh-fafsa-object-rendering-review.md).
-CLEAN-CONTEXT RECOGNITION IS PENDING for any changed master.
+The current clean-context record is in
+[`family-consistency-review.md`](family-consistency-review.md); its v10
+result requires four noun-clarity redraws before family-wide recognition can
+pass.
 
 **Review date:** 2026-08-12
 
@@ -56,6 +59,7 @@ rules; they do not substitute for a clean-context noun-recognition result.
 ## Remaining gate
 
 The v7 reader ledger is historical because later Email, Fresh Greens, Notes,
-portrait, and UnderstandingFAFSA master edits changed the aggregate. Two
-clean-context reviewers must receive only the v8 anonymous batches recorded
-in the family-consistency review before a final recognition claim is made.
+portrait, and UnderstandingFAFSA master edits changed the aggregate. The v10
+source-free review is now complete and recorded in the family-consistency
+review. Its four noun-clarity failures must be corrected and newly reviewed
+before a final family-wide recognition claim is made.

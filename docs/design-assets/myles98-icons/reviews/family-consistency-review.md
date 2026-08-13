@@ -1,11 +1,14 @@
 # Myles 98 Icon Family Consistency Review
 
-**Verdict:** INTERNAL INFORMED REVIEW PASS. CLEAN-CONTEXT RECOGNITION IS
-PENDING.
+**Verdict:** REVISE. The v10 clean-context recognition gate is complete but
+does not pass for every family.
 
 **Review date:** 2026-08-12
 
 ## Current candidate lock
+
+The lock below documents the historical v9 candidate. The current v10
+recognition result and its evidence lock follow it.
 
 - **48-master aggregate:**
   `1177575d1c60ccc75c74c7d700e5424790a8ba7618515a0315df0fa19a34005e`.
@@ -57,7 +60,54 @@ build completed; and its browser checks passed 2/2. Raster audit found only
 binary alpha and no perimeter touching pixels. Resume paperclip openings and
 the 24px/32px detached Navi pin are the only approved topology exceptions.
 
-## Strict recognition protocol still required
+## v10 clean-context recognition result
+
+Two independent source-free model reviewers received only the four v10
+anonymous batches below. They did not inspect source SVGs, filenames, manifest
+metadata, or prior review conclusions before recording their visual readings.
+
+- **Commit:** `b15eab4d3db63b937238a14c2b9bfb84d02bf4de`.
+- **48-master aggregate:**
+  `230f0dea93e7b37c9931cfac1efa9af5bd723bc27a675b6a3a61c824c64406d5`.
+- **Manifest:**
+  `d01524f7ac277f9babc51e6ca3dc91f0e57306c7775778068f1008b8e82ff6ef`.
+- **Canonical contact sheet:**
+  `52e6f7e3a0c26975a504bde96ba65a285cff5f17e1d25833657aee5646e388af`.
+- **Source-free batch 01:**
+  `/private/tmp/myles98-icon-anonymous-v10-batch-01.png`,
+  `b01c310e0263bdc4a250e951c671b47a750d2975b5d4193d79718968510a9756`.
+- **Source-free batch 02:**
+  `/private/tmp/myles98-icon-anonymous-v10-batch-02.png`,
+  `91bd7f9f7bebc08abfcf8d9f0b3f44f1d84677b4b425b985c0be6422b5727ede`.
+- **Source-free batch 03:**
+  `/private/tmp/myles98-icon-anonymous-v10-batch-03.png`,
+  `950d3c9a8b1f6c74e1523ba528611c6026d11134d185697e04595fe315629801`.
+- **Source-free batch 04:**
+  `/private/tmp/myles98-icon-anonymous-v10-batch-04.png`,
+  `838338cda65cbab09d8427ce9c48c67676b921c8956d9cd1bcc39fc08b4b6819`.
+
+The primary readings for F004, F005, F006, F007, F008, F009, F010, F012,
+F014, F015, and F016 match their approved object vocabulary at all three
+tiers. F003 received "text document" as its primary reading but "note" as a
+plausible alternative in both records, so it is a watch rather than a redraw
+order.
+
+Four families fail the strict all-reviewer primary-reading rule and require
+targeted redraw plus a new, hash-bound review:
+
+| Family | Intended object | Reviewer A | Reviewer B | Disposition |
+| --- | --- | --- | --- | --- |
+| F001 | Handled shopping bag | Floppy disk | Floppy disk | REVISE |
+| F002 | GPS navigation unit | Display with inset panel | Small display/device panel | REVISE |
+| F011 | 2+1 construction-block stack | Three-person group | Group of people | REVISE |
+| F013 | Location marker above storefront | Globe over travel card | Location pin with ticket/card | REVISE |
+
+Neither reviewer inferred a named brand or product for any family, and both
+found the 16px, 24px, and 32px masters internally consistent. The failures are
+therefore noun-recognition failures, not brand, tier-consistency, or rendering
+failures.
+
+## Historical strict-recognition protocol
 
 The v7 de-identified recognition ledger is historical only. It cannot certify
 this aggregate because the master source changed afterward. For a final
@@ -72,8 +122,9 @@ recognition disposition:
    reading, brand implication, unaccepted primary noun, or tier mismatch
    blocks that family.
 
-Do not call the current candidate a clean-context recognition pass until that
-protocol completes against these exact hashes.
+The v10 protocol above replaces this pending requirement for the current
+candidate. Its four REVISE outcomes block a family-wide clean-context
+recognition pass until their masters change and are reviewed again.
 
 ## Historical v7 provenance — not current evidence
 
