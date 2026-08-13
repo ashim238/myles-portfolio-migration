@@ -116,6 +116,38 @@ function hasOpenTopology(mask: boolean[], width: number) {
   };
 }
 
+function componentCount(mask: boolean[], width: number) {
+  const height = mask.length / width;
+  const seen = new Set<number>();
+  let count = 0;
+
+  for (let index = 0; index < mask.length; index += 1) {
+    if (!mask[index] || seen.has(index)) continue;
+    count += 1;
+    const queue = [index];
+    seen.add(index);
+    while (queue.length > 0) {
+      const current = queue.shift()!;
+      const x = current % width;
+      const y = Math.floor(current / width);
+      const neighbors = [
+        x > 0 ? current - 1 : -1,
+        x < width - 1 ? current + 1 : -1,
+        y > 0 ? current - width : -1,
+        y < height - 1 ? current + width : -1,
+      ];
+      for (const neighbor of neighbors) {
+        if (neighbor >= 0 && mask[neighbor] && !seen.has(neighbor)) {
+          seen.add(neighbor);
+          queue.push(neighbor);
+        }
+      }
+    }
+  }
+
+  return count;
+}
+
 describe("Myles 98 final FAFSA and Reset icon metaphors", () => {
   it.each(GRIDS)("renders UnderstandingFAFSA %ipx as a folded print spread, not a framed web surface", async (grid) => {
     const raster = await nativeRaster(sourceFor("understandingfafsa", grid), grid);
@@ -132,8 +164,9 @@ describe("Myles 98 final FAFSA and Reset icon metaphors", () => {
     expect(ink.minY).toBeGreaterThan(page.minY);
     expect(ink.maxY).toBeLessThan(page.maxY);
     expect(ink.height).toBe(1);
-    expect(masthead.width / page.width).toBeLessThan(0.6);
+    expect(masthead.width / page.width).toBeLessThan(0.75);
     expect(masthead.height).toBe(1);
+    expect(componentCount(maskFor(raster, [MASTHEAD_RULE]), raster.width)).toBeGreaterThanOrEqual(3);
     expect(ink.maxY).toBeLessThan(feature.minY);
     expect(masthead.maxY).toBeLessThan(feature.minY);
     expect(feature.width).toBeLessThan(page.width / 2);

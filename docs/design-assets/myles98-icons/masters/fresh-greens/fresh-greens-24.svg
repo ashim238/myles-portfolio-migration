@@ -1,21 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" shape-rendering="crispEdges" data-m98-concept="fresh-greens" data-m98-grid="24">
-  <path fill="#202621" d="M1 1H23V23H1Z" />
-  <rect fill="#d8dfc3" x="2" y="2" width="20" height="20" />
-  <rect fill="#c4ceac" x="3" y="3" width="5" height="3" />
-  <rect fill="#c4ceac" x="10" y="3" width="6" height="3" />
-  <rect fill="#c4ceac" x="3" y="14" width="5" height="4" />
-  <rect fill="#c4ceac" x="18" y="14" width="3" height="4" />
-  <rect fill="#5f99ae" x="11" y="4" width="4" height="2" />
-  <rect fill="#78a85d" x="4" y="15" width="3" height="2" />
-  <rect fill="#aebc9a" x="3" y="6" width="18" height="2" />
-  <rect fill="#aebc9a" x="3" y="12" width="18" height="2" />
-  <rect fill="#aebc9a" x="3" y="18" width="18" height="2" />
-  <rect fill="#aebc9a" x="8" y="3" width="2" height="18" />
-  <rect fill="#aebc9a" x="16" y="3" width="2" height="18" />
-  <rect fill="#4d5552" x="3" y="6" width="7" height="2" />
-  <rect fill="#4d5552" x="8" y="6" width="2" height="8" />
-  <rect fill="#4d5552" x="8" y="12" width="10" height="2" />
-  <rect fill="#4d5552" x="16" y="12" width="2" height="8" />
-  <rect fill="#205a40" x="2" y="5" width="3" height="3" />
-  <path fill="#f27524" d="M15 18H18V22H17V21H15Z" />
+  <rect fill="#27312b" x="3" y="4" width="19" height="16" />
+  <rect fill="#3b4a41" x="4" y="19" width="17" height="1" />
+  <rect fill="#3b4a41" x="21" y="5" width="1" height="14" />
+  <rect fill="#627353" x="4" y="5" width="17" height="14" />
+  <rect fill="#aebc9a" x="4" y="5" width="16" height="1" />
+  <rect fill="#aebc9a" x="4" y="5" width="1" height="13" />
+  <rect fill="#1d2923" x="5" y="6" width="13" height="9" />
+  <rect fill="#d8dfc3" x="6" y="7" width="11" height="7" />
+  <rect fill="#5f99ae" x="6" y="7" width="5" height="2" />
+  <rect fill="#c4ceac" x="11" y="7" width="6" height="2" />
+  <rect fill="#aebc9a" x="6" y="10" width="4" height="3" />
+  <rect fill="#4d5552" x="8" y="9" width="1" height="4" />
+  <rect fill="#4d5552" x="8" y="12" width="7" height="1" />
+  <rect fill="#f27524" x="14" y="12" width="2" height="1" />
+  <rect fill="#3b4a41" x="9" y="15" width="6" height="3" />
+  <rect fill="#205a40" x="10" y="16" width="4" height="1" />
+  <rect fill="#c5963a" x="19" y="10" width="1" height="3" />
 </svg>

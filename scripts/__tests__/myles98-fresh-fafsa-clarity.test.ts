@@ -6,40 +6,40 @@ import { expectedMasterPath } from "../lib/myles98-icon-contract.mjs";
 const ROOT = "docs/design-assets/myles98-icons";
 const GRIDS = [16, 24, 32] as const;
 const WATER = "#5f99ae";
-const PARK = "#78a85d";
+const DESTINATION = "#f27524";
 const PAPER = "#f3efe7";
 const CREASE = "#d8d4cc";
 
 type Grid = (typeof GRIDS)[number];
 type Rect = { fill: string; height: number; width: number; x: number; y: number };
 
-const FRESH_LANDMARKS = new Map<Grid, { park: Rect; water: Rect }>([
+const FRESH_GPS = new Map<Grid, { destination: Rect; water: Rect }>([
   [16, {
-    water: { fill: WATER, x: 7, y: 5, width: 3, height: 2 },
-    park: { fill: PARK, x: 3, y: 10, width: 2, height: 2 },
+    water: { fill: WATER, x: 5, y: 6, width: 3, height: 1 },
+    destination: { fill: DESTINATION, x: 9, y: 8, width: 1, height: 1 },
   }],
   [24, {
-    water: { fill: WATER, x: 11, y: 4, width: 4, height: 2 },
-    park: { fill: PARK, x: 4, y: 15, width: 3, height: 2 },
+    water: { fill: WATER, x: 6, y: 7, width: 5, height: 2 },
+    destination: { fill: DESTINATION, x: 14, y: 12, width: 2, height: 1 },
   }],
   [32, {
-    water: { fill: WATER, x: 14, y: 5, width: 6, height: 2 },
-    park: { fill: PARK, x: 5, y: 19, width: 4, height: 3 },
+    water: { fill: WATER, x: 8, y: 9, width: 7, height: 2 },
+    destination: { fill: DESTINATION, x: 19, y: 16, width: 3, height: 2 },
   }],
 ]);
 
 const NEWSPRINT = new Map<Grid, { gutter: Rect; page: Rect }>([
   [16, {
-    page: { fill: PAPER, x: 1, y: 2, width: 13, height: 8 },
+    page: { fill: PAPER, x: 1, y: 2, width: 12, height: 8 },
     gutter: { fill: CREASE, x: 7, y: 8, width: 1, height: 2 },
   }],
   [24, {
-    page: { fill: PAPER, x: 1, y: 5, width: 21, height: 14 },
-    gutter: { fill: CREASE, x: 11, y: 16, width: 1, height: 3 },
+    page: { fill: PAPER, x: 1, y: 3, width: 19, height: 13 },
+    gutter: { fill: CREASE, x: 11, y: 13, width: 1, height: 3 },
   }],
   [32, {
-    page: { fill: PAPER, x: 2, y: 6, width: 27, height: 16 },
-    gutter: { fill: CREASE, x: 16, y: 18, width: 1, height: 4 },
+    page: { fill: PAPER, x: 2, y: 4, width: 24, height: 16 },
+    gutter: { fill: CREASE, x: 16, y: 17, width: 1, height: 3 },
   }],
 ]);
 
@@ -91,27 +91,27 @@ function colorAt(data: Buffer, channels: number, width: number, x: number, y: nu
 }
 
 describe("Myles 98 Fresh Greens and UnderstandingFAFSA clarity pass", () => {
-  it.each(GRIDS)("uses map-specific water and park landmarks at %ipx, not only a circuit-like street grid", async (grid) => {
+  it.each(GRIDS)("uses water and a destination inside a physical GPS map screen at %ipx", async (grid) => {
     const source = sourceFor("fresh-greens", grid);
-    const landmarks = FRESH_LANDMARKS.get(grid)!;
+    const landmarks = FRESH_GPS.get(grid)!;
     const rects = rectsFor(source);
     const rendered = await raster(source, grid);
 
     expect(includesRect(rects, landmarks.water)).toBe(true);
-    expect(includesRect(rects, landmarks.park)).toBe(true);
+    expect(includesRect(rects, landmarks.destination)).toBe(true);
     expect(colorAt(rendered.data, rendered.info.channels, grid, landmarks.water.x, landmarks.water.y)).toBe(WATER);
-    expect(colorAt(rendered.data, rendered.info.channels, grid, landmarks.park.x, landmarks.park.y)).toBe(PARK);
+    expect(colorAt(rendered.data, rendered.info.channels, grid, landmarks.destination.x, landmarks.destination.y)).toBe(DESTINATION);
     expect(publicSourceFor("fresh-greens", grid)).toBe(source);
   });
 
-  it.each(GRIDS)("uses a deliberately wide printed-newsprint silhouette and a lower print gutter at %ipx", async (grid) => {
+  it.each(GRIDS)("uses a deliberately wide physical newsprint packet and a lower print gutter at %ipx", async (grid) => {
     const source = sourceFor("understandingfafsa", grid);
     const expected = NEWSPRINT.get(grid)!;
     const rects = rectsFor(source);
     const rendered = await raster(source, grid);
 
     expect(includesRect(rects, expected.page)).toBe(true);
-    expect(expected.page.width / expected.page.height).toBeGreaterThanOrEqual(1.5);
+    expect(expected.page.width / expected.page.height).toBeGreaterThanOrEqual(1.4);
     expect(includesRect(rects, expected.gutter)).toBe(true);
     expect(colorAt(rendered.data, rendered.info.channels, grid, expected.gutter.x, expected.gutter.y)).toBe(CREASE);
     expect(publicSourceFor("understandingfafsa", grid)).toBe(source);

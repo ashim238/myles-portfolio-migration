@@ -199,7 +199,7 @@ describe("Myles 98 icon fill integrity", () => {
     }
   });
 
-  it("uses one fully filled road-map tile for Fresh Greens", () => {
+  it("uses one fully filled GPS navigation unit for Fresh Greens", () => {
     for (const grid of ICON_GRIDS) {
       const source = sourceFor("fresh-greens", grid);
       expect(source).not.toContain("<polygon");

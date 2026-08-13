@@ -13,16 +13,16 @@ const BAG_OPENING_FILL = "#f3eee4";
 const BAG_HANDLE_FILL = "#202126";
 const COLLAPSED_LOWER_MODULES = new Map<Grid, [string, string]>([
   [16, [
-    '<rect fill="#eeeae3" x="2" y="7" width="11" height="3" />',
+    '<rect fill="#eeeae3" x="2" y="7" width="10" height="3" />',
     '<rect fill="#eeeae3" x="2" y="7" width="3" height="3" />',
   ]],
   [24, [
-    '<rect fill="#eeeae3" x="2" y="15" width="18" height="4" />',
-    '<rect fill="#eeeae3" x="2" y="15" width="3" height="4" />',
+    '<rect fill="#eeeae3" x="2" y="12" width="17" height="4" />',
+    '<rect fill="#eeeae3" x="2" y="12" width="3" height="4" />',
   ]],
   [32, [
-    '<rect fill="#eeeae3" x="3" y="17" width="22" height="5" />',
-    '<rect fill="#eeeae3" x="3" y="17" width="4" height="5" />',
+    '<rect fill="#eeeae3" x="3" y="16" width="21" height="4" />',
+    '<rect fill="#eeeae3" x="3" y="16" width="4" height="4" />',
   ]],
 ]);
 const MISSING_HANDLE_SIDE_FRAMES = new Map<Grid, [string, string]>([

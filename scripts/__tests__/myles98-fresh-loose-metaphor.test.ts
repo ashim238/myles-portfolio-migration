@@ -5,9 +5,10 @@ import { expectedMasterPath } from "../lib/myles98-icon-contract.mjs";
 
 const ROOT = "docs/design-assets/myles98-icons";
 const GRIDS = [16, 24, 32] as const;
-const STREET_FILL = "#aebc9a";
-const ROUTE_FILL = "#4d5552";
-const START_FILL = "#205a40";
+const GPS_BEZEL = "#27312b";
+const GPS_HOUSING = "#627353";
+const GPS_SCREEN = "#d8dfc3";
+const GPS_CONTROL = "#205a40";
 const DESTINATION_FILL = "#f27524";
 const LOOSE_FRONT_FILLS = ["#c58c45", "#d6a45c", "#c89149"];
 const MIN_LOOSE_VISIBLE_COLORS = new Map([[16, 8], [24, 10], [32, 10]]);
@@ -83,77 +84,27 @@ function bounds(pixels: Pixel[]) {
   };
 }
 
-function hasSolidSquare(pixels: Pixel[], side: number) {
-  const filled = new Set(pixels.map((pixel) => `${pixel.x},${pixel.y}`));
-  return pixels.some(({ x, y }) =>
-    Array.from({ length: side }, (_, offsetY) =>
-      Array.from({ length: side }, (_, offsetX) => filled.has(`${x + offsetX},${y + offsetY}`))
-        .every(Boolean),
-    ).every(Boolean),
-  );
-}
-
-function longStreetRuns(pixels: Pixel[], grid: number, direction: "horizontal" | "vertical") {
-  const filled = new Set(pixels.map((pixel) => `${pixel.x},${pixel.y}`));
-  const minimum = Math.ceil(grid * 0.3);
-  let runs = 0;
-
-  for (let line = 0; line < grid; line += 1) {
-    let current = 0;
-    let hasLongRun = false;
-    for (let offset = 0; offset < grid; offset += 1) {
-      const position = direction === "horizontal" ? `${offset},${line}` : `${line},${offset}`;
-      current = filled.has(position) ? current + 1 : 0;
-      if (current >= minimum) hasLongRun = true;
-    }
-    if (hasLongRun) runs += 1;
-  }
-
-  return runs;
-}
-
-function touches(left: Pixel[], right: Pixel[]) {
-  const positions = new Set(right.map((pixel) => `${pixel.x},${pixel.y}`));
-  return left.some(({ x, y }) => [
-    `${x - 1},${y}`,
-    `${x + 1},${y}`,
-    `${x},${y - 1}`,
-    `${x},${y + 1}`,
-  ].some((position) => positions.has(position)));
-}
-
 describe("Fresh Greens and Loose Parts native-size metaphors", () => {
-  it.each(GRIDS)("renders Fresh Greens %ipx as a street-block map with a highlighted route, not a music note or folded map", async (grid) => {
+  it.each(GRIDS)("renders Fresh Greens %ipx as a physical GPS navigator, not a folded map or generic screen", async (grid) => {
     const raster = await rasterFor("fresh-greens", grid);
-    const streets = raster.filter((pixel) => pixel.color === STREET_FILL);
-    const road = raster.filter((pixel) => pixel.color === ROUTE_FILL);
-    const start = raster.filter((pixel) => pixel.color === START_FILL);
+    const bezel = raster.filter((pixel) => pixel.color === GPS_BEZEL);
+    const housing = raster.filter((pixel) => pixel.color === GPS_HOUSING);
+    const screen = raster.filter((pixel) => pixel.color === GPS_SCREEN);
+    const control = raster.filter((pixel) => pixel.color === GPS_CONTROL);
     const destination = raster.filter((pixel) => pixel.color === DESTINATION_FILL);
-    const roadComponents = connectedComponents(road);
-    const startComponents = connectedComponents(start);
-    const destinationComponents = connectedComponents(destination);
 
-    expect(roadComponents).toHaveLength(1);
-    expect(streets.length).toBeGreaterThan(road.length);
-    expect(longStreetRuns(streets, grid, "horizontal")).toBeGreaterThanOrEqual(2);
-    expect(longStreetRuns(streets, grid, "vertical")).toBeGreaterThanOrEqual(1);
-    expect(longStreetRuns(road, grid, "horizontal")).toBeGreaterThanOrEqual(1);
-    expect(longStreetRuns(road, grid, "vertical")).toBeGreaterThanOrEqual(1);
-    const roadBounds = bounds(roadComponents[0]!);
-    expect(roadBounds.maxX - roadBounds.minX).toBeGreaterThanOrEqual(Math.floor(grid * 0.4));
-    expect(roadBounds.maxY - roadBounds.minY).toBeGreaterThanOrEqual(Math.floor(grid * 0.3));
-    expect(roadComponents[0]!.length).toBeLessThan(grid * grid * 0.2);
-    expect(hasSolidSquare(roadComponents[0]!, 3)).toBe(false);
-    expect(touches(road, start)).toBe(true);
-    expect(touches(road, destination)).toBe(true);
-    expect(startComponents).toHaveLength(1);
-    expect(destinationComponents).toHaveLength(1);
-    const startBounds = bounds(startComponents[0]!);
-    const destinationBounds = bounds(destinationComponents[0]!);
-    expect(Math.hypot(
-      (startBounds.minX + startBounds.maxX - destinationBounds.minX - destinationBounds.maxX) / 2,
-      (startBounds.minY + startBounds.maxY - destinationBounds.minY - destinationBounds.maxY) / 2,
-    )).toBeGreaterThanOrEqual(grid * 0.65);
+    expect(connectedComponents(raster)).toHaveLength(1);
+    expect(bezel.length).toBeGreaterThan(housing.length * 0.25);
+    expect(housing.length).toBeGreaterThan(screen.length);
+    expect(screen.length).toBeGreaterThan(destination.length * 5);
+    expect(control.length).toBeGreaterThanOrEqual(grid === 16 ? 2 : 4);
+    expect(destination.length).toBeGreaterThan(0);
+    const bezelBounds = bounds(bezel);
+    const screenBounds = bounds(screen);
+    const controlBounds = bounds(control);
+    expect(bezelBounds.minX).toBeLessThan(screenBounds.minX);
+    expect(bezelBounds.maxX).toBeGreaterThan(screenBounds.maxX);
+    expect(controlBounds.minY).toBeGreaterThan(screenBounds.maxY);
   });
 
   it.each(GRIDS)("renders Loose Parts %ipx as three equal-ish stacked cuboids, not books, boots, or people", async (grid) => {

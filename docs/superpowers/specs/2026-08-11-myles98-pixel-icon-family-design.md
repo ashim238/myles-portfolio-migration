@@ -41,8 +41,8 @@ tracing or copying proprietary assets.
 | Open Apps | Two overlapping windows | Distinct titlebars | Layered app windows with content panes |
 | Reset Desktop | Open restart C-loop | C-loop plus directional wedge and gap | Stepped open restart C-loop with compact wedge |
 | Generic App / Welcome | Application window | Blue titlebar and inner pane | Neutral window with restrained chrome depth |
-| Fresh Greens | Street-block map with route and markers | Route, markers, four parcel cues | Road-map tile with street network and route |
-| UnderstandingFAFSA | Folded printed newsletter | Rear sheet, blue masthead, photo, crease | Wide newsprint with stack, crease, lower leaf, and print hierarchy |
+| Fresh Greens | Compact GPS navigator | Routed map screen and lower control | Beveled GPS unit with route, destination, control, and side button |
+| UnderstandingFAFSA | Stacked newsletter packet | Printed masthead, fold, and exposed paper edge | Dimensional folded-newsletter packet with rear sheet, print gutter, and editorial anatomy |
 | Navi | Location marker | Orange-center pin above storefront | Pin above widened neighborhood storefront |
 | TikTok catalog studio | Handled shopping bag | Bag with one side plane | Dimensional shopping bag with opening and side depth |
 
@@ -57,8 +57,9 @@ moustache, and separate chin hair. A continuous full beard mass is prohibited.
 
 ## Collision rules
 
-- Fresh Greens is a street-block route map, never a music note, folded map,
-  circuit, landscape, wand, or leaf logo. Navi owns pin-over-storefront.
+- Fresh Greens is a physical GPS navigation unit with a routed screen and lower
+  control, never a music note, folded map, circuit, generic screen, landscape,
+  wand, or leaf logo. Navi owns pin-over-storefront.
 - E-mail is a sealed message with symmetric side folds. UnderstandingFAFSA is
   a physical folded newsletter with editorial print anatomy, never browser
   chrome, a dashboard, a screen, envelope, folded map, mountain, or letter.

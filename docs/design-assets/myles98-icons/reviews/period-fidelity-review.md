@@ -1,7 +1,9 @@
 # Myles 98 Icon Period-Fidelity and Originality Review
 
-**Verdict:** INTERNAL INFORMED REVIEW PASS. CLEAN-CONTEXT RECOGNITION IS
-PENDING.
+**Verdict:** INTERNAL INFORMED REVIEW PASS for the candidate locked below.
+Later Fresh Greens and UnderstandingFAFSA masters are separately reviewed in
+[`fresh-fafsa-object-rendering-review.md`](fresh-fafsa-object-rendering-review.md).
+CLEAN-CONTEXT RECOGNITION IS PENDING for any changed master.
 
 **Review date:** 2026-08-12
 
@@ -29,8 +31,9 @@ than adding generic gloss, soft shadows, or reusable bevels.
 
 The most collision-prone concepts are specific and distinct:
 
-- Fresh Greens is a street-block map with a dark three-turn route and green
-  and orange endpoints, not a landscape, folded map, circuit, or music note.
+- In the locked historical candidate, Fresh Greens was a street-block map with
+  a dark three-turn route and green and orange endpoints. The later GPS-unit
+  replacement is reviewed separately in the linked object-rendering review.
 - UnderstandingFAFSA is a wide folded printed newsletter with a masthead,
   print hierarchy, crease, lower leaf, and rear sheet, not a browser window.
 - Loose Parts is a non-branded 2+1 stack of wooden blocks without studs or a

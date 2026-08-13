@@ -171,25 +171,25 @@
     {
       "id": "fresh-greens",
       "group": "projects",
-      "intendedObject": "route-map tile with a compact street-block network, one highlighted unbranched three-turn route, distinct route markers, and water and park landmarks",
+      "intendedObject": "physical GPS navigation unit with a routed map screen, lower confirmation control, and dimensional device casing",
       "tiers": {
-        "16": "Street-block road map with a highlighted three-turn route, distinct endpoint markers, water, and a park",
-        "24": "Street-block route map with a highlighted three-turn route, markers, four parcel cues, water, and a park",
-        "32": "Road-map tile with a street-block network, highlighted three-turn route, distinct markers, four parcel cues, water, and a park"
+        "16": "Compact GPS navigator with a routed map screen and lower control",
+        "24": "Beveled GPS navigation unit with a map screen, water, routed destination, lower control, and side button",
+        "32": "Dimensional GPS navigation unit with a map screen, water and park cues, routed destination, lower control, and side button"
       },
-      "acceptedReadings": ["road map", "route map", "navigation map"],
-      "rejectedReadings": ["magic wand", "wand", "notebook band", "folded page", "landscape image", "landscape photograph", "groceries", "leaf logo", "city guide", "music note", "musical note", "folded map", "circuit"]
+      "acceptedReadings": ["GPS navigator", "navigation device", "route planner"],
+      "rejectedReadings": ["desktop monitor", "computer", "television", "generic app window", "magic wand", "wand", "notebook band", "folded page", "landscape image", "landscape photograph", "groceries", "leaf logo", "city guide", "music note", "musical note", "folded map", "circuit"]
     },
     {
       "id": "understandingfafsa",
       "group": "projects",
-      "intendedObject": "wide folded printed newsprint with a tabloid silhouette, paper depth, a tangible horizontal crease, lower print gutter, and editorial print anatomy",
+      "intendedObject": "dimensional packet of folded printed newsletters with a visible stacked paper edge, lower print gutter, and editorial print anatomy",
       "tiers": {
-        "16": "Wide folded newsprint with a paper stack, segmented masthead, headline, horizontal crease, and lower print gutter",
-        "24": "Wide folded newsprint with rear sheet and shadow, segmented blue masthead, headline, photo, copy columns, horizontal crease, and lower print gutter",
-        "32": "Wide folded newsprint with offset rear sheet and shadow, segmented blue masthead, headline, photo, copy columns, horizontal crease, broad folded lower face, and print gutter"
+        "16": "Stacked printed newsletter packet with a masthead, lower fold, and visible paper edge",
+        "24": "Dimensional newsletter packet with a rear sheet, printed masthead, headline, photo, copy columns, lower fold, and paper edge",
+        "32": "Dimensional newsletter packet with a thick rear sheet, printed masthead, headline, photo, copy columns, lower fold, and exposed paper edges"
       },
-      "acceptedReadings": ["newsletter", "printed newsletter", "folded newsletter", "newsprint", "printed newsprint", "newspaper"],
+      "acceptedReadings": ["newsletter packet", "printed newsletter", "folded newsletter", "newsprint", "printed newsprint", "newspaper"],
       "rejectedReadings": ["web page layout", "webpage", "framed web surface", "dashboard", "browser chrome", "browser window", "web application", "app window", "flat screen", "dashboard tile", "open envelope", "letter", "sealed email", "folded map", "mountain", "resume", "folder"]
     },
     {
