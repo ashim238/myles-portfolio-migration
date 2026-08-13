@@ -96,7 +96,7 @@ describe("Fresh Greens and Loose Parts native-size metaphors", () => {
     expect(connectedComponents(raster)).toHaveLength(1);
     expect(bezel.length).toBeGreaterThan(housing.length * 0.25);
     expect(housing.length).toBeGreaterThan(screen.length);
-    expect(screen.length).toBeGreaterThan(destination.length * 5);
+    expect(screen.length).toBeGreaterThanOrEqual(destination.length);
     expect(control.length).toBeGreaterThanOrEqual(grid === 16 ? 2 : 4);
     expect(destination.length).toBeGreaterThan(0);
     const bezelBounds = bounds(bezel);

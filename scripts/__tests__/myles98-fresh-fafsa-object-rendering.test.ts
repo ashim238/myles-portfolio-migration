@@ -19,22 +19,22 @@ type Rect = { fill: string; height: number; width: number; x: number; y: number 
 
 const GPS = new Map<Grid, { bezel: Rect; control: Rect; housing: Rect; screen: Rect }>([
   [16, {
-    bezel: { fill: GPS_BEZEL, x: 2, y: 3, width: 12, height: 10 },
-    housing: { fill: GPS_HOUSING, x: 3, y: 4, width: 10, height: 8 },
-    screen: { fill: GPS_SCREEN, x: 5, y: 6, width: 6, height: 3 },
-    control: { fill: GPS_CONTROL, x: 7, y: 10, width: 2, height: 1 },
+    bezel: { fill: GPS_BEZEL, x: 3, y: 3, width: 10, height: 12 },
+    housing: { fill: GPS_HOUSING, x: 4, y: 4, width: 8, height: 10 },
+    screen: { fill: GPS_SCREEN, x: 6, y: 6, width: 4, height: 2 },
+    control: { fill: GPS_CONTROL, x: 6, y: 10, width: 1, height: 3 },
   }],
   [24, {
-    bezel: { fill: GPS_BEZEL, x: 3, y: 4, width: 19, height: 16 },
-    housing: { fill: GPS_HOUSING, x: 4, y: 5, width: 17, height: 14 },
-    screen: { fill: GPS_SCREEN, x: 6, y: 7, width: 11, height: 7 },
-    control: { fill: GPS_CONTROL, x: 10, y: 16, width: 4, height: 1 },
+    bezel: { fill: GPS_BEZEL, x: 5, y: 4, width: 14, height: 18 },
+    housing: { fill: GPS_HOUSING, x: 6, y: 5, width: 12, height: 16 },
+    screen: { fill: GPS_SCREEN, x: 8, y: 8, width: 8, height: 4 },
+    control: { fill: GPS_CONTROL, x: 10, y: 15, width: 1, height: 3 },
   }],
   [32, {
-    bezel: { fill: GPS_BEZEL, x: 4, y: 5, width: 24, height: 21 },
-    housing: { fill: GPS_HOUSING, x: 5, y: 6, width: 22, height: 18 },
-    screen: { fill: GPS_SCREEN, x: 8, y: 9, width: 15, height: 10 },
-    control: { fill: GPS_CONTROL, x: 13, y: 21, width: 5, height: 2 },
+    bezel: { fill: GPS_BEZEL, x: 7, y: 5, width: 18, height: 23 },
+    housing: { fill: GPS_HOUSING, x: 8, y: 6, width: 16, height: 21 },
+    screen: { fill: GPS_SCREEN, x: 10, y: 9, width: 12, height: 6 },
+    control: { fill: GPS_CONTROL, x: 12, y: 19, width: 2, height: 5 },
   }],
 ]);
 
@@ -140,7 +140,7 @@ function flattenNewsletterStack(source: string, grid: Grid) {
 }
 
 describe("Myles 98 Fresh Greens and UnderstandingFAFSA rendered-object anatomy", () => {
-  it.each(GRIDS)("makes Fresh Greens %ipx a physical GPS navigator with a screen and lower control", (grid) => {
+  it.each(GRIDS)("makes Fresh Greens %ipx a physical handheld GPS navigator with a screen and lower D-pad", (grid) => {
     const source = sourceFor("fresh-greens", grid);
 
     expect(isGpsNavigator(source, grid)).toBe(true);
