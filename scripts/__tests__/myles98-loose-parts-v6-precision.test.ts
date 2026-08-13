@@ -18,33 +18,33 @@ type Pixel = { color: string; x: number; y: number };
 
 const CUBES = new Map<Grid, Cube[]>([
   [16, [
-    { front: { fill: "#c58c45", x: 6, y: 6, width: 3, height: 3 }, depth: 1, top: "#ffe8b0", side: "#805224" },
+    { front: { fill: "#c58c45", x: 3, y: 6, width: 3, height: 3 }, depth: 1, top: "#ffe8b0", side: "#805224" },
     { front: { fill: "#d6a45c", x: 2, y: 10, width: 3, height: 3 }, depth: 1, top: "#f4d99a", side: "#8e5d2a" },
-    { front: { fill: "#c89149", x: 9, y: 10, width: 3, height: 3 }, depth: 1, top: "#f0ce85", side: "#71451f" },
+    { front: { fill: "#c89149", x: 7, y: 10, width: 3, height: 3 }, depth: 1, top: "#f0ce85", side: "#71451f" },
   ]],
   [24, [
-    { front: { fill: "#c58c45", x: 10, y: 8, width: 5, height: 5 }, depth: 2, top: "#ffe8b0", side: "#805224" },
+    { front: { fill: "#c58c45", x: 5, y: 8, width: 5, height: 5 }, depth: 2, top: "#ffe8b0", side: "#805224" },
     { front: { fill: "#d6a45c", x: 4, y: 15, width: 5, height: 5 }, depth: 2, top: "#f4d99a", side: "#8e5d2a" },
-    { front: { fill: "#c89149", x: 15, y: 15, width: 5, height: 5 }, depth: 2, top: "#f0ce85", side: "#71451f" },
+    { front: { fill: "#c89149", x: 12, y: 15, width: 5, height: 5 }, depth: 2, top: "#f0ce85", side: "#71451f" },
   ]],
   [32, [
-    { front: { fill: "#c58c45", x: 13, y: 10, width: 7, height: 7 }, depth: 2, top: "#ffe8b0", side: "#805224" },
+    { front: { fill: "#c58c45", x: 8, y: 11, width: 7, height: 7 }, depth: 2, top: "#ffe8b0", side: "#805224" },
     { front: { fill: "#d6a45c", x: 6, y: 20, width: 7, height: 7 }, depth: 2, top: "#f4d99a", side: "#8e5d2a" },
-    { front: { fill: "#c89149", x: 19, y: 20, width: 7, height: 7 }, depth: 2, top: "#f0ce85", side: "#71451f" },
+    { front: { fill: "#c89149", x: 17, y: 20, width: 7, height: 7 }, depth: 2, top: "#f0ce85", side: "#71451f" },
   ]],
 ]);
 
 const HIGHLIGHTS = new Map<Grid, Rect[]>([
   [16, []],
   [24, [
-    { fill: "#fff6d3", x: 13, y: 7, width: 2, height: 1 },
+    { fill: "#fff6d3", x: 8, y: 7, width: 2, height: 1 },
     { fill: "#fff0c4", x: 7, y: 14, width: 2, height: 1 },
-    { fill: "#fff0c4", x: 18, y: 14, width: 2, height: 1 },
+    { fill: "#fff0c4", x: 15, y: 14, width: 2, height: 1 },
   ]],
   [32, [
-    { fill: "#fff6d3", x: 17, y: 9, width: 3, height: 1 },
+    { fill: "#fff6d3", x: 12, y: 10, width: 3, height: 1 },
     { fill: "#fff0c4", x: 10, y: 19, width: 3, height: 1 },
-    { fill: "#fff0c4", x: 23, y: 19, width: 3, height: 1 },
+    { fill: "#fff0c4", x: 21, y: 19, width: 3, height: 1 },
   ]],
 ]);
 
@@ -87,6 +87,50 @@ function pointsForCube({ front, depth }: Cube) {
   };
 }
 
+function hasNonHumanConstructionStack(source: string, grid: Grid) {
+  const fronts = rectsFor(source, FRONT_FILLS).sort((left, right) => left.y - right.y || left.x - right.x);
+  const [upper, lowerLeft, lowerRight] = fronts;
+  const upperDepth = CUBES.get(grid)![0]!.depth;
+
+  if (!upper || !lowerLeft || !lowerRight) return false;
+
+  const upperOutlineLeft = upper.x - upperDepth;
+  const baseCenter = (lowerLeft.x + lowerRight.x + lowerRight.width) / 2;
+  const upperCenter = upper.x + upper.width / 2;
+
+  return lowerLeft.y === lowerRight.y &&
+    upper.y + upper.height + upperDepth === lowerLeft.y &&
+    upperOutlineLeft < lowerLeft.x + lowerLeft.width &&
+    upper.x < lowerLeft.x + lowerLeft.width &&
+    upperCenter <= lowerLeft.x + lowerLeft.width &&
+    upperCenter < baseCenter;
+}
+
+function repositionUpperCube(source: string, grid: Grid, x: number) {
+  const original = CUBES.get(grid)![0]!;
+  const repositioned: Cube = { ...original, front: { ...original.front, x } };
+  const from = pointsForCube(original);
+  const to = pointsForCube(repositioned);
+  const originalHighlight = HIGHLIGHTS.get(grid)![0];
+  const repositionedHighlight = originalHighlight && {
+    ...originalHighlight,
+    x: originalHighlight.x + (x - original.front.x),
+  };
+
+  return source
+    .replace(`points="${from.outline}"`, `points="${to.outline}"`)
+    .replace(`points="${from.top}"`, `points="${to.top}"`)
+    .replace(`points="${from.side}"`, `points="${to.side}"`)
+    .replace(
+      `fill="${original.front.fill}" x="${original.front.x}" y="${original.front.y}" width="${original.front.width}" height="${original.front.height}"`,
+      `fill="${repositioned.front.fill}" x="${repositioned.front.x}" y="${repositioned.front.y}" width="${repositioned.front.width}" height="${repositioned.front.height}"`,
+    )
+    .replace(
+      originalHighlight ? `fill="${originalHighlight.fill}" x="${originalHighlight.x}" y="${originalHighlight.y}" width="${originalHighlight.width}" height="${originalHighlight.height}"` : "",
+      repositionedHighlight ? `fill="${repositionedHighlight.fill}" x="${repositionedHighlight.x}" y="${repositionedHighlight.y}" width="${repositionedHighlight.width}" height="${repositionedHighlight.height}"` : "",
+    );
+}
+
 function hasV6WoodenBlockAnatomy(source: string, grid: Grid) {
   const cubes = CUBES.get(grid)!;
   const fronts = rectsFor(source, FRONT_FILLS).sort((left, right) => left.y - right.y || left.x - right.x);
@@ -94,12 +138,6 @@ function hasV6WoodenBlockAnatomy(source: string, grid: Grid) {
   const outlines = polygonsFor(source, [OUTLINE_FILL]);
   const tops = polygonsFor(source, TOP_FILLS);
   const sides = polygonsFor(source, SIDE_FILLS);
-  const stack = fronts.length === 3 &&
-    fronts[1]!.y === fronts[2]!.y &&
-    fronts[0]!.y + fronts[0]!.height <= fronts[1]!.y &&
-    fronts[0]!.x - cubes[0]!.depth <= fronts[1]!.x + fronts[1]!.width &&
-    fronts[0]!.x + fronts[0]!.width + cubes[0]!.depth >= fronts[2]!.x;
-
   const cubeChecks = cubes.map((cube) => {
     const expected = pointsForCube(cube);
     return outlines.some((polygon) => polygon.points === expected.outline) &&
@@ -114,7 +152,7 @@ function hasV6WoodenBlockAnatomy(source: string, grid: Grid) {
     legacy: !new RegExp(LEGACY_V5_FILLS.join("|"), "i").test(source),
     outline: outlines.length === 3,
     square: fronts.every(({ width, height }) => width === height),
-    stack,
+    stack: hasNonHumanConstructionStack(source, grid),
     sides: sides.length === 3,
     tops: tops.length === 3,
   };
@@ -226,5 +264,18 @@ describe("Myles 98 Loose Parts v6 literal construction-block precision", () => {
     expect(hasV6WoodenBlockAnatomy(v5Palette, grid)).toBe(false);
     expect(hasV6WoodenBlockAnatomy(tallBottleBody, grid)).toBe(false);
     expect(hasV6WoodenBlockAnatomy(badgeLikeClothingMark, grid)).toBe(false);
+  });
+
+  it.each([
+    [16, 6],
+    [24, 10],
+    [32, 13],
+  ] as const)("rejects a centered head-over-two-bodies arrangement at %ipx", (grid, personLikeX) => {
+    const source = readFileSync(expectedMasterPath(ROOT, "loose-parts", grid), "utf8");
+    const personLikeStack = repositionUpperCube(source, grid, personLikeX);
+
+    expect(hasV6WoodenBlockAnatomy(source, grid)).toBe(true);
+    expect(hasNonHumanConstructionStack(personLikeStack, grid)).toBe(false);
+    expect(hasV6WoodenBlockAnatomy(personLikeStack, grid)).toBe(false);
   });
 });
