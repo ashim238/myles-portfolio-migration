@@ -991,7 +991,7 @@ export function Myles97Icon({
         ? renderMenuGlyph
         : renderDiscoveryGlyph;
   const glyph = renderer(name, palette);
-  if (!color || compact) {
+  if (!color) {
     return <svg {...common}>{glyph}</svg>;
   }
 

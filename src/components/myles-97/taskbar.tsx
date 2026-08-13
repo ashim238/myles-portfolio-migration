@@ -100,6 +100,7 @@ export function Taskbar({
                 name={iconForProgram(id)}
                 size={16}
                 compact
+                variant="color"
                 aria-hidden="true"
               />
               <span className="myles97-task-label">{title}</span>

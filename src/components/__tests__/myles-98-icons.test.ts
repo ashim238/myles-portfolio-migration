@@ -211,6 +211,58 @@ describe("Myles 98 program icon identity", () => {
     ).toHaveLength(COLOR_ICON_NAMES.length * nativeSizes.length);
   });
 
+  it("routes compact color through the audited chrome master while compact mono stays inline", () => {
+    render(
+      createElement(
+        "div",
+        null,
+        createElement(Myles97Icon, {
+          name: "fafsa",
+          size: 16,
+          compact: true,
+          variant: "color",
+          title: "Compact color FAFSA",
+        }),
+        createElement(Myles97Icon, {
+          name: "fafsa",
+          size: 16,
+          compact: true,
+          title: "Compact mono FAFSA",
+        }),
+      ),
+    );
+
+    const colorIcon = screen.getByRole("img", { name: "Compact color FAFSA" });
+    const colorMaster = colorIcon.querySelector<SVGImageElement>(
+      "image[data-m98-icon-master]",
+    );
+    const colorFallback = colorIcon.querySelector<SVGGElement>(
+      ".myles98-icon-fallback",
+    );
+
+    expect(colorIcon).toHaveAttribute("data-m98-icon-tier", "chrome");
+    expect(colorIcon).toHaveAttribute("data-m98-icon-grid", "16");
+    expect(colorMaster).toHaveAttribute(
+      "href",
+      "/myles98-icons/understandingfafsa/understandingfafsa-16.svg",
+    );
+    expect(colorMaster).toHaveAttribute("data-m98-icon-master-grid", "16");
+    expect(colorFallback).toHaveAttribute("aria-hidden", "true");
+    expect(colorFallback?.querySelectorAll("path")).toHaveLength(2);
+
+    const monoIcon = screen.getByRole("img", { name: "Compact mono FAFSA" });
+
+    expect(monoIcon).toHaveAttribute("data-m98-icon-tier", "chrome");
+    expect(monoIcon).toHaveAttribute("data-m98-icon-variant", "mono");
+    expect(
+      monoIcon.querySelector("image[data-m98-icon-master]"),
+    ).not.toBeInTheDocument();
+    expect(
+      monoIcon.querySelector(".myles98-icon-fallback"),
+    ).not.toBeInTheDocument();
+    expect(monoIcon.querySelectorAll("path")).toHaveLength(2);
+  });
+
   it("keeps the public master directory byte-identical to the audited family", () => {
     const documentedRoot = resolve(
       process.cwd(),

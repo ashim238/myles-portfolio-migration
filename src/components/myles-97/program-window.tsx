@@ -102,7 +102,12 @@ export function ProgramWindow({
     >
       <header className="myles97-titlebar" {...dragHandleProps}>
         <span className="myles97-titlebar-icon" aria-hidden="true">
-          <Myles97Icon name={iconForProgram(id)} size={16} compact />
+          <Myles97Icon
+            name={iconForProgram(id)}
+            size={16}
+            compact
+            variant="color"
+          />
         </span>
         <strong id={titleId} className="myles97-window-title">
           {title}

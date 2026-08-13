@@ -27,12 +27,54 @@ const fafsaProgram: ProgramDefinition = {
   href: "/work/understandingfafsa",
 };
 
-function expectCompactFafsaIcon(container: HTMLElement) {
+function compactFafsaIcon(container: HTMLElement) {
+  const icon = container.querySelector<SVGSVGElement>(
+    'svg[data-myles97-icon-density="compact"]',
+  );
+
+  expect(icon).toBeInTheDocument();
+  expect(icon).toHaveAttribute("data-m98-icon", "fafsa");
+  expect(icon).toHaveAttribute("data-m98-icon-tier", "chrome");
+  expect(icon).toHaveAttribute("data-m98-icon-grid", "16");
+  expect(icon).toHaveAttribute("aria-hidden", "true");
+
+  return icon!;
+}
+
+function expectCompactMonoFafsaGlyph(container: HTMLElement) {
+  const icon = compactFafsaIcon(container);
+
+  expect(icon).toHaveAttribute("data-m98-icon-variant", "mono");
   expect(
-    container.querySelector(
-      'svg[data-myles97-icon-density="compact"]',
-    ),
-  ).toBeInTheDocument();
+    icon.querySelector("image[data-m98-icon-master]"),
+  ).not.toBeInTheDocument();
+  expect(icon.querySelector(".myles98-icon-fallback")).not.toBeInTheDocument();
+  expect(icon.querySelectorAll("path")).toHaveLength(2);
+}
+
+function expectCompactColorFafsaMaster(container: HTMLElement) {
+  const icon = compactFafsaIcon(container);
+  const master = icon.querySelector<SVGImageElement>(
+    "image[data-m98-icon-master]",
+  );
+  const fallback = icon.querySelector<SVGGElement>(
+    ".myles98-icon-fallback",
+  );
+
+  expect(icon).toHaveAttribute("data-m98-icon-variant", "color");
+  expect(master).toHaveAttribute(
+    "href",
+    "/myles98-icons/understandingfafsa/understandingfafsa-16.svg",
+  );
+  expect(master).toHaveAttribute(
+    "data-m98-icon-master-concept",
+    "understandingfafsa",
+  );
+  expect(master).toHaveAttribute("data-m98-icon-master-grid", "16");
+  expect(master).toHaveAttribute("width", "16");
+  expect(master).toHaveAttribute("height", "16");
+  expect(fallback).toHaveAttribute("aria-hidden", "true");
+  expect(fallback?.querySelectorAll("path")).toHaveLength(2);
 }
 
 describe("dense Myles 98 chrome", () => {
@@ -41,10 +83,10 @@ describe("dense Myles 98 chrome", () => {
       <ReaderHeader slug="understandingfafsa" title="FAFSA Mail" />,
     );
 
-    expectCompactFafsaIcon(container);
+    expectCompactMonoFafsaGlyph(container);
   });
 
-  it("requests the compact FAFSA icon in a program title bar", () => {
+  it("renders the audited compact FAFSA master in a program title bar with an inline fallback", () => {
     const { container } = render(
       <ProgramWindow
         id="understandingfafsa"
@@ -60,10 +102,10 @@ describe("dense Myles 98 chrome", () => {
       </ProgramWindow>,
     );
 
-    expectCompactFafsaIcon(container);
+    expectCompactColorFafsaMaster(container);
   });
 
-  it("requests the compact FAFSA icon in a taskbar button", () => {
+  it("renders the audited compact FAFSA master in a taskbar button with an inline fallback", () => {
     const { container } = render(
       <Taskbar
         programs={[fafsaProgram]}
@@ -79,6 +121,6 @@ describe("dense Myles 98 chrome", () => {
       />,
     );
 
-    expectCompactFafsaIcon(container);
+    expectCompactColorFafsaMaster(container);
   });
 });
