@@ -38,6 +38,12 @@ describe("ProgramWindow", () => {
     );
     expect(screen.getByText("Program content")).toBeInTheDocument();
 
+    const move = screen.getByRole("button", { name: "Move Fresh Greens.exe" });
+    expect(move).toHaveAttribute("data-m97-window-move", "fresh-greens");
+    expect(move).toHaveClass("myles97-hit-target");
+    move.focus();
+    expect(move).toHaveFocus();
+
     const minimize = screen.getByRole("button", { name: "Minimize Fresh Greens.exe" });
     expect(minimize).toHaveClass("myles97-hit-target");
     await user.click(minimize);

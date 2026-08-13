@@ -111,6 +111,7 @@ export function ProgramWindow({
           <button
             type="button"
             className="myles97-hit-target myles97-titlebar-move"
+            data-m97-window-move={id}
             aria-label={`Move ${title}`}
             title="Move with arrow keys. Hold Shift for larger steps."
             onKeyDown={(event) => {

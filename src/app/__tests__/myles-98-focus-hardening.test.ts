@@ -29,16 +29,24 @@ function contrastRatio(first: string, second: string) {
 describe("Myles 98 focus hardening", () => {
   it("uses contrasting dark and white focus rings for their actual surfaces", () => {
     expect(contrastRatio("#111111", "#c7c7c7")).toBeGreaterThanOrEqual(3);
+    expect(contrastRatio("#ffffff", "#c7c7c7")).toBeLessThan(3);
     expect(contrastRatio("#111111", "#f5f3ea")).toBeGreaterThanOrEqual(3);
     expect(contrastRatio("#111111", "#087f86")).toBeGreaterThanOrEqual(3);
     expect(contrastRatio("#ffffff", "#263cb8")).toBeGreaterThanOrEqual(3);
 
+    const lightRingSelector =
+      desktopStyles
+        .match(/([^{}]+)\{\s*outline-color: var\(--m97-focus-light\);\s*\}/)?.[1]
+        .replace(/\s+/g, " ")
+        .trim() ?? "";
+
     expect(desktopStyles).toMatch(
       /\.myles97-window :is\(button, a, input, select, textarea\):focus-visible,[\s\S]*?outline: 3px solid var\(--m97-focus-dark\);/,
     );
-    expect(desktopStyles).toMatch(
-      /\.myles97-window\[data-focused="true"\] \.myles97-titlebar \.myles97-hit-target:focus-visible,[\s\S]*?outline-color: var\(--m97-focus-light\);/,
+    expect(lightRingSelector).toBe(
+      '.myles97-window[data-focused="true"] .myles97-titlebar .myles97-hit-target:focus-visible, .myles97-start-menu-items :is(button, a):focus-visible',
     );
+    expect(lightRingSelector).not.toContain(".myles97-task-button");
     expect(pocketStyles).toMatch(
       /\.pocket97-dock button:focus-visible,[\s\S]*?outline: 3px solid var\(--m97-focus-dark\);/,
     );

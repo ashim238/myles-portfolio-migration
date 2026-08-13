@@ -120,7 +120,11 @@ export function WorkstationDesktop({
       `[data-m97-program-window="${state.focusedProgram}"]`,
     );
     if (!windowElement || windowElement.contains(document.activeElement)) return;
-    windowElement.focus();
+    windowElement
+      .querySelector<HTMLButtonElement>(
+        `[data-m97-window-move="${state.focusedProgram}"]`,
+      )
+      ?.focus();
   }, [state.focusedProgram, state.minimizedPrograms, state.openPrograms]);
 
   const commonWindowProps = (id: ProgramId, stackIndex: number) => ({

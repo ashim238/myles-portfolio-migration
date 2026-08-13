@@ -442,7 +442,6 @@ describe("Myles 98 workstation depth system", () => {
     `);
     const activeFocusSelector = normalizeSelector(`
       .myles97-window[data-focused="true"] .myles97-titlebar .myles97-hit-target:focus-visible,
-      .myles97-task-button[data-focused="true"]:focus-visible,
       .myles97-start-menu-items :is(button, a):focus-visible
     `);
 

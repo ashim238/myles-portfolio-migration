@@ -140,10 +140,17 @@ describe("Myles98 product shell", () => {
         name: "Open Fresh Greens.exe program",
       }),
     );
-    expect(screen.getByRole("region", { name: "Fresh Greens.exe" })).toHaveAttribute(
-      "data-focused",
-      "true",
-    );
+    const freshGreensWindow = screen.getByRole("region", {
+      name: "Fresh Greens.exe",
+    });
+    expect(freshGreensWindow).toHaveAttribute("data-focused", "true");
+    await waitFor(() => {
+      expect(
+        within(freshGreensWindow).getByRole("button", {
+          name: "Move Fresh Greens.exe",
+        }),
+      ).toHaveFocus();
+    });
   });
 
   it("opens Start, exposes program actions, and closes the transient menu with Escape", async () => {
@@ -212,7 +219,7 @@ describe("Myles98 product shell", () => {
 
     await user.click(within(startMenu).getByRole("button", { name: "About Myles" }));
     await waitFor(() => {
-      expect(screen.getByRole("region", { name: "About Myles" })).toHaveFocus();
+      expect(screen.getByRole("button", { name: "Move About Myles" })).toHaveFocus();
     });
     expect(screen.getByRole("button", { name: "Start" })).not.toHaveFocus();
   });
@@ -232,7 +239,9 @@ describe("Myles98 product shell", () => {
       ),
     );
     await waitFor(() => {
-      expect(screen.getByRole("region", { name: "Selected Work" })).toHaveFocus();
+      expect(
+        screen.getByRole("button", { name: "Move Selected Work" }),
+      ).toHaveFocus();
     });
 
     await user.click(
@@ -241,6 +250,12 @@ describe("Myles98 product shell", () => {
         { name: "Close Selected Work" },
       ),
     );
-    await waitFor(() => expect(welcome).toHaveFocus());
+    await waitFor(() => {
+      expect(
+        within(welcome).getByRole("button", {
+          name: "Move Welcome to Myles 98",
+        }),
+      ).toHaveFocus();
+    });
   });
 });

@@ -303,7 +303,6 @@
 }
 
 .myles97-window[data-focused="true"] .myles97-titlebar .myles97-hit-target:focus-visible,
-.myles97-task-button[data-focused="true"]:focus-visible,
 .myles97-start-menu-items :is(button, a):focus-visible {
   outline-color: var(--m97-focus-light);
 }
