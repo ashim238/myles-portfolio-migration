@@ -1,146 +1,93 @@
 # Myles 98 Icon Family Consistency Review
 
-**Verdict:** CLEAN-CONTEXT RECOGNITION PASS; PENDING informed family review
+**Verdict:** INTERNAL INFORMED REVIEW PASS. CLEAN-CONTEXT RECOGNITION IS
+PENDING.
 
-**Phase A status:** v7 replaces only UnderstandingFAFSA with the wide folded
-printed-newsletter master in `f65e88bd5a81677f4945230b5f572de402780441`.
-The source-free evidence below was regenerated for that aggregate. The
-versioned de-identified v7 recognition ledger below records the completed PASS
-without evaluator identities or private rationale. Family P0–P3 counts and
-informed approval remain unassessed.
+**Review date:** 2026-08-12
 
-**Review date:** 2026-08-11
+## Current candidate lock
 
-## Current evidence lock
+- **48-master aggregate:**
+  `1177575d1c60ccc75c74c7d700e5424790a8ba7618515a0315df0fa19a34005e`.
+- **Manifest:** `d58b7100f8209080eb62968306af505477726e48b6a9614f1f8fab55d9793697`.
+- **Canonical contact sheet:**
+  `bb04413d3dfb6eb47f1e257c5d3eb8442eb4534d60238bdf3ff4355243c29ba7`.
+- **Labeled render:** `/private/tmp/myles98-contact-labeled-task5-v9.png`,
+  `b9fb9af01b6994cb8e05e302d75657a73e96e30ef959ed90b0b32acea47c0f92`.
+- **Source-free batch 01:**
+  `/private/tmp/myles98-icon-anonymous-v9-batch-01.png`,
+  `d5fea31332392b80df97d57aff5d37421b9b8958993818d0aadd6cae371f7e90`.
+- **Source-free batch 02:**
+  `/private/tmp/myles98-icon-anonymous-v9-batch-02.png`,
+  `e4203b67aba0ea3f723284de498f336578c78bf7607fb8418f7522e73e912663`.
+- **Source-free batch 03:**
+  `/private/tmp/myles98-icon-anonymous-v9-batch-03.png`,
+  `27561d9ca96c25b266fd91cdd1fc1ab50cea7d691f278bd35c4796e95e17b872`.
 
-- **Candidate HEAD:** `f65e88bd5a81677f4945230b5f572de402780441`
-- **Sorted path-bearing 48-master aggregate SHA-256:** `644b72a13e1362e8b7781436d502254047dadc1b64e79f014a4d9df248d098e8`
-- **Manifest SHA-256:** `6e33848ebcc6db7adbd934c528affe81411a580e6c3880c0b400bfd0d3f8f187`
-- **Canonical contact-sheet HTML SHA-256:** `a72a8c524e5a1e8c2bd90a8b2fe4056324185fa9f7fdea05aa789d0093e9fd2b`
-- **Labeled render:** `/private/tmp/myles98-contact-labeled-v7.png`; SHA-256 `6e7637b868570c85030961796d3cb7cac02771d0763ec59135035a50497d785e`
-- **Anonymous batch 01:** `/private/tmp/myles98-icon-anonymous-v7-batch-01.png`; SHA-256 `dd6c8303034cb196968a2a3d97dd423c6aeb29dea69ca1fdec3f4ddf6a03c4b3`
-- **Anonymous batch 02:** `/private/tmp/myles98-icon-anonymous-v7-batch-02.png`; SHA-256 `8aa2074971250d71efc9d834f07e0f6df1a5cd4b6ff2bffabefa961a71b9fbb0`
-- **Anonymous batch 03:** `/private/tmp/myles98-icon-anonymous-v7-batch-03.png`; SHA-256 `64fe294a8813d7a39bf996729ee800834364fba64f4f49bd9203091769bc4e8d`
-- **Controller-only F701–F712 mapping:** `.superpowers/sdd/2026-08-11-myles98-five-icon-refinement/task-5-report.md`, canonical mapping SHA-256 `d5d219aeefb9aa1023fcdc89a499410f08e40b4274a024a2c651fbf91eec4608`. It is not reviewer material.
-- **Each batch geometry:** 1440 × 4868, device scale factor 1.
+Each batch is 1440 × 4568 and contains four anonymous families, three
+backgrounds, and all 16px, 24px, and 32px cards. It exposes only large
+anonymous IDs and tier labels, never source names or filenames.
 
-The three anonymous batches are the only assets to give a clean-context
-reviewer. Each batch contains four groups repeated on teal, system gray, and
-white. Each visible group has only a large arbitrary `M98-F###` identifier and
-`16px`, `24px`, and `32px` tier labels. No batch contains filenames, concept
-names, semantic labels, review conclusions, or labeled cards.
+## Internal informed result
 
-## v7 de-identified clean-context recognition ledger
+Severity counts are **P0 0, P1 0, P2 0, P3 0**.
 
-**Release disposition:** `PASS` for the exact v7 asset aggregate. Two
-independent clean-context reviewers received only the three source-free PNG
-batches above. This release ledger deliberately omits evaluator identities,
-reasoning, and alternative-reading narratives. It records only the
-controller-normalized primary-reading outcome and disposition needed to audit
-the release decision.
+The 16-family set shares a consistent native-grid contour weight, upper-left
+light logic, pixel-step vocabulary, and dense-but-bounded 32px detail. It
+keeps meaningful silhouette separation across siblings:
 
-**Hash binding:** aggregate
-`644b72a13e1362e8b7781436d502254047dadc1b64e79f014a4d9df248d098e8`; batch
-01 `dd6c8303034cb196968a2a3d97dd423c6aeb29dea69ca1fdec3f4ddf6a03c4b3`; batch
-02 `8aa2074971250d71efc9d834f07e0f6df1a5cd4b6ff2bffabefa961a71b9fbb0`; batch
-03 `64fe294a8813d7a39bf996729ee800834364fba64f4f49bd9203091769bc4e8d`.
+- paper nouns separate as memo, checklist, profile sheet, newsletter, and
+  project dossier;
+- monitors separate as CRT settings, layered app windows, and a neutral
+  program window;
+- navigation separates as a street map, a location pin over storefront, and
+  an open restart arrow;
+- the handled shopping bag, sealed envelope, and three-block stack retain
+  distinct outer silhouettes at all tiers.
 
-| Anonymous group | De-identified primary-reading result | Release disposition |
-| --- | --- | --- |
-| M98-F701 | shopping bag | PASS |
-| M98-F702 | route map | PASS |
-| M98-F703 | note / text document | PASS |
-| M98-F704 | portrait | PASS — user-locked direct approval |
-| M98-F705 | CRT monitor | PASS |
-| M98-F706 | résumé document | PASS |
-| M98-F707 | stacked wooden building blocks | PASS |
-| M98-F708 | newsletter / news page | PASS |
-| M98-F709 | location pin above storefront | PASS — user-locked direct approval |
-| M98-F710 | checklist | PASS |
-| M98-F711 | folder / documents | PASS |
-| M98-F712 | refresh / restart arrow | PASS |
+Start’s portrait likeness and Navi’s pin-above-storefront relationship remain
+user-approved locks. This review records their intact construction, not a
+redraw recommendation.
 
-The three previously contested outcomes retain the controller-supplied
-readings above: F707 `stacked wooden building blocks`, F708 `newsletter / news
-page`, and F712 `refresh / restart arrow`. The remaining entries are concise,
-controller-normalized noun labels, not verbatim reviewer transcripts. The
-controller compared the completed results against the current manifest's
-accepted and rejected readings and recorded no gate-blocking collision, brand
-implication, or tier-consistency failure. The deterministic pre-review
-F701–F712 mapping remains controller-held; this post-disposition ledger is the
-versioned release evidence.
+## Mechanical support
 
-This recognition PASS does not claim a completed informed family review, zero
-P0–P3 findings, production integration, or a live-integration audit.
+For this candidate: 48/48 source masters verified; 48/48 public mirrors were
+byte-identical; the 15 focused icon suites passed 216 tests; the contact-sheet
+build completed; and its browser checks passed 2/2. Raster audit found only
+binary alpha and no perimeter touching pixels. Resume paperclip openings and
+the 24px/32px detached Navi pin are the only approved topology exceptions.
 
-## Mechanical family baseline
+## Strict recognition protocol still required
 
-The exact candidate must pass:
+The v7 de-identified recognition ledger is historical only. It cannot certify
+this aggregate because the master source changed afterward. For a final
+recognition disposition:
 
-```text
-npm run icons:verify
-npm run icons:contact-sheet
-npm test -- scripts/__tests__/myles98-icon-contract.test.ts scripts/__tests__/myles98-icon-fill-integrity.test.ts scripts/__tests__/myles98-resume-reset-refinement.test.ts scripts/__tests__/myles98-reset-arrow-v6.test.ts scripts/__tests__/myles98-loose-parts-refinement.test.ts scripts/__tests__/myles98-loose-parts-v6-precision.test.ts scripts/__tests__/myles98-fafsa-editorial-v6.test.ts scripts/__tests__/myles98-fresh-greens-refinement.test.ts scripts/__tests__/myles98-navi-refinement.test.ts scripts/__tests__/myles98-notes-reminders-refinement.test.ts scripts/__tests__/myles98-display-selected-work-refinement.test.ts scripts/__tests__/myles98-fafsa-tiktok-refinement.test.ts scripts/__tests__/myles98-fafsa-reset-final.test.ts scripts/__tests__/myles98-fresh-loose-metaphor.test.ts scripts/__tests__/myles98-icon-contact-sheet.test.ts
-npm exec vitest -- run scripts/__tests__/myles98-icon-contact-sheet.browser.test.ts
-```
+1. Give each of two reviewers who have not seen code, filenames, metadata,
+   prior reviews, or conclusions only the three v8 batches above.
+2. For every anonymous family, ask: “What object is this?”, “What are two
+   plausible alternatives?”, “Does it imply a specific brand or product?”, and
+   “Do all three tiers depict the same object?”
+3. Map IDs to concepts only after both records are complete. A rejected
+   reading, brand implication, unaccepted primary noun, or tier mismatch
+   blocks that family.
 
-Each batch DOM integrity check must find 12 visible family panels, 36 visible
-tier cards, four unique group IDs, and zero visible labeled cards.
+Do not call the current candidate a clean-context recognition pass until that
+protocol completes against these exact hashes.
 
-## Completed clean-context recognition protocol
+## Historical v7 provenance — not current evidence
 
-Two reviewers who had not seen filenames, source, manifest semantics, earlier
-reviews, or prior conclusions received only the three current anonymous batches
-and this question set for every group:
+The prior aggregate
+`644b72a13e1362e8b7781436d502254047dadc1b64e79f014a4d9df248d098e8`
+completed a de-identified clean-context recognition PASS with batches
+`dd6c8303034cb196968a2a3d97dd423c6aeb29dea69ca1fdec3f4ddf6a03c4b3`,
+`8aa2074971250d71efc9d834f07e0f6df1a5cd4b6ff2bffabefa961a71b9fbb0`, and
+`64fe294a8813d7a39bf996729ee800834364fba64f4f49bd9203091769bc4e8d`.
+Its normalized PASS readings were shopping bag, route map, note, portrait,
+CRT monitor, résumé document, stacked wooden building blocks, newsletter,
+location pin above storefront, checklist, folder/documents, and refresh arrow.
 
-1. What is the intended noun?
-2. What are two plausible alternative readings?
-3. Does it imply a recognizable brand or product?
-4. Does it remain the same object across 16px, 24px, and 32px?
-
-Each response stated all three artifact SHA-256 values above and confirmed
-clean context. The controller mapped group IDs only after both records were
-complete, using the mapping bound to the manifest digest.
-
-The strict disposition compared each primary reading and material alternative
-with the current manifest's accepted and rejected readings. A rejected
-collision, an unaccepted primary noun, a brand implication, lack of tier
-consistency, or material reviewer disagreement would have failed the affected
-redrawn family. Start's portrait and Navi's pin-above-separate-storefront
-relationship remain user-locked direct approvals, recorded separately from
-strict redraw-gate results. Neither may be redrawn in Task 5.
-
-## Historical diagnostics — not current evidence
-
-The dense all-48 one-sheet and its two initial reader records are invalid and
-unusable because their labels did not yield reliable group association. The
-F101–F112, F201–F212, F301–F312, and F401–F412 gates remain valid only for
-their own earlier aggregates. The F501–F512 v5 gate is valid only for aggregate
-`a4ecbf16ec6dd7d62f7e65176baf0e0e81b71e90652bb3052c91d6249eaa8c46`.
-Its F507 Loose Parts, F508 UnderstandingFAFSA, and F512 Reset Desktop failures
-are superseded by later master changes. The v6 F601–F612 gate is a valid
-historical BLOCK for aggregate
-`5484181525aa995e6cdb66ef55228a04603a54c9a09a7b578a8cbd44715e4dd4` because
-F608 UnderstandingFAFSA received primary reading `webpage`. The v6 result is
-superseded for that concept by `f65e88bd5a81677f4945230b5f572de402780441`,
-not relabeled invalid. No earlier reading can evidence this aggregate or the
-F701–F712 batches.
-
-## Fresh informed family-review queue
-
-With the clean-context disposition complete, inspect the current labeled sheet
-and record:
-
-- native-size silhouette continuity and hierarchy across all 12 target
-  families;
-- sibling separation for paper, monitor, folder, map, and bag nouns;
-- Fresh's street-block route, Loose's wooden 2+1 construction-block stack,
-  FAFSA's wide folded printed-newsletter paper depth and crease, and Reset's
-  C-loop plus compact wedge;
-- palette ownership, contour grammar, optical mass, and 16px/24px/32px
-  progression;
-- user-locked Start and Navi construction without changing their masters; and
-- P0–P3 counts plus any approval or blocking disposition.
-
-Until then, all current family-review severities are **unassessed**. Production
-integration remains out of scope for this Phase A document.
+That record remains an honest historical result, but later Email, Fresh Greens,
+Notes, portrait, and FAFSA master edits mean it cannot approve the current
+aggregate. The historical ledger is retained for provenance, not relabeled as
+current evidence.

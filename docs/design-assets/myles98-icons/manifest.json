@@ -13,12 +13,12 @@
         "skin": "dark skin",
         "hair": "long locs with tapered sides",
         "eyewear": "glasses",
-        "facialHair": "moustache and separated chin hair",
+        "facialHair": "continuous moustache and separate chin hair",
         "prohibited": ["full-beard mass"]
       },
       "likenessTiers": {
         "16": "Primary portrait noun with dark skin and the essential head, glasses, and long-locs/tapered-sides silhouette; omit facial-hair microdetail before weakening the noun",
-        "24": "Resolve long locs with tapered sides, glasses, moustache, and separated chin hair while preserving the portrait silhouette",
+        "24": "Resolve long locs with tapered sides, glasses, a continuous moustache, and separate chin hair while preserving the portrait silhouette",
         "32": "Complete pixel portrait with dark skin and every approved likeness cue; no full-beard mass"
       },
       "acceptedReadings": ["portrait", "head", "person"],
@@ -49,12 +49,12 @@
         "skin": "dark skin",
         "hair": "long locs with tapered sides",
         "eyewear": "glasses",
-        "facialHair": "moustache and separated chin hair",
+        "facialHair": "continuous moustache and separate chin hair",
         "prohibited": ["full-beard mass"]
       },
       "likenessTiers": {
         "16": "Primary ID-card noun with a dark portrait and essential long-locs/tapered-sides silhouette; omit small likeness details before weakening the card",
-        "24": "Resolve glasses, moustache, and separated chin hair within the card while preserving dark skin and the long-locs/tapered-sides silhouette",
+        "24": "Resolve glasses, a continuous moustache, and separate chin hair within the card while preserving dark skin and the long-locs/tapered-sides silhouette",
         "32": "Complete ID card plus dark skin and every approved likeness cue; no full-beard mass"
       },
       "acceptedReadings": ["ID card", "profile card", "portrait card"],
@@ -75,11 +75,11 @@
     {
       "id": "email",
       "group": "system",
-      "intendedObject": "sealed envelope with one subordinate stamp",
+      "intendedObject": "sealed envelope with symmetric closed side folds",
       "tiers": {
         "16": "Sealed envelope",
-        "24": "Sealed envelope with one yellow stamp",
-        "32": "Dimensional sealed envelope with one subordinate stamp"
+        "24": "Sealed envelope with symmetric closed side folds",
+        "32": "Dimensional sealed envelope with symmetric side folds and lower depth band"
       },
       "acceptedReadings": ["envelope", "mail", "sealed message"],
       "rejectedReadings": ["newsletter", "document", "folder"]

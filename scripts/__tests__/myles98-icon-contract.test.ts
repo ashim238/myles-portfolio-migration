@@ -316,7 +316,7 @@ describe("Myles 98 icon master contract", () => {
       "selected-work": REFINED_TARGET_METADATA["selected-work"].tiers,
       "about-myles": { "16": "Portrait card", "24": "ID-card frame and one information line", "32": "ID card with portrait and information lines" },
       resume: { "16": "Profile sheet with blue header", "24": "Subordinate blue paperclip and two bullets", "32": "Professional profile sheet with compact paperclip and structured lines" },
-      email: { "16": "Sealed envelope", "24": "Sealed envelope with one yellow stamp", "32": "Dimensional sealed envelope with one subordinate stamp" },
+      email: { "16": "Sealed envelope", "24": "Sealed envelope with symmetric closed side folds", "32": "Dimensional sealed envelope with symmetric side folds and lower depth band" },
       reminders: REFINED_TARGET_METADATA.reminders.tiers,
       "trini-roti": { "16": "Single memo sheet", "24": "Folded corner and handwritten lines", "32": "Personal memo sheet with folded corner, handwritten lines, and paper depth" },
       "loose-parts": REFINED_TARGET_METADATA["loose-parts"].tiers,
@@ -443,18 +443,18 @@ describe("Myles 98 icon master contract", () => {
       skin: "dark skin",
       hair: "long locs with tapered sides",
       eyewear: "glasses",
-      facialHair: "moustache and separated chin hair",
+      facialHair: "continuous moustache and separate chin hair",
       prohibited: ["full-beard mass"],
     };
     const likenessTiers = {
       start: {
         "16": "Primary portrait noun with dark skin and the essential head, glasses, and long-locs/tapered-sides silhouette; omit facial-hair microdetail before weakening the noun",
-        "24": "Resolve long locs with tapered sides, glasses, moustache, and separated chin hair while preserving the portrait silhouette",
+        "24": "Resolve long locs with tapered sides, glasses, a continuous moustache, and separate chin hair while preserving the portrait silhouette",
         "32": "Complete pixel portrait with dark skin and every approved likeness cue; no full-beard mass",
       },
       "about-myles": {
         "16": "Primary ID-card noun with a dark portrait and essential long-locs/tapered-sides silhouette; omit small likeness details before weakening the card",
-        "24": "Resolve glasses, moustache, and separated chin hair within the card while preserving dark skin and the long-locs/tapered-sides silhouette",
+        "24": "Resolve glasses, a continuous moustache, and separate chin hair within the card while preserving dark skin and the long-locs/tapered-sides silhouette",
         "32": "Complete ID card plus dark skin and every approved likeness cue; no full-beard mass",
       },
     };

@@ -1,102 +1,58 @@
 # Myles 98 Icon Period-Fidelity and Originality Review
 
-**Verdict:** CLEAN-CONTEXT RECOGNITION PASS; PENDING fresh informed period review
+**Verdict:** INTERNAL INFORMED REVIEW PASS. CLEAN-CONTEXT RECOGNITION IS
+PENDING.
 
-**Phase A status:** v7 replaces only UnderstandingFAFSA with the wide folded
-printed-newsletter master in `f65e88bd5a81677f4945230b5f572de402780441`.
-The versioned de-identified v7 recognition PASS is recorded in the
-family-consistency review's release ledger. Period-fidelity, originality, and
-P0–P3 judgments remain pending informed review.
+**Review date:** 2026-08-12
 
-**Review date:** 2026-08-11
+## Candidate lock
 
-## Evidence lock
+- **48-master aggregate:**
+  `1177575d1c60ccc75c74c7d700e5424790a8ba7618515a0315df0fa19a34005e`.
+- **Manifest:** `d58b7100f8209080eb62968306af505477726e48b6a9614f1f8fab55d9793697`.
+- **Canonical contact sheet:**
+  `bb04413d3dfb6eb47f1e257c5d3eb8442eb4534d60238bdf3ff4355243c29ba7`.
+- **Labeled native-size render:**
+  `/private/tmp/myles98-contact-labeled-task5-v9.png`,
+  `b9fb9af01b6994cb8e05e302d75657a73e96e30ef959ed90b0b32acea47c0f92`.
 
-- **Candidate HEAD:** `f65e88bd5a81677f4945230b5f572de402780441`
-- **48-master aggregate SHA-256:** `644b72a13e1362e8b7781436d502254047dadc1b64e79f014a4d9df248d098e8`
-- **Manifest SHA-256:** `6e33848ebcc6db7adbd934c528affe81411a580e6c3880c0b400bfd0d3f8f187`
-- **Canonical contact-sheet HTML SHA-256:** `a72a8c524e5a1e8c2bd90a8b2fe4056324185fa9f7fdea05aa789d0093e9fd2b`
-- **Labeled PNG SHA-256:** `6e7637b868570c85030961796d3cb7cac02771d0763ec59135035a50497d785e`; 1440 × 8431, device scale factor 1
-- **Anonymous batch 01 SHA-256:** `dd6c8303034cb196968a2a3d97dd423c6aeb29dea69ca1fdec3f4ddf6a03c4b3`
-- **Anonymous batch 02 SHA-256:** `8aa2074971250d71efc9d834f07e0f6df1a5cd4b6ff2bffabefa961a71b9fbb0`
-- **Anonymous batch 03 SHA-256:** `64fe294a8813d7a39bf996729ee800834364fba64f4f49bd9203091769bc4e8d`
+## Internal period and originality result
 
-The current reviewer material is the three-PNG flattened batch set. Each PNG
-visibly contains only four large arbitrary anonymous IDs and the `16px`,
-`24px`, and `32px` tiers on teal, system gray, and white.
+Severity counts are **P0 0, P1 0, P2 0, P3 0** for the current locked
+masters.
 
-**Recognition boundary:** the hash-bound de-identified ledger in
-`family-consistency-review.md` records the v7 PASS, including F708's
-`newsletter / news page` reading. It is not an informed period-fidelity or
-originality verdict, and it does not set P0–P3 counts to zero.
+The family uses the intended late-1990s pixel-object grammar: crisp integer
+edges, filled contour bands rather than global strokes, square or stepped
+corners, binary transparency, restrained indexed palettes, and light from the
+upper left. The detail added at 24px and 32px clarifies object material rather
+than adding generic gloss, soft shadows, or reusable bevels.
 
-## Mechanical baseline
+The most collision-prone concepts are specific and distinct:
 
-`npm run icons:verify` verifies all 48 masters. The verifier and focused
-suites enforce exact native viewBoxes, `shape-rendering="crispEdges"`,
-integer-aligned filled `path`, `rect`, or `polygon` primitives, binary alpha,
-and no strokes, curves, transforms, filters, masks, clipping, opacity,
-gradients, or rounded geometry.
+- Fresh Greens is a street-block map with a dark three-turn route and green
+  and orange endpoints, not a landscape, folded map, circuit, or music note.
+- UnderstandingFAFSA is a wide folded printed newsletter with a masthead,
+  print hierarchy, crease, lower leaf, and rear sheet, not a browser window.
+- Loose Parts is a non-branded 2+1 stack of wooden blocks without studs or a
+  proprietary palette.
+- Reset Desktop is one open restart C-loop with a compact rightward wedge,
+  never a device, cable, or chain link.
+- E-mail is a sealed envelope with symmetric side folds and no distracting
+  postal stamp at larger sizes.
 
-The current semantic contract binds literal nouns to the masters:
+No reviewed master copies a Windows, toy-brand, social-media, or other
+proprietary glyph or pixel arrangement. Windows 98 remains a construction
+reference, not a source to trace.
 
-- project dossier folder with two project cards, not a photo landscape;
-- checklist pad with two pairs at 16px and three checkbox/checkmark pairs at
-  24px and 32px, not a calendar;
-- CRT display-settings monitor with in-screen controls, not a television;
-- one connected open restart C-loop with a compact directional wedge and
-  intentional gap, not a fuel pump, instant camera, chain link, paperclip,
-  pencil, alert flag, transfer control, monitor cable, pointer, telephone
-  handset, or alarm clock. `reset desktop` remains an action label, not a
-  depicted device;
-- route-map tile with a compact street-block network, one highlighted
-  unbranched three-turn route, and distinct route markers, not a magic wand,
-  music note, folded map, notebook band, circuit, or landscape image;
-- literal non-branded compact 2+1 stack of three wooden construction blocks
-  with square fronts, lit upper-left planes, dark right planes, and upper-face
-  highlights at 24px and 32px, not books, boots, people, bottles, clothing,
-  a stair, a bar chart, or branded studs;
-- wide folded printed newsletter with a visible paper stack, rear sheet and
-  shadow, segmented blue masthead, headline, photo, copy columns, tangible
-  horizontal crease, and broad folded lower face, not browser chrome, a flat
-  screen, a dashboard tile, a framed web surface, envelope, folded map, or
-  mountain; and
-- handled rectangular shopping bag with one side depth plane, not a
-  wastebasket or basket.
+## Mechanical support
 
-Those are mechanical contract statements, not an informed period-fidelity
-verdict.
+The current source verifier, contact-sheet build, 216 focused icon tests, and
+two browser contact-sheet tests passed. These automate format and topology
+rules; they do not substitute for a clean-context noun-recognition result.
 
-## Fresh informed-review queue
+## Remaining gate
 
-Use the labeled PNG and exact hashes above to assess the late-1990s
-construction grammar:
-
-1. literal silhouette before decorative detail at native size;
-2. upper-left light planes, darker right/lower planes, and object-specific
-   depth;
-3. restrained pixel stepping, filled contour bands, and no smooth-vector
-   treatment;
-4. original treatment without copied Windows, toy-brand, social-media, or
-   proprietary map glyphs; and
-5. coherent palette and complexity across every 16px, 24px, and 32px tier.
-
-Record P0–P3 counts only after this inspection. Until then, all severity
-levels are **unassessed**.
-
-## Historical limitation
-
-The former period-fidelity PASS and all earlier batch gates are bound only to
-their earlier aggregates. The dense all-48 reader records are invalid and
-unusable for disposition because their labels did not permit reliable group
-association. The v5 failures remain valid historical diagnostics. The v6
-F601–F612 gate is a valid historical BLOCK for aggregate
-`5484181525aa995e6cdb66ef55228a04603a54c9a09a7b578a8cbd44715e4dd4`: its
-F608 UnderstandingFAFSA primary reading `webpage` blocks that candidate and is
-superseded for the changed concept by `f65e88bd5a81677f4945230b5f572de402780441`.
-No earlier evidence applies to this aggregate or the F701–F712 batches.
-
-The current aggregate instead has the v7 recognition PASS recorded in the
-de-identified family-consistency ledger.
-
-This review document does not authorize production integration.
+The v7 reader ledger is historical because later Email, Fresh Greens, Notes,
+portrait, and UnderstandingFAFSA master edits changed the aggregate. Two
+clean-context reviewers must receive only the v8 anonymous batches recorded
+in the family-consistency review before a final recognition claim is made.
