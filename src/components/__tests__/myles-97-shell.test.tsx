@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Myles97Shell } from "@/components/myles-97/myles-97-shell";
@@ -152,6 +152,7 @@ describe("Myles98 product shell", () => {
 
     await user.click(screen.getByRole("button", { name: "Start" }));
     const startMenu = screen.getByRole("group", { name: "Start menu" });
+    const firstAction = within(startMenu).getByRole("button", { name: "Selected Work" });
     const startMenuMasters = Array.from(
       startMenu.querySelectorAll<SVGImageElement>(
         "image[data-m98-icon-master]",
@@ -177,7 +178,7 @@ describe("Myles98 product shell", () => {
       expect(master).not.toHaveAttribute("transform");
     }
 
-    expect(within(startMenu).getByRole("button", { name: "Selected Work" })).toBeInTheDocument();
+    expect(firstAction).toHaveFocus();
     expect(within(startMenu).getByRole("button", { name: "About Myles" })).toBeInTheDocument();
     expect(within(startMenu).getByRole("button", { name: "Loose Parts" })).toBeInTheDocument();
     expect(within(startMenu).getByRole("button", { name: "Résumé" })).toBeInTheDocument();
@@ -190,6 +191,56 @@ describe("Myles98 product shell", () => {
 
     fireEvent.keyDown(window, { key: "Escape" });
     expect(screen.queryByRole("group", { name: "Start menu" })).toBeNull();
+    expect(screen.getByRole("button", { name: "Start" })).toHaveFocus();
     expect(screen.getByRole("region", { name: "Welcome to Myles 98" })).toBeInTheDocument();
+  });
+
+  it("contains Start focus and sends program choices into the launched window", async () => {
+    const user = userEvent.setup();
+    render(<Myles97Shell programs={programs} looseParts={looseParts} />);
+
+    await user.click(screen.getByRole("button", { name: "Start" }));
+    const startMenu = screen.getByRole("group", { name: "Start menu" });
+    const firstAction = within(startMenu).getByRole("button", { name: "Selected Work" });
+    const lastAction = within(startMenu).getByRole("button", { name: "Reset Desktop…" });
+
+    expect(firstAction).toHaveFocus();
+    await user.tab({ shift: true });
+    expect(lastAction).toHaveFocus();
+    await user.tab();
+    expect(firstAction).toHaveFocus();
+
+    await user.click(within(startMenu).getByRole("button", { name: "About Myles" }));
+    await waitFor(() => {
+      expect(screen.getByRole("region", { name: "About Myles" })).toHaveFocus();
+    });
+    expect(screen.getByRole("button", { name: "Start" })).not.toHaveFocus();
+  });
+
+  it("raises windows on keyboard entry and focuses the result of taskbar and close actions", async () => {
+    const user = userEvent.setup();
+    render(<Myles97Shell programs={programs} looseParts={looseParts} />);
+
+    const welcome = screen.getByRole("region", { name: "Welcome to Myles 98" });
+    fireEvent.focus(within(welcome).getByRole("button", { name: "Selected Work" }));
+    await waitFor(() => expect(welcome).toHaveAttribute("data-focused", "true"));
+
+    await user.click(
+      within(screen.getByRole("navigation", { name: "Open programs" })).getByRole(
+        "button",
+        { name: "Selected Work" },
+      ),
+    );
+    await waitFor(() => {
+      expect(screen.getByRole("region", { name: "Selected Work" })).toHaveFocus();
+    });
+
+    await user.click(
+      within(screen.getByRole("region", { name: "Selected Work" })).getByRole(
+        "button",
+        { name: "Close Selected Work" },
+      ),
+    );
+    await waitFor(() => expect(welcome).toHaveFocus());
   });
 });

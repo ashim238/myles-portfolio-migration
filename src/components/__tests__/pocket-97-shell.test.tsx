@@ -180,6 +180,58 @@ describe("Pocket 98", () => {
     expect(within(apps).getByRole("button", { name: /Loose Parts/ })).toBeInTheDocument();
   });
 
+  it("contains Pocket sheet focus, returns Escape to its opener, and focuses Back on launch", async () => {
+    installMatchMedia(true);
+    const user = userEvent.setup();
+    render(<Myles97Shell programs={programs} looseParts={looseParts} />);
+
+    const dock = await screen.findByRole("navigation", { name: "Pocket 98 dock" });
+    const start = within(dock).getByRole("button", { name: "Start" });
+    await user.click(start);
+
+    const startSheet = screen.getByRole("group", { name: "Pocket 98 Start" });
+    const firstAction = within(startSheet).getByRole("button", { name: "About Myles" });
+    const lastAction = within(startSheet).getByRole("link", { name: "E-mail" });
+    expect(firstAction).toHaveFocus();
+
+    await user.tab({ shift: true });
+    expect(lastAction).toHaveFocus();
+    await user.tab();
+    expect(firstAction).toHaveFocus();
+
+    await user.keyboard("{Escape}");
+    expect(screen.queryByRole("group", { name: "Pocket 98 Start" })).toBeNull();
+    expect(start).toHaveFocus();
+
+    await user.click(start);
+    await user.click(screen.getByRole("button", { name: "About Myles" }));
+    const app = screen.getByRole("region", { name: /About Myles/ });
+    expect(within(app).getByRole("button", { name: "Back" })).toHaveFocus();
+
+    await user.click(within(app).getByRole("button", { name: "Back" }));
+    await waitFor(() => {
+      expect(within(dock).getByRole("button", { name: "Work" })).toHaveFocus();
+    });
+  });
+
+  it("focuses the first Open Apps action and returns Escape to Open Apps", async () => {
+    installMatchMedia(true);
+    const user = userEvent.setup();
+    render(<Myles97Shell programs={programs} looseParts={looseParts} />);
+
+    const dock = await screen.findByRole("navigation", { name: "Pocket 98 dock" });
+    await user.click(within(dock).getByRole("button", { name: "Loose Parts" }));
+    const openApps = within(dock).getByRole("button", { name: "Open Apps" });
+    await user.click(openApps);
+
+    const appsSheet = screen.getByRole("group", { name: "Open Apps" });
+    expect(within(appsSheet).getByRole("button", { name: /Loose Parts/ })).toHaveFocus();
+
+    await user.keyboard("{Escape}");
+    expect(screen.queryByRole("group", { name: "Open Apps" })).toBeNull();
+    expect(openApps).toHaveFocus();
+  });
+
   it("keeps the workstation model when the capability query does not match", async () => {
     installMatchMedia(false);
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);

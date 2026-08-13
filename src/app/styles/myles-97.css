@@ -5,6 +5,8 @@
   --m97-active: #263cb8;
   --m97-signal: #ffe52f;
   --m97-ink: #111111;
+  --m97-focus-dark: #111111;
+  --m97-focus-light: #ffffff;
   --m97-paper: #f5f3ea;
   --m97-reader-ink: #171717;
   --m97-bevel-highlight: #fff;
@@ -184,12 +186,12 @@
   box-shadow:
     var(--m97-bevel-raised),
     4px 4px 0 rgb(17 17 17 / 28%);
-  will-change: transform;
 }
 
 .myles97-window[data-dragging="true"] {
   cursor: grabbing;
   user-select: none;
+  will-change: transform;
 }
 
 .myles97-titlebar {
@@ -257,6 +259,12 @@
   box-shadow: var(--m97-bevel-raised);
 }
 
+.myles97-titlebar-move .myles97-window-control {
+  width: 34px;
+  font-size: 9px;
+  letter-spacing: 0.01em;
+}
+
 .myles97-hit-target:active .myles97-window-control {
   border-color: var(--m97-bevel-dark) var(--m97-bevel-highlight)
     var(--m97-bevel-highlight) var(--m97-bevel-dark);
@@ -290,8 +298,14 @@
 
 .myles97-window :is(button, a, input, select, textarea):focus-visible,
 .myles97-shell :is(button, a, input, select, textarea):focus-visible {
-  outline: 3px solid var(--m97-signal);
+  outline: 3px solid var(--m97-focus-dark);
   outline-offset: 2px;
+}
+
+.myles97-window[data-focused="true"] .myles97-titlebar .myles97-hit-target:focus-visible,
+.myles97-task-button[data-focused="true"]:focus-visible,
+.myles97-start-menu-items :is(button, a):focus-visible {
+  outline-color: var(--m97-focus-light);
 }
 
 .myles97-desktop-shortcuts {
@@ -921,7 +935,8 @@
   text-decoration: none;
 }
 
-.myles97-start-menu-items :is(button, a):hover {
+.myles97-start-menu-items :is(button, a):hover,
+.myles97-start-menu-items :is(button, a):focus-visible {
   background: var(--m97-active);
   color: #fff;
 }
@@ -1070,6 +1085,7 @@
   .myles97-start-menu-brand,
   .myles97-reminders-widget-title,
   .myles97-start-menu-items :is(button, a):hover,
+  .myles97-start-menu-items :is(button, a):focus-visible,
   .myles97-case-study-link:hover,
   .project-enter-program-titlebar {
     background: Highlight;
@@ -1077,7 +1093,10 @@
   }
 
   .myles97-window :is(button, a, input, select, textarea):focus-visible,
-  .myles97-shell :is(button, a, input, select, textarea):focus-visible {
+  .myles97-shell :is(button, a, input, select, textarea):focus-visible,
+  .myles97-window[data-focused="true"] .myles97-titlebar .myles97-hit-target:focus-visible,
+  .myles97-task-button[data-focused="true"]:focus-visible,
+  .myles97-start-menu-items :is(button, a):focus-visible {
     outline-color: Highlight;
   }
 

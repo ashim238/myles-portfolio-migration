@@ -3,6 +3,7 @@
 import type { CSSProperties, PropsWithChildren, ReactNode } from "react";
 import type { ProgramId } from "@/lib/myles-97/programs";
 import type { WindowGeometry } from "@/lib/myles-97/state";
+import { clampWindowGeometry } from "@/lib/myles-97/state";
 import { iconForProgram, Myles97Icon } from "@/components/myles-97/icons";
 import { useWindowDrag } from "@/components/myles-97/use-window-drag";
 
@@ -54,6 +55,32 @@ export function ProgramWindow({
     transform: previewTransform,
     zIndex: stackIndex,
   };
+  const moveWithKeyboard = (key: string, shiftKey: boolean) => {
+    const distance = shiftKey ? 64 : 16;
+    const delta = {
+      ArrowLeft: { x: -distance, y: 0 },
+      ArrowRight: { x: distance, y: 0 },
+      ArrowUp: { x: 0, y: -distance },
+      ArrowDown: { x: 0, y: distance },
+    }[key];
+    if (!delta) return false;
+
+    onMove(
+      id,
+      clampWindowGeometry(
+        {
+          ...geometry,
+          x: geometry.x + delta.x,
+          y: geometry.y + delta.y,
+        },
+        {
+          width: Math.max(window.innerWidth, 320),
+          height: Math.max(window.innerHeight, 240),
+        },
+      ),
+    );
+    return true;
+  };
 
   return (
     <section
@@ -67,7 +94,11 @@ export function ProgramWindow({
       data-draggable-window="true"
       data-m97-program-window={id}
       style={style}
+      tabIndex={-1}
       onPointerDown={() => onFocus(id)}
+      onFocusCapture={() => {
+        if (!focused) onFocus(id);
+      }}
     >
       <header className="myles97-titlebar" {...dragHandleProps}>
         <span className="myles97-titlebar-icon" aria-hidden="true">
@@ -77,6 +108,20 @@ export function ProgramWindow({
           {title}
         </strong>
         <div className="myles97-window-controls" aria-label={`${title} window controls`}>
+          <button
+            type="button"
+            className="myles97-hit-target myles97-titlebar-move"
+            aria-label={`Move ${title}`}
+            title="Move with arrow keys. Hold Shift for larger steps."
+            onKeyDown={(event) => {
+              if (!moveWithKeyboard(event.key, event.shiftKey)) return;
+              event.preventDefault();
+            }}
+          >
+            <span className="myles97-window-control" aria-hidden="true">
+              Move
+            </span>
+          </button>
           <button
             type="button"
             className="myles97-hit-target"

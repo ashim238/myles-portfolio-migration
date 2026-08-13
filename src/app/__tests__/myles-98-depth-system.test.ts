@@ -425,18 +425,32 @@ describe("Myles 98 workstation depth system", () => {
       .myles97-start-menu-brand,
       .myles97-reminders-widget-title,
       .myles97-start-menu-items :is(button, a):hover,
+      .myles97-start-menu-items :is(button, a):focus-visible,
       .myles97-case-study-link:hover,
       .project-enter-program-titlebar
     `);
     const focusSelector = normalizeSelector(`
       .myles97-window :is(button, a, input, select, textarea):focus-visible,
+      .myles97-shell :is(button, a, input, select, textarea):focus-visible,
+      .myles97-window[data-focused="true"] .myles97-titlebar .myles97-hit-target:focus-visible,
+      .myles97-task-button[data-focused="true"]:focus-visible,
+      .myles97-start-menu-items :is(button, a):focus-visible
+    `);
+    const baseFocusSelector = normalizeSelector(`
+      .myles97-window :is(button, a, input, select, textarea):focus-visible,
       .myles97-shell :is(button, a, input, select, textarea):focus-visible
+    `);
+    const activeFocusSelector = normalizeSelector(`
+      .myles97-window[data-focused="true"] .myles97-titlebar .myles97-hit-target:focus-visible,
+      .myles97-task-button[data-focused="true"]:focus-visible,
+      .myles97-start-menu-items :is(button, a):focus-visible
     `);
 
     const flatten = rule(flattenSelector, media);
     const focus = rule(focusSelector, media);
     const selected = rule(selectedSelector, media);
-    const baseFocus = rule(focusSelector);
+    const baseFocus = rule(baseFocusSelector);
+    const activeFocus = rule(activeFocusSelector);
 
     expect(flatten.authored).toBe(
       "border-color: canvastext; background: canvas; color: canvastext; box-shadow: none;",
@@ -446,8 +460,9 @@ describe("Myles 98 workstation depth system", () => {
     );
     expect(focus.authored).toBe("outline-color: highlight;");
     expect(baseFocus.authored).toBe(
-      "outline: 3px solid var(--m97-signal); outline-offset: 2px;",
+      "outline: 3px solid var(--m97-focus-dark); outline-offset: 2px;",
     );
+    expect(activeFocus.authored).toBe("outline-color: var(--m97-focus-light);");
     expect(selected.order).toBeGreaterThan(flatten.order);
     expect(focus.order).toBeGreaterThan(selected.order);
     expect(specificity('.myles97-start-button[aria-expanded="true"]')).toEqual([

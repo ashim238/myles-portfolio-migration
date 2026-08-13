@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState, type Dispatch } from "react";
+import { useCallback, useEffect, useRef, useState, type Dispatch } from "react";
 import { DisplayProperties } from "@/components/myles-97/display-properties";
 import { Myles97Icon } from "@/components/myles-97/icons";
 import type { LoosePartSummary } from "@/components/myles-97/loose-parts-program";
@@ -89,16 +89,39 @@ export function WorkstationDesktop({
   const startButtonRef = useRef<HTMLButtonElement>(null);
   const remindersTriggerRef = useRef<HTMLButtonElement>(null);
   const recipeTriggerRef = useRef<HTMLButtonElement>(null);
+  const pendingWindowFocus = useRef(false);
   const minimized = new Set(state.minimizedPrograms);
   const projectById = new Map(programs.map((program) => [program.id, program]));
-  const openProgram = useCallback(
-    (id: ProgramId) => dispatch({ type: "open", id }),
+  const dispatchWithWindowFocus = useCallback(
+    (action: WorkstationAction) => {
+      pendingWindowFocus.current = true;
+      dispatch(action);
+    },
     [dispatch],
+  );
+  const openProgram = useCallback(
+    (id: ProgramId) => {
+      setStartOpen(false);
+      dispatchWithWindowFocus({ type: "open", id });
+    },
+    [dispatchWithWindowFocus],
   );
   const closeStart = useCallback(() => {
     setStartOpen(false);
     startButtonRef.current?.focus();
   }, []);
+
+  useEffect(() => {
+    if (!pendingWindowFocus.current) return;
+    pendingWindowFocus.current = false;
+    if (!state.focusedProgram) return;
+
+    const windowElement = document.querySelector<HTMLElement>(
+      `[data-m97-program-window="${state.focusedProgram}"]`,
+    );
+    if (!windowElement || windowElement.contains(document.activeElement)) return;
+    windowElement.focus();
+  }, [state.focusedProgram, state.minimizedPrograms, state.openPrograms]);
 
   const commonWindowProps = (id: ProgramId, stackIndex: number) => ({
     id,
@@ -110,8 +133,9 @@ export function WorkstationDesktop({
     onMove: (programId: ProgramId, geometry: WindowGeometry) =>
       dispatch({ type: "move", id: programId, geometry }),
     onMinimize: (programId: ProgramId) =>
-      dispatch({ type: "minimize", id: programId }),
-    onClose: (programId: ProgramId) => dispatch({ type: "close", id: programId }),
+      dispatchWithWindowFocus({ type: "minimize", id: programId }),
+    onClose: (programId: ProgramId) =>
+      dispatchWithWindowFocus({ type: "close", id: programId }),
   });
 
   return (
@@ -257,9 +281,9 @@ export function WorkstationDesktop({
         startOpen={startOpen}
         startButtonRef={startButtonRef}
         onToggleStart={() => setStartOpen((open) => !open)}
-        onFocus={(id) => dispatch({ type: "focus", id })}
-        onMinimize={(id) => dispatch({ type: "minimize", id })}
-        onRestore={(id) => dispatch({ type: "restore", id })}
+        onFocus={(id) => dispatchWithWindowFocus({ type: "focus", id })}
+        onMinimize={(id) => dispatchWithWindowFocus({ type: "minimize", id })}
+        onRestore={(id) => dispatchWithWindowFocus({ type: "restore", id })}
       />
     </div>
   );

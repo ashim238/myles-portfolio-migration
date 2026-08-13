@@ -298,8 +298,13 @@
 
 .pocket97-dock button:focus-visible,
 .pocket97-shell :is(button, a, input, select, textarea):focus-visible {
-  outline: 3px solid var(--m97-signal);
+  outline: 3px solid var(--m97-focus-dark);
   outline-offset: 2px;
+}
+
+.pocket97-sheet :is(button, a):focus-visible,
+.pocket97-dock button[aria-expanded="true"]:focus-visible {
+  outline-color: var(--m97-focus-light);
 }
 
 /* The server snapshot is workstation=false. Flatten that initial markup on
@@ -500,6 +505,12 @@
   .pocket97-dock button[aria-expanded="true"] {
     background: Highlight;
     color: HighlightText;
+  }
+
+  .pocket97-sheet :is(button, a):focus-visible,
+  .pocket97-dock button:focus-visible,
+  .pocket97-shell :is(button, a, input, select, textarea):focus-visible {
+    outline-color: Highlight;
   }
 }
 

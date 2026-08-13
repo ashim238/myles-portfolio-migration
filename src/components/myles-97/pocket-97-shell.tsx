@@ -3,6 +3,10 @@
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState, type Dispatch } from "react";
 import { DisplayProperties } from "@/components/myles-97/display-properties";
+import {
+  containTabFocus,
+  focusFirstAvailable,
+} from "@/components/myles-97/focus-management";
 import { iconForProgram, Myles97Icon } from "@/components/myles-97/icons";
 import type { LoosePartSummary } from "@/components/myles-97/loose-parts-program";
 import { ProjectProgram } from "@/components/myles-97/project-program";
@@ -53,6 +57,9 @@ export function Pocket97Shell({
   const startButtonRef = useRef<HTMLButtonElement>(null);
   const appsButtonRef = useRef<HTMLButtonElement>(null);
   const workButtonRef = useRef<HTMLButtonElement>(null);
+  const backButtonRef = useRef<HTMLButtonElement>(null);
+  const startSheetRef = useRef<HTMLDivElement>(null);
+  const appsSheetRef = useRef<HTMLDivElement>(null);
 
   const projectById = useMemo(
     () => new Map(programs.map((program) => [program.id, program])),
@@ -103,6 +110,16 @@ export function Pocket97Shell({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [appsOpen, startOpen]);
 
+  useEffect(() => {
+    const openSheet = startOpen ? startSheetRef.current : appsOpen ? appsSheetRef.current : null;
+    if (!openSheet) return;
+    if (!focusFirstAvailable(openSheet)) openSheet.focus();
+  }, [appsOpen, startOpen]);
+
+  useEffect(() => {
+    if (activeProgram) backButtonRef.current?.focus();
+  }, [activeProgram]);
+
   const recentPrograms = state.recentPrograms.filter(
     (id) => id !== "welcome" && id !== "selected-work" && id !== "reminders",
   );
@@ -117,7 +134,12 @@ export function Pocket97Shell({
         {activeProgram ? (
           <section className="pocket97-app" aria-labelledby="pocket97-app-title">
             <header className="pocket97-app-header">
-              <button type="button" className="pocket97-back" onClick={returnHome}>
+              <button
+                ref={backButtonRef}
+                type="button"
+                className="pocket97-back"
+                onClick={returnHome}
+              >
                 <span aria-hidden="true">←</span>
                 Back
               </button>
@@ -196,7 +218,14 @@ export function Pocket97Shell({
       </div>
 
       {startOpen ? (
-        <div className="pocket97-sheet" role="group" aria-label="Pocket 98 Start">
+        <div
+          ref={startSheetRef}
+          className="pocket97-sheet"
+          role="group"
+          aria-label="Pocket 98 Start"
+          tabIndex={-1}
+          onKeyDown={(event) => containTabFocus(event, startSheetRef.current)}
+        >
           <button type="button" onClick={() => openProgram("about")}>
             <Myles97Icon name="profile" size={24} variant="color" aria-hidden="true" />
             About Myles
@@ -217,7 +246,14 @@ export function Pocket97Shell({
       ) : null}
 
       {appsOpen ? (
-        <div className="pocket97-sheet" role="group" aria-label="Open Apps">
+        <div
+          ref={appsSheetRef}
+          className="pocket97-sheet"
+          role="group"
+          aria-label="Open Apps"
+          tabIndex={-1}
+          onKeyDown={(event) => containTabFocus(event, appsSheetRef.current)}
+        >
           {recentPrograms.length > 0 ? (
             recentPrograms
               .slice()

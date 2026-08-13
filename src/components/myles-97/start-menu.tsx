@@ -1,6 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import {
+  containTabFocus,
+  focusFirstAvailable,
+} from "@/components/myles-97/focus-management";
 import { Myles97Icon } from "@/components/myles-97/icons";
 import type { ProgramId } from "@/lib/myles-97/programs";
 import { siteConfig } from "@/lib/site-config";
@@ -18,8 +22,12 @@ export function StartMenu({
   onOpenProgram,
   onRequestReset,
 }: StartMenuProps) {
+  const menuRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!open) return;
+
+    focusFirstAvailable(menuRef.current);
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
@@ -32,11 +40,17 @@ export function StartMenu({
 
   const openThenClose = (id: ProgramId) => {
     onOpenProgram(id);
-    onClose();
   };
 
   return (
-    <div className="myles97-start-menu" id="myles97-start-menu" role="group" aria-label="Start menu">
+    <div
+      ref={menuRef}
+      className="myles97-start-menu"
+      id="myles97-start-menu"
+      role="group"
+      aria-label="Start menu"
+      onKeyDown={(event) => containTabFocus(event, menuRef.current)}
+    >
       <div className="myles97-start-menu-brand" aria-hidden="true">
         <span>Myles</span>
         <strong>98</strong>
@@ -71,7 +85,6 @@ export function StartMenu({
           type="button"
           onClick={() => {
             onRequestReset();
-            onClose();
           }}
         >
           <Myles97Icon name="reset-desktop" size={24} variant="color" aria-hidden="true" />

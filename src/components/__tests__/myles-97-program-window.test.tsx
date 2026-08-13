@@ -104,4 +104,66 @@ describe("ProgramWindow", () => {
       expect.objectContaining({ x: 80, y: 96, width: 720, height: 520 }),
     );
   });
+
+  it("raises an obscured window when keyboard focus enters it", () => {
+    const onFocus = vi.fn();
+
+    render(
+      <ProgramWindow
+        id="fresh-greens"
+        title="Fresh Greens.exe"
+        geometry={{ x: 40, y: 64, width: 720, height: 520 }}
+        focused={false}
+        onFocus={onFocus}
+        onMove={vi.fn()}
+        onMinimize={vi.fn()}
+        onClose={vi.fn()}
+      >
+        <button type="button">Program action</button>
+      </ProgramWindow>,
+    );
+
+    screen.getByRole("button", { name: "Program action" }).focus();
+
+    expect(onFocus).toHaveBeenCalledWith("fresh-greens");
+  });
+
+  it("moves with arrow keys through a dedicated clamped titlebar control", async () => {
+    const user = userEvent.setup();
+    const onMove = vi.fn();
+
+    render(
+      <ProgramWindow
+        id="fresh-greens"
+        title="Fresh Greens.exe"
+        geometry={{ x: 40, y: 64, width: 720, height: 520 }}
+        focused
+        onFocus={vi.fn()}
+        onMove={onMove}
+        onMinimize={vi.fn()}
+        onClose={vi.fn()}
+      >
+        <p>Program content</p>
+      </ProgramWindow>,
+    );
+
+    const move = screen.getByRole("button", { name: "Move Fresh Greens.exe" });
+    await user.click(move);
+    await user.keyboard("{ArrowRight}");
+
+    expect(onMove).toHaveBeenLastCalledWith("fresh-greens", {
+      x: 56,
+      y: 64,
+      width: 720,
+      height: 520,
+    });
+
+    await user.keyboard("{Shift>}{ArrowDown}{/Shift}");
+    expect(onMove).toHaveBeenLastCalledWith("fresh-greens", {
+      x: 40,
+      y: 128,
+      width: 720,
+      height: 520,
+    });
+  });
 });
