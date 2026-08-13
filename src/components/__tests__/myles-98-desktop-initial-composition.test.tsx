@@ -8,6 +8,7 @@ import type { ProgramDefinition } from "@/lib/myles-97/programs";
 import {
   createInitialWorkstationState,
   workstationReducer,
+  type WorkstationState,
 } from "@/lib/myles-97/state";
 
 const desktopStyles = readFileSync(
@@ -52,14 +53,13 @@ function DesktopHarness({ bootCompleted = false }: { bootCompleted?: boolean }) 
     undefined,
     () => {
       const initial = createInitialWorkstationState();
-      return bootCompleted
-        ? {
+      const bootedState: WorkstationState = {
             ...initial,
             bootCompleted: true,
             openPrograms: ["selected-work", "welcome"],
             focusedProgram: "welcome",
-          }
-        : initial;
+          };
+      return bootCompleted ? bootedState : initial;
     },
   );
 
@@ -108,8 +108,9 @@ describe("Myles 98 desktop initial composition", () => {
         .getAttribute("aria-pressed"),
     ).toBe("true");
     expect(
-      within(selectedWork).getByRole("button", { name: "Open Fresh Greens.exe program" })
-        .disabled,
+      (within(selectedWork).getByRole("button", {
+        name: "Open Fresh Greens.exe program",
+      }) as HTMLButtonElement).disabled,
     ).toBe(false);
   });
 

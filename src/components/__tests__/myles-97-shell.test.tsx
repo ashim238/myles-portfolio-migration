@@ -85,7 +85,7 @@ describe("Myles98 product shell", () => {
     sessionStorage.clear();
   });
 
-  it("renders the approved first impression with Welcome focused over Selected Work", () => {
+  it("renders the approved first impression with Selected Work focused beside Welcome", () => {
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
 
     expect(screen.getByRole("heading", { name: "Myles Ashitey" })).toBeInTheDocument();
@@ -98,9 +98,12 @@ describe("Myles98 product shell", () => {
 
     expect(screen.getByRole("region", { name: "Welcome to Myles 98" })).toHaveAttribute(
       "data-focused",
+      "false",
+    );
+    expect(screen.getByRole("region", { name: "Selected Work" })).toHaveAttribute(
+      "data-focused",
       "true",
     );
-    expect(screen.getByRole("region", { name: "Selected Work" })).toBeInTheDocument();
     expect(screen.getAllByRole("link", { name: /Open .* case study/ })).toHaveLength(4);
   });
 
