@@ -5,7 +5,7 @@ import { expectedMasterPath } from "../lib/myles98-icon-contract.mjs";
 
 const ROOT = "docs/design-assets/myles98-icons";
 const GRIDS = [16, 24, 32] as const;
-const FRONT_FILLS = ["#c58c45", "#d6a45c", "#c89149"];
+const FRONT_FILLS = ["#c94c4c", "#e0af3d", "#4e91bd"];
 const LEGACY_PRODUCT_FILLS = ["#667d91", "#5f8d73", "#bd7654", "#90a7b5", "#8eaf8d", "#d69c78"];
 
 type Grid = (typeof GRIDS)[number];
@@ -89,6 +89,7 @@ describe("Myles 98 Loose Parts wooden construction blocks", () => {
     expect(source).not.toMatch(new RegExp(LEGACY_PRODUCT_FILLS.join("|"), "i"));
     expect(source).not.toMatch(/<path\b|<circle\b|<ellipse\b|stud|lego|boot|shoe|toe|sole|book|page|person|people|head|leg|arm/i);
     expect(fronts).toHaveLength(3);
+    expect(new Set(fronts.map(({ fill }) => fill))).toHaveLength(3);
     expect(fronts.every(({ width, height }) => width === height)).toBe(true);
     expect(upper!.width).toBe(left!.width);
     expect(upper!.width).toBe(right!.width);

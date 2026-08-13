@@ -6,10 +6,10 @@ import { expectedMasterPath } from "../lib/myles98-icon-contract.mjs";
 const ROOT = "docs/design-assets/myles98-icons";
 const GRIDS = [16, 24, 32] as const;
 const OUTLINE_FILL = "#20242a";
-const FRONT_FILLS = ["#c58c45", "#d6a45c", "#c89149"];
-const TOP_FILLS = ["#ffe8b0", "#f4d99a", "#f0ce85"];
-const SIDE_FILLS = ["#805224", "#8e5d2a", "#71451f"];
-const GRAIN_FILL = "#6b4325";
+const FRONT_FILLS = ["#c94c4c", "#e0af3d", "#4e91bd"];
+const TOP_FILLS = ["#f38b78", "#ffe07b", "#8dc7e5"];
+const SIDE_FILLS = ["#8f3037", "#a46f24", "#2f628e"];
+const GRAIN_FILL = "#822d39";
 const LEGACY_V5_FILLS = ["#667d91", "#5f8d73", "#bd7654", "#90a7b5", "#8eaf8d", "#d69c78"];
 
 type Grid = (typeof GRIDS)[number];
@@ -19,53 +19,35 @@ type Pixel = { color: string; x: number; y: number };
 
 const CUBES = new Map<Grid, Cube[]>([
   [16, [
-    { front: { fill: "#c58c45", x: 3, y: 6, width: 3, height: 3 }, depth: 1, top: "#ffe8b0", side: "#805224" },
-    { front: { fill: "#d6a45c", x: 2, y: 10, width: 3, height: 3 }, depth: 1, top: "#f4d99a", side: "#8e5d2a" },
-    { front: { fill: "#c89149", x: 7, y: 10, width: 3, height: 3 }, depth: 1, top: "#f0ce85", side: "#71451f" },
+    { front: { fill: "#c94c4c", x: 3, y: 6, width: 3, height: 3 }, depth: 1, top: "#f38b78", side: "#8f3037" },
+    { front: { fill: "#e0af3d", x: 2, y: 10, width: 3, height: 3 }, depth: 1, top: "#ffe07b", side: "#a46f24" },
+    { front: { fill: "#4e91bd", x: 7, y: 10, width: 3, height: 3 }, depth: 1, top: "#8dc7e5", side: "#2f628e" },
   ]],
   [24, [
-    { front: { fill: "#c58c45", x: 5, y: 8, width: 5, height: 5 }, depth: 2, top: "#ffe8b0", side: "#805224" },
-    { front: { fill: "#d6a45c", x: 4, y: 15, width: 5, height: 5 }, depth: 2, top: "#f4d99a", side: "#8e5d2a" },
-    { front: { fill: "#c89149", x: 12, y: 15, width: 5, height: 5 }, depth: 2, top: "#f0ce85", side: "#71451f" },
+    { front: { fill: "#c94c4c", x: 5, y: 8, width: 5, height: 5 }, depth: 2, top: "#f38b78", side: "#8f3037" },
+    { front: { fill: "#e0af3d", x: 4, y: 15, width: 5, height: 5 }, depth: 2, top: "#ffe07b", side: "#a46f24" },
+    { front: { fill: "#4e91bd", x: 12, y: 15, width: 5, height: 5 }, depth: 2, top: "#8dc7e5", side: "#2f628e" },
   ]],
   [32, [
-    { front: { fill: "#c58c45", x: 8, y: 11, width: 7, height: 7 }, depth: 2, top: "#ffe8b0", side: "#805224" },
-    { front: { fill: "#d6a45c", x: 6, y: 20, width: 7, height: 7 }, depth: 2, top: "#f4d99a", side: "#8e5d2a" },
-    { front: { fill: "#c89149", x: 17, y: 20, width: 7, height: 7 }, depth: 2, top: "#f0ce85", side: "#71451f" },
+    { front: { fill: "#c94c4c", x: 8, y: 11, width: 7, height: 7 }, depth: 2, top: "#f38b78", side: "#8f3037" },
+    { front: { fill: "#e0af3d", x: 6, y: 20, width: 7, height: 7 }, depth: 2, top: "#ffe07b", side: "#a46f24" },
+    { front: { fill: "#4e91bd", x: 17, y: 20, width: 7, height: 7 }, depth: 2, top: "#8dc7e5", side: "#2f628e" },
   ]],
 ]);
 
 const HIGHLIGHTS = new Map<Grid, Rect[]>([
   [16, []],
-  [24, [
-    { fill: "#fff6d3", x: 8, y: 7, width: 2, height: 1 },
-    { fill: "#fff0c4", x: 7, y: 14, width: 2, height: 1 },
-    { fill: "#fff0c4", x: 15, y: 14, width: 2, height: 1 },
-  ]],
-  [32, [
-    { fill: "#fff6d3", x: 12, y: 10, width: 3, height: 1 },
-    { fill: "#fff0c4", x: 10, y: 19, width: 3, height: 1 },
-    { fill: "#fff0c4", x: 21, y: 19, width: 3, height: 1 },
-  ]],
+  [24, []],
+  [32, []],
 ]);
 
 const GRAIN_MARKS = new Map<Grid, Rect[]>([
   [16, []],
   [24, [
     { fill: GRAIN_FILL, x: 6, y: 10, width: 2, height: 1 },
-    { fill: GRAIN_FILL, x: 8, y: 11, width: 1, height: 1 },
-    { fill: GRAIN_FILL, x: 5, y: 17, width: 2, height: 1 },
-    { fill: GRAIN_FILL, x: 13, y: 17, width: 2, height: 1 },
-    { fill: GRAIN_FILL, x: 7, y: 18, width: 1, height: 1 },
-    { fill: GRAIN_FILL, x: 15, y: 18, width: 1, height: 1 },
   ]],
   [32, [
     { fill: GRAIN_FILL, x: 9, y: 13, width: 3, height: 1 },
-    { fill: GRAIN_FILL, x: 12, y: 15, width: 2, height: 1 },
-    { fill: GRAIN_FILL, x: 7, y: 22, width: 3, height: 1 },
-    { fill: GRAIN_FILL, x: 18, y: 22, width: 3, height: 1 },
-    { fill: GRAIN_FILL, x: 10, y: 24, width: 2, height: 1 },
-    { fill: GRAIN_FILL, x: 21, y: 24, width: 2, height: 1 },
   ]],
 ]);
 
@@ -169,7 +151,7 @@ function hasV6WoodenBlockAnatomy(source: string, grid: Grid) {
   const checks = {
     cubes: cubeChecks.every(Boolean),
     forbidden: !/<(?:path|circle|ellipse|line)\b|stud|lego|book|page|boot|shoe|toe|sole|person|people|head|leg|arm/i.test(source),
-    fronts: fronts.length === cubes.length && fronts.every((front, index) => sameRect(front, cubes[index]!.front)),
+    fronts: fronts.length === cubes.length && fronts.every((front, index) => sameRect(front, cubes[index]!.front)) && new Set(fronts.map(({ fill }) => fill)).size === 3,
     grain: grain.length === GRAIN_MARKS.get(grid)!.length && grain.every((mark, index) => sameRect(mark, GRAIN_MARKS.get(grid)![index]!)),
     highlights: highlights.length === HIGHLIGHTS.get(grid)!.length && highlights.every((highlight, index) => sameRect(highlight, HIGHLIGHTS.get(grid)![index]!)),
     legacy: !new RegExp(LEGACY_V5_FILLS.join("|"), "i").test(source),
@@ -255,7 +237,7 @@ function enclosedTransparency(alpha: number[], grid: Grid) {
 }
 
 describe("Myles 98 Loose Parts v6 literal construction-block precision", () => {
-  it.each(GRIDS)("uses exact, independent wooden cube anatomy at %ipx", async (grid) => {
+  it.each(GRIDS)("uses exact, independently painted construction-block anatomy at %ipx", async (grid) => {
     const source = readFileSync(expectedMasterPath(ROOT, "loose-parts", grid), "utf8");
     const raster = await nativePixels(source, grid);
     const visibleColors = new Set(raster.pixels.map(({ color }) => color));
@@ -264,16 +246,19 @@ describe("Myles 98 Loose Parts v6 literal construction-block precision", () => {
     expect(raster.alpha.every((value) => value === 0 || value === 0xff)).toBe(true);
     expect(componentCount(raster.pixels)).toBe(1);
     expect(enclosedTransparency(raster.alpha, grid)).toEqual([]);
-    expect(visibleColors.size).toBeGreaterThanOrEqual(grid === 16 ? 8 : 11);
+    expect(visibleColors.size).toBeGreaterThanOrEqual(grid === 16 ? 9 : 10);
   });
 
-  it.each(GRIDS)("rejects v5 bottle-or-clothing regressions at %ipx", (grid) => {
+  it.each(GRIDS)("rejects monochrome box, bottle, or clothing regressions at %ipx", (grid) => {
     const source = readFileSync(expectedMasterPath(ROOT, "loose-parts", grid), "utf8");
     const upper = CUBES.get(grid)![0]!.front;
     const v5Palette = source
-      .replace("#c58c45", "#667d91")
-      .replace("#d6a45c", "#5f8d73")
-      .replace("#c89149", "#bd7654");
+      .replace("#c94c4c", "#667d91")
+      .replace("#e0af3d", "#5f8d73")
+      .replace("#4e91bd", "#bd7654");
+    const monochromeBoxes = source
+      .replaceAll("#e0af3d", "#c94c4c")
+      .replaceAll("#4e91bd", "#c94c4c");
     const tallBottleBody = source.replace(
       `fill="${upper.fill}" x="${upper.x}" y="${upper.y}" width="${upper.width}" height="${upper.height}"`,
       `fill="${upper.fill}" x="${upper.x}" y="${upper.y}" width="${upper.width}" height="${upper.height + 2}"`,
@@ -285,6 +270,7 @@ describe("Myles 98 Loose Parts v6 literal construction-block precision", () => {
 
     expect(hasV6WoodenBlockAnatomy(source, grid)).toBe(true);
     expect(hasV6WoodenBlockAnatomy(v5Palette, grid)).toBe(false);
+    expect(hasV6WoodenBlockAnatomy(monochromeBoxes, grid)).toBe(false);
     expect(hasV6WoodenBlockAnatomy(tallBottleBody, grid)).toBe(false);
     expect(hasV6WoodenBlockAnatomy(badgeLikeClothingMark, grid)).toBe(false);
   });

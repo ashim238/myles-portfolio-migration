@@ -10,7 +10,7 @@ const GPS_HOUSING = "#627353";
 const GPS_SCREEN = "#d8dfc3";
 const GPS_CONTROL = "#205a40";
 const DESTINATION_FILL = "#f27524";
-const LOOSE_FRONT_FILLS = ["#c58c45", "#d6a45c", "#c89149"];
+const LOOSE_FRONT_FILLS = ["#c94c4c", "#e0af3d", "#4e91bd"];
 const MIN_LOOSE_VISIBLE_COLORS = new Map([[16, 8], [24, 10], [32, 10]]);
 
 type Pixel = {
