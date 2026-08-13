@@ -142,3 +142,70 @@ That record remains an honest historical result, but later Email, Fresh Greens,
 Notes, portrait, and FAFSA master edits mean it cannot approve the current
 aggregate. The historical ledger is retained for provenance, not relabeled as
 current evidence.
+
+## v11 to v13 targeted redraw and recognition record
+
+**Verdict:** REVISE. The four v10 noun-recognition failures were redrawn with
+literal object-specific anatomy, then re-rendered and re-tested. The resulting
+source and mechanical contract are current; the strict source-free recognition
+result is mixed and is recorded here without being upgraded to a family-wide
+PASS.
+
+### Current candidate lock
+
+- **48-master aggregate:**
+  `750a02964c6d937f8252e3dacc067700c800157e273a0dfdaa50d38e8edb3226`.
+- **Manifest:**
+  `aa70f4a8577107fd81bcc4cbd0c804ec48a959b8d5c8a3157469bb852aa0ca61`.
+- **Canonical contact sheet:**
+  `fd650aabefe43abdbb1b4b577b5d9a326a9a99e0f179ab68ce81e37489524178`.
+- **Target-only anonymous render IDs:** F001 TikTok catalog, F002 Fresh
+  Greens, F011 Loose Parts, and F013 Navi. The identifiers were mapped only
+  after reviewers returned their readings.
+- **Current target images:**
+  - F001: `e53da32d0dcd95ca54989b47170cff8d12fcbdcb67b6735003408f4f2ad54f48`
+  - F002: `4da04e3a140192883ffad5d134f881be1a821103d2b30a10fb3567371c7a0af4`
+  - F011: `93c3db26d04951070b468b242a6e3dc08568d0a20fa11180d460b75ddd0808a9`
+  - F013: `7982a540aabead74e81bcbbe8a1611af2b352b481d29e012f443fb394f30172d`
+
+### What changed
+
+- TikTok catalog is an upright U-handled shopping bag. Its 16px master stays
+  flat; 24px and 32px add exactly one depth plane to avoid a floppy-disk slot.
+- Fresh Greens is a rugged handheld GPS receiver with a separate antenna,
+  recessed route display, cross D-pad, and physical controls, rather than a
+  generic landscape display.
+- Loose Parts is a hard-edged red, yellow, and blue 2+1 wooden-cube stack with
+  cuboid planes. The larger tiers add one restrained recess, not a branded
+  stud or organic surface treatment.
+- Navi is a pointed map pin at 16px and a pin above a separate scalloped-awning
+  storefront at 24px and 32px.
+
+### Source-free readings
+
+Two clean-context reviewers saw only the four target PNGs. Their raw noun
+readings are intentionally retained even where they conflict:
+
+| Family | Reviewer A primary noun | Reviewer B primary noun | Strict disposition |
+| --- | --- | --- | --- |
+| F001 TikTok catalog | File folder, with shopping bag as alternative | Shopping bag | REVISE |
+| F002 Fresh Greens | Vending machine / arcade cabinet | Walkie-talkie / portable radio | REVISE |
+| F011 Loose Parts | Toy building blocks, low confidence | Stack of books, with colored building blocks as alternative | REVISE |
+| F013 Navi | Hot-air balloon, with map pin as alternative | Map pin | REVISE |
+
+The four masters are mechanically valid and visually more literal than their
+v10 predecessors, but the protocol requires both reviewers to land on an
+approved primary noun. That has not happened for this aggregate. Do not cite
+this section as a clean-context PASS. A future redraw should choose a simpler
+metaphor for Fresh Greens, and a future reviewer should receive a new
+hash-bound target set before these outcomes are reconsidered.
+
+### Mechanical support for this candidate
+
+- 48 of 48 master sources verify and the rebuilt contact sheet is byte-stable.
+- Eight focused source, contract, topology, and recognition suites pass 137
+  tests.
+- Contact-sheet source and browser suites pass 8 tests, including opaque wells,
+  exact 6x raster blocks, and blind-mode label isolation.
+- TypeScript passes without emit and `git diff --check` is clean at the time of
+  this record.

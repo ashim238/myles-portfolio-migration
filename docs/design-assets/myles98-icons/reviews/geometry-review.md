@@ -69,3 +69,18 @@ This review cannot act as a clean-context recognition evaluation because the
 reviewer saw names and source. Use the three source-free v8 batches listed in
 the family-consistency review with two reviewers who have not seen the source,
 manifest, labels, or earlier conclusions.
+
+## Latest mechanical geometry addendum
+
+The four v10 target masters have since been redrawn and the contact sheet has
+been rebuilt. This is a mechanical addendum, not an informed or blind
+recognition PASS.
+
+- Current aggregate: `750a02964c6d937f8252e3dacc067700c800157e273a0dfdaa50d38e8edb3226`.
+- Current manifest: `aa70f4a8577107fd81bcc4cbd0c804ec48a959b8d5c8a3157469bb852aa0ca61`.
+- Current sheet: `fd650aabefe43abdbb1b4b577b5d9a326a9a99e0f179ab68ce81e37489524178`.
+- All 48 current masters pass source validation with integer hard-edged
+  geometry, binary alpha, and transparent perimeters. Master/public mirrors
+  remain byte-identical.
+- The current source-free outcome is mixed and lives in the family-consistency
+  review. It remains the controlling semantic gate.

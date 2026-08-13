@@ -56,11 +56,11 @@ const REFINED_TARGET_METADATA = {
     rejectedReadings: ["fuel pump", "instant camera", "display properties", "open apps", "reload browser", "monitor alert", "monitor with alert", "alert flag", "opposing transfer arrows", "transfer control", "monitor cable", "pointer", "monitor with restart arrow", "monitor with restart loop", "reset monitor", "red telephone handset", "telephone handset", "alarm clock", "chain link", "paperclip", "pencil"],
   },
   "fresh-greens": {
-    intendedObject: "physical GPS navigation unit with a routed map screen, lower confirmation control, and dimensional device casing",
+    intendedObject: "rugged upright handheld GPS receiver with a separate top antenna, recessed routed map display, rounded cross D-pad, tactile function buttons, and dimensional casing",
     tiers: {
-      "16": "Compact GPS navigator with a routed map screen and lower control",
-      "24": "Beveled GPS navigation unit with a map screen, water, routed destination, lower control, and side button",
-      "32": "Dimensional GPS navigation unit with a map screen, water and park cues, routed destination, lower control, and side button",
+      "16": "Compact rugged GPS receiver with separate antenna, map display, rounded cross D-pad, and function buttons",
+      "24": "Rugged handheld GPS receiver with separate antenna, recessed routed map, rounded cross D-pad, and function buttons",
+      "32": "Dimensional rugged GPS receiver with separate antenna, recessed map, water and park cues, rounded cross D-pad, and function buttons",
     },
     acceptedReadings: ["GPS navigator", "navigation device", "route planner"],
     rejectedReadings: ["desktop monitor", "computer", "television", "generic app window", "magic wand", "wand", "notebook band", "folded page", "landscape image", "landscape photograph", "groceries", "leaf logo", "city guide", "music note", "musical note", "folded map", "circuit"],
@@ -76,24 +76,24 @@ const REFINED_TARGET_METADATA = {
     rejectedReadings: ["web page layout", "webpage", "framed web surface", "dashboard", "browser chrome", "browser window", "web application", "app window", "flat screen", "dashboard tile", "open envelope", "letter", "sealed email", "folded map", "mountain", "resume", "folder"],
   },
   "loose-parts": {
-    intendedObject: "literal non-branded compact 2+1 stack of three independent wooden construction blocks with square front faces, visible top/right planes, and upper-face highlights at 24/32",
+    intendedObject: "literal non-branded compact 2+1 stack of three painted wooden construction cubes with square faces and visible top/right planes",
     tiers: {
-      "16": "Compact 2+1 stack of three wooden construction blocks",
-      "24": "Compact 2+1 stack of three wooden construction blocks with visible top/right planes and upper-face highlights",
-      "32": "Compact 2+1 stack of three wooden construction blocks with visible top/right planes and upper-face highlights",
+      "16": "Red, yellow, and blue 2+1 construction-cube stack with visible top/right planes",
+      "24": "Red, yellow, and blue 2+1 wooden construction-cube stack with square faces and a restrained upper-cube recess",
+      "32": "Red, yellow, and blue 2+1 wooden construction-cube stack with square faces, visible top/right planes, and a restrained upper-cube recess",
     },
     acceptedReadings: ["building blocks", "construction blocks", "toy blocks"],
-    rejectedReadings: ["boots", "pair of boots", "people", "group of people", "branded studs", "LEGO", "food", "table", "furniture", "steps", "bar chart", "books", "stack of books", "book stack", "bottle", "clothing"],
+    rejectedReadings: ["boots", "pair of boots", "people", "group of people", "branded studs", "LEGO", "food", "table", "furniture", "steps", "bar chart", "books", "stack of books", "book stack", "cardboard boxes", "box stack", "logs", "bottle", "clothing"],
   },
   "tiktok-catalog": {
-    intendedObject: "handled rectangular shopping bag with one side depth plane",
+    intendedObject: "upright handled shopping bag with a framed opening and a single side depth plane at 24/32",
     tiers: {
-      "16": "Handled shopping bag silhouette",
-      "24": "Handled rectangular shopping bag with one side plane",
-      "32": "Handled dimensional shopping bag with framed opening and side depth plane",
+      "16": "U-handled upright shopping bag",
+      "24": "U-handled upright shopping bag with framed opening and one side depth plane",
+      "32": "Dimensional U-handled upright shopping bag with framed opening and one side depth plane",
     },
     acceptedReadings: ["shopping bag", "retail bag", "product bag"],
-    rejectedReadings: ["wastebasket", "basket", "shopping basket", "small tote", "purse", "catalog page", "TikTok logo", "music note", "social media app", "book", "dashboard"],
+    rejectedReadings: ["wastebasket", "basket", "shopping basket", "small tote", "purse", "catalog page", "floppy disk", "save icon", "diskette", "TikTok logo", "music note", "social media app", "book", "dashboard"],
   },
 } as const;
 
@@ -290,21 +290,21 @@ describe("Myles 98 icon master contract", () => {
     expect(validateManifest(manifest)).toEqual([]);
   });
 
-  it("locks Loose Parts to literal wooden construction blocks rather than books, boots, people, a stair, or a chart", () => {
+  it("locks Loose Parts to painted wooden construction blocks rather than books, boxes, boots, people, a stair, or a chart", () => {
     const manifest = JSON.parse(
       readFileSync("docs/design-assets/myles98-icons/manifest.json", "utf8"),
     );
     const looseParts = manifest.icons.find((icon: { id: string }) => icon.id === "loose-parts");
 
     expect(looseParts.intendedObject).toBe(
-      "literal non-branded compact 2+1 stack of three independent wooden construction blocks with square front faces, visible top/right planes, and upper-face highlights at 24/32",
+      "literal non-branded compact 2+1 stack of three painted wooden construction cubes with square faces and visible top/right planes",
     );
     expect(looseParts.acceptedReadings).toEqual([
       "building blocks",
       "construction blocks",
       "toy blocks",
     ]);
-    expect(looseParts.rejectedReadings).toEqual(["boots", "pair of boots", "people", "group of people", "branded studs", "LEGO", "food", "table", "furniture", "steps", "bar chart", "books", "stack of books", "book stack", "bottle", "clothing"]);
+    expect(looseParts.rejectedReadings).toEqual(["boots", "pair of boots", "people", "group of people", "branded studs", "LEGO", "food", "table", "furniture", "steps", "bar chart", "books", "stack of books", "book stack", "cardboard boxes", "box stack", "logs", "bottle", "clothing"]);
   });
 
   it("locks the approved tier cue spelling and case into metadata and the manifest", () => {
@@ -326,7 +326,7 @@ describe("Myles 98 icon master contract", () => {
       "generic-app": { "16": "Single application window", "24": "Blue titlebar and inner pane", "32": "Neutral program window with restrained chrome depth" },
       "fresh-greens": REFINED_TARGET_METADATA["fresh-greens"].tiers,
       understandingfafsa: REFINED_TARGET_METADATA.understandingfafsa.tiers,
-      navi: { "16": "Location marker", "24": "Location marker with orange center above storefront", "32": "Location marker above a widened neighborhood storefront" },
+      navi: { "16": "Pointed location marker", "24": "Two-plane location marker above a roofed storefront with scalloped awning", "32": "Pointed two-plane marker with orange cue above storefront facade, awning, window, and door" },
       "tiktok-catalog": REFINED_TARGET_METADATA["tiktok-catalog"].tiers,
     };
 
@@ -418,8 +418,8 @@ describe("Myles 98 icon master contract", () => {
     const navi = manifest.icons.find((icon: { id: string }) => icon.id === "navi");
 
     expect(navi.intendedObject).toBe("location marker above a neighborhood storefront");
-    expect(navi.tiers["24"]).toBe("Location marker with orange center above storefront");
-    expect(navi.tiers["32"]).toBe("Location marker above a widened neighborhood storefront");
+    expect(navi.tiers["24"]).toBe("Two-plane location marker above a roofed storefront with scalloped awning");
+    expect(navi.tiers["32"]).toBe("Pointed two-plane marker with orange cue above storefront facade, awning, window, and door");
   });
 
   it("locks TikTok to a handled shopping bag rather than a bin, basket, or branded app mark", () => {
@@ -428,10 +428,10 @@ describe("Myles 98 icon master contract", () => {
     );
     const catalog = manifest.icons.find((icon: { id: string }) => icon.id === "tiktok-catalog");
 
-    expect(catalog.intendedObject).toBe("handled rectangular shopping bag with one side depth plane");
+    expect(catalog.intendedObject).toBe("upright handled shopping bag with a framed opening and a single side depth plane at 24/32");
     expect(catalog.acceptedReadings).toEqual(["shopping bag", "retail bag", "product bag"]);
     expect(catalog.rejectedReadings).toEqual(
-      expect.arrayContaining(["wastebasket", "basket", "small tote", "purse", "catalog page", "TikTok logo", "music note", "social media app"]),
+      expect.arrayContaining(["wastebasket", "basket", "small tote", "purse", "catalog page", "floppy disk", "save icon", "diskette", "TikTok logo", "music note", "social media app"]),
     );
   });
 

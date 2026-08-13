@@ -340,7 +340,7 @@ describe("Myles 98 UnderstandingFAFSA and TikTok Catalog refinement", () => {
     );
   });
 
-  it.each(GRIDS)("makes TikTok Catalog %ipx a handled rectangular shopping bag with one side depth plane", async (grid) => {
+  it.each(GRIDS)("makes TikTok Catalog %ipx an upright handled shopping bag with depth at 24px and 32px", async (grid) => {
     const source = sourceFor("tiktok-catalog", grid);
     const raster = await nativeRaster(source, grid);
     const faceRects = rectsForFill(source, BAG_FACE_FILL);
@@ -348,18 +348,20 @@ describe("Myles 98 UnderstandingFAFSA and TikTok Catalog refinement", () => {
     const depthShapes = shapesForFill(source, BAG_DEPTH_FILL);
     const faceBounds = boundsFor(colorPixels(raster, BAG_FACE_FILL), grid);
     const openingBounds = boundsFor(colorPixels(raster, BAG_OPENING_FILL), grid);
-    const depthBounds = boundsFor(colorPixels(raster, BAG_DEPTH_FILL), grid);
+    const depthBounds = grid === 16 ? null : boundsFor(colorPixels(raster, BAG_DEPTH_FILL), grid);
     const handle = bagHandleFrame(raster);
 
     expect(faceRects, "bag face must keep parallel sides instead of a wastebasket taper").toHaveLength(1);
     expect(openingRects, "handled opening must be one clearly separated light aperture").toHaveLength(1);
-    expect(depthShapes, "bag must use one object-specific side plane, not basket seams").toHaveLength(1);
+    expect(depthShapes, "the minimal 16px bag must remain flat while larger bags use one object-specific side plane").toHaveLength(grid === 16 ? 0 : 1);
     expect(openingBounds.maxY).toBeLessThan(faceBounds.minY);
     expect(widthOf(openingBounds)).toBeLessThan(widthOf(faceBounds) * 0.65);
     expect(widthOf(faceBounds) / heightOf(faceBounds)).toBeGreaterThan(0.7);
-    expect(depthBounds.maxX).toBeGreaterThan(faceBounds.maxX);
-    expect(depthBounds.minX).toBeGreaterThanOrEqual(faceBounds.maxX - 1);
-    expect(depthBounds.maxY - depthBounds.minY).toBeGreaterThanOrEqual(heightOf(faceBounds) - 2);
+    if (depthBounds) {
+      expect(depthBounds.maxX).toBeGreaterThan(faceBounds.maxX);
+      expect(depthBounds.minX).toBeGreaterThanOrEqual(faceBounds.maxX - 1);
+      expect(depthBounds.maxY - depthBounds.minY).toBeGreaterThanOrEqual(heightOf(faceBounds) - 2);
+    }
     expect(handle.topFrame, "shopping-bag handle needs an opaque top over its aperture").toBe(true);
     expect(handle.leftFrame, "shopping-bag handle needs an opaque left side").toBe(true);
     expect(handle.rightFrame, "shopping-bag handle needs an opaque right side").toBe(true);

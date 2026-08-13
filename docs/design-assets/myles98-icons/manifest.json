@@ -111,14 +111,14 @@
     {
       "id": "loose-parts",
       "group": "personal",
-      "intendedObject": "literal non-branded compact 2+1 stack of three independent wooden construction blocks with square front faces, visible top/right planes, and upper-face highlights at 24/32",
+      "intendedObject": "literal non-branded compact 2+1 stack of three painted wooden construction cubes with square faces and visible top/right planes",
       "tiers": {
-        "16": "Compact 2+1 stack of three wooden construction blocks",
-        "24": "Compact 2+1 stack of three wooden construction blocks with visible top/right planes and upper-face highlights",
-        "32": "Compact 2+1 stack of three wooden construction blocks with visible top/right planes and upper-face highlights"
+        "16": "Red, yellow, and blue 2+1 construction-cube stack with visible top/right planes",
+        "24": "Red, yellow, and blue 2+1 wooden construction-cube stack with square faces and a restrained upper-cube recess",
+        "32": "Red, yellow, and blue 2+1 wooden construction-cube stack with square faces, visible top/right planes, and a restrained upper-cube recess"
       },
       "acceptedReadings": ["building blocks", "construction blocks", "toy blocks"],
-      "rejectedReadings": ["boots", "pair of boots", "people", "group of people", "branded studs", "LEGO", "food", "table", "furniture", "steps", "bar chart", "books", "stack of books", "book stack", "bottle", "clothing"]
+      "rejectedReadings": ["boots", "pair of boots", "people", "group of people", "branded studs", "LEGO", "food", "table", "furniture", "steps", "bar chart", "books", "stack of books", "book stack", "cardboard boxes", "box stack", "logs", "bottle", "clothing"]
     },
     {
       "id": "display-properties",
@@ -171,11 +171,11 @@
     {
       "id": "fresh-greens",
       "group": "projects",
-      "intendedObject": "physical GPS navigation unit with a routed map screen, lower confirmation control, and dimensional device casing",
+      "intendedObject": "rugged upright handheld GPS receiver with a separate top antenna, recessed routed map display, rounded cross D-pad, tactile function buttons, and dimensional casing",
       "tiers": {
-        "16": "Compact GPS navigator with a routed map screen and lower control",
-        "24": "Beveled GPS navigation unit with a map screen, water, routed destination, lower control, and side button",
-        "32": "Dimensional GPS navigation unit with a map screen, water and park cues, routed destination, lower control, and side button"
+        "16": "Compact rugged GPS receiver with separate antenna, map display, rounded cross D-pad, and function buttons",
+        "24": "Rugged handheld GPS receiver with separate antenna, recessed routed map, rounded cross D-pad, and function buttons",
+        "32": "Dimensional rugged GPS receiver with separate antenna, recessed map, water and park cues, rounded cross D-pad, and function buttons"
       },
       "acceptedReadings": ["GPS navigator", "navigation device", "route planner"],
       "rejectedReadings": ["desktop monitor", "computer", "television", "generic app window", "magic wand", "wand", "notebook band", "folded page", "landscape image", "landscape photograph", "groceries", "leaf logo", "city guide", "music note", "musical note", "folded map", "circuit"]
@@ -197,9 +197,9 @@
       "group": "projects",
       "intendedObject": "location marker above a neighborhood storefront",
       "tiers": {
-        "16": "Location marker",
-        "24": "Location marker with orange center above storefront",
-        "32": "Location marker above a widened neighborhood storefront"
+        "16": "Pointed location marker",
+        "24": "Two-plane location marker above a roofed storefront with scalloped awning",
+        "32": "Pointed two-plane marker with orange cue above storefront facade, awning, window, and door"
       },
       "acceptedReadings": ["location marker", "map pin", "neighborhood destination"],
       "rejectedReadings": ["book", "guidebook", "leaf"]
@@ -207,14 +207,14 @@
     {
       "id": "tiktok-catalog",
       "group": "projects",
-      "intendedObject": "handled rectangular shopping bag with one side depth plane",
+      "intendedObject": "upright handled shopping bag with a framed opening and a single side depth plane at 24/32",
       "tiers": {
-        "16": "Handled shopping bag silhouette",
-        "24": "Handled rectangular shopping bag with one side plane",
-        "32": "Handled dimensional shopping bag with framed opening and side depth plane"
+        "16": "U-handled upright shopping bag",
+        "24": "U-handled upright shopping bag with framed opening and one side depth plane",
+        "32": "Dimensional U-handled upright shopping bag with framed opening and one side depth plane"
       },
       "acceptedReadings": ["shopping bag", "retail bag", "product bag"],
-      "rejectedReadings": ["wastebasket", "basket", "shopping basket", "small tote", "purse", "catalog page", "TikTok logo", "music note", "social media app", "book", "dashboard"]
+      "rejectedReadings": ["wastebasket", "basket", "shopping basket", "small tote", "purse", "catalog page", "floppy disk", "save icon", "diskette", "TikTok logo", "music note", "social media app", "book", "dashboard"]
     }
   ]
 }
