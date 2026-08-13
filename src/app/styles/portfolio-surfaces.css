@@ -1615,7 +1615,8 @@
   }
 
   .reader-mode.reader-mode.tt-page .tt-cover--preview .tt-cover-cluster {
-    display: none;
+    transform: translate3d(24%, -42%, 0) scale(0.64);
+    transform-origin: 50% 50%;
   }
 
   .reader-mode.reader-mode.tt-page .tt-cover--preview .tt-cover-inner {

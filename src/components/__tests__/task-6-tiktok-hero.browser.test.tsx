@@ -114,6 +114,9 @@ describe("Task 6 TikTok mobile hero polish", () => {
       await page.setContent(documentWith(markup), { waitUntil: "load" });
 
       const geometry = await page.evaluate(() => {
+        const cluster = document.querySelector<HTMLElement>(
+          "header.tt-cover--preview .tt-cover-cluster",
+        )!;
         const poster = document.querySelector<HTMLElement>(
           "header.tt-cover--preview .tt-cover-poster",
         )!;
@@ -123,9 +126,12 @@ describe("Task 6 TikTok mobile hero polish", () => {
         const lede = document.querySelector<HTMLElement>(
           "header.tt-cover--preview .tt-lede",
         )!;
+        const clusterRect = cluster.getBoundingClientRect();
         const posterRect = poster.getBoundingClientRect();
         const titleRect = title.getBoundingClientRect();
         const ledeRect = lede.getBoundingClientRect();
+        const clusterStyle = getComputedStyle(cluster);
+        const posterStyle = getComputedStyle(poster);
         const overlaps = (a: DOMRect, b: DOMRect) =>
           a.left < b.right &&
           a.right > b.left &&
@@ -133,6 +139,17 @@ describe("Task 6 TikTok mobile hero polish", () => {
           a.bottom > b.top;
 
         return {
+          clusterVisible:
+            clusterStyle.display !== "none" &&
+            clusterStyle.visibility !== "hidden" &&
+            clusterRect.width > 0 &&
+            clusterRect.height > 0,
+          posterVisible:
+            posterStyle.display !== "none" &&
+            posterStyle.visibility !== "hidden" &&
+            Number.parseFloat(posterStyle.opacity) > 0 &&
+            posterRect.width > 0 &&
+            posterRect.height > 0,
           poster: {
             left: posterRect.left,
             top: posterRect.top,
@@ -157,6 +174,8 @@ describe("Task 6 TikTok mobile hero polish", () => {
       });
 
       expect(geometry, JSON.stringify(geometry, null, 2)).toMatchObject({
+        clusterVisible: true,
+        posterVisible: true,
         overlapsTitle: false,
         overlapsLede: false,
       });
