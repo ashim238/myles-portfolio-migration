@@ -15,16 +15,16 @@ type Rect = { fill: string; height: number; width: number; x: number; y: number 
 
 const FRESH_GPS = new Map<Grid, { destination: Rect; water: Rect }>([
   [16, {
-    water: { fill: WATER, x: 6, y: 6, width: 2, height: 1 },
-    destination: { fill: DESTINATION, x: 8, y: 7, width: 1, height: 1 },
+    water: { fill: WATER, x: 6, y: 8, width: 1, height: 1 },
+    destination: { fill: DESTINATION, x: 9, y: 8, width: 1, height: 1 },
   }],
   [24, {
-    water: { fill: WATER, x: 8, y: 8, width: 3, height: 2 },
-    destination: { fill: DESTINATION, x: 13, y: 10, width: 2, height: 2 },
+    water: { fill: WATER, x: 9, y: 9, width: 2, height: 2 },
+    destination: { fill: DESTINATION, x: 13, y: 10, width: 1, height: 1 },
   }],
   [32, {
-    water: { fill: WATER, x: 10, y: 9, width: 5, height: 3 },
-    destination: { fill: DESTINATION, x: 18, y: 11, width: 3, height: 3 },
+    water: { fill: WATER, x: 12, y: 11, width: 3, height: 2 },
+    destination: { fill: DESTINATION, x: 18, y: 12, width: 2, height: 2 },
   }],
 ]);
 

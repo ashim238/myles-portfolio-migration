@@ -33,7 +33,7 @@ type NavigatorSpec = {
   water: Rect;
   route: Rect[];
   destination: Rect;
-  controlWell: Rect;
+  dPadRing: Rect[];
   dPadVertical: Rect;
   dPadHorizontal: Rect;
   dPadCenter: Rect;
@@ -45,82 +45,93 @@ type NavigatorSpec = {
 
 const GPS = new Map<Grid, NavigatorSpec>([
   [16, {
-    antennaCap: { fill: BEZEL, x: 6, y: 1, width: 4, height: 2 },
-    antennaStem: { fill: DEPTH, x: 7, y: 2, width: 2, height: 1 },
-    body: { fill: BEZEL, x: 3, y: 3, width: 10, height: 12 },
-    depthBottom: { fill: DEPTH, x: 4, y: 14, width: 8, height: 1 },
-    depthRight: { fill: DEPTH, x: 12, y: 4, width: 1, height: 10 },
-    housing: { fill: HOUSING, x: 4, y: 4, width: 8, height: 10 },
-    topLight: { fill: HIGHLIGHT, x: 4, y: 4, width: 7, height: 1 },
-    leftLight: { fill: HIGHLIGHT, x: 4, y: 4, width: 1, height: 9 },
-    screenBezel: { fill: SCREEN_BEZEL, x: 5, y: 5, width: 6, height: 4 },
-    screen: { fill: SCREEN, x: 6, y: 6, width: 4, height: 2 },
-    water: { fill: WATER, x: 6, y: 6, width: 2, height: 1 },
+    antennaCap: { fill: BEZEL, x: 7, y: 1, width: 2, height: 2 },
+    antennaStem: { fill: DEPTH, x: 7, y: 3, width: 2, height: 2 },
+    body: { fill: BEZEL, x: 4, y: 5, width: 8, height: 10 },
+    depthBottom: { fill: DEPTH, x: 5, y: 14, width: 6, height: 1 },
+    depthRight: { fill: DEPTH, x: 11, y: 6, width: 1, height: 8 },
+    housing: { fill: HOUSING, x: 5, y: 6, width: 6, height: 9 },
+    topLight: { fill: HIGHLIGHT, x: 5, y: 6, width: 5, height: 1 },
+    leftLight: { fill: HIGHLIGHT, x: 5, y: 6, width: 1, height: 8 },
+    screenBezel: { fill: SCREEN_BEZEL, x: 5, y: 7, width: 6, height: 3 },
+    screen: { fill: SCREEN, x: 6, y: 8, width: 4, height: 1 },
+    water: { fill: WATER, x: 6, y: 8, width: 1, height: 1 },
     route: [
-      { fill: ROUTE, x: 7, y: 6, width: 1, height: 2 },
-      { fill: ROUTE, x: 7, y: 7, width: 2, height: 1 },
+      { fill: ROUTE, x: 7, y: 8, width: 1, height: 1 },
     ],
-    destination: { fill: DESTINATION, x: 8, y: 7, width: 1, height: 1 },
-    controlWell: { fill: SCREEN_BEZEL, x: 5, y: 10, width: 3, height: 3 },
-    dPadVertical: { fill: CONTROL, x: 6, y: 10, width: 1, height: 3 },
-    dPadHorizontal: { fill: CONTROL, x: 5, y: 11, width: 3, height: 1 },
-    dPadCenter: { fill: CONTROL_CENTER, x: 6, y: 11, width: 1, height: 1 },
-    upperButtonWell: { fill: SCREEN_BEZEL, x: 9, y: 10, width: 2, height: 1 },
-    upperButton: { fill: CONTROL_CENTER, x: 9, y: 10, width: 1, height: 1 },
-    lowerButtonWell: { fill: SCREEN_BEZEL, x: 9, y: 12, width: 2, height: 1 },
-    lowerButton: { fill: CONTROL_CENTER, x: 9, y: 12, width: 1, height: 1 },
+    destination: { fill: DESTINATION, x: 9, y: 8, width: 1, height: 1 },
+    dPadRing: [
+      { fill: SCREEN_BEZEL, x: 6, y: 10, width: 3, height: 1 },
+      { fill: SCREEN_BEZEL, x: 5, y: 11, width: 5, height: 3 },
+      { fill: SCREEN_BEZEL, x: 6, y: 13, width: 3, height: 1 },
+    ],
+    dPadVertical: { fill: CONTROL, x: 7, y: 11, width: 1, height: 3 },
+    dPadHorizontal: { fill: CONTROL, x: 6, y: 12, width: 3, height: 1 },
+    dPadCenter: { fill: CONTROL_CENTER, x: 7, y: 12, width: 1, height: 1 },
+    upperButtonWell: { fill: SCREEN_BEZEL, x: 10, y: 11, width: 1, height: 1 },
+    upperButton: { fill: CONTROL_CENTER, x: 10, y: 11, width: 1, height: 1 },
+    lowerButtonWell: { fill: SCREEN_BEZEL, x: 10, y: 12, width: 1, height: 1 },
+    lowerButton: { fill: CONTROL_CENTER, x: 10, y: 12, width: 1, height: 1 },
   }],
   [24, {
-    antennaCap: { fill: BEZEL, x: 9, y: 1, width: 6, height: 2 },
-    antennaStem: { fill: DEPTH, x: 11, y: 3, width: 2, height: 1 },
-    body: { fill: BEZEL, x: 5, y: 4, width: 14, height: 18 },
-    depthBottom: { fill: DEPTH, x: 6, y: 21, width: 12, height: 1 },
-    depthRight: { fill: DEPTH, x: 18, y: 5, width: 1, height: 16 },
-    housing: { fill: HOUSING, x: 6, y: 5, width: 12, height: 16 },
-    topLight: { fill: HIGHLIGHT, x: 6, y: 5, width: 11, height: 1 },
-    leftLight: { fill: HIGHLIGHT, x: 6, y: 5, width: 1, height: 15 },
-    screenBezel: { fill: SCREEN_BEZEL, x: 7, y: 7, width: 10, height: 6 },
-    screen: { fill: SCREEN, x: 8, y: 8, width: 8, height: 4 },
-    water: { fill: WATER, x: 8, y: 8, width: 3, height: 2 },
+    antennaCap: { fill: BEZEL, x: 11, y: 1, width: 3, height: 3 },
+    antennaStem: { fill: DEPTH, x: 11, y: 4, width: 3, height: 2 },
+    body: { fill: BEZEL, x: 7, y: 6, width: 10, height: 17 },
+    depthBottom: { fill: DEPTH, x: 8, y: 22, width: 8, height: 1 },
+    depthRight: { fill: DEPTH, x: 16, y: 7, width: 1, height: 15 },
+    housing: { fill: HOUSING, x: 8, y: 7, width: 8, height: 15 },
+    topLight: { fill: HIGHLIGHT, x: 8, y: 7, width: 7, height: 1 },
+    leftLight: { fill: HIGHLIGHT, x: 8, y: 7, width: 1, height: 14 },
+    screenBezel: { fill: SCREEN_BEZEL, x: 8, y: 8, width: 8, height: 5 },
+    screen: { fill: SCREEN, x: 9, y: 9, width: 6, height: 3 },
+    water: { fill: WATER, x: 9, y: 9, width: 2, height: 2 },
     route: [
-      { fill: ROUTE, x: 10, y: 9, width: 1, height: 3 },
-      { fill: ROUTE, x: 10, y: 11, width: 4, height: 1 },
+      { fill: ROUTE, x: 11, y: 10, width: 1, height: 2 },
+      { fill: ROUTE, x: 11, y: 11, width: 3, height: 1 },
     ],
-    destination: { fill: DESTINATION, x: 13, y: 10, width: 2, height: 2 },
-    controlWell: { fill: SCREEN_BEZEL, x: 8, y: 14, width: 5, height: 5 },
-    dPadVertical: { fill: CONTROL, x: 10, y: 15, width: 1, height: 3 },
-    dPadHorizontal: { fill: CONTROL, x: 9, y: 16, width: 3, height: 1 },
-    dPadCenter: { fill: CONTROL_CENTER, x: 10, y: 16, width: 1, height: 1 },
+    destination: { fill: DESTINATION, x: 13, y: 10, width: 1, height: 1 },
+    dPadRing: [
+      { fill: SCREEN_BEZEL, x: 10, y: 15, width: 3, height: 1 },
+      { fill: SCREEN_BEZEL, x: 9, y: 16, width: 5, height: 5 },
+      { fill: SCREEN_BEZEL, x: 10, y: 21, width: 3, height: 1 },
+    ],
+    dPadVertical: { fill: CONTROL, x: 11, y: 16, width: 1, height: 5 },
+    dPadHorizontal: { fill: CONTROL, x: 10, y: 18, width: 3, height: 1 },
+    dPadCenter: { fill: CONTROL_CENTER, x: 11, y: 18, width: 1, height: 1 },
     upperButtonWell: { fill: SCREEN_BEZEL, x: 14, y: 15, width: 2, height: 2 },
     upperButton: { fill: CONTROL_CENTER, x: 14, y: 15, width: 1, height: 1 },
-    lowerButtonWell: { fill: SCREEN_BEZEL, x: 14, y: 18, width: 2, height: 1 },
-    lowerButton: { fill: CONTROL_CENTER, x: 14, y: 18, width: 1, height: 1 },
+    lowerButtonWell: { fill: SCREEN_BEZEL, x: 14, y: 19, width: 2, height: 2 },
+    lowerButton: { fill: CONTROL_CENTER, x: 14, y: 19, width: 1, height: 1 },
   }],
   [32, {
-    antennaCap: { fill: BEZEL, x: 13, y: 1, width: 6, height: 3 },
-    antennaStem: { fill: DEPTH, x: 14, y: 3, width: 4, height: 2 },
-    body: { fill: BEZEL, x: 7, y: 5, width: 18, height: 23 },
-    depthBottom: { fill: DEPTH, x: 8, y: 27, width: 16, height: 1 },
-    depthRight: { fill: DEPTH, x: 24, y: 6, width: 1, height: 21 },
-    housing: { fill: HOUSING, x: 8, y: 6, width: 16, height: 21 },
-    topLight: { fill: HIGHLIGHT, x: 8, y: 6, width: 15, height: 1 },
-    leftLight: { fill: HIGHLIGHT, x: 8, y: 6, width: 1, height: 20 },
-    screenBezel: { fill: SCREEN_BEZEL, x: 9, y: 8, width: 14, height: 8 },
-    screen: { fill: SCREEN, x: 10, y: 9, width: 12, height: 6 },
-    water: { fill: WATER, x: 10, y: 9, width: 5, height: 3 },
+    antennaCap: { fill: BEZEL, x: 14, y: 1, width: 4, height: 3 },
+    antennaStem: { fill: DEPTH, x: 15, y: 4, width: 2, height: 3 },
+    body: { fill: BEZEL, x: 9, y: 7, width: 14, height: 23 },
+    depthBottom: { fill: DEPTH, x: 10, y: 29, width: 12, height: 1 },
+    depthRight: { fill: DEPTH, x: 22, y: 8, width: 1, height: 21 },
+    housing: { fill: HOUSING, x: 10, y: 8, width: 12, height: 21 },
+    topLight: { fill: HIGHLIGHT, x: 10, y: 8, width: 11, height: 1 },
+    leftLight: { fill: HIGHLIGHT, x: 10, y: 8, width: 1, height: 20 },
+    screenBezel: { fill: SCREEN_BEZEL, x: 11, y: 10, width: 10, height: 6 },
+    screen: { fill: SCREEN, x: 12, y: 11, width: 8, height: 4 },
+    water: { fill: WATER, x: 12, y: 11, width: 3, height: 2 },
     route: [
-      { fill: ROUTE, x: 14, y: 10, width: 2, height: 4 },
-      { fill: ROUTE, x: 14, y: 12, width: 5, height: 2 },
+      { fill: ROUTE, x: 14, y: 12, width: 1, height: 2 },
+      { fill: ROUTE, x: 14, y: 13, width: 3, height: 1 },
     ],
-    destination: { fill: DESTINATION, x: 18, y: 11, width: 3, height: 3 },
-    controlWell: { fill: SCREEN_BEZEL, x: 10, y: 18, width: 6, height: 7 },
-    dPadVertical: { fill: CONTROL, x: 12, y: 19, width: 2, height: 5 },
-    dPadHorizontal: { fill: CONTROL, x: 11, y: 20, width: 4, height: 2 },
-    dPadCenter: { fill: CONTROL_CENTER, x: 12, y: 20, width: 2, height: 2 },
-    upperButtonWell: { fill: SCREEN_BEZEL, x: 18, y: 19, width: 3, height: 3 },
-    upperButton: { fill: CONTROL_CENTER, x: 19, y: 20, width: 1, height: 1 },
-    lowerButtonWell: { fill: SCREEN_BEZEL, x: 18, y: 23, width: 3, height: 2 },
-    lowerButton: { fill: CONTROL_CENTER, x: 19, y: 23, width: 1, height: 1 },
+    destination: { fill: DESTINATION, x: 18, y: 12, width: 2, height: 2 },
+    dPadRing: [
+      { fill: SCREEN_BEZEL, x: 14, y: 18, width: 4, height: 1 },
+      { fill: SCREEN_BEZEL, x: 12, y: 19, width: 8, height: 7 },
+      { fill: SCREEN_BEZEL, x: 14, y: 26, width: 4, height: 1 },
+    ],
+    dPadVertical: { fill: CONTROL, x: 15, y: 19, width: 2, height: 7 },
+    dPadHorizontal: { fill: CONTROL, x: 13, y: 21, width: 6, height: 2 },
+    dPadCenter: { fill: CONTROL_CENTER, x: 15, y: 21, width: 2, height: 2 },
+    upperButtonWell: { fill: SCREEN_BEZEL, x: 20, y: 19, width: 2, height: 3 },
+    upperButton: { fill: CONTROL_CENTER, x: 20, y: 20, width: 1, height: 1 },
+    lowerButtonWell: { fill: SCREEN_BEZEL, x: 20, y: 24, width: 2, height: 2 },
+    lowerButton: { fill: CONTROL_CENTER, x: 20, y: 24, width: 1, height: 1 },
   }],
 ]);
 
@@ -199,7 +210,7 @@ function isNavigator(source: string, grid: Grid) {
     spec.water,
     ...spec.route,
     spec.destination,
-    spec.controlWell,
+    ...spec.dPadRing,
   ];
 
   return structuralParts.every((rect) => hasRect(rects, rect))
@@ -211,8 +222,9 @@ function isNavigator(source: string, grid: Grid) {
     && isInside(spec.screen, spec.screenBezel)
     && isInside(spec.screenBezel, spec.housing)
     && [spec.water, ...spec.route, spec.destination].every((rect) => isInside(rect, spec.screen))
-    && isInside(spec.controlWell, spec.housing)
-    && [spec.dPadVertical, spec.dPadHorizontal, spec.dPadCenter].every((rect) => isInside(rect, spec.controlWell))
+    && spec.dPadRing.every((rect) => isInside(rect, spec.housing))
+    && [spec.dPadVertical, spec.dPadHorizontal, spec.dPadCenter]
+      .every((rect) => spec.dPadRing.some((ring) => isInside(rect, ring)))
     && spec.dPadHorizontal.y > spec.screen.y + spec.screen.height
     && spec.dPadVertical.y > spec.screen.y + spec.screen.height
     && spec.dPadVertical.x < spec.dPadHorizontal.x + spec.dPadHorizontal.width
@@ -260,7 +272,7 @@ function hasTransparentPerimeter(data: Buffer, channels: number, grid: Grid) {
 }
 
 describe("Myles 98 Fresh Greens physical handheld GPS navigator refinement", () => {
-  it.each(GRIDS)("uses a tall handheld GPS receiver, not a generic screen, wallet, or television at %ipx", (grid) => {
+  it.each(GRIDS)("uses a rugged handheld GPS receiver, not a generic screen, wallet, television, or vending machine at %ipx", (grid) => {
     const source = sourceFor(grid);
     const fills = rectsFor(source).map((rect) => rect.fill);
 
@@ -270,7 +282,7 @@ describe("Myles 98 Fresh Greens physical handheld GPS navigator refinement", () 
     expect(source).not.toContain("#ffffff");
   });
 
-  it.each(GRIDS)("renders the antenna, recessed map, below-screen D-pad, and tactile buttons at native %ipx", async (grid) => {
+  it.each(GRIDS)("renders a separate top antenna, rounded D-pad, and discrete tactile buttons at native %ipx", async (grid) => {
     const { data, info } = await nativePixels(sourceFor(grid), grid);
     const spec = GPS.get(grid)!;
 
@@ -280,6 +292,7 @@ describe("Myles 98 Fresh Greens physical handheld GPS navigator refinement", () 
     expect(hasColorWithin(data, info.channels, grid, CONTROL, spec.body)).toBe(true);
     expect(hasColorWithin(data, info.channels, grid, CONTROL_CENTER, spec.upperButtonWell)).toBe(true);
     expect(hasColorWithin(data, info.channels, grid, CONTROL_CENTER, spec.lowerButtonWell)).toBe(true);
+    expect(spec.dPadRing).toHaveLength(3);
     expect(hasTransparentPerimeter(data, info.channels, grid)).toBe(true);
     expect(Array.from({ length: grid * grid }, (_, index) => data[index * info.channels + 3])
       .every((alpha) => alpha === 0 || alpha === 0xff)).toBe(true);
@@ -295,6 +308,7 @@ describe("Myles 98 Fresh Greens physical handheld GPS navigator refinement", () 
       spec.dPadVertical,
       spec.dPadHorizontal,
       spec.dPadCenter,
+      ...spec.dPadRing,
       spec.upperButtonWell,
       spec.upperButton,
       spec.lowerButtonWell,

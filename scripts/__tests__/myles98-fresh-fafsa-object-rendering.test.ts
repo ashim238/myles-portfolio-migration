@@ -19,22 +19,22 @@ type Rect = { fill: string; height: number; width: number; x: number; y: number 
 
 const GPS = new Map<Grid, { bezel: Rect; control: Rect; housing: Rect; screen: Rect }>([
   [16, {
-    bezel: { fill: GPS_BEZEL, x: 3, y: 3, width: 10, height: 12 },
-    housing: { fill: GPS_HOUSING, x: 4, y: 4, width: 8, height: 10 },
-    screen: { fill: GPS_SCREEN, x: 6, y: 6, width: 4, height: 2 },
-    control: { fill: GPS_CONTROL, x: 6, y: 10, width: 1, height: 3 },
+    bezel: { fill: GPS_BEZEL, x: 4, y: 5, width: 8, height: 10 },
+    housing: { fill: GPS_HOUSING, x: 5, y: 6, width: 6, height: 9 },
+    screen: { fill: GPS_SCREEN, x: 6, y: 8, width: 4, height: 1 },
+    control: { fill: GPS_CONTROL, x: 7, y: 11, width: 1, height: 3 },
   }],
   [24, {
-    bezel: { fill: GPS_BEZEL, x: 5, y: 4, width: 14, height: 18 },
-    housing: { fill: GPS_HOUSING, x: 6, y: 5, width: 12, height: 16 },
-    screen: { fill: GPS_SCREEN, x: 8, y: 8, width: 8, height: 4 },
-    control: { fill: GPS_CONTROL, x: 10, y: 15, width: 1, height: 3 },
+    bezel: { fill: GPS_BEZEL, x: 7, y: 6, width: 10, height: 17 },
+    housing: { fill: GPS_HOUSING, x: 8, y: 7, width: 8, height: 15 },
+    screen: { fill: GPS_SCREEN, x: 9, y: 9, width: 6, height: 3 },
+    control: { fill: GPS_CONTROL, x: 11, y: 16, width: 1, height: 5 },
   }],
   [32, {
-    bezel: { fill: GPS_BEZEL, x: 7, y: 5, width: 18, height: 23 },
-    housing: { fill: GPS_HOUSING, x: 8, y: 6, width: 16, height: 21 },
-    screen: { fill: GPS_SCREEN, x: 10, y: 9, width: 12, height: 6 },
-    control: { fill: GPS_CONTROL, x: 12, y: 19, width: 2, height: 5 },
+    bezel: { fill: GPS_BEZEL, x: 9, y: 7, width: 14, height: 23 },
+    housing: { fill: GPS_HOUSING, x: 10, y: 8, width: 12, height: 21 },
+    screen: { fill: GPS_SCREEN, x: 12, y: 11, width: 8, height: 4 },
+    control: { fill: GPS_CONTROL, x: 15, y: 19, width: 2, height: 7 },
   }],
 ]);
 
@@ -97,8 +97,8 @@ function hasRect(rects: Rect[], expected: Rect) {
 function contains(outer: Rect, inner: Rect) {
   return inner.x > outer.x
     && inner.y > outer.y
-    && inner.x + inner.width < outer.x + outer.width
-    && inner.y + inner.height < outer.y + outer.height;
+    && inner.x + inner.width <= outer.x + outer.width
+    && inner.y + inner.height <= outer.y + outer.height;
 }
 
 function isGpsNavigator(source: string, grid: Grid) {
