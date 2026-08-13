@@ -45,6 +45,7 @@ export function ReaderHeader({ slug, title }: ReaderHeaderProps) {
       <Link
         className="reader-return"
         href="/"
+        aria-label="Return to Desktop"
         onClick={(event) => {
           if (shouldUseNativeNavigation(event)) return;
           const snapshot = readProjectReturnSnapshot();
@@ -54,7 +55,12 @@ export function ReaderHeader({ slug, title }: ReaderHeaderProps) {
         }}
       >
         <span aria-hidden="true">←</span>
-        Return to Desktop
+        <span className="reader-return-label reader-return-label--full" aria-hidden="true">
+          Return to Desktop
+        </span>
+        <span className="reader-return-label reader-return-label--compact" aria-hidden="true">
+          Desktop
+        </span>
       </Link>
     </header>
   );

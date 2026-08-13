@@ -301,7 +301,9 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
     (id: string) => {
       setActiveId(id);
       setIsOpen(false);
-      if (isOpen) toggleRef.current?.focus();
+      if (isOpen) {
+        window.requestAnimationFrame(() => toggleRef.current?.focus());
+      }
     },
     [isOpen],
   );
@@ -382,6 +384,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
           }}
           aria-expanded={isOpen}
           aria-controls="project-toc-list"
+          aria-label={activeTitle || "Case study chapters"}
         >
           <span className="project-toc-toggle-label">
             <span className="project-toc-num">{activeNum}.</span>

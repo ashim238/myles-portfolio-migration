@@ -1,9 +1,15 @@
 import { readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 
+const testDirectory = dirname(fileURLToPath(import.meta.url));
 const styles = readFileSync(
-  resolve(process.cwd(), "src/app/styles/base.css"),
+  resolve(testDirectory, "../../app/styles/base.css"),
+  "utf8",
+);
+const readerStyles = readFileSync(
+  resolve(testDirectory, "../../app/styles/reader-mode.css"),
   "utf8",
 );
 
@@ -80,6 +86,21 @@ describe("ProjectToc responsive layout", () => {
     expect(stage).toMatch(/flex:\s*0 0 auto;/);
     expect(title).toMatch(/min-width:\s*0;/);
     expect(title).toMatch(/text-overflow:\s*ellipsis;/);
+  });
+
+  it("gives compact phones the title before stage and decorative read-time", () => {
+    const compact = cssBlock("@media (max-width: 420px)", readerStyles);
+    expect(
+      cssBlock(".reader-mode.reader-mode .project-toc-stage", compact),
+    ).toMatch(/display:\s*none;/);
+    expect(compact).toMatch(
+      /\.reader-mode\.reader-mode \.project-toc-separator\s*\{?[^}]*display:\s*none;/,
+    );
+
+    const narrow = cssBlock("@media (max-width: 360px)", readerStyles);
+    expect(
+      cssBlock(".reader-mode.reader-mode .project-toc-readout-mobile", narrow),
+    ).toMatch(/display:\s*none;/);
   });
 
   it("keeps the mobile fallback in document flow until enhancement succeeds", () => {

@@ -53,6 +53,10 @@
   color: #fff;
 }
 
+.reader-return-label--compact {
+  display: none;
+}
+
 .reader-header :is(a, button):focus-visible,
 .reader-mode :is(a, button, input, select, textarea):focus-visible {
   outline: 3px solid var(--m97-signal);
@@ -217,7 +221,7 @@
 }
 
 .reader-mode.reader-mode .project-toc {
-  top: 52px;
+  top: 54px;
   z-index: 115;
   border-color: color-mix(in srgb, var(--m97-reader-ink) 28%, transparent);
   background: color-mix(in srgb, var(--m97-paper) 94%, transparent);
@@ -298,7 +302,7 @@
   }
 
   .reader-mode.reader-mode .project-toc {
-    top: 52px;
+    top: 54px;
   }
 
   .reader-mode.reader-mode .project-opening-facts-row {
@@ -315,13 +319,34 @@
   }
 }
 
+@media (max-width: 420px) {
+  .reader-return-label--full {
+    display: none;
+  }
+
+  .reader-mode.reader-mode .project-toc-stage,
+  .reader-mode.reader-mode .project-toc-separator {
+    display: none;
+  }
+
+  .reader-return-label--compact {
+    display: inline;
+  }
+}
+
+@media (max-width: 360px) {
+  .reader-mode.reader-mode .project-toc-readout-mobile {
+    display: none;
+  }
+}
+
 /* Once the existing TOC enhancements are ready, coarse/narrow Reader Mode
    keeps the collapsed chapter control in the sticky reading lane. Without JS
    the full chapter list remains in normal document flow through base.css. */
 @media (max-width: 767px), (pointer: coarse) {
   .reader-mode.reader-mode .project-toc[data-toc-ready="true"] {
     position: sticky;
-    top: 52px;
+    top: 54px;
     bottom: auto;
     margin: 0;
     padding: 0 16px;

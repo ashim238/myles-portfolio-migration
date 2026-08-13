@@ -112,7 +112,7 @@ describe("portfolio hardening style contract", () => {
     );
   });
 
-  it("caps Pocket project previews below the dock on short tablet viewports", () => {
+  it("caps two-column Pocket project previews below the dock on short tablet viewports", () => {
     const shortTablet = cssBlock(
       "@media (min-width: 768px) and (max-width: 1024px)",
       pocketStyles,
@@ -123,7 +123,7 @@ describe("portfolio hardening style contract", () => {
     );
 
     expect(launch).toMatch(
-      /grid-template-rows:\s*minmax\(150px, min\(42vw, 31svh\)\) auto;/,
+      /grid-template-rows:\s*minmax\(132px, min\(21vw, 24svh\)\) auto;/,
     );
   });
 

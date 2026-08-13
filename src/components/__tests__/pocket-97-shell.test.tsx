@@ -1,9 +1,34 @@
+import { readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Myles97Shell } from "@/components/myles-97/myles-97-shell";
 import { POCKET_97_QUERY } from "@/components/myles-97/use-pocket-97";
 import type { ProgramDefinition } from "@/lib/myles-97/programs";
+
+const testDirectory = dirname(fileURLToPath(import.meta.url));
+const pocketStyles = readFileSync(
+  resolve(testDirectory, "../../app/styles/myles-97-pocket.css"),
+  "utf8",
+);
+
+function cssBlock(header: string, source = pocketStyles) {
+  const escapedHeader = header.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const match = new RegExp(`(?:^|\\n)\\s*${escapedHeader}\\s*\\{`).exec(source);
+  expect(match, `${header} CSS block`).not.toBeNull();
+
+  const open = source.indexOf("{", match!.index);
+  let depth = 0;
+  for (let index = open; index < source.length; index += 1) {
+    if (source[index] === "{") depth += 1;
+    if (source[index] === "}") depth -= 1;
+    if (depth === 0) return source.slice(open + 1, index);
+  }
+
+  throw new Error(`Unclosed CSS block for ${header}`);
+}
 
 vi.mock("@/components/myles-97/boot-sequence", () => ({
   BootSequence: () => null,
@@ -139,6 +164,31 @@ describe("Pocket 98", () => {
     expect(document.querySelector("[data-draggable-window]")).toBeNull();
     expect(screen.getAllByRole("link", { name: /Open .* case study/ })).toHaveLength(4);
     expect(screen.getByRole("heading", { name: "Myles Ashitey" })).toBeInTheDocument();
+  });
+
+  it("lays out the real Pocket home as a two-column tablet folio without losing project covers", async () => {
+    installMatchMedia(true);
+    const { container } = render(
+      <Myles97Shell programs={programs} looseParts={looseParts} />,
+    );
+
+    await screen.findByRole("navigation", { name: "Pocket 98 dock" });
+    expect(
+      Array.from(container.querySelectorAll<HTMLImageElement>(".myles97-program-cover img"))
+        .map((image) => image.getAttribute("src")),
+    ).toEqual(programs.map((program) => program.coverImage));
+
+    const tablet = cssBlock("@media (min-width: 768px) and (max-width: 1024px)");
+    expect(cssBlock(".pocket97-stage", tablet)).toMatch(/width:\s*min\(100%,\s*64rem\);/);
+    expect(cssBlock(".pocket97-home", tablet)).toMatch(
+      /grid-template-columns:\s*minmax\(15rem,\s*0\.72fr\) minmax\(0,\s*1\.28fr\);/,
+    );
+    expect(cssBlock(".pocket97-intro", tablet)).toMatch(/grid-area:\s*intro;/);
+    expect(cssBlock(".pocket97-work", tablet)).toMatch(/grid-area:\s*work;/);
+    expect(cssBlock(".pocket97-recipe-card", tablet)).toMatch(/grid-area:\s*recipe;/);
+    expect(cssBlock(".pocket97-shell .myles97-selected-work-list", tablet)).toMatch(
+      /grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\);/,
+    );
   });
 
   it("opens one project program, keeps its native case-study link, and returns to the stack", async () => {

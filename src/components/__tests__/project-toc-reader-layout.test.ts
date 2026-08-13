@@ -42,7 +42,7 @@ describe("ProjectToc Reader layout", () => {
     );
 
     expect(toc).toMatch(/position:\s*sticky;/);
-    expect(toc).toMatch(/top:\s*52px;/);
+    expect(toc).toMatch(/top:\s*54px;/);
     expect(toc).toMatch(/bottom:\s*auto;/);
     expect(toc).not.toMatch(/position:\s*fixed;/);
     expect(toc).not.toMatch(/z-index:\s*140;/);

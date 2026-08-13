@@ -1,5 +1,5 @@
 import { createRef } from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { ProgramWindow } from "@/components/myles-97/program-window";
 import { ReaderHeader } from "@/components/myles-97/reader-header";
@@ -84,6 +84,19 @@ describe("dense Myles 98 chrome", () => {
     );
 
     expectCompactMonoFafsaGlyph(container);
+  });
+
+  it("keeps the Reader return name complete while exposing separate compact visual text", () => {
+    render(<ReaderHeader slug="understandingfafsa" title="FAFSA Mail" />);
+
+    const returnLink = screen.getByRole("link", { name: "Return to Desktop" });
+    expect(returnLink).toHaveAttribute("href", "/");
+    expect(returnLink.querySelector(".reader-return-label--full")).toHaveTextContent(
+      "Return to Desktop",
+    );
+    expect(returnLink.querySelector(".reader-return-label--compact")).toHaveTextContent(
+      "Desktop",
+    );
   });
 
   it("renders the audited compact FAFSA master in a program title bar with an inline fallback", () => {
