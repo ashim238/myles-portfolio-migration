@@ -1,8 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges" data-m98-concept="tiktok-catalog" data-m98-grid="16">
+  <rect fill="#202126" x="2" y="4" width="11" height="11" />
   <rect fill="#202126" x="5" y="1" width="6" height="5" />
+  <rect fill="#cf526d" x="3" y="5" width="9" height="10" />
+  <rect fill="#f07b91" x="3" y="5" width="1" height="1" />
   <rect fill="#f3eee4" x="6" y="2" width="4" height="3" />
-  <rect fill="#202126" x="2" y="5" width="13" height="10" />
-  <rect fill="#cf526d" x="3" y="6" width="9" height="8" />
-  <rect fill="#f07b91" x="3" y="6" width="9" height="1" />
-  <polygon fill="#8d3349" points="12,6 14,7 14,14 12,14" />
 </svg>
