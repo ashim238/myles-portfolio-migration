@@ -657,8 +657,13 @@
     padding: 8px;
   }
 
+  .myles97-desktop .myles97-project-preview {
+    height: 100%;
+    grid-template-columns: minmax(0, 3fr) minmax(240px, 2fr);
+    align-items: stretch;
+  }
+
   .myles97-desktop .myles97-project-preview-cover {
-    height: 180px;
     min-height: 0;
   }
 
@@ -666,7 +671,11 @@
     width: 100%;
     height: 100%;
     max-height: none;
-    object-fit: cover;
+    object-fit: contain;
+  }
+
+  .myles97-desktop .myles97-project-preview-copy {
+    align-content: center;
   }
 }
 
