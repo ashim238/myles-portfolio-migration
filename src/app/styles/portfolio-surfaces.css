@@ -1614,6 +1614,10 @@
     margin-bottom: 0.5rem;
   }
 
+  .reader-mode.reader-mode.tt-page .tt-cover--preview .tt-cover-cluster {
+    display: none;
+  }
+
   .reader-mode.reader-mode.tt-page .tt-cover--preview .tt-cover-inner {
     padding-top: 1rem;
     padding-bottom: 1rem;

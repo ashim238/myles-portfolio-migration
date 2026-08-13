@@ -17,6 +17,22 @@ export default function AboutPage() {
           <h1 id="about-title" className="about-heading">
             {siteConfig.name}
           </h1>
+
+          <div className="about-actions about-page-actions">
+            <Link className="about-action" href="/#selected-work">
+              See the work
+              <span aria-hidden="true">→</span>
+            </Link>
+            <Link className="about-action" href="/resume">
+              Read the résumé
+              <span aria-hidden="true">→</span>
+            </Link>
+            <a className="about-action" href={`mailto:${siteConfig.email}`}>
+              Get in touch
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+
           <div className="about-body">
             <p>
               I came to product design through creative strategy at TikTok
@@ -41,21 +57,6 @@ export default function AboutPage() {
               more, as much as the city and my allergies allow. If you want to
               talk product design, RPGs, or a bit of both, my email is below.
             </p>
-          </div>
-
-          <div className="about-actions about-page-actions">
-            <Link className="about-action" href="/#selected-work">
-              See the work
-              <span aria-hidden="true">→</span>
-            </Link>
-            <Link className="about-action" href="/resume">
-              Read the résumé
-              <span aria-hidden="true">→</span>
-            </Link>
-            <a className="about-action" href={`mailto:${siteConfig.email}`}>
-              Get in touch
-              <span aria-hidden="true">↗</span>
-            </a>
           </div>
         </div>
 
