@@ -26,9 +26,9 @@ const FOLD = new Map<Grid, {
   x: number;
   y: number;
 }>([
-  [16, { x: 2, y: 7, width: 8, sideHeight: 3, sideX: 10, upperFaceProbeX: 3, lowerFaceProbeX: 7 }],
-  [24, { x: 3, y: 12, width: 15, sideHeight: 4, sideX: 18, upperFaceProbeX: 4, lowerFaceProbeX: 17 }],
-  [32, { x: 4, y: 15, width: 20, sideHeight: 6, sideX: 24, upperFaceProbeX: 5, lowerFaceProbeX: 23 }],
+  [16, { x: 2, y: 6, width: 11, sideHeight: 3, sideX: 13, upperFaceProbeX: 8, lowerFaceProbeX: 12 }],
+  [24, { x: 2, y: 14, width: 18, sideHeight: 4, sideX: 20, upperFaceProbeX: 9, lowerFaceProbeX: 18 }],
+  [32, { x: 3, y: 16, width: 22, sideHeight: 5, sideX: 25, upperFaceProbeX: 9, lowerFaceProbeX: 24 }],
 ]);
 
 function masterSource(grid: Grid) {

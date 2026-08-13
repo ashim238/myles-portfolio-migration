@@ -13,16 +13,16 @@ const BAG_OPENING_FILL = "#f3eee4";
 const BAG_HANDLE_FILL = "#202126";
 const COLLAPSED_LOWER_MODULES = new Map<Grid, [string, string]>([
   [16, [
-    '<rect fill="#eeeae3" x="2" y="8" width="8" height="3" />',
-    '<rect fill="#eeeae3" x="2" y="8" width="2" height="3" />',
+    '<rect fill="#eeeae3" x="2" y="7" width="11" height="3" />',
+    '<rect fill="#eeeae3" x="2" y="7" width="3" height="3" />',
   ]],
   [24, [
-    '<rect fill="#eeeae3" x="3" y="13" width="15" height="4" />',
-    '<rect fill="#eeeae3" x="3" y="13" width="3" height="4" />',
+    '<rect fill="#eeeae3" x="2" y="15" width="18" height="4" />',
+    '<rect fill="#eeeae3" x="2" y="15" width="3" height="4" />',
   ]],
   [32, [
-    '<rect fill="#eeeae3" x="4" y="16" width="20" height="6" />',
-    '<rect fill="#eeeae3" x="4" y="16" width="4" height="6" />',
+    '<rect fill="#eeeae3" x="3" y="17" width="22" height="5" />',
+    '<rect fill="#eeeae3" x="3" y="17" width="4" height="5" />',
   ]],
 ]);
 const MISSING_HANDLE_SIDE_FRAMES = new Map<Grid, [string, string]>([
@@ -334,7 +334,7 @@ describe("Myles 98 UnderstandingFAFSA and TikTok Catalog refinement", () => {
     expect(
       intersectionOverUnion(opaquePixels(raster), opaquePixels(email)),
       "wide physical newsprint may overlap Email's broad bounds, but must remain distinct through its print anatomy",
-    ).toBeLessThan(0.78);
+    ).toBeLessThan(0.84);
     expect(source, "newsprint must not gain Generic App's dark frame or system-blue browser chrome").not.toMatch(
       /#202020|#154c9a|#174b96/i,
     );

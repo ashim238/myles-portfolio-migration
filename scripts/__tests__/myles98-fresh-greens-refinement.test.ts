@@ -10,11 +10,15 @@ const ROUTE_FILL = "#4d5552";
 const START_FILL = "#205a40";
 const DESTINATION_FILL = "#f27524";
 const LANDMARK_FILL = "#c4ceac";
+const WATER_FILL = "#5f99ae";
+const PARK_FILL = "#78a85d";
 const ALLOWED_FILLS = new Set([
   "#202621",
   "#d8dfc3",
   STREET_FILL,
   LANDMARK_FILL,
+  WATER_FILL,
+  PARK_FILL,
   ROUTE_FILL,
   START_FILL,
   DESTINATION_FILL,
