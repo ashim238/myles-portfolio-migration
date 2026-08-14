@@ -186,7 +186,7 @@ describe("ProjectEnterTransition", () => {
     );
   });
 
-  it("lands an image frame on the marked destination geometry and cleans up once", async () => {
+  it("settles an image frame with transform-only FLIP keyframes and cleans up once", async () => {
     const complete = vi.fn();
     window.addEventListener("project-enter-complete", complete);
     const { rerender } = render(
@@ -223,9 +223,23 @@ describe("ProjectEnterTransition", () => {
 
     const animate = HTMLElement.prototype.animate as ReturnType<typeof vi.fn>;
     const frameCall = animate.mock.calls.find(
-      ([keyframes]) => Array.isArray(keyframes) && "top" in keyframes[0],
+      ([keyframes]) => Array.isArray(keyframes) && "transform" in keyframes[0],
     );
-    expect(frameCall?.[0]?.[1]).toMatchObject({
+    expect(frameCall?.[0]).toEqual([
+      {
+        transform:
+          "translate3d(-80px, 80px, 0) scale(0.533333, 0.533333)",
+      },
+      { transform: "translate3d(0px, 0px, 0) scale(1, 1)" },
+    ]);
+    for (const keyframe of frameCall?.[0] ?? []) {
+      expect(keyframe).not.toHaveProperty("top");
+      expect(keyframe).not.toHaveProperty("left");
+      expect(keyframe).not.toHaveProperty("width");
+      expect(keyframe).not.toHaveProperty("height");
+      expect(keyframe).not.toHaveProperty("borderRadius");
+    }
+    expect(document.querySelector(".project-enter-frame")).toHaveStyle({
       top: "40px",
       left: "160px",
       width: "900px",
@@ -244,7 +258,7 @@ describe("ProjectEnterTransition", () => {
     window.removeEventListener("project-enter-complete", complete);
   });
 
-  it("animates a return overlay from the reader cover to the restored desktop program", async () => {
+  it("uses inverse FLIP geometry when returning to the restored desktop program", async () => {
     navigation.pathname = "/work/fresh-greens";
     coverGeometry = domRect(32, 120, 960, 620);
     programGeometry = domRect(88, 160, 720, 520);
@@ -286,10 +300,18 @@ describe("ProjectEnterTransition", () => {
     const reverseFrameCall = animate.mock.calls.find(
       ([keyframes]) =>
         Array.isArray(keyframes) &&
-        "top" in keyframes[0] &&
-        keyframes[0].top === "32px",
+        "transform" in keyframes[0] &&
+        keyframes[0].transform ===
+          "translate3d(-40px, -56px, 0) scale(1.333333, 1.192308)",
     );
-    expect(reverseFrameCall?.[0]?.[1]).toMatchObject({
+    expect(reverseFrameCall?.[0]).toEqual([
+      {
+        transform:
+          "translate3d(-40px, -56px, 0) scale(1.333333, 1.192308)",
+      },
+      { transform: "translate3d(0px, 0px, 0) scale(1, 1)" },
+    ]);
+    expect(document.querySelector(".project-enter-frame")).toHaveStyle({
       top: "88px",
       left: "160px",
       width: "720px",
@@ -324,9 +346,56 @@ describe("ProjectEnterTransition", () => {
 
     const animate = HTMLElement.prototype.animate as ReturnType<typeof vi.fn>;
     const geometryCalls = animate.mock.calls.filter(
-      ([keyframes]) => Array.isArray(keyframes) && "top" in keyframes[0],
+      ([keyframes]) => Array.isArray(keyframes) && "transform" in keyframes[0],
     );
     expect(geometryCalls).toHaveLength(0);
+    expect(
+      animate.mock.calls.some(
+        ([keyframes]) => Array.isArray(keyframes) && "opacity" in keyframes[0],
+      ),
+    ).toBe(true);
+  });
+
+  it("crossfades when the destination cover has no usable geometry", async () => {
+    coverGeometry = domRect(0, 0, 0, 0);
+    const { rerender } = render(
+      <ProjectEnterTransition>
+        <main className="project-page" data-project-slug="fresh-greens">
+          <figure data-project-enter-cover />
+        </main>
+      </ProjectEnterTransition>,
+    );
+
+    await act(async () => {
+      request({
+        slug: "fresh-greens",
+        href: "/work/fresh-greens",
+        rect,
+        visual: { type: "image", src: "/projects/fresh-greens/cover.png" },
+        borderRadius: "12px",
+      });
+      await Promise.resolve();
+    });
+
+    navigation.pathname = "/work/fresh-greens";
+    await act(async () => {
+      rerender(
+        <ProjectEnterTransition>
+          <main className="project-page" data-project-slug="fresh-greens">
+            <figure data-project-enter-cover />
+          </main>
+        </ProjectEnterTransition>,
+      );
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+
+    const animate = HTMLElement.prototype.animate as ReturnType<typeof vi.fn>;
+    expect(
+      animate.mock.calls.filter(
+        ([keyframes]) => Array.isArray(keyframes) && "transform" in keyframes[0],
+      ),
+    ).toHaveLength(0);
     expect(
       animate.mock.calls.some(
         ([keyframes]) => Array.isArray(keyframes) && "opacity" in keyframes[0],

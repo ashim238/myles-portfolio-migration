@@ -24,6 +24,7 @@ import {
 } from "@/lib/project-enter";
 
 const EASE_OUT_CUBIC = "cubic-bezier(0.33, 1, 0.68, 1)";
+const FLIP_IDENTITY = "translate3d(0px, 0px, 0) scale(1, 1)";
 const TRANSITION_FAILSAFE_MS = 4500;
 
 type OverlayPhase = "holding" | "navigating" | "settling";
@@ -70,6 +71,34 @@ function toRect(rect: DOMRect): ProjectEnterRect {
     width: rect.width,
     height: rect.height,
   };
+}
+
+function formatScale(value: number): string {
+  return Number(value.toFixed(6)).toString();
+}
+
+function inverseFlipTransform(
+  start: ProjectEnterRect,
+  target: ProjectEnterRect,
+): string {
+  const translateX = start.left - target.left;
+  const translateY = start.top - target.top;
+  const scaleX = formatScale(start.width / target.width);
+  const scaleY = formatScale(start.height / target.height);
+
+  return `translate3d(${translateX}px, ${translateY}px, 0) scale(${scaleX}, ${scaleY})`;
+}
+
+function commitFrameDestination(
+  frame: HTMLDivElement,
+  target: ProjectEnterRect,
+  borderRadius: string,
+) {
+  frame.style.top = `${target.top}px`;
+  frame.style.left = `${target.left}px`;
+  frame.style.width = `${target.width}px`;
+  frame.style.height = `${target.height}px`;
+  frame.style.borderRadius = borderRadius;
 }
 
 function caseStudyPath(slug: string): string {
@@ -215,24 +244,21 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
         return;
       }
 
-      const targetRect = cover.getBoundingClientRect();
+      const targetBounds = cover.getBoundingClientRect();
+      if (!validRect(targetBounds)) {
+        await runCrossfade(state);
+        return;
+      }
+
+      const targetRect = toRect(targetBounds);
       const targetRadius = getComputedStyle(cover).borderRadius || "0.65rem";
+      commitFrameDestination(frame, targetRect, targetRadius);
       const frameAnim = frame.animate(
         [
           {
-            top: `${state.startRect.top}px`,
-            left: `${state.startRect.left}px`,
-            width: `${state.startRect.width}px`,
-            height: `${state.startRect.height}px`,
-            borderRadius: state.borderRadius,
+            transform: inverseFlipTransform(state.startRect, targetRect),
           },
-          {
-            top: `${targetRect.top}px`,
-            left: `${targetRect.left}px`,
-            width: `${targetRect.width}px`,
-            height: `${targetRect.height}px`,
-            borderRadius: targetRadius,
-          },
+          { transform: FLIP_IDENTITY },
         ],
         {
           duration: PROJECT_ENTER_SETTLE_MS,
@@ -312,22 +338,13 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
       const targetRect = toRect(targetBounds);
       const targetRadius =
         getComputedStyle(target).borderRadius || state.snapshot.borderRadius;
+      commitFrameDestination(frame, targetRect, targetRadius);
       const frameAnim = frame.animate(
         [
           {
-            top: `${state.startRect.top}px`,
-            left: `${state.startRect.left}px`,
-            width: `${state.startRect.width}px`,
-            height: `${state.startRect.height}px`,
-            borderRadius: state.borderRadius,
+            transform: inverseFlipTransform(state.startRect, targetRect),
           },
-          {
-            top: `${targetRect.top}px`,
-            left: `${targetRect.left}px`,
-            width: `${targetRect.width}px`,
-            height: `${targetRect.height}px`,
-            borderRadius: targetRadius,
-          },
+          { transform: FLIP_IDENTITY },
         ],
         {
           duration: PROJECT_ENTER_SETTLE_MS,

@@ -110,50 +110,8 @@
 }
 
 /* ───────────────────────────────────────────────────────────────
-   Motion-play: 3D device block (Fresh Greens)
+   Scroll-reveal IntersectionObserver fallback (Firefox)
    ─────────────────────────────────────────────────────────────── */
-.device-3d {
-  margin-top: 2.2rem;
-}
-
-.device-3d-stage {
-  position: relative;
-  width: 100%;
-  height: clamp(440px, 62vh, 660px);
-  touch-action: pan-y;
-  cursor: grab;
-}
-
-.device-3d-stage:active {
-  cursor: grabbing;
-}
-
-.device-3d-hint {
-  position: absolute;
-  left: 50%;
-  bottom: 0.4rem;
-  transform: translateX(-50%);
-  margin: 0;
-  font-family: var(--font-mono, ui-monospace, monospace);
-  font-size: 0.72rem;
-  letter-spacing: 0.05em;
-  color: var(--muted);
-  opacity: 0.7;
-  pointer-events: none;
-}
-
-.device-3d-flat {
-  display: flex;
-  justify-content: center;
-}
-
-.device-3d-flat-img {
-  width: auto;
-  max-height: clamp(440px, 62vh, 660px);
-  border-radius: var(--rounded-lg, 1rem);
-}
-
-/* ── Scroll-reveal IntersectionObserver fallback (Firefox) ──────── */
 @supports not (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     html[data-reveal-ready="true"] :is(

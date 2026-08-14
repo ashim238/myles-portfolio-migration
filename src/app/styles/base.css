@@ -322,7 +322,8 @@ html.project-enter-settling .project-page {
   overflow: hidden;
   border: 1px solid var(--line);
   background: var(--surface);
-  will-change: top, left, width, height, border-radius;
+  transform-origin: top left;
+  will-change: transform;
 }
 
 .project-enter-image {
