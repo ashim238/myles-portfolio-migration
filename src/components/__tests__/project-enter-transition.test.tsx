@@ -186,7 +186,7 @@ describe("ProjectEnterTransition", () => {
     );
   });
 
-  it("settles an image frame with transform-only FLIP keyframes and cleans up once", async () => {
+  it("settles matching image geometry with a uniform FLIP and interpolated radius", async () => {
     const complete = vi.fn();
     window.addEventListener("project-enter-complete", complete);
     const { rerender } = render(
@@ -228,16 +228,19 @@ describe("ProjectEnterTransition", () => {
     expect(frameCall?.[0]).toEqual([
       {
         transform:
-          "translate3d(-80px, 80px, 0) scale(0.533333, 0.533333)",
+          "translate3d(-80px, 80px, 0) scale(0.533333)",
+        borderRadius: "22.5px",
       },
-      { transform: "translate3d(0px, 0px, 0) scale(1, 1)" },
+      {
+        transform: "translate3d(0px, 0px, 0) scale(1)",
+        borderRadius: "32px",
+      },
     ]);
     for (const keyframe of frameCall?.[0] ?? []) {
       expect(keyframe).not.toHaveProperty("top");
       expect(keyframe).not.toHaveProperty("left");
       expect(keyframe).not.toHaveProperty("width");
       expect(keyframe).not.toHaveProperty("height");
-      expect(keyframe).not.toHaveProperty("borderRadius");
     }
     expect(document.querySelector(".project-enter-frame")).toHaveStyle({
       top: "40px",
@@ -258,9 +261,56 @@ describe("ProjectEnterTransition", () => {
     window.removeEventListener("project-enter-complete", complete);
   });
 
-  it("uses inverse FLIP geometry when returning to the restored desktop program", async () => {
+  it("crossfades enter content when source and target aspect ratios differ", async () => {
+    coverGeometry = domRect(40, 160, 900, 500);
+    const { rerender } = render(
+      <ProjectEnterTransition>
+        <main className="project-page" data-project-slug="fresh-greens">
+          <figure data-project-enter-cover />
+        </main>
+      </ProjectEnterTransition>,
+    );
+
+    await act(async () => {
+      request({
+        slug: "fresh-greens",
+        href: "/work/fresh-greens",
+        rect,
+        visual: { type: "image", src: "/projects/fresh-greens/cover.png" },
+        borderRadius: "12px",
+      });
+      await Promise.resolve();
+    });
+
     navigation.pathname = "/work/fresh-greens";
-    coverGeometry = domRect(32, 120, 960, 620);
+    await act(async () => {
+      rerender(
+        <ProjectEnterTransition>
+          <main className="project-page" data-project-slug="fresh-greens">
+            <figure data-project-enter-cover />
+          </main>
+        </ProjectEnterTransition>,
+      );
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+
+    const animate = HTMLElement.prototype.animate as ReturnType<typeof vi.fn>;
+    expect(
+      animate.mock.calls.filter(
+        ([keyframes]) => Array.isArray(keyframes) && "transform" in keyframes[0],
+      ),
+    ).toHaveLength(0);
+    expect(
+      animate.mock.calls.some(
+        ([keyframes]) => Array.isArray(keyframes) && "opacity" in keyframes[0],
+      ),
+    ).toBe(true);
+  });
+
+  it("uses a uniform inverse FLIP when returning to matching desktop geometry", async () => {
+    navigation.pathname = "/work/fresh-greens";
+    coverGeometry = domRect(32, 120, 936, 676);
     programGeometry = domRect(88, 160, 720, 520);
     const { rerender } = render(
       <ProjectEnterTransition>
@@ -302,14 +352,18 @@ describe("ProjectEnterTransition", () => {
         Array.isArray(keyframes) &&
         "transform" in keyframes[0] &&
         keyframes[0].transform ===
-          "translate3d(-40px, -56px, 0) scale(1.333333, 1.192308)",
+          "translate3d(-40px, -56px, 0) scale(1.3)",
     );
     expect(reverseFrameCall?.[0]).toEqual([
       {
         transform:
-          "translate3d(-40px, -56px, 0) scale(1.333333, 1.192308)",
+          "translate3d(-40px, -56px, 0) scale(1.3)",
+        borderRadius: "0px",
       },
-      { transform: "translate3d(0px, 0px, 0) scale(1, 1)" },
+      {
+        transform: "translate3d(0px, 0px, 0) scale(1)",
+        borderRadius: "0px",
+      },
     ]);
     expect(document.querySelector(".project-enter-frame")).toHaveStyle({
       top: "88px",
@@ -317,6 +371,52 @@ describe("ProjectEnterTransition", () => {
       width: "720px",
       height: "520px",
     });
+  });
+
+  it("crossfades return content when cover and desktop aspect ratios differ", async () => {
+    navigation.pathname = "/work/fresh-greens";
+    coverGeometry = domRect(32, 120, 960, 620);
+    programGeometry = domRect(88, 160, 720, 520);
+    const { rerender } = render(
+      <ProjectEnterTransition>
+        <main>
+          <article className="project-page" data-project-slug="fresh-greens">
+            <figure data-project-enter-cover />
+          </article>
+          <section data-m97-program-window="fresh-greens" />
+        </main>
+      </ProjectEnterTransition>,
+    );
+
+    await act(async () => {
+      requestReturn();
+      await Promise.resolve();
+    });
+
+    navigation.pathname = "/";
+    await act(async () => {
+      rerender(
+        <ProjectEnterTransition>
+          <main>
+            <section data-m97-program-window="fresh-greens" />
+          </main>
+        </ProjectEnterTransition>,
+      );
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+
+    const animate = HTMLElement.prototype.animate as ReturnType<typeof vi.fn>;
+    expect(
+      animate.mock.calls.filter(
+        ([keyframes]) => Array.isArray(keyframes) && "transform" in keyframes[0],
+      ),
+    ).toHaveLength(0);
+    expect(
+      animate.mock.calls.some(
+        ([keyframes]) => Array.isArray(keyframes) && "opacity" in keyframes[0],
+      ),
+    ).toBe(true);
   });
 
   it("falls back to a crossfade when the restored program target is missing", async () => {

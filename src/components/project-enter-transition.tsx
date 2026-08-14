@@ -24,7 +24,8 @@ import {
 } from "@/lib/project-enter";
 
 const EASE_OUT_CUBIC = "cubic-bezier(0.33, 1, 0.68, 1)";
-const FLIP_IDENTITY = "translate3d(0px, 0px, 0) scale(1, 1)";
+const FLIP_ASPECT_TOLERANCE = 0.005;
+const FLIP_IDENTITY = "translate3d(0px, 0px, 0) scale(1)";
 const TRANSITION_FAILSAFE_MS = 4500;
 
 type OverlayPhase = "holding" | "navigating" | "settling";
@@ -77,16 +78,47 @@ function formatScale(value: number): string {
   return Number(value.toFixed(6)).toString();
 }
 
+function uniformFlipScale(
+  start: ProjectEnterRect,
+  target: ProjectEnterRect,
+): number | null {
+  const scaleX = start.width / target.width;
+  const scaleY = start.height / target.height;
+  const largestScale = Math.max(Math.abs(scaleX), Math.abs(scaleY));
+
+  if (
+    !Number.isFinite(scaleX) ||
+    !Number.isFinite(scaleY) ||
+    largestScale === 0 ||
+    Math.abs(scaleX - scaleY) / largestScale > FLIP_ASPECT_TOLERANCE
+  ) {
+    return null;
+  }
+
+  // Matching width exactly keeps the horizontal edges anchored. The aspect
+  // tolerance only admits minor layout rounding on the vertical edge.
+  return scaleX;
+}
+
 function inverseFlipTransform(
   start: ProjectEnterRect,
   target: ProjectEnterRect,
+  scale: number,
 ): string {
   const translateX = start.left - target.left;
   const translateY = start.top - target.top;
-  const scaleX = formatScale(start.width / target.width);
-  const scaleY = formatScale(start.height / target.height);
 
-  return `translate3d(${translateX}px, ${translateY}px, 0) scale(${scaleX}, ${scaleY})`;
+  return `translate3d(${translateX}px, ${translateY}px, 0) scale(${formatScale(scale)})`;
+}
+
+function counterScaledPixelRadius(radius: string, scale: number): string {
+  const match = radius.trim().match(/^(-?(?:\d+|\d*\.\d+))px$/);
+  if (!match) return radius;
+
+  const value = Number(match[1]);
+  if (!Number.isFinite(value)) return radius;
+
+  return `${formatScale(value / scale)}px`;
 }
 
 function commitFrameDestination(
@@ -251,14 +283,24 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
       }
 
       const targetRect = toRect(targetBounds);
+      const scale = uniformFlipScale(state.startRect, targetRect);
+      if (scale === null) {
+        await runCrossfade(state);
+        return;
+      }
+
       const targetRadius = getComputedStyle(cover).borderRadius || "0.65rem";
       commitFrameDestination(frame, targetRect, targetRadius);
       const frameAnim = frame.animate(
         [
           {
-            transform: inverseFlipTransform(state.startRect, targetRect),
+            transform: inverseFlipTransform(state.startRect, targetRect, scale),
+            borderRadius: counterScaledPixelRadius(state.borderRadius, scale),
           },
-          { transform: FLIP_IDENTITY },
+          {
+            transform: FLIP_IDENTITY,
+            borderRadius: targetRadius,
+          },
         ],
         {
           duration: PROJECT_ENTER_SETTLE_MS,
@@ -336,15 +378,25 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
       }
 
       const targetRect = toRect(targetBounds);
+      const scale = uniformFlipScale(state.startRect, targetRect);
+      if (scale === null) {
+        await runCrossfade(state);
+        return;
+      }
+
       const targetRadius =
         getComputedStyle(target).borderRadius || state.snapshot.borderRadius;
       commitFrameDestination(frame, targetRect, targetRadius);
       const frameAnim = frame.animate(
         [
           {
-            transform: inverseFlipTransform(state.startRect, targetRect),
+            transform: inverseFlipTransform(state.startRect, targetRect, scale),
+            borderRadius: counterScaledPixelRadius(state.borderRadius, scale),
           },
-          { transform: FLIP_IDENTITY },
+          {
+            transform: FLIP_IDENTITY,
+            borderRadius: targetRadius,
+          },
         ],
         {
           duration: PROJECT_ENTER_SETTLE_MS,
