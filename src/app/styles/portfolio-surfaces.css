@@ -2410,6 +2410,12 @@
   animation: fadeUp 520ms ease-out both;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .about-layout {
+    animation: none;
+  }
+}
+
 @media (min-width: 768px) {
   .about-layout {
     grid-template-columns: 3fr 1fr;

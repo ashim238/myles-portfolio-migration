@@ -395,7 +395,9 @@ describe("Task 5 responsive adaptation", () => {
     expect(await page.locator(".pocket97-dock button").count()).toBe(4);
     expect(await page.locator("[data-draggable-window]").count()).toBe(0);
     await page
-      .getByRole("button", { name: "Open Fresh Greens.exe program" })
+      .getByRole("button", {
+        name: "Explore Fresh Greens.exe interactive preview",
+      })
       .click();
     await page.waitForSelector(".pocket97-app");
     expect(await page.locator(".pocket97-home").count()).toBe(0);
@@ -404,12 +406,127 @@ describe("Task 5 responsive adaptation", () => {
     await page.waitForFunction(
       () => document.activeElement?.classList.contains("pocket97-back"),
     );
+
+    await page.getByRole("button", { name: "Open Apps" }).click();
+    const appsDialog = page.getByRole("dialog", { name: "Open Apps" });
+    await appsDialog.getByRole("button", { name: "Fresh Greens.exe" }).click();
+    await appsDialog.waitFor({ state: "detached" });
+    await page.waitForFunction(
+      () => document.activeElement?.classList.contains("pocket97-back"),
+    );
+
     await back.click();
     await page.waitForSelector(".pocket97-home");
     await page.waitForFunction(
       () => document.activeElement?.textContent?.trim() === "Work",
     );
     await page.close();
+  }, 60_000);
+
+  it("hydrates Pocket Start as a modal sheet with isolated background and restored focus", async () => {
+    const page = await hydratedBrowserPage("pocket", phoneViewports[0]);
+    const start = page.getByRole("button", { name: "Start" });
+
+    expect(await start.getAttribute("aria-controls")).toBe("pocket97-start-sheet");
+    await start.click();
+
+    const dialog = page.getByRole("dialog", { name: "Pocket 98 Start" });
+    await dialog.waitFor();
+    expect(await dialog.getAttribute("aria-modal")).toBe("true");
+    expect(
+      await page
+        .locator(".pocket97-stage")
+        .evaluate((element) => element instanceof HTMLElement && element.inert),
+    ).toBe(true);
+    expect(
+      await page
+        .locator(".pocket97-dock")
+        .evaluate((element) => element instanceof HTMLElement && element.inert),
+    ).toBe(true);
+    expect(
+      await dialog
+        .getByRole("button", { name: "About Myles" })
+        .evaluate((element) => element === document.activeElement),
+    ).toBe(true);
+
+    await page.keyboard.press("Shift+Tab");
+    expect(
+      await dialog
+        .getByRole("button", { name: "Close Pocket 98 Start" })
+        .evaluate((element) => element === document.activeElement),
+    ).toBe(true);
+    await page.keyboard.press("Tab");
+    expect(
+      await dialog
+        .getByRole("button", { name: "About Myles" })
+        .evaluate((element) => element === document.activeElement),
+    ).toBe(true);
+
+    await page.keyboard.press("Escape");
+    await dialog.waitFor({ state: "detached" });
+    expect(await start.evaluate((element) => element === document.activeElement)).toBe(
+      true,
+    );
+    expect(
+      await page
+        .locator(".pocket97-stage")
+        .evaluate((element) => element instanceof HTMLElement && element.inert),
+    ).toBe(false);
+    expect(
+      await page
+        .locator(".pocket97-dock")
+        .evaluate((element) => element instanceof HTMLElement && element.inert),
+    ).toBe(false);
+
+    await start.click();
+    const reopenedDialog = page.getByRole("dialog", { name: "Pocket 98 Start" });
+    await reopenedDialog
+      .getByRole("button", { name: "Close Pocket 98 Start" })
+      .click();
+    await reopenedDialog.waitFor({ state: "detached" });
+    expect(await start.evaluate((element) => element === document.activeElement)).toBe(
+      true,
+    );
+    await page.close();
+  }, 60_000);
+
+  it("keeps functional Pocket and compact recipe labels at 12px without clipping", async () => {
+    const pocketPage = await hydratedBrowserPage("pocket", phoneViewports[1]);
+    const dockLabels = await pocketPage.locator(".pocket97-dock button").evaluateAll(
+      (buttons) =>
+        buttons.map((button) => {
+          const label = button.querySelector("span")!;
+          return {
+            fontSize: Number.parseFloat(getComputedStyle(label).fontSize),
+            fits: button.scrollWidth <= button.clientWidth,
+          };
+        }),
+    );
+    expect(dockLabels).toEqual(
+      dockLabels.map(() => ({ fontSize: 12, fits: true })),
+    );
+    await pocketPage.close();
+
+    const compactPage = await hydratedBrowserPage("pocket", {
+      width: 1050,
+      height: 900,
+    });
+    await compactPage.waitForSelector('[data-m97-shell="workstation"]');
+    const recipe = await compactPage.locator(".myles97-roti-note").evaluate((note) => {
+      const label = note.querySelector<HTMLElement>(".myles97-roti-label")!;
+      const preview = note.querySelector<HTMLElement>(":scope > span:last-child")!;
+      return {
+        labelFontSize: Number.parseFloat(getComputedStyle(label).fontSize),
+        previewFontSize: Number.parseFloat(getComputedStyle(preview).fontSize),
+        fits: note.scrollHeight <= note.clientHeight,
+      };
+    });
+    expect(recipe).toEqual({
+      labelFontSize: 12,
+      previewFontSize: 12,
+      fits: true,
+    });
+    await compactPage.close();
   }, 60_000);
 
   it("keeps the real JavaScript-disabled server snapshots navigable", async () => {
@@ -431,7 +548,7 @@ describe("Task 5 responsive adaptation", () => {
         (element) => getComputedStyle(element).display,
       ),
     ).toBe("none");
-    expect(await pocketPage.getByRole("link", { name: /Open .* case study/ }).count()).toBe(
+    expect(await pocketPage.getByRole("link", { name: /Read .* case study/ }).count()).toBe(
       programs.length,
     );
     await assertNoHorizontalOverflow(pocketPage);

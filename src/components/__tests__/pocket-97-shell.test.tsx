@@ -162,7 +162,7 @@ describe("Pocket 98", () => {
 
     expect(dock).toBeInTheDocument();
     expect(document.querySelector("[data-draggable-window]")).toBeNull();
-    expect(screen.getAllByRole("link", { name: /Open .* case study/ })).toHaveLength(4);
+    expect(screen.getAllByRole("link", { name: /Read .* case study/ })).toHaveLength(4);
     expect(screen.getByRole("heading", { name: "Myles Ashitey" })).toBeInTheDocument();
   });
 
@@ -191,6 +191,25 @@ describe("Pocket 98", () => {
     );
   });
 
+  it("keeps functional Pocket and narrow-workstation note copy on the 12px floor", () => {
+    const dockButton = cssBlock(".pocket97-dock button");
+    const compact = cssBlock(
+      "@media (min-width: 1025px) and (max-width: 1080px) and (pointer: fine)",
+    );
+    const recipeLabel = cssBlock(
+      ".myles97-roti-note .myles97-roti-label",
+      compact,
+    );
+    const recipePreview = cssBlock(
+      ".myles97-roti-note > span:last-child",
+      compact,
+    );
+
+    expect(dockButton).toMatch(/font:\s*700 12px\/1\.1 var\(--m97-ui-font\);/);
+    expect(recipeLabel).toMatch(/font-size:\s*12px;/);
+    expect(recipePreview).toMatch(/font-size:\s*12px;/);
+  });
+
   it("opens one project program, keeps its native case-study link, and returns to the stack", async () => {
     installMatchMedia(true);
     const user = userEvent.setup();
@@ -198,11 +217,13 @@ describe("Pocket 98", () => {
 
     await screen.findByRole("navigation", { name: "Pocket 98 dock" });
     await user.click(
-      screen.getByRole("button", { name: "Open Fresh Greens.exe program" }),
+      screen.getByRole("button", {
+        name: "Explore Fresh Greens.exe interactive preview",
+      }),
     );
 
     const app = screen.getByRole("region", { name: /Fresh Greens.exe/ });
-    expect(within(app).getByRole("link", { name: "Open Fresh Greens case study" })).toHaveAttribute(
+    expect(within(app).getByRole("link", { name: "Read Fresh Greens case study" })).toHaveAttribute(
       "href",
       "/work/fresh-greens",
     );
@@ -226,22 +247,30 @@ describe("Pocket 98", () => {
     );
 
     await user.click(within(dock).getByRole("button", { name: "Open Apps" }));
-    const apps = screen.getByRole("group", { name: "Open Apps" });
+    const apps = screen.getByRole("dialog", { name: "Open Apps" });
     expect(within(apps).getByRole("button", { name: /Loose Parts/ })).toBeInTheDocument();
   });
 
-  it("contains Pocket sheet focus, returns Escape to its opener, and focuses Back on launch", async () => {
+  it("opens Start as an isolated modal, contains focus, and restores its opener", async () => {
     installMatchMedia(true);
     const user = userEvent.setup();
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
 
     const dock = await screen.findByRole("navigation", { name: "Pocket 98 dock" });
     const start = within(dock).getByRole("button", { name: "Start" });
+    expect(start).toHaveAttribute("aria-controls", "pocket97-start-sheet");
+    expect(start).toHaveAttribute("aria-haspopup", "dialog");
     await user.click(start);
 
-    const startSheet = screen.getByRole("group", { name: "Pocket 98 Start" });
+    const startSheet = screen.getByRole("dialog", { name: "Pocket 98 Start" });
     const firstAction = within(startSheet).getByRole("button", { name: "About Myles" });
-    const lastAction = within(startSheet).getByRole("link", { name: "E-mail" });
+    const lastAction = within(startSheet).getByRole("button", {
+      name: "Close Pocket 98 Start",
+    });
+    expect(startSheet).toHaveAttribute("id", "pocket97-start-sheet");
+    expect(startSheet).toHaveAttribute("aria-modal", "true");
+    expect(document.querySelector(".pocket97-stage")).toHaveAttribute("inert");
+    expect(dock).toHaveAttribute("inert");
     expect(firstAction).toHaveFocus();
 
     await user.tab({ shift: true });
@@ -250,7 +279,9 @@ describe("Pocket 98", () => {
     expect(firstAction).toHaveFocus();
 
     await user.keyboard("{Escape}");
-    expect(screen.queryByRole("group", { name: "Pocket 98 Start" })).toBeNull();
+    expect(screen.queryByRole("dialog", { name: "Pocket 98 Start" })).toBeNull();
+    expect(document.querySelector(".pocket97-stage")).not.toHaveAttribute("inert");
+    expect(dock).not.toHaveAttribute("inert");
     expect(start).toHaveFocus();
 
     await user.click(start);
@@ -264,6 +295,42 @@ describe("Pocket 98", () => {
     });
   });
 
+  it("offers a touch dismissal action for Start and restores its opener", async () => {
+    installMatchMedia(true);
+    const user = userEvent.setup();
+    render(<Myles97Shell programs={programs} looseParts={looseParts} />);
+
+    const dock = await screen.findByRole("navigation", { name: "Pocket 98 dock" });
+    const start = within(dock).getByRole("button", { name: "Start" });
+    await user.click(start);
+
+    const startSheet = screen.getByRole("dialog", { name: "Pocket 98 Start" });
+    await user.click(
+      within(startSheet).getByRole("button", { name: "Close Pocket 98 Start" }),
+    );
+
+    expect(screen.queryByRole("dialog", { name: "Pocket 98 Start" })).toBeNull();
+    expect(start).toHaveFocus();
+  });
+
+  it("focuses a touch dismissal action when Open Apps is empty", async () => {
+    installMatchMedia(true);
+    const user = userEvent.setup();
+    render(<Myles97Shell programs={programs} looseParts={looseParts} />);
+
+    const dock = await screen.findByRole("navigation", { name: "Pocket 98 dock" });
+    const openApps = within(dock).getByRole("button", { name: "Open Apps" });
+    await user.click(openApps);
+
+    const appsSheet = screen.getByRole("dialog", { name: "Open Apps" });
+    const close = within(appsSheet).getByRole("button", { name: "Close Open Apps" });
+    expect(close).toHaveFocus();
+
+    await user.click(close);
+    expect(screen.queryByRole("dialog", { name: "Open Apps" })).toBeNull();
+    expect(openApps).toHaveFocus();
+  });
+
   it("focuses the first Open Apps action and returns Escape to Open Apps", async () => {
     installMatchMedia(true);
     const user = userEvent.setup();
@@ -272,14 +339,36 @@ describe("Pocket 98", () => {
     const dock = await screen.findByRole("navigation", { name: "Pocket 98 dock" });
     await user.click(within(dock).getByRole("button", { name: "Loose Parts" }));
     const openApps = within(dock).getByRole("button", { name: "Open Apps" });
+    expect(openApps).toHaveAttribute("aria-controls", "pocket97-open-apps-sheet");
+    expect(openApps).toHaveAttribute("aria-haspopup", "dialog");
     await user.click(openApps);
 
-    const appsSheet = screen.getByRole("group", { name: "Open Apps" });
+    const appsSheet = screen.getByRole("dialog", { name: "Open Apps" });
+    expect(appsSheet).toHaveAttribute("id", "pocket97-open-apps-sheet");
+    expect(appsSheet).toHaveAttribute("aria-modal", "true");
     expect(within(appsSheet).getByRole("button", { name: /Loose Parts/ })).toHaveFocus();
 
     await user.keyboard("{Escape}");
-    expect(screen.queryByRole("group", { name: "Open Apps" })).toBeNull();
+    expect(screen.queryByRole("dialog", { name: "Open Apps" })).toBeNull();
     expect(openApps).toHaveFocus();
+  });
+
+  it("focuses Back after selecting the already-active program from Open Apps", async () => {
+    installMatchMedia(true);
+    const user = userEvent.setup();
+    render(<Myles97Shell programs={programs} looseParts={looseParts} />);
+
+    const dock = await screen.findByRole("navigation", { name: "Pocket 98 dock" });
+    await user.click(within(dock).getByRole("button", { name: "Loose Parts" }));
+    await user.click(within(dock).getByRole("button", { name: "Open Apps" }));
+
+    const appsSheet = screen.getByRole("dialog", { name: "Open Apps" });
+    await user.click(within(appsSheet).getByRole("button", { name: /Loose Parts/ }));
+
+    expect(screen.queryByRole("dialog", { name: "Open Apps" })).toBeNull();
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: "Back" })).toHaveFocus();
+    });
   });
 
   it("keeps the workstation model when the capability query does not match", async () => {

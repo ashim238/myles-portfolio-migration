@@ -54,12 +54,15 @@ export function Pocket97Shell({
   const [activeProgram, setActiveProgram] = useState<ProgramId | null>(null);
   const [startOpen, setStartOpen] = useState(false);
   const [appsOpen, setAppsOpen] = useState(false);
+  const [programFocusRequest, setProgramFocusRequest] = useState(0);
   const startButtonRef = useRef<HTMLButtonElement>(null);
   const appsButtonRef = useRef<HTMLButtonElement>(null);
   const workButtonRef = useRef<HTMLButtonElement>(null);
   const backButtonRef = useRef<HTMLButtonElement>(null);
   const startSheetRef = useRef<HTMLDivElement>(null);
   const appsSheetRef = useRef<HTMLDivElement>(null);
+  const sheetReturnFocusRef = useRef<HTMLButtonElement | null>(null);
+  const sheetOpen = startOpen || appsOpen;
 
   const projectById = useMemo(
     () => new Map(programs.map((program) => [program.id, program])),
@@ -76,11 +79,13 @@ export function Pocket97Shell({
   };
 
   const openProgram = (id: ProgramId) => {
+    sheetReturnFocusRef.current = null;
     if (id === "welcome" || id === "selected-work") {
       setActiveProgram(null);
     } else {
       dispatch({ type: "open", id });
       setActiveProgram(id);
+      setProgramFocusRequest((request) => request + 1);
     }
     setStartOpen(false);
     setAppsOpen(false);
@@ -98,17 +103,25 @@ export function Pocket97Shell({
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
       if (startOpen) {
+        sheetReturnFocusRef.current = startButtonRef.current;
         setStartOpen(false);
-        startButtonRef.current?.focus();
       }
       if (appsOpen) {
+        sheetReturnFocusRef.current = appsButtonRef.current;
         setAppsOpen(false);
-        appsButtonRef.current?.focus();
       }
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [appsOpen, startOpen]);
+
+  useEffect(() => {
+    if (sheetOpen) return;
+    const trigger = sheetReturnFocusRef.current;
+    if (!trigger) return;
+    sheetReturnFocusRef.current = null;
+    trigger.focus();
+  }, [sheetOpen]);
 
   useEffect(() => {
     const openSheet = startOpen ? startSheetRef.current : appsOpen ? appsSheetRef.current : null;
@@ -117,8 +130,8 @@ export function Pocket97Shell({
   }, [appsOpen, startOpen]);
 
   useEffect(() => {
-    if (activeProgram) backButtonRef.current?.focus();
-  }, [activeProgram]);
+    if (activeProgram && programFocusRequest > 0) backButtonRef.current?.focus();
+  }, [activeProgram, programFocusRequest]);
 
   const recentPrograms = state.recentPrograms.filter(
     (id) => id !== "welcome" && id !== "selected-work" && id !== "reminders",
@@ -130,7 +143,7 @@ export function Pocket97Shell({
 
   return (
     <div className="pocket97-shell">
-      <div className="pocket97-stage">
+      <div className="pocket97-stage" inert={sheetOpen ? true : undefined}>
         {activeProgram ? (
           <section className="pocket97-app" aria-labelledby="pocket97-app-title">
             <header className="pocket97-app-header">
@@ -220,8 +233,10 @@ export function Pocket97Shell({
       {startOpen ? (
         <div
           ref={startSheetRef}
+          id="pocket97-start-sheet"
           className="pocket97-sheet"
-          role="group"
+          role="dialog"
+          aria-modal="true"
           aria-label="Pocket 98 Start"
           tabIndex={-1}
           onKeyDown={(event) => containTabFocus(event, startSheetRef.current)}
@@ -238,18 +253,37 @@ export function Pocket97Shell({
             <Myles97Icon name="display" size={24} variant="color" aria-hidden="true" />
             Display Properties
           </button>
-          <a href={`mailto:${siteConfig.email}`}>
+          <a
+            href={`mailto:${siteConfig.email}`}
+            onClick={() => {
+              sheetReturnFocusRef.current = startButtonRef.current;
+              setStartOpen(false);
+            }}
+          >
             <Myles97Icon name="mail" size={24} variant="color" aria-hidden="true" />
             E-mail
           </a>
+          <button
+            type="button"
+            className="pocket97-sheet-dismiss"
+            aria-label="Close Pocket 98 Start"
+            onClick={() => {
+              sheetReturnFocusRef.current = startButtonRef.current;
+              setStartOpen(false);
+            }}
+          >
+            Close
+          </button>
         </div>
       ) : null}
 
       {appsOpen ? (
         <div
           ref={appsSheetRef}
+          id="pocket97-open-apps-sheet"
           className="pocket97-sheet"
-          role="group"
+          role="dialog"
+          aria-modal="true"
           aria-label="Open Apps"
           tabIndex={-1}
           onKeyDown={(event) => containTabFocus(event, appsSheetRef.current)}
@@ -272,15 +306,33 @@ export function Pocket97Shell({
           ) : (
             <p>No other programs are open yet.</p>
           )}
+          <button
+            type="button"
+            className="pocket97-sheet-dismiss"
+            aria-label="Close Open Apps"
+            onClick={() => {
+              sheetReturnFocusRef.current = appsButtonRef.current;
+              setAppsOpen(false);
+            }}
+          >
+            Close
+          </button>
         </div>
       ) : null}
 
-      <nav className="pocket97-dock" aria-label="Pocket 98 dock">
+      <nav
+        className="pocket97-dock"
+        aria-label="Pocket 98 dock"
+        inert={sheetOpen ? true : undefined}
+      >
         <button
           ref={startButtonRef}
           type="button"
+          aria-controls="pocket97-start-sheet"
           aria-expanded={startOpen}
+          aria-haspopup="dialog"
           onClick={() => {
+            sheetReturnFocusRef.current = startButtonRef.current;
             setAppsOpen(false);
             setStartOpen((open) => !open);
           }}
@@ -299,8 +351,11 @@ export function Pocket97Shell({
         <button
           ref={appsButtonRef}
           type="button"
+          aria-controls="pocket97-open-apps-sheet"
           aria-expanded={appsOpen}
+          aria-haspopup="dialog"
           onClick={() => {
+            sheetReturnFocusRef.current = appsButtonRef.current;
             setStartOpen(false);
             setAppsOpen((open) => !open);
           }}

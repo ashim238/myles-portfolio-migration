@@ -125,6 +125,16 @@ describe("visible-first structural motion", () => {
     expect(aboutPage).toContain('id="about-details-title"');
   });
 
+  it("removes the About entrance animation when motion is reduced", () => {
+    const reduced = cssBlocks(
+      "@media (prefers-reduced-motion: reduce)",
+      surfaceStyles,
+    ).join("\n");
+    const aboutLayout = cssBlock(".about-layout", reduced);
+
+    expect(aboutLayout).toMatch(/animation:\s*none;/);
+  });
+
   it("limits artifact transforms to motion-safe contexts and resets exact layers", () => {
     const noPreference = cssBlocks(
       "@media (prefers-reduced-motion: no-preference)",

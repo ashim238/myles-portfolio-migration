@@ -110,7 +110,7 @@
   min-height: 0;
 }
 
-.pocket97-shell .myles97-program-launch {
+.pocket97-shell .myles97-program-summary {
   grid-template-rows: minmax(150px, 42vw) auto;
 }
 
@@ -259,6 +259,13 @@
   font-size: 12px;
 }
 
+.pocket97-sheet .pocket97-sheet-dismiss {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  margin-top: 6px;
+  border-top: 1px solid var(--m97-bevel-shadow);
+}
+
 .pocket97-dock {
   position: fixed;
   z-index: 150;
@@ -286,7 +293,7 @@
   background: transparent;
   color: var(--m97-ink);
   cursor: pointer;
-  font: 700 10px/1.05 var(--m97-ui-font);
+  font: 700 12px/1.1 var(--m97-ui-font);
   text-align: center;
 }
 
@@ -428,7 +435,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .pocket97-shell .myles97-program-launch {
+  .pocket97-shell .myles97-program-summary {
     grid-template-rows: minmax(132px, min(21vw, 24svh)) auto;
   }
 }
@@ -467,7 +474,7 @@
 
   .myles97-roti-note .myles97-roti-label {
     margin-bottom: 6px;
-    font-size: 9px;
+    font-size: 12px;
     letter-spacing: 0.06em;
   }
 
@@ -478,7 +485,7 @@
   }
 
   .myles97-roti-note > span:last-child {
-    font-size: 10px;
+    font-size: 12px;
     line-height: 1.35;
   }
 }

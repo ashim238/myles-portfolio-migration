@@ -118,7 +118,7 @@ describe("portfolio hardening style contract", () => {
       pocketStyles,
     );
     const launch = cssBlock(
-      ".pocket97-shell .myles97-program-launch",
+      ".pocket97-shell .myles97-program-summary",
       shortTablet,
     );
 
