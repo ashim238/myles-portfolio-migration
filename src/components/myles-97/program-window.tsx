@@ -142,11 +142,11 @@ export function ProgramWindow({
             <button
               type="button"
               className="myles97-hit-target"
-              aria-label={`Open ${caseStudyName(title)} case study`}
+              aria-label={`Read ${caseStudyName(title)} case study`}
               onClick={() => onMaximize(id)}
             >
               <span className="myles97-window-control" aria-hidden="true">
-                □
+                ↗
               </span>
             </button>
           ) : null}

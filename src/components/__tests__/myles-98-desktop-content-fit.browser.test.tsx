@@ -22,8 +22,10 @@ const desktopStyles = readFileSync(
 );
 const publicDirectory = resolve(__dirname, "../../../public");
 const laptopViewports = [
+  { width: 1440, height: 900 },
   { width: 1280, height: 800 },
   { width: 1117, height: 837 },
+  { width: 1025, height: 768 },
 ] as const;
 const imageContentTypes: Record<string, string> = {
   ".jpg": "image/jpeg",
@@ -89,7 +91,7 @@ function renderDesktopMarkup(openProgram?: ProgramDefinition) {
   if (openProgram) {
     fireEvent.click(
       within(rendered.container).getByRole("button", {
-        name: `Open ${openProgram.appName} program`,
+        name: `Explore ${openProgram.appName} interactive preview`,
       }),
     );
     expect(
@@ -143,6 +145,7 @@ async function contentFit(page: Page, selector: string, childSelector: string) {
       return {
         noHorizontalScroll: element.scrollWidth === element.clientWidth,
         noVerticalScroll: element.scrollHeight === element.clientHeight,
+        bottomClearance: elementRect.bottom - childRect.bottom,
         childFullyVisible:
           childRect.top >= elementRect.top &&
           childRect.right <= elementRect.right &&
@@ -207,21 +210,38 @@ describe("Myles 98 desktop content fit", () => {
       );
       const selectedGeometry = await selectedContent.evaluate((element) => {
         const contentRect = element.getBoundingClientRect();
-        const links = Array.from(
-          element.querySelectorAll<HTMLElement>(".myles97-case-study-link"),
+        const inside = (child: DOMRect, parent: DOMRect) =>
+          child.top >= parent.top &&
+          child.right <= parent.right &&
+          child.bottom <= parent.bottom &&
+          child.left >= parent.left;
+        const actions = Array.from(
+          element.querySelectorAll<HTMLElement>(
+            ".myles97-case-study-link, .myles97-program-launch",
+          ),
+        );
+        const covers = Array.from(
+          element.querySelectorAll<HTMLElement>(".myles97-program-cover"),
+        );
+        const images = Array.from(
+          element.querySelectorAll<HTMLImageElement>(".myles97-program-cover img"),
         );
         return {
           noHorizontalScroll: element.scrollWidth === element.clientWidth,
           noVerticalScroll: element.scrollHeight === element.clientHeight,
-          visibleActions: links.filter((link) => {
-            const linkRect = link.getBoundingClientRect();
-            return (
-              linkRect.top >= contentRect.top &&
-              linkRect.right <= contentRect.right &&
-              linkRect.bottom <= contentRect.bottom &&
-              linkRect.left >= contentRect.left
-            );
-          }).length,
+          visibleActions: actions.filter((action) =>
+            inside(action.getBoundingClientRect(), contentRect),
+          ).length,
+          visibleCovers: covers.filter((cover) =>
+            inside(cover.getBoundingClientRect(), contentRect),
+          ).length,
+          loadedImages: images.filter(
+            (image) =>
+              image.complete &&
+              image.naturalWidth > 0 &&
+              getComputedStyle(image).objectFit === "contain" &&
+              inside(image.getBoundingClientRect(), contentRect),
+          ).length,
         };
       });
       const welcomeFit = await contentFit(
@@ -234,13 +254,17 @@ describe("Myles 98 desktop content fit", () => {
       expect(selectedGeometry).toEqual({
         noHorizontalScroll: true,
         noVerticalScroll: true,
-        visibleActions: programs.length,
+        visibleActions: programs.length * 2,
+        visibleCovers: programs.length,
+        loadedImages: programs.length,
       });
       expect(welcomeFit).toEqual({
         noHorizontalScroll: true,
         noVerticalScroll: true,
+        bottomClearance: expect.any(Number),
         childFullyVisible: true,
       });
+      expect(welcomeFit.bottomClearance).toBeGreaterThanOrEqual(16);
       await page.close();
     },
     60_000,

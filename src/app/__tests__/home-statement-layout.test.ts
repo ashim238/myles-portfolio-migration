@@ -58,11 +58,11 @@ describe("Myles 98 homepage layout", () => {
   });
 
   it("fits 16:9 program covers inside their fixed well without vertical crop", () => {
-    const launch = block(".myles97-program-launch");
+    const summary = block(".myles97-program-summary");
     const cover = block(".myles97-program-cover");
     const image = block(".myles97-program-cover img");
 
-    expect(launch).toMatch(/grid-template-rows:\s*116px auto/);
+    expect(summary).toMatch(/grid-template-rows:\s*116px auto/);
     expect(cover).toMatch(/position:\s*relative/);
     expect(cover).toMatch(/background:\s*#dfdfdf/);
     expect(image).toMatch(/position:\s*absolute/);
@@ -70,6 +70,31 @@ describe("Myles 98 homepage layout", () => {
     expect(image).toMatch(/width:\s*100%/);
     expect(image).toMatch(/height:\s*100%/);
     expect(image).toMatch(/object-fit:\s*contain/);
+  });
+
+  it("keeps both project-choice actions on the functional 12px type floor", () => {
+    const guide = block(".myles97-explorer-guide");
+    const caseStudy = block(".myles97-case-study-link");
+    const preview = block(".myles97-program-launch");
+
+    expect(guide).toMatch(/font-size:\s*12px/);
+    expect(caseStudy).toMatch(/font:\s*700 12px\/1\.2 var\(--m97-ui-font\)/);
+    expect(preview).toMatch(/font:\s*700 12px\/1\.2 var\(--m97-ui-font\)/);
+  });
+
+  it("preserves the primary case-study action in the custom high-contrast mode", () => {
+    const primary = block(
+      '.myles97-shell[data-m97-contrast="high"] .myles97-case-study-link',
+    );
+
+    expect(primary).toMatch(/background:\s*#000/);
+    expect(primary).toMatch(/color:\s*#fff/);
+  });
+
+  it("highlights project cards only when an actual action receives focus", () => {
+    expect(css).not.toContain(".myles97-program-card:hover {");
+    const focusedCard = block(".myles97-program-card:focus-within");
+    expect(focusedCard).toMatch(/border-color:\s*var\(--m97-active\)/);
   });
 
   it("keeps the large name open enough to preserve letter shapes", () => {

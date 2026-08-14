@@ -39,7 +39,7 @@ export type WorkstationDesktopProps = {
 
 const defaultGeometry: Partial<Record<ProgramId, WindowGeometry>> = {
   "selected-work": { x: 136, y: 112, width: 744, height: 536 },
-  welcome: { x: 896, y: 160, width: 352, height: 312 },
+  welcome: { x: 896, y: 160, width: 352, height: 352 },
   about: { x: 312, y: 124, width: 540, height: 430 },
   "loose-parts": { x: 232, y: 92, width: 720, height: 520 },
   resume: { x: 344, y: 112, width: 560, height: 470 },
@@ -47,14 +47,6 @@ const defaultGeometry: Partial<Record<ProgramId, WindowGeometry>> = {
   "trini-roti": { x: 472, y: 92, width: 520, height: 560 },
   "display-properties": { x: 504, y: 168, width: 448, height: 456 },
 };
-
-const evidenceLabels = {
-  built: "Built",
-  shipped: "Shipped",
-  observed: "Observed",
-  proposed: "Proposed",
-  "needs-proof": "Still needs proof",
-} as const;
 
 const secondaryTitles: Record<SecondaryProgramId, string> = {
   about: "About Myles",
@@ -76,6 +68,23 @@ function fallbackGeometry(id: ProgramId, stackIndex: number): WindowGeometry {
     y: 104 + offset,
     width: 720,
     height: 520,
+  };
+}
+
+function resolvedGeometry(
+  id: ProgramId,
+  stackIndex: number,
+  stored: WindowGeometry | undefined,
+): WindowGeometry {
+  const fallback = fallbackGeometry(id, stackIndex);
+  if (!stored) return fallback;
+
+  // Windows can be moved but not resized. Preserve the user's position while
+  // allowing current authored dimensions to replace stale persisted sizes.
+  return {
+    ...fallback,
+    x: stored.x,
+    y: stored.y,
   };
 }
 
@@ -129,7 +138,7 @@ export function WorkstationDesktop({
 
   const commonWindowProps = (id: ProgramId, stackIndex: number) => ({
     id,
-    geometry: state.windowGeometry[id] ?? fallbackGeometry(id, stackIndex),
+    geometry: resolvedGeometry(id, stackIndex, state.windowGeometry[id]),
     focused: state.focusedProgram === id,
     isDefaultPosition: state.windowGeometry[id] === undefined,
     stackIndex: 10 + stackIndex,
@@ -181,7 +190,7 @@ export function WorkstationDesktop({
               key={id}
               {...props}
               title="Selected Work"
-              status={`${programs.length} portfolio programs`}
+              status={`${programs.length} portfolio projects`}
             >
               <SelectedWorkExplorer
                 programs={programs}
@@ -251,7 +260,7 @@ export function WorkstationDesktop({
             key={id}
             {...props}
             title={project.appName}
-            status={evidenceLabels[project.primaryEvidence]}
+            status="Interactive preview"
           >
             <ProjectProgram
               program={project}

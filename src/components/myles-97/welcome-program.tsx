@@ -20,7 +20,7 @@ export function WelcomeProgram({ onSelectedWork }: WelcomeProgramProps) {
           Previously TikTok and UMG. Latest project: Fresh Greens.
         </p>
         <button type="button" className="myles97-primary-button" onClick={onSelectedWork}>
-          Selected Work
+          Browse projects
         </button>
       </div>
     </div>

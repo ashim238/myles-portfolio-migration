@@ -50,9 +50,10 @@ describe("ProgramWindow", () => {
     expect(onMinimize).toHaveBeenCalledWith("fresh-greens");
 
     const maximize = screen.getByRole("button", {
-      name: "Open Fresh Greens case study",
+      name: "Read Fresh Greens case study",
     });
     expect(maximize).toHaveClass("myles97-hit-target");
+    expect(maximize).toHaveTextContent("↗");
     await user.click(maximize);
     expect(onMaximize).toHaveBeenCalledWith("fresh-greens");
 

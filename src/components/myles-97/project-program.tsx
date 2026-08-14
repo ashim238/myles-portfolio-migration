@@ -13,14 +13,6 @@ import {
   type ProjectProgramVisual,
 } from "@/lib/project-enter";
 
-const evidenceLabels = {
-  built: "Built",
-  shipped: "Shipped",
-  observed: "Observed",
-  proposed: "Proposed",
-  "needs-proof": "Still needs proof",
-} as const;
-
 function shouldUseNativeNavigation(event: MouseEvent<HTMLAnchorElement>) {
   return (
     event.button !== 0 ||
@@ -121,17 +113,12 @@ export function ProjectProgram({
         <p className="myles97-eyebrow">{program.applicationType}</p>
         <h2>{program.title}</h2>
         <p>{program.summary}</p>
-        <p>
-          <span className="myles97-evidence-badge">
-            {evidenceLabels[program.primaryEvidence]}
-          </span>
-        </p>
         <a
           className="myles97-primary-button"
           href={program.href}
           onClick={openCaseStudy}
         >
-          Open {program.title} case study
+          Read {program.title} case study
         </a>
       </div>
     </div>

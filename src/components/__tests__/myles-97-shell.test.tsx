@@ -104,7 +104,7 @@ describe("Myles98 product shell", () => {
       "data-focused",
       "true",
     );
-    expect(screen.getAllByRole("link", { name: /Open .* case study/ })).toHaveLength(4);
+    expect(screen.getAllByRole("link", { name: /Read .* case study/ })).toHaveLength(4);
   });
 
   it("preloads one universal above-fold cover candidate", () => {
@@ -126,18 +126,18 @@ describe("Myles98 product shell", () => {
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
 
     const welcome = screen.getByRole("region", { name: "Welcome to Myles 98" });
-    await user.click(within(welcome).getByRole("button", { name: "Selected Work" }));
+    await user.click(within(welcome).getByRole("button", { name: "Browse projects" }));
     const selectedWork = screen.getByRole("region", { name: "Selected Work" });
     expect(selectedWork).toHaveAttribute("data-focused", "true");
 
     const freshGreensLink = within(selectedWork).getByRole("link", {
-      name: "Open Fresh Greens case study",
+      name: "Read Fresh Greens case study",
     });
     expect(freshGreensLink).toHaveAttribute("href", "/work/fresh-greens");
 
     await user.click(
       within(selectedWork).getByRole("button", {
-        name: "Open Fresh Greens.exe program",
+        name: "Explore Fresh Greens.exe interactive preview",
       }),
     );
     const freshGreensWindow = screen.getByRole("region", {
@@ -229,7 +229,7 @@ describe("Myles98 product shell", () => {
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
 
     const welcome = screen.getByRole("region", { name: "Welcome to Myles 98" });
-    fireEvent.focus(within(welcome).getByRole("button", { name: "Selected Work" }));
+    fireEvent.focus(within(welcome).getByRole("button", { name: "Browse projects" }));
     await waitFor(() => expect(welcome).toHaveAttribute("data-focused", "true"));
 
     await user.click(

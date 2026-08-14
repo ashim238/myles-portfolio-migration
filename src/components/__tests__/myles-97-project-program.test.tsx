@@ -5,9 +5,13 @@ import { PROJECT_ENTER_REQUEST } from "@/lib/project-enter";
 import type { ProgramDefinition } from "@/lib/myles-97/programs";
 
 vi.mock("next/image", () => ({
-  default: ({ alt = "", ...props }: React.ImgHTMLAttributes<HTMLImageElement>) => {
+  default: ({
+    alt = "",
+    src,
+    ...props
+  }: React.ImgHTMLAttributes<HTMLImageElement>) => {
     // eslint-disable-next-line @next/next/no-img-element
-    return <img {...props} alt={alt} />;
+    return <img {...props} src={String(src)} alt={alt} />;
   },
 }));
 
@@ -55,8 +59,9 @@ describe("ProjectProgram", () => {
       toJSON: () => ({}),
     }));
 
-    const link = screen.getByRole("link", { name: "Open Fresh Greens case study" });
+    const link = screen.getByRole("link", { name: "Read Fresh Greens case study" });
     expect(link).toHaveAttribute("href", "/work/fresh-greens");
+    expect(screen.queryByText("Built")).not.toBeInTheDocument();
     fireEvent.click(link);
 
     expect(onRequest).toHaveBeenCalledTimes(1);
@@ -83,7 +88,7 @@ describe("ProjectProgram", () => {
     );
 
     fireEvent.click(
-      screen.getByRole("link", { name: "Open Fresh Greens case study" }),
+      screen.getByRole("link", { name: "Read Fresh Greens case study" }),
       { ctrlKey: true },
     );
 
@@ -101,7 +106,7 @@ describe("ProjectProgram", () => {
     );
 
     fireEvent.click(
-      screen.getByRole("link", { name: "Open Fresh Greens case study" }),
+      screen.getByRole("link", { name: "Read Fresh Greens case study" }),
     );
 
     expect(onRequest).not.toHaveBeenCalled();

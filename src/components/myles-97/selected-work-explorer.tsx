@@ -13,14 +13,6 @@ export type SelectedWorkExplorerProps = {
   onOpen: (id: ProjectProgramId) => void;
 };
 
-const evidenceLabels = {
-  built: "Built",
-  shipped: "Shipped",
-  observed: "Observed",
-  proposed: "Proposed",
-  "needs-proof": "Still needs proof",
-} as const;
-
 export function SelectedWorkExplorer({
   programs,
   onOpen,
@@ -28,18 +20,25 @@ export function SelectedWorkExplorer({
   return (
     <div className="myles97-explorer">
       <div className="myles97-explorer-toolbar" aria-hidden="true">
-        <span>Portfolio Programs</span>
-        <span>{programs.length} items</span>
+        <span>Portfolio projects</span>
+        <span>{programs.length} projects</span>
       </div>
-      <ul className="myles97-selected-work-list" role="list">
+      <p id="selected-work-guide" className="myles97-explorer-guide">
+        Read the full design story, or explore the interactive preview.
+      </p>
+      <ul
+        className="myles97-selected-work-list"
+        role="list"
+        aria-label="Portfolio projects"
+        aria-describedby="selected-work-guide"
+      >
         {programs.map((program) => (
-          <li key={program.id} className="myles97-program-card">
-            <button
-              type="button"
-              className="myles97-program-launch"
-              aria-label={`Open ${program.appName} program`}
-              onClick={() => onOpen(program.id)}
-            >
+          <li
+            key={program.id}
+            className="myles97-program-card"
+            aria-label={program.title}
+          >
+            <div className="myles97-program-summary">
               <span className="myles97-program-cover" aria-hidden="true">
                 {program.coverImage ? (
                   <Image
@@ -55,20 +54,28 @@ export function SelectedWorkExplorer({
                 )}
               </span>
               <span className="myles97-program-card-copy">
-                <strong>{program.appName}</strong>
+                <strong>{program.title}</strong>
                 <span>{program.applicationType}</span>
-                <span className="myles97-evidence-badge">
-                  {evidenceLabels[program.primaryEvidence]}
-                </span>
+                <span>{program.appName}</span>
               </span>
-            </button>
-            <Link
-              className="myles97-case-study-link"
-              href={program.href}
-              aria-label={`Open ${program.title} case study`}
-            >
-              Open case study <span aria-hidden="true">↗</span>
-            </Link>
+            </div>
+            <div className="myles97-program-actions">
+              <Link
+                className="myles97-case-study-link"
+                href={program.href}
+                aria-label={`Read ${program.title} case study`}
+              >
+                Read case study <span aria-hidden="true">↗</span>
+              </Link>
+              <button
+                type="button"
+                className="myles97-program-launch"
+                aria-label={`Explore ${program.appName} interactive preview`}
+                onClick={() => onOpen(program.id)}
+              >
+                Explore preview
+              </button>
+            </div>
           </li>
         ))}
       </ul>

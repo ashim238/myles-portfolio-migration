@@ -47,7 +47,13 @@ const programs: ProgramDefinition[] = [
   },
 ];
 
-function DesktopHarness({ bootCompleted = false }: { bootCompleted?: boolean }) {
+function DesktopHarness({
+  bootCompleted = false,
+  welcomeGeometry,
+}: {
+  bootCompleted?: boolean;
+  welcomeGeometry?: WorkstationState["windowGeometry"]["welcome"];
+}) {
   const [state, dispatch] = useReducer(
     workstationReducer,
     undefined,
@@ -59,7 +65,13 @@ function DesktopHarness({ bootCompleted = false }: { bootCompleted?: boolean }) 
             openPrograms: ["selected-work", "welcome"],
             focusedProgram: "welcome",
           };
-      return bootCompleted ? bootedState : initial;
+      const selectedState = bootCompleted ? bootedState : initial;
+      return welcomeGeometry
+        ? {
+            ...selectedState,
+            windowGeometry: { welcome: welcomeGeometry },
+          }
+        : selectedState;
     },
   );
 
@@ -109,7 +121,7 @@ describe("Myles 98 desktop initial composition", () => {
     ).toBe("true");
     expect(
       (within(selectedWork).getByRole("button", {
-        name: "Open Fresh Greens.exe program",
+        name: "Explore Fresh Greens.exe interactive preview",
       }) as HTMLButtonElement).disabled,
     ).toBe(false);
   });
@@ -154,5 +166,20 @@ describe("Myles 98 desktop initial composition", () => {
     expect(desktopStyles).toMatch(
       /\.myles97-window\[data-m97-program-window="welcome"\] \.myles97-welcome-mark \{[\s\S]*?width: 48px;[\s\S]*?height: 48px;/,
     );
+  });
+
+  it("preserves a moved Welcome position without carrying stale window dimensions forward", () => {
+    render(
+      <DesktopHarness
+        welcomeGeometry={{ x: 700, y: 120, width: 1100, height: 830 }}
+      />,
+    );
+
+    const welcome = screen.getByRole("region", { name: "Welcome to Myles 98" });
+    expect(welcome.style.left).toBe("700px");
+    expect(welcome.style.top).toBe("120px");
+    expect(welcome.style.width).toBe("352px");
+    expect(welcome.style.height).toBe("352px");
+    expect(welcome).toHaveAttribute("data-m97-default-position", "false");
   });
 });
