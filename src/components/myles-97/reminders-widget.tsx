@@ -3,14 +3,9 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 
 const PERSONAL_REMINDERS = [
-  {
-    title: "Catch up on World’s Finest",
-    detail: "See what Daniel Mora’s been drawing.",
-  },
-  {
-    title: "Plan the next hike",
-    detail: "Check the pollen count before choosing a trail.",
-  },
+  "catch up on house of the dragon",
+  "touch up portfolio",
+  "meal prep for the week",
 ] as const;
 
 export function RemindersWidget({
@@ -29,8 +24,8 @@ export function RemindersWidget({
       aria-label="Open Reminders"
     >
       <span className="myles97-reminders-widget-title">Reminders</span>
-      <strong>2 things on my list</strong>
-      <span>World’s Finest · Next hike</span>
+      <strong>3 things on my list</strong>
+      <span>house of the dragon · portfolio · meal prep</span>
     </button>
   );
 }
@@ -56,7 +51,7 @@ export function RemindersProgram() {
       <ol>
         {PERSONAL_REMINDERS.map((reminder, index) => (
           <li
-            key={reminder.title}
+            key={reminder}
             data-completed={completed[index] ? "true" : "false"}
           >
             <label>
@@ -74,8 +69,7 @@ export function RemindersProgram() {
                 }}
               />
               <span>
-                <strong>{reminder.title}</strong>
-                <span>{reminder.detail}</span>
+                <strong>{reminder}</strong>
               </span>
             </label>
           </li>

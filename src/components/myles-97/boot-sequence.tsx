@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 export const MYLES97_BOOT_MAX_MS = 1450;
+const MYLES97_BOOT_PROGRESS_SEGMENTS = 12;
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
 type BootSequenceProps = {
@@ -108,7 +109,13 @@ export function BootSequence({
         </div>
         <strong className="myles97-boot-name">Myles 98</strong>
         <div className="myles97-boot-progress" aria-hidden="true">
-          <span />
+          {Array.from({ length: MYLES97_BOOT_PROGRESS_SEGMENTS }, (_, index) => (
+            <span
+              key={index}
+              className="myles97-boot-progress-segment"
+              style={{ animationDelay: `${index * 90}ms` }}
+            />
+          ))}
         </div>
         <p>Loading selected work...</p>
         <span className="myles97-boot-skip">Press any key or click to skip</span>

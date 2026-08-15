@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import {
   APPROVED_ICON_METADATA,
@@ -66,11 +67,11 @@ const REFINED_TARGET_METADATA = {
     rejectedReadings: ["desktop monitor", "computer", "television", "generic app window", "magic wand", "wand", "notebook band", "folded page", "landscape image", "landscape photograph", "groceries", "leaf logo", "city guide", "music note", "musical note", "folded map", "circuit"],
   },
   understandingfafsa: {
-    intendedObject: "dimensional packet of folded printed newsletters with a visible stacked paper edge, lower print gutter, and editorial print anatomy",
+    intendedObject: "dimensional packet of folded printed newsletters with a visible stacked paper edge, centered vertical crease, lower print gutter, and editorial print anatomy",
     tiers: {
-      "16": "Stacked printed newsletter packet with a masthead, lower fold, and visible paper edge",
-      "24": "Dimensional newsletter packet with a rear sheet, printed masthead, headline, photo, copy columns, lower fold, and paper edge",
-      "32": "Dimensional newsletter packet with a thick rear sheet, printed masthead, headline, photo, copy columns, lower fold, and exposed paper edges",
+      "16": "Stacked printed newsletter packet with a masthead, centered fold crease, lower fold, and visible paper edge",
+      "24": "Dimensional newsletter packet with a rear sheet, printed masthead, centered fold crease, headline, photo, copy columns, lower fold, and paper edge",
+      "32": "Dimensional newsletter packet with a thick rear sheet, printed masthead, centered fold crease, headline, photo, copy columns, lower fold, and exposed paper edges",
     },
     acceptedReadings: ["newsletter packet", "printed newsletter", "folded newsletter", "newsprint", "printed newsprint", "newspaper"],
     rejectedReadings: ["web page layout", "webpage", "framed web surface", "dashboard", "browser chrome", "browser window", "web application", "app window", "flat screen", "dashboard tile", "open envelope", "letter", "sealed email", "folded map", "mountain", "resume", "folder"],
@@ -86,14 +87,14 @@ const REFINED_TARGET_METADATA = {
     rejectedReadings: ["boots", "pair of boots", "people", "group of people", "branded studs", "LEGO", "food", "table", "furniture", "steps", "bar chart", "books", "stack of books", "book stack", "cardboard boxes", "box stack", "logs", "bottle", "clothing"],
   },
   "tiktok-catalog": {
-    intendedObject: "upright handled shopping bag with a framed opening and a single side depth plane at 24/32",
+    intendedObject: "pixel TikTok note mark with cyan and magenta offsets around a dark musical-note core",
     tiers: {
-      "16": "U-handled upright shopping bag",
-      "24": "U-handled upright shopping bag with framed opening and one side depth plane",
-      "32": "Dimensional U-handled upright shopping bag with framed opening and one side depth plane",
+      "16": "Compact three-channel TikTok note mark",
+      "24": "Stepped TikTok note mark with distinct cyan and magenta offsets",
+      "32": "Large pixel TikTok note mark with distinct cyan and magenta offsets around a dark core",
     },
-    acceptedReadings: ["shopping bag", "retail bag", "product bag"],
-    rejectedReadings: ["wastebasket", "basket", "shopping basket", "small tote", "purse", "catalog page", "floppy disk", "save icon", "diskette", "TikTok logo", "music note", "social media app", "book", "dashboard"],
+    acceptedReadings: ["TikTok logo", "music note", "TikTok mark"],
+    rejectedReadings: ["shopping bag", "retail bag", "product bag", "wastebasket", "basket", "shopping basket", "small tote", "purse", "catalog page", "floppy disk", "save icon", "diskette", "book", "dashboard"],
   },
 } as const;
 
@@ -114,6 +115,26 @@ function manifestWithRefinedTargetMetadata() {
 }
 
 describe("Myles 98 icon master contract", () => {
+  it("keeps the current FAFSA and TikTok native review evidence tracked", () => {
+    const evidencePath =
+      "docs/design-assets/myles98-icons/reviews/evidence/2026-08-15-fafsa-tiktok-native-trisurface.png";
+    const evidence = readFileSync(evidencePath);
+    const review = readFileSync(
+      "docs/design-assets/myles98-icons/reviews/family-consistency-review.md",
+      "utf8",
+    );
+
+    expect(createHash("sha256").update(evidence).digest("hex")).toBe(
+      "8a1f97ba216249a4313abe8e3f02583667c7a0cb510ae605c5d6788a58b9058b",
+    );
+    expect(review).toContain(
+      "evidence/2026-08-15-fafsa-tiktok-native-trisurface.png",
+    );
+    expect(review).not.toContain(
+      "/private/tmp/myles98-fafsa-tiktok-native-trisurface.png",
+    );
+  });
+
   it("locks the complete family and three native grids", () => {
     expect(ICON_GRIDS).toEqual([16, 24, 32]);
     expect(ICON_CONCEPTS).toEqual([
@@ -400,14 +421,15 @@ describe("Myles 98 icon master contract", () => {
     }
   });
 
-  it("keeps branded TikTok and generic social-app symbols out of the catalog icon", () => {
+  it("locks the DSA project icon to the user-selected pixel TikTok mark", () => {
     const manifest = JSON.parse(
       readFileSync("docs/design-assets/myles98-icons/manifest.json", "utf8"),
     );
     const catalog = manifest.icons.find((icon: { id: string }) => icon.id === "tiktok-catalog");
 
+    expect(catalog.acceptedReadings).toEqual(["TikTok logo", "music note", "TikTok mark"]);
     expect(catalog.rejectedReadings).toEqual(
-      expect.arrayContaining(["TikTok logo", "music note", "social media app"]),
+      expect.arrayContaining(["shopping bag", "retail bag", "product bag"]),
     );
   });
 
@@ -422,16 +444,16 @@ describe("Myles 98 icon master contract", () => {
     expect(navi.tiers["32"]).toBe("Pointed two-plane marker with orange cue above storefront facade, awning, window, and door");
   });
 
-  it("locks TikTok to a handled shopping bag rather than a bin, basket, or branded app mark", () => {
+  it("locks TikTok to a pixel note mark rather than the retired shopping bag", () => {
     const manifest = JSON.parse(
       readFileSync("docs/design-assets/myles98-icons/manifest.json", "utf8"),
     );
     const catalog = manifest.icons.find((icon: { id: string }) => icon.id === "tiktok-catalog");
 
-    expect(catalog.intendedObject).toBe("upright handled shopping bag with a framed opening and a single side depth plane at 24/32");
-    expect(catalog.acceptedReadings).toEqual(["shopping bag", "retail bag", "product bag"]);
+    expect(catalog.intendedObject).toBe("pixel TikTok note mark with cyan and magenta offsets around a dark musical-note core");
+    expect(catalog.acceptedReadings).toEqual(["TikTok logo", "music note", "TikTok mark"]);
     expect(catalog.rejectedReadings).toEqual(
-      expect.arrayContaining(["wastebasket", "basket", "small tote", "purse", "catalog page", "floppy disk", "save icon", "diskette", "TikTok logo", "music note", "social media app"]),
+      expect.arrayContaining(["shopping bag", "retail bag", "product bag", "wastebasket", "basket", "small tote", "purse", "catalog page", "floppy disk", "save icon", "diskette"]),
     );
   });
 

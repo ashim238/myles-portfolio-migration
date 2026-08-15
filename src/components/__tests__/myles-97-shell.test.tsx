@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Myles97Shell } from "@/components/myles-97/myles-97-shell";
@@ -147,7 +147,7 @@ describe("Myles98 product shell", () => {
     await waitFor(() => {
       expect(
         within(freshGreensWindow).getByRole("button", {
-          name: "Move Fresh Greens.exe",
+          name: "Move Fresh Greens.exe with arrow keys",
         }),
       ).toHaveFocus();
     });
@@ -210,7 +210,7 @@ describe("Myles98 product shell", () => {
     expect(screen.queryByRole("dialog", { name: "Start" })).toBeNull();
     expect(desktopStage).not.toHaveAttribute("inert");
     expect(taskbar).not.toHaveAttribute("inert");
-    expect(startButton).toHaveFocus();
+    await waitFor(() => expect(startButton).toHaveFocus());
     expect(screen.getByRole("region", { name: "Welcome to Myles 98" })).toBeInTheDocument();
   });
 
@@ -234,7 +234,40 @@ describe("Myles98 product shell", () => {
     expect(screen.queryByRole("dialog", { name: "Start" })).toBeNull();
     expect(desktopStage).not.toHaveAttribute("inert");
     expect(taskbar).not.toHaveAttribute("inert");
-    expect(startButton).toHaveFocus();
+    await waitFor(() => expect(startButton).toHaveFocus());
+  });
+
+  it("dismisses Start from an outside pointer press and restores its opener", async () => {
+    const user = userEvent.setup();
+    render(<Myles97Shell programs={programs} looseParts={looseParts} />);
+
+    const startButton = screen.getByRole("button", { name: "Start" });
+    const desktopStage = screen.getByRole("navigation", {
+      name: "Desktop shortcuts",
+    }).parentElement!;
+
+    await user.click(startButton);
+    expect(screen.getByRole("dialog", { name: "Start" })).toBeInTheDocument();
+
+    fireEvent.pointerDown(desktopStage);
+
+    expect(screen.queryByRole("dialog", { name: "Start" })).toBeNull();
+    await waitFor(() => expect(startButton).toHaveFocus());
+  });
+
+  it("keeps the Start button as a close toggle", async () => {
+    const user = userEvent.setup();
+    render(<Myles97Shell programs={programs} looseParts={looseParts} />);
+
+    const startButton = screen.getByRole("button", { name: "Start" });
+
+    await user.click(startButton);
+    expect(screen.getByRole("dialog", { name: "Start" })).toBeInTheDocument();
+
+    await user.click(startButton);
+
+    expect(screen.queryByRole("dialog", { name: "Start" })).toBeNull();
+    await waitFor(() => expect(startButton).toHaveFocus());
   });
 
   it("contains Start focus and sends program choices into the launched window", async () => {
@@ -254,7 +287,11 @@ describe("Myles98 product shell", () => {
 
     await user.click(within(startMenu).getByRole("button", { name: "About Myles" }));
     await waitFor(() => {
-      expect(screen.getByRole("button", { name: "Move About Myles" })).toHaveFocus();
+      expect(
+        screen.getByRole("button", {
+          name: "Move About Myles with arrow keys",
+        }),
+      ).toHaveFocus();
     });
     expect(screen.getByRole("button", { name: "Start" })).not.toHaveFocus();
   });
@@ -275,7 +312,9 @@ describe("Myles98 product shell", () => {
     );
     await waitFor(() => {
       expect(
-        screen.getByRole("button", { name: "Move Selected Work" }),
+        screen.getByRole("button", {
+          name: "Move Selected Work with arrow keys",
+        }),
       ).toHaveFocus();
     });
 
@@ -288,9 +327,65 @@ describe("Myles98 product shell", () => {
     await waitFor(() => {
       expect(
         within(welcome).getByRole("button", {
-          name: "Move Welcome to Myles 98",
+          name: "Move Welcome to Myles 98 with arrow keys",
         }),
       ).toHaveFocus();
     });
+  });
+
+  it("hands arrow-key movement to the window selected by its title bar", async () => {
+    const user = userEvent.setup();
+    render(<Myles97Shell programs={programs} looseParts={looseParts} />);
+
+    const selectedWork = screen.getByRole("region", { name: "Selected Work" });
+    const welcome = screen.getByRole("region", { name: "Welcome to Myles 98" });
+    const selectedMove = within(selectedWork).getByRole("button", {
+      name: "Move Selected Work with arrow keys",
+    });
+    const welcomeMove = within(welcome).getByRole("button", {
+      name: "Move Welcome to Myles 98 with arrow keys",
+    });
+    const selectedLeft = selectedWork.style.left;
+    const welcomeLeft = Number.parseInt(welcome.style.left, 10);
+
+    selectedMove.focus();
+    expect(selectedMove).toHaveFocus();
+
+    fireEvent.pointerDown(welcome.querySelector(".myles97-titlebar")!);
+    await waitFor(() => expect(welcome).toHaveAttribute("data-focused", "true"));
+    expect(welcomeMove).toHaveFocus();
+
+    await user.keyboard("{ArrowRight}");
+    await waitFor(() => {
+      expect(welcome.style.left).toBe(`${welcomeLeft + 16}px`);
+    });
+    expect(selectedWork.style.left).toBe(selectedLeft);
+  });
+
+  it("keeps intentional control focus in the raised window without moving the old one", async () => {
+    const user = userEvent.setup();
+    render(<Myles97Shell programs={programs} looseParts={looseParts} />);
+
+    const selectedWork = screen.getByRole("region", { name: "Selected Work" });
+    const welcome = screen.getByRole("region", { name: "Welcome to Myles 98" });
+    const selectedMove = within(selectedWork).getByRole("button", {
+      name: "Move Selected Work with arrow keys",
+    });
+    const welcomeAction = within(welcome).getByRole("button", {
+      name: "Browse projects",
+    });
+    const selectedLeft = selectedWork.style.left;
+    const welcomeLeft = welcome.style.left;
+
+    selectedMove.focus();
+    expect(selectedMove).toHaveFocus();
+
+    act(() => welcomeAction.focus());
+    await waitFor(() => expect(welcome).toHaveAttribute("data-focused", "true"));
+    expect(welcomeAction).toHaveFocus();
+
+    await user.keyboard("{ArrowRight}");
+    expect(selectedWork.style.left).toBe(selectedLeft);
+    expect(welcome.style.left).toBe(welcomeLeft);
   });
 });

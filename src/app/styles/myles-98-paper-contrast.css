@@ -145,6 +145,11 @@
   color: var(--m98-paper-muted);
 }
 
+.reader-mode.reader-mode .project-work-jump-window-content {
+  background: var(--m98-paper-panel);
+  color: var(--m98-paper-text);
+}
+
 .reader-mode.reader-mode
   .project-toc-link:not(.project-toc-link--active):hover {
   background: color-mix(in srgb, var(--m98-paper-text) 7%, transparent);

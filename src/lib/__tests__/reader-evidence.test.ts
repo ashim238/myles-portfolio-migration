@@ -100,6 +100,11 @@ describe("Reader evidence maps", () => {
     expect(getChapterEvidence("fresh-greens", "fg-scope")).toMatchObject({
       supportingProofs: [
         {
+          id: "fresh-greens-architecture",
+          label: "Public and community data architecture",
+          kind: "diagram",
+        },
+        {
           id: "fresh-greens-en-route-video",
           label: "Working en-route prototype recording",
           kind: "interaction",
@@ -164,11 +169,69 @@ describe("Reader evidence maps", () => {
   });
 
   it("keeps Navi evidence summaries in Myles's first-person voice", () => {
+    const insights = getChapterEvidence("navi", "nv-insights");
     const framework = getChapterEvidence("navi", "nv-framework");
+    const build = getChapterEvidence("navi", "nv-build");
 
+    expect(READER_EVIDENCE_MAPS.navi.portfolioSignal).toBe(
+      "I worked from 14 responses and built the Figma design system. I later rebuilt the booking flow in React.",
+    );
+    expect(insights.dominantClaim).toBe(
+      "From what I remember, people wanted a deeper level of engagement with a neighborhood and its offerings.",
+    );
+    expect(insights.interpretation).toBe(
+      "The heatmap was super surface-level. Learn, Plan, Go was our attempt to remove some of the barriers to branching out and exploring the city.",
+    );
     expect(framework.interpretation).toBe(
-      "I used the personas and journey maps to adjust my teammate's original information architecture, then built the Figma design system.",
+      "My teammate proposed the original information architecture. I tweaked it to align with the personas and journey maps, then created the design system from head to toe.",
     );
     expect(framework.interpretation).not.toMatch(/^Myles\b/);
+    expect(build.interpretation).toBe(
+      "The design students focused on the layout. We made the cards the same height and cut down the copy and tags. The React demo now supports browsing, search, host detail, and a sample reservation.",
+    );
+  });
+
+  it("keeps UnderstandingFAFSA evidence summaries founder-first and direct", () => {
+    const context = getChapterEvidence("understandingfafsa", "uf-context");
+    const audit = getChapterEvidence("understandingfafsa", "uf-audit");
+    const locked = getChapterEvidence("understandingfafsa", "uf-locked");
+    const results = getChapterEvidence("understandingfafsa", "uf-results");
+
+    expect(READER_EVIDENCE_MAPS.understandingfafsa.portfolioSignal).toBe(
+      "A Mailchimp system the founder can edit herself, shaped by what broke in practice sends.",
+    );
+    expect(context.dominantClaim).toBe(
+      "The founder had a short turnaround each week, and the newsletter no longer matched the personality of the redesigned website.",
+    );
+    expect(context.interpretation).toBe(
+      "I made the newsletter easier to scan and built the kit in Mailchimp so the founder could run it herself.",
+    );
+    expect(audit.dominantClaim).toBe(
+      "Another designer and I reviewed more than 120 newsletters, then used what we found to decide what should stay fixed and what could change.",
+    );
+    expect(audit.interpretation).toBe(
+      "Snacks influenced the copy and color treatment because it was easy to scan. HubSpot influenced the divider direction.",
+    );
+    expect(locked.dominantClaim).toBe(
+      "The founder can change the content and module order without rebuilding the header, footer, spacing, type, or dividers.",
+    );
+    expect(results.dominantClaim).toBe(
+      "The founder has used the kit for roughly 20 sends. The first redesigned send had a ~52.6% open rate with MPP excluded.",
+    );
+    expect(results.interpretation).toBe(
+      "I include the open rate as context because it wasn't a controlled test. The founder still edits and sends the template herself each week.",
+    );
+  });
+
+  it("keeps TikTok unknowns in Myles's first-person voice", () => {
+    const system = getChapterEvidence("tiktok", "tt-system");
+    const outcome = getChapterEvidence("tiktok", "tt-outcome");
+
+    expect(system.caveat).toBe(
+      "I proposed sharing a few parts between Light Academia and e-Boy/e-Girl. I don't have evidence that the team used them that way.",
+    );
+    expect(outcome.caveat).toBe(
+      "I learned about the American Eagle selection later through Global Creative Lab. I didn't receive performance data.",
+    );
   });
 });

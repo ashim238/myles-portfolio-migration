@@ -84,3 +84,16 @@ recognition PASS.
   remain byte-identical.
 - The current source-free outcome is mixed and lives in the family-consistency
   review. It remains the controlling semantic gate.
+
+## 2026-08-15 mechanical geometry addendum
+
+UnderstandingFAFSA and TikTok changed again after the addendum above. The
+current aggregate is
+`7e38f85fc23de2f6f4269ab8e17ebc381bea98b03bf72e3432b14f224f000cfd`,
+the manifest is
+`d678dfc7b3e82a820c209b305b2b6e8dc17c9e030ff4a10e55e4309bb3e6467d`,
+and the regenerated sheet is
+`325b352c7ad8a9174523a9d70b7d13279bd5ee20fc89131158a0030f7b70615e`.
+All 48 masters retain integer geometry, binary alpha, transparent perimeters,
+and exact public mirrors. This addendum is mechanical and informed only. It
+does not replace the source-free recognition gate in the family review.

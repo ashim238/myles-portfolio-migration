@@ -32,6 +32,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
   const [activeId, setActiveId] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
+  const activeIdRef = useRef("");
   const tocRef = useRef<HTMLElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
   const activeItemRef = useRef<HTMLAnchorElement>(null);
@@ -60,53 +61,28 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
     [],
   );
 
+  const commitActiveId = useCallback((id: string) => {
+    if (!id || activeIdRef.current === id) return;
+    activeIdRef.current = id;
+    setActiveId(id);
+  }, []);
+
   useEffect(() => () => {
     const toc = tocRef.current;
     if (toc) delete toc.dataset.tocReady;
   }, []);
 
-  // Track which section is in view (drives the active highlight only)
+  // Confirm the chapter anchors exist before the enhanced mobile control
+  // replaces the server-rendered list. Active chapter tracking is handled by
+  // the reading playhead below so it remains correct inside long chapters in
+  // both scroll directions.
   useEffect(() => {
     const sectionEls = sections
       .map((s) => document.getElementById(s.id))
       .filter(Boolean) as HTMLElement[];
 
-    if (
-      sectionEls.length === 0 ||
-      typeof window.IntersectionObserver !== "function"
-    ) {
-      updateEnhancement("sections", false);
-      return;
-    }
-
-    let observer: IntersectionObserver | undefined;
-    try {
-      observer = new IntersectionObserver(
-        (entries) => {
-          // Find the entry that is most visible
-          const visible = entries
-            .filter((e) => e.isIntersecting)
-            .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-
-          if (visible.length > 0 && visible[0].target.id) {
-            setActiveId(visible[0].target.id);
-          }
-        },
-        {
-          rootMargin: "-10% 0px -60% 0px",
-          threshold: [0, 0.25, 0.5],
-        },
-      );
-      sectionEls.forEach((el) => observer?.observe(el));
-    } catch {
-      observer?.disconnect();
-      updateEnhancement("sections", false);
-      return;
-    }
-
-    updateEnhancement("sections", true);
+    updateEnhancement("sections", sectionEls.length === sections.length);
     return () => {
-      observer?.disconnect();
       updateEnhancement("sections", false);
     };
   }, [sections, updateEnhancement]);
@@ -173,6 +149,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
     // Section anchors, in document order. Bounds are remeasured whenever the
     // layout changes (image loads, font swaps, viewport resize).
     let starts: number[] = [];
+    let anchorIds: string[] = [];
     let regionStart = 0;
     let regionEnd = 1;
 
@@ -184,6 +161,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
 
       const pageY = window.scrollY;
       starts = anchors.map((el) => el.getBoundingClientRect().top + pageY);
+      anchorIds = anchors.map((el) => el.id);
 
       // The reading region can extend past the last visible TOC chapter when
       // several later sections are intentionally grouped under one chapter.
@@ -219,6 +197,20 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
       // counts as read once its text has cleared the chrome.
       const navH = nav.getBoundingClientRect().height || 48;
       const playhead = window.scrollY + navH + 8;
+
+      let currentChapterIndex = 0;
+      for (let index = 0; index < starts.length; index += 1) {
+        if (playhead < starts[index]) break;
+        currentChapterIndex = index;
+      }
+      const hasUsableChapterGeometry =
+        starts.length === 1 ||
+        starts.some(
+          (start, index) => index > 0 && start - starts[index - 1] > 1,
+        );
+      if (hasUsableChapterGeometry) {
+        commitActiveId(anchorIds[currentChapterIndex] ?? "");
+      }
 
       const span = Math.max(1, regionEnd - regionStart);
       const overall = Math.min(1, Math.max(0, (playhead - regionStart) / span));
@@ -284,12 +276,17 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
       if (frame) cancelAnimationFrame(frame);
       updateEnhancement("resize", false);
     };
-  }, [sections, readingEndId, updateEnhancement]);
+  }, [sections, readingEndId, updateEnhancement, commitActiveId]);
 
   // Auto-scroll active item into view on desktop
   useEffect(() => {
-    if (activeItemRef.current && listRef.current) {
-      activeItemRef.current.scrollIntoView({
+    const activeItem = activeItemRef.current;
+    if (
+      activeItem &&
+      listRef.current &&
+      typeof activeItem.scrollIntoView === "function"
+    ) {
+      activeItem.scrollIntoView({
         behavior: reducedRef.current ? "auto" : "smooth",
         block: "nearest",
         inline: "center",
@@ -299,13 +296,13 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
 
   const handleClick = useCallback(
     (id: string) => {
-      setActiveId(id);
+      commitActiveId(id);
       setIsOpen(false);
       if (isOpen) {
         window.requestAnimationFrame(() => toggleRef.current?.focus());
       }
     },
-    [isOpen],
+    [isOpen, commitActiveId],
   );
 
   const scrollToTop = useCallback(() => {

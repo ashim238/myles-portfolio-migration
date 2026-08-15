@@ -56,6 +56,14 @@ vi.mock("@/components/fresh-greens/departure-reminder-evidence", () => ({
     <figure data-testid="departure-reminder-evidence" />
   ),
 }));
+vi.mock("@/components/fresh-greens/route-decision-evidence", () => ({
+  RouteComparisonEvidence: () => (
+    <figure data-testid="route-comparison-evidence" />
+  ),
+  ReportRouteInfluenceEvidence: () => (
+    <figure data-testid="report-route-influence" />
+  ),
+}));
 vi.mock("@/components/fresh-greens/pulled-over-journey", () => ({
   PulledOverJourney: () => <section data-testid="pulled-over-journey" />,
 }));
@@ -111,7 +119,12 @@ describe("Fresh Greens rendered narrative ownership", () => {
     expect(
       within(plan).getByTestId("departure-reminder-evidence"),
     ).toBeInTheDocument();
-    expect(within(plan).getByTestId("architecture-diagram")).toBeInTheDocument();
+    expect(
+      within(plan).getByTestId("route-comparison-evidence"),
+    ).toBeInTheDocument();
+    expect(
+      within(plan).queryByTestId("architecture-diagram"),
+    ).not.toBeInTheDocument();
     expect(
       within(plan).queryByTestId("pulled-over-journey"),
     ).not.toBeInTheDocument();
@@ -124,9 +137,7 @@ describe("Fresh Greens rendered narrative ownership", () => {
     ).not.toBeInTheDocument();
 
     expect(
-      within(trust).getByRole("img", {
-        name: /Felt welcome contribution form/i,
-      }),
+      within(trust).getByTestId("report-route-influence"),
     ).toBeInTheDocument();
     expect(
       within(trust).queryByRole("img", { name: /report picker/i }),
@@ -141,6 +152,11 @@ describe("Fresh Greens rendered narrative ownership", () => {
     expect(trust).toHaveTextContent("corroboration weighting");
     expect(
       within(chapter(container, "fg-scope")).getByText("Built now"),
+    ).toBeInTheDocument();
+    expect(
+      within(chapter(container, "fg-scope")).getByTestId(
+        "architecture-diagram",
+      ),
     ).toBeInTheDocument();
     expect(
       within(chapter(container, "fg-scope")).getByText("What remains"),
@@ -239,9 +255,7 @@ describe("Fresh Greens rendered narrative ownership", () => {
     expect(trust).toHaveTextContent(
       "I haven't added corroboration weighting, visible contributor provenance, or route-level trust tiers yet",
     );
-    expect(trust).toHaveTextContent(
-      "Contributors can optionally describe the experience",
-    );
+    expect(within(trust).getByTestId("report-route-influence")).toBeInTheDocument();
   });
 
   it("keeps stress-state and failure-mode proof in the validation ledger", async () => {

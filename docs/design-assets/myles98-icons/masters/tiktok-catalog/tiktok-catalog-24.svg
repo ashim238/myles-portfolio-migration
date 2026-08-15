@@ -1,8 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" shape-rendering="crispEdges" data-m98-concept="tiktok-catalog" data-m98-grid="24">
-  <rect fill="#202126" x="5" y="6" width="15" height="17" />
-  <rect fill="#202126" x="8" y="1" width="9" height="8" />
-  <rect fill="#cf526d" x="6" y="7" width="13" height="16" />
-  <rect fill="#f07b91" x="6" y="7" width="3" height="1" />
-  <polygon fill="#8d3349" points="19,7 21,9 21,22 19,23" />
-  <rect fill="#f3eee4" x="10" y="3" width="5" height="4" />
+  <rect fill="#25f4ee" x="9" y="5" width="4" height="14" />
+  <rect fill="#25f4ee" x="12" y="8" width="3" height="4" />
+  <rect fill="#25f4ee" x="15" y="10" width="3" height="4" />
+  <rect fill="#25f4ee" x="2" y="16" width="10" height="5" />
+  <rect fill="#25f4ee" x="3" y="14" width="9" height="2" />
+  <rect fill="#25f4ee" x="3" y="21" width="7" height="2" />
+  <rect fill="#fe2c55" x="13" y="2" width="4" height="14" />
+  <rect fill="#fe2c55" x="16" y="5" width="3" height="4" />
+  <rect fill="#fe2c55" x="19" y="7" width="3" height="4" />
+  <rect fill="#fe2c55" x="6" y="13" width="10" height="5" />
+  <rect fill="#fe2c55" x="7" y="11" width="9" height="2" />
+  <rect fill="#fe2c55" x="7" y="18" width="7" height="2" />
+  <rect fill="#202126" x="11" y="3" width="4" height="14" />
+  <rect fill="#202126" x="14" y="6" width="3" height="4" />
+  <rect fill="#202126" x="17" y="8" width="3" height="4" />
+  <rect fill="#202126" x="4" y="14" width="10" height="5" />
+  <rect fill="#202126" x="5" y="12" width="9" height="2" />
+  <rect fill="#202126" x="5" y="19" width="7" height="2" />
 </svg>

@@ -120,6 +120,10 @@ describe("Myles 98 secondary programs", () => {
     expect(
       within(recipeWindow).getByRole("link", { name: /Immaculate Bites/ }),
     ).toHaveAttribute("href", "https://www.africanbites.com/paratha-buss-shut/");
+    expect(recipeWindow).toHaveTextContent("Don't skip the rests!");
+    expect(recipeWindow).not.toHaveTextContent(
+      "The two rests are the part I would not skip.",
+    );
 
     await user.click(
       within(recipeWindow).getByRole("button", { name: "Close Buss Up Shut.txt" }),
@@ -156,25 +160,29 @@ describe("Myles 98 secondary programs", () => {
         name: "A couple of notes",
       }),
     ).toBeInTheDocument();
-    const comicReminder = within(reminderWindow).getByRole("checkbox", {
-      name: /Catch up on World’s Finest/,
+    const firstReminder = within(reminderWindow).getByRole("checkbox", {
+      name: "catch up on house of the dragon",
     });
-    expect(comicReminder).toHaveFocus();
+    expect(firstReminder).toHaveFocus();
     expect(
-      within(reminderWindow).getByText("See what Daniel Mora’s been drawing."),
+      within(reminderWindow).getByRole("checkbox", {
+        name: "touch up portfolio",
+      }),
     ).toBeInTheDocument();
     expect(
       within(reminderWindow).getByRole("checkbox", {
-        name: /Plan the next hike/,
+        name: "meal prep for the week",
       }),
     ).toBeInTheDocument();
+    expect(within(reminderWindow).getAllByRole("checkbox")).toHaveLength(3);
+    expect(reminderWindow).not.toHaveTextContent(/World’s Finest|next hike/i);
     expect(within(reminderWindow).queryAllByRole("link")).toHaveLength(0);
     expect(reminderWindow).not.toHaveTextContent(
       /Fresh Greens|UnderstandingFAFSA|Navi|TikTok/,
     );
 
-    await user.click(comicReminder);
-    expect(comicReminder).toBeChecked();
+    await user.click(firstReminder);
+    expect(firstReminder).toBeChecked();
 
     await user.click(
       within(reminderWindow).getByRole("button", { name: "Close Reminders" }),

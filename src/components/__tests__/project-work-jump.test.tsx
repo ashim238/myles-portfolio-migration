@@ -22,16 +22,6 @@ vi.mock("@/components/transition-link", () => ({
   ),
 }));
 
-vi.mock("@/components/tiktok-dsa", () => ({
-  TikTokCoverBlobs: ({
-    deferUntilVisible,
-  }: {
-    deferUntilVisible?: boolean;
-  }) => (
-    <span data-testid="tiktok-cover-blobs" data-deferred={deferUntilVisible} />
-  ),
-}));
-
 function project(slug: string, title: string): Project {
   return {
     slug,
@@ -57,7 +47,9 @@ const projects = [
 
 describe("ProjectWorkJump", () => {
   it("renders one destination link and one work-index link", () => {
-    render(<ProjectWorkJump currentSlug="fresh-greens" projects={projects} />);
+    const { container } = render(
+      <ProjectWorkJump currentSlug="fresh-greens" projects={projects} />,
+    );
 
     const links = screen.getAllByRole("link");
     expect(links).toHaveLength(2);
@@ -69,6 +61,26 @@ describe("ProjectWorkJump", () => {
     );
     expect(links[1]).toHaveAttribute("href", "/#work");
     expect(links[1]).toHaveTextContent("View all work");
+
+    const windowFrame = screen.getByRole("group", {
+      name: "Next project: Navi",
+    });
+    expect(windowFrame).toHaveAttribute("data-m98-next-project-window", "navi");
+    expect(windowFrame).toHaveTextContent("Navi Places.exe");
+    expect(windowFrame).toHaveTextContent("Up next");
+    expect(windowFrame).toHaveTextContent("2 of 4 portfolio programs");
+    expect(windowFrame).toContainElement(links[0]);
+    expect(windowFrame).toContainElement(links[1]);
+    expect(
+      container.querySelector(
+        '[data-m98-next-project-window="navi"] [data-m98-icon="navi"]',
+      ),
+    ).toHaveAttribute("data-m98-icon-variant", "color");
+    expect(
+      container.querySelector(
+        '[data-m98-next-project-window="navi"] image[data-m98-icon-master]',
+      ),
+    ).toHaveAttribute("href", "/myles98-icons/navi/navi-16.svg");
   });
 
   it("treats destination media as decorative inside the descriptive link", () => {
@@ -81,16 +93,23 @@ describe("ProjectWorkJump", () => {
     ).toHaveAttribute("alt", "");
   });
 
-  it("uses the deferred TikTok mark for the TikTok destination", () => {
-    render(
-      <ProjectWorkJump currentSlug="understandingfafsa" projects={projects} />,
+  it("uses the approved phone mockup for the TikTok destination", () => {
+    const tiktokProjects = projects.map((item) =>
+      item.slug === "tiktok"
+        ? { ...item, coverImage: "/projects/tiktok/cover-phone-mockup.jpg" }
+        : item,
+    );
+    const { container } = render(
+      <ProjectWorkJump
+        currentSlug="understandingfafsa"
+        projects={tiktokProjects}
+      />,
     );
 
-    expect(screen.getByTestId("tiktok-cover-blobs")).toHaveAttribute(
-      "data-deferred",
-      "true",
+    expect(container.querySelector(".project-work-jump-media img")).toHaveAttribute(
+      "src",
+      "/projects/tiktok/cover-phone-mockup.jpg",
     );
-    expect(screen.queryByRole("img", { hidden: true })).toBeNull();
   });
 
   it("retains the media surface when a published image is missing", () => {

@@ -486,4 +486,80 @@ describe("ProjectToc", () => {
 
     expect(screen.queryByText("Finished")).not.toBeInTheDocument();
   });
+
+  it("moves the active chapter backward when the playhead returns to the previous chapter body", async () => {
+    vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
+    vi.stubGlobal("ResizeObserver", MockResizeObserver);
+
+    let pageY = 1020;
+    Object.defineProperty(window, "scrollY", {
+      configurable: true,
+      get: () => pageY,
+    });
+    Object.defineProperty(window, "innerHeight", {
+      configurable: true,
+      value: 800,
+    });
+
+    rects.set("plan", { top: 500, bottom: 520 });
+    rects.set("respond", { top: 1000, bottom: 1020 });
+    rects.set("trust", { top: 1500, bottom: 1520 });
+
+    vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(
+      function getBoundingClientRect(this: HTMLElement) {
+        if (this.id && rects.has(this.id)) {
+          const rect = rects.get(this.id)!;
+          return mockRect(rect.top, rect.bottom) as DOMRect;
+        }
+
+        const heading = this.querySelector?.("h2");
+        if (heading?.id && rects.has(heading.id)) {
+          const rect = rects.get(heading.id)!;
+          return mockRect(rect.top, rect.bottom) as DOMRect;
+        }
+
+        return mockRect(0, 48) as DOMRect;
+      },
+    );
+    vi.spyOn(window, "requestAnimationFrame").mockImplementation((callback) => {
+      callback(0);
+      return 1;
+    });
+
+    render(
+      <main className="project-page">
+        <section className="project-section">
+          <h2 id="plan">Plan chapter</h2>
+        </section>
+        <section className="project-section">
+          <h2 id="respond">Respond chapter</h2>
+        </section>
+        <section className="project-section">
+          <h2 id="trust">Trust chapter</h2>
+        </section>
+        <ProjectToc
+          sections={[
+            { id: "plan", stage: "Plan", title: "Plan chapter" },
+            { id: "respond", stage: "Respond", title: "Respond chapter" },
+            { id: "trust", stage: "Trust", title: "Trust chapter" },
+          ]}
+        />
+      </main>,
+    );
+
+    const respond = screen.getByRole("link", {
+      name: "Respond: Respond chapter",
+    });
+    fireEvent.click(respond);
+    expect(respond).toHaveAttribute("aria-current", "true");
+
+    pageY = 850;
+    fireEvent.scroll(window);
+
+    await vi.waitFor(() => {
+      expect(
+        screen.getByRole("link", { name: "Plan: Plan chapter" }),
+      ).toHaveAttribute("aria-current", "true");
+    });
+  });
 });

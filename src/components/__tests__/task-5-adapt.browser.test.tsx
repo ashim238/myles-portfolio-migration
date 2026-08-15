@@ -490,6 +490,35 @@ describe("Task 5 responsive adaptation", () => {
     await page.close();
   }, 60_000);
 
+  it("restores the workstation Start button after pointer dismissal", async () => {
+    const page = await hydratedBrowserPage("pocket", {
+      width: 1280,
+      height: 800,
+    });
+    const start = page.getByRole("button", { name: "Start" });
+
+    const dismissAndExpectStartFocus = async (x: number, y: number) => {
+      await start.click();
+      const dialog = page.getByRole("dialog", { name: "Start" });
+      await dialog.waitFor();
+      await page.mouse.click(x, y);
+      await dialog.waitFor({ state: "detached" });
+      await page.waitForFunction(
+        () => document.activeElement?.classList.contains("myles97-start-button"),
+      );
+    };
+
+    const startBox = await start.boundingBox();
+    if (!startBox) throw new Error("Start button is not rendered");
+    await dismissAndExpectStartFocus(
+      startBox.x + startBox.width / 2,
+      startBox.y + startBox.height / 2,
+    );
+    await dismissAndExpectStartFocus(760, 260);
+
+    await page.close();
+  }, 60_000);
+
   it("keeps functional Pocket and compact recipe labels at 12px without clipping", async () => {
     const pocketPage = await hydratedBrowserPage("pocket", phoneViewports[1]);
     const dockLabels = await pocketPage.locator(".pocket97-dock button").evaluateAll(

@@ -54,6 +54,9 @@ describe("ArchitectureDiagram", () => {
     expect(scroller).toHaveTextContent(
       "Converts provider responses into typed app data.",
     );
+    expect(
+      screen.getByText(/scroll the diagram to read it all/i),
+    ).toBeInTheDocument();
   });
 
   it("draws a visible keyboard focus treatment around the scroller", () => {

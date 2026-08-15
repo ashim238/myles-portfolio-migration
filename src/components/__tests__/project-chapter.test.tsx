@@ -79,7 +79,7 @@ describe("ProjectChapter", () => {
     expect(screen.getByText("What this shows")).toBeVisible();
     expect(
       screen.getByText(
-        "I used the personas and journey maps to adjust my teammate's original information architecture, then built the Figma design system.",
+        "My teammate proposed the original information architecture. I tweaked it to align with the personas and journey maps, then created the design system from head to toe.",
       ),
     ).toBeVisible();
     expect(screen.getByText("Boundary")).toBeVisible();
@@ -222,7 +222,7 @@ describe("ProjectChapter", () => {
       {
         variant: "fresh-greens",
         id: "fg-design",
-        proof: "fresh-greens-pivot-journey",
+        proof: "fresh-greens-route-comparison",
         interpretation:
           "Route cards show some of the reasons behind a recommendation. Fresh Greens waits until someone taps Schedule before asking for notification access.",
         caveat:
@@ -231,7 +231,7 @@ describe("ProjectChapter", () => {
       {
         variant: "fresh-greens",
         id: "fg-trust",
-        proof: "fresh-greens-report-moderation",
+        proof: "fresh-greens-report-route-influence",
         interpretation:
           "Reports stay on the device first. With Supabase configured, they can enter the moderation path.",
         caveat:
@@ -244,7 +244,7 @@ describe("ProjectChapter", () => {
         interpretation:
           "The slot map stayed constant. Only a few parts could cross between Light Academia and e-Boy/e-Girl.",
         caveat:
-          "Limited cross-direction modularity was a proposal made while building the files.",
+          "I proposed sharing a few parts between Light Academia and e-Boy/e-Girl. I don't have evidence that the team used them that way.",
       },
       {
         variant: "tiktok",
@@ -253,7 +253,7 @@ describe("ProjectChapter", () => {
         interpretation:
           "The final direction records what changed during internal review. It does not show audience response.",
         caveat:
-          "American Eagle selection was learned later through Global Creative Lab. No performance result is claimed.",
+          "I learned about the American Eagle selection later through Global Creative Lab. I didn't receive performance data.",
       },
     ] as const;
 

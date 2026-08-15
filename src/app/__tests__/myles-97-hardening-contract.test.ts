@@ -119,6 +119,17 @@ describe("Myles 98 hardening contract", () => {
     expect(pocket).not.toMatch(/overflow-x:\s*(?:auto|scroll)/);
   });
 
+  it("gives the arrow-key move instruction enough titlebar space", () => {
+    const desktop = read("src/app/styles/myles-97.css");
+
+    expect(desktop).toMatch(
+      /\.myles97-titlebar-move \.myles97-window-control \{[^}]*width: 96px;[^}]*white-space: nowrap;/,
+    );
+    expect(desktop).toMatch(
+      /\.myles97-titlebar-move \{[^}]*width: 104px;/,
+    );
+  });
+
   it("passes the saved reduced-motion preference to both Selected Work surfaces", () => {
     for (const path of [
       "src/components/myles-97/workstation-desktop.tsx",

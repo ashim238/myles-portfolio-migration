@@ -168,8 +168,8 @@ export function ArchitectureDiagram() {
           <text x="850" y="32">Open-Meteo</text>
           <text x="850" y="50" fontSize="11" opacity="0.62">weather + visibility</text>
 
-          <text x="1000" y="32">Community reports</text>
-          <text x="1000" y="50" fontSize="11" opacity="0.62">local-first · Supabase when configured</text>
+          <text x="975" y="32">Community reports</text>
+          <text x="975" y="50" fontSize="11" opacity="0.62">local-first · Supabase when configured</text>
         </g>
 
         {/* Arrows from sources into the adapter layer */}
@@ -281,6 +281,7 @@ export function ArchitectureDiagram() {
       <figcaption className="fg-arch-caption">
         Community reports are local-first. Supabase, row-level security, device
         checks, and moderation activate only when configured.
+        <span className="fg-arch-scrollhint"> Scroll the diagram to read it all.</span>
       </figcaption>
     </figure>
   );

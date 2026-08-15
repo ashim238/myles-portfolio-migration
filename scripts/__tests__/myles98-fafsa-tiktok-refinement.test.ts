@@ -7,10 +7,10 @@ const ROOT = "docs/design-assets/myles98-icons";
 const GRIDS = [16, 24, 32] as const;
 const NEWSLETTER_MASTHEAD_FILL = "#1f679f";
 const NEWSLETTER_REGION_FILLS = ["#a7bcc2", "#c5963a", "#eeeae3"] as const;
-const BAG_FACE_FILL = "#cf526d";
-const BAG_DEPTH_FILL = "#8d3349";
-const BAG_OPENING_FILL = "#f3eee4";
-const BAG_HANDLE_FILL = "#202126";
+const TIKTOK_INK = "#202126";
+const TIKTOK_CYAN = "#25f4ee";
+const TIKTOK_MAGENTA = "#fe2c55";
+const FORMER_BAG_COLORS = ["#cf526d", "#8d3349", "#f3eee4", "#f07b91"] as const;
 const COLLAPSED_LOWER_MODULES = new Map<Grid, [string, string]>([
   [16, [
     '<rect fill="#eeeae3" x="2" y="7" width="10" height="3" />',
@@ -25,43 +25,16 @@ const COLLAPSED_LOWER_MODULES = new Map<Grid, [string, string]>([
     '<rect fill="#eeeae3" x="3" y="16" width="4" height="4" />',
   ]],
 ]);
-const MISSING_HANDLE_SIDE_FRAMES = new Map<Grid, [string, string]>([
-  [16, [
-    '<rect fill="#202126" x="5" y="1" width="6" height="5" />',
-    '<rect fill="#202126" x="5" y="1" width="6" height="1" />\n  <rect fill="#202126" x="10" y="2" width="1" height="4" />',
-  ]],
-  [24, [
-    '<rect fill="#202126" x="8" y="1" width="9" height="8" />',
-    '<rect fill="#202126" x="8" y="1" width="9" height="2" />\n  <rect fill="#202126" x="8" y="3" width="1" height="6" />\n  <rect fill="#202126" x="15" y="3" width="2" height="6" />',
-  ]],
-  [32, [
-    '<rect fill="#202126" x="10" y="1" width="13" height="10" />',
-    '<rect fill="#202126" x="10" y="1" width="13" height="2" />\n  <rect fill="#202126" x="10" y="3" width="2" height="8" />\n  <rect fill="#202126" x="20" y="3" width="3" height="8" />',
-  ]],
-]);
-const MISSING_HANDLE_TOP_FRAMES = new Map<Grid, [string, string]>([
-  [16, [
-    '<rect fill="#202126" x="5" y="1" width="6" height="5" />',
-    '<rect fill="#202126" x="5" y="1" width="1" height="5" />\n  <rect fill="#202126" x="10" y="1" width="1" height="5" />',
-  ]],
-  [24, [
-    '<rect fill="#202126" x="8" y="1" width="9" height="8" />',
-    '<rect fill="#202126" x="8" y="1" width="9" height="1" />\n  <rect fill="#202126" x="8" y="2" width="2" height="7" />\n  <rect fill="#202126" x="15" y="2" width="2" height="7" />',
-  ]],
-  [32, [
-    '<rect fill="#202126" x="10" y="1" width="13" height="10" />',
-    '<rect fill="#202126" x="10" y="1" width="13" height="1" />\n  <rect fill="#202126" x="10" y="2" width="3" height="9" />\n  <rect fill="#202126" x="20" y="2" width="3" height="9" />',
-  ]],
-]);
-const MAX_HANDLE_OPENING_WIDTH_RATIO = new Map<Grid, number>([
-  [16, 0.5],
-  [24, 0.4],
-  [32, 0.4],
-]);
-const MAX_HANDLE_OPENING_HEIGHT_RATIO = new Map<Grid, number>([
-  [16, 0.5],
-  [24, 0.5],
-  [32, 0.4],
+const TIKTOK_PROBES = new Map<Grid, {
+  cyan: readonly [number, number];
+  flag: readonly [number, number];
+  head: readonly [number, number];
+  magenta: readonly [number, number];
+  stem: readonly [number, number];
+}>([
+  [16, { cyan: [1, 11], magenta: [13, 5], stem: [8, 3], flag: [12, 6], head: [3, 10] }],
+  [24, { cyan: [2, 18], magenta: [21, 8], stem: [12, 5], flag: [18, 10], head: [5, 16] }],
+  [32, { cyan: [3, 25], magenta: [29, 11], stem: [17, 7], flag: [26, 13], head: [7, 23] }],
 ]);
 
 type Grid = (typeof GRIDS)[number];
@@ -70,30 +43,6 @@ type NativeRaster = Awaited<ReturnType<typeof nativeRaster>>;
 
 function sourceFor(concept: "email" | "generic-app" | "understandingfafsa" | "tiktok-catalog", grid: Grid) {
   return readFileSync(expectedMasterPath(ROOT, concept, grid), "utf8");
-}
-
-function attribute(attributes: string, name: string) {
-  return attributes.match(new RegExp(`\\b${name}="([^"]+)"`, "i"))?.[1];
-}
-
-function rectsForFill(source: string, fill: string) {
-  return [...source.matchAll(/<rect\b([^>]*)\/>/gi)]
-    .filter(([, attributes]) => attribute(attributes, "fill")?.toLowerCase() === fill)
-    .map(([, attributes]) => {
-      const minX = Number(attribute(attributes, "x"));
-      const minY = Number(attribute(attributes, "y"));
-      return {
-        minX,
-        minY,
-        maxX: minX + Number(attribute(attributes, "width")) - 1,
-        maxY: minY + Number(attribute(attributes, "height")) - 1,
-      };
-    });
-}
-
-function shapesForFill(source: string, fill: string) {
-  return [...source.matchAll(/<(path|rect|polygon)\b([^>]*)\/>/gi)]
-    .filter(([, , attributes]) => attribute(attributes, "fill")?.toLowerCase() === fill);
 }
 
 async function nativeRaster(source: string, grid: Grid) {
@@ -247,7 +196,7 @@ function newsletterLayout(raster: NativeRaster) {
     masthead: largestComponentBounds(raster, NEWSLETTER_MASTHEAD_FILL),
     feature: largestComponentBounds(raster, NEWSLETTER_REGION_FILLS[0]),
     lowerLeft: largestComponentBounds(raster, NEWSLETTER_REGION_FILLS[1]),
-    lowerRight: largestComponentBounds(raster, NEWSLETTER_REGION_FILLS[2]),
+    lowerRight: boundsFor(colorPixels(raster, NEWSLETTER_REGION_FILLS[2]), raster.width),
   };
 }
 
@@ -262,39 +211,26 @@ function newsletterHasDistinctModules(raster: NativeRaster) {
     && widthOf(layout.lowerRight) / widthOf(layout.page) > 0.55;
 }
 
-function bagHandleFrame(raster: NativeRaster) {
-  const opening = largestComponentBounds(raster, BAG_OPENING_FILL);
-  const face = largestComponentBounds(raster, BAG_FACE_FILL);
-  const topFrame = Array.from(
-    { length: widthOf(opening) },
-    (_, offset) => matchesFill(raster, opening.minX + offset, opening.minY - 1, BAG_HANDLE_FILL),
-  ).every(Boolean);
-  const leftFrame = Array.from(
-    { length: heightOf(opening) },
-    (_, offset) => matchesFill(raster, opening.minX - 1, opening.minY + offset, BAG_HANDLE_FILL),
-  ).every(Boolean);
-  const rightFrame = Array.from(
-    { length: heightOf(opening) },
-    (_, offset) => matchesFill(raster, opening.maxX + 1, opening.minY + offset, BAG_HANDLE_FILL),
-  ).every(Boolean);
-  const joinsBody = opaquePathConnects(
-    raster,
-    { x: opening.minX - 1, y: opening.maxY },
-    { x: face.minX, y: face.minY },
-  );
-  return { opening, face, topFrame, leftFrame, rightFrame, joinsBody };
-}
+function isPixelatedTikTokMark(raster: NativeRaster, grid: Grid) {
+  const probe = TIKTOK_PROBES.get(grid)!;
+  const ink = colorPixels(raster, TIKTOK_INK);
+  const cyan = colorPixels(raster, TIKTOK_CYAN);
+  const magenta = colorPixels(raster, TIKTOK_MAGENTA);
+  if (ink.length === 0 || cyan.length === 0 || magenta.length === 0) return false;
+  const inkBounds = boundsFor(ink, raster.width);
+  const cyanBounds = boundsFor(cyan, raster.width);
+  const magentaBounds = boundsFor(magenta, raster.width);
 
-function bagHasFramedHandle(raster: NativeRaster) {
-  const handle = bagHandleFrame(raster);
-  const grid = raster.width as Grid;
-  return handle.opening.maxY < handle.face.minY
-    && widthOf(handle.opening) / widthOf(handle.face) < MAX_HANDLE_OPENING_WIDTH_RATIO.get(grid)!
-    && heightOf(handle.opening) / heightOf(handle.face) < MAX_HANDLE_OPENING_HEIGHT_RATIO.get(grid)!
-    && handle.topFrame
-    && handle.leftFrame
-    && handle.rightFrame
-    && handle.joinsBody;
+  return matchesFill(raster, ...probe.stem, TIKTOK_INK)
+    && matchesFill(raster, ...probe.flag, TIKTOK_INK)
+    && matchesFill(raster, ...probe.head, TIKTOK_INK)
+    && matchesFill(raster, ...probe.cyan, TIKTOK_CYAN)
+    && matchesFill(raster, ...probe.magenta, TIKTOK_MAGENTA)
+    && opaquePathConnects(raster, { x: probe.head[0], y: probe.head[1] }, { x: probe.flag[0], y: probe.flag[1] })
+    && cyanBounds.minX < inkBounds.minX
+    && cyanBounds.maxY > inkBounds.maxY
+    && magentaBounds.maxX > inkBounds.maxX
+    && magentaBounds.minY < inkBounds.minY;
 }
 
 function collapseLowerNewsletterModule(source: string, grid: Grid) {
@@ -302,14 +238,20 @@ function collapseLowerNewsletterModule(source: string, grid: Grid) {
   return source.replace(original, collapsed);
 }
 
-function removeHandleSide(source: string, grid: Grid) {
-  const [original, missingSide] = MISSING_HANDLE_SIDE_FRAMES.get(grid)!;
-  return source.replace(original, missingSide);
+function removeTikTokHead(source: string, grid: Grid) {
+  const yFloor = grid === 16 ? 8 : grid === 24 ? 12 : 18;
+  return source.replace(
+    new RegExp(`  <rect fill="${TIKTOK_INK}"[^>]* y="(?:${Array.from(
+      { length: 9 },
+      (_, index) => yFloor + index,
+    ).join("|")})"[^>]*/>\\n`, "g"),
+    "",
+  );
 }
 
-function removeHandleTop(source: string, grid: Grid) {
-  const [original, missingTop] = MISSING_HANDLE_TOP_FRAMES.get(grid)!;
-  return source.replace(original, missingTop);
+function removeTikTokFlag(source: string, grid: Grid) {
+  const flagX = grid === 16 ? 11 : grid === 24 ? 17 : 24;
+  return source.replace(new RegExp(`  <rect fill="${TIKTOK_INK}" x="${flagX}"[^>]*/>\\n`), "");
 }
 
 describe("Myles 98 UnderstandingFAFSA and TikTok Catalog refinement", () => {
@@ -340,45 +282,19 @@ describe("Myles 98 UnderstandingFAFSA and TikTok Catalog refinement", () => {
     );
   });
 
-  it.each(GRIDS)("makes TikTok Catalog %ipx an upright handled shopping bag with depth at 24px and 32px", async (grid) => {
+  it.each(GRIDS)("makes TikTok Catalog %ipx a compact three-channel TikTok note", async (grid) => {
     const source = sourceFor("tiktok-catalog", grid);
     const raster = await nativeRaster(source, grid);
-    const faceRects = rectsForFill(source, BAG_FACE_FILL);
-    const openingRects = rectsForFill(source, BAG_OPENING_FILL);
-    const depthShapes = shapesForFill(source, BAG_DEPTH_FILL);
-    const faceBounds = boundsFor(colorPixels(raster, BAG_FACE_FILL), grid);
-    const openingBounds = boundsFor(colorPixels(raster, BAG_OPENING_FILL), grid);
-    const depthBounds = grid === 16 ? null : boundsFor(colorPixels(raster, BAG_DEPTH_FILL), grid);
-    const handle = bagHandleFrame(raster);
-
-    expect(faceRects, "bag face must keep parallel sides instead of a wastebasket taper").toHaveLength(1);
-    expect(openingRects, "handled opening must be one clearly separated light aperture").toHaveLength(1);
-    expect(depthShapes, "the minimal 16px bag must remain flat while larger bags use one object-specific side plane").toHaveLength(grid === 16 ? 0 : 1);
-    expect(openingBounds.maxY).toBeLessThan(faceBounds.minY);
-    expect(widthOf(openingBounds)).toBeLessThan(widthOf(faceBounds) * 0.65);
-    expect(widthOf(faceBounds) / heightOf(faceBounds)).toBeGreaterThan(0.7);
-    if (depthBounds) {
-      expect(depthBounds.maxX).toBeGreaterThan(faceBounds.maxX);
-      expect(depthBounds.minX).toBeGreaterThanOrEqual(faceBounds.maxX - 1);
-      expect(depthBounds.maxY - depthBounds.minY).toBeGreaterThanOrEqual(heightOf(faceBounds) - 2);
-    }
-    expect(handle.topFrame, "shopping-bag handle needs an opaque top over its aperture").toBe(true);
-    expect(handle.leftFrame, "shopping-bag handle needs an opaque left side").toBe(true);
-    expect(handle.rightFrame, "shopping-bag handle needs an opaque right side").toBe(true);
-    expect(handle.joinsBody, "shopping-bag handle must connect to the bag body").toBe(true);
-    expect(widthOf(handle.opening) / widthOf(handle.face)).toBeLessThan(MAX_HANDLE_OPENING_WIDTH_RATIO.get(grid)!);
-    expect(heightOf(handle.opening) / heightOf(handle.face)).toBeLessThan(MAX_HANDLE_OPENING_HEIGHT_RATIO.get(grid)!);
-    expect(bagHasFramedHandle(raster)).toBe(true);
-    expect(source, "shopping bag must not include an open-bin rim or branded/social ornament").not.toMatch(
-      /#6f293d|<(?:circle|ellipse|line|polyline|text|use)\b|\b(?:opacity|filter|stroke|transform)=/i,
-    );
+    expect(isPixelatedTikTokMark(raster, grid)).toBe(true);
+    expect(FORMER_BAG_COLORS.some((color) => source.toLowerCase().includes(color))).toBe(false);
+    expect(source).not.toMatch(/<(?:circle|ellipse|line|polyline|text|use)\b|\b(?:opacity|filter|stroke|transform)=/i);
 
     const genericApp = await nativeRaster(sourceFor("generic-app", grid), grid);
     expect(
       intersectionOverUnion(opaquePixels(raster), opaquePixels(genericApp)),
-      "shopping bag must not collapse into the Generic App silhouette",
+      "TikTok note must not collapse into the Generic App silhouette",
     ).toBeLessThan(0.82);
-    expect(topRowWidth(opaquePixels(raster), grid)).toBeLessThan(topRowWidth(opaquePixels(genericApp), grid) * 0.65);
+    expect(topRowWidth(opaquePixels(raster), grid)).toBeLessThan(topRowWidth(opaquePixels(genericApp), grid) * 0.75);
   });
 
   it.each(GRIDS)("rejects a %ipx newsletter whose physical fold collapses into a dashboard-like tile", async (grid) => {
@@ -387,15 +303,15 @@ describe("Myles 98 UnderstandingFAFSA and TikTok Catalog refinement", () => {
     expect(newsletterHasDistinctModules(await nativeRaster(collapseLowerNewsletterModule(source, grid), grid))).toBe(false);
   });
 
-  it.each(GRIDS)("rejects a %ipx shopping bag with a missing handle side", async (grid) => {
+  it.each(GRIDS)("rejects a %ipx TikTok mark with its lower note head removed", async (grid) => {
     const source = sourceFor("tiktok-catalog", grid);
-    expect(bagHasFramedHandle(await nativeRaster(source, grid))).toBe(true);
-    expect(bagHasFramedHandle(await nativeRaster(removeHandleSide(source, grid), grid))).toBe(false);
+    expect(isPixelatedTikTokMark(await nativeRaster(source, grid), grid)).toBe(true);
+    expect(isPixelatedTikTokMark(await nativeRaster(removeTikTokHead(source, grid), grid), grid)).toBe(false);
   });
 
-  it.each(GRIDS)("rejects a %ipx shopping bag with a missing handle top", async (grid) => {
+  it.each(GRIDS)("rejects a %ipx TikTok mark with its right-facing flag removed", async (grid) => {
     const source = sourceFor("tiktok-catalog", grid);
-    expect(bagHasFramedHandle(await nativeRaster(source, grid))).toBe(true);
-    expect(bagHasFramedHandle(await nativeRaster(removeHandleTop(source, grid), grid))).toBe(false);
+    expect(isPixelatedTikTokMark(await nativeRaster(source, grid), grid)).toBe(true);
+    expect(isPixelatedTikTokMark(await nativeRaster(removeTikTokFlag(source, grid), grid), grid)).toBe(false);
   });
 });

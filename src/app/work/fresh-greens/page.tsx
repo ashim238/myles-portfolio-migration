@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { ExpandableImage } from "@/components/expandable-image";
 import { LeadMedia } from "@/components/lead-media";
 import { LeadVideo } from "@/components/lead-video";
 import { ReaderShell } from "@/components/myles-97/reader-shell";
@@ -10,10 +9,15 @@ import { TransitionLink } from "@/components/transition-link";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectChapter } from "@/components/project-chapter";
 import { ProjectWorkJump } from "@/components/project-work-jump";
-import { ArchitectureDiagram, PhoneFrame } from "@/components/fresh-greens";
+import { ProjectEvidenceDisclosure } from "@/components/project-evidence-disclosure";
+import { ArchitectureDiagram } from "@/components/fresh-greens";
 import { DepartureReminderEvidence } from "@/components/fresh-greens/departure-reminder-evidence";
 import { PivotJourney } from "@/components/fresh-greens/pivot-journey";
 import { PulledOverJourney } from "@/components/fresh-greens/pulled-over-journey";
+import {
+  ReportRouteInfluenceEvidence,
+  RouteComparisonEvidence,
+} from "@/components/fresh-greens/route-decision-evidence";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
 import { CASE_STUDY_CHAPTERS } from "@/lib/project-chapters";
@@ -33,19 +37,6 @@ export const metadata: Metadata = createRouteMetadata({
   image: "/projects/fresh-greens/cover.png",
   type: "article",
 });
-
-function Shot({ name, alt }: { name: string; alt: string }) {
-  return (
-    <ExpandableImage
-      src={`/projects/fresh-greens/v2/${name}.png`}
-      alt={alt}
-      width={1290}
-      height={2796}
-      sizes="(max-width: 768px) 70vw, 280px"
-      className="fg-feature-shot"
-    />
-  );
-}
 
 export default async function FreshGreensPage() {
   const project = await getProjectBySlug("fresh-greens");
@@ -189,9 +180,11 @@ export default async function FreshGreensPage() {
               and leave the choice with the driver.
             </p>
           </div>
-          <PivotJourney />
-          <DepartureReminderEvidence />
-          <ArchitectureDiagram />
+          <RouteComparisonEvidence />
+          <ProjectEvidenceDisclosure summary="View the visual pivot and daylight reminder">
+            <PivotJourney />
+            <DepartureReminderEvidence />
+          </ProjectEvidenceDisclosure>
         </section>
       </ProjectChapter>
 
@@ -233,15 +226,9 @@ export default async function FreshGreensPage() {
               route-level trust tiers yet.
             </p>
           </div>
-          <figure className="fg-safety-visual">
-            <PhoneFrame variant="screenshot">
-              <Shot name="report-detail" alt="The Fresh Greens Felt welcome contribution form over the en-route map, with place-type chips, welcoming-reason chips, an optional experience field, and a green Share your experience button with black text." />
-            </PhoneFrame>
-            <figcaption className="fg-safety-visual-caption">
-              Contributors can optionally describe the experience.
-            </figcaption>
-          </figure>
-          <div className="fg-moderation" aria-label="How a report moves through moderation">
+          <ReportRouteInfluenceEvidence />
+          <ProjectEvidenceDisclosure summary="View the moderation path">
+            <div className="fg-moderation" aria-label="How a report moves through moderation">
             <div className="fg-mod-flow">
               <div className="fg-mod-stage">
                 <p className="fg-mod-stage-label">Configured cloud</p>
@@ -260,7 +247,8 @@ export default async function FreshGreensPage() {
                 <p className="fg-mod-stage-text">Reviewed, hidden, restored, or removed</p>
               </div>
             </div>
-          </div>
+            </div>
+          </ProjectEvidenceDisclosure>
         </div>
       </ProjectChapter>
 
@@ -304,6 +292,9 @@ export default async function FreshGreensPage() {
               </ul>
             </div>
           </div>
+          <ProjectEvidenceDisclosure summary="See how the data reaches route scoring">
+            <ArchitectureDiagram />
+          </ProjectEvidenceDisclosure>
           <figure
             className="fg-en-route-video"
             data-evidence-proof="fresh-greens-en-route-video"

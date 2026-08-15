@@ -57,16 +57,20 @@ describe("UnderstandingFAFSA outcome claims", () => {
     );
   });
 
-  it("leads the condensed project summary with the shipped system", () => {
+  it("leads the condensed project summary with the founder's need", () => {
     const content = readFileSync(
       resolve(process.cwd(), "content/projects/understandingfafsa.md"),
       "utf8",
     );
     const summary = content.match(/^summary: (.+)$/m)?.[1];
 
-    expect(summary).toMatch(/^Built a Mailchimp-native newsletter kit/);
+    expect(summary).toMatch(
+      /^The founder needed a newsletter she could edit herself/,
+    );
+    expect(summary).toContain("three-theme Mailchimp kit");
     expect(summary).toContain("roughly 20 sends");
     expect(summary).toContain("observed");
+    expect(summary).toContain("Mailchimp Privacy Protection excluded");
     expect(summary).toContain("wasn't a controlled attribution test");
     expect(summary).not.toMatch(/versus prior|around 30%/);
   });
@@ -183,7 +187,7 @@ describe("UnderstandingFAFSA outcome claims", () => {
     );
 
     expect(projectPage).toMatch(
-      /constraint\.\s*<\/mark>\s*\{" "\}\s*Figma&apos;s spacing/,
+      /102 KB\.\s*<\/mark>\s*\{" "\}\s*Figma&apos;s spacing/,
     );
   });
 });

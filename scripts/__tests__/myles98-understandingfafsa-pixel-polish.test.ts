@@ -142,6 +142,50 @@ function flattenLowerLeaf(source: string) {
   return source.replaceAll(FOLD_SHADOW, FOLD_FACE);
 }
 
+function hasInteriorCenterCrease(source: string, grid: Grid) {
+  const page = source.match(
+    new RegExp(`<rect fill="${PAPER}" x="(\\d+)" y="(\\d+)" width="(\\d+)" height="(\\d+)" />`),
+  );
+  if (!page) return false;
+  const [, pageXRaw, pageYRaw, pageWidthRaw, pageHeightRaw] = page;
+  const pageX = Number(pageXRaw);
+  const pageY = Number(pageYRaw);
+  const pageWidth = Number(pageWidthRaw);
+  const pageHeight = Number(pageHeightRaw);
+  const creaseRects = [...source.matchAll(
+    new RegExp(`<rect fill="${FOLD_SHADOW}" x="(\\d+)" y="(\\d+)" width="1" height="(\\d+)" />`, "g"),
+  )].map((match) => ({ x: Number(match[1]), y: Number(match[2]), height: Number(match[3]) }));
+
+  return creaseRects.some((crease) => (
+    crease.x >= pageX + Math.floor(pageWidth * 0.4)
+    && crease.x <= pageX + Math.ceil(pageWidth * 0.6)
+    && crease.y > pageY
+    && crease.y + crease.height <= pageY + pageHeight
+    && crease.height >= Math.max(3, Math.floor(grid * 0.25))
+  ));
+}
+
+function removeInteriorCenterCrease(source: string, grid: Grid) {
+  const page = source.match(
+    new RegExp(`<rect fill="${PAPER}" x="(\\d+)" y="(\\d+)" width="(\\d+)" height="(\\d+)" />`),
+  );
+  if (!page) return source;
+  const pageX = Number(page[1]);
+  const pageWidth = Number(page[3]);
+  return source.replace(
+    new RegExp(
+      `  <rect fill="${FOLD_SHADOW}" x="(?:${Array.from(
+        { length: Math.ceil(pageWidth * 0.2) + 1 },
+        (_, index) => pageX + Math.floor(pageWidth * 0.4) + index,
+      ).join("|")})" y="\\d+" width="1" height="(?:${Array.from(
+        { length: grid },
+        (_, index) => index + 1,
+      ).join("|")})" />\\n`,
+    ),
+    "",
+  );
+}
+
 describe("Myles 98 UnderstandingFAFSA native paper-fold polish", () => {
   it.each(GRIDS)("renders %ipx as one un-clipped, folded printed newsletter with a material fold transition", async (grid) => {
     const source = masterSource(grid);
@@ -174,6 +218,15 @@ describe("Myles 98 UnderstandingFAFSA native paper-fold polish", () => {
 
     expect(hasPhysicalLowerLeaf(await nativeRaster(source, grid), grid)).toBe(true);
     expect(hasPhysicalLowerLeaf(await nativeRaster(flattenLowerLeaf(source), grid), grid)).toBe(false);
+  });
+
+  it.each(GRIDS)("uses a %ipx interior center crease so the packet reads as folded newsprint", (grid) => {
+    const source = masterSource(grid);
+    const mutated = removeInteriorCenterCrease(source, grid);
+
+    expect(hasInteriorCenterCrease(source, grid)).toBe(true);
+    expect(mutated).not.toBe(source);
+    expect(hasInteriorCenterCrease(mutated, grid)).toBe(false);
   });
 
   it.each(GRIDS)("keeps the public %ipx asset byte-for-byte authored from the matching master", (grid) => {

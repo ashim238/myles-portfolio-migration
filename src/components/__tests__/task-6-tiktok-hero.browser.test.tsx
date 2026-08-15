@@ -44,6 +44,11 @@ const mobileViewports = [
   { width: 390, height: 844 },
   { width: 320, height: 568 },
 ] as const;
+const openingViewports = [
+  { width: 1280, height: 900 },
+  { width: 390, height: 844 },
+  { width: 320, height: 568 },
+] as const;
 const imageContentTypes: Record<string, string> = {
   ".jpg": "image/jpeg",
   ".jpeg": "image/jpeg",
@@ -62,7 +67,7 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await browser?.close();
-});
+}, 60_000);
 
 async function fulfillAsset(route: Route) {
   const requestUrl = new URL(route.request().url());
@@ -203,6 +208,56 @@ describe("Task 6 TikTok mobile hero polish", () => {
         overlapsTitle: false,
         overlapsLede: false,
       });
+      await page.close();
+    },
+    60_000,
+  );
+});
+
+describe("TikTok opening alignment", () => {
+  it.each(openingViewports)(
+    "keeps facts, timeline, and key moves on one editorial column at $width×$height",
+    async (viewport) => {
+      const page = await browser.newPage({
+        viewport,
+        reducedMotion: "reduce",
+      });
+      await page.route("http://portfolio.test/**", fulfillAsset);
+      await page.setContent(documentWith(markup), { waitUntil: "load" });
+
+      const geometry = await page.evaluate(() => {
+        const box = (selector: string) => {
+          const element = document.querySelector<HTMLElement>(selector);
+          if (!element) throw new Error(`Missing ${selector}`);
+          const rect = element.getBoundingClientRect();
+          return {
+            left: rect.left,
+            right: rect.right,
+            width: rect.width,
+          };
+        };
+
+        return {
+          viewportWidth: document.documentElement.clientWidth,
+          documentScrollWidth: document.documentElement.scrollWidth,
+          opening: box(".project-opening-facts"),
+          recruiterCut: box(".case-cut"),
+        };
+      });
+
+      expect(geometry.documentScrollWidth).toBeLessThanOrEqual(
+        geometry.viewportWidth,
+      );
+      expect(
+        Math.abs(geometry.recruiterCut.left - geometry.opening.left),
+      ).toBeLessThanOrEqual(1);
+      expect(
+        Math.abs(geometry.recruiterCut.right - geometry.opening.right),
+      ).toBeLessThanOrEqual(1);
+      expect(
+        Math.abs(geometry.recruiterCut.width - geometry.opening.width),
+      ).toBeLessThanOrEqual(1);
+
       await page.close();
     },
     60_000,

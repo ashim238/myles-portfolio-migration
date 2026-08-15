@@ -124,7 +124,10 @@ export function WorkstationDesktop({
   useEffect(() => {
     if (startOpen || !restoreStartFocusRef.current) return;
     restoreStartFocusRef.current = false;
-    startButtonRef.current?.focus();
+    const focusFrame = window.requestAnimationFrame(() => {
+      startButtonRef.current?.focus({ preventScroll: true });
+    });
+    return () => window.cancelAnimationFrame(focusFrame);
   }, [startOpen]);
 
   useEffect(() => {
@@ -149,7 +152,8 @@ export function WorkstationDesktop({
     focused: state.focusedProgram === id,
     isDefaultPosition: state.windowGeometry[id] === undefined,
     stackIndex: 10 + stackIndex,
-    onFocus: (programId: ProgramId) => dispatch({ type: "focus", id: programId }),
+    onFocus: (programId: ProgramId) =>
+      dispatchWithWindowFocus({ type: "focus", id: programId }),
     onMove: (programId: ProgramId, geometry: WindowGeometry) =>
       dispatch({ type: "move", id: programId, geometry }),
     onMinimize: (programId: ProgramId) =>

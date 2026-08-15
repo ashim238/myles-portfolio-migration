@@ -8,6 +8,7 @@ import { ProjectChapter } from "@/components/project-chapter";
 import { ProjectOpeningFacts } from "@/components/project-opening-facts";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
+import { ProjectEvidenceDisclosure } from "@/components/project-evidence-disclosure";
 import { RecruiterCut } from "@/components/recruiter-cut";
 import {
   TikTokCoverBlobs,
@@ -206,9 +207,9 @@ export default async function TikTokPage() {
               had to use the asset, so it needed to adapt to the client&apos;s needs.
             </p>
             <p>
-              Once the three directions were set, I built each one as a layered
-              Photoshop file around the same product-slot map. Type, color,
-              texture, and supporting graphics stayed on separate layers.
+              I built all three as layered Photoshop files around the same
+              product-slot map. I kept the type, color, texture, and supporting
+              graphics on separate layers.
             </p>
           </div>
           <TikTokTemplateSystem />
@@ -220,62 +221,64 @@ export default async function TikTokPage() {
               already aligned.
             </p>
           </div>
-          <div className="tt-preview-process">
-            <p className="tt-preview-process-lede">
-              I started with loose sketches, then built each direction as a
-              layered Photoshop file. I don&apos;t remember the exact critique
-              language, so the notes below paraphrase the feedback visible in
-              the sketches and what I remember from Global Creative Lab.
-            </p>
-            <div className="tt-preview-process-list">
-              {TIKTOK_TEMPLATES.map((template) => (
-                <article key={template.key} className="tt-preview-process-card">
-                  <header>
-                    <h3>{template.name}</h3>
-                    {template.launchLibraryStatus === "confirmed" ? (
-                      <span>Launch library</span>
-                    ) : null}
-                  </header>
-                  <div className="tt-preview-process-media">
-                    <figure className="tt-preview-sketch">
-                      <ExpandableImage
-                        src={template.sketch}
-                        alt={`Original process sketch for ${template.name}`}
-                        width={1600}
-                        height={900}
-                        sizes="(max-width: 768px) 100vw, 640px"
-                        style={{
-                          width: "100%",
-                          height: "auto",
-                          display: "block",
-                        }}
-                      />
-                      <figcaption>Process sketch</figcaption>
-                    </figure>
-                    <figure className="tt-preview-final">
-                      <ExpandableImage
-                        src={template.fullTemplate}
-                        alt={`Finished static ${template.name} catalog template`}
-                        width={1080}
-                        height={1920}
-                        sizes="(max-width: 768px) 75vw, 320px"
-                        style={{
-                          width: "100%",
-                          height: "auto",
-                          display: "block",
-                        }}
-                      />
-                      <figcaption>Static template</figcaption>
-                    </figure>
-                  </div>
-                  <p className="tt-preview-iteration">
-                    <strong>Iteration note</strong>
-                    <span>{template.iterationNote}</span>
-                  </p>
-                </article>
-              ))}
+          <ProjectEvidenceDisclosure summary="View all three sketch-to-template comparisons">
+            <div className="tt-preview-process">
+              <p className="tt-preview-process-lede">
+                I started with loose sketches, then built each direction as a
+                layered Photoshop file. I don&apos;t remember the exact critique
+                language, so the notes below paraphrase the feedback visible in
+                the sketches and what I remember from Global Creative Lab.
+              </p>
+              <div className="tt-preview-process-list">
+                {TIKTOK_TEMPLATES.map((template) => (
+                  <article key={template.key} className="tt-preview-process-card">
+                    <header>
+                      <h3>{template.name}</h3>
+                      {template.launchLibraryStatus === "confirmed" ? (
+                        <span>Launch library</span>
+                      ) : null}
+                    </header>
+                    <div className="tt-preview-process-media">
+                      <figure className="tt-preview-sketch">
+                        <ExpandableImage
+                          src={template.sketch}
+                          alt={`Original process sketch for ${template.name}`}
+                          width={1600}
+                          height={900}
+                          sizes="(max-width: 768px) 100vw, 640px"
+                          style={{
+                            width: "100%",
+                            height: "auto",
+                            display: "block",
+                          }}
+                        />
+                        <figcaption>Process sketch</figcaption>
+                      </figure>
+                      <figure className="tt-preview-final">
+                        <ExpandableImage
+                          src={template.fullTemplate}
+                          alt={`Finished static ${template.name} catalog template`}
+                          width={1080}
+                          height={1920}
+                          sizes="(max-width: 768px) 75vw, 320px"
+                          style={{
+                            width: "100%",
+                            height: "auto",
+                            display: "block",
+                          }}
+                        />
+                        <figcaption>Static template</figcaption>
+                      </figure>
+                    </div>
+                    <p className="tt-preview-iteration">
+                      <strong>Iteration note</strong>
+                      <span>{template.iterationNote}</span>
+                    </p>
+                  </article>
+                ))}
+              </div>
             </div>
-          </div>
+          </ProjectEvidenceDisclosure>
         </div>
       </ProjectChapter>
 
@@ -363,10 +366,11 @@ export default async function TikTokPage() {
               I&apos;m left doing work without knowing the full impact.
             </p>
             <p>
-              Since then, I check with stakeholders at multiple stages to make
-              sure they still like the direction of the work. Mockups are
-              cheaper to make now, which means I can show something convincing
-              before the work is too finished to change.
+              Now, I check with stakeholders at multiple stages to see if they
+              like the direction of the work. With tools like Claude Code and
+              Figma Make, a low-stakes, convincing mockup takes a lot less
+              investment. I can show the team something concrete before the
+              work feels too finished to change.
             </p>
           </div>
         </div>

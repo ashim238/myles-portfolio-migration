@@ -103,8 +103,10 @@ describe("Navi evidence claims", () => {
     expect(projectPage).toContain(
       'outcome="A functional team Figma prototype, followed by my solo React portfolio demo."',
     );
-    expect(projectPage).toMatch(/My teammate[\s\S]{0,180}information architecture/i);
-    expect(projectPage).toMatch(/I created the design system from head to toe/i);
+    expect(projectPage).toMatch(/My teammate[\s\S]{0,180}information\s+architecture/i);
+    expect(projectPage).toMatch(
+      /I\s+created\s+the\s+design\s+system\s+from\s+head\s+to\s+toe/i,
+    );
     expect(projectPage).toMatch(/After the semester[\s\S]{0,180}on my own/i);
   });
 
@@ -140,10 +142,10 @@ describe("Navi evidence claims", () => {
     const projectProse = projectPage.replace(/\s+/g, " ");
 
     expect(projectProse).toMatch(/digital nomads, ethical travelers/i);
-    expect(projectProse).toMatch(/early audience hypothesis/i);
-    expect(projectProse).toMatch(/not a validated market segment/i);
-    expect(projectProse).toMatch(/no engineering resources or budget/i);
-    expect(projectProse).toMatch(/kept the prototype in Figma/i);
+    expect(projectProse).toMatch(/early audience hypotheses/i);
+    expect(projectProse).toMatch(/not validated market segments/i);
+    expect(projectProse).toMatch(/didn&apos;t have engineering resources or a budget/i);
+    expect(projectProse).toMatch(/project stayed in Figma/i);
   });
 
   it("keeps the institutional path plausible rather than claimed", () => {
@@ -187,8 +189,8 @@ describe("Navi evidence claims", () => {
   it("separates research evidence, planning artifacts, and future work", () => {
     const projectPage = readSource("src/app/work/navi/page.tsx");
 
-    expect(projectPage).toMatch(/research informed three archetypes/i);
-    expect(projectPage).toMatch(/internal\s+planning artifacts/i);
+    expect(projectPage).toMatch(/grouped responses into three archetypes/i);
+    expect(projectPage).toMatch(/internal\s+planning\s+artifacts/i);
     expect(projectPage).toMatch(/group booking.{0,100}future opportunity/i);
     expect(projectPage).toMatch(/not wired into this demo/i);
     expect(projectPage).not.toMatch(/three personas/i);
@@ -280,12 +282,14 @@ describe("Navi evidence claims", () => {
     );
     expect(projectPage).toMatch(/Learn.{0,260}fish out of water/i);
     expect(projectPage).toMatch(
-      /Plan.{0,220}what the activity requires.{0,220}small-business cost breakdown/i,
+      /Plan.{0,220}activity requirements.{0,220}small-business cost breakdown/i,
     );
     expect(projectPage).toMatch(
       /Go.{0,220}eco-friendly.{0,220}current location/i,
     );
-    expect(projectPage).toMatch(/Booking sat beside.{0,180}separate module/i);
+    expect(projectPage).toMatch(
+      /book directly with a partner.{0,180}separate module/i,
+    );
     expect(projectPage).not.toContain(
       "Go carries a trip into an individual booking.",
     );
@@ -297,10 +301,10 @@ describe("Navi evidence claims", () => {
       " ",
     );
 
-    expect(projectPage).toMatch(/tested the homepage and search/i);
+    expect(projectPage).toMatch(/design students tested the homepage and search/i);
     expect(projectPage).toMatch(/other design students/i);
-    expect(projectPage).toMatch(/same height/i);
-    expect(projectPage).toMatch(/less copy and fewer tags/i);
+    expect(projectPage).toMatch(/matched heights/i);
+    expect(projectPage).toMatch(/cut tags and copy/i);
     expect(projectPage).toMatch(/semester ended.{0,180}didn&apos;t.{0,80}test/i);
     expect(projectPage).toMatch(/Cost, location, and event type.{0,80}non-negotiable/i);
     expect(projectPage).toMatch(/Time-sensitive statuses.{0,80}first/i);
@@ -317,13 +321,54 @@ describe("Navi evidence claims", () => {
 
     expect(projectPage).toMatch(/created the design system from head to toe/i);
     expect(projectPage).toMatch(/teammate.{0,100}original information architecture/i);
-    expect(projectPage).toMatch(/Different levels of experience.{0,120}schedules/i);
+    expect(projectPage).toMatch(/experience with design tools.{0,120}schedules/i);
     expect(projectPage).toMatch(
       /design system.{0,180}resident and business-owner insights/i,
     );
     expect(projectPage).toMatch(/functional Figma prototype/i);
     expect(projectPage).toMatch(/booking widget/i);
     expect(projectPage).toMatch(/profile of the event host/i);
-    expect(projectPage).toMatch(/group coordination.{0,100}future/i);
+    expect(projectPage).toMatch(/plans for group event coordination/i);
+  });
+
+  it("keeps Myles's spoken definition of Plan", () => {
+    const projectProse = readSource("src/app/work/navi/page.tsx").replace(
+      /\s+/g,
+      " ",
+    );
+
+    expect(projectProse).toMatch(
+      /<strong>Plan<\/strong> is supposed to help someone, well, plan\./,
+    );
+  });
+
+  it("keeps the testing context in Myles's sentence shape", () => {
+    const projectProse = readSource("src/app/work/navi/page.tsx").replace(
+      /\s+/g,
+      " ",
+    );
+
+    expect(projectProse).toContain(
+      "The homepage was sort of a first pass at whether the system held up.",
+    );
+    expect(projectProse).toMatch(
+      /Other design students tested the homepage and search, so it makes sense that feedback centered on layout\./,
+    );
+    expect(projectProse).not.toContain("The homepage tested the system first.");
+  });
+
+  it("keeps the teamwork constraint and V1 judgment in first person", () => {
+    const projectProse = readSource("src/app/work/navi/page.tsx").replace(
+      /\s+/g,
+      " ",
+    );
+
+    expect(projectProse).toContain("The team had trouble working together.");
+    expect(projectProse).toContain(
+      "I had plans for group event coordination, but I was comfortable with that as a V1.",
+    );
+    expect(projectProse).not.toContain(
+      "No engineering resources or budget kept the prototype in Figma.",
+    );
   });
 });

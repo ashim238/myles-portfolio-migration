@@ -38,7 +38,12 @@ export function ReaderHeader({ slug, title }: ReaderHeaderProps) {
     <header className="reader-header" aria-label="Reader controls">
       <div className="reader-header-project">
         <span aria-hidden="true">
-          <Myles97Icon name={iconForProgram(slug)} size={18} compact />
+          <Myles97Icon
+            name={iconForProgram(slug)}
+            size={16}
+            compact
+            variant="color"
+          />
         </span>
         <strong>{appName}</strong>
       </div>

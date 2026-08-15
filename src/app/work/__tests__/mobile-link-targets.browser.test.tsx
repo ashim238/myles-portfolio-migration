@@ -29,6 +29,7 @@ import {
 const styles = [
   "src/app/styles/base.css",
   "src/app/styles/late-polish.css",
+  "src/app/styles/myles-97.css",
   "src/app/styles/myles-98-polish.css",
   "src/app/styles/myles-98-paper-contrast.css",
   "src/app/styles/portfolio-surfaces.css",
@@ -116,7 +117,11 @@ async function renderedPage(
     <html>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <style>${styles}</style>
+        <style>
+          *, *::before, *::after { box-sizing: border-box; }
+          html, body { margin: 0; }
+          ${styles}
+        </style>
       </head>
       <body>${markup}</body>
     </html>`);
@@ -197,6 +202,58 @@ describe("mobile standalone link targets", () => {
           }),
         );
       expect(scaledWorkIndexFrames).toEqual([]);
+
+      const endcap = page.locator(
+        "[data-fixture='navi'] [data-m98-next-project-window]",
+      );
+      const titlebar = endcap.locator(".project-work-jump-window-titlebar");
+      const beforeFocus = await endcap.evaluate((frame) => ({
+        scrollTop: frame.scrollTop,
+        overflow: getComputedStyle(frame).overflow,
+        background: getComputedStyle(frame).backgroundColor,
+      }));
+      const titlebarOffset = await titlebar.evaluate(
+        (target) => {
+          const frame = target.closest("[data-m98-next-project-window]");
+          if (!(frame instanceof HTMLElement)) {
+            throw new Error("Next-project frame is missing");
+          }
+          return (
+            target.getBoundingClientRect().top -
+            frame.getBoundingClientRect().top
+          );
+        },
+      );
+
+      await page
+        .locator("[data-fixture='navi'] .project-work-jump-view-all")
+        .focus();
+
+      const afterFocus = await endcap.evaluate((frame) => frame.scrollTop);
+      const focusedTitlebarOffset = await titlebar.evaluate(
+        (target) => {
+          const frame = target.closest("[data-m98-next-project-window]");
+          if (!(frame instanceof HTMLElement)) {
+            throw new Error("Next-project frame is missing");
+          }
+          return (
+            target.getBoundingClientRect().top -
+            frame.getBoundingClientRect().top
+          );
+        },
+      );
+      expect(beforeFocus).toMatchObject({
+        scrollTop: 0,
+        overflow: "clip",
+        background: "rgb(199, 199, 199)",
+      });
+      expect(
+        await titlebar.evaluate(
+          (target) => getComputedStyle(target).backgroundColor,
+        ),
+      ).toBe("rgb(38, 60, 184)");
+      expect(afterFocus).toBe(0);
+      expect(focusedTitlebarOffset).toBeCloseTo(titlebarOffset, 3);
 
       await page.close();
     },

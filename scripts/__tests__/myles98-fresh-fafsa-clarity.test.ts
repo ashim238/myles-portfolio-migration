@@ -35,11 +35,11 @@ const NEWSPRINT = new Map<Grid, { gutter: Rect; page: Rect }>([
   }],
   [24, {
     page: { fill: PAPER, x: 1, y: 3, width: 19, height: 13 },
-    gutter: { fill: CREASE, x: 11, y: 13, width: 1, height: 3 },
+    gutter: { fill: CREASE, x: 10, y: 13, width: 1, height: 3 },
   }],
   [32, {
     page: { fill: PAPER, x: 2, y: 4, width: 24, height: 16 },
-    gutter: { fill: CREASE, x: 16, y: 17, width: 1, height: 3 },
+    gutter: { fill: CREASE, x: 14, y: 17, width: 1, height: 3 },
   }],
 ]);
 

@@ -51,14 +51,14 @@ const NEWSLETTER = new Map<Grid, { back: Rect; edge: Rect; gutter: Rect; page: R
     back: { fill: BACK_PAGE, x: 3, y: 5, width: 18, height: 13 },
     shadow: { fill: PAGE_SHADOW, x: 4, y: 6, width: 19, height: 14 },
     edge: { fill: PAGE_EDGE, x: 19, y: 4, width: 1, height: 12 },
-    gutter: { fill: GUTTER, x: 11, y: 13, width: 1, height: 3 },
+    gutter: { fill: GUTTER, x: 10, y: 13, width: 1, height: 3 },
   }],
   [32, {
     page: { fill: PAPER, x: 2, y: 4, width: 24, height: 16 },
     back: { fill: BACK_PAGE, x: 3, y: 6, width: 24, height: 16 },
     shadow: { fill: PAGE_SHADOW, x: 5, y: 8, width: 24, height: 17 },
     edge: { fill: PAGE_EDGE, x: 25, y: 5, width: 1, height: 15 },
-    gutter: { fill: GUTTER, x: 16, y: 17, width: 1, height: 3 },
+    gutter: { fill: GUTTER, x: 14, y: 17, width: 1, height: 3 },
   }],
 ]);
 

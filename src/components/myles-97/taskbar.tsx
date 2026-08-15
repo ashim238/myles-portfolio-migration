@@ -74,7 +74,12 @@ export function Taskbar({
         onClick={onToggleStart}
       >
         <span className="myles97-start-mark" aria-hidden="true">
-          <Image src="/logomark.svg" alt="" width={24} height={24} />
+          <Image
+            src="/myles98-icons/start/start-24.svg"
+            alt=""
+            width={24}
+            height={24}
+          />
         </span>
         <strong>Start</strong>
       </button>

@@ -35,5 +35,5 @@ export const TRINI_ROTI_RECIPE: RecipeNoteContent = {
     "While it is still hot, buss it up with two spatulas or shake it in a covered container or clean cloth, then serve warm.",
   ],
   note:
-    "This is my condensed working note from the Immaculate Bites recipe. The two rests are the part I would not skip.",
+    "This is my condensed working note from the Immaculate Bites recipe. Don't skip the rests!",
 };

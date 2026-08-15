@@ -41,17 +41,6 @@ function compactFafsaIcon(container: HTMLElement) {
   return icon!;
 }
 
-function expectCompactMonoFafsaGlyph(container: HTMLElement) {
-  const icon = compactFafsaIcon(container);
-
-  expect(icon).toHaveAttribute("data-m98-icon-variant", "mono");
-  expect(
-    icon.querySelector("image[data-m98-icon-master]"),
-  ).not.toBeInTheDocument();
-  expect(icon.querySelector(".myles98-icon-fallback")).not.toBeInTheDocument();
-  expect(icon.querySelectorAll("path")).toHaveLength(2);
-}
-
 function expectCompactColorFafsaMaster(container: HTMLElement) {
   const icon = compactFafsaIcon(container);
   const master = icon.querySelector<SVGImageElement>(
@@ -78,13 +67,36 @@ function expectCompactColorFafsaMaster(container: HTMLElement) {
 }
 
 describe("dense Myles 98 chrome", () => {
-  it("requests the compact FAFSA icon in the Reader header", () => {
-    const { container } = render(
-      <ReaderHeader slug="understandingfafsa" title="FAFSA Mail" />,
-    );
+  it.each([
+    ["fresh-greens", "Fresh Greens", "fresh-greens", "fresh-greens"],
+    ["understandingfafsa", "FAFSA Mail", "fafsa", "understandingfafsa"],
+    ["navi", "Navi Places", "navi", "navi"],
+    ["tiktok", "TikTok Catalog", "tiktok", "tiktok-catalog"],
+  ])(
+    "renders the audited 16px %s master in the Reader header",
+    (slug, title, iconName, concept) => {
+      const { container } = render(
+        <ReaderHeader slug={slug} title={title} />,
+      );
 
-    expectCompactMonoFafsaGlyph(container);
-  });
+      const icon = container.querySelector<SVGSVGElement>(
+        'svg[data-myles97-icon-density="compact"]',
+      );
+      const master = icon?.querySelector<SVGImageElement>(
+        "image[data-m98-icon-master]",
+      );
+
+      expect(icon).toHaveAttribute("data-m98-icon", iconName);
+      expect(icon).toHaveAttribute("data-m98-icon-grid", "16");
+      expect(icon).toHaveAttribute("data-m98-icon-variant", "color");
+      expect(icon).toHaveAttribute("width", "16");
+      expect(icon).toHaveAttribute("height", "16");
+      expect(master).toHaveAttribute(
+        "href",
+        `/myles98-icons/${concept}/${concept}-16.svg`,
+      );
+    },
+  );
 
   it("keeps the Reader return name complete while exposing separate compact visual text", () => {
     render(<ReaderHeader slug="understandingfafsa" title="FAFSA Mail" />);

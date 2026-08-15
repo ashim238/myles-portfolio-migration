@@ -26,7 +26,7 @@
   <rect fill="#eeeae3" x="3" y="16" width="21" height="4" />
   <rect fill="#6c6962" x="3" y="17" width="5" height="1" />
   <rect fill="#6c6962" x="10" y="17" width="4" height="1" />
-  <rect fill="#d8d4cc" x="16" y="17" width="1" height="3" />
+  <rect fill="#d8d4cc" x="14" y="17" width="1" height="3" />
   <rect fill="#6c6962" x="18" y="17" width="5" height="1" />
   <rect fill="#6c6962" x="3" y="18" width="4" height="1" />
   <rect fill="#6c6962" x="10" y="18" width="4" height="1" />
@@ -34,4 +34,5 @@
   <rect fill="#c5963a" x="3" y="19" width="5" height="1" />
   <rect fill="#6c6962" x="10" y="19" width="4" height="1" />
   <rect fill="#6c6962" x="18" y="19" width="4" height="1" />
+  <rect fill="#b8b4ad" x="14" y="7" width="1" height="10" />
 </svg>

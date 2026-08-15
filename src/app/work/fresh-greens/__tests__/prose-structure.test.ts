@@ -24,17 +24,13 @@ const latePolishStylesPath = resolve(
   "src/app/styles/late-polish.css",
 );
 const baseStylesPath = resolve(process.cwd(), "src/app/styles/base.css");
-const pivotPath = resolve(
-  process.cwd(),
-  "src/components/fresh-greens/pivot-journey.tsx",
-);
 const pulledOverPath = resolve(
   process.cwd(),
   "src/components/fresh-greens/pulled-over-journey.tsx",
 );
-const reminderPath = resolve(
+const routeDecisionPath = resolve(
   process.cwd(),
-  "src/components/fresh-greens/departure-reminder-evidence.tsx",
+  "src/components/fresh-greens/route-decision-evidence.tsx",
 );
 const projectChaptersPath = resolve(
   process.cwd(),
@@ -42,9 +38,8 @@ const projectChaptersPath = resolve(
 );
 const primaryPathFiles = [
   pagePath,
-  pivotPath,
   pulledOverPath,
-  reminderPath,
+  routeDecisionPath,
 ];
 
 const recruiterCutAttributes = new Set([
@@ -245,8 +240,11 @@ describe("Fresh Greens prose structure", () => {
 
     for (const component of [
       "PivotJourney",
+      "RouteComparisonEvidence",
       "ArchitectureDiagram",
       "PulledOverJourney",
+      "ReportRouteInfluenceEvidence",
+      "ProjectEvidenceDisclosure",
       "LeadVideo",
     ]) {
       expect(source).toContain(`<${component}`);
@@ -259,7 +257,7 @@ describe("Fresh Greens prose structure", () => {
     ]) {
       expect(source).not.toContain(`<${retired}`);
     }
-    expect(source).toContain('name="report-detail"');
+    expect(source).toContain("<ReportRouteInfluenceEvidence");
     expect(source).not.toContain('name="report-picker"');
     expect(source).not.toContain('name="en-route"');
     expect(source).not.toContain('name="route-preview"');

@@ -27,7 +27,7 @@ describe("Task 6 polish contracts", () => {
     expect(iconRow).toBeDefined();
     expect(iconRow).toContain("The current family is mechanically valid.");
     expect(iconRow).toContain(
-      "Strict source-free noun recognition remains mixed for four targeted families.",
+      "The latest FAFSA crease and branded TikTok-mark revisions have not received a new source-free recognition review.",
     );
     expect(iconRow).toContain(
       "[Current family-consistency review](../design-assets/myles98-icons/reviews/family-consistency-review.md)",
@@ -46,10 +46,10 @@ describe("Task 6 polish contracts", () => {
       "At a glance retains only Team, Timeline, Tools, and Key moves",
     );
     expect(closeout).toContain(
-      "titlebar and taskbar use the exact audited 16px color masters",
+      "titlebars, taskbar, and Reader chrome use distinct size-specific color icons",
     );
     expect(closeout).toContain(
-      "Reader chrome retains its compact monochrome mark",
+      "Reader now uses the exact 16px project masters rather than alternate monochrome metaphors",
     );
   });
 

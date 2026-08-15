@@ -255,7 +255,7 @@ describe("TikTok short-form case study", () => {
     expect(within(system).getAllByText("Static template")).toHaveLength(3);
     expect(system).toHaveTextContent("layered Photoshop");
     expect(system).toHaveTextContent(
-      "Once the three directions were set, I built each one as a layered Photoshop file around the same product-slot map.",
+      "I built all three as layered Photoshop files around the same product-slot map.",
     );
     expect(system).toHaveTextContent(
       /most parts stayed within their own direction/i,

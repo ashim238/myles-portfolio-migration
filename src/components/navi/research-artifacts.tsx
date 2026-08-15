@@ -3,6 +3,7 @@ import {
   NAVI_BOOKING_STEPS,
   NAVI_JOURNEY_STAGES,
 } from "@/lib/navi/research-artifacts";
+import { ProjectEvidenceDisclosure } from "@/components/project-evidence-disclosure";
 
 export function NaviResearchArtifacts(): React.JSX.Element {
   return (
@@ -56,7 +57,8 @@ export function NaviResearchArtifacts(): React.JSX.Element {
           </ol>
         </figure>
 
-        <figure aria-label="Journey-map excerpt" className="nv-research-artifact">
+        <ProjectEvidenceDisclosure summary="View the journey and booking artifacts">
+          <figure aria-label="Journey-map excerpt" className="nv-research-artifact">
           <figcaption>
             Journey-map excerpt
             <span>Internal planning artifact</span>
@@ -82,12 +84,12 @@ export function NaviResearchArtifacts(): React.JSX.Element {
               </li>
             ))}
           </ol>
-        </figure>
+          </figure>
 
-        <figure
-          aria-label="Individual booking-flow excerpt"
-          className="nv-research-artifact"
-        >
+          <figure
+            aria-label="Individual booking-flow excerpt"
+            className="nv-research-artifact"
+          >
           <figcaption>
             Individual booking-flow excerpt
             <span>Airbnb audit and secondary research</span>
@@ -113,7 +115,8 @@ export function NaviResearchArtifacts(): React.JSX.Element {
               </li>
             ))}
           </ol>
-        </figure>
+          </figure>
+        </ProjectEvidenceDisclosure>
       </div>
     </section>
   );

@@ -4,7 +4,6 @@ import { render, screen, within } from "@testing-library/react";
 import ts from "typescript";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Project } from "@/lib/content";
-import { UNDERSTANDING_FAFSA_AUDIT_RULES } from "@/lib/understandingfafsa-audit-rules";
 
 const getProjectBySlug = vi.fn();
 const getPublishedProjects = vi.fn();
@@ -27,6 +26,17 @@ import UnderstandingFafsaPage from "@/app/work/understandingfafsa/page";
 const pagePath = "src/app/work/understandingfafsa/page.tsx";
 const page = readFileSync(resolve(process.cwd(), pagePath), "utf8");
 const prose = page.replace(/\s+/g, " ");
+const auditRuleSource = readFileSync(
+  resolve(process.cwd(), "src/lib/understandingfafsa-audit-rules.ts"),
+  "utf8",
+).replace(/\s+/g, " ");
+const auditActionCopy = [
+  "I gave longer sends clearer breaks and more direct section titles to make them easier to scan.",
+  "I locked spacing, type hierarchy, and dividers while leaving content and module order swappable.",
+  "I built the kit in Mailchimp so the founder could assemble each issue without touching HTML.",
+  "I flattened the hierarchy and cut extra wrappers once practice sends exposed Gmail clipping.",
+  "I made welcome, weekly, and shorter event templates so different sends could hold different amounts of content.",
+] as const;
 const readerFacingProperties = new Set([
   "description",
   "role",
@@ -214,12 +224,12 @@ describe("UnderstandingFAFSA case-study structure", () => {
     }
   });
 
-  it("renders the five audit findings as one ordered rule chain", () => {
+  it("renders the five audit decisions as a direct action list", () => {
     expect(page).toMatch(
-      /import\s*\{\s*UNDERSTANDING_FAFSA_AUDIT_RULES\s*\}\s*from\s*"@\/lib\/understandingfafsa-audit-rules"/,
+      /UNDERSTANDING_FAFSA_AUDIT_ACTIONS[\s\S]*UNDERSTANDING_FAFSA_AUDIT_RULES[\s\S]*from\s*"@\/lib\/understandingfafsa-audit-rules"/,
     );
     expect(page).toContain(
-      '<ol aria-label="Audit findings and system rules">',
+      '<ol aria-label="Design changes from the newsletter audit">',
     );
     expect(page).toMatch(
       /UNDERSTANDING_FAFSA_AUDIT_RULES\.map\(\(rule\) =>/,
@@ -227,24 +237,43 @@ describe("UnderstandingFAFSA case-study structure", () => {
     expect(
       page.match(/UNDERSTANDING_FAFSA_AUDIT_RULES\.map/g) ?? [],
     ).toHaveLength(1);
-    expect(page).toContain("<strong>Finding:</strong>");
-    expect(page).toContain("<strong>System rule:</strong>");
+    expect(page).not.toContain("<strong>Finding:</strong>");
+    expect(page).not.toContain("<strong>System rule:</strong>");
+    for (const action of auditActionCopy) {
+      expect(auditRuleSource).toContain(action);
+    }
   });
 
-  it("exposes the audit chain as a named ordered list", async () => {
+  it("exposes the audit decisions as a named ordered list", async () => {
     render(await UnderstandingFafsaPage());
 
     const list = screen.getByRole("list", {
-      name: "Audit findings and system rules",
+      name: "Design changes from the newsletter audit",
     });
     const items = within(list).getAllByRole("listitem");
 
     expect(list.tagName).toBe("OL");
     expect(items).toHaveLength(5);
-    for (const item of items) {
-      expect(within(item).getByText("Finding:")).toBeVisible();
-      expect(within(item).getByText("System rule:")).toBeVisible();
+    for (const [index, item] of items.entries()) {
+      expect(item).toHaveTextContent(auditActionCopy[index]);
+      expect(within(item).queryByText("Finding:")).not.toBeInTheDocument();
+      expect(within(item).queryByText("System rule:")).not.toBeInTheDocument();
     }
+  });
+
+  it("keeps the founder's problem and Myles's original sentence shape", () => {
+    expect(prose).toContain(
+      "The founder had her own issues with the newsletter. Open rates were down",
+    );
+    expect(prose).toContain("My own audit aligned with that.");
+    expect(prose).toContain(
+      "The world of email marketing was somewhat foreign to me.",
+    );
+    expect(prose).toContain("That was not the case.");
+    expect(prose).not.toContain("That assumption failed once I started building.");
+    expect(prose).not.toContain(
+      "Gmail&apos;s 102 KB HTML clipping threshold set a rigid constraint.",
+    );
   });
 
   it("preserves the founder constraints, ownership boundaries, validation, and ongoing use", () => {
@@ -261,7 +290,7 @@ describe("UnderstandingFAFSA case-study structure", () => {
       /I owned the final visual design[\s\S]{0,240}another designer[\s\S]{0,180}founder/i,
     );
     expect(prose).toMatch(
-      /required sections[\s\S]{0,120}colors[\s\S]{0,120}typefaces[\s\S]{0,180}final approval/i,
+      /required sections[\s\S]{0,120}colors[\s\S]{0,120}typefaces[\s\S]{0,180}final (?:approval|say)/i,
     );
     expect(prose).toContain("Add some pizzazz.");
     expect(prose).toContain("Snacks");
@@ -299,7 +328,7 @@ describe("UnderstandingFAFSA case-study structure", () => {
     const storyMarkers = [
       "Open rates were down",
       "reviewed more than 120 newsletters",
-      "Snacks was a useful reference",
+      "I kept coming back to Snacks",
       "Add some pizzazz.",
       "The world of email marketing was somewhat foreign to me",
       "Practice sends went to me",
@@ -319,7 +348,7 @@ describe("UnderstandingFAFSA case-study structure", () => {
     const brief =
       "The new system had to work inside Mailchimp without requiring either skill.";
     const feasibility =
-      "I first assumed I could design in Figma and port the result easily into Mailchimp.";
+      "I hoped whatever I designed in Figma could be ported straight into Mailchimp.";
     const result =
       "The founder has launched roughly 20 sends since the redesign and edits the template herself each week.";
 
@@ -328,7 +357,7 @@ describe("UnderstandingFAFSA case-study structure", () => {
     expect(prose).toContain(result);
     expect(prose.indexOf(brief)).toBeLessThan(prose.indexOf(feasibility));
     expect(prose.indexOf(feasibility)).toBeLessThan(
-      prose.indexOf("Gmail&apos;s 102 KB HTML clipping threshold"),
+      prose.indexOf("Gmail clips emails once the HTML source crosses 102 KB"),
     );
     expect(page).toContain(
       '"Constraint: The founder needed a Mailchimp-native system she could edit without Figma or HTML.",',
@@ -362,6 +391,9 @@ describe("UnderstandingFAFSA case-study structure", () => {
       "Those sends exposed Gmail&apos;s 102 KB HTML clipping limit and dark-mode color inversion.",
     );
     expect(prose).toContain(
+      "Gmail clips emails once the HTML source crosses 102 KB.",
+    );
+    expect(prose).toContain(
       "I rebuilt the live system with simpler native blocks, flattened the hierarchy, and removed what didn&apos;t need to ship.",
     );
     expect(prose).toContain(
@@ -370,8 +402,8 @@ describe("UnderstandingFAFSA case-study structure", () => {
     expect(prose).not.toContain(
       "Early weight came from custom section icons and themed dividers",
     );
-    expect(prose).toContain(
-      "removed the white backgrounds from the custom illustrations in Photoshop",
+    expect(prose).toMatch(
+      /white backgrounds of the custom illustrations had to go[\s\S]{0,160}interrupted the visual rhythm[\s\S]{0,100}removed them in Photoshop/i,
     );
   });
 
@@ -386,7 +418,7 @@ describe("UnderstandingFAFSA case-study structure", () => {
       /Within the founder&apos;s type choices, I locked spacing, type hierarchy, and dividers/i,
     );
     expect(prose).toMatch(
-      /assumed I could design in Figma[\s\S]{0,100}Mailchimp[\s\S]{0,100}assumption failed/i,
+      /hoped whatever I designed in Figma[\s\S]{0,100}Mailchimp[\s\S]{0,100}That was not the case/i,
     );
     expect(prose).not.toContain("The shared framework");
     expect(prose).not.toContain("same vocabulary");
@@ -417,20 +449,17 @@ describe("UnderstandingFAFSA case-study structure", () => {
   });
 
   it("counts imported audit-rule copy inside the page-authored prose budget", () => {
-    const importedAuditCopy = UNDERSTANDING_FAFSA_AUDIT_RULES.flatMap(
-      ({ finding, response }) => [finding, response],
-    );
-    const repeatedLabels = Array.from(
-      { length: UNDERSTANDING_FAFSA_AUDIT_RULES.length - 1 },
-      () => ["Finding", "System rule"],
-    ).flat();
     const sourceOnlyCount = readerFacingWordCount([pagePath]);
     const completeCount = readerFacingWordCount(
       [pagePath],
-      [...importedAuditCopy, ...repeatedLabels],
+      auditActionCopy,
     );
+    const expectedImportedWords =
+      auditActionCopy
+        .join(" ")
+        .match(/[A-Za-z0-9]+(?:['’][A-Za-z0-9]+)*/g)?.length ?? 0;
 
-    expect(completeCount - sourceOnlyCount).toBe(96);
+    expect(completeCount - sourceOnlyCount).toBe(expectedImportedWords);
     expect(completeCount).toBeLessThanOrEqual(800);
   });
 });

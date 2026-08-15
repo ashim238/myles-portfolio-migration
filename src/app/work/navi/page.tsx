@@ -105,9 +105,9 @@ export default async function NaviPage() {
         timeline="January 2025 – June 2025"
         tools="Figma, FigJam, React, TypeScript"
         moves={[
-          "Tested: Other design students reviewed the homepage and search. We aligned card heights and reduced copy and tags.",
-          "Untested: The semester ended before we could test Learn, Plan, Go or booking.",
-          "Current demo: Plan lacks the full cost breakdown, and Go does not calculate a route from the visitor's current location.",
+          "Tested: Other design students reviewed the homepage and search. We aligned card heights and cut copy and tags.",
+          "Untested: The semester ended before Learn, Plan, Go or booking could be tested.",
+          "Current demo: Plan's full cost breakdown and Go's routing are not built.",
         ]}
       />
 
@@ -117,10 +117,10 @@ export default async function NaviPage() {
         <div className="project-section nv-section">
           <div className="project-section-body">
             <p>
-              The brief framed regenerative tourism as participatory and
-              contributive for visitors, local businesses and artisans, and
-              longtime residents. The Manhattan heatmap was an exploratory
-              hypothesis, not live tourist-density data.
+              The brief asked how regenerative tourism could be participatory
+              and contributive for visitors, local businesses and artisans,
+              and longtime residents. The Manhattan heatmap was our first idea,
+              not live tourist-density data.
             </p>
           </div>
         </div>
@@ -131,8 +131,8 @@ export default async function NaviPage() {
           </h3>
           <div className="project-section-body">
             <p>
-              The regions show early emphasis, not actual tourist density or
-              live geo analytics.
+              The regions reflect early emphasis. We had no live
+              tourist-density or geo-analytics data.
             </p>
           </div>
           <HeatmapExplorer />
@@ -190,24 +190,26 @@ export default async function NaviPage() {
         <div className="project-section nv-section project-section--wide nv-section--wide">
           <div className="project-section-body">
             <p className="case-section-lead">
-              The research informed three archetypes: digital nomads, ethical
-              travelers, and visitors who already contributed to communities.
-              This was an early audience hypothesis, not a validated market
-              segment.
+              I grouped responses into three archetypes: digital nomads,
+              ethical travelers, and visitors already contributing to
+              communities. These were early audience hypotheses, not validated
+              market segments.
             </p>
             <p>
-              I organized the Figma prototype as{" "}
-              <mark className="case-highlight">Learn, Plan, Go</mark>:
+              I used{" "}
+              <mark className="case-highlight">Learn, Plan, Go</mark> to bridge
+              customers and businesses:
             </p>
             <ul>
               <li>
-                <strong>Learn</strong> explains the neighborhood, activity, and
-                host, so someone can try something new without feeling like a
+                <strong>Learn</strong> covers the neighborhood, activity, and
+                host so someone can try something new without feeling like a
                 fish out of water.
               </li>
               <li>
-                <strong>Plan</strong> shows what the activity requires and a
-                small-business cost breakdown.
+                <strong>Plan</strong> is supposed to help someone, well, plan.
+                It shows activity requirements and a small-business cost
+                breakdown.
               </li>
               <li>
                 <strong>Go</strong> shows eco-friendly ways to reach the event
@@ -215,16 +217,16 @@ export default async function NaviPage() {
               </li>
             </ul>
             <p>
-              Booking sat beside those stages in a separate module. In the
-              prototype, visitors could choose a date and reserve with a partner.
+              In the prototype, visitors could choose a date and book directly
+              with a partner in a separate module beside those stages.
             </p>
             <p>
               Cost, location, and event type were non-negotiable.
               Time-sensitive statuses came first. Going Fast reflected remaining
-              availability. Popular was meant to compare tickets booked within a
-              set window against other events. I didn&apos;t wire that logic into
-              React. In another course, my team noticed Airbnb used Featured so
-              often that it lost value. I kept that in mind here.
+              availability. Popular was meant to compare tickets booked within
+              a set window against other events. I didn&apos;t wire that logic into
+              React. In another course, my team noticed Airbnb used Featured
+              so often that it lost value. I kept that in mind here.
             </p>
           </div>
           <NaviResearchArtifacts />
@@ -239,29 +241,28 @@ export default async function NaviPage() {
           <h3 className="project-evidence-heading" id="nv-system">Rebuilding Navi as a working system</h3>
           <div className="project-section-body">
             <p>
-              No engineering resources or budget kept the prototype in Figma.
-              My teammate
-              proposed the original information architecture, and I tweaked it
-              to align with the personas and journey maps. Different levels of
-              experience with design tools and incompatible schedules made it
-              hard to align. I created the design system from head to toe. It
-              saved time on aesthetic decisions and let us focus on resident and
+              We didn&apos;t have engineering resources or a budget, so the
+              project stayed in Figma. My teammate proposed the original
+              information architecture. I tweaked it to match the personas and
+              journey maps. The team had trouble working together. Our
+              experience with design tools and schedules didn&apos;t line up. I
+              created the design system from head to toe, saving time on
+              aesthetic decisions and refocusing us on resident and
               business-owner insights. The journeys and flows were internal
               planning artifacts with no engineering handoff.
             </p>
             <p>
-              The homepage tested the system first. Other design students tested
-              the homepage and search, so most feedback was visual. We made the
-              cards the same height to give the viewer a
-              consistent place to move their eye, then used less copy and fewer
-              tags to lower the load.
+              The homepage was sort of a first pass at whether the system held
+              up. Other design students tested the homepage and search, so it
+              makes sense that feedback centered on layout. We matched heights,
+              then cut tags and copy to lessen visual load.
             </p>
             <p>
               By the time the semester ended, we didn&apos;t have an opportunity to
               test Learn, Plan, Go or the booking flow. The functional Figma
-              prototype included neighborhood-specific events, a booking widget,
-              and a profile of the event host. Group coordination remained a
-              future idea. I was comfortable treating that version as a V1.
+              prototype included events that felt native to each neighborhood,
+              a booking widget, and a profile of the event host. I had plans for
+              group event coordination, but I was comfortable with that as a V1.
             </p>
             <p>
               After the semester, I rebuilt the system in React and TypeScript

@@ -3,7 +3,6 @@
 import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { TikTokCoverBlobs } from "@/components/tiktok-dsa";
 import type { Project } from "@/lib/content";
 import { prefersReducedMotion } from "@/lib/home-intro";
 import { dispatchProjectEnterRequest } from "@/lib/project-enter";
@@ -52,7 +51,6 @@ export function WorkProjectCard({
 }: WorkProjectCardProps) {
   const { lead, rest } = galleryOutcome(project);
   const tab = tabText(project);
-  const usesTikTokLogo = project.slug === "tiktok";
   const evidenceLabel = EVIDENCE_LABELS[project.slug];
   const imageDelay = `${(0.32 + index * 0.08).toFixed(2)}s`;
   const titleDelay = `${(0.42 + index * 0.08).toFixed(2)}s`;
@@ -77,9 +75,7 @@ export function WorkProjectCard({
       slug: project.slug,
       href: `/work/${project.slug}`,
       rect: { top: rect.top, left: rect.left, width: rect.width, height: rect.height },
-      visual: usesTikTokLogo
-        ? { type: "tiktok" }
-        : { type: "image", src: project.coverImage },
+      visual: { type: "image", src: project.coverImage },
       borderRadius: getComputedStyle(frame).borderRadius,
     });
     if (handled) event.preventDefault();
@@ -98,21 +94,17 @@ export function WorkProjectCard({
         {project.coverImage ? (
           <div className="work-media">
             <div
-              className={`work-thumb wg-anim${usesTikTokLogo ? " work-thumb--tiktok-logo tt-cover--preview" : ""}`}
+              className="work-thumb wg-anim"
               style={{ ["--d" as string]: imageDelay }}
             >
-              {usesTikTokLogo ? (
-                <TikTokCoverBlobs deferUntilVisible />
-              ) : (
-                <Image
-                  src={project.coverImage}
-                  alt={`${project.title} preview`}
-                  width={1400}
-                  height={933}
-                  sizes="(max-width: 767px) 100vw, min(46vw, 524px)"
-                  priority={index === 0}
-                />
-              )}
+              <Image
+                src={project.coverImage}
+                alt={`${project.title} preview`}
+                width={1400}
+                height={933}
+                sizes="(max-width: 767px) 100vw, min(46vw, 524px)"
+                priority={index === 0}
+              />
               {tab ? <span className="work-tab">{tab}</span> : null}
             </div>
           </div>

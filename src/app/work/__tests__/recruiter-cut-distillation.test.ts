@@ -64,9 +64,9 @@ const routes: RouteContract[] = [
       timeline: "January 2025 – June 2025",
       tools: "Figma, FigJam, React, TypeScript",
       moves: [
-        "Tested: Other design students reviewed the homepage and search. We aligned card heights and reduced copy and tags.",
-        "Untested: The semester ended before we could test Learn, Plan, Go or booking.",
-        "Current demo: Plan lacks the full cost breakdown, and Go does not calculate a route from the visitor's current location.",
+        "Tested: Other design students reviewed the homepage and search. We aligned card heights and cut copy and tags.",
+        "Untested: The semester ended before Learn, Plan, Go or booking could be tested.",
+        "Current demo: Plan's full cost breakdown and Go's routing are not built.",
       ],
     },
   },

@@ -31,14 +31,14 @@ describe("Fresh Greens departure reminder evidence", () => {
 
     expect(
       screen.getByRole("heading", {
-        name: "A departure reminder tied to daylight.",
+        name: "A daylight departure reminder.",
       }),
     ).toBeInTheDocument();
     expect(
       screen.getByText(/daylight came up in all six interviews/i),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/built a local reminder around that pattern/i),
+      screen.getByText(/built the reminder around that pattern/i),
     ).toBeInTheDocument();
     expect(screen.getByText("Time to head out")).toBeInTheDocument();
     expect(
@@ -48,21 +48,23 @@ describe("Fresh Greens departure reminder evidence", () => {
       screen.getByText("Notification access comes after Schedule."),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/asking for every permission up front felt deceptive/i),
+      screen.getByText(/asking up front felt deceptive/i),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/it doesn't show that people leave at that time/i),
+      screen.getByText(/portfolio reconstruction of the implemented schedule/i),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/hasn't shown that people leave then/i),
     ).toBeInTheDocument();
   });
 
-  it("uses the existing route-preview capture as inspectable media", () => {
-    render(<DepartureReminderEvidence />);
+  it("shows the schedule, permission, and delivered-notification states without repeating the route preview", () => {
+    const { container } = render(<DepartureReminderEvidence />);
 
-    expect(
-      screen.getByRole("img", {
-        name: /route preview showing route conditions, daylight timing/i,
-      }),
-    ).toHaveAttribute("src", "/projects/fresh-greens/v2/route-preview.png");
+    expect(screen.getByText("Schedule")).toBeInTheDocument();
+    expect(screen.getByText("Allow notifications?")).toBeInTheDocument();
+    expect(screen.getByText("Time to head out")).toBeInTheDocument();
+    expect(container.querySelector('img[src*="route-preview"]')).toBeNull();
   });
 
   it("matches the supporting proof declared in the Reader evidence map", () => {
@@ -83,12 +85,10 @@ describe("Fresh Greens departure reminder evidence", () => {
     expect(surface).toHaveAttribute("data-evidence-chapter", "fg-design");
   });
 
-  it("stacks the evidence on phones without shrinking the route capture", () => {
+  it("stacks the reminder states on phones", () => {
     expect(styles).toMatch(
       /@media \(max-width: 720px\)[\s\S]*?\.fg-page \.fg-reminder-layout[\s\S]*?grid-template-columns:\s*minmax\(0, 1fr\);/,
     );
-    expect(styles).toMatch(
-      /@media \(max-width: 720px\)[\s\S]*?--phone-w:\s*min\(68vw, 250px\);/,
-    );
+    expect(styles).toMatch(/\.fg-reminder-state-strip\s*\{/);
   });
 });

@@ -54,7 +54,7 @@ const project: Project = {
   status: "published",
   order: 4,
   tags: [],
-  coverImage: "/projects/tiktok/cover.jpg",
+  coverImage: "/projects/tiktok/cover-phone-mockup.jpg",
   sections: [],
   bodyHtml: "",
 };
@@ -108,22 +108,21 @@ describe("WorkProjectCard layout variants", () => {
     );
   });
 
-  it("uses the shared 3D TikTok mark instead of the static project cover", () => {
-    const { container } = render(
-      <WorkProjectCard project={project} index={3} />,
-    );
+  it("uses the approved phone mockup as the TikTok project cover", () => {
+    render(<WorkProjectCard project={project} index={3} />);
 
-    expect(container.querySelector(".work-thumb--tiktok-logo .tt-cover-field")).not.toBeNull();
-    expect(container.querySelectorAll(".tt-cover-field .tt-cblob")).toHaveLength(16);
-    expect(screen.queryByRole("img", { name: "TikTok preview" })).toBeNull();
+    expect(screen.getByRole("img", { name: "TikTok preview" })).toHaveAttribute(
+      "src",
+      "/projects/tiktok/cover-phone-mockup.jpg",
+    );
   });
 
   it.each([
     [
       { ...project, slug: "navi", title: "Navi" },
-      { type: "image", src: "/projects/tiktok/cover.jpg" },
+      { type: "image", src: "/projects/tiktok/cover-phone-mockup.jpg" },
     ],
-    [project, { type: "tiktok" }],
+    [project, { type: "image", src: "/projects/tiktok/cover-phone-mockup.jpg" }],
   ] as const)(
     "requests the matching shared visual when opening %s",
     (projectUnderTest, expectedVisual) => {
@@ -150,15 +149,10 @@ describe("WorkProjectCard layout variants", () => {
     },
   );
 
-  it("centers only the homepage TikTok cluster inside its no-copy cover", () => {
-    const homeCluster = declarationBlock(
-      ".work-thumb--tiktok-logo .tt-cover-cluster",
-    );
+  it("keeps project-cover images contained by the shared media frame", () => {
+    const image = declarationBlock(".work-thumb > img");
 
-    expect(homeCluster).toContain("transform-origin: 50% 50%");
-    expect(homeCluster).toContain(
-      "transform: translate3d(-16%, 15%, 0) scale(1.2)",
-    );
-    expect(baseStyles).not.toContain(".tt-cover--preview .tt-cover-cluster");
+    expect(image).toContain("width: 100%");
+    expect(image).toContain("height: 100%");
   });
 });

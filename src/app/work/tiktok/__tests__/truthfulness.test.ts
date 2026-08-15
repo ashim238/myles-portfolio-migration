@@ -117,6 +117,22 @@ describe("TikTok public truthfulness contract", () => {
     expect(publicCaseStudy).not.toMatch(/the more interesting part/i);
   });
 
+  it("keeps the build and stakeholder reflection close to Myles's spoken sentence shape", () => {
+    const page = normalizeProse(read("src/app/work/tiktok/page.tsx"));
+
+    expect(page).toContain(
+      "I built all three as layered Photoshop files around the same product-slot map.",
+    );
+    expect(page).toContain(
+      "Now, I check with stakeholders at multiple stages to see if they like the direction of the work.",
+    );
+    expect(page).toContain(
+      "With tools like Claude Code and Figma Make, a low-stakes, convincing mockup takes a lot less investment.",
+    );
+    expect(page).not.toContain("Once the three directions were set");
+    expect(page).not.toContain("Mockups are cheaper to make now");
+  });
+
   it("uses the populated single-phone mockup for the public cover", () => {
     const page = read("src/app/work/tiktok/page.tsx");
     const content = read("content/projects/tiktok.md");

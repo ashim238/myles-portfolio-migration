@@ -137,7 +137,7 @@ describe("Fresh Greens pulled-over journey", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByRole("img", {
-        name: /no message or location has been sent.*Jordan Lee/i,
+        name: /no message or location has been sent.*John Appleseed/i,
       }),
     ).toBeInTheDocument();
   });

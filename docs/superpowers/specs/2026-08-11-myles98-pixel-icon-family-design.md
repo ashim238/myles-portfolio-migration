@@ -3,13 +3,16 @@
 **Date:** 2026-08-12
 
 **Status:** Task 5 mechanical verification and internal informed review pass
-for the historical 48-master aggregate. The current v10 clean-context review
-has four noun-clarity failures, recorded below. Production rendering is
-separately integrated and out of scope for this asset-family acceptance
-document.
+for the historical v9 48-master aggregate. The historical v10 clean-context
+review recorded four noun-clarity failures. The latest 2026-08-15 aggregate
+passes mechanical and informed native-size checks but awaits fresh anonymous
+recognition. Production rendering is separately integrated and out of scope
+for this asset-family acceptance document.
 
-**Reference boundary:** Windows 98 is a construction reference only. Every
-metaphor, silhouette, palette arrangement, and pixel layout is original.
+**Reference boundary:** Windows 98 is a construction reference only. The
+family uses original metaphors and pixel layouts except for the user-selected
+TikTok project icon, which is an intentionally branded pixel adaptation of
+TikTok's note mark.
 
 ## Goal
 
@@ -43,9 +46,9 @@ tracing or copying proprietary assets.
 | Reset Desktop | Open restart C-loop | C-loop plus directional wedge and gap | Stepped open restart C-loop with compact wedge |
 | Generic App / Welcome | Application window | Blue titlebar and inner pane | Neutral window with restrained chrome depth |
 | Fresh Greens | Compact GPS navigator | Routed map screen and lower control | Beveled GPS unit with route, destination, control, and side button |
-| UnderstandingFAFSA | Stacked newsletter packet | Printed masthead, fold, and exposed paper edge | Dimensional folded-newsletter packet with rear sheet, print gutter, and editorial anatomy |
+| UnderstandingFAFSA | Stacked newsletter packet | Printed masthead, centered crease, fold, and exposed paper edge | Dimensional folded-newsletter packet with rear sheet, centered crease, print gutter, and editorial anatomy |
 | Navi | Location marker | Orange-center pin above storefront | Pin above widened neighborhood storefront |
-| TikTok catalog studio | Handled shopping bag | Bag with one side plane | Dimensional shopping bag with opening and side depth |
+| TikTok catalog studio | Three-channel TikTok note | Cyan and magenta offsets | Large pixel TikTok mark around a dark note core |
 
 The manifest is the authority for intended objects, accepted readings,
 rejected readings, grouping, and tier wording.
@@ -67,8 +70,9 @@ moustache, and separate chin hair. A continuous full beard mass is prohibited.
 - Reminders is a checklist and Notes a folded memo. Display Properties is a
   CRT with controls. Reset Desktop is an open restart arrow, not a device,
   cable, chain link, telephone handset, or alarm clock.
-- TikTok Catalog is a handled shopping bag, never a catalog page, social mark,
-  music note, basket, or wastebasket.
+- TikTok Catalog is the one approved branded exception: a hard-edged pixel
+  TikTok note with cyan and magenta offsets, never the retired shopping bag,
+  catalog page, basket, wastebasket, or diskette.
 - Loose Parts is a non-branded 2+1 stack of wooden blocks, never books, boots,
   clothing, a stair, bar chart, furniture, food, or a studded branded brick.
 
@@ -80,7 +84,8 @@ moustache, and separate chin hair. A continuous full beard mass is prohibited.
 - Binary transparency, one-pixel transparent perimeter, filled contour bands,
   square or stair-stepped corners, and upper-left lighting.
 - No strokes, fractional coordinates, transforms, smooth curves, filters,
-  masks, clipping, gradients, opacity, rounded geometry, text, or brand mark.
+  masks, clipping, gradients, opacity, rounded geometry, text, or unapproved
+  brand mark.
 
 ## Exact topology contract
 
@@ -89,7 +94,7 @@ moustache, and separate chin hair. A continuous full beard mass is prohibited.
 - All remaining masters are one opaque component with no enclosed transparent
   pixels.
 
-## Task 5 evidence lock
+## Historical Task 5 evidence lock
 
 - **Master snapshot:** `e9f724d586c9` before this documentation-only update.
 - **48-master aggregate:**
@@ -107,15 +112,25 @@ moustache, and separate chin hair. A continuous full beard mass is prohibited.
   - `/private/tmp/myles98-icon-anonymous-v9-batch-03.png`,
     `27561d9ca96c25b266fd91cdd1fc1ab50cea7d691f278bd35c4796e95e17b872`
 
-The candidate passed 48-master verification, contact-sheet generation, 216
+The historical Task 5 candidate passed 48-master verification, contact-sheet generation, 216
 focused tests, two contact-sheet browser tests, mirror parity, binary-alpha
 and perimeter audits, and an internal informed geometry, period, and family
 review with P0–P3 all at zero.
 
-The historical v7 clean-context ledger is not evidence for the current
-aggregate because later Email, Fresh Greens, Notes, portrait, and FAFSA edits
-changed master source. The v10 clean-context gate is recorded in the family
-consistency review. It identified noun-recognition failures for the TikTok bag,
-Fresh Greens GPS, Loose Parts blocks, and Navi marker/storefront. Each must be
-redrawn and re-reviewed from new anonymous batches before family-wide
-recognition can pass.
+The historical v7 clean-context ledger did not certify the later v9 aggregate
+because Email, Fresh Greens, Notes, portrait, and FAFSA edits changed master
+source. The historical v10 gate identified noun-recognition failures for the
+TikTok bag, Fresh Greens GPS, Loose Parts blocks, and Navi marker/storefront.
+Later redraws and their mixed review are retained in the family-consistency
+record.
+
+## 2026-08-15 current status
+
+The current 48-master aggregate is
+`7e38f85fc23de2f6f4269ab8e17ebc381bea98b03bf72e3432b14f224f000cfd`.
+UnderstandingFAFSA now has a centered fold crease, and TikTok Catalog uses the
+user-selected branded pixel note instead of the retired shopping bag. The
+mechanical checks and informed native-size inspection pass. A new anonymous
+review is still required before claiming clean-context recognition. The
+hash-bound status and tracked render are in
+[`family-consistency-review.md`](../../design-assets/myles98-icons/reviews/family-consistency-review.md).

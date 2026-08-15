@@ -45,6 +45,36 @@ function atRuleBlockContaining(atRule: string, needle: string): string {
 }
 
 describe("ProjectWorkJump editorial endcap layout", () => {
+  it("places the endcap inside a static Myles 98 program window", () => {
+    expect(block(".project-work-jump", baseStyles)).toContain(
+      "width: min(100%, 64rem)",
+    );
+    expect(block(".project-work-jump", baseStyles)).toContain(
+      "margin-inline: auto",
+    );
+    expect(block(".project-work-jump-window", baseStyles)).toContain(
+      "border: 2px solid var(--m97-ink)",
+    );
+    expect(block(".project-work-jump-window", baseStyles)).toContain(
+      "background: var(--m97-chrome)",
+    );
+    expect(block(".project-work-jump-window", baseStyles)).toContain(
+      "scroll-margin-top: calc(var(--project-heading-offset) + 3.5rem)",
+    );
+    expect(block(".project-work-jump-window-titlebar", baseStyles)).toContain(
+      "background: var(--m97-active)",
+    );
+    expect(block(".project-work-jump-window-titlebar", baseStyles)).toContain(
+      "min-height: 28px",
+    );
+    expect(block(".project-work-jump-window-content", baseStyles)).toContain(
+      "box-shadow: var(--m97-bevel-recessed)",
+    );
+    expect(block(".project-work-jump-window-status", baseStyles)).toContain(
+      "font-family: var(--m97-ui-font)",
+    );
+  });
+
   it("uses one accessible editorial card with destination-specific media", () => {
     expect(block(".project-work-jump-card", baseStyles)).toContain(
       "display: grid",
@@ -52,14 +82,15 @@ describe("ProjectWorkJump editorial endcap layout", () => {
     expect(block(".project-work-jump-card", baseStyles)).toContain(
       "min-height: 44px",
     );
-    expect(block(".project-work-jump-card", baseStyles)).toContain(
-      "gap: 1.6rem",
-    );
+    expect(block(".project-work-jump-card", baseStyles)).toContain("gap: 0");
     expect(block(".project-work-jump-view-all", baseStyles)).toContain(
       "min-height: 44px",
     );
     expect(block(".project-work-jump-text", baseStyles)).toContain(
-      "padding: clamp(1.6rem, 3vw, 2.4rem)",
+      "padding: clamp(1.5rem, 3vw, 3rem)",
+    );
+    expect(block(".project-work-jump-text", baseStyles)).toContain(
+      "align-items: flex-start",
     );
     expect(
       block(
@@ -92,7 +123,7 @@ describe("ProjectWorkJump editorial endcap layout", () => {
       '.project-work-jump-card[data-next-project="understandingfafsa"]\n  .project-work-jump-title',
       baseStyles,
     );
-    expect(titleStyles).toContain("font-size: clamp(2rem, 4vw, 3.5rem)");
+    expect(titleStyles).toContain("font-size: clamp(1.85rem, 3.5vw, 3rem)");
     expect(titleStyles).toContain("overflow-wrap: normal");
   });
 
@@ -103,6 +134,9 @@ describe("ProjectWorkJump editorial endcap layout", () => {
     expect(baseStyles).toMatch(
       /prefers-reduced-motion: reduce[\s\S]*?\.project-work-jump-card[\s\S]*?transform: none/,
     );
+    expect(
+      block(".project-work-jump-card:focus-visible", baseStyles),
+    ).toContain("inset 0 0 0 3px var(--focus-ring)");
   });
 
   it("uses scroll-linked entrance only where supported", () => {

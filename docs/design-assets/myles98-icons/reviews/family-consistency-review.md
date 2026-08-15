@@ -1,14 +1,46 @@
 # Myles 98 Icon Family Consistency Review
 
-**Verdict:** REVISE. The v10 clean-context recognition gate is complete but
-does not pass for every family.
+**Verdict:** REVISE for clean-context provenance. The current masters pass
+mechanical and informed native-size checks, but source-free recognition has
+not been rerun after the latest UnderstandingFAFSA and TikTok changes.
 
-**Review date:** 2026-08-12
+**Review date:** 2026-08-15
 
-## Current candidate lock
+## 2026-08-15 current candidate update
 
-The lock below documents the historical v9 candidate. The current v10
-recognition result and its evidence lock follow it.
+Myles selected two direct clarity changes after reviewing the icons in live
+Reader chrome. UnderstandingFAFSA keeps the folded-newsletter metaphor but
+now carries a centered vertical crease through the lower fold. TikTok Catalog
+now uses a deliberately branded pixel TikTok note instead of the earlier
+shopping-bag metaphor.
+
+- **Source base:** `553b61d69c8dba88f8cf591d6593e8131e2d6724` plus the six
+  revised master sources.
+- **48-master aggregate:**
+  `7e38f85fc23de2f6f4269ab8e17ebc381bea98b03bf72e3432b14f224f000cfd`.
+- **Manifest:** `d678dfc7b3e82a820c209b305b2b6e8dc17c9e030ff4a10e55e4309bb3e6467d`.
+- **Canonical contact sheet:**
+  `325b352c7ad8a9174523a9d70b7d13279bd5ee20fc89131158a0030f7b70615e`.
+- **Native and 8x nearest-neighbor render on white, system gray, and teal:**
+  [`evidence/2026-08-15-fafsa-tiktok-native-trisurface.png`](evidence/2026-08-15-fafsa-tiktok-native-trisurface.png),
+  `8a1f97ba216249a4313abe8e3f02583667c7a0cb510ae605c5d6788a58b9058b`.
+
+All 48 masters pass the source verifier and byte-match their public mirrors.
+The focused non-contact-sheet icon suites pass 263 tests. The rebuilt sheet
+passes six deterministic source checks and two browser-rendering checks. The
+new FAFSA and TikTok masters were inspected at native size on all three
+surfaces.
+
+This is not a new clean-context recognition PASS. The prior source-free
+readings below describe older pixels and, for TikTok, a retired metaphor. A
+fresh anonymous review is required before making a recognition claim about
+this aggregate.
+
+## Historical v9 candidate lock
+
+The lock below documents the historical v9 candidate. The v10 recognition
+result and its evidence lock follow it. Neither is current evidence for the
+2026-08-15 aggregate above.
 
 - **48-master aggregate:**
   `1177575d1c60ccc75c74c7d700e5424790a8ba7618515a0315df0fa19a34005e`.
@@ -31,9 +63,10 @@ Each batch is 1440 × 4568 and contains four anonymous families, three
 backgrounds, and all 16px, 24px, and 32px cards. It exposes only large
 anonymous IDs and tier labels, never source names or filenames.
 
-## Internal informed result
+## Historical v9 internal informed result
 
-Severity counts are **P0 0, P1 0, P2 0, P3 0**.
+For the historical v9 candidate, severity counts were **P0 0, P1 0, P2 0,
+P3 0**.
 
 The 16-family set shares a consistent native-grid contour weight, upper-left
 light logic, pixel-step vocabulary, and dense-but-bounded 32px detail. It
@@ -52,13 +85,13 @@ Start’s portrait likeness and Navi’s pin-above-storefront relationship remai
 user-approved locks. This review records their intact construction, not a
 redraw recommendation.
 
-## Mechanical support
+## Historical v9 mechanical support
 
-For this candidate: 48/48 source masters verified; 48/48 public mirrors were
+For that candidate: 48/48 source masters verified; 48/48 public mirrors were
 byte-identical; the 15 focused icon suites passed 216 tests; the contact-sheet
 build completed; and its browser checks passed 2/2. Raster audit found only
 binary alpha and no perimeter touching pixels. Resume paperclip openings and
-the 24px/32px detached Navi pin are the only approved topology exceptions.
+the 24px/32px detached Navi pin were the only approved topology exceptions.
 
 ## v10 clean-context recognition result
 
@@ -122,9 +155,9 @@ recognition disposition:
    reading, brand implication, unaccepted primary noun, or tier mismatch
    blocks that family.
 
-The v10 protocol above replaces this pending requirement for the current
-candidate. Its four REVISE outcomes block a family-wide clean-context
-recognition pass until their masters change and are reviewed again.
+The v10 protocol above replaced this pending requirement for the historical
+v10 candidate. Its four REVISE outcomes blocked a family-wide clean-context
+recognition pass for those pixels.
 
 ## Historical v7 provenance — not current evidence
 
@@ -143,15 +176,15 @@ Notes, portrait, and FAFSA master edits mean it cannot approve the current
 aggregate. The historical ledger is retained for provenance, not relabeled as
 current evidence.
 
-## v11 to v13 targeted redraw and recognition record
+## Historical v11 to v13 targeted redraw and recognition record
 
 **Verdict:** REVISE. The four v10 noun-recognition failures were redrawn with
 literal object-specific anatomy, then re-rendered and re-tested. The resulting
-source and mechanical contract are current; the strict source-free recognition
-result is mixed and is recorded here without being upgraded to a family-wide
-PASS.
+source and mechanical contract applied to that candidate; its strict
+source-free recognition result was mixed and is recorded here without being
+upgraded to a family-wide PASS.
 
-### Current candidate lock
+### Historical candidate lock
 
 - **48-master aggregate:**
   `750a02964c6d937f8252e3dacc067700c800157e273a0dfdaa50d38e8edb3226`.
@@ -162,7 +195,7 @@ PASS.
 - **Target-only anonymous render IDs:** F001 TikTok catalog, F002 Fresh
   Greens, F011 Loose Parts, and F013 Navi. The identifiers were mapped only
   after reviewers returned their readings.
-- **Current target images:**
+- **Historical target images:**
   - F001: `e53da32d0dcd95ca54989b47170cff8d12fcbdcb67b6735003408f4f2ad54f48`
   - F002: `4da04e3a140192883ffad5d134f881be1a821103d2b30a10fb3567371c7a0af4`
   - F011: `93c3db26d04951070b468b242a6e3dc08568d0a20fa11180d460b75ddd0808a9`
@@ -193,7 +226,7 @@ readings are intentionally retained even where they conflict:
 | F011 Loose Parts | Toy building blocks, low confidence | Stack of books, with colored building blocks as alternative | REVISE |
 | F013 Navi | Hot-air balloon, with map pin as alternative | Map pin | REVISE |
 
-The four masters are mechanically valid and visually more literal than their
+Those four masters were mechanically valid and visually more literal than their
 v10 predecessors, but the protocol requires both reviewers to land on an
 approved primary noun. That has not happened for this aggregate. Do not cite
 this section as a clean-context PASS. A future redraw should choose a simpler

@@ -174,7 +174,7 @@ describe("Navi case-study structure", () => {
       .slice(page.indexOf("<ProjectToc"))
       .replace(/\s+/g, " ");
     const storyMarkers = [
-      "The Manhattan heatmap was an exploratory hypothesis",
+      "The Manhattan heatmap was our first idea",
       "resident and stakeholder responses",
       "overcrowdingStat.count",
       "Learn, Plan, Go",
@@ -197,8 +197,8 @@ describe("Navi case-study structure", () => {
   });
 
   it("lets the heatmap and research board carry their details without losing boundaries", () => {
-    expect(prose).toContain("exploratory hypothesis");
-    expect(prose).toContain("not actual tourist density or live geo analytics");
+    expect(prose).toContain("The Manhattan heatmap was our first idea");
+    expect(prose).toContain("no live tourist-density or geo-analytics data");
     expect(prose).toContain("internal planning artifacts");
     expect(prose).toContain("with no engineering handoff");
     expect(prose).toContain("Cost, location, and event type were non-negotiable");

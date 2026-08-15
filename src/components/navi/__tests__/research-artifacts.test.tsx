@@ -106,6 +106,15 @@ describe("NaviResearchArtifacts", () => {
     expect(screen.queryByText(/validated/i)).not.toBeInTheDocument();
   });
 
+  it("keeps the supporting disclosure on the research board's dark surface", () => {
+    expect(portfolioSurfacesCss).toMatch(
+      /\.nv-research-board \.project-evidence-disclosure\s*\{[\s\S]*?background:\s*var\(--nv-research-board-surface\);[\s\S]*?color:\s*var\(--nv-research-board-ink\);/,
+    );
+    expect(portfolioSurfacesCss).toMatch(
+      /\.nv-research-board \.project-evidence-disclosure-content\s*\{[\s\S]*?border-color:\s*var\(--nv-research-board-line\);/,
+    );
+  });
+
   it("makes only the research artifacts reveal one-shot", () => {
     expect(naviAnimReadySource).toMatch(
       /if \(entry\.isIntersecting\) \{[\s\S]*?classList\.add\("nv-reveal--visible"\);[\s\S]*?classList\.contains\("nv-research-artifacts"\)[\s\S]*?io\.unobserve\(entry\.target\);/,

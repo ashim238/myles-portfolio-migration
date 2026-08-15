@@ -10,6 +10,7 @@ import { RecruiterCut } from "@/components/recruiter-cut";
 import { TransitionLink } from "@/components/transition-link";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
+import { ProjectEvidenceDisclosure } from "@/components/project-evidence-disclosure";
 import {
   BeforeAfterPhones,
   FigmaMailchimpPair,
@@ -21,10 +22,13 @@ import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
 import { CASE_STUDY_CHAPTERS } from "@/lib/project-chapters";
 import { createRouteMetadata } from "@/lib/site-config";
-import { UNDERSTANDING_FAFSA_AUDIT_RULES } from "@/lib/understandingfafsa-audit-rules";
+import {
+  UNDERSTANDING_FAFSA_AUDIT_ACTIONS,
+  UNDERSTANDING_FAFSA_AUDIT_RULES,
+} from "@/lib/understandingfafsa-audit-rules";
 
 const UF_DESCRIPTION =
-  "Built a Mailchimp-native newsletter kit the founder has used for roughly 20 sends. The first redesigned send had an observed ~52.6% open rate with Mailchimp Privacy Protection excluded. This wasn't a controlled attribution test.";
+  "The founder needed a newsletter she could edit herself, one that matched the personality of the new website. I designed a three-theme Mailchimp kit that she has used for roughly 20 sends. The first redesigned send had an observed ~52.6% open rate with Mailchimp Privacy Protection excluded, but this wasn't a controlled attribution test.";
 const chapters = CASE_STUDY_CHAPTERS.understandingfafsa;
 const understandingFafsaProof = {
   label: "Build a sample send",
@@ -118,18 +122,20 @@ export default async function UnderstandingFafsaPage() {
         <div className="project-section uf-section">
           <div className="project-section-body">
             <p>
-              UnderstandingFAFSA helps students, parents, and counselors navigate
-              the Free Application for Federal Student Aid (FAFSA). The founder
-              already knew the newsletter needed work. Open rates were down, and
-              its long copy, uneven CTAs, and poor hierarchy no longer matched
-              the personality of the newly redesigned website. My own audit
-              aligned with that.
+              UnderstandingFAFSA helps people navigate FAFSA. The founder had her
+              own issues with the newsletter. Open rates were down, and the design
+              stood in contrast with what was on the newly redesigned website. My
+              own audit aligned with that. The website redesign was well executed
+              and full of personality. The newsletter&apos;s overly long copy, uneven
+              CTAs, and poor hierarchy weren&apos;t doing the same. It needed a
+              refresh.
             </p>
             <p>
-              She had a short turnaround once articles were compiled and
-              reviewed by her editor. She also had limited Figma experience, and
-              coding or editing HTML wasn&apos;t her strength. The new system had to
-              work inside Mailchimp without requiring either skill.
+              The founder had a busy schedule and a short turnaround once all the
+              articles were compiled and her editor had given them a gander. Her
+              experience with Figma was limited, and coding or editing HTML
+              wasn&apos;t her strength. The new system had to work inside Mailchimp
+              without requiring either skill.
             </p>
           </div>
         </div>
@@ -140,10 +146,10 @@ export default async function UnderstandingFafsaPage() {
           </h3>
           <div className="project-section-body">
             <p>
-              The newsletter carries deadline-driven guidance across FAFSA
-              filing windows, scholarship deadlines, and policy changes. The
-              founder needed enough structure to assemble each send quickly,
-              while keeping room for different stories and calls to action.
+              Each send could include FAFSA filing windows, scholarship
+              deadlines, policy changes, and several calls to action. The founder
+              needed enough structure to put an issue together quickly, with room
+              to rearrange stories when the week called for it.
             </p>
           </div>
           <BeforeAfterPhones />
@@ -159,25 +165,26 @@ export default async function UnderstandingFafsaPage() {
         <div className="project-section uf-section">
           <div className="project-section-body">
             <p>
-              To decide what the system needed to lock, a collaborator and I
-              reviewed more than 120 newsletters. We looked at clarity,
-              personalization, tone, visual appeal, and brand consistency.
+              A collaborator and I reviewed more than 120 newsletters. We looked
+              at clarity, personalization, tone, visual appeal, and brand
+              consistency.
               Revenews, The 74, Next by Jeff Selingo, Medium, and Folderly gave
-              us a broad comparison set. Snacks was a useful reference for copy
-              and hierarchy because it felt lively and used color to make
-              scanning easier. HubSpot inspired a livelier divider direction.
+              us a broad comparison set. I kept coming back to Snacks because its
+              copy felt lively and it used color to make scanning easier. HubSpot
+              gave me the idea for livelier dividers.
             </p>
             <p>
-              Another designer, the founder, and I worked together on the copy
-              and base structure. The founder kept control of the required
-              sections, colors, typefaces, and final approval. I owned the final
-              visual design. Her critique was short: <q>Add some pizzazz.</q>
+              I owned the final visual design. Another designer, the founder, and
+              I worked together on the copy and base structure. The required
+              sections, colors, typefaces, and final say stayed with the founder.
+              Her critique was short: <q>Add some pizzazz.</q> Over time, I felt
+              more comfortable deviating from the standing layout when a send
+              needed something different.
             </p>
-            <ol aria-label="Audit findings and system rules">
+            <ol aria-label="Design changes from the newsletter audit">
               {UNDERSTANDING_FAFSA_AUDIT_RULES.map((rule) => (
                 <li key={rule.id}>
-                  <p><strong>Finding:</strong> {rule.finding}.</p>
-                  <p><strong>System rule:</strong> {rule.response}.</p>
+                  <p>{UNDERSTANDING_FAFSA_AUDIT_ACTIONS[rule.id]}</p>
                 </li>
               ))}
             </ol>
@@ -200,9 +207,9 @@ export default async function UnderstandingFafsaPage() {
           </h3>
           <div className="project-section-body">
             <p>
-              The world of email marketing was somewhat foreign to me. I first
-              assumed I could design in Figma and port the result easily into
-              Mailchimp. That assumption failed once I started building.
+              The world of email marketing was somewhat foreign to me. I hoped
+              whatever I designed in Figma could be ported straight into
+              Mailchimp. That was not the case.
             </p>
             <p>
               I made a welcome email, the weekly newsletter, and a shorter ICYMI
@@ -211,7 +218,6 @@ export default async function UnderstandingFafsaPage() {
             </p>
           </div>
           <TemplateSwitcher />
-          <NewsletterComposerDemo />
         </section>
 
         <div className="project-section uf-section project-section--wide uf-section--wide">
@@ -219,14 +225,15 @@ export default async function UnderstandingFafsaPage() {
             <p>
               Within the founder&apos;s type choices, I locked spacing, type
               hierarchy, and dividers. The founder can swap content and copy,
-              then rearrange middle modules without touching HTML. As we kept
-              working, I became more comfortable departing from the standing
-              layout when a send needed something different.
+              then rearrange middle modules without touching HTML.
             </p>
           </div>
+        </div>
+        <NewsletterComposerDemo />
+        <ProjectEvidenceDisclosure summary="Open the supporting system details">
           <LockedSwappableView />
           <ColorPalette colors={UF_COLORS} />
-        </div>
+        </ProjectEvidenceDisclosure>
       </ProjectChapter>
 
       <ProjectChapter
@@ -245,7 +252,7 @@ export default async function UnderstandingFafsaPage() {
             </p>
             <p>
               <mark className="case-highlight">
-                Gmail&apos;s 102 KB HTML clipping threshold set a rigid constraint.
+                Gmail clips emails once the HTML source crosses 102 KB.
               </mark>{" "}
               Figma&apos;s spacing created too many Mailchimp containers and
               wrappers. I rebuilt the live system with simpler native blocks,
@@ -259,10 +266,10 @@ export default async function UnderstandingFafsaPage() {
               source Gmail measures.
             </p>
             <p>
-              Dark mode inverted some colors. I removed the white backgrounds
-              from the custom illustrations in Photoshop, so they could sit
-              against a viewer&apos;s phone theme without interrupting the visual
-              rhythm.
+              Dark mode inverted some colors. The white backgrounds of the custom
+              illustrations had to go so they could align with a viewer&apos;s phone
+              theme. Leaving them in place interrupted the visual rhythm, so I
+              removed them in Photoshop.
             </p>
           </div>
           <FigmaMailchimpPair />

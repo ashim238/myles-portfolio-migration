@@ -36,10 +36,10 @@ export default function AboutPage() {
           <div className="about-body">
             <p>
               I came to product design through creative strategy at TikTok
-              and Universal Music Group. I learned how brands talk to people,
-              then realized I wanted to build rather than just shape. That led
-              me to an MFA in Design and Technology at Parsons, which I
-              completed in 2026.
+              and Universal Music Group. I liked it, but missed the making
+              process, the feeling of building a concept from an idea into
+              something tangible. That led me to an MFA in Design and
+              Technology at Parsons, which I completed in 2026.
             </p>
             <p>
               My thesis became Fresh Greens, a React Native wayfinding
@@ -51,11 +51,11 @@ export default function AboutPage() {
               selected it.
             </p>
             <p>
-              Outside of work, I&apos;m a huge comic fan. The work Daniel
-              Mora&apos;s been doing on World&apos;s Finest is
-              &ldquo;chef&apos;s kiss.&rdquo; I&apos;ve also been trying to hike
-              more, as much as the city and my allergies allow. If you want to
-              talk product design, RPGs, or a bit of both, my email is below.
+              Outside of work, I&apos;m a huge comic fan. Highly recommend
+              Absolute Batman and, if you&apos;re a fantasy nerd, Absolute Wonder
+              Woman as well. I&apos;ve also been trying to hike more, as much as
+              the city and my allergies allow. If you want to talk product
+              design, RPGs, or a bit of both, my email is below.
             </p>
           </div>
         </div>
@@ -71,11 +71,25 @@ export default function AboutPage() {
             </div>
             <div className="about-detail">
               <dt>Education</dt>
-              <dd>MFA · Design and Technology, Parsons · 2026</dd>
+              <dd className="about-detail-education">
+                <span className="about-detail-education-line">
+                  MFA · Design and Technology
+                </span>
+                <span className="about-detail-education-line">
+                  Parsons · 2026
+                </span>
+              </dd>
             </div>
             <div className="about-detail">
               <dt>Tools</dt>
-              <dd>Figma · Adobe Suite · React Native · TypeScript</dd>
+              <dd>
+                <ul className="about-tools">
+                  <li>Figma</li>
+                  <li>Adobe Suite</li>
+                  <li>React Native</li>
+                  <li>TypeScript</li>
+                </ul>
+              </dd>
             </div>
             <div className="about-detail">
               <dt>Contact</dt>

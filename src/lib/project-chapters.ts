@@ -52,7 +52,7 @@ export const CASE_STUDY_CHAPTERS = {
     {
       id: "nv-insights",
       stage: "Research",
-      title: "The survey changed the brief",
+      title: "People wanted to know what a neighborhood had to offer",
     },
     {
       id: "nv-framework",

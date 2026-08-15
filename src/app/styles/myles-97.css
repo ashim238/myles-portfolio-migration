@@ -113,21 +113,24 @@
 }
 
 .myles97-boot-progress {
+  display: grid;
   width: 100%;
   height: 18px;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 2px;
   overflow: hidden;
   border: 2px solid #fff;
   padding: 2px;
 }
 
-.myles97-boot-progress span {
+.myles97-boot-progress-segment {
   display: block;
-  width: 100%;
+  min-width: 0;
   height: 100%;
   background: var(--m97-signal);
-  transform: scaleX(0);
-  transform-origin: left;
-  animation: myles97-boot-progress 1350ms linear forwards;
+  opacity: 1;
+  animation: myles97-boot-progress-segment 80ms steps(1, end) backwards;
 }
 
 .myles97-boot-panel p,
@@ -150,8 +153,9 @@
   to { opacity: 1; }
 }
 
-@keyframes myles97-boot-progress {
-  to { transform: scaleX(1); }
+@keyframes myles97-boot-progress-segment {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .myles97-desktop {
@@ -259,9 +263,14 @@
 }
 
 .myles97-titlebar-move .myles97-window-control {
-  width: 34px;
+  width: 96px;
   font-size: 9px;
-  letter-spacing: 0.01em;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.myles97-titlebar-move {
+  width: 104px;
 }
 
 .myles97-hit-target:active .myles97-window-control {
@@ -825,6 +834,7 @@
 .myles97-start-mark img {
   width: 24px;
   height: 24px;
+  image-rendering: pixelated;
 }
 
 .myles97-task-buttons {
@@ -1124,11 +1134,16 @@
   .myles97-primary-button,
   .myles97-boot-pixels,
   .myles97-boot-logo,
-  .myles97-boot-progress span,
+  .myles97-boot-progress-segment,
   .project-enter-program-titlebar,
   .project-enter-program-cover {
     animation: none !important;
     transition: none !important;
+  }
+
+  .myles97-boot-logo,
+  .myles97-boot-progress-segment {
+    opacity: 1;
   }
 }
 
@@ -1136,9 +1151,14 @@
 [data-m97-motion="reduce"] .myles97-primary-button,
 [data-m97-motion="reduce"] .myles97-boot-pixels,
 [data-m97-motion="reduce"] .myles97-boot-logo,
-[data-m97-motion="reduce"] .myles97-boot-progress span,
+[data-m97-motion="reduce"] .myles97-boot-progress-segment,
 [data-m97-motion="reduce"] .project-enter-program-titlebar,
 [data-m97-motion="reduce"] .project-enter-program-cover {
   animation: none !important;
   transition: none !important;
+}
+
+[data-m97-motion="reduce"] .myles97-boot-logo,
+[data-m97-motion="reduce"] .myles97-boot-progress-segment {
+  opacity: 1;
 }

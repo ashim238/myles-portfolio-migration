@@ -101,7 +101,7 @@ export const READER_EVIDENCE_MAPS = {
   navi: {
     project: "navi",
     portfolioSignal:
-      "Research synthesis, system thinking, and a working browser demo.",
+      "I worked from 14 responses and built the Figma design system. I later rebuilt the booking flow in React.",
     chapters: [
       {
         chapterId: "nv-intro",
@@ -122,7 +122,7 @@ export const READER_EVIDENCE_MAPS = {
       {
         chapterId: "nv-insights",
         dominantClaim:
-          "Resident and stakeholder responses asked for deeper engagement with neighborhoods and what they offered.",
+          "From what I remember, people wanted a deeper level of engagement with a neighborhood and its offerings.",
         claimClass: "interpretive",
         evidenceState: "observed",
         dominantProof: {
@@ -131,7 +131,7 @@ export const READER_EVIDENCE_MAPS = {
           kind: "structured-data",
         },
         interpretation:
-          "Overcrowding and the lack of authentic experiences moved the team beyond the heatmap and toward Learn, Plan, Go.",
+          "The heatmap was super surface-level. Learn, Plan, Go was our attempt to remove some of the barriers to branching out and exploring the city.",
         caveat:
           "Fourteen responses, including two local businesses, informed the concept but do not represent all New Yorkers.",
       },
@@ -147,7 +147,7 @@ export const READER_EVIDENCE_MAPS = {
           kind: "structured-data",
         },
         interpretation:
-          "I used the personas and journey maps to adjust my teammate's original information architecture, then built the Figma design system.",
+          "My teammate proposed the original information architecture. I tweaked it to align with the personas and journey maps, then created the design system from head to toe.",
         caveat:
           "The studio project ended before engineering handoff, and the intended tag-ranking logic was not wired into the later React build.",
       },
@@ -170,7 +170,7 @@ export const READER_EVIDENCE_MAPS = {
           },
         ],
         interpretation:
-          "Student feedback reduced card copy and tags and aligned card heights. The later build demonstrates browsing, search, host detail, and a sample reservation.",
+          "The design students focused on the layout. We made the cards the same height and cut down the copy and tags. The React demo now supports browsing, search, host detail, and a sample reservation.",
         caveat:
           "The semester ended before the team could test Learn, Plan, Go or booking. The current Go view lists travel options but does not calculate a live route from current location.",
       },
@@ -249,20 +249,20 @@ export const READER_EVIDENCE_MAPS = {
         claimClass: "behavioral",
         evidenceState: "built",
         dominantProof: {
-          id: "fresh-greens-pivot-journey",
-          label: "Route-planning pivot journey",
-          kind: "sequence",
+          id: "fresh-greens-route-comparison",
+          label: "Implemented pre-drive route comparison",
+          kind: "interaction",
         },
         supportingProofs: [
+          {
+            id: "fresh-greens-pivot-journey",
+            label: "Route-planning pivot journey",
+            kind: "sequence",
+          },
           {
             id: "fg-departure-reminder",
             label: "Implemented daylight departure reminder",
             kind: "interaction",
-          },
-          {
-            id: "fresh-greens-architecture",
-            label: "Public and community data architecture",
-            kind: "diagram",
           },
         ],
         interpretation:
@@ -293,15 +293,15 @@ export const READER_EVIDENCE_MAPS = {
         claimClass: "behavioral",
         evidenceState: "needs-proof",
         dominantProof: {
-          id: "fresh-greens-report-moderation",
-          label: "Contribution and moderation flow",
+          id: "fresh-greens-report-route-influence",
+          label: "Community report to route-preview sequence",
           kind: "sequence",
         },
         supportingProofs: [
           {
-            id: "fresh-greens-report-detail",
-            label: "Structured contribution form",
-            kind: "image",
+            id: "fresh-greens-report-moderation",
+            label: "Configured moderation flow",
+            kind: "sequence",
           },
         ],
         interpretation:
@@ -322,6 +322,11 @@ export const READER_EVIDENCE_MAPS = {
         },
         supportingProofs: [
           {
+            id: "fresh-greens-architecture",
+            label: "Public and community data architecture",
+            kind: "diagram",
+          },
+          {
             id: "fresh-greens-en-route-video",
             label: "Working en-route prototype recording",
             kind: "interaction",
@@ -337,12 +342,12 @@ export const READER_EVIDENCE_MAPS = {
   understandingfafsa: {
     project: "understandingfafsa",
     portfolioSignal:
-      "Operational constraints, modular content systems, and a qualified observed result.",
+      "A Mailchimp system the founder can edit herself, shaped by what broke in practice sends.",
     chapters: [
       {
         chapterId: "uf-context",
         dominantClaim:
-          "The newsletter had to carry the refreshed brand inside a founder-run weekly workflow.",
+          "The founder had a short turnaround each week, and the newsletter no longer matched the personality of the redesigned website.",
         claimClass: "descriptive",
         evidenceState: "observed",
         dominantProof: {
@@ -351,13 +356,13 @@ export const READER_EVIDENCE_MAPS = {
           kind: "comparison",
         },
         interpretation:
-          "The redesign focused on scanning, mobile hierarchy, and a system the founder could operate.",
+          "I made the newsletter easier to scan and built the kit in Mailchimp so the founder could run it herself.",
         caveat: "The project scope was email-only.",
       },
       {
         chapterId: "uf-audit",
         dominantClaim:
-          "A review of more than 120 newsletters converted recurring communication problems into explicit system rules.",
+          "Another designer and I reviewed more than 120 newsletters, then used what we found to decide what should stay fixed and what could change.",
         claimClass: "interpretive",
         evidenceState: "observed",
         dominantProof: {
@@ -366,13 +371,13 @@ export const READER_EVIDENCE_MAPS = {
           kind: "structured-data",
         },
         interpretation:
-          "Research references became operational rules for hierarchy, tone, branding, and scanning.",
+          "Snacks influenced the copy and color treatment because it was easy to scan. HubSpot influenced the divider direction.",
         caveat: "The audit was completed with one collaborator.",
       },
       {
         chapterId: "uf-locked",
         dominantClaim:
-          "Fixed hierarchy and swappable content let the founder assemble three send types without changing the system.",
+          "The founder can change the content and module order without rebuilding the header, footer, spacing, type, or dividers.",
         claimClass: "behavioral",
         evidenceState: "built",
         dominantProof: {
@@ -411,7 +416,7 @@ export const READER_EVIDENCE_MAPS = {
       {
         chapterId: "uf-results",
         dominantClaim:
-          "The modular kit shipped, and the first redesigned send recorded a qualified open-rate increase.",
+          "The founder has used the kit for roughly 20 sends. The first redesigned send had a ~52.6% open rate with MPP excluded.",
         claimClass: "outcome",
         evidenceState: "observed",
         dominantProof: {
@@ -427,7 +432,7 @@ export const READER_EVIDENCE_MAPS = {
           },
         ],
         interpretation:
-          "The result is useful context alongside the delivered system and founder workflow.",
+          "I include the open rate as context because it wasn't a controlled test. The founder still edits and sends the template herself each week.",
         caveat:
           "The ~52.6% open rate, with MPP excluded, was not a controlled attribution test and does not prove the redesign caused the change.",
       },
@@ -487,7 +492,7 @@ export const READER_EVIDENCE_MAPS = {
         interpretation:
           "The slot map stayed constant. Only a few parts could cross between Light Academia and e-Boy/e-Girl.",
         caveat:
-          "Limited cross-direction modularity was a proposal made while building the files.",
+          "I proposed sharing a few parts between Light Academia and e-Boy/e-Girl. I don't have evidence that the team used them that way.",
       },
       {
         chapterId: "tt-outcome",
@@ -503,7 +508,7 @@ export const READER_EVIDENCE_MAPS = {
         interpretation:
           "The final direction records what changed during internal review. It does not show audience response.",
         caveat:
-          "American Eagle selection was learned later through Global Creative Lab. No performance result is claimed.",
+          "I learned about the American Eagle selection later through Global Creative Lab. I didn't receive performance data.",
       },
     ],
   },

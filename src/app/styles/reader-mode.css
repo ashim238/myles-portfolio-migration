@@ -114,12 +114,25 @@
 }
 
 .reader-mode.reader-mode .project-opening-facts {
-  width: min(100% - 32px, 72ch);
+  width: min(100% - 32px, 48rem);
   margin: 1.5rem auto;
   padding-block: 1rem;
   border-block: 1px solid var(--m97-reader-line);
   color: var(--m97-reader-ink);
   font-family: var(--m97-ui-font);
+}
+
+.reader-mode.reader-mode .case-cut {
+  width: min(100% - 32px, 48rem);
+  max-width: none;
+  margin: 0 auto 2.2rem;
+}
+
+/* Editorial openings share one font-independent column. The hero keeps its
+   left-justified type while the column itself stays centered in Reader. */
+.reader-mode.reader-mode:not(.tt-page) .project-hero {
+  width: min(100% - 32px, 48rem);
+  margin-inline: auto;
 }
 
 .reader-mode.reader-mode .project-opening-facts-list {
@@ -133,6 +146,7 @@
   grid-template-columns: minmax(6.5rem, 0.24fr) minmax(0, 1fr);
   gap: 0.5rem 1rem;
   align-items: baseline;
+  align-content: start;
 }
 
 .reader-mode.reader-mode .project-opening-facts dt {

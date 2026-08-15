@@ -38,9 +38,12 @@ describe("ProgramWindow", () => {
     );
     expect(screen.getByText("Program content")).toBeInTheDocument();
 
-    const move = screen.getByRole("button", { name: "Move Fresh Greens.exe" });
+    const move = screen.getByRole("button", {
+      name: "Move Fresh Greens.exe with arrow keys",
+    });
     expect(move).toHaveAttribute("data-m97-window-move", "fresh-greens");
     expect(move).toHaveClass("myles97-hit-target");
+    expect(move).toHaveTextContent("Move with ←↑↓→");
     move.focus();
     expect(move).toHaveFocus();
 
@@ -154,7 +157,9 @@ describe("ProgramWindow", () => {
       </ProgramWindow>,
     );
 
-    const move = screen.getByRole("button", { name: "Move Fresh Greens.exe" });
+    const move = screen.getByRole("button", {
+      name: "Move Fresh Greens.exe with arrow keys",
+    });
     await user.click(move);
     await user.keyboard("{ArrowRight}");
 

@@ -37,7 +37,7 @@ const STEPS = [
     decision: "Recording and trusted-contact actions stay visible.",
     detail:
       "The screen confirms that nothing has been sent.",
-    alt: "The pulled-over contact screen showing a live recording timer, the message You're not alone, a note that no message or location has been sent, and Call and Text actions for trusted contact Jordan Lee.",
+    alt: "The pulled-over contact screen showing a live recording timer, the message You're not alone, a note that no message or location has been sent, and Call and Text actions for trusted contact John Appleseed.",
   },
 ] as const;
 

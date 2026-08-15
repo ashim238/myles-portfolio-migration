@@ -43,3 +43,16 @@ export const UNDERSTANDING_FAFSA_AUDIT_RULES = [
       "Welcome, weekly, and short event templates built from the same rules",
   },
 ] as const satisfies readonly UnderstandingFafsaAuditRule[];
+
+export const UNDERSTANDING_FAFSA_AUDIT_ACTIONS = {
+  scanning:
+    "I gave longer sends clearer breaks and more direct section titles to make them easier to scan.",
+  "brand-structure":
+    "I locked spacing, type hierarchy, and dividers while leaving content and module order swappable.",
+  "founder-workflow":
+    "I built the kit in Mailchimp so the founder could assemble each issue without touching HTML.",
+  "gmail-clipping":
+    "I flattened the hierarchy and cut extra wrappers once practice sends exposed Gmail clipping.",
+  "send-density":
+    "I made welcome, weekly, and shorter event templates so different sends could hold different amounts of content.",
+} as const satisfies Record<UnderstandingFafsaAuditRuleId, string>;

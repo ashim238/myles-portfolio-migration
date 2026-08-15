@@ -27,8 +27,8 @@ type ProjectChapterProps = {
 const FEATURED_EVIDENCE_PLACEMENTS = new Map<string, number>([
   ["navi-research-artifacts", 0],
   ["navi-booking-demo", 1],
-  ["fresh-greens-pivot-journey", 0],
-  ["fresh-greens-report-moderation", 0],
+  ["fresh-greens-route-comparison", 0],
+  ["fresh-greens-report-route-influence", 0],
   ["fafsa-composer-demo", 0],
   ["fafsa-figma-mailchimp", 0],
   ["tiktok-template-system", 0],
