@@ -1,13 +1,13 @@
 ---
 slug: understandingfafsa
 title: UnderstandingFAFSA
-summary: Built a modular newsletter system for a site rebrand. The first redesigned send had an observed ~52.6% open rate with Mailchimp Privacy Protection excluded.
+summary: Built a Mailchimp-native newsletter kit the founder has used for roughly 20 sends. The first redesigned send had an observed ~52.6% open rate with Mailchimp Privacy Protection excluded. This wasn't a controlled attribution test.
 role: Product Designer
 timeframe: February 2025 – Ongoing
 status: published
 order: 2
 coverImage: /projects/understandingfafsa/cover.png
-highlightQuote: The newsletter should feel as trustworthy and modern as the newly rebranded website.
+highlightQuote: Add some pizzazz.
 outcomeMetricLabel: observed open rate on the first redesigned send, with Mailchimp Privacy Protection excluded
 outcomeMetricValue: ~52.6%
 outcomeLead: ~52.6%

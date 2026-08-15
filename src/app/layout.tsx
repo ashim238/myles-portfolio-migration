@@ -68,14 +68,16 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col">
         <LightboxProvider>
-          <a className="skip-link" href="#main-content">
-            Skip to main content
-          </a>
-          <ConsoleGreeting />
-          <ProjectEnterTransition>{children}</ProjectEnterTransition>
-          <DotCursor />
-          <MobileNav />
-          <ScrollRevealFallback />
+          <ProjectEnterTransition>
+            <a className="skip-link" href="#main-content">
+              Skip to main content
+            </a>
+            <ConsoleGreeting />
+            {children}
+            <DotCursor />
+            <MobileNav />
+            <ScrollRevealFallback />
+          </ProjectEnterTransition>
         </LightboxProvider>
       </body>
     </html>

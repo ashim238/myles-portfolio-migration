@@ -47,7 +47,7 @@ function AboutPreview() {
 function ResumePreview() {
   return (
     <div className="myles97-secondary-program">
-      <p className="myles97-eyebrow">Résumé · updated July 2026</p>
+      <p className="myles97-eyebrow">Résumé · updated August 2026</p>
       <h2>{siteConfig.name}</h2>
       <p>
         Product designer with an MFA from Parsons and a creative-strategy

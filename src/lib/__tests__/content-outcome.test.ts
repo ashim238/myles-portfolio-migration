@@ -7,7 +7,7 @@ describe("outcome frontmatter fields", () => {
     const fafsa = projects.find((p) => p.slug === "understandingfafsa");
     expect(fafsa).toBeDefined();
     expect(fafsa!.summary).toBe(
-      "Built a modular newsletter system for a site rebrand. The first redesigned send had an observed ~52.6% open rate with Mailchimp Privacy Protection excluded.",
+      "Built a Mailchimp-native newsletter kit the founder has used for roughly 20 sends. The first redesigned send had an observed ~52.6% open rate with Mailchimp Privacy Protection excluded. This wasn't a controlled attribution test.",
     );
     expect(fafsa!.outcomeMetricLabel).toBe(
       "observed open rate on the first redesigned send, with Mailchimp Privacy Protection excluded",

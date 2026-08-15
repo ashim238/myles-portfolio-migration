@@ -157,8 +157,15 @@ describe("Myles98 product shell", () => {
     const user = userEvent.setup();
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
 
-    await user.click(screen.getByRole("button", { name: "Start" }));
-    const startMenu = screen.getByRole("group", { name: "Start menu" });
+    const startButton = screen.getByRole("button", { name: "Start" });
+    const desktopStage = screen.getByRole("navigation", {
+      name: "Desktop shortcuts",
+    }).parentElement;
+    const taskbar = screen.getByRole("navigation", { name: "Open programs" });
+
+    expect(startButton).toHaveAttribute("aria-haspopup", "dialog");
+    await user.click(startButton);
+    const startMenu = screen.getByRole("dialog", { name: "Start" });
     const firstAction = within(startMenu).getByRole("button", { name: "Selected Work" });
     const startMenuMasters = Array.from(
       startMenu.querySelectorAll<SVGImageElement>(
@@ -186,6 +193,9 @@ describe("Myles98 product shell", () => {
     }
 
     expect(firstAction).toHaveFocus();
+    expect(startMenu).toHaveAttribute("aria-modal", "true");
+    expect(desktopStage).toHaveAttribute("inert");
+    expect(taskbar).toHaveAttribute("inert");
     expect(within(startMenu).getByRole("button", { name: "About Myles" })).toBeInTheDocument();
     expect(within(startMenu).getByRole("button", { name: "Loose Parts" })).toBeInTheDocument();
     expect(within(startMenu).getByRole("button", { name: "Résumé" })).toBeInTheDocument();
@@ -197,9 +207,34 @@ describe("Myles98 product shell", () => {
     expect(within(startMenu).getByText("Reset Desktop…")).toBeInTheDocument();
 
     fireEvent.keyDown(window, { key: "Escape" });
-    expect(screen.queryByRole("group", { name: "Start menu" })).toBeNull();
-    expect(screen.getByRole("button", { name: "Start" })).toHaveFocus();
+    expect(screen.queryByRole("dialog", { name: "Start" })).toBeNull();
+    expect(desktopStage).not.toHaveAttribute("inert");
+    expect(taskbar).not.toHaveAttribute("inert");
+    expect(startButton).toHaveFocus();
     expect(screen.getByRole("region", { name: "Welcome to Myles 98" })).toBeInTheDocument();
+  });
+
+  it("closes Start with the pointer and restores focus after releasing the desktop", async () => {
+    const user = userEvent.setup();
+    render(<Myles97Shell programs={programs} looseParts={looseParts} />);
+
+    const startButton = screen.getByRole("button", { name: "Start" });
+    const desktopStage = screen.getByRole("navigation", {
+      name: "Desktop shortcuts",
+    }).parentElement;
+    const taskbar = screen.getByRole("navigation", { name: "Open programs" });
+
+    await user.click(startButton);
+    await user.click(
+      within(screen.getByRole("dialog", { name: "Start" })).getByRole("button", {
+        name: "Close Start",
+      }),
+    );
+
+    expect(screen.queryByRole("dialog", { name: "Start" })).toBeNull();
+    expect(desktopStage).not.toHaveAttribute("inert");
+    expect(taskbar).not.toHaveAttribute("inert");
+    expect(startButton).toHaveFocus();
   });
 
   it("contains Start focus and sends program choices into the launched window", async () => {
@@ -207,9 +242,9 @@ describe("Myles98 product shell", () => {
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
 
     await user.click(screen.getByRole("button", { name: "Start" }));
-    const startMenu = screen.getByRole("group", { name: "Start menu" });
+    const startMenu = screen.getByRole("dialog", { name: "Start" });
     const firstAction = within(startMenu).getByRole("button", { name: "Selected Work" });
-    const lastAction = within(startMenu).getByRole("button", { name: "Reset Desktop…" });
+    const lastAction = within(startMenu).getByRole("button", { name: "Close Start" });
 
     expect(firstAction).toHaveFocus();
     await user.tab({ shift: true });

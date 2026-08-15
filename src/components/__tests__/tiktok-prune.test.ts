@@ -147,12 +147,22 @@ describe("TikTok retired implementation pruning", () => {
     const blobFiles = readdirSync(coverBlobDirectory).sort();
     const expectedBlobFiles = Array.from(
       { length: 16 },
-      (_, index) => `b${String(index).padStart(2, "0")}.png`,
+      (_, index) => `b${String(index).padStart(2, "0")}.webp`,
     );
 
     expect(blobFiles).toEqual(expectedBlobFiles);
     for (const blobFile of blobFiles) {
-      expect(source).toContain(`{ f: "${blobFile.replace(".png", "")}"`);
+      expect(source).toContain(`{ f: "${blobFile.replace(".webp", "")}"`);
     }
+  });
+
+  it("keeps the animated opening composition below a 430 KiB transfer budget", () => {
+    const blobFiles = readdirSync(coverBlobDirectory);
+    const totalBytes = blobFiles.reduce(
+      (sum, asset) => sum + statSync(join(coverBlobDirectory, asset)).size,
+      0,
+    );
+
+    expect(totalBytes).toBeLessThanOrEqual(430 * 1024);
   });
 });

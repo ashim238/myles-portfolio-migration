@@ -32,7 +32,7 @@ const mylesSource = [
 ].join("\n");
 
 describe("Myles 98 hardening contract", () => {
-  it("uses original local UI resources without hotlinked or proprietary assets", () => {
+  it("uses local UI resources and records the licensed TikTok cover sources", () => {
     expect(mylesSource).not.toMatch(/(?:src|poster)\s*=\s*[{"']\s*https?:\/\//i);
 
     const resourceReferences =
@@ -47,7 +47,12 @@ describe("Myles 98 hardening contract", () => {
       /import type \{[^}]*\bSVGProps\b[^}]*\} from "react";/,
     );
     expect(icons.match(/from\s+["'][^"']+["']/g)).toEqual(['from "react"']);
-    expect(existsSync(resolve(root, "THIRD_PARTY_NOTICES.md"))).toBe(false);
+    expect(existsSync(resolve(root, "THIRD_PARTY_NOTICES.md"))).toBe(true);
+    const notices = read("THIRD_PARTY_NOTICES.md");
+    expect(notices).toContain("public/projects/tiktok/cover-phone-mockup.jpg");
+    expect(notices).toContain("MockupShelf License Agreement");
+    expect(notices).toContain("Pexels License");
+    expect(notices).toContain("The source PSD is not redistributed.");
   });
 
   it("keeps boot presentation below the 1.5 second ceiling", () => {
@@ -64,6 +69,27 @@ describe("Myles 98 hardening contract", () => {
     expect(transition).toContain('event.key === "Escape"');
     expect(transition).toContain("unlockProjectEnter();");
     expect(transition).toContain("animation.cancel()");
+  });
+
+  it("places every global underlay control inside the inert transition surface", () => {
+    const layout = read("src/app/layout.tsx");
+    const transitionStart = layout.indexOf("<ProjectEnterTransition>");
+    const transitionEnd = layout.indexOf("</ProjectEnterTransition>");
+
+    expect(transitionStart).toBeGreaterThan(-1);
+    expect(transitionEnd).toBeGreaterThan(transitionStart);
+    for (const marker of [
+      'className="skip-link"',
+      "<ConsoleGreeting />",
+      "{children}",
+      "<DotCursor />",
+      "<MobileNav />",
+      "<ScrollRevealFallback />",
+    ]) {
+      const index = layout.indexOf(marker);
+      expect(index, marker).toBeGreaterThan(transitionStart);
+      expect(index, marker).toBeLessThan(transitionEnd);
+    }
   });
 
   it("preserves canonical project URLs and explicit transition target markers", () => {
@@ -91,6 +117,17 @@ describe("Myles 98 hardening contract", () => {
     expect(pocketHook).toContain(`\"${query}\"`);
     expect(pocket).toContain('data-m97-shell="workstation"');
     expect(pocket).not.toMatch(/overflow-x:\s*(?:auto|scroll)/);
+  });
+
+  it("passes the saved reduced-motion preference to both Selected Work surfaces", () => {
+    for (const path of [
+      "src/components/myles-97/workstation-desktop.tsx",
+      "src/components/myles-97/pocket-97-shell.tsx",
+    ]) {
+      expect(read(path), path).toMatch(
+        /<SelectedWorkExplorer[\s\S]*?reduceMotion=\{state\.displayPreferences\.reduceMotion\}[\s\S]*?\/>/,
+      );
+    }
   });
 
   it("hides the desktop-only Reminders widget in the Pocket server snapshot", () => {

@@ -15,39 +15,39 @@ export const CASE_STUDY_CHAPTERS = {
     {
       id: "fg-problem",
       stage: "Frame",
-      title: "Why route planning needs more than time and distance",
+      title: "Car culture and South Jersey go hand in hand",
     },
     {
       id: "fg-research",
       stage: "Research",
-      title: "Three problems the interviews made clear",
+      title: "What I heard from six Black drivers",
     },
     {
       id: "fg-design",
       stage: "Plan",
-      title: "1. See what is on each route before choosing",
+      title: "1. Compare route conditions before choosing",
     },
     {
       id: "fg-pulled-over",
       stage: "Respond",
-      title: "2. Handle unexpected problems without adding stress",
+      title: "2. Keep four support paths one tap away during a stressful moment",
     },
     {
       id: "fg-trust",
       stage: "Trust",
-      title: "3. Navigate with transparent community contributors",
+      title: "3. Show what influenced a route recommendation",
     },
     {
       id: "fg-scope",
       stage: "Validate",
-      title: "What the prototype made possible and what still needs proof",
+      title: "What I built and what I still need to test",
     },
   ],
   navi: [
     {
       id: "nv-intro",
       stage: "Frame",
-      title: "The first idea moved visitors, not behavior",
+      title: "An early heatmap showed where to go",
     },
     {
       id: "nv-insights",
@@ -57,12 +57,12 @@ export const CASE_STUDY_CHAPTERS = {
     {
       id: "nv-framework",
       stage: "Define",
-      title: "From neighborhood context to Learn, Plan, Go",
+      title: "How Learn, Plan, Go addressed the research",
     },
     {
       id: "nv-build",
       stage: "Build",
-      title: "From studio concept to working booking flow",
+      title: "I rebuilt the booking flow in React",
     },
     {
       id: "nv-outcome",

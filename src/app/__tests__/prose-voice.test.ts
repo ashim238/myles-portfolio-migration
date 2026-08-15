@@ -14,8 +14,9 @@ describe("portfolio prose voice", () => {
       "My thesis became Fresh Greens, a React Native wayfinding prototype for Black drivers.",
     );
     expect(source).toContain(
-      "One entered the launch library and was later selected by American Eagle.",
+      "Light Academia entered the launch library, and I later learned through Global Creative Lab that American Eagle selected it.",
     );
+    expect(source).not.toContain("the one template");
     expect(source).not.toContain("My thesis was a solo-built React Native wayfinding app");
   });
 

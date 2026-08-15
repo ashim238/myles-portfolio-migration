@@ -12,9 +12,10 @@ import {
   PROJECT_ENTER_SETTLE_MS,
   PROJECT_RETURN_REQUEST,
   queryProjectCover,
+  queryProjectReturnTarget,
   readProjectReturnSnapshot,
   waitForProjectCover,
-  waitForProjectProgram,
+  waitForProjectReturnTarget,
   type ProjectCoverVisual,
   type ProjectEnterRequestDetail,
   type ProjectEnterRect,
@@ -30,6 +31,10 @@ const TRANSITION_FAILSAFE_MS = 4500;
 
 type OverlayPhase = "holding" | "navigating" | "settling";
 type OverlayDirection = "enter" | "return";
+
+type RouteFocusIntent =
+  | { kind: "destination"; pathname: string }
+  | { kind: "return"; pathname: "/"; snapshot: ProjectReturnSnapshot };
 
 type OverlayState = {
   id: number;
@@ -137,6 +142,54 @@ function caseStudyPath(slug: string): string {
   return `/work/${slug}`;
 }
 
+function routeMain(): HTMLElement | null {
+  return (
+    document.querySelector<HTMLElement>("main#main-content") ??
+    document.querySelector<HTMLElement>("main")
+  );
+}
+
+function routeTitle(main: HTMLElement | null): string {
+  const heading = main?.querySelector<HTMLElement>("h1");
+  const headingText = heading?.textContent?.replace(/\s+/g, " ").trim();
+  if (headingText) return headingText;
+
+  return document.title.replace(/\s*\|.*$/, "").trim();
+}
+
+function focusElement(
+  element: HTMLElement | null,
+  ensureVisible = false,
+): void {
+  if (!element) return;
+  if (element.tabIndex < 0 && !element.hasAttribute("tabindex")) {
+    element.setAttribute("tabindex", "-1");
+  }
+  if (ensureVisible) {
+    element.scrollIntoView?.({ block: "nearest", inline: "nearest" });
+  }
+  element.focus({ preventScroll: true });
+}
+
+function focusSettledRoute(
+  intent: RouteFocusIntent | null,
+  resolvedReturnTarget: HTMLElement | null = null,
+): string {
+  const main = routeMain();
+
+  if (intent?.kind === "return") {
+    const returnTarget =
+      resolvedReturnTarget ?? queryProjectReturnTarget(intent.snapshot);
+    const linkSelector = `a[href="${caseStudyPath(intent.snapshot.slug)}"]`;
+    const trigger = returnTarget?.querySelector<HTMLElement>(linkSelector);
+    focusElement(trigger ?? returnTarget ?? main, true);
+  } else {
+    focusElement(main);
+  }
+
+  return routeTitle(main);
+}
+
 function CoverVisual({ visual }: { visual: ProjectCoverVisual }) {
   if (visual.type === "tiktok") {
     return (
@@ -188,26 +241,65 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
   const router = useRouter();
   const pathname = usePathname();
   const [overlay, setOverlay] = useState<OverlayState | null>(null);
+  const [routeAnnouncement, setRouteAnnouncement] = useState("");
   const shellRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
-  const navigatingRef = useRef(false);
   const settleRanRef = useRef(false);
   const failsafeRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const routeIntentFailsafeRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
   const settleTimeoutRef = useRef<number | null>(null);
   const animationsRef = useRef<Animation[]>([]);
   const transitionSequenceRef = useRef(0);
   const activeTransitionIdRef = useRef<number | null>(null);
+  const navigationStartedIdRef = useRef<number | null>(null);
+  const previousPathnameRef = useRef(pathname);
+  const pendingRoutePathnameRef = useRef<string | null>(null);
+  const routeFocusIntentRef = useRef<RouteFocusIntent | null>(null);
+  const currentPathnameRef = useRef(pathname);
 
-  const finishTransition = useCallback((transitionId: number | null) => {
-    if (
-      transitionId === null ||
-      activeTransitionIdRef.current !== transitionId
-    ) {
-      return;
+  useEffect(() => {
+    currentPathnameRef.current = pathname;
+  }, [pathname]);
+
+  const clearRouteFocusIntent = useCallback(
+    (expectedIntent?: RouteFocusIntent) => {
+      if (
+        expectedIntent &&
+        routeFocusIntentRef.current !== expectedIntent
+      ) {
+        return;
+      }
+      if (routeIntentFailsafeRef.current) {
+        clearTimeout(routeIntentFailsafeRef.current);
+        routeIntentFailsafeRef.current = null;
+      }
+      routeFocusIntentRef.current = null;
+      pendingRoutePathnameRef.current = null;
+    },
+    [],
+  );
+
+  const setRouteFocusIntent = useCallback((intent: RouteFocusIntent) => {
+    if (routeIntentFailsafeRef.current) {
+      clearTimeout(routeIntentFailsafeRef.current);
     }
+    routeFocusIntentRef.current = intent;
+    routeIntentFailsafeRef.current = setTimeout(() => {
+      routeIntentFailsafeRef.current = null;
+      if (
+        routeFocusIntentRef.current === intent &&
+        currentPathnameRef.current !== intent.pathname
+      ) {
+        routeFocusIntentRef.current = null;
+        pendingRoutePathnameRef.current = null;
+      }
+    }, TRANSITION_FAILSAFE_MS);
+  }, []);
 
-    activeTransitionIdRef.current = null;
+  const cancelActiveMotion = useCallback(() => {
     if (failsafeRef.current) {
       clearTimeout(failsafeRef.current);
       failsafeRef.current = null;
@@ -218,11 +310,23 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
     }
     for (const animation of animationsRef.current) animation.cancel();
     animationsRef.current = [];
-    navigatingRef.current = false;
     settleRanRef.current = false;
+  }, []);
+
+  const finishTransition = useCallback((transitionId: number | null) => {
+    if (
+      transitionId === null ||
+      activeTransitionIdRef.current !== transitionId
+    ) {
+      return;
+    }
+
+    activeTransitionIdRef.current = null;
+    navigationStartedIdRef.current = null;
+    cancelActiveMotion();
     unlockProjectEnter();
     setOverlay(null);
-  }, []);
+  }, [cancelActiveMotion]);
 
   const runCrossfade = useCallback(
     async (state: OverlayState) => {
@@ -360,7 +464,7 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
         return;
       }
 
-      const target = await waitForProjectProgram(state.snapshot.slug);
+      const target = await waitForProjectReturnTarget(state.snapshot);
       if (activeTransitionIdRef.current !== state.id) return;
 
       const shell = shellRef.current;
@@ -438,25 +542,38 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
   const armFailsafe = useCallback(
     (transitionId: number) => {
       if (failsafeRef.current) clearTimeout(failsafeRef.current);
-      failsafeRef.current = setTimeout(
-        () => finishTransition(transitionId),
-        TRANSITION_FAILSAFE_MS,
-      );
+      failsafeRef.current = setTimeout(() => {
+        finishTransition(transitionId);
+      }, TRANSITION_FAILSAFE_MS);
     },
     [finishTransition],
   );
 
   const startEnterTransition = useCallback(
     (detail: ProjectEnterRequestDetail) => {
-      if (prefersReducedMotion()) {
+      if (
+        detail.animate === false ||
+        detail.reduceMotion ||
+        prefersReducedMotion()
+      ) {
+        setRouteFocusIntent({
+          kind: "destination",
+          pathname: detail.href,
+        });
+        setRouteAnnouncement("");
         router.push(detail.href);
         return;
       }
-      if (navigatingRef.current) return;
 
+      cancelActiveMotion();
       const transitionId = ++transitionSequenceRef.current;
       activeTransitionIdRef.current = transitionId;
-      navigatingRef.current = true;
+      navigationStartedIdRef.current = null;
+      setRouteFocusIntent({
+        kind: "destination",
+        pathname: detail.href,
+      });
+      setRouteAnnouncement("");
       lockProjectEnter();
       document.documentElement.classList.add("project-enter-settling");
       armFailsafe(transitionId);
@@ -473,17 +590,27 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
         crossfade: false,
       });
     },
-    [armFailsafe, router],
+    [armFailsafe, cancelActiveMotion, router, setRouteFocusIntent],
   );
 
   const startReturnTransition = useCallback(
     (detail: ProjectReturnRequestDetail, navigationAlreadyStarted = false) => {
-      if (prefersReducedMotion()) {
+      if (
+        detail.snapshot.animate === false ||
+        detail.snapshot.reduceMotion ||
+        prefersReducedMotion()
+      ) {
+        setRouteFocusIntent({
+          kind: "return",
+          pathname: "/",
+          snapshot: detail.snapshot,
+        });
+        setRouteAnnouncement("");
         if (!navigationAlreadyStarted) router.push(detail.href);
         return;
       }
-      if (navigatingRef.current) return;
 
+      cancelActiveMotion();
       const source = queryProjectCover(detail.snapshot.slug);
       const sourceBounds = source?.getBoundingClientRect();
       const hasSource = Boolean(sourceBounds && validRect(sourceBounds));
@@ -495,7 +622,15 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
           : detail.snapshot.borderRadius;
       const transitionId = ++transitionSequenceRef.current;
       activeTransitionIdRef.current = transitionId;
-      navigatingRef.current = true;
+      navigationStartedIdRef.current = navigationAlreadyStarted
+        ? transitionId
+        : null;
+      setRouteFocusIntent({
+        kind: "return",
+        pathname: "/",
+        snapshot: detail.snapshot,
+      });
+      setRouteAnnouncement("");
       lockProjectEnter();
       document.documentElement.classList.add("project-enter-settling");
       armFailsafe(transitionId);
@@ -513,36 +648,51 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
         crossfade: !hasSource,
       });
     },
-    [armFailsafe, router],
+    [armFailsafe, cancelActiveMotion, router, setRouteFocusIntent],
   );
 
   useEffect(() => {
     return () => {
       activeTransitionIdRef.current = null;
-      if (failsafeRef.current) clearTimeout(failsafeRef.current);
-      if (settleTimeoutRef.current) clearTimeout(settleTimeoutRef.current);
-      for (const animation of animationsRef.current) animation.cancel();
+      navigationStartedIdRef.current = null;
+      cancelActiveMotion();
+      clearRouteFocusIntent();
       unlockProjectEnter();
     };
-  }, []);
+  }, [cancelActiveMotion, clearRouteFocusIntent]);
 
   useEffect(() => {
     if (!overlay) return;
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") finishTransition(overlay.id);
+      if (event.key === "Escape") {
+        event.preventDefault();
+        event.stopPropagation();
+        if (
+          navigationStartedIdRef.current !== overlay.id &&
+          pathname !== overlay.href
+        ) {
+          navigationStartedIdRef.current = overlay.id;
+          router.push(overlay.href);
+        }
+        finishTransition(overlay.id);
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [overlay, finishTransition]);
+  }, [overlay, finishTransition, pathname, router]);
 
   useEffect(() => {
     const onEnterRequest = (event: Event) => {
       const detail = (event as CustomEvent<ProjectEnterRequestDetail>).detail;
-      if (detail) startEnterTransition(detail);
+      if (!detail) return;
+      event.preventDefault();
+      startEnterTransition(detail);
     };
     const onReturnRequest = (event: Event) => {
       const detail = (event as CustomEvent<ProjectReturnRequestDetail>).detail;
-      if (detail) startReturnTransition(detail);
+      if (!detail) return;
+      event.preventDefault();
+      startReturnTransition(detail);
     };
 
     window.addEventListener(PROJECT_ENTER_REQUEST, onEnterRequest);
@@ -558,6 +708,7 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
       const snapshot = readProjectReturnSnapshot();
       if (!snapshot) return;
       if (pathname !== caseStudyPath(snapshot.slug)) return;
+      if (window.location.pathname !== "/") return;
       startReturnTransition({ href: "/", snapshot }, true);
     };
 
@@ -570,6 +721,7 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
     if (!shellRef.current) return;
     if (!overlay.crossfade && !frameRef.current) return;
 
+    navigationStartedIdRef.current = overlay.id;
     setOverlay((current) =>
       current ? { ...current, phase: "navigating" } : current,
     );
@@ -602,9 +754,62 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
     }
   }, [overlay, runEnterSettle, runReturnSettle]);
 
+  useEffect(() => {
+    if (previousPathnameRef.current !== pathname) {
+      previousPathnameRef.current = pathname;
+      pendingRoutePathnameRef.current = pathname;
+    }
+    if (overlay || pendingRoutePathnameRef.current !== pathname) return;
+    if (
+      routeFocusIntentRef.current &&
+      routeFocusIntentRef.current.pathname !== pathname
+    ) {
+      return;
+    }
+
+    let cancelled = false;
+    const frame = requestAnimationFrame(() => {
+      void (async () => {
+        if (pendingRoutePathnameRef.current !== pathname) return;
+        const intent = routeFocusIntentRef.current;
+        const returnTarget =
+          intent?.kind === "return"
+            ? await waitForProjectReturnTarget(intent.snapshot)
+            : null;
+        if (cancelled || pendingRoutePathnameRef.current !== pathname) return;
+        if (intent && routeFocusIntentRef.current !== intent) return;
+
+        const title = focusSettledRoute(intent, returnTarget);
+        pendingRoutePathnameRef.current = null;
+        clearRouteFocusIntent(intent ?? undefined);
+        if (title) setRouteAnnouncement(title);
+      })();
+    });
+
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(frame);
+    };
+  }, [clearRouteFocusIntent, overlay, pathname]);
+
   return (
     <>
-      {children}
+      <div
+        className="project-route-surface"
+        data-project-route-surface
+        inert={overlay ? true : undefined}
+        aria-hidden={overlay ? "true" : undefined}
+      >
+        {children}
+      </div>
+      <p
+        className="sr-only"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        {routeAnnouncement}
+      </p>
       {overlay ? (
         <div
           ref={shellRef}

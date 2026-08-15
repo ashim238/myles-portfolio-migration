@@ -331,6 +331,10 @@
   box-shadow: 3px 4px 0 rgb(17 17 17 / 18%);
 }
 
+.myles98-system-document .portfolio-endcap-label {
+  color: var(--m97-ink);
+}
+
 .myles98-system-document .portfolio-endcap a {
   color: inherit;
 }
@@ -497,6 +501,16 @@
 @media (min-width: 768px) and (pointer: fine) {
   .myles97-window[data-m97-program-window="loose-parts"] {
     max-height: 400px;
+  }
+}
+
+@media (max-width: 640px), (pointer: coarse), (any-pointer: coarse) {
+  .myles98-system-document .resume-detail dd a,
+  .myles98-system-document .resume-role-title a {
+    display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
   }
 }
 

@@ -11,6 +11,7 @@ export type TaskbarProps = {
   minimizedPrograms: readonly ProgramId[];
   focusedProgram: ProgramId | null;
   startOpen: boolean;
+  inert?: boolean;
   startButtonRef: RefObject<HTMLButtonElement | null>;
   onToggleStart: () => void;
   onFocus: (id: ProgramId) => void;
@@ -39,6 +40,7 @@ export function Taskbar({
   minimizedPrograms,
   focusedProgram,
   startOpen,
+  inert = false,
   startButtonRef,
   onToggleStart,
   onFocus,
@@ -57,13 +59,18 @@ export function Taskbar({
   const minimized = new Set(minimizedPrograms);
 
   return (
-    <nav className="myles97-taskbar" aria-label="Open programs">
+    <nav
+      className="myles97-taskbar"
+      aria-label="Open programs"
+      inert={inert ? true : undefined}
+    >
       <button
         ref={startButtonRef}
         type="button"
         className="myles97-start-button"
         aria-expanded={startOpen}
         aria-controls="myles97-start-menu"
+        aria-haspopup="dialog"
         onClick={onToggleStart}
       >
         <span className="myles97-start-mark" aria-hidden="true">

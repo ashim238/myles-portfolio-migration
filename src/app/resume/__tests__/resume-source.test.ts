@@ -6,6 +6,16 @@ const readSource = (file: string) =>
   readFileSync(resolve(process.cwd(), file), "utf8");
 
 describe("resume source", () => {
+  it("shows the current public revision month in both resume surfaces", () => {
+    const page = readSource("src/app/resume/page.tsx");
+    const desktopProgram = readSource(
+      "src/components/myles-97/secondary-programs.tsx",
+    );
+
+    expect(page).toContain('RESUME_UPDATED = "August 2026"');
+    expect(desktopProgram).toContain("Résumé · updated August 2026");
+  });
+
   it("publishes the canonical privacy-safe resume artifact and download action", () => {
     const source = readSource("src/app/resume/page.tsx");
     const publicPdf = resolve(
@@ -175,7 +185,7 @@ describe("resume source", () => {
     const page = readSource("src/app/resume/page.tsx");
     const verifier = readSource("scripts/verify-resume-pdf.mjs");
     const sharedAudit =
-      "With one collaborator, compiled and evaluated 120+ newsletter examples across four criteria";
+      "With one collaborator, compiled and evaluated 120+ newsletter examples to ground the redesign";
 
     expect(page.replace(/\s+/g, " ")).toContain(sharedAudit);
     expect(verifier).toContain(sharedAudit);
@@ -214,6 +224,33 @@ describe("resume source", () => {
       /\.resume-skill-group dt,[\s\S]*\.resume-skill-group dd[\s\S]*font-size:\s*8\.5pt/,
     );
     expect(printCss).not.toMatch(/transform:\s*scale/);
+  });
+
+  it("strips the interactive Myles 98 document chrome from the PDF", () => {
+    const css = readSource("src/app/styles/accessibility-preferences.css");
+    const printCss = css.slice(css.indexOf("@media print"));
+
+    expect(printCss).toContain(".myles98-document-header");
+    expect(printCss).toContain(".myles98-document-statusbar");
+    expect(printCss).toMatch(/display:\s*none\s*!important/);
+    expect(printCss).toMatch(
+      /\.myles98-document-canvas[\s\S]*padding:\s*0[\s\S]*background:\s*#fff\s*!important/,
+    );
+    expect(printCss).toMatch(
+      /\.myles98-document-window[\s\S]*border:\s*0[\s\S]*box-shadow:\s*none/,
+    );
+    expect(printCss).toMatch(
+      /\.myles98-system-document\.myles98-system-document[\s\S]*padding:\s*0[\s\S]*box-shadow:\s*none/,
+    );
+    expect(printCss).toMatch(
+      /\.myles98-system-document \.resume-aside[\s\S]*padding:\s*2\.3mm 0 0[\s\S]*background:\s*transparent[\s\S]*box-shadow:\s*none/,
+    );
+    expect(printCss).toMatch(
+      /\.myles98-system-document \.resume-details[\s\S]*display:\s*flex[\s\S]*border:\s*0[\s\S]*background:\s*transparent/,
+    );
+    expect(printCss).toMatch(
+      /\.myles98-system-document \.resume-detail[\s\S]*padding:\s*0[\s\S]*border:\s*0/,
+    );
   });
 
   it("keeps resume details immediately visible without scroll reveal selectors", () => {
@@ -297,7 +334,7 @@ describe("resume source", () => {
     expect(source).toContain('["Creative Strategist Intern", 2]');
     expect(source).not.toContain('["Creative Strategy Intern", 1]');
     expect(source).toContain("The team audited six travel platforms");
-    expect(source).toContain("Light Academia shipped in the launch library");
+    expect(source).toContain("Light Academia entered the launch library");
   });
 
   it("exposes reproducible candidate-only PDF commands", () => {

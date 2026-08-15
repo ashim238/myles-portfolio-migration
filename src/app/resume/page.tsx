@@ -2,7 +2,7 @@ import { PortfolioEndcap } from "@/components/portfolio-endcap";
 import { SystemDocumentShell } from "@/components/myles-97/system-document-shell";
 import { createRouteMetadata, siteConfig } from "@/lib/site-config";
 
-const RESUME_UPDATED = "July 2026";
+const RESUME_UPDATED = "August 2026";
 
 type ResumeRole = {
   role: string;
@@ -34,7 +34,7 @@ const INDEPENDENT_WORK: IndependentProject[] = [
     role: "Product Designer",
     dates: "Feb 2025 – Present",
     summary:
-      "Newsletter redesign for a nonprofit navigating financial aid. Built modular Figma to Mailchimp templates with locked-vs-swappable rules so a non-designer founder could ship on-brand without a designer in the loop. With one collaborator, compiled and evaluated 120+ newsletter examples across four criteria to ground the redesign. The first redesigned send had an observed 52.6% open rate with Mailchimp Privacy Protection excluded.",
+      "Newsletter redesign for a nonprofit navigating financial aid. Built modular Figma to Mailchimp templates with locked and swappable rules so the founder could edit weekly sends herself and bring me back for new audiences or color pairings. With one collaborator, compiled and evaluated 120+ newsletter examples to ground the redesign. The first redesigned send had an observed 52.6% open rate with Mailchimp Privacy Protection excluded.",
   },
   {
     name: "Navi",
@@ -69,7 +69,7 @@ const EXPERIENCE: ResumeRole[] = [
     org: "TikTok (ByteDance)",
     dates: "May – Aug 2021",
     bullets: [
-      "Designed 3 of ~10 templates in TikTok’s Dynamic Showcase Ads launch batch. Light Academia shipped in the launch library. I later learned through Global Creative Lab that American Eagle selected it. The format debuted at TikTok World 2021 and was later folded into TikTok’s Video Shopping Ads.",
+      "Designed 3 of ~10 templates in TikTok’s Dynamic Showcase Ads launch batch. Light Academia entered the launch library. I later learned through Global Creative Lab that American Eagle selected it. The format debuted at TikTok World 2021 and was later folded into TikTok’s Video Shopping Ads.",
     ],
   },
 ];

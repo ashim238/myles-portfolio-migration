@@ -28,7 +28,7 @@ const freshGreensProof = {
 export const metadata: Metadata = createRouteMetadata({
   title: "Fresh Greens",
   description:
-    "A wayfinding app for Black drivers that brings community safety knowledge into route planning alongside public map data.",
+    "Fresh Greens is a working React Native navigation prototype for Black drivers, based on interviews with six Black drivers across the South.",
   path: "/work/fresh-greens",
   image: "/projects/fresh-greens/cover.png",
   type: "article",
@@ -71,14 +71,13 @@ export default async function FreshGreensPage() {
           Fresh Greens
         </h1>
         <p className="project-hero-lede fg-lede">
-          Fresh Greens brings the safety knowledge Black drivers already use into
-          route planning.
+          A navigation tool for Black drivers at different stages of a drive.
         </p>
       </section>
 
       <ProjectOpeningFacts
         role="Solo, design and engineering"
-        scope="Six interviews shaped route comparison, reminders, stress support, reporting, and moderation."
+        scope="Six interviews helped me frame three problems: Plan, Respond, and Trust."
         outcome="Working React Native prototype across 26+ screens."
         proof={freshGreensProof}
       />
@@ -101,27 +100,22 @@ export default async function FreshGreensPage() {
         <div className="project-section fg-section">
           <div className="project-section-body">
             <p>
-              I grew up in Brooklyn and moved to rural South Jersey around age
-              ten. At night, Confederate flags, worsening roads, and spotty
-              reception made driving feel exposed. I worried about a police
-              stop, car trouble, or being stranded somewhere people might not
-              be welcoming.
+              I moved there from Brooklyn as a kid. Driving was the only
+              practical way to get around, but I didn&apos;t know New Jersey like the
+              back of my hand.
             </p>
             <p>
-              I still used Google Maps or Apple Maps, but avoided backroads,
-              drove below the speed limit, and kept my wallet within reach. That
-              was a hypothesis, not proof, so I interviewed six Black drivers.
+              Whether I was dropping my mom at the bus station early or driving
+              back from Cape May late, there were stretches that made me
+              uncomfortable. The roads would start to break down a bit.
+              Confederate flags would appear. Reception would become unreliable.
+              All of the spooky pieces started falling into place.
             </p>
             <p>
-              The Green Book helped Black travelers find places that would serve
-              them. I use that as design lineage, not evidence that Fresh Greens
-              is its digital successor. I wanted to explore what that principle
-              could look like inside navigation.{" "}
-              <a href="https://nmaahc.si.edu/explore/stories/traveling-through-jim-crow-america" rel="noreferrer" target="_blank">
-                Source: Smithsonian National Museum of African American History
-                and Culture
-              </a>
-              .
+              I&apos;d slow down, avoid backroads, and keep my wallet and phone close.
+              Then I&apos;d wonder what would happen if the car broke down right
+              there. I didn&apos;t know whether that discomfort was mine alone, so I
+              spoke with six Black drivers across the South, ages 19 to 34.
             </p>
           </div>
         </div>
@@ -130,25 +124,33 @@ export default async function FreshGreensPage() {
       <ProjectChapter entry={chapters[1]} index={2} total={chapters.length} variant="fresh-greens">
         <div className="project-section fg-section fg-section--wide">
           <p className="case-section-lead">
-            Participants described three problems with planning, stress, and
-            trust.
+            Qualitative interviews were new to me, but I tried to navigate them
+            like everyday conversations. Unfortunately, I wasn&apos;t the only
+            person getting the heebie-jeebies during a drive.
           </p>
+          <div className="project-section-body">
+            <p>
+              Drivers already relied on tools like Google Maps.
+            </p>
+          </div>
           <div className="fg-evidence-boundaries" aria-label="Three Fresh Greens product problems">
             <div className="fg-evidence-boundary">
               <p className="fg-evidence-label">Plan</p>
-              <p>Drivers couldn&apos;t inspect conditions on each route before choosing. 6 of 6 connected trip timing to daylight, 5 of 6 raised road conditions, 5 of 6 raised police presence, and 3 of 6 raised wildlife.</p>
+              <p>Drivers couldn&apos;t compare the conditions they cared about across routes before choosing. All six mentioned daylight, five mentioned road conditions, five mentioned police presence, and three mentioned wildlife.</p>
             </div>
             <div className="fg-evidence-boundary">
               <p className="fg-evidence-label">Respond</p>
-              <p>Participants described preparing for police encounters and keeping help close when unexpected problems raised stress.</p>
+              <p>Drivers talked about police encounters and keeping help close when something went wrong.</p>
             </div>
             <div className="fg-evidence-boundary">
               <p className="fg-evidence-label">Trust</p>
-              <p>Useful community knowledge lived outside navigation and depended on reaching the right person. 5 of 6 asked family or friends before trusting an unfamiliar place.</p>
+              <p>Five of six asked family or friends before trusting an unfamiliar place.</p>
             </div>
           </div>
           <div className="project-section-body">
-            <p>These interviews widened my hypothesis. Six interviews don&apos;t represent every Black driver.</p>
+            <p>
+              Six interviews can&apos;t represent every Black driver.
+            </p>
           </div>
         </div>
       </ProjectChapter>
@@ -157,11 +159,34 @@ export default async function FreshGreensPage() {
         <section className="project-section fg-section fg-section--wide">
           <div className="project-section-body">
             <p>
-              At first, I added a safety layer to Google Maps. It left route
-              comparison in the background. The interviews pushed me toward a
-              standalone route preview, where public and community inputs became
-              route chips and source cards. The prototype can explain a route
-              preference without calling that route safer.
+              I knew Fresh Greens had some utility. Begrudgingly, my first idea was a Google Maps
+              plug-in. I showed it to my thesis advisor. He was content, not
+              impressed. The thesis was getting lost inside Google&apos;s framework.
+              I was about a month from delivering it, so I kept the information
+              architecture and started over visually.
+            </p>
+            <p>
+              I returned to the Green Book for the visual system. Its palette
+              became a reference, not a claim that Fresh Greens is its digital
+              successor. {" "}
+              <a href="https://nmaahc.si.edu/explore/stories/traveling-through-jim-crow-america" rel="noreferrer" target="_blank">
+                Source: Smithsonian National Museum of African American History
+                and Culture
+              </a>
+              .
+            </p>
+            <p>
+              On a trip from Chicago to rural Georgia, the driver needs to see
+              where natural light fades, where
+              artificial light picks up the slack, and what unknowns to account
+              for. The driver isn&apos;t expecting perfection, but they are
+              expecting the clarity and autonomy to choose a route that they can
+              feel adequately prepared for.
+            </p>
+            <p>
+              The current build still labels the top option &quot;Safest
+              route,&quot; ahead of the research. It needs to explain the tradeoff
+              and leave the choice with the driver.
             </p>
           </div>
           <PivotJourney />
@@ -173,11 +198,18 @@ export default async function FreshGreensPage() {
       <ProjectChapter entry={chapters[3]} index={4} total={chapters.length} variant="fresh-greens">
         <section className="project-section fg-section fg-section--wide">
           <div className="project-section-body">
-            <p>High stress is the wrong time to search navigation. I hid four support paths behind one thumb-reachable control until requested.</p>
+            <p>
+              Worst comes to worst, a Black driver needs to be informed. A police
+              encounter can be a lot to juggle. One tap opens four support paths,
+              including the pulled-over flow.
+            </p>
           </div>
           <PulledOverJourney />
           <div className="project-section-body">
-            <p>The flow starts recording, puts reassurance first, and leaves trusted-contact actions visible. Roadside help, location sharing, guidance, and emergency steps work offline. That is built behavior, not evidence of a better encounter.</p>
+            <p>
+              I haven&apos;t tested this flow with drivers yet, let alone during a
+              real encounter.
+            </p>
           </div>
         </section>
       </ProjectChapter>
@@ -185,32 +217,46 @@ export default async function FreshGreensPage() {
       <ProjectChapter entry={chapters[4]} index={5} total={chapters.length} variant="fresh-greens">
         <div className="project-section fg-section fg-section--wide">
           <div className="project-section-body">
-            <p>Public datasets have checkable sources, but not felt experience. Each report remained one person&apos;s account, reviewed only for rule breaks.</p>
-            <p>Over time, separate reports should carry more weight, and time-sensitive hazards could appear sooner. Fresh Greens shows uncertainty where coverage is thin.</p>
-            <p><strong>Current prototype limit:</strong> one report maps to one scored zone, so it can affect route ranking on its own. Corroboration-weighted ranking is still an intended safeguard, not a built feature. Contributor provenance and trust levels aren&apos;t visible yet.</p>
+            <p>
+              People just need transparency into how the app is doing what it
+              claims it does. Route chips and cards show public sources and
+              community-report influence. The full score and its weights aren&apos;t
+              exposed yet.
+            </p>
+            <p>
+              Reports stay on the device first. With Supabase configured, they enter moderation.
+            </p>
+            <p>
+              <strong>Current prototype limit:</strong> One report
+              creates a scored zone and can affect route ranking. I haven&apos;t added
+              corroboration weighting, visible contributor provenance, or
+              route-level trust tiers yet.
+            </p>
           </div>
           <figure className="fg-safety-visual">
             <PhoneFrame variant="screenshot">
               <Shot name="report-detail" alt="The Fresh Greens Felt welcome contribution form over the en-route map, with place-type chips, welcoming-reason chips, an optional experience field, and a green Share your experience button with black text." />
             </PhoneFrame>
-            <figcaption className="fg-safety-visual-caption">Structured tags keep each account specific while leaving room for context.</figcaption>
+            <figcaption className="fg-safety-visual-caption">
+              Contributors can optionally describe the experience.
+            </figcaption>
           </figure>
           <div className="fg-moderation" aria-label="How a report moves through moderation">
             <div className="fg-mod-flow">
               <div className="fg-mod-stage">
-                <p className="fg-mod-stage-label">Enters</p>
-                <p className="fg-mod-stage-text">A report joins the queue</p>
+                <p className="fg-mod-stage-label">Configured cloud</p>
+                <p className="fg-mod-stage-text">Queued</p>
               </div>
               <span className="fg-mod-arrow" aria-hidden="true" />
               <div className="fg-mod-stage fg-mod-stage--panel">
-                <p className="fg-mod-stage-label">Investigation panel</p>
+                <p className="fg-mod-stage-label">Investigation</p>
                 <ul className="fg-mod-checks" role="list">
-                  <li>Source device</li><li>Prior reports at the same spot</li><li>Nearby reports</li><li>Coordination: duplicate IPs and devices</li>
+                  <li>Source device</li><li>Same-spot reports</li><li>Nearby reports</li><li>Duplicate IPs and devices</li>
                 </ul>
               </div>
               <span className="fg-mod-arrow" aria-hidden="true" />
               <div className="fg-mod-stage">
-                <p className="fg-mod-stage-label">Human decision</p>
+                <p className="fg-mod-stage-label">Decision</p>
                 <p className="fg-mod-stage-text">Reviewed, hidden, restored, or removed</p>
               </div>
             </div>
@@ -222,37 +268,39 @@ export default async function FreshGreensPage() {
         <div className="project-section fg-section fg-scope">
           <div className="project-section-body">
             <p>
-              I turned six interviews into a working React Native prototype for
-              route comparison, reminders, en-route guidance, stress support,
-              reporting, and moderation. It can explain why it prefers one route
-              without proving it safer.
+              I used Figma to set the initial rules, then built them in code. A
+              spacing problem became a shared theme rule.
             </p>
             <p>
-              Early tests exposed a technical issue. People onboarded, typed a
-              residential address, and waited as search returned places only.
-              Recent searches masked it.
+              Search broke first. My own address was sitting in Recent, so a
+              places-only search looked functional. I added street addresses
+              and separated Recent from live results.
             </p>
             <p>
-              Next, I&apos;d test Black drivers 55 and older, including people in my
-              parents&apos; cohort. Their driving routines and Siri use may surface
-              different expectations.
+              The prototype still hasn&apos;t shown that a route is safer, its
+              explanations earn trust, or its support flow holds up under stress.
+            </p>
+            <p>
+              Next, I&apos;d learn from Black drivers 55 and older by watching where
+              Fresh Greens fits, where it asks for too much, and what I need to
+              change.
             </p>
           </div>
           <div className="fg-scope-grid">
             <div className="fg-scope-col">
               <p className="fg-scope-label">Built now</p>
               <ul className="fg-scope-list" role="list">
-                <li>Plan: route comparison explained through chips and source cards, plus local departure and refuel reminders</li>
-                <li>Respond: one-thumb, offline support across five stress states</li>
-                <li>Trust: contribution and moderation flows that keep reports reviewable</li>
+                <li>Plan: route comparison, source cards, departure and refuel reminders</li>
+                <li>Respond: four support paths, on-device recording when available, and user-controlled contact handoffs</li>
+                <li>Trust: local-first reports and configured moderation</li>
               </ul>
             </div>
             <div className="fg-scope-col">
               <p className="fg-scope-label">What remains</p>
               <ul className="fg-scope-list" role="list">
-                <li>Plan: route-quality testing with more Black drivers across regions before making any claim that a preferred route is safer</li>
-                <li>Respond: stress-state and failure-mode testing on real devices and configured builds</li>
-                <li>Trust: weighted ranking, visible provenance, trust levels, and public moderation transparency</li>
+                <li>Plan: broader route-quality testing before any safety claim</li>
+                <li>Respond: real-device stress-state and failure-mode testing in configured builds</li>
+                <li>Trust: route-level corroboration by distinct contributors, provenance, trust levels, and moderation transparency</li>
               </ul>
             </div>
           </div>

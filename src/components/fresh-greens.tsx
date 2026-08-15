@@ -128,7 +128,7 @@ export function ArchitectureDiagram() {
         xmlns="http://www.w3.org/2000/svg"
         className="fg-arch-svg"
         role="img"
-        aria-label="Three-layer architecture: eight data inputs feed an adapter layer, which feeds a deterministic scoring layer, which feeds the screen layer. Community reports are one input: local-first in the prototype, with a Supabase and Postgres path behind configuration, row-level security, device UUID checks, and moderation views."
+        aria-label="Three-layer architecture: eight source adapters support route geometry, search, context, and community reports. Route and zone data feed deterministic scoring, and the results render in the screen layer. DOT-511 is a demo adapter whose live feed is not wired. Community reports are local-first in the prototype, with a Supabase and Postgres path behind configuration, row-level security, device UUID checks, and moderation views."
       >
         <defs>
           <marker
@@ -159,7 +159,8 @@ export function ArchitectureDiagram() {
           <text x="435" y="50" fontSize="11" opacity="0.62">destinations</text>
 
           <text x="550" y="32">DOT-511</text>
-          <text x="550" y="50" fontSize="11" opacity="0.62">state traffic feeds</text>
+          <text x="550" y="46" fontSize="10" opacity="0.64">demo adapter</text>
+          <text x="550" y="59" fontSize="9" opacity="0.64">live feed not wired</text>
 
           <text x="690" y="32">Mapbox incidents</text>
           <text x="690" y="50" fontSize="11" opacity="0.62">driving-traffic events</text>
@@ -200,7 +201,7 @@ export function ArchitectureDiagram() {
             Adapter layer
           </text>
           <text x="48" y="155" fontSize="14" fontWeight="500">
-            Typed contracts. Each source speaks one shape.
+            Converts provider responses into typed app data.
           </text>
         </g>
 
@@ -238,10 +239,7 @@ export function ArchitectureDiagram() {
             Scoring layer
           </text>
           <text x="48" y="263" fontSize="14" fontWeight="500">
-            Pure deterministic function.
-          </text>
-          <text x="48" y="282" fontSize="12" opacity="0.7">
-            Same inputs → same routing decision.
+            Scores the same inputs the same way.
           </text>
         </g>
 

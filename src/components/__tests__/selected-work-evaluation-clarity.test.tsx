@@ -1,8 +1,12 @@
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { SelectedWorkExplorer } from "@/components/myles-97/selected-work-explorer";
 import type { ProgramDefinition } from "@/lib/myles-97/programs";
+import {
+  PROJECT_ENTER_REQUEST,
+  readProjectReturnSnapshot,
+} from "@/lib/project-enter";
 
 vi.mock("next/image", () => ({
   default: ({
@@ -81,5 +85,79 @@ describe("Selected Work evaluation paths", () => {
     expect(within(tiktokCard).getByText("TikTok Catalog.studio")).toBeInTheDocument();
     expect(within(tiktokCard).getByText("Catalog-template studio")).toBeInTheDocument();
     expect(within(tiktokCard).queryByText("Shipped")).not.toBeInTheDocument();
+  });
+
+  it("routes through the controller without faking a full-card animation", () => {
+    sessionStorage.clear();
+    const onRequest = vi.fn((event: Event) => event.preventDefault());
+    window.addEventListener(PROJECT_ENTER_REQUEST, onRequest);
+    render(
+      <SelectedWorkExplorer
+        programs={programs}
+        onOpen={vi.fn()}
+      />,
+    );
+
+    const freshCard = screen.getByRole("listitem", { name: "Fresh Greens" });
+    Object.defineProperty(freshCard, "getBoundingClientRect", {
+      configurable: true,
+      value: () => ({
+        top: 112,
+        left: 136,
+        width: 744,
+        height: 126,
+        right: 880,
+        bottom: 238,
+        x: 136,
+        y: 112,
+        toJSON: () => ({}),
+      }),
+    });
+    const link = within(freshCard).getByRole("link", {
+      name: "Read Fresh Greens case study",
+    });
+    link.addEventListener("click", (event) => event.preventDefault());
+
+    fireEvent.click(link);
+
+    expect(readProjectReturnSnapshot()).toMatchObject({
+      version: 1,
+      slug: "fresh-greens",
+      returnTarget: "selected-work",
+      reduceMotion: false,
+      animate: false,
+      visual: {
+        type: "program",
+        programId: "fresh-greens",
+        appName: "Fresh Greens.exe",
+        title: "Fresh Greens",
+        cover: { type: "image", src: "/projects/fresh-greens/cover.png" },
+      },
+    });
+    expect(onRequest).toHaveBeenCalledTimes(1);
+    expect((onRequest.mock.calls[0][0] as CustomEvent).detail).toMatchObject({
+      slug: "fresh-greens",
+      href: "/work/fresh-greens",
+      reduceMotion: false,
+      animate: false,
+    });
+    window.removeEventListener(PROJECT_ENTER_REQUEST, onRequest);
+  });
+
+  it("leaves modified case-study clicks to the native link", () => {
+    sessionStorage.clear();
+    const onRequest = vi.fn((event: Event) => event.preventDefault());
+    window.addEventListener(PROJECT_ENTER_REQUEST, onRequest);
+    render(<SelectedWorkExplorer programs={programs} onOpen={vi.fn()} />);
+
+    const link = screen.getByRole("link", {
+      name: "Read Fresh Greens case study",
+    });
+    link.addEventListener("click", (event) => event.preventDefault());
+    fireEvent.click(link, { ctrlKey: true });
+
+    expect(onRequest).not.toHaveBeenCalled();
+    expect(readProjectReturnSnapshot()).toBeNull();
+    window.removeEventListener(PROJECT_ENTER_REQUEST, onRequest);
   });
 });

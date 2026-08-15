@@ -23,8 +23,7 @@ const routes: RouteContract[] = [
     route: "fresh-greens",
     opening: {
       role: "Solo, design and engineering",
-      scope:
-        "Six interviews shaped route comparison, reminders, stress support, reporting, and moderation.",
+      scope: "Six interviews helped me frame three problems: Plan, Respond, and Trust.",
       outcome: "Working React Native prototype across 26+ screens.",
     },
     recruiter: {
@@ -39,16 +38,16 @@ const routes: RouteContract[] = [
     opening: {
       role: "Creative Strategist Intern · Global Creative Lab",
       scope:
-        "I designed three static catalog templates for Dynamic Showcase Ads during my Global Creative Lab internship.",
+        "I designed three fashion catalog templates inside dimensions and product slots that were fixed before I received the brief.",
       outcome:
-        "Light Academia was 1 of 3 templates shipped in the launch library.",
+        "Light Academia entered the launch library. I later learned through Global Creative Lab that American Eagle selected it.",
     },
     recruiter: {
       timeline: "May – August 2021",
       moves: [
-        "Studied Y2K, Maximalism, Dark Academia, WitchTok, and Cottagecore before choosing the final directions.",
-        "Used one product slot map across Dopamine Dressing, e-Boy/e-Girl, and Light Academia.",
-        "Built the files in parts and tested which elements could mix across directions.",
+        "Review: I showed early sketches in weekly GCL huddles and refined the directions through internal critique.",
+        "Research: market research and burner accounts helped me study how different TikTok subcultures presented themselves.",
+        "Boundary: the work was reviewed internally. I did not receive selection rationale, performance data, or the final fate of the other templates.",
       ],
     },
   },
@@ -57,17 +56,17 @@ const routes: RouteContract[] = [
     opening: {
       role: "UI/UX Designer",
       scope:
-        "I collected and synthesized 14 resident and stakeholder responses, including two local businesses.",
+        "I synthesized 14 resident and stakeholder responses, including two Manhattan businesses, adjusted the information architecture, and created the design system.",
       outcome:
-        "In a later solo rebuild, I turned Learn, Plan, Go into a React component system and working individual booking flow.",
+        "A functional team Figma prototype, followed by my solo React portfolio demo.",
     },
     recruiter: {
       timeline: "January 2025 – June 2025",
       tools: "Figma, FigJam, React, TypeScript",
       moves: [
-        "Graduate studio: the team tested an early Manhattan redirection concept and audited six travel platforms.",
-        "My contribution: I collected and synthesized the 14 responses, then created research-informed archetypes, journeys, opportunity areas, flows, and studio design-system work.",
-        "Solo rebuild: I turned Learn, Plan, Go into a React component system and working individual booking flow.",
+        "Tested: Other design students reviewed the homepage and search. We aligned card heights and reduced copy and tags.",
+        "Untested: The semester ended before we could test Learn, Plan, Go or booking.",
+        "Current demo: Plan lacks the full cost breakdown, and Go does not calculate a route from the visitor's current location.",
       ],
     },
   },
@@ -76,17 +75,17 @@ const routes: RouteContract[] = [
     opening: {
       role: "Product Designer",
       scope:
-        "I designed the modular rules and rebuilt the live system in Mailchimp.",
+        "I owned the final visual design and Mailchimp build. Another designer, the founder, and I shaped the copy and base structure.",
       outcome:
-        "A Mailchimp-native kit the founder uses for weekly sends and ICYMI without editing HTML.",
+        "A three-theme kit the founder edits herself. She has launched roughly 20 sends since the redesign.",
     },
     recruiter: {
       timeline: "February 2025 – Ongoing",
       tools: "Figma, Mailchimp",
       moves: [
-        "Outcome: I designed and rebuilt a Mailchimp-native kit the founder uses for weekly sends and ICYMI without editing HTML.",
-        "Rules: I defined the fixed and swappable parts across three send types.",
-        "Feasibility: I tested the Figma direction through Mailchimp practice sends.",
+        "Problem: Open rates were down, and the newsletter no longer matched the redesigned website.",
+        "Constraint: The founder needed a Mailchimp-native system she could edit without Figma or HTML.",
+        "Validation: Practice sends on mobile and desktop exposed Gmail clipping and dark-mode inversion.",
       ],
     },
   },

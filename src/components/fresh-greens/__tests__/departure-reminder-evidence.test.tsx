@@ -31,21 +31,21 @@ describe("Fresh Greens departure reminder evidence", () => {
 
     expect(
       screen.getByRole("heading", {
-        name: "Bring the daylight plan back at the right time.",
+        name: "A departure reminder tied to daylight.",
       }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/all six participants connected trip timing to daylight/i),
+      screen.getByText(/daylight came up in all six interviews/i),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/waited to request notification access until someone tapped schedule/i),
+      screen.getByText(/built a local reminder around that pattern/i),
     ).toBeInTheDocument();
     expect(screen.getByText("Time to head out")).toBeInTheDocument();
     expect(
       screen.getByText("Leaving now gives you more daylight."),
     ).toBeInTheDocument();
     expect(
-      screen.getByText("I waited to ask for notification access."),
+      screen.getByText("Notification access comes after Schedule."),
     ).toBeInTheDocument();
     expect(
       screen.getByText(/asking for every permission up front felt deceptive/i),

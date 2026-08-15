@@ -129,6 +129,7 @@ describe("WorkProjectCard layout variants", () => {
     (projectUnderTest, expectedVisual) => {
       const requests: ProjectEnterRequestDetail[] = [];
       const onRequest = (event: Event) => {
+        event.preventDefault();
         requests.push((event as CustomEvent<ProjectEnterRequestDetail>).detail);
       };
       window.addEventListener(PROJECT_ENTER_REQUEST, onRequest);

@@ -1,4 +1,4 @@
-import { act, fireEvent, render } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ProjectEnterTransition } from "@/components/project-enter-transition";
 import {
@@ -86,6 +86,7 @@ describe("ProjectEnterTransition", () => {
     vi.useFakeTimers();
     navigation.pathname = "/";
     navigation.push.mockReset();
+    window.history.replaceState({}, "", "/");
     animationCancels.length = 0;
     sessionStorage.clear();
     coverGeometry = domRect(40, 160, 900, 600);
@@ -130,6 +131,10 @@ describe("ProjectEnterTransition", () => {
         };
       }),
     });
+    Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
+      configurable: true,
+      value: vi.fn(),
+    });
   });
 
   afterEach(() => {
@@ -157,6 +162,429 @@ describe("ProjectEnterTransition", () => {
     expect(document.querySelector(".project-enter-overlay")).not.toBeNull();
     expect(document.querySelector(".project-enter-backdrop")).not.toBeNull();
     expect(navigation.push).toHaveBeenCalledWith("/work/fresh-greens");
+  });
+
+  it("makes the routed surface inert while the transition overlay is active", async () => {
+    render(
+      <ProjectEnterTransition>
+        <main>
+          <button type="button">Underlying route action</button>
+        </main>
+      </ProjectEnterTransition>,
+    );
+
+    const routeSurface = document.querySelector("[data-project-route-surface]");
+    expect(routeSurface).not.toHaveAttribute("inert");
+    expect(routeSurface).not.toHaveAttribute("aria-hidden");
+
+    await act(async () => {
+      request({
+        slug: "fresh-greens",
+        href: "/work/fresh-greens",
+        rect,
+        visual: { type: "image", src: "/projects/fresh-greens/cover.png" },
+        borderRadius: "0.75rem",
+      });
+      await Promise.resolve();
+    });
+
+    expect(routeSurface).toHaveAttribute("inert");
+    expect(routeSurface).toHaveAttribute("aria-hidden", "true");
+
+    fireEvent.keyDown(window, { key: "Escape" });
+    expect(routeSurface).not.toHaveAttribute("inert");
+    expect(routeSurface).not.toHaveAttribute("aria-hidden");
+  });
+
+  it("expires a failed route intent so later navigation still receives focus", async () => {
+    const { rerender } = render(
+      <ProjectEnterTransition>
+        <main id="main-content">
+          <h1>Homepage</h1>
+        </main>
+      </ProjectEnterTransition>,
+    );
+
+    await act(async () => {
+      request({
+        slug: "fresh-greens",
+        href: "/work/fresh-greens",
+        rect,
+        visual: { type: "image", src: "/projects/fresh-greens/cover.png" },
+        borderRadius: "0.75rem",
+      });
+      await Promise.resolve();
+    });
+
+    await act(async () => {
+      vi.advanceTimersByTime(4_500);
+      await Promise.resolve();
+    });
+    expect(document.querySelector(".project-enter-overlay")).toBeNull();
+
+    navigation.pathname = "/about";
+    await act(async () => {
+      rerender(
+        <ProjectEnterTransition>
+          <main id="main-content">
+            <h1>About Myles</h1>
+          </main>
+        </ProjectEnterTransition>,
+      );
+      await Promise.resolve();
+    });
+
+    expect(screen.getByRole("main")).toHaveFocus();
+    expect(screen.getByRole("status")).toHaveTextContent("About Myles");
+  });
+
+  it("expires a failed reduced-motion route intent", async () => {
+    vi.mocked(window.matchMedia).mockReturnValue({ matches: true } as MediaQueryList);
+    const { rerender } = render(
+      <ProjectEnterTransition>
+        <main id="main-content">
+          <h1>Homepage</h1>
+        </main>
+      </ProjectEnterTransition>,
+    );
+
+    await act(async () => {
+      request({
+        slug: "fresh-greens",
+        href: "/work/fresh-greens",
+        rect,
+        visual: { type: "image", src: "/projects/fresh-greens/cover.png" },
+        borderRadius: "0.75rem",
+      });
+    });
+    expect(document.querySelector(".project-enter-overlay")).toBeNull();
+
+    await act(async () => {
+      vi.advanceTimersByTime(4_500);
+      await Promise.resolve();
+    });
+
+    navigation.pathname = "/about";
+    await act(async () => {
+      rerender(
+        <ProjectEnterTransition>
+          <main id="main-content">
+            <h1>About Myles</h1>
+          </main>
+        </ProjectEnterTransition>,
+      );
+      await Promise.resolve();
+    });
+
+    expect(screen.getByRole("main")).toHaveFocus();
+    expect(screen.getByRole("status")).toHaveTextContent("About Myles");
+  });
+
+  it("politely announces the destination title only after the enter transition settles", async () => {
+    const { rerender } = render(
+      <ProjectEnterTransition>
+        <main id="main-content">Homepage</main>
+      </ProjectEnterTransition>,
+    );
+
+    const status = screen.getByRole("status");
+    expect(status).toHaveAttribute("aria-live", "polite");
+    expect(status).toHaveAttribute("aria-atomic", "true");
+    expect(status).toBeEmptyDOMElement();
+
+    await act(async () => {
+      request({
+        slug: "fresh-greens",
+        href: "/work/fresh-greens",
+        rect,
+        visual: { type: "image", src: "/projects/fresh-greens/cover.png" },
+        borderRadius: "12px",
+      });
+      await Promise.resolve();
+    });
+
+    navigation.pathname = "/work/fresh-greens";
+    await act(async () => {
+      rerender(
+        <ProjectEnterTransition>
+          <main
+            id="main-content"
+            className="project-page"
+            data-project-slug="fresh-greens"
+          >
+            <h1>Fresh Greens</h1>
+            <figure data-project-enter-cover />
+          </main>
+        </ProjectEnterTransition>,
+      );
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+
+    expect(status).toBeEmptyDOMElement();
+    fireEvent.keyDown(window, { key: "Escape" });
+    expect(screen.getByRole("status")).toHaveTextContent("Fresh Greens");
+  });
+
+  it("moves focus from the removed project trigger to the destination main after settling", async () => {
+    const { rerender } = render(
+      <ProjectEnterTransition>
+        <main id="main-content">
+          <button type="button">Open Fresh Greens</button>
+        </main>
+      </ProjectEnterTransition>,
+    );
+    screen.getByRole("button", { name: "Open Fresh Greens" }).focus();
+
+    await act(async () => {
+      request({
+        slug: "fresh-greens",
+        href: "/work/fresh-greens",
+        rect,
+        visual: { type: "image", src: "/projects/fresh-greens/cover.png" },
+        borderRadius: "12px",
+      });
+      await Promise.resolve();
+    });
+
+    navigation.pathname = "/work/fresh-greens";
+    await act(async () => {
+      rerender(
+        <ProjectEnterTransition>
+          <main
+            id="main-content"
+            className="project-page"
+            data-project-slug="fresh-greens"
+          >
+            <h1>Fresh Greens</h1>
+            <figure data-project-enter-cover />
+          </main>
+        </ProjectEnterTransition>,
+      );
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+
+    const destination = screen.getByRole("main", { hidden: true });
+    expect(destination).not.toHaveFocus();
+    fireEvent.keyDown(window, { key: "Escape" });
+    expect(destination).toHaveFocus();
+    expect(destination).toHaveAttribute("tabindex", "-1");
+  });
+
+  it("restores focus to the originating project trigger after the return settles", async () => {
+    navigation.pathname = "/work/fresh-greens";
+    const { rerender } = render(
+      <ProjectEnterTransition>
+        <main
+          id="main-content"
+          className="project-page"
+          data-project-slug="fresh-greens"
+        >
+          <h1>Fresh Greens</h1>
+          <figure data-project-enter-cover />
+        </main>
+      </ProjectEnterTransition>,
+    );
+
+    await act(async () => {
+      requestReturn();
+      await Promise.resolve();
+    });
+
+    navigation.pathname = "/";
+    await act(async () => {
+      rerender(
+        <ProjectEnterTransition>
+          <main id="main-content">
+            <h1>Myles Ashitey</h1>
+            <section data-m97-program-window="fresh-greens" tabIndex={-1}>
+              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+              <a href="/work/fresh-greens">Read Fresh Greens case study</a>
+            </section>
+          </main>
+        </ProjectEnterTransition>,
+      );
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+
+    const trigger = screen.getByRole("link", {
+      name: "Read Fresh Greens case study",
+      hidden: true,
+    });
+    expect(trigger).not.toHaveFocus();
+    await act(async () => {
+      fireEvent.keyDown(window, { key: "Escape" });
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+    expect(trigger).toHaveFocus();
+    expect(screen.getByRole("status")).toHaveTextContent("Myles Ashitey");
+  });
+
+  it("restores focus to Selected Work even when its project preview is already open", async () => {
+    navigation.pathname = "/work/fresh-greens";
+    const { rerender } = render(
+      <ProjectEnterTransition>
+        <main id="main-content" className="project-page" data-project-slug="fresh-greens">
+          <h1>Fresh Greens</h1>
+          <figure data-project-enter-cover />
+        </main>
+      </ProjectEnterTransition>,
+    );
+
+    await act(async () => {
+      requestReturn({ ...returnSnapshot, returnTarget: "selected-work" });
+      await Promise.resolve();
+    });
+
+    navigation.pathname = "/";
+    await act(async () => {
+      rerender(
+        <ProjectEnterTransition>
+          <main id="main-content">
+            <h1>Myles Ashitey</h1>
+            <section data-m97-program-window="fresh-greens" tabIndex={-1}>
+              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+              <a href="/work/fresh-greens">Preview-window case-study link</a>
+            </section>
+            <section data-m97-program-window="selected-work">
+              <article data-m97-selected-work-project="fresh-greens">
+                {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+                <a href="/work/fresh-greens">Read Fresh Greens case study</a>
+              </article>
+            </section>
+          </main>
+        </ProjectEnterTransition>,
+      );
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+
+    const trigger = screen.getByRole("link", {
+      name: "Read Fresh Greens case study",
+      hidden: true,
+    });
+    await act(async () => {
+      fireEvent.keyDown(window, { key: "Escape" });
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+    expect(trigger).toHaveFocus();
+  });
+
+  it("uses the newest route intent when a second request interrupts the transition", async () => {
+    const { rerender } = render(
+      <ProjectEnterTransition>
+        <main id="main-content">Homepage</main>
+      </ProjectEnterTransition>,
+    );
+
+    await act(async () => {
+      request({
+        slug: "fresh-greens",
+        href: "/work/fresh-greens",
+        rect,
+        visual: { type: "image", src: "/projects/fresh-greens/cover.png" },
+        borderRadius: "12px",
+      });
+      await Promise.resolve();
+    });
+    await act(async () => {
+      request({
+        slug: "navi",
+        href: "/work/navi",
+        rect: { ...rect, left: 160 },
+        visual: { type: "image", src: "/projects/navi/cover.png" },
+        borderRadius: "0px",
+      });
+      await Promise.resolve();
+    });
+
+    expect(navigation.push.mock.calls).toEqual([
+      ["/work/fresh-greens"],
+      ["/work/navi"],
+    ]);
+
+    fireEvent.keyDown(window, { key: "Escape" });
+    expect(document.querySelector(".project-enter-overlay")).toBeNull();
+
+    navigation.pathname = "/work/fresh-greens";
+    await act(async () => {
+      rerender(
+        <ProjectEnterTransition>
+          <main
+            id="main-content"
+            className="project-page"
+            data-project-slug="fresh-greens"
+          >
+            <h1>Fresh Greens</h1>
+            <figure data-project-enter-cover />
+          </main>
+        </ProjectEnterTransition>,
+      );
+      await Promise.resolve();
+    });
+
+    expect(screen.getByRole("main")).not.toHaveFocus();
+    expect(screen.getByRole("status")).toBeEmptyDOMElement();
+
+    navigation.pathname = "/work/navi";
+    await act(async () => {
+      rerender(
+        <ProjectEnterTransition>
+          <main id="main-content" className="project-page" data-project-slug="navi">
+            <h1>Navi</h1>
+            <figure data-project-enter-cover />
+          </main>
+        </ProjectEnterTransition>,
+      );
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+
+    expect(screen.getByRole("main")).toHaveFocus();
+    expect(screen.getByRole("status")).toHaveTextContent("Navi");
+  });
+
+  it("keeps the requested route and focuses it when Escape skips animation before arrival", async () => {
+    const { rerender } = render(
+      <ProjectEnterTransition>
+        <main id="main-content">Homepage</main>
+      </ProjectEnterTransition>,
+    );
+
+    await act(async () => {
+      request({
+        slug: "fresh-greens",
+        href: "/work/fresh-greens",
+        rect,
+        visual: { type: "image", src: "/projects/fresh-greens/cover.png" },
+        borderRadius: "12px",
+      });
+      await Promise.resolve();
+    });
+    fireEvent.keyDown(window, { key: "Escape" });
+
+    expect(navigation.push).toHaveBeenLastCalledWith("/work/fresh-greens");
+    expect(document.querySelector(".project-enter-overlay")).toBeNull();
+
+    navigation.pathname = "/work/fresh-greens";
+    await act(async () => {
+      rerender(
+        <ProjectEnterTransition>
+          <main id="main-content" className="project-page" data-project-slug="fresh-greens">
+            <h1>Fresh Greens</h1>
+            <figure data-project-enter-cover />
+          </main>
+        </ProjectEnterTransition>,
+      );
+      await Promise.resolve();
+    });
+
+    expect(screen.getByRole("main")).toHaveFocus();
+    expect(screen.getByRole("status")).toHaveTextContent("Fresh Greens");
   });
 
   it("renders a structured Myles 97 program instead of serializing the source DOM", async () => {
@@ -531,6 +959,143 @@ describe("ProjectEnterTransition", () => {
     expect(document.querySelector(".project-enter-overlay")).toBeNull();
   });
 
+  it("uses direct return navigation for an app-level reduced-motion snapshot", async () => {
+    render(
+      <ProjectEnterTransition>
+        <main>Current route</main>
+      </ProjectEnterTransition>,
+    );
+
+    await act(async () => {
+      requestReturn({ ...returnSnapshot, reduceMotion: true });
+    });
+
+    expect(navigation.push).toHaveBeenCalledWith("/");
+    expect(document.querySelector(".project-enter-overlay")).toBeNull();
+  });
+
+  it("uses direct enter navigation for an app-level reduced-motion request", async () => {
+    render(
+      <ProjectEnterTransition>
+        <main>Current route</main>
+      </ProjectEnterTransition>,
+    );
+
+    await act(async () => {
+      request({
+        slug: "fresh-greens",
+        href: "/work/fresh-greens",
+        rect,
+        visual: programVisual,
+        borderRadius: "0px",
+        reduceMotion: true,
+      });
+    });
+
+    expect(navigation.push).toHaveBeenCalledWith("/work/fresh-greens");
+    expect(document.querySelector(".project-enter-overlay")).toBeNull();
+  });
+
+  it("uses controller-owned direct navigation when a source cannot animate truthfully", async () => {
+    render(
+      <ProjectEnterTransition>
+        <main>Current route</main>
+      </ProjectEnterTransition>,
+    );
+
+    await act(async () => {
+      request({
+        slug: "fresh-greens",
+        href: "/work/fresh-greens",
+        rect,
+        visual: programVisual,
+        borderRadius: "0px",
+        animate: false,
+      });
+    });
+
+    expect(navigation.push).toHaveBeenCalledWith("/work/fresh-greens");
+    expect(document.querySelector(".project-enter-overlay")).toBeNull();
+  });
+
+  it("uses controller-owned direct return for a non-animated origin", async () => {
+    render(
+      <ProjectEnterTransition>
+        <main>Current route</main>
+      </ProjectEnterTransition>,
+    );
+
+    await act(async () => {
+      requestReturn({ ...returnSnapshot, animate: false });
+    });
+
+    expect(navigation.push).toHaveBeenCalledWith("/");
+    expect(document.querySelector(".project-enter-overlay")).toBeNull();
+  });
+
+  it("waits for a persisted program window before restoring direct-return focus", async () => {
+    const frames: FrameRequestCallback[] = [];
+    vi.mocked(window.requestAnimationFrame).mockImplementation((callback) => {
+      frames.push(callback);
+      return frames.length;
+    });
+    navigation.pathname = "/work/fresh-greens";
+    const { rerender } = render(
+      <ProjectEnterTransition>
+        <main id="main-content">
+          <h1>Fresh Greens</h1>
+        </main>
+      </ProjectEnterTransition>,
+    );
+
+    await act(async () => {
+      requestReturn({ ...returnSnapshot, animate: false });
+      await Promise.resolve();
+    });
+
+    navigation.pathname = "/";
+    rerender(
+      <ProjectEnterTransition>
+        <main id="main-content">
+          <h1>Myles Ashitey</h1>
+        </main>
+      </ProjectEnterTransition>,
+    );
+
+    await act(async () => {
+      frames.shift()?.(0);
+      await Promise.resolve();
+    });
+    expect(screen.getByRole("main")).not.toHaveFocus();
+
+    rerender(
+      <ProjectEnterTransition>
+        <main id="main-content">
+          <h1>Myles Ashitey</h1>
+          <section data-m97-program-window="fresh-greens">
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+            <a href="/work/fresh-greens">Read Fresh Greens case study</a>
+          </section>
+        </main>
+      </ProjectEnterTransition>,
+    );
+
+    await act(async () => {
+      while (frames.length > 0) frames.shift()?.(0);
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+
+    expect(
+      screen.getByRole("link", { name: "Read Fresh Greens case study" }),
+    ).toHaveFocus();
+    expect(HTMLElement.prototype.scrollIntoView).toHaveBeenCalledWith({
+      block: "nearest",
+      inline: "nearest",
+    });
+    expect(screen.getByRole("status")).toHaveTextContent("Myles Ashitey");
+  });
+
   it("carries the live TikTok cover treatment instead of a static image", async () => {
     render(
       <ProjectEnterTransition>
@@ -553,7 +1118,7 @@ describe("ProjectEnterTransition", () => {
     expect(document.querySelector(".project-enter-image")).toBeNull();
   });
 
-  it("uses a stored snapshot for browser Back only on the exact case-study route", async () => {
+  it("uses a stored snapshot only when browser Back reaches the homepage", async () => {
     saveProjectReturnSnapshot(returnSnapshot);
     navigation.pathname = "/work/fresh-greens";
     const { rerender } = render(
@@ -564,6 +1129,11 @@ describe("ProjectEnterTransition", () => {
       </ProjectEnterTransition>,
     );
 
+    window.history.replaceState({}, "", "/work/fresh-greens#fg-plan");
+    fireEvent.popState(window);
+    expect(document.querySelector(".project-enter-overlay")).toBeNull();
+
+    window.history.replaceState({}, "", "/");
     fireEvent.popState(window);
     expect(document.querySelector(".project-enter-overlay")).toHaveAttribute(
       "data-direction",

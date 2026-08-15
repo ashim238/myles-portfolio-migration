@@ -67,14 +67,13 @@ export function PivotJourney() {
             </PhoneFrame>
           </div>
           <p className="fg-pivot-caption">
-            I first added the safety layer to Google Maps. It put controls on the
-            map, but those signals still felt secondary and route comparison had
-            no structure of its own.
+            I first put Fresh Greens inside Google Maps. The safety criteria
+            were there, but Google&apos;s route still controlled the screen.
           </p>
         </li>
 
         <li className="fg-pivot-step fg-pivot-step--v2">
-          <p className="fg-pivot-step-label">The final</p>
+          <p className="fg-pivot-step-label">Standalone app</p>
           <div className="fg-pivot-phone">
             <PhoneFrame variant="screenshot">
               <ExpandableImage
@@ -88,10 +87,8 @@ export function PivotJourney() {
             </PhoneFrame>
           </div>
           <p className="fg-pivot-caption">
-            The standalone preview puts daylight, route status, and trusted
-            places at the choice point. Reserved safety colors keep warnings
-            distinct, while the sun-to-moon route shows how light changes before
-            arrival.
+            The standalone preview lets the driver compare daylight, route
+            conditions, and trusted places before choosing.
           </p>
         </li>
       </ol>

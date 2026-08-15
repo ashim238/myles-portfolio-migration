@@ -14,6 +14,7 @@ const expectedImports = [
   '@import "./styles/myles-97-pocket.css";',
   '@import "./styles/myles-98-polish.css";',
   '@import "./styles/myles-98-paper-contrast.css";',
+  '@import "./styles/accessibility-preferences.css";',
 ];
 
 const sections = [
@@ -28,6 +29,7 @@ const sections = [
   ["styles/myles-97-pocket.css", "Pocket 97 capability-led mobile shell"],
   ["styles/myles-98-polish.css", "Myles 98 recording-review polish"],
   ["styles/myles-98-paper-contrast.css", "Paper-backed Myles 98 surfaces"],
+  ["styles/accessibility-preferences.css", "Preference-specific chrome corrections"],
 ] as const;
 
 describe("global stylesheet boundaries", () => {

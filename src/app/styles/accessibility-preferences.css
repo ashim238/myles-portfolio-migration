@@ -1,0 +1,208 @@
+/* Preference-specific chrome corrections. These are intentionally isolated
+   from the default Myles 98 and Reader art direction. */
+
+.myles97-desktop-stage {
+  display: contents;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  :is(
+    .myles97-taskbar,
+    .myles97-start-menu,
+    .myles98-document-header,
+    .pocket97-dock,
+    .pocket97-sheet,
+    .reader-header,
+    .reader-mode.reader-mode .project-toc,
+    .mobile-nav
+  ) {
+    backdrop-filter: none !important;
+  }
+
+  :is(
+    .myles97-taskbar,
+    .myles97-start-menu,
+    .myles98-document-header,
+    .pocket97-dock,
+    .pocket97-sheet,
+    .reader-header
+  ) {
+    background: var(--m97-chrome);
+  }
+
+  .reader-mode.reader-mode .project-toc {
+    background: var(--m97-paper) !important;
+  }
+
+  .mobile-nav {
+    background: var(--background);
+  }
+}
+
+/* Older WebKit exposes only the prefixed property. Keep that fallback in a
+   separate conditional rule so the production CSS transform cannot collapse
+   the standard override into a prefixed-only declaration. */
+@supports (-webkit-backdrop-filter: none) and (not (backdrop-filter: none)) {
+  @media (prefers-reduced-transparency: reduce) {
+    :is(
+      .myles97-taskbar,
+      .myles97-start-menu,
+      .myles98-document-header,
+      .pocket97-dock,
+      .pocket97-sheet,
+      .reader-header,
+      .reader-mode.reader-mode .project-toc,
+      .mobile-nav
+    ) {
+      -webkit-backdrop-filter: none !important;
+    }
+  }
+}
+
+@media (prefers-contrast: more) {
+  :is(
+    .myles97-taskbar,
+    .myles97-start-menu,
+    .myles98-document-header,
+    .pocket97-dock,
+    .pocket97-sheet,
+    .reader-header
+  ) {
+    border-color: var(--m97-ink);
+    background: var(--m97-chrome);
+  }
+
+  :is(.myles97-taskbar, .pocket97-dock, .mobile-nav) {
+    border-top-width: 3px;
+    border-top-color: currentColor;
+  }
+
+  :is(.reader-header, .myles98-document-header) {
+    border-bottom-width: 3px;
+    border-bottom-color: currentColor;
+  }
+
+  :is(.myles97-start-menu, .pocket97-sheet) {
+    border-width: 3px;
+  }
+
+  .reader-mode.reader-mode .project-toc {
+    border: 2px solid var(--m97-reader-ink);
+    background: var(--m97-paper);
+  }
+
+  .mobile-nav {
+    background: var(--background);
+  }
+
+  :is(
+    .myles97-taskbar,
+    .myles97-start-menu,
+    .myles98-system-document,
+    .pocket97-shell,
+    .reader-header,
+    .reader-mode,
+    .mobile-nav
+  ) :is(a, button, input, select, textarea):focus-visible {
+    outline-width: 4px;
+    outline-style: solid;
+    outline-offset: 3px;
+  }
+
+  .reader-mode.reader-mode
+    :is(a, button, input, select, textarea):focus-visible {
+    outline-width: 4px;
+    outline-style: solid;
+    outline-offset: 3px;
+  }
+
+  .myles97-task-button[data-focused="true"],
+  .myles97-start-button[aria-expanded="true"] {
+    box-shadow:
+      var(--m97-bevel-recessed, inset 1px 1px 0 rgb(17 17 17 / 60%)),
+      inset 0 0 0 2px currentColor;
+  }
+
+  :is(
+    .pocket97-dock button[aria-expanded="true"],
+    .reader-mode.reader-mode .project-toc-link--active,
+    .reader-mode.reader-mode .project-toc-toggle[aria-expanded="true"],
+    .mobile-nav-item--active
+  ) {
+    box-shadow: inset 0 0 0 2px currentColor;
+  }
+}
+
+@media (forced-colors: active) {
+  .reader-mode.reader-mode .project-toc {
+    border-color: CanvasText !important;
+    background: Canvas !important;
+    color: CanvasText !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+}
+
+@media print {
+  .myles98-document-header,
+  .myles98-document-statusbar {
+    display: none !important;
+  }
+
+  .myles98-document-canvas {
+    display: block;
+    min-height: 0;
+    padding: 0;
+    background: #fff !important;
+    color: #171717;
+  }
+
+  .myles98-document-window {
+    display: block;
+    width: auto;
+    min-height: 0;
+    margin: 0;
+    border: 0;
+    background: #fff;
+    box-shadow: none;
+  }
+
+  .myles98-system-document.myles98-system-document {
+    width: auto;
+    max-width: none;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    background: #fff !important;
+    color: #171717;
+    box-shadow: none;
+  }
+
+  .myles98-system-document .resume-aside {
+    margin-top: 3mm;
+    padding: 2.3mm 0 0;
+    border: 0;
+    border-top: 0.5pt solid #bdbdbd;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .myles98-system-document .resume-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.4mm 5mm;
+    border: 0;
+    background: transparent;
+  }
+
+  .myles98-system-document .resume-detail {
+    display: flex;
+    gap: 1.5mm;
+    padding: 0;
+    border: 0;
+  }
+
+  .myles98-system-document .resume-detail:first-child {
+    display: none;
+  }
+}

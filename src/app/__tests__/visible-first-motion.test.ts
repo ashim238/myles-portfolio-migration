@@ -101,6 +101,21 @@ describe("visible-first structural motion", () => {
     expect(surfaceStyles).not.toContain("@keyframes uf-template-sweep");
   });
 
+  it("keeps Fresh Greens, TikTok, and Navi evidence copy visible throughout motion", () => {
+    const freshPivotPending = cssBlock(
+      '.fg-pivot[data-reveal="pending"] .fg-pivot-step',
+      lateStyles,
+    );
+    const naviPending = cssBlock(
+      ".nv-page[data-nv-anim-ready] .nv-reveal:not(.nv-reveal--visible)",
+      surfaceStyles,
+    );
+
+    expect(freshPivotPending).toMatch(/opacity:\s*1;/);
+    expectVisibleFirst("tt-outcome-arrive", surfaceStyles);
+    expect(naviPending).toMatch(/opacity:\s*1;/);
+  });
+
   it("only animates Fresh Greens panels after progressive enhancement", () => {
     const noPreference = cssBlocks(
       "@media (prefers-reduced-motion: no-preference)",

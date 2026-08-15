@@ -108,7 +108,7 @@ describe("public route metadata", () => {
       metadata: freshGreensMetadata,
       title: "Fresh Greens",
       description:
-        "A wayfinding app for Black drivers that brings community safety knowledge into route planning alongside public map data.",
+        "Fresh Greens is a working React Native navigation prototype for Black drivers, based on interviews with six Black drivers across the South.",
       image: "/projects/fresh-greens/cover.png",
     },
     {
@@ -124,7 +124,7 @@ describe("public route metadata", () => {
       metadata: understandingFafsaMetadata,
       title: "UnderstandingFAFSA",
       description:
-        "Built a modular newsletter system for a site rebrand. The first redesigned send had an observed ~52.6% open rate with Mailchimp Privacy Protection excluded. This was not a controlled attribution test.",
+        "Built a Mailchimp-native newsletter kit the founder has used for roughly 20 sends. The first redesigned send had an observed ~52.6% open rate with Mailchimp Privacy Protection excluded. This wasn't a controlled attribution test.",
       image: "/projects/understandingfafsa/cover.png",
     },
   ])("publishes route-aware social metadata for $path", (route) => {
@@ -137,8 +137,8 @@ describe("public route metadata", () => {
       metadata: await generateTikTokMetadata(),
       title: "TikTok Dynamic Showcase Ads",
       description:
-        "Static catalog templates designed for TikTok's Dynamic Showcase Ads during a 2021 Global Creative Lab internship. Light Academia shipped in the launch library.",
-      image: "/projects/tiktok/lofi-dopamine.png",
+        "Three static fashion catalog templates designed for TikTok's Dynamic Showcase Ads during a 2021 Global Creative Lab internship. Light Academia entered the launch library.",
+      image: "/projects/tiktok/cover-phone-mockup.jpg",
     });
   });
 

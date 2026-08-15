@@ -4,7 +4,7 @@ import * as tiktokData from "@/lib/tiktok-data";
 type PreviewTemplate = {
   key: string;
   name: string;
-  shipped: boolean;
+  launchLibraryStatus: "confirmed" | "unknown";
   iterationNote: string;
   regionOverlays: Partial<
     Record<
@@ -29,16 +29,21 @@ describe("TikTok preview template data", () => {
     ]);
   });
 
-  it("marks only Light Academia as shipped", () => {
+  it("distinguishes a confirmed launch-library result from unknown outcomes", () => {
     expect(templates).toBeDefined();
     expect(
-      templates?.filter((template) => template.shipped),
+      templates?.map(({ key, launchLibraryStatus }) => ({
+        key,
+        launchLibraryStatus,
+      })),
     ).toEqual([
-      expect.objectContaining({
-        key: "lightacademia",
-        name: "#LightAcademia",
-      }),
+      { key: "dopamine", launchLibraryStatus: "unknown" },
+      { key: "eboy", launchLibraryStatus: "unknown" },
+      { key: "lightacademia", launchLibraryStatus: "confirmed" },
     ]);
+    for (const template of templates ?? []) {
+      expect(template).not.toHaveProperty("shipped");
+    }
   });
 
   it("keeps paraphrased GCL feedback as iteration notes", () => {
@@ -47,6 +52,26 @@ describe("TikTok preview template data", () => {
       expect(template).toHaveProperty("iterationNote");
       expect(template).not.toHaveProperty("feedbackQuote");
     }
+  });
+
+  it("keeps the approved source-bounded iteration notes stable", () => {
+    expect(templates?.map(({ key, iterationNote }) => ({ key, iterationNote }))).toEqual([
+      {
+        key: "dopamine",
+        iterationNote:
+          "The sketch explores brand colors and copy such as #OOTD. I rejected the direction once the copy felt like it was trying too hard to belong and the visuals felt too TikTok-branded.",
+      },
+      {
+        key: "eboy",
+        iterationNote:
+          "The notes warned that the direction might stray too far from the guidelines. I was asked to build it out and find a way to make the nearly colorless treatment appealing.",
+      },
+      {
+        key: "lightacademia",
+        iterationNote:
+          "The sketch records the internal critique that shaped the final Light Academia direction.",
+      },
+    ]);
   });
 
   it("stores source-aligned region geometry with each artifact", () => {

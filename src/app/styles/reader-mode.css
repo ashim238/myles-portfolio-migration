@@ -317,6 +317,15 @@
   .reader-mode.reader-mode .project-opening-facts-action-label {
     grid-column: 1 / -1;
   }
+
+  .reader-mode.reader-mode.uf-page .project-opening-facts-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem 0.9rem;
+  }
+
+  .reader-mode.reader-mode.uf-page .project-opening-facts-row:last-child {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (max-width: 420px) {

@@ -14,6 +14,10 @@ const polishStyles = readFileSync(
   resolve(process.cwd(), "src/app/styles/late-polish.css"),
   "utf8",
 );
+const myles98PolishStyles = readFileSync(
+  resolve(process.cwd(), "src/app/styles/myles-98-polish.css"),
+  "utf8",
+);
 const freshGreensComponents = readFileSync(
   resolve(process.cwd(), "src/components/fresh-greens.tsx"),
   "utf8",
@@ -341,26 +345,34 @@ describe("portfolio artifact accessibility styles", () => {
     expect(declarationBlock(".uf-composer-btn")).toContain("min-height: 44px");
   });
 
-  it("gives coarse pointers 44px controls independent of viewport width", () => {
+  it("gives small viewports and coarse pointers 44px controls", () => {
     expect(styles).toMatch(
-      /@media \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.color-swatch,[\s\S]*?\.fg-synth-tab,[\s\S]*?\.fg-pulled-tab,[\s\S]*?\.project-toc-link\s*\{[\s\S]*?min-height: 44px;/,
+      /@media \(max-width: 640px\), \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.color-swatch,[\s\S]*?\.fg-synth-tab,[\s\S]*?\.fg-pulled-tab,[\s\S]*?\.project-toc-link\s*\{[\s\S]*?min-height: 44px;/,
     );
     expect(styles).toMatch(
-      /@media \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.color-swatch\s*\{[\s\S]*?min-width: 44px;/,
+      /@media \(max-width: 640px\), \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.color-swatch\s*\{[\s\S]*?min-width: 44px;/,
     );
     expect(styles).toMatch(
-      /@media \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.uf-chip,[\s\S]*?\.uf-segment,[\s\S]*?\.uf-lock-palette-swatch\s*\{[\s\S]*?min-height: 44px;/,
+      /@media \(max-width: 640px\), \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.uf-chip,[\s\S]*?\.uf-segment,[\s\S]*?\.uf-lock-palette-swatch\s*\{[\s\S]*?min-height: 44px;/,
     );
     expect(styles).toMatch(
-      /@media \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.uf-lock-palette-swatch\s*\{[\s\S]*?min-width: 44px;/,
+      /@media \(max-width: 640px\), \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.uf-lock-palette-swatch\s*\{[\s\S]*?min-width: 44px;/,
     );
     const evidenceLinkTargets = styles.match(
-      /@media \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.about-detail dd a,[\s\S]*?\.nv-page \.project-section-body a,[\s\S]*?\.nv-closing-links a,[\s\S]*?\.uf-before-after-item a,[\s\S]*?\.uf-switcher > a\s*\{([^}]*)\}/,
+      /@media \(max-width: 640px\), \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.about-detail dd a,[\s\S]*?\.nv-system-proof-links a,[\s\S]*?\.nv-closing-links a,[\s\S]*?\.uf-before-after-item a,[\s\S]*?\.uf-switcher > a\s*\{([^}]*)\}/,
     )?.[1];
 
     expect(evidenceLinkTargets).toContain("display: inline-flex");
     expect(evidenceLinkTargets).toContain("min-height: 44px");
     expect(evidenceLinkTargets).toContain("align-items: center");
+
+    const resumeLinkTargets = myles98PolishStyles.match(
+      /@media \(max-width: 640px\), \(pointer: coarse\), \(any-pointer: coarse\)[\s\S]*?\.myles98-system-document \.resume-detail dd a,[\s\S]*?\.myles98-system-document \.resume-role-title a\s*\{([^}]*)\}/,
+    )?.[1];
+
+    expect(resumeLinkTargets).toContain("display: inline-flex");
+    expect(resumeLinkTargets).toContain("min-height: 44px");
+    expect(resumeLinkTargets).toContain("align-items: center");
   });
 
   it("uses a complete boundary instead of a colored side stripe on the reminder permission", () => {

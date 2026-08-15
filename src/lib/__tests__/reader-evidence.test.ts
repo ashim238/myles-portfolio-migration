@@ -9,6 +9,7 @@ import {
   EVIDENCE_STATES,
   READER_EVIDENCE_MAPS,
   getChapterEvidence,
+  getEvidenceStateLabel,
   type ChapterEvidenceMap,
 } from "@/lib/reader-evidence";
 
@@ -105,5 +106,69 @@ describe("Reader evidence maps", () => {
         },
       ],
     });
+  });
+
+  it("keeps Fresh Greens report attribution scoped to non-anonymous reports", () => {
+    const trust = getChapterEvidence("fresh-greens", "fg-trust");
+
+    expect(trust.dominantClaim).toContain(
+      "other reports retain only current-account ownership",
+    );
+    expect(trust.dominantClaim).toContain(
+      "Sensitive reports omit attribution",
+    );
+    expect(trust.dominantClaim).not.toContain(
+      "Each report stays tied to a place, category, and contributor's account",
+    );
+  });
+
+  it("keeps FAFSA middle-module order swappable while the frame stays locked", () => {
+    const locked = getChapterEvidence("understandingfafsa", "uf-locked");
+
+    expect(locked.interpretation).toContain("middle-module order can change");
+    expect(locked.interpretation).toContain("Header and footer placement");
+    expect(locked.interpretation).not.toContain("Section order");
+    expect(locked.caveat).toBe(
+      "The interactive switcher shows the weekly and event templates, not the welcome email.",
+    );
+
+    const implementation = getChapterEvidence(
+      "understandingfafsa",
+      "uf-figma",
+    );
+    expect(implementation.dominantClaim).toBe(
+      "Practice sends exposed Gmail's 102 KB clipping threshold and dark-mode inversion before launch.",
+    );
+    expect(implementation.dominantClaim).not.toContain("stays editable");
+  });
+
+  it("labels the TikTok outcome as a confirmed launch-library result", () => {
+    const outcome = getChapterEvidence("tiktok", "tt-outcome");
+
+    expect(outcome).toMatchObject({
+      evidenceState: "confirmed",
+      dominantProof: {
+        label: "Critique, response, and launch-library sequence",
+      },
+      interpretation:
+        "The final direction records what changed during internal review. It does not show audience response.",
+    });
+    expect(getEvidenceStateLabel(outcome.evidenceState)).toBe("Confirmed");
+    expect(READER_EVIDENCE_MAPS.tiktok.portfolioSignal).toContain(
+      "confirmed launch-library artifact",
+    );
+    expect(outcome.dominantClaim).toBe(
+      "Light Academia was refined through internal critique and entered the launch library.",
+    );
+    expect(outcome.dominantClaim).not.toContain("the one template");
+  });
+
+  it("keeps Navi evidence summaries in Myles's first-person voice", () => {
+    const framework = getChapterEvidence("navi", "nv-framework");
+
+    expect(framework.interpretation).toBe(
+      "I used the personas and journey maps to adjust my teammate's original information architecture, then built the Figma design system.",
+    );
+    expect(framework.interpretation).not.toMatch(/^Myles\b/);
   });
 });

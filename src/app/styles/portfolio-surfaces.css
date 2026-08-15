@@ -2066,7 +2066,7 @@
 
 @keyframes tt-outcome-arrive {
   from {
-    opacity: 0.68;
+    opacity: 1;
     transform: translateY(8px);
   }
   to {
@@ -2866,7 +2866,7 @@
 }
 
 .nv-page[data-nv-anim-ready] .nv-reveal:not(.nv-reveal--visible) {
-  opacity: 0;
+  opacity: 1;
   transform: translateY(14px);
 }
 
@@ -5011,9 +5011,24 @@
 }
 
 /* ── Project TOC: staggered entrance ───────────────── */
+@keyframes project-toc-enter {
+  0% {
+    opacity: 1;
+    transform: translateY(18px);
+  }
+  55% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .project-toc-item {
-    animation: nv-hero-in 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: project-toc-enter 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
     animation-delay: calc(var(--toc-i, 0) * 0.06s + 0.2s);
   }
 }
@@ -5064,9 +5079,14 @@
 /* ── Project work jump: scroll-driven entrance ───────── */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .project-work-jump-card,
-    .project-work-jump-view-all {
+    .project-work-jump-card {
       animation: od-card-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 30%;
+    }
+
+    .project-work-jump-view-all {
+      animation: od-footer-in linear both;
       animation-timeline: view();
       animation-range: entry 0% cover 30%;
     }
@@ -5093,7 +5113,7 @@
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .resume-detail {
-      animation: od-card-rise linear both;
+      animation: od-footer-in linear both;
       animation-timeline: view();
       animation-range: entry 0% cover 40%;
     }
@@ -5691,7 +5711,7 @@
   text-align: center;
 }
 
-@media (pointer: coarse), (any-pointer: coarse) {
+@media (max-width: 640px), (pointer: coarse), (any-pointer: coarse) {
   .color-swatch,
   .fg-synth-tab,
   .fg-pulled-tab,
@@ -5714,7 +5734,7 @@
   }
 
   .about-detail dd a,
-  .nv-page .project-section-body a,
+  .nv-system-proof-links a,
   .nv-closing-links a,
   .uf-before-after-item a,
   .uf-switcher > a {

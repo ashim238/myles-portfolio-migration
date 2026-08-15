@@ -21,7 +21,7 @@ import { TIKTOK_TEMPLATES } from "@/lib/tiktok-data";
 import styles from "./tiktok-four-beat.module.css";
 
 const TIKTOK_DESCRIPTION =
-  "Static catalog templates designed for TikTok's Dynamic Showcase Ads during a 2021 Global Creative Lab internship. Light Academia shipped in the launch library.";
+  "Three static fashion catalog templates designed for TikTok's Dynamic Showcase Ads during a 2021 Global Creative Lab internship. Light Academia entered the launch library.";
 const chapters = CASE_STUDY_CHAPTERS.tiktok;
 const tiktokProof = {
   label: "Inspect the template system",
@@ -37,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: "TikTok Dynamic Showcase Ads",
       description: TIKTOK_DESCRIPTION,
       path: "/work/tiktok",
-      image: "/projects/tiktok/lofi-dopamine.png",
+      image: "/projects/tiktok/cover-phone-mockup.jpg",
       type: "article",
     }),
     robots: isPublic
@@ -81,26 +81,24 @@ export default async function TikTokPage() {
             TikTok Dynamic Showcase Ads
           </h1>
           <p className="project-hero-lede tt-lede">
-            During my 2021 internship with Global Creative Lab, I designed
-            three static catalog templates for TikTok&apos;s Dynamic Showcase
-            Ads. The product slot stayed fixed while the type, color, and
-            supporting graphics changed.
+            The templates needed to appeal to different styles and aesthetics,
+            so I had room to think outside the box.
           </p>
         </div>
       </header>
 
       <ProjectOpeningFacts
         role="Creative Strategist Intern · Global Creative Lab"
-        scope="I designed three static catalog templates for Dynamic Showcase Ads during my Global Creative Lab internship."
-        outcome="Light Academia was 1 of 3 templates shipped in the launch library."
+        scope="I designed three fashion catalog templates inside dimensions and product slots that were fixed before I received the brief."
+        outcome="Light Academia entered the launch library. I later learned through Global Creative Lab that American Eagle selected it."
         proof={tiktokProof}
       />
       <RecruiterCut
         timeline="May – August 2021"
         moves={[
-          "Studied Y2K, Maximalism, Dark Academia, WitchTok, and Cottagecore before choosing the final directions.",
-          "Used one product slot map across Dopamine Dressing, e-Boy/e-Girl, and Light Academia.",
-          "Built the files in parts and tested which elements could mix across directions.",
+          "Review: I showed early sketches in weekly GCL huddles and refined the directions through internal critique.",
+          "Research: market research and burner accounts helped me study how different TikTok subcultures presented themselves.",
+          "Boundary: the work was reviewed internally. I did not receive selection rationale, performance data, or the final fate of the other templates.",
         ]}
       />
 
@@ -115,11 +113,17 @@ export default async function TikTokPage() {
         <div className="project-section tt-section">
           <div className="project-section-body">
             <p>
-              I came into my 2021 Global Creative Lab internship knowing very
-              little about the client. The brief was to make static catalog
-              templates that could work across product categories while keeping
-              the product slots fixed. I used type, color, and supporting
-              graphics to give each direction its own visual logic.
+              The brief asked for three templates for clients in the fashion
+              vertical. Each one had to hold a fashion product catalog while
+              appealing to a different style or aesthetic, but the dimensions
+              and product slots were set in stone before I received the brief.
+              I could change the type, color, texture, and supporting graphics.
+            </p>
+            <p>
+              I showed my first sketches to my manager and other Global Creative
+              Lab members during our weekly GCL huddle. I think there was enough
+              variation between them that, even with critiques, the team liked
+              the overall direction.
             </p>
             <dl className={styles.briefFacts}>
               <div>
@@ -132,7 +136,7 @@ export default async function TikTokPage() {
               </div>
               <div>
                 <dt>Intended use</dt>
-                <dd>Reusable templates for brand catalog content</dd>
+                <dd>Reusable fashion catalog templates for clients</dd>
               </div>
               <div>
                 <dt>Deliverable</dt>
@@ -142,7 +146,7 @@ export default async function TikTokPage() {
               </div>
               <div>
                 <dt>Fixed parts</dt>
-                <dd>Product slots and the shared slot map</dd>
+                <dd>Template dimensions, product slots, and the shared slot map</dd>
               </div>
               <div>
                 <dt>Variable parts</dt>
@@ -162,13 +166,26 @@ export default async function TikTokPage() {
         <div className="project-section tt-section">
           <div className="project-section-body">
             <p>
-              I looked at TikTok subcultures because I needed to understand the
-              range of voices and perspectives on the platform. I compared Y2K,
-              Maximalism, Dark Academia, WitchTok, and Cottagecore through type,
-              color, texture, and imagery. The final directions had to make
-              sense for their audiences. Dopamine Dressing could stay closer to
-              TikTok&apos;s own visual language. e-Boy/e-Girl and Light Academia
-              could move farther away when the theme called for it.
+              One point the team drove home during the internship was that
+              TikTok tailors the feed to what someone engages with. No surprise
+              there. Some subcultures drew a bigger crowd than others. There was
+              no one subculture that wholly represented the site. That pushed me
+              toward looking at several of them.
+            </p>
+            <p>
+              I did traditional market research. I also made burner accounts and
+              changed what each one engaged with to see what surfaced. Within
+              each aesthetic, I looked at popular posts, how community members
+              talked to each other, and how prominent creators presented
+              themselves. I was looking for things I could mimic in a 2D design,
+              mainly color, type, and texture.
+            </p>
+            <p>
+              I compared Y2K, Maximalism, Dark Academia, WitchTok, and
+              Cottagecore before narrowing the work to Dopamine Dressing,
+              e-Boy/e-Girl, and Light Academia. The assignment only allowed
+              three templates, so I did have to flatten the aesthetics
+              somewhat.
             </p>
           </div>
         </div>
@@ -183,9 +200,15 @@ export default async function TikTokPage() {
         <div className="project-section tt-section tt-section--wide">
           <div className="project-section-body">
             <p>
-              I built each direction as a layered Photoshop file around the
-              same product-slot map. Type, color, texture, and supporting
-              graphics stayed on separate layers.
+              I rejected an early Dopamine Dressing route. The copy felt like it
+              was trying too hard to belong to the subculture, and the visuals
+              felt too TikTok-branded. At the end of the day, a business still
+              had to use the asset, so it needed to adapt to the client&apos;s needs.
+            </p>
+            <p>
+              Once the three directions were set, I built each one as a layered
+              Photoshop file around the same product-slot map. Type, color,
+              texture, and supporting graphics stayed on separate layers.
             </p>
           </div>
           <TikTokTemplateSystem />
@@ -200,15 +223,18 @@ export default async function TikTokPage() {
           <div className="tt-preview-process">
             <p className="tt-preview-process-lede">
               I started with loose sketches, then built each direction as a
-              layered Photoshop file. The notes below paraphrase feedback from
-              Global Creative Lab.
+              layered Photoshop file. I don&apos;t remember the exact critique
+              language, so the notes below paraphrase the feedback visible in
+              the sketches and what I remember from Global Creative Lab.
             </p>
             <div className="tt-preview-process-list">
               {TIKTOK_TEMPLATES.map((template) => (
                 <article key={template.key} className="tt-preview-process-card">
                   <header>
                     <h3>{template.name}</h3>
-                    {template.shipped ? <span>Shipped</span> : null}
+                    {template.launchLibraryStatus === "confirmed" ? (
+                      <span>Launch library</span>
+                    ) : null}
                   </header>
                   <div className="tt-preview-process-media">
                     <figure className="tt-preview-sketch">
@@ -277,8 +303,9 @@ export default async function TikTokPage() {
                     style={{ width: "100%", height: "auto", display: "block" }}
                   />
                   <figcaption>
-                    Global Creative Lab felt the simplicity was working and
-                    encouraged a more upbeat, deliberate direction.
+                    The sketch notes called for smaller type, a subtler Light
+                    Academia treatment, reconsidered copy placement, and a calm
+                    pastel palette.
                   </figcaption>
                 </figure>
               </li>
@@ -294,13 +321,15 @@ export default async function TikTokPage() {
                     style={{ width: "100%", height: "auto", display: "block" }}
                   />
                   <figcaption>
-                    I kept the fixed catalog slot and refined the editorial
-                    title, color, and supporting details.
+                    I scaled down the type, moved the copy, kept the fixed
+                    catalog slot, and introduced the calmer palette.
                   </figcaption>
                 </figure>
               </li>
               <li className="tt-outcome-step tt-outcome-step--shipped">
-                <p className="tt-outcome-step-label">Shipped result</p>
+                <p className="tt-outcome-step-label">
+                  Launch-library result
+                </p>
                 <figure>
                   <ExpandableImage
                     src={lightAcademia.fullTemplate}
@@ -319,10 +348,25 @@ export default async function TikTokPage() {
           ) : null}
           <div className="project-section-body">
             <p>
+              The work was reviewed internally by Global Creative Lab and people
+              adjacent to the project. As far as I know, it wasn&apos;t shown to
+              external brands or audience members during my internship.
+            </p>
+            <p>
               <mark className="case-highlight">
                 I later learned through Global Creative Lab that American Eagle
                 selected it.
-              </mark>
+              </mark>{" "}
+              I wasn&apos;t told why American Eagle selected Light Academia. I
+              didn&apos;t receive performance data, and I don&apos;t know what happened
+              to the other two templates. Internships are very transitory, so
+              I&apos;m left doing work without knowing the full impact.
+            </p>
+            <p>
+              Since then, I check with stakeholders at multiple stages to make
+              sure they still like the direction of the work. Mockups are
+              cheaper to make now, which means I can show something convincing
+              before the work is too finished to change.
             </p>
           </div>
         </div>

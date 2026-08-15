@@ -47,8 +47,10 @@ export function StartMenu({
       ref={menuRef}
       className="myles97-start-menu"
       id="myles97-start-menu"
-      role="group"
-      aria-label="Start menu"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Start"
+      tabIndex={-1}
       onKeyDown={(event) => containTabFocus(event, menuRef.current)}
     >
       <div className="myles97-start-menu-brand" aria-hidden="true">
@@ -89,6 +91,11 @@ export function StartMenu({
         >
           <Myles97Icon name="reset-desktop" size={24} variant="color" aria-hidden="true" />
           <span>Reset Desktop…</span>
+        </button>
+        <div className="myles97-start-menu-separator" aria-hidden="true" />
+        <button type="button" onClick={onClose} aria-label="Close Start">
+          <span aria-hidden="true">×</span>
+          <span>Close</span>
         </button>
       </div>
     </div>

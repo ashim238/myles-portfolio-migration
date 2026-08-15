@@ -42,6 +42,18 @@ describe("ArchitectureDiagram", () => {
     ) ?? []) {
       expect(subtitle).toHaveAttribute("font-size", "11");
     }
+
+    expect(
+      screen.getByRole("img", {
+        name: /route and zone data feed deterministic scoring/i,
+      }),
+    ).toBeInTheDocument();
+    expect(scroller).toHaveTextContent("DOT-511");
+    expect(scroller).toHaveTextContent("demo adapter");
+    expect(scroller).toHaveTextContent("live feed not wired");
+    expect(scroller).toHaveTextContent(
+      "Converts provider responses into typed app data.",
+    );
   });
 
   it("draws a visible keyboard focus treatment around the scroller", () => {

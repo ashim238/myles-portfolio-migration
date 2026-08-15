@@ -72,9 +72,8 @@ export function WorkProjectCard({
     }
     const frame = event.currentTarget.querySelector<HTMLElement>(".work-thumb");
     if (!frame) return;
-    event.preventDefault();
     const rect = frame.getBoundingClientRect();
-    dispatchProjectEnterRequest({
+    const handled = dispatchProjectEnterRequest({
       slug: project.slug,
       href: `/work/${project.slug}`,
       rect: { top: rect.top, left: rect.left, width: rect.width, height: rect.height },
@@ -83,6 +82,7 @@ export function WorkProjectCard({
         : { type: "image", src: project.coverImage },
       borderRadius: getComputedStyle(frame).borderRadius,
     });
+    if (handled) event.preventDefault();
   };
 
   return (

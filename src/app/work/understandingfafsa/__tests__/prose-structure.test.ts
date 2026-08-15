@@ -189,8 +189,8 @@ describe("UnderstandingFAFSA case-study structure", () => {
     expect(page.match(/<ProjectChapter/g)).toHaveLength(5);
     expect(chapterIndexes).toEqual(["0", "1", "2", "3", "4"]);
     expect(evidenceHeadings).toEqual([
-      { id: "uf-problem", title: "Where the old template broke down" },
-      { id: "uf-templates", title: "Three send types from the audit" },
+      { id: "uf-problem", title: "What the redesign had to account for" },
+      { id: "uf-templates", title: "Building a kit inside Mailchimp" },
     ]);
   });
 
@@ -247,14 +247,63 @@ describe("UnderstandingFAFSA case-study structure", () => {
     }
   });
 
+  it("preserves the founder constraints, ownership boundaries, validation, and ongoing use", () => {
+    expect(prose).toMatch(
+      /open rates were down[\s\S]{0,180}newly redesigned website/i,
+    );
+    expect(prose).toMatch(
+      /short turnaround[\s\S]{0,180}(?:articles|copy)[\s\S]{0,120}editor/i,
+    );
+    expect(prose).toMatch(
+      /email marketing was somewhat foreign[\s\S]{0,220}Figma[\s\S]{0,120}Mailchimp/i,
+    );
+    expect(prose).toMatch(
+      /I owned the final visual design[\s\S]{0,240}another designer[\s\S]{0,180}founder/i,
+    );
+    expect(prose).toMatch(
+      /required sections[\s\S]{0,120}colors[\s\S]{0,120}typefaces[\s\S]{0,180}final approval/i,
+    );
+    expect(prose).toContain("Add some pizzazz.");
+    expect(prose).toContain("Snacks");
+    expect(prose).toContain("HubSpot");
+    expect(prose).toMatch(
+      /practice sends[\s\S]{0,220}other designer[\s\S]{0,140}editor[\s\S]{0,140}founder/i,
+    );
+    expect(prose).toMatch(/mobile[\s\S]{0,100}desktop/i);
+    expect(prose).toMatch(/Gmail[\s\S]{0,180}dark.mode/i);
+    expect(prose).toMatch(/roughly 20 sends/i);
+    expect(prose).toMatch(/three (?:email )?themes/i);
+    expect(prose).toMatch(/specific audience[\s\S]{0,120}color pairing/i);
+    expect(prose).toContain("It&apos;s a constant back and forth.");
+  });
+
+  it("keeps the newsletter review framed as an audit rather than reader research", async () => {
+    render(await UnderstandingFafsaPage());
+
+    expect(screen.getAllByText(/120 newsletters/i).length).toBeGreaterThan(1);
+    expect(prose).toContain("reviewed more than 120 newsletters");
+    for (const auditSource of [
+      "Revenews",
+      "The 74",
+      "Next by Jeff Selingo",
+      "Medium",
+      "Folderly",
+    ]) {
+      expect(prose).toContain(auditSource);
+    }
+    expect(prose).not.toMatch(/interviewed (?:readers|subscribers|students)/i);
+    expect(prose).not.toMatch(/(?:readers|subscribers) (?:said|told|asked)/i);
+  });
+
   it("orders the story from operating context through the supporting metric", () => {
     const storyMarkers = [
-      "Where the old template broke down",
+      "Open rates were down",
       "reviewed more than 120 newsletters",
-      "Audit findings and system rules",
-      "Three send types from the audit",
-      "Gmail&apos;s 102 KB HTML clipping threshold",
-      "I shipped a master template",
+      "Snacks was a useful reference",
+      "Add some pizzazz.",
+      "The world of email marketing was somewhat foreign to me",
+      "Practice sends went to me",
+      "The founder has launched roughly 20 sends",
       "November 4, 2025",
     ];
 
@@ -268,68 +317,77 @@ describe("UnderstandingFAFSA case-study structure", () => {
 
   it("centers founder autonomy before the rules and feasibility work that enabled it", () => {
     const brief =
-      "During the rebrand, I built a newsletter system the founder can run independently in Mailchimp.";
+      "The new system had to work inside Mailchimp without requiring either skill.";
     const feasibility =
-      "I moved the design from Figma into Mailchimp for feasibility checks and practice sends, then built a version ready for user testing.";
+      "I first assumed I could design in Figma and port the result easily into Mailchimp.";
     const result =
-      "The founder now handles weekly sends and ICYMI in Mailchimp, swapping content, copy, and module order without editing HTML.";
+      "The founder has launched roughly 20 sends since the redesign and edits the template herself each week.";
 
     expect(prose).toContain(brief);
     expect(prose).toContain(feasibility);
     expect(prose).toContain(result);
-    expect(page.indexOf(brief)).toBeLessThan(
-      page.indexOf("reviewed more than 120 newsletters"),
-    );
-    expect(page.indexOf(feasibility)).toBeLessThan(
-      page.indexOf("Gmail&apos;s 102 KB HTML clipping threshold"),
+    expect(prose.indexOf(brief)).toBeLessThan(prose.indexOf(feasibility));
+    expect(prose.indexOf(feasibility)).toBeLessThan(
+      prose.indexOf("Gmail&apos;s 102 KB HTML clipping threshold"),
     );
     expect(page).toContain(
-      '"Outcome: I designed and rebuilt a Mailchimp-native kit the founder uses for weekly sends and ICYMI without editing HTML.",',
+      '"Constraint: The founder needed a Mailchimp-native system she could edit without Figma or HTML.",',
+    );
+    expect(page).toContain(
+      '"Validation: Practice sends on mobile and desktop exposed Gmail clipping and dark-mode inversion.",',
+    );
+    expect(page).not.toContain(
+      '"Build: I owned the final visual design and rebuilt it as a Mailchimp-native kit.",',
+    );
+    expect(page).not.toContain(
+      '"Use: The founder edits the template herself and has launched roughly 20 sends.",',
     );
   });
 
   it("keeps ownership, workflow, and the implementation constraint explicit", () => {
-    expect(prose).toMatch(/one collaborator and I[\s\S]{0,100}more than 120/i);
-    expect(prose).toMatch(/I designed[\s\S]{0,100}modular rules/i);
-    expect(prose).toMatch(/I rebuilt[\s\S]{0,100}Mailchimp/i);
+    expect(prose).toContain(
+      "Another designer, the founder, and I worked together on the copy and base structure.",
+    );
+    expect(prose).toContain("I owned the final visual design.");
+    expect(prose).toMatch(/I rebuilt the live system[\s\S]{0,100}native blocks/i);
     expect(prose).toMatch(
-      /founder[\s\S]{0,100}without (?:touching|editing) HTML/i,
+      /founder[\s\S]{0,140}without (?:touching|editing) HTML/i,
     );
     expect(prose).toMatch(/102 ?KB/i);
-
-    for (const source of [
-      "Revenews",
-      "The 74",
-      "Next by Jeff Selingo",
-      "Medium",
-      "Folderly",
-    ]) {
-      expect(prose).toContain(source);
-    }
   });
 
   it("separates Gmail HTML clipping work from PNG download weight", () => {
     expect(prose).not.toContain("The fix arrived through test sends");
     expect(prose).toContain(
-      "Test sends showed which wrappers and dividers could go.",
+      "Those sends exposed Gmail&apos;s 102 KB HTML clipping limit and dark-mode color inversion.",
     );
     expect(prose).toContain(
-      "To reduce the HTML Gmail measures, I flattened the hierarchy, removed wrappers and blocks that didn&apos;t need to ship, and used Mailchimp-native structure where it replaced custom markup.",
+      "I rebuilt the live system with simpler native blocks, flattened the hierarchy, and removed what didn&apos;t need to ship.",
     );
     expect(prose).toContain(
-      "Compressing the PNGs through an external tool lowered their download weight. It didn&apos;t reduce the HTML source Gmail measures.",
+      "Compressing the PNGs lowered their download weight, but it didn&apos;t reduce the HTML source Gmail measures.",
     );
     expect(prose).not.toContain(
       "Early weight came from custom section icons and themed dividers",
     );
-    expect(prose).toContain("removed backgrounds in Photoshop");
+    expect(prose).toContain(
+      "removed the white backgrounds from the custom illustrations in Photoshop",
+    );
   });
 
   it("names the three templates and the Mailchimp tradeoff without abstract system language", () => {
     expect(prose).toContain(
-      "The audit led to three templates: a welcome email, the weekly newsletter, and a shorter ICYMI version for event invites and recaps.",
+      "I made a welcome email, the weekly newsletter, and a shorter ICYMI version for event invites and recaps.",
     );
-    expect(prose).toMatch(/I locked the visual rules that needed to hold/i);
+    expect(prose).toContain(
+      "I also left the founder with three email themes inspired by the brand palette.",
+    );
+    expect(prose).toMatch(
+      /Within the founder&apos;s type choices, I locked spacing, type hierarchy, and dividers/i,
+    );
+    expect(prose).toMatch(
+      /assumed I could design in Figma[\s\S]{0,100}Mailchimp[\s\S]{0,100}assumption failed/i,
+    );
     expect(prose).not.toContain("The shared framework");
     expect(prose).not.toContain("same vocabulary");
     expect(prose).not.toContain("modular rhythm");
@@ -338,15 +396,16 @@ describe("UnderstandingFAFSA case-study structure", () => {
 
   it("keeps the build and measured result specific after distillation", () => {
     expect(prose).toMatch(
-      /I rebuilt the live (?:system|template) in Mailchimp[\s\S]{0,100}without touching HTML/i,
+      /I rebuilt the live system[\s\S]{0,100}simpler native blocks/i,
+    );
+    expect(prose).toContain(
+      "The founder has launched roughly 20 sends since the redesign and edits the template herself each week.",
     );
     expect(prose).toContain("November 4, 2025");
     expect(prose).toContain(
-      "That result is supporting context, not a controlled attribution test.",
+      "Because this wasn&apos;t a controlled attribution test, I don&apos;t attribute the difference to the redesign.",
     );
-    expect(prose).toContain(
-      "I don&apos;t claim the redesign caused the change.",
-    );
+    expect(prose).not.toContain("That result is supporting context");
     expect(prose).not.toContain(
       "The rest of the newsletter pool served as lighter references",
     );
@@ -357,7 +416,7 @@ describe("UnderstandingFAFSA case-study structure", () => {
     expect(page).toContain('<CountUp value="~52.6%" />{" "}open rate');
   });
 
-  it("counts imported audit-rule copy inside the prose budget", () => {
+  it("counts imported audit-rule copy inside the page-authored prose budget", () => {
     const importedAuditCopy = UNDERSTANDING_FAFSA_AUDIT_RULES.flatMap(
       ({ finding, response }) => [finding, response],
     );

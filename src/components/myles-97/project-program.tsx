@@ -43,11 +43,13 @@ function coverVisual(program: ProgramDefinition): ProjectCoverVisual {
 type ProjectProgramProps = {
   program: ProgramDefinition;
   reduceMotion?: boolean;
+  returnTarget?: "program" | "selected-work";
 };
 
 export function ProjectProgram({
   program,
   reduceMotion = false,
+  returnTarget = "program",
 }: ProjectProgramProps) {
   const visual: ProjectProgramVisual = {
     type: "program",
@@ -58,40 +60,45 @@ export function ProjectProgram({
   };
 
   const openCaseStudy = (event: MouseEvent<HTMLAnchorElement>) => {
-    if (
-      shouldUseNativeNavigation(event) ||
-      reduceMotion ||
-      prefersReducedMotion()
-    ) {
-      return;
-    }
+    if (shouldUseNativeNavigation(event)) return;
 
-    const windowElement = event.currentTarget.closest<HTMLElement>(
-      ".myles97-window",
-    );
-    if (!windowElement) return;
+    const sourceElement =
+      returnTarget === "selected-work"
+        ? event.currentTarget.closest<HTMLElement>(
+            '[data-project-transition-source="selected-work"]',
+          )
+        : event.currentTarget.closest<HTMLElement>(".myles97-window");
+    if (!sourceElement) return;
 
-    const sourceRect = windowElement.getBoundingClientRect();
+    const sourceRect = sourceElement.getBoundingClientRect();
     if (sourceRect.width <= 0 || sourceRect.height <= 0) return;
 
-    event.preventDefault();
+    const shouldReduceMotion = reduceMotion || prefersReducedMotion();
     const rect = toRect(sourceRect);
-    const borderRadius = getComputedStyle(windowElement).borderRadius || "0px";
+    const borderRadius = getComputedStyle(sourceElement).borderRadius || "0px";
+    const animate = returnTarget === "program";
 
     saveProjectReturnSnapshot({
       version: 1,
       slug: program.id,
+      returnTarget,
+      reduceMotion: shouldReduceMotion,
+      animate,
       rect,
       borderRadius,
       visual,
     });
-    dispatchProjectEnterRequest({
+
+    const handled = dispatchProjectEnterRequest({
       slug: program.id,
       href: program.href,
       rect,
       visual,
       borderRadius,
+      reduceMotion: shouldReduceMotion,
+      animate,
     });
+    if (handled) event.preventDefault();
   };
 
   return (

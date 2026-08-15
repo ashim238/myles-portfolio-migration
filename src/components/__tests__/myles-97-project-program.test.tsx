@@ -1,7 +1,10 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ProjectProgram } from "@/components/myles-97/project-program";
-import { PROJECT_ENTER_REQUEST } from "@/lib/project-enter";
+import {
+  PROJECT_ENTER_REQUEST,
+  readProjectReturnSnapshot,
+} from "@/lib/project-enter";
 import type { ProgramDefinition } from "@/lib/myles-97/programs";
 
 vi.mock("next/image", () => ({
@@ -39,7 +42,7 @@ describe("ProjectProgram", () => {
   });
 
   it("dispatches a structured program transition for an unmodified click", () => {
-    const onRequest = vi.fn();
+    const onRequest = vi.fn((event: Event) => event.preventDefault());
     window.addEventListener(PROJECT_ENTER_REQUEST, onRequest);
     const { container } = render(
       <section className="myles97-window">
@@ -79,7 +82,7 @@ describe("ProjectProgram", () => {
   });
 
   it("leaves modified clicks on the native case-study link", () => {
-    const onRequest = vi.fn();
+    const onRequest = vi.fn((event: Event) => event.preventDefault());
     window.addEventListener(PROJECT_ENTER_REQUEST, onRequest);
     render(
       <section className="myles97-window">
@@ -87,29 +90,54 @@ describe("ProjectProgram", () => {
       </section>,
     );
 
-    fireEvent.click(
-      screen.getByRole("link", { name: "Read Fresh Greens case study" }),
-      { ctrlKey: true },
-    );
+    const link = screen.getByRole("link", {
+      name: "Read Fresh Greens case study",
+    });
+    link.addEventListener("click", (event) => event.preventDefault(), {
+      once: true,
+    });
+    fireEvent.click(link, { ctrlKey: true });
 
     expect(onRequest).not.toHaveBeenCalled();
     window.removeEventListener(PROJECT_ENTER_REQUEST, onRequest);
   });
 
-  it("does not animate when the saved reduced-motion preference is active", () => {
-    const onRequest = vi.fn();
+  it("routes through the controller without animation when reduced motion is active", () => {
+    const onRequest = vi.fn((event: Event) => event.preventDefault());
     window.addEventListener(PROJECT_ENTER_REQUEST, onRequest);
-    render(
+    const { container } = render(
       <section className="myles97-window">
         <ProjectProgram program={program} reduceMotion />
       </section>,
     );
+    const windowElement = container.querySelector<HTMLElement>(".myles97-window")!;
+    windowElement.getBoundingClientRect = vi.fn(() => ({
+      top: 64,
+      left: 160,
+      width: 720,
+      height: 520,
+      right: 880,
+      bottom: 584,
+      x: 160,
+      y: 64,
+      toJSON: () => ({}),
+    }));
 
     fireEvent.click(
       screen.getByRole("link", { name: "Read Fresh Greens case study" }),
     );
 
-    expect(onRequest).not.toHaveBeenCalled();
+    expect(onRequest).toHaveBeenCalledTimes(1);
+    expect((onRequest.mock.calls[0][0] as CustomEvent).detail).toMatchObject({
+      slug: "fresh-greens",
+      href: "/work/fresh-greens",
+      reduceMotion: true,
+    });
+    expect(readProjectReturnSnapshot()).toMatchObject({
+      slug: "fresh-greens",
+      returnTarget: "program",
+      reduceMotion: true,
+    });
     window.removeEventListener(PROJECT_ENTER_REQUEST, onRequest);
   });
 });

@@ -6,6 +6,7 @@ import {
 export const EVIDENCE_STATES = [
   "built",
   "shipped",
+  "confirmed",
   "observed",
   "proposed",
   "needs-proof",
@@ -82,6 +83,7 @@ type ReaderEvidenceMaps = {
 export const EVIDENCE_STATE_LABELS = {
   built: "Built",
   shipped: "Shipped",
+  confirmed: "Confirmed",
   observed: "Observed",
   proposed: "Proposed",
   "needs-proof": "Needs proof",
@@ -99,12 +101,12 @@ export const READER_EVIDENCE_MAPS = {
   navi: {
     project: "navi",
     portfolioSignal:
-      "Research synthesis, system thinking, and a working browser product.",
+      "Research synthesis, system thinking, and a working browser demo.",
     chapters: [
       {
         chapterId: "nv-intro",
         dominantClaim:
-          "The early heatmap tested redistribution, but movement alone did not address how visitors engaged after arrival.",
+          "The heatmap could show people where to go, but not what to do when they got there.",
         claimClass: "interpretive",
         evidenceState: "observed",
         dominantProof: {
@@ -113,14 +115,14 @@ export const READER_EVIDENCE_MAPS = {
           kind: "interaction",
         },
         interpretation:
-          "The first artifact made movement the outcome, which exposed the need for a stronger post-arrival experience.",
+          "The first artifact redirected attention. It did not help someone understand what a neighborhood or activity had to offer.",
         caveat:
           "The heatmap was an exploratory concept, not live tourist-density or geo-analytics data.",
       },
       {
         chapterId: "nv-insights",
         dominantClaim:
-          "Resident and stakeholder responses, plus the platform audit, shifted the brief toward neighborhood context and planning confidence.",
+          "Resident and stakeholder responses asked for deeper engagement with neighborhoods and what they offered.",
         claimClass: "interpretive",
         evidenceState: "observed",
         dominantProof: {
@@ -129,14 +131,14 @@ export const READER_EVIDENCE_MAPS = {
           kind: "structured-data",
         },
         interpretation:
-          "Overcrowding and the lack of authentic experiences appeared often enough to change the concept direction.",
+          "Overcrowding and the lack of authentic experiences moved the team beyond the heatmap and toward Learn, Plan, Go.",
         caveat:
           "Fourteen responses, including two local businesses, informed the concept but do not represent all New Yorkers.",
       },
       {
         chapterId: "nv-framework",
         dominantClaim:
-          "Archetypes, journey stages, and flows translated the research into Learn, Plan, Go.",
+          "Learn adds neighborhood and activity context. Plan shows requirements and cost. Go handles travel options. Booking remains a separate module.",
         claimClass: "interpretive",
         evidenceState: "proposed",
         dominantProof: {
@@ -145,14 +147,14 @@ export const READER_EVIDENCE_MAPS = {
           kind: "structured-data",
         },
         interpretation:
-          "The artifacts connect observed needs to product areas and the individual booking flow.",
+          "I used the personas and journey maps to adjust my teammate's original information architecture, then built the Figma design system.",
         caveat:
-          "These remained internal planning artifacts because the studio project ended before engineering handoff.",
+          "The studio project ended before engineering handoff, and the intended tag-ranking logic was not wired into the later React build.",
       },
       {
         chapterId: "nv-build",
         dominantClaim:
-          "The solo rebuild turns Learn, Plan, Go into a working React booking flow.",
+          "The team tested the Figma homepage and search, then I later rebuilt the component system and individual booking flow in React.",
         claimClass: "behavioral",
         evidenceState: "built",
         dominantProof: {
@@ -168,12 +170,14 @@ export const READER_EVIDENCE_MAPS = {
           },
         ],
         interpretation:
-          "The current build demonstrates feed browsing, neighborhood search, host detail, and a sample reservation with one component system.",
+          "Student feedback reduced card copy and tags and aligned card heights. The later build demonstrates browsing, search, host detail, and a sample reservation.",
+        caveat:
+          "The semester ended before the team could test Learn, Plan, Go or booking. The current Go view lists travel options but does not calculate a live route from current location.",
       },
       {
         chapterId: "nv-outcome",
         dominantClaim:
-          "The current browser product demonstrates the core flow, while resident, traveler, and host validation remains open.",
+          "The current browser demo supports the individual booking flow, while resident, traveler, and host validation remains open.",
         claimClass: "outcome",
         evidenceState: "needs-proof",
         dominantProof: {
@@ -189,7 +193,7 @@ export const READER_EVIDENCE_MAPS = {
           },
         ],
         interpretation:
-          "The rebuild makes the design inspectable and testable instead of treating the Figma concept as the final answer.",
+          "The rebuild makes the individual flow inspectable. Group coordination, deeper Learn pages, and host onboarding remain future work.",
         caveat:
           "No user or host testing has established that the current choices are settled.",
       },
@@ -203,7 +207,7 @@ export const READER_EVIDENCE_MAPS = {
       {
         chapterId: "fg-problem",
         dominantClaim:
-          "A personal safety hypothesis became a research question about what route planning leaves Black drivers to carry themselves.",
+          "My own experience gave me the first question. Six interviews helped me see which parts other Black drivers also planned around.",
         claimClass: "interpretive",
         evidenceState: "observed",
         dominantProof: {
@@ -219,14 +223,14 @@ export const READER_EVIDENCE_MAPS = {
           },
         ],
         interpretation:
-          "The personal experience set the hypothesis, while interviews tested which concerns extended beyond one route.",
+          "I started with a South Jersey drive, then spoke with six Black drivers to learn whether the discomfort was only mine.",
         caveat:
           "The Green Book is design lineage, not proof that Fresh Greens is a digital successor.",
       },
       {
         chapterId: "fg-research",
         dominantClaim:
-          "Six interviews surfaced three linked needs: inspect routes, respond under stress, and judge community knowledge.",
+          "Six interviews gave me three problems to work on: planning with more context, finding support under stress, and knowing why a recommendation should be trusted.",
         claimClass: "interpretive",
         evidenceState: "observed",
         dominantProof: {
@@ -235,13 +239,13 @@ export const READER_EVIDENCE_MAPS = {
           kind: "structured-data",
         },
         interpretation:
-          "The interview themes widened the original route-safety hypothesis into three product problems.",
+          "Drivers already paired navigation with daylight, road conditions, and advice from people they trusted.",
         caveat: "Six interviews do not represent every Black driver.",
       },
       {
         chapterId: "fg-design",
         dominantClaim:
-          "The prototype makes route factors and their sources inspectable before a driver chooses, then lets them schedule a local departure reminder.",
+          "The route preview lets drivers compare daylight and route conditions before choosing. A local reminder brings that plan back at departure time.",
         claimClass: "behavioral",
         evidenceState: "built",
         dominantProof: {
@@ -262,14 +266,14 @@ export const READER_EVIDENCE_MAPS = {
           },
         ],
         interpretation:
-          "Route chips and source cards explain the route preference, while the local reminder carries a useful daylight window beyond the open app.",
+          "Route cards show some of the reasons behind a recommendation. Fresh Greens waits until someone taps Schedule before asking for notification access.",
         caveat:
-          "The prototype does not prove that a preferred route is safer or that the reminder changes behavior.",
+          "The prototype does not prove that a preferred route is safer. Its current Safest route label overstates the evidence, and the reminder has not been shown to change behavior.",
       },
       {
         chapterId: "fg-pulled-over",
         dominantClaim:
-          "One thumb-reachable control reveals calm, offline support only when the driver requests it.",
+          "One thumb-reachable control reveals four support paths, with an on-device recording path and user-controlled contact handoffs.",
         claimClass: "behavioral",
         evidenceState: "built",
         dominantProof: {
@@ -278,14 +282,14 @@ export const READER_EVIDENCE_MAPS = {
           kind: "sequence",
         },
         interpretation:
-          "The response flow reduces searching and keeps reassurance and trusted-contact actions visible.",
+          "The response flow reduces searching, requests microphone access after the driver answers, records when available, and keeps trusted-contact actions visible.",
         caveat:
           "Prototype behavior is not evidence that the flow improves a real encounter.",
       },
       {
         chapterId: "fg-trust",
         dominantClaim:
-          "Structured reports and moderation keep accounts specific, while weighted trust and visible provenance remain unbuilt.",
+          "Each report stays tied to a place and category. Sensitive reports omit attribution, while other reports retain only current-account ownership. Route ranking does not yet weigh corroboration from distinct contributors or show contributor provenance and trust tiers.",
         claimClass: "behavioral",
         evidenceState: "needs-proof",
         dominantProof: {
@@ -301,14 +305,14 @@ export const READER_EVIDENCE_MAPS = {
           },
         ],
         interpretation:
-          "The prototype keeps reports reviewable instead of treating one account as universal fact.",
+          "Reports stay on the device first. With Supabase configured, they can enter the moderation path.",
         caveat:
-          "One report can affect route ranking now. Corroboration weighting, provenance, and trust levels are intended safeguards.",
+          "One report can affect route ranking now. Corroboration from distinct contributors, visible provenance, and route-level trust tiers are not built yet.",
       },
       {
         chapterId: "fg-scope",
         dominantClaim:
-          "The working prototype connects interview themes to more than 26 screens, while safety, stress-state, and trust outcomes still require testing.",
+          "Fresh Greens is a working React Native prototype across more than 26 screens. It hasn't shown that routes are safer, that the support flow holds up under stress, or that the explanations earn trust.",
         claimClass: "outcome",
         evidenceState: "needs-proof",
         dominantProof: {
@@ -324,7 +328,7 @@ export const READER_EVIDENCE_MAPS = {
           },
         ],
         interpretation:
-          "The prototype makes the research-to-product decisions inspectable and ready for broader validation.",
+          "The browser recording shows the current navigation flow. The ledger separates what is working from what I still need to test.",
         caveat:
           "It does not establish safer routes or improved outcomes.",
       },
@@ -384,13 +388,14 @@ export const READER_EVIDENCE_MAPS = {
           },
         ],
         interpretation:
-          "Headlines, body copy, imagery, and links can change. Section order, spacing, type, dividers, and the footer structure stay fixed.",
-        caveat: "The counselor toolkit remains in progress.",
+          "Headlines, body copy, imagery, links, and middle-module order can change. Header and footer placement, spacing, type, and dividers stay fixed.",
+        caveat:
+          "The interactive switcher shows the weekly and event templates, not the welcome email.",
       },
       {
         chapterId: "uf-figma",
         dominantClaim:
-          "The Figma system was simplified into a Mailchimp-native template that stays editable and below Gmail's HTML constraint.",
+          "Practice sends exposed Gmail's 102 KB clipping threshold and dark-mode inversion before launch.",
         claimClass: "behavioral",
         evidenceState: "shipped",
         dominantProof: {
@@ -399,7 +404,7 @@ export const READER_EVIDENCE_MAPS = {
           kind: "comparison",
         },
         interpretation:
-          "Flattened hierarchy and native blocks reduced unnecessary HTML while preserving the brand.",
+          "I rebuilt the live template with a flatter hierarchy, fewer wrappers, and Mailchimp-native blocks.",
         caveat:
           "Image compression reduced download weight, not the HTML source Gmail measures.",
       },
@@ -431,7 +436,7 @@ export const READER_EVIDENCE_MAPS = {
   tiktok: {
     project: "tiktok",
     portfolioSignal:
-      "Visual-system judgment, art direction, and a shipped creative artifact.",
+      "Visual-system judgment, art direction, and a confirmed launch-library artifact.",
     chapters: [
       {
         chapterId: "tt-brief",
@@ -487,16 +492,16 @@ export const READER_EVIDENCE_MAPS = {
       {
         chapterId: "tt-outcome",
         dominantClaim:
-          "Light Academia was refined from critique into the one template that entered the launch library.",
+          "Light Academia was refined through internal critique and entered the launch library.",
         claimClass: "outcome",
-        evidenceState: "shipped",
+        evidenceState: "confirmed",
         dominantProof: {
           id: "tiktok-light-academia-sequence",
-          label: "Critique, response, and shipped-result sequence",
+          label: "Critique, response, and launch-library sequence",
           kind: "sequence",
         },
         interpretation:
-          "The critique led me to keep the simple editorial structure and make the color and supporting details more upbeat.",
+          "The final direction records what changed during internal review. It does not show audience response.",
         caveat:
           "American Eagle selection was learned later through Global Creative Lab. No performance result is claimed.",
       },

@@ -12,14 +12,12 @@ export function DepartureReminderEvidence() {
       data-evidence-chapter="fg-design"
     >
       <div className="fg-reminder-copy">
-        <p className="fg-reminder-kicker">Interview insight → feature</p>
+        <p className="fg-reminder-kicker">Daylight came up in all six interviews</p>
         <h3 id="fg-reminder-title">
-          Bring the daylight plan back at the right time.
+          A departure reminder tied to daylight.
         </h3>
         <p>
-          All six participants connected trip timing to daylight. I built the
-          reminder around that timing and waited to request notification access
-          until someone tapped Schedule.
+          I built a local reminder around that pattern.
         </p>
       </div>
 
@@ -55,11 +53,9 @@ export function DepartureReminderEvidence() {
           </div>
 
           <div className="fg-reminder-permission">
-            <strong>Ask when the value is clear.</strong>
-            <p>I waited to ask for notification access.</p>
+            <strong>Notification access comes after Schedule.</strong>
             <p>
-              Asking for every permission up front felt deceptive. Fresh Greens
-              waits until the driver presses Schedule.
+              Asking for every permission up front felt deceptive.
             </p>
           </div>
         </div>

@@ -1,12 +1,16 @@
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Myles97Shell } from "@/components/myles-97/myles-97-shell";
 import { POCKET_97_QUERY } from "@/components/myles-97/use-pocket-97";
 import type { ProgramDefinition } from "@/lib/myles-97/programs";
+import {
+  PROJECT_ENTER_REQUEST,
+  readProjectReturnSnapshot,
+} from "@/lib/project-enter";
 
 const testDirectory = dirname(fileURLToPath(import.meta.url));
 const pocketStyles = readFileSync(
@@ -223,11 +227,45 @@ describe("Pocket 98", () => {
     );
 
     const app = screen.getByRole("region", { name: /Fresh Greens.exe/ });
-    expect(within(app).getByRole("link", { name: "Read Fresh Greens case study" })).toHaveAttribute(
+    const caseStudyLink = within(app).getByRole("link", {
+      name: "Read Fresh Greens case study",
+    });
+    expect(caseStudyLink).toHaveAttribute(
       "href",
       "/work/fresh-greens",
     );
     expect(screen.queryByRole("region", { name: "Selected Work" })).toBeNull();
+
+    Object.defineProperty(app, "getBoundingClientRect", {
+      configurable: true,
+      value: () => ({
+        top: 0,
+        left: 0,
+        width: 390,
+        height: 760,
+        right: 390,
+        bottom: 760,
+        x: 0,
+        y: 0,
+        toJSON: () => ({}),
+      }),
+    });
+    const onRequest = vi.fn((event: Event) => event.preventDefault());
+    window.addEventListener(PROJECT_ENTER_REQUEST, onRequest);
+    fireEvent.click(caseStudyLink);
+
+    expect(onRequest).toHaveBeenCalledTimes(1);
+    expect((onRequest.mock.calls[0][0] as CustomEvent).detail).toMatchObject({
+      slug: "fresh-greens",
+      href: "/work/fresh-greens",
+      animate: false,
+    });
+    expect(readProjectReturnSnapshot()).toMatchObject({
+      slug: "fresh-greens",
+      returnTarget: "selected-work",
+      animate: false,
+    });
+    window.removeEventListener(PROJECT_ENTER_REQUEST, onRequest);
 
     await user.click(within(app).getByRole("button", { name: "Back" }));
     expect(screen.getByRole("heading", { name: "Selected Work" })).toBeInTheDocument();

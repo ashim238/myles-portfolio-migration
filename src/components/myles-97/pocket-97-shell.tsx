@@ -145,7 +145,11 @@ export function Pocket97Shell({
     <div className="pocket97-shell">
       <div className="pocket97-stage" inert={sheetOpen ? true : undefined}>
         {activeProgram ? (
-          <section className="pocket97-app" aria-labelledby="pocket97-app-title">
+          <section
+            className="pocket97-app"
+            aria-labelledby="pocket97-app-title"
+            data-project-transition-source="selected-work"
+          >
             <header className="pocket97-app-header">
               <button
                 ref={backButtonRef}
@@ -171,6 +175,7 @@ export function Pocket97Shell({
                 <ProjectProgram
                   program={activeProject}
                   reduceMotion={state.displayPreferences.reduceMotion}
+                  returnTarget="selected-work"
                 />
               ) : activeProgram === "trini-roti" ? (
                 <RecipeNoteProgram />
@@ -214,6 +219,7 @@ export function Pocket97Shell({
               <SelectedWorkExplorer
                 programs={programs}
                 onOpen={(id) => openProgram(id)}
+                reduceMotion={state.displayPreferences.reduceMotion}
               />
             </section>
 

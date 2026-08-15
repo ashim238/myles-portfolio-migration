@@ -1164,7 +1164,7 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 
 /* ── Pivot micro-reveal (matches token exhibit craft) ─── */
 .fg-pivot[data-reveal="pending"] .fg-pivot-step {
-  opacity: 0;
+  opacity: 1;
   transform: translateY(10px);
 }
 .fg-pivot[data-reveal] .fg-pivot-step {

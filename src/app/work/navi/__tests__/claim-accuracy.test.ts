@@ -56,8 +56,10 @@ describe("Navi evidence claims", () => {
     expect(projectPage).not.toMatch(/most go to the same ten\s+places/i);
     expect(projectPage).not.toMatch(/businesses[\s\S]{0,100}struggle for visibility/i);
     expect(projectPage).not.toMatch(/residents[\s\S]{0,100}absorb the side effects/i);
-    expect(projectPage).toMatch(/early team concept could move a visitor/i);
-    expect(projectPage).toMatch(/first artifact worked/i);
+    expect(projectPage).toMatch(
+      /The heatmap could show people where to go, but not what to do when\s+they got there\./,
+    );
+    expect(projectPage).toContain("<HeatmapExplorer />");
   });
 
   it("keeps participant scope, ownership, and exact findings connected", () => {
@@ -67,19 +69,19 @@ describe("Navi evidence claims", () => {
     expect(
       projectPage.indexOf("resident and stakeholder responses"),
     ).toBeLessThan(projectPage.indexOf("<HeatmapExplorer"));
-    expect(projectPage).toMatch(/including two\s+local businesses/i);
+    expect(projectPage).toMatch(/including two\s+Manhattan businesses/i);
     expect(projectPage).toMatch(
       /I collected[\s\S]{0,120}resident and stakeholder responses/i,
     );
     expect(projectPage).toMatch(
-      /It informed the concept, but it doesn&apos;t\s+stand in for all NYC residents\./,
+      /many college-aged\s+people, so it doesn&apos;t stand in for all\s+NYC residents\./,
     );
     expect(projectPage).not.toContain(
       "It does not stand in for all NYC residents.",
     );
     expect(projectPage).toMatch(/The team[\s\S]{0,100}six travel platforms/i);
     expect(projectPage).toMatch(
-      /I evaluated Airbnb with Kaori\s+Ogawa and Amy\s+Zhang/i,
+      /I evaluated Airbnb with\s+Kaori\s+Ogawa and Amy\s+Zhang/i,
     );
     expect(projectPage).toMatch(
       /\{overcrowdingStat\.count\} of \{NAVI_SURVEY_META\.responseCount\} responses \([\s\S]{0,40}\{overcrowdingStat\.label\}\)/,
@@ -98,9 +100,12 @@ describe("Navi evidence claims", () => {
     expect(projectPage).toContain(
       'tools="Figma, FigJam, React, TypeScript"',
     );
-    expect(projectPage).toMatch(/Graduate studio:[\s\S]{0,180}The team/i);
-    expect(projectPage).toMatch(/My contribution:[\s\S]{0,220}I collected/i);
-    expect(projectPage).toMatch(/Solo rebuild:[\s\S]{0,180}React/i);
+    expect(projectPage).toContain(
+      'outcome="A functional team Figma prototype, followed by my solo React portfolio demo."',
+    );
+    expect(projectPage).toMatch(/My teammate[\s\S]{0,180}information architecture/i);
+    expect(projectPage).toMatch(/I created the design system from head to toe/i);
+    expect(projectPage).toMatch(/After the semester[\s\S]{0,180}on my own/i);
   });
 
   it("preserves the studio brief, sample boundaries, and wider findings", () => {
@@ -137,18 +142,16 @@ describe("Navi evidence claims", () => {
     expect(projectProse).toMatch(/digital nomads, ethical travelers/i);
     expect(projectProse).toMatch(/early audience hypothesis/i);
     expect(projectProse).toMatch(/not a validated market segment/i);
-    expect(projectProse).toMatch(/no engineering resources/i);
-    expect(projectProse).toMatch(/no implementation budget/i);
-    expect(projectProse).toMatch(/not a production website/i);
+    expect(projectProse).toMatch(/no engineering resources or budget/i);
+    expect(projectProse).toMatch(/kept the prototype in Figma/i);
   });
 
   it("keeps the institutional path plausible rather than claimed", () => {
     const projectPage = readSource("src/app/work/navi/page.tsx");
     const projectProse = projectPage.replace(/\s+/g, " ");
 
-    expect(projectProse).toMatch(/plausible long-term path/i);
-    expect(projectProse).toMatch(/such as NYC Tourism/i);
-    expect(projectProse).toMatch(/future path, not a launch outcome/i);
+    expect(projectProse).toMatch(/NYC Tourism as a future partner/i);
+    expect(projectProse).toMatch(/partnership hasn&apos;t happened/i);
     expect(projectProse).not.toMatch(/presented (?:to|Navi to) NYC Tourism/i);
   });
 
@@ -184,8 +187,8 @@ describe("Navi evidence claims", () => {
   it("separates research evidence, planning artifacts, and future work", () => {
     const projectPage = readSource("src/app/work/navi/page.tsx");
 
-    expect(projectPage).toContain("research-informed archetypes");
-    expect(projectPage).toContain("internal planning artifacts");
+    expect(projectPage).toMatch(/research informed three archetypes/i);
+    expect(projectPage).toMatch(/internal\s+planning artifacts/i);
     expect(projectPage).toMatch(/group booking.{0,100}future opportunity/i);
     expect(projectPage).toMatch(/not wired into this demo/i);
     expect(projectPage).not.toMatch(/three personas/i);
@@ -203,7 +206,7 @@ describe("Navi evidence claims", () => {
       "outcomeRest: Portfolio rebuild with a live component system and working booking flow.",
     );
     expect(content).toContain(
-      "highlightQuote: Navi pairs neighborhood experiences with local context and trip planning.",
+      "highlightQuote: The heatmap could show people where to go, but not what to do when they got there.",
     );
     expect(content).not.toContain(
       "Navi reframes tourism from destination checklists to intentional neighborhood participation.",
@@ -214,7 +217,7 @@ describe("Navi evidence claims", () => {
     const content = readSource("content/projects/navi.md");
     const projectPage = readSource("src/app/work/navi/page.tsx");
     const summary =
-      "A graduate-studio concept for neighborhood travel. I later rebuilt it as a working portfolio demo.";
+      "A graduate-studio concept for learning about a neighborhood, planning an activity, and getting there. I later rebuilt it as a working portfolio demo.";
 
     expect(content).toContain(`summary: ${summary}`);
     expect(projectPage).toMatch(
@@ -225,11 +228,11 @@ describe("Navi evidence claims", () => {
     expect(projectPage).not.toMatch(/local heartbeat/i);
   });
 
-  it("labels the current system and demo as a portfolio rebuild", () => {
+  it("labels the current system and demo as a post-semester rebuild", () => {
     const projectPage = readSource("src/app/work/navi/page.tsx");
     const resume = readSource("src/app/resume/page.tsx");
 
-    expect(projectPage).toMatch(/portfolio\s+rebuild/i);
+    expect(projectPage).toMatch(/After the semester.{0,120}React and TypeScript/i);
     expect(projectPage).not.toContain("This is the prototype that would have shipped on day one.");
     expect(projectPage).not.toContain("Every design decision linked back to research findings");
     expect(projectPage).not.toContain("Journey mapping validated");
@@ -253,11 +256,9 @@ describe("Navi evidence claims", () => {
     expect(projectPage).not.toMatch(
       /Navi&apos;s proposed alternative connected trip planning/,
     );
+    expect(projectPage).toMatch(/heatmap[\s\S]{0,160}Learn, Plan,\s+Go/i);
     expect(projectPage).toMatch(
-      /NYC Tourism\s+conversations[\s\S]{0,160}Learn, Plan,\s+Go/i,
-    );
-    expect(projectPage).toMatch(
-      /The research shifted my focus/i,
+      /The heatmap could show people where to go, but not what to do when\s+they got there\./,
     );
     expect(artifactCopy).not.toContain("not the same ten default stops");
     expect(artifactCopy).toContain(
@@ -266,5 +267,63 @@ describe("Navi evidence claims", () => {
     expect(artifactCopy).toContain('className="nv-heatmap-map-selection"');
     expect(artifactCopy).toContain('className="nv-heatmap-map-context"');
     expect(artifactCopy).not.toContain('className="nv-heatmap-map-name">{activeName}.</strong>');
+  });
+
+  it("keeps Learn, Plan, Go distinct from the separate booking module", () => {
+    const projectPage = readSource("src/app/work/navi/page.tsx").replace(
+      /\s+/g,
+      " ",
+    );
+
+    expect(projectPage).toContain(
+      "The heatmap could show people where to go, but not what to do when they got there.",
+    );
+    expect(projectPage).toMatch(/Learn.{0,260}fish out of water/i);
+    expect(projectPage).toMatch(
+      /Plan.{0,220}what the activity requires.{0,220}small-business cost breakdown/i,
+    );
+    expect(projectPage).toMatch(
+      /Go.{0,220}eco-friendly.{0,220}current location/i,
+    );
+    expect(projectPage).toMatch(/Booking sat beside.{0,180}separate module/i);
+    expect(projectPage).not.toContain(
+      "Go carries a trip into an individual booking.",
+    );
+  });
+
+  it("records the bounded semester test and the resulting card hierarchy", () => {
+    const projectPage = readSource("src/app/work/navi/page.tsx").replace(
+      /\s+/g,
+      " ",
+    );
+
+    expect(projectPage).toMatch(/tested the homepage and search/i);
+    expect(projectPage).toMatch(/other design students/i);
+    expect(projectPage).toMatch(/same height/i);
+    expect(projectPage).toMatch(/less copy and fewer tags/i);
+    expect(projectPage).toMatch(/semester ended.{0,180}didn&apos;t.{0,80}test/i);
+    expect(projectPage).toMatch(/Cost, location, and event type.{0,80}non-negotiable/i);
+    expect(projectPage).toMatch(/Time-sensitive statuses.{0,80}first/i);
+    expect(projectPage).toMatch(/Going Fast.{0,120}remaining availability/i);
+    expect(projectPage).toMatch(/Popular.{0,180}tickets booked/i);
+    expect(projectPage).toMatch(/didn&apos;t wire.{0,160}logic into\s+React/i);
+  });
+
+  it("states Myles's system ownership and the collaboration constraint", () => {
+    const projectPage = readSource("src/app/work/navi/page.tsx").replace(
+      /\s+/g,
+      " ",
+    );
+
+    expect(projectPage).toMatch(/created the design system from head to toe/i);
+    expect(projectPage).toMatch(/teammate.{0,100}original information architecture/i);
+    expect(projectPage).toMatch(/Different levels of experience.{0,120}schedules/i);
+    expect(projectPage).toMatch(
+      /design system.{0,180}resident and business-owner insights/i,
+    );
+    expect(projectPage).toMatch(/functional Figma prototype/i);
+    expect(projectPage).toMatch(/booking widget/i);
+    expect(projectPage).toMatch(/profile of the event host/i);
+    expect(projectPage).toMatch(/group coordination.{0,100}future/i);
   });
 });

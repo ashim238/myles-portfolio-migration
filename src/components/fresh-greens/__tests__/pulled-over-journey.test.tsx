@@ -26,7 +26,7 @@ describe("Fresh Greens pulled-over journey", () => {
       container.querySelector("h3.fg-pulled-reconstruction-title"),
     ).toHaveTextContent("Interactive case-study reconstruction");
     expect(markup).toContain(
-      "This web reconstruction shows one representative path. The native prototype contains the full flow.",
+      "This shows one path through the prototype.",
     );
     expect(container.querySelectorAll('[role="tablist"], [role="tab"]')).toHaveLength(0);
     expect(container.querySelectorAll('[role="tabpanel"]')).toHaveLength(0);
@@ -37,9 +37,15 @@ describe("Fresh Greens pulled-over journey", () => {
       expect(interaction).toHaveAttribute("hidden");
     }
     expect(panels).toHaveLength(4);
-    for (const key of ["toolkit", "reassurance", "question", "contact"]) {
+    for (const key of ["toolkit", "question", "reassurance", "contact"]) {
       expect(markup).toContain(`id="fg-pulled-panel-${key}"`);
     }
+    expect(panels.map((panel) => panel.id)).toEqual([
+      "fg-pulled-panel-toolkit",
+      "fg-pulled-panel-question",
+      "fg-pulled-panel-reassurance",
+      "fg-pulled-panel-contact",
+    ]);
     for (const panel of panels) {
       expect(panel).toHaveAttribute("role", "group");
       expect(panel.getAttribute("aria-label")).toBeTruthy();
@@ -113,7 +119,9 @@ describe("Fresh Greens pulled-over journey", () => {
       "aria-selected",
       "true",
     );
-    expect(screen.getByText("I started with the driver's question.")).toBeInTheDocument();
+    expect(
+      screen.getByText("The toolkit starts with ‘What’s going on?’"),
+    ).toBeInTheDocument();
 
     await user.click(screen.getByRole("tab", { name: /Contact/i }));
 
@@ -122,7 +130,7 @@ describe("Fresh Greens pulled-over journey", () => {
       "true",
     );
     expect(
-      screen.getByText("I kept recording and trusted-contact actions visible."),
+      screen.getByText("Recording and trusted-contact actions stay visible."),
     ).toBeInTheDocument();
     expect(
       screen.getByText("The screen confirms that nothing has been sent."),
@@ -142,9 +150,11 @@ describe("Fresh Greens pulled-over journey", () => {
     toolkit.focus();
     await user.keyboard("{ArrowRight}");
 
-    expect(screen.getByRole("tab", { name: /Reassurance/i })).toHaveFocus();
+    expect(screen.getByRole("tab", { name: /Question/i })).toHaveFocus();
     expect(
-      screen.getByText("I started recording before asking for another decision."),
+      screen.getByText(
+        "One question comes before the microphone request.",
+      ),
     ).toBeInTheDocument();
   });
 
@@ -155,14 +165,6 @@ describe("Fresh Greens pulled-over journey", () => {
     expect(
       screen.getByRole("group", { name: "Toolkit controls" }),
     ).toBeVisible();
-    await user.click(screen.getByRole("button", { name: "Continue" }));
-    const reassuranceTab = screen.getByRole("tab", { name: /Reassurance/i });
-    expect(reassuranceTab).toHaveAttribute(
-      "aria-selected",
-      "true",
-    );
-    expect(reassuranceTab).toHaveFocus();
-
     await user.click(screen.getByRole("button", { name: "Continue" }));
     expect(screen.getByRole("tab", { name: /Question/i })).toHaveAttribute(
       "aria-selected",
@@ -176,6 +178,17 @@ describe("Fresh Greens pulled-over journey", () => {
 
     expect(screen.getByRole("status")).toHaveTextContent("You selected Yes.");
     expect(screen.getByRole("button", { name: "Continue" })).toBeEnabled();
+
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+
+    const reassuranceTab = screen.getByRole("tab", { name: /Reassurance/i });
+    expect(reassuranceTab).toHaveAttribute("aria-selected", "true");
+    expect(reassuranceTab).toHaveFocus();
+    expect(
+      screen.getByText(
+        "Recording starts when microphone access is available.",
+      ),
+    ).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Continue" }));
 

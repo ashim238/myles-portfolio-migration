@@ -174,11 +174,11 @@ describe("Navi case-study structure", () => {
       .slice(page.indexOf("<ProjectToc"))
       .replace(/\s+/g, " ");
     const storyMarkers = [
-      "The team used a Manhattan heatmap",
+      "The Manhattan heatmap was an exploratory hypothesis",
       "resident and stakeholder responses",
       "overcrowdingStat.count",
       "Learn, Plan, Go",
-      "working alone",
+      "After the semester, I rebuilt the system",
       "Next research",
     ];
 
@@ -191,18 +191,18 @@ describe("Navi case-study structure", () => {
       );
     }
 
-    expect(page.match(/solo portfolio\s+rebuild/gi) ?? []).toHaveLength(1);
+    expect(page.match(/After the semester, I rebuilt the system/gi) ?? []).toHaveLength(1);
     expect(page).toContain('href="/work/navi/demo"');
     expect(page).toContain('href="/work/navi/system"');
   });
 
   it("lets the heatmap and research board carry their details without losing boundaries", () => {
     expect(prose).toContain("exploratory hypothesis");
-    expect(prose).toContain("do not represent actual tourist density or live geo analytics");
+    expect(prose).toContain("not actual tourist density or live geo analytics");
     expect(prose).toContain("internal planning artifacts");
-    expect(prose).toContain("without an engineering handoff");
-    expect(prose).toContain("The Airbnb audit and secondary research");
-    expect(prose).toContain("I repeated cost, requirements, and timing");
+    expect(prose).toContain("with no engineering handoff");
+    expect(prose).toContain("Cost, location, and event type were non-negotiable");
+    expect(prose).toContain("Going Fast reflected remaining availability");
     expect(prose).not.toContain(
       "A Manhattan heatmap turned the routing premise into an exploratory artifact.",
     );
@@ -218,11 +218,12 @@ describe("Navi case-study structure", () => {
     expect(prose).not.toContain(
       "The current demo makes the interaction model clickable.",
     );
-    expect(prose).toContain(
-      "I can now inspect the component states and individual booking flow in a browser.",
-    );
-    expect(page.indexOf("future path, not a launch outcome")).toBeLessThan(
-      page.indexOf("I can now inspect the component states"),
+    expect(prose).toContain("The browser demo supports the individual flow.");
+    expect(page).toContain("I could see NYC Tourism as a future partner");
+    expect(
+      page.indexOf("I could see NYC Tourism as a future partner"),
+    ).toBeLessThan(
+      page.indexOf("The browser demo supports the individual flow"),
     );
     expect(prose).not.toContain("The portfolio rebuild makes the concept easier to inspect");
     expect(prose).not.toContain("The graduate-studio concept did not ship");
@@ -240,7 +241,7 @@ describe("Navi case-study structure", () => {
     );
   });
 
-  it("counts imported survey display data inside the prose budget", () => {
+  it("counts imported survey display data inside the page-authored prose budget", () => {
     const [overcrowdingStat, authenticExperienceStat] = NAVI_SURVEY_STATS;
     const importedSurveyDisplay = [
       String(overcrowdingStat.count),

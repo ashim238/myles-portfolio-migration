@@ -84,16 +84,15 @@ export default async function NaviPage() {
         <p className="nv-eyebrow">Graduate studio · 2025</p>
         <h1 id="nv-title" className="project-hero-title nv-title">Navi</h1>
         <p className="project-hero-lede nv-lede">
-          Fourteen responses, two Manhattan businesses, and NYC Tourism
-          conversations took the work beyond an early heatmap toward Learn, Plan,
-          Go.
+          The heatmap could show people where to go, but not what to do when
+          they got there. Learn, Plan, Go grew out of that gap.
         </p>
       </section>
 
       <ProjectOpeningFacts
         role="UI/UX Designer"
-        scope="I collected and synthesized 14 resident and stakeholder responses, including two local businesses."
-        outcome="In a later solo rebuild, I turned Learn, Plan, Go into a React component system and working individual booking flow."
+        scope="I synthesized 14 resident and stakeholder responses, including two Manhattan businesses, adjusted the information architecture, and created the design system."
+        outcome="A functional team Figma prototype, followed by my solo React portfolio demo."
         proof={naviProof}
       />
       <LeadMedia
@@ -106,9 +105,9 @@ export default async function NaviPage() {
         timeline="January 2025 – June 2025"
         tools="Figma, FigJam, React, TypeScript"
         moves={[
-          "Graduate studio: the team tested an early Manhattan redirection concept and audited six travel platforms.",
-          "My contribution: I collected and synthesized the 14 responses, then created research-informed archetypes, journeys, opportunity areas, flows, and studio design-system work.",
-          "Solo rebuild: I turned Learn, Plan, Go into a React component system and working individual booking flow.",
+          "Tested: Other design students reviewed the homepage and search. We aligned card heights and reduced copy and tags.",
+          "Untested: The semester ended before we could test Learn, Plan, Go or booking.",
+          "Current demo: Plan lacks the full cost breakdown, and Go does not calculate a route from the visitor's current location.",
         ]}
       />
 
@@ -116,20 +115,12 @@ export default async function NaviPage() {
 
       <ProjectChapter entry={chapters[0]} index={1} total={chapters.length} variant="navi">
         <div className="project-section nv-section">
-          <p className="case-section-lead">
-            The early team concept could move a visitor to another neighborhood,
-            but it didn&apos;t change how they engaged after arriving.
-          </p>
           <div className="project-section-body">
             <p>
-              The studio brief framed regenerative tourism as participatory and
+              The brief framed regenerative tourism as participatory and
               contributive for visitors, local businesses and artisans, and
-              longtime residents.
-            </p>
-            <p>
-              The team used a Manhattan heatmap as an exploratory hypothesis:
-              could redirecting visitors spread attention across more
-              neighborhoods?
+              longtime residents. The Manhattan heatmap was an exploratory
+              hypothesis, not live tourist-density data.
             </p>
           </div>
         </div>
@@ -138,11 +129,10 @@ export default async function NaviPage() {
           <h3 className="project-evidence-heading" id="nv-heatmap">
             The first prototype: a Manhattan heatmap
           </h3>
-          <p className="case-section-lead">Select a neighborhood to see how the first artifact worked.</p>
           <div className="project-section-body">
             <p>
-              The regions show early emphasis. They do not represent actual
-              tourist density or live geo analytics.
+              The regions show early emphasis, not actual tourist density or
+              live geo analytics.
             </p>
           </div>
           <HeatmapExplorer />
@@ -154,25 +144,22 @@ export default async function NaviPage() {
           <h3 className="project-evidence-heading" id="nv-research">Platform audits and resident research</h3>
           <div className="project-section-body">
             <p>
-              Thirty-minute interviews with random New Yorkers were hard to
-              recruit, so surveys became the primary method and interviews
-              supplied context. I collected 14 resident and
-              stakeholder responses, including two Manhattan businesses, and
-              spoke with NYC Tourism. The sample included longtime residents and
-              many college-aged people. It informed the concept, but it doesn&apos;t
-              stand in for all NYC residents.
+              Interviews were hard to recruit, so surveys became the primary
+              method. I collected 14 resident and stakeholder responses,
+              including two Manhattan businesses, and spoke with NYC Tourism.
+              The sample included longtime residents and many college-aged
+              people, so it doesn&apos;t stand in for all NYC residents.
             </p>
             <p>
-              The team audited six travel platforms. I evaluated Airbnb with Kaori
-              Ogawa and Amy Zhang against Nielsen&apos;s ten heuristics, surfacing
-              inconsistent labels, weak family filters, and visual clutter.
+              The team audited six travel platforms. I evaluated Airbnb with
+              Kaori Ogawa and Amy Zhang against Nielsen&apos;s ten heuristics.
             </p>
           </div>
           <HeuristicInsightCards />
         </section>
 
         <div className="project-section nv-section">
-          <p className="case-section-lead">Two concerns appeared most often in the resident and stakeholder survey.</p>
+          <p className="case-section-lead">Two survey concerns appeared most often.</p>
           <div className="project-section-body">
             <p>
               {overcrowdingStat.count} of {NAVI_SURVEY_META.responseCount} responses (
@@ -184,14 +171,10 @@ export default async function NaviPage() {
             <p>
               Survey responses also raised rising costs, local-business
               displacement, repeat visitor relationships, and discovery outside
-              traditional social platforms. Tourism professionals pointed to
-              regenerative work already happening citywide.
-            </p>
-            <p>
-              The Manhattan businesses I spoke with stressed a strong social
-              presence across available channels. Survey respondents wanted
-              deeper engagement with communities and what they offer. Learn,
-              Plan, Go was meant to respond to both.
+              traditional social platforms. Tourism professionals described
+              regenerative work already happening citywide. From what I
+              remember, people wanted deeper engagement with a neighborhood and
+              its offerings.
             </p>
             <p className="nv-survey-note">
               Highlights from {NAVI_SURVEY_META.responseCount} responses,
@@ -207,37 +190,42 @@ export default async function NaviPage() {
         <div className="project-section nv-section project-section--wide nv-section--wide">
           <div className="project-section-body">
             <p className="case-section-lead">
-              I created three research-informed archetypes from the survey, platform audits, and
-              secondary research.
+              The research informed three archetypes: digital nomads, ethical
+              travelers, and visitors who already contributed to communities.
+              This was an early audience hypothesis, not a validated market
+              segment.
             </p>
             <p>
-              I treated digital nomads, ethical travelers, and visitors who
-              already contributed to communities as an early audience hypothesis,
-              not a validated market segment.
-            </p>
-            <p>
-              With no engineering resources and no implementation budget, the
-              studio ended with a Figma prototype, not a production website. The
-              journeys and flows stayed internal planning artifacts without an
-              engineering handoff.
-            </p>
-            <p>
-              I used the archetypes, journey map, opportunity areas, and flows to
-              decide what Navi needed to do. The Airbnb audit and secondary
-              research shaped the booking path. I repeated cost, requirements, and
-              timing where a traveler had to decide whether to book with an
-              unfamiliar host.
-            </p>
-            <p>
-              The research shifted my focus from moving visitors on a map to
-              helping them understand and plan what they would do after arriving.
-              I organized that concept as <mark className="case-highlight">Learn, Plan, Go</mark>:
+              I organized the Figma prototype as{" "}
+              <mark className="case-highlight">Learn, Plan, Go</mark>:
             </p>
             <ul>
-              <li><strong>Learn</strong> surfaces neighborhood context.</li>
-              <li><strong>Plan</strong> helps users compare and organize.</li>
-              <li><strong>Go</strong> carries a trip into an individual booking.</li>
+              <li>
+                <strong>Learn</strong> explains the neighborhood, activity, and
+                host, so someone can try something new without feeling like a
+                fish out of water.
+              </li>
+              <li>
+                <strong>Plan</strong> shows what the activity requires and a
+                small-business cost breakdown.
+              </li>
+              <li>
+                <strong>Go</strong> shows eco-friendly ways to reach the event
+                from the visitor&apos;s current location.
+              </li>
             </ul>
+            <p>
+              Booking sat beside those stages in a separate module. In the
+              prototype, visitors could choose a date and reserve with a partner.
+            </p>
+            <p>
+              Cost, location, and event type were non-negotiable.
+              Time-sensitive statuses came first. Going Fast reflected remaining
+              availability. Popular was meant to compare tickets booked within a
+              set window against other events. I didn&apos;t wire that logic into
+              React. In another course, my team noticed Airbnb used Featured so
+              often that it lost value. I kept that in mind here.
+            </p>
           </div>
           <NaviResearchArtifacts />
         </div>
@@ -251,21 +239,40 @@ export default async function NaviPage() {
           <h3 className="project-evidence-heading" id="nv-system">Rebuilding Navi as a working system</h3>
           <div className="project-section-body">
             <p>
-              My largest studio contribution was the Figma system. I built
-              Button and Field first, then used variants for the category-chip
-              rail. That specificity saved time and made the React conversion
-              straightforward.
+              No engineering resources or budget kept the prototype in Figma.
+              My teammate
+              proposed the original information architecture, and I tweaked it
+              to align with the personas and journey maps. Different levels of
+              experience with design tools and incompatible schedules made it
+              hard to align. I created the design system from head to toe. It
+              saved time on aesthetic decisions and let us focus on resident and
+              business-owner insights. The journeys and flows were internal
+              planning artifacts with no engineering handoff.
             </p>
             <p>
-              The studio ended as a Figma concept. In a later solo portfolio
-              rebuild, working alone, I turned Learn, Plan, Go into React and
-              TypeScript components and an individual booking flow.
+              The homepage tested the system first. Other design students tested
+              the homepage and search, so most feedback was visual. We made the
+              cards the same height to give the viewer a
+              consistent place to move their eye, then used less copy and fewer
+              tags to lower the load.
             </p>
             <p>
-              The same components and variants power both the editable system page
-              and the booking demo. <Link href="/work/navi/system">See the Navi
-              design system</Link>.{" "}
-              <Link href="/work/navi/demo">Open the demo</Link>.
+              By the time the semester ended, we didn&apos;t have an opportunity to
+              test Learn, Plan, Go or the booking flow. The functional Figma
+              prototype included neighborhood-specific events, a booking widget,
+              and a profile of the event host. Group coordination remained a
+              future idea. I was comfortable treating that version as a V1.
+            </p>
+            <p>
+              After the semester, I rebuilt the system in React and TypeScript
+              on my own. The current version covers the individual booking flow.
+              Plan doesn&apos;t show the full cost breakdown yet. Go lists public
+              transit, walking, and bike options for each activity, but it
+              doesn&apos;t calculate a route from the visitor&apos;s current location yet.
+            </p>
+            <p className="nv-system-proof-links">
+              The <Link href="/work/navi/system">system page</Link> and{" "}
+              <Link href="/work/navi/demo">booking demo</Link> share components.
             </p>
           </div>
           <CompositionStrip />
@@ -276,14 +283,6 @@ export default async function NaviPage() {
           aria-labelledby="nv-screens"
         >
           <h3 className="project-evidence-heading" id="nv-screens">A working booking flow</h3>
-          <p className="case-section-lead">The screens below come from the React build.</p>
-          <div className="project-section-body">
-            <p>
-              In the current build, you can browse the feed, search by
-              neighborhood, open a host, and complete a sample individual
-              reservation with the same components catalogued on the system page.
-            </p>
-          </div>
           <NaviDemoEmbed />
         </section>
       </ProjectChapter>
@@ -292,14 +291,9 @@ export default async function NaviPage() {
         <div className="project-section nv-section nv-closing">
           <div className="project-section-body">
             <p>
-              A plausible long-term path is to bring the evidence and prototype to
-              an institution such as NYC Tourism for further development. It
-              remains a future path, not a launch outcome.
-            </p>
-            <p>
-              I can now inspect the component states and individual booking flow in
-              a browser. I still need to test it with residents, travelers, and
-              local hosts before treating those choices as settled.
+              I could see NYC Tourism as a future partner, but that partnership
+              hasn&apos;t happened. The browser demo supports the individual flow. I
+              still need to test it with residents, travelers, and local hosts.
             </p>
           </div>
           <div className="nv-validation-ledger">

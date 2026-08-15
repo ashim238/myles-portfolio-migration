@@ -145,6 +145,8 @@ The portfolio shell has no primary brand accent of its own. The primary color is
 
 **The No-Warm-Default Rule.** Neither the dark nor light theme tints toward warmth-by-default. `#050505` is true near-black; `#fafafa` is cool-neutral. The 2026 cream/sand/paper aesthetic is forbidden.
 
+**The Reader Paper Exception.** `--m97-paper` is a tightly scoped warm off-white for Reader paper and Reader-owned editorial chrome only. It represents a document opened from Myles 98, not the portfolio's light theme. It must not enter shell chrome, cards, or project evidence. Under reduced transparency it stays fully opaque; under increased contrast it retains an explicit ink divider.
+
 **The Project Color Rule.** Project colors live on the project page root or inside the artifact they reproduce. They may color project navigation, evidence, and authored simulations. They must not recolor shared shell chrome or enter the global palette solely because one project uses them.
 
 ## 3. Typography

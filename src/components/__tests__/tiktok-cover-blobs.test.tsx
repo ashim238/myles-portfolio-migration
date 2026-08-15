@@ -330,13 +330,13 @@ describe("TikTokCoverBlobs preview geometry", () => {
   it("keeps the desktop stem open and the right satellite close enough to read as one mark", () => {
     const { container } = render(<TikTokCoverBlobs />);
     const topStem = container.querySelector<HTMLImageElement>(
-      'img[src$="/b00.png"]',
+      'img[src$="/b00.webp"]',
     );
     const bottomStem = container.querySelector<HTMLImageElement>(
-      'img[src$="/b12.png"]',
+      'img[src$="/b12.webp"]',
     );
     const rightSatellite = container.querySelector<HTMLImageElement>(
-      'img[src$="/b10.png"]',
+      'img[src$="/b10.webp"]',
     );
 
     expect(topStem).not.toBeNull();
@@ -358,13 +358,13 @@ describe("TikTokCoverBlobs preview geometry", () => {
   it("provides a mobile composition with separate horizontal and vertical spreads", () => {
     const { container } = render(<TikTokCoverBlobs />);
     const topStem = container.querySelector<HTMLImageElement>(
-      'img[src$="/b00.png"]',
+      'img[src$="/b00.webp"]',
     );
     const bottomStem = container.querySelector<HTMLImageElement>(
-      'img[src$="/b12.png"]',
+      'img[src$="/b12.webp"]',
     );
     const rightSatellite = container.querySelector<HTMLImageElement>(
-      'img[src$="/b10.png"]',
+      'img[src$="/b10.webp"]',
     );
 
     expect(numericCustomProperty(topStem!, "--tt-preview-mobile-y")).toBeCloseTo(

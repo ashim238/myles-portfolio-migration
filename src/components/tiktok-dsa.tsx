@@ -74,7 +74,9 @@ export function TikTokTemplateSystem() {
               selected.key === template.key ? " tt-template-choice--selected" : ""
             }`}
             aria-label={`View ${template.name} template${
-              template.shipped ? ", shipped" : ""
+              template.launchLibraryStatus === "confirmed"
+                ? ", confirmed in the launch library"
+                : ""
             }`}
             aria-pressed={selected.key === template.key}
             onClick={() => setSelectedKey(template.key)}
@@ -92,8 +94,8 @@ export function TikTokTemplateSystem() {
             </span>
             <span className="tt-template-choice-meta">
               <span>{template.name}</span>
-              {template.shipped ? (
-                <span className="tt-template-shipped">Shipped</span>
+              {template.launchLibraryStatus === "confirmed" ? (
+                <span className="tt-template-shipped">Launch library</span>
               ) : null}
             </span>
           </button>
@@ -353,7 +355,7 @@ export function TikTokCoverBlobs(
           // eslint-disable-next-line @next/next/no-img-element
           <img
             key={b.f}
-            src={`/projects/tiktok/cover-blobs/${b.f}.png`}
+            src={`/projects/tiktok/cover-blobs/${b.f}.webp`}
             alt=""
             draggable={false}
             loading={deferUntilVisible ? "lazy" : "eager"}

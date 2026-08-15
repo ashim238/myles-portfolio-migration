@@ -46,9 +46,9 @@ export default function AboutPage() {
               prototype for Black drivers. For UnderstandingFAFSA, I built
               reusable newsletter templates. The first redesigned send had an observed 52.6% open rate
               with Mailchimp Privacy Protection excluded. At TikTok, I designed
-              three catalog templates. One
-              entered the launch library and was later selected by American
-              Eagle.
+              three catalog templates. Light Academia entered the launch library,
+              and I later learned through Global Creative Lab that American Eagle
+              selected it.
             </p>
             <p>
               Outside of work, I&apos;m a huge comic fan. The work Daniel

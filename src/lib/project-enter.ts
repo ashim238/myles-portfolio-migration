@@ -35,11 +35,16 @@ export type ProjectEnterRequestDetail = {
   rect: ProjectEnterRect;
   visual: ProjectEnterVisual;
   borderRadius: string;
+  reduceMotion?: boolean;
+  animate?: boolean;
 };
 
 export type ProjectReturnSnapshot = {
   version: 1;
   slug: ProjectProgramId;
+  returnTarget?: "program" | "selected-work";
+  reduceMotion?: boolean;
+  animate?: boolean;
   rect: ProjectEnterRect;
   borderRadius: string;
   visual: ProjectProgramVisual;
@@ -104,6 +109,11 @@ function isReturnSnapshot(value: unknown): value is ProjectReturnSnapshot {
   return (
     value.version === 1 &&
     isProjectProgramId(value.slug) &&
+    (value.returnTarget === undefined ||
+      value.returnTarget === "program" ||
+      value.returnTarget === "selected-work") &&
+    (value.reduceMotion === undefined || typeof value.reduceMotion === "boolean") &&
+    (value.animate === undefined || typeof value.animate === "boolean") &&
     isRect(value.rect) &&
     typeof value.borderRadius === "string" &&
     isProgramVisual(value.visual) &&
@@ -111,10 +121,15 @@ function isReturnSnapshot(value: unknown): value is ProjectReturnSnapshot {
   );
 }
 
-export function dispatchProjectEnterRequest(detail: ProjectEnterRequestDetail): void {
-  window.dispatchEvent(
-    new CustomEvent<ProjectEnterRequestDetail>(PROJECT_ENTER_REQUEST, { detail }),
+export function dispatchProjectEnterRequest(
+  detail: ProjectEnterRequestDetail,
+): boolean {
+  const event = new CustomEvent<ProjectEnterRequestDetail>(
+    PROJECT_ENTER_REQUEST,
+    { detail, cancelable: true },
   );
+  window.dispatchEvent(event);
+  return event.defaultPrevented;
 }
 
 export function saveProjectReturnSnapshot(snapshot: ProjectReturnSnapshot): void {
@@ -145,12 +160,15 @@ export function dispatchProjectReturnRequest(
   snapshot = readProjectReturnSnapshot(),
 ): boolean {
   if (!snapshot) return false;
-  window.dispatchEvent(
-    new CustomEvent<ProjectReturnRequestDetail>(PROJECT_RETURN_REQUEST, {
+  const event = new CustomEvent<ProjectReturnRequestDetail>(
+    PROJECT_RETURN_REQUEST,
+    {
       detail: { href: "/", snapshot },
-    }),
+      cancelable: true,
+    },
   );
-  return true;
+  window.dispatchEvent(event);
+  return event.defaultPrevented;
 }
 
 export const PROJECT_ENTER_SETTLE_MS = 560;
@@ -171,6 +189,17 @@ export function queryProjectProgram(slug: ProjectProgramId): HTMLElement | null 
   return document.querySelector<HTMLElement>(
     `[data-m97-program-window="${slug}"]`,
   );
+}
+
+export function queryProjectReturnTarget(
+  snapshot: ProjectReturnSnapshot,
+): HTMLElement | null {
+  if (snapshot.returnTarget === "selected-work") {
+    return document.querySelector<HTMLElement>(
+      `[data-m97-selected-work-project="${snapshot.slug}"]`,
+    );
+  }
+  return queryProjectProgram(snapshot.slug);
 }
 
 function waitForElement(
@@ -212,4 +241,11 @@ export function waitForProjectProgram(
   attempts = 48,
 ): Promise<HTMLElement | null> {
   return waitForElement(() => queryProjectProgram(slug), attempts);
+}
+
+export function waitForProjectReturnTarget(
+  snapshot: ProjectReturnSnapshot,
+  attempts = 48,
+): Promise<HTMLElement | null> {
+  return waitForElement(() => queryProjectReturnTarget(snapshot), attempts);
 }

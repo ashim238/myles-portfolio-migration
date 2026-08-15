@@ -51,7 +51,7 @@ describe("ReaderShell", () => {
 
   it("dispatches the reverse transition only for a matching saved program", () => {
     saveProjectReturnSnapshot(snapshot);
-    const onReturn = vi.fn();
+    const onReturn = vi.fn((event: Event) => event.preventDefault());
     window.addEventListener(PROJECT_RETURN_REQUEST, onReturn);
 
     render(
@@ -67,7 +67,7 @@ describe("ReaderShell", () => {
 
   it("keeps direct and mismatched project visits on native desktop navigation", () => {
     saveProjectReturnSnapshot(snapshot);
-    const onReturn = vi.fn();
+    const onReturn = vi.fn((event: Event) => event.preventDefault());
     window.addEventListener(PROJECT_RETURN_REQUEST, onReturn);
 
     render(

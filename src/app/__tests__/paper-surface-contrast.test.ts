@@ -7,6 +7,10 @@ const paperStyles = readFileSync(
   resolve(process.cwd(), "src/app/styles/myles-98-paper-contrast.css"),
   "utf8",
 );
+const systemStyles = readFileSync(
+  resolve(process.cwd(), "src/app/styles/myles-98-polish.css"),
+  "utf8",
+);
 
 function relativeLuminance(hex: string) {
   const channels = hex
@@ -41,9 +45,21 @@ function contrastRatio(foreground: string, background: string) {
 }
 
 describe("Myles 98 paper-surface contrast", () => {
-  it("loads the paper correction after every shared presentation layer", () => {
+  it("loads paper correction after presentation layers and preference overrides last", () => {
+    const paperImport = globals.indexOf(
+      '@import "./styles/myles-98-paper-contrast.css";',
+    );
+    const systemImport = globals.indexOf(
+      '@import "./styles/myles-98-polish.css";',
+    );
+    const preferenceImport = globals.indexOf(
+      '@import "./styles/accessibility-preferences.css";',
+    );
+
+    expect(paperImport).toBeGreaterThan(systemImport);
+    expect(preferenceImport).toBeGreaterThan(paperImport);
     expect(globals.trimEnd()).toMatch(
-      /@import "\.\/styles\/myles-98-paper-contrast\.css";$/,
+      /@import "\.\/styles\/accessibility-preferences\.css";$/,
     );
   });
 
@@ -85,6 +101,13 @@ describe("Myles 98 paper-surface contrast", () => {
     expect(contrastRatio("#5b5953", "#f5f3ea")).toBeGreaterThanOrEqual(4.5);
     expect(paperStyles).toMatch(
       /\.reader-mode\.reader-mode :is\(\s*\.uf-composer-pinned-badge,\s*\.uf-composer-item-position\s*\)\s*\{[^}]*opacity:\s*1;/,
+    );
+  });
+
+  it("keeps the document endcap label readable on Myles 98 chrome", () => {
+    expect(contrastRatio("#111111", "#c7c7c7")).toBeGreaterThanOrEqual(4.5);
+    expect(systemStyles).toMatch(
+      /\.myles98-system-document \.portfolio-endcap-label\s*\{[^}]*color:\s*var\(--m97-ink\);/,
     );
   });
 

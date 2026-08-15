@@ -49,8 +49,11 @@ describe("UnderstandingFAFSA outcome claims", () => {
     expect(visibleMetricCopy).toMatch(
       /earlier sends[\s\S]{0,50}around 30%/i,
     );
-    expect(visibleMetricCopy).toMatch(
-      /not a controlled attribution test[\s\S]{0,120}(?:don&apos;t|do not) claim/i,
+    expect(visibleMetricCopy).toContain(
+      "Because this wasn&apos;t a controlled attribution test, I don&apos;t attribute the difference to the redesign.",
+    );
+    expect(visibleMetricCopy).not.toContain(
+      "That result is supporting context",
     );
   });
 
@@ -61,8 +64,10 @@ describe("UnderstandingFAFSA outcome claims", () => {
     );
     const summary = content.match(/^summary: (.+)$/m)?.[1];
 
-    expect(summary).toMatch(/^Built a modular newsletter system/);
+    expect(summary).toMatch(/^Built a Mailchimp-native newsletter kit/);
+    expect(summary).toContain("roughly 20 sends");
     expect(summary).toContain("observed");
+    expect(summary).toContain("wasn't a controlled attribution test");
     expect(summary).not.toMatch(/versus prior|around 30%/);
   });
 
@@ -164,6 +169,11 @@ describe("UnderstandingFAFSA outcome claims", () => {
       expect(source).not.toMatch(/52\.6%[^.]*prior sends around 30%/i);
       expect(source).not.toMatch(/52\.6%[^.]*compared with prior sends/i);
     }
+
+    expect(resume).toContain(
+      "founder could edit weekly sends herself and bring me back for new audiences or color pairings",
+    );
+    expect(resume).not.toContain("without a designer in the loop");
   });
 
   it("keeps a rendered space after the highlighted Gmail constraint", () => {
@@ -173,7 +183,7 @@ describe("UnderstandingFAFSA outcome claims", () => {
     );
 
     expect(projectPage).toMatch(
-      /constraint\.\s*<\/mark>\s*\{" "\}\s*To reduce/,
+      /constraint\.\s*<\/mark>\s*\{" "\}\s*Figma&apos;s spacing/,
     );
   });
 });

@@ -88,6 +88,30 @@ describe("ProjectToc responsive layout", () => {
     expect(title).toMatch(/text-overflow:\s*ellipsis;/);
   });
 
+  it("lets expanded mobile chapter labels wrap without changing the collapsed bar", () => {
+    const mobile = cssBlocks("@media (max-width: 767px)").find((block) =>
+      block.includes(".project-toc-toggle"),
+    );
+    expect(mobile).toBeDefined();
+
+    const expandedLink = cssBlock(".project-toc-list--open .project-toc-link", mobile!);
+    const expandedLabel = cssBlock(".project-toc-list--open .project-toc-text", mobile!);
+    const expandedTitle = cssBlock(".project-toc-list--open .project-toc-title", mobile!);
+    const collapsedTitle = cssBlock(
+      ".project-toc-active-title .project-toc-title",
+      mobile!,
+    );
+
+    expect(expandedLink).toMatch(/white-space:\s*normal;/);
+    expect(expandedLabel).toMatch(/overflow:\s*visible;/);
+    expect(expandedLabel).toMatch(/white-space:\s*normal;/);
+    expect(expandedTitle).toMatch(/overflow:\s*visible;/);
+    expect(expandedTitle).toMatch(/text-overflow:\s*clip;/);
+    expect(expandedTitle).toMatch(/white-space:\s*normal;/);
+    expect(collapsedTitle).toMatch(/white-space:\s*nowrap;/);
+    expect(collapsedTitle).toMatch(/text-overflow:\s*ellipsis;/);
+  });
+
   it("gives compact phones the title before stage and decorative read-time", () => {
     const compact = cssBlock("@media (max-width: 420px)", readerStyles);
     expect(
@@ -161,6 +185,20 @@ describe("ProjectToc responsive layout", () => {
     expect(label).toMatch(/left:\s*auto;/);
     expect(label).toMatch(/text-align:\s*right;/);
     expect(active).toMatch(/opacity:\s*1;/);
+  });
+
+  it("keeps a continuation fade on overflowing desktop chapter rails until spine mode", () => {
+    const overflowRange = cssBlock(
+      "@media (min-width: 769px) and (max-width: 1599px)",
+    );
+    const rail = cssBlock(
+      ".project-toc-list:not(:focus-within)",
+      overflowRange,
+    );
+
+    expect(rail).toMatch(/mask-image:\s*linear-gradient/);
+    expect(rail).toMatch(/transparent/);
+    expect(rail).toMatch(/calc\(100% - 30px\)/);
   });
 
   it("raises the return control above mobile navigation and the safe area", () => {

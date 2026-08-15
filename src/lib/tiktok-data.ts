@@ -34,7 +34,7 @@ export type TikTokTemplate = {
   fullTemplate: string;
   fullTemplateSource: string;
   sketch: string;
-  shipped: boolean;
+  launchLibraryStatus: "confirmed" | "unknown";
   palette: readonly { hex: string; label: string }[];
   iterationNote: string;
   regionOverlays: Partial<Record<TikTokTemplateRegion, TikTokRegionBox>>;
@@ -61,10 +61,10 @@ export const TIKTOK_TEMPLATES = [
     fullTemplate: "/projects/tiktok/system/dopamine.webp",
     fullTemplateSource: "/projects/tiktok/system/dopamine.svg",
     sketch: "/projects/tiktok/lofi-dopamine.png",
-    shipped: false,
+    launchLibraryStatus: "unknown",
     palette: AESTHETICS[0].palette,
     iterationNote:
-      "GCL feedback pushed me to bring more of TikTok's brand language and copy into the direction.",
+      "The sketch explores brand colors and copy such as #OOTD. I rejected the direction once the copy felt like it was trying too hard to belong and the visuals felt too TikTok-branded.",
     regionOverlays: {
       title: { left: 20.37, top: 13.02, width: 47.67, height: 4.92 },
       catalog: { left: 12.45, top: 19.18, width: 64.48, height: 41.97 },
@@ -83,10 +83,10 @@ export const TIKTOK_TEMPLATES = [
     fullTemplate: "/projects/tiktok/system/eboy.webp",
     fullTemplateSource: "/projects/tiktok/system/eboy.svg",
     sketch: "/projects/tiktok/lofi-eboy.png",
-    shipped: false,
+    launchLibraryStatus: "unknown",
     palette: AESTHETICS[1].palette,
     iterationNote:
-      "The team liked the texture, but felt the direction was drifting too far from TikTok's upbeat visual language. I kept the edge and looked for more dimension.",
+      "The notes warned that the direction might stray too far from the guidelines. I was asked to build it out and find a way to make the nearly colorless treatment appealing.",
     regionOverlays: {
       catalog: { left: 11.11, top: 13.33, width: 66.67, height: 48.33 },
     },
@@ -98,10 +98,10 @@ export const TIKTOK_TEMPLATES = [
     fullTemplate: "/projects/tiktok/system/academia.webp",
     fullTemplateSource: "/projects/tiktok/system/academia.svg",
     sketch: "/projects/tiktok/lofi-light-academia.png",
-    shipped: true,
+    launchLibraryStatus: "confirmed",
     palette: AESTHETICS[2].palette,
     iterationNote:
-      "I kept the spare editorial structure and pushed the title, color, and supporting details further.",
+      "The sketch records the internal critique that shaped the final Light Academia direction.",
     regionOverlays: {
       title: { left: 61.11, top: 13.28, width: 35.91, height: 13.98 },
       catalog: { left: 10.84, top: 18.75, width: 66.94, height: 42.71 },

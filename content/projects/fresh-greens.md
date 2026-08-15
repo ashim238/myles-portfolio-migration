@@ -1,13 +1,13 @@
 ---
 slug: fresh-greens
 title: Fresh Greens
-summary: A working wayfinding prototype for Black drivers that brings community safety reports and daylight reminders into route planning alongside public map data.
+summary: Fresh Greens is a working navigation prototype for Black drivers. It shows conditions before a drive and keeps support tools one tap away during a drive.
 role: Product Designer · Solo build
 timeframe: 2025–2026
 status: published
 order: 1
 coverImage: /projects/fresh-greens/cover.png
-highlightQuote: A working wayfinding prototype that brings community safety knowledge into route scoring alongside public data, then explains the evidence through route chips and source detail cards.
+highlightQuote: The route preview shows daylight, road conditions, and community reports before the driver chooses. Detail cards show where those signals came from.
 outcomeLead: Built solo.
 outcomeRest: A working React Native prototype across 26+ screens.
 tags:

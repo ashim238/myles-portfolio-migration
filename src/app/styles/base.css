@@ -291,6 +291,10 @@ a {
 }
 
 /* Project cover zoom — home work card into case study */
+.project-route-surface {
+  display: contents;
+}
+
 html.project-enter-lock {
   overflow: hidden;
 }
@@ -307,7 +311,8 @@ html.project-enter-settling .project-page {
   position: fixed;
   inset: 0;
   z-index: 10001;
-  pointer-events: none;
+  pointer-events: auto;
+  touch-action: none;
 }
 
 .project-enter-backdrop {
@@ -3014,7 +3019,7 @@ button:focus-visible,
    so it scrolls. Fade both edges so the overflow reads as "scroll for more"
    instead of an abrupt cut. Dropped while a pill is keyboard-focused so focus
    rings near the edges are never clipped by the mask. */
-@media (min-width: 769px) and (max-width: 1279px) {
+@media (min-width: 769px) and (max-width: 1599px) {
   .project-toc-list:not(:focus-within) {
     -webkit-mask-image: linear-gradient(
       to right,
@@ -3396,6 +3401,23 @@ button:focus-visible,
     min-height: 44px;
     font-size: 0.82rem;
     border-radius: 0;
+  }
+
+  .project-toc-list--open .project-toc-link {
+    align-items: flex-start;
+    white-space: normal;
+  }
+
+  .project-toc-list--open .project-toc-text {
+    flex: 1 1 auto;
+    overflow: visible;
+    white-space: normal;
+  }
+
+  .project-toc-list--open .project-toc-title {
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
   }
 
   .project-toc-link--active {

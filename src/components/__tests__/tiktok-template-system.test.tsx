@@ -54,7 +54,7 @@ describe("TikTokTemplateSystem", () => {
     expect(selectedImage.getAttribute("src")).toContain(".webp");
   });
 
-  it("shows the three original templates and marks only Light Academia as shipped", () => {
+  it("shows the three original templates and marks the confirmed launch-library result", () => {
     render(<TikTokTemplateSystem />);
 
     const chooser = screen.getByRole("group", { name: "Choose a template" });
@@ -62,13 +62,13 @@ describe("TikTokTemplateSystem", () => {
     expect(within(chooser).getByText("#DopamineDressing")).toBeInTheDocument();
     expect(within(chooser).getByText("#e-Boy/#e-Girl")).toBeInTheDocument();
     expect(within(chooser).getByText("#LightAcademia")).toBeInTheDocument();
-    expect(within(chooser).getAllByText("Shipped")).toHaveLength(1);
+    expect(within(chooser).getAllByText("Launch library")).toHaveLength(1);
     expect(
       within(
         screen.getByRole("button", {
-          name: "View #LightAcademia template, shipped",
+          name: "View #LightAcademia template, confirmed in the launch library",
         }),
-      ).getByText("Shipped"),
+      ).getByText("Launch library"),
     ).toBeInTheDocument();
   });
 
@@ -79,7 +79,7 @@ describe("TikTokTemplateSystem", () => {
       name: "View #DopamineDressing template",
     });
     const academia = screen.getByRole("button", {
-      name: "View #LightAcademia template, shipped",
+      name: "View #LightAcademia template, confirmed in the launch library",
     });
 
     expect(dopamine).toHaveAttribute("aria-pressed", "true");
@@ -170,7 +170,7 @@ describe("TikTokTemplateSystem", () => {
 
     fireEvent.click(
       screen.getByRole("button", {
-        name: "View #LightAcademia template, shipped",
+        name: "View #LightAcademia template, confirmed in the launch library",
       }),
     );
     fireEvent.click(

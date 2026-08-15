@@ -36,6 +36,10 @@ const reminderPath = resolve(
   process.cwd(),
   "src/components/fresh-greens/departure-reminder-evidence.tsx",
 );
+const projectChaptersPath = resolve(
+  process.cwd(),
+  "src/lib/project-chapters.ts",
+);
 const primaryPathFiles = [
   pagePath,
   pivotPath,
@@ -62,6 +66,7 @@ function normalizeCopy(copy: string) {
   return copy
     .replace(/<[^>]+>/g, "")
     .replace(/&apos;/g, "'")
+    .replace(/&quot;/g, '"')
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -232,10 +237,10 @@ describe("Fresh Greens prose structure", () => {
     expect(source).not.toContain("Warm surfaces and a reserved serif");
     expect(source).not.toContain("Four colors and the daylight gradient");
     expect(source).not.toContain("The honest split between");
-    expect(copy).toContain("I interviewed six Black drivers");
+    expect(copy).toContain("I spoke with six Black drivers");
   });
 
-  it("keeps only decision-bearing artifacts in the five-minute path", () => {
+  it("keeps only decision-bearing artifacts in the primary reading path", () => {
     const source = readPage();
 
     for (const component of [
@@ -265,7 +270,7 @@ describe("Fresh Greens prose structure", () => {
     expect(source).toContain("En-route prototype on a simulated route.");
   });
 
-  it("names the second route-planning state as the final direction", () => {
+  it("names the second route-planning state without portfolio shorthand", () => {
     const source = readFileSync(
       resolve(
         process.cwd(),
@@ -274,7 +279,8 @@ describe("Fresh Greens prose structure", () => {
       "utf8",
     );
 
-    expect(source).toContain(">The final<");
+    expect(source).toContain(">Standalone app<");
+    expect(source).not.toContain(">The final<");
     expect(source).not.toContain(">The break<");
   });
 
@@ -329,7 +335,9 @@ describe("Fresh Greens prose structure", () => {
     const page = readPage();
 
     expect(component).not.toContain("eight public data sources");
-    expect(component).toMatch(/eight data inputs/i);
+    expect(component).toMatch(/eight source adapters/i);
+    expect(component).not.toMatch(/eight data inputs pass/i);
+    expect(component).toContain("live feed not wired");
     expect(component).toContain("local-first in the prototype");
     expect(component).toContain("Supabase and Postgres path behind configuration");
     expect(component).toContain("local-first · Supabase when configured");
@@ -345,16 +353,19 @@ describe("Fresh Greens prose structure", () => {
     const copy = normalizeCopy(source);
 
     expect(copy).toContain(
-      "Fresh Greens brings the safety knowledge Black drivers already use into route planning.",
+      "A navigation tool for Black drivers at different stages of a drive.",
     );
-    expect(copy).toContain("I grew up in Brooklyn");
-    expect(copy).toContain("moved to rural South Jersey around age ten");
-    expect(copy).toContain("Confederate flags, worsening roads, and spotty reception");
-    expect(copy).toContain("a police stop, car trouble, or being stranded");
-    expect(copy).toContain("Google Maps or Apple Maps");
-    expect(copy).toContain("drove below the speed limit");
-    expect(copy).toContain("That was a hypothesis, not proof");
-    expect(copy).toContain("I interviewed six Black drivers");
+    expect(readFileSync(projectChaptersPath, "utf8")).toContain(
+      "Car culture and South Jersey go hand in hand",
+    );
+    expect(copy).toContain("I moved there from Brooklyn as a kid");
+    expect(copy).toContain("The roads would start to break down a bit");
+    expect(copy).toContain("Reception would become unreliable");
+    expect(copy).toContain("what would happen if the car broke down right there");
+    expect(copy).toContain("Drivers already relied on tools like Google Maps");
+    expect(copy).toContain("I'd slow down, avoid backroads");
+    expect(copy).toContain("I didn't know whether that discomfort was mine alone");
+    expect(copy).toContain("I spoke with six Black drivers");
 
     expect(source).toContain(
       'href="https://nmaahc.si.edu/explore/stories/traveling-through-jim-crow-america"',
@@ -362,25 +373,70 @@ describe("Fresh Greens prose structure", () => {
     expect(copy).toContain("Plan");
     expect(copy).toContain("Respond");
     expect(copy).toContain("Trust");
-    expect(copy).toContain("6 of 6 connected trip timing to daylight");
-    expect(copy).toContain("5 of 6 raised road conditions");
-    expect(copy).toContain("5 of 6 raised police presence");
-    expect(copy).toContain("3 of 6 raised wildlife");
+    expect(copy).toContain("All six mentioned daylight");
+    expect(copy).toContain("five mentioned road conditions");
+    expect(copy).toContain("five mentioned police presence");
+    expect(copy).toContain("three mentioned wildlife");
     expect(copy).toContain(
-      "5 of 6 asked family or friends before trusting an unfamiliar place",
+      "Five of six asked family or friends before trusting an unfamiliar place",
     );
     expect(copy).toContain(
-      "Drivers couldn't inspect conditions on each route before choosing.",
+      "Drivers couldn't compare the conditions they cared about across routes before choosing.",
     );
     expect(copy).toContain(
-      "Useful community knowledge lived outside navigation",
+      "Five of six asked family or friends before trusting an unfamiliar place",
     );
     expect(copy).toContain(
-      "Six interviews don't represent every Black driver.",
+      "Six interviews can't represent every Black driver.",
     );
     expect(copy).toContain(
-      "I wanted to explore what that principle could look like inside navigation.",
+      "I returned to the Green Book for the visual system",
     );
+  });
+
+  it("keeps Myles's causal spine from existing workarounds through the build and test correction", () => {
+    const copy = normalizeCopy(readPage());
+
+    expect(readFileSync(projectChaptersPath, "utf8")).toContain(
+      "Car culture and South Jersey go hand in hand",
+    );
+    expect(copy).toContain(
+      "Qualitative interviews were new to me, but I tried to navigate them like everyday conversations.",
+    );
+    expect(copy).toContain("I wasn't the only person getting the heebie-jeebies during a drive.");
+    expect(copy).toContain("He was content, not impressed.");
+    expect(copy).toContain("I was about a month from delivering it");
+    expect(copy).toContain("Chicago to rural Georgia");
+    expect(copy).toContain(
+      "The driver isn't expecting perfection, but they are expecting the clarity and autonomy to choose a route that they can feel adequately prepared for.",
+    );
+    expect(copy).not.toContain(
+      "The driver isn't expecting perfection. They're expecting",
+    );
+    expect(copy).toContain("Worst comes to worst, a Black driver needs to be informed.");
+    expect(copy).toContain(
+      "People just need transparency into how the app is doing what it claims it does.",
+    );
+    expect(copy).toContain(
+      'The current build still labels the top option "Safest route,"',
+    );
+    expect(copy).toContain("The full score and its weights aren't exposed yet.");
+    expect(copy).toContain(
+      "I used Figma to set the initial rules, then built them in code.",
+    );
+    expect(copy).toContain("My own address was sitting in Recent");
+    expect(copy).toContain("I added street addresses");
+    expect(copy).toContain(
+      "where it asks for too much, and what I need to change.",
+    );
+
+    expect(copy).not.toContain(
+      "Roadside help, location sharing, guidance, and emergency steps work offline.",
+    );
+    expect(copy).not.toContain(
+      "Fresh Greens shows uncertainty where coverage is thin.",
+    );
+    expect(copy).toContain("With Supabase configured");
   });
 
   it("retires the four-tab taxonomy from the primary research path", () => {
@@ -426,9 +482,16 @@ describe("Fresh Greens prose structure", () => {
   it("describes the project-card work as a prototype for Black drivers", () => {
     const content = readFileSync(projectContentPath, "utf8");
     const summary = content.match(/^summary: (.+)$/m)?.[1];
+    const highlightQuote = content.match(/^highlightQuote: (.+)$/m)?.[1];
 
     expect(summary).toBe(
-      "A working wayfinding prototype for Black drivers that brings community safety reports and daylight reminders into route planning alongside public map data.",
+      "Fresh Greens is a working navigation prototype for Black drivers. It shows conditions before a drive and keeps support tools one tap away during a drive.",
+    );
+    expect(highlightQuote).toBe(
+      "The route preview shows daylight, road conditions, and community reports before the driver chooses. Detail cards show where those signals came from.",
+    );
+    expect(`${readPage()}\n${content}`).not.toMatch(
+      /\bbrings?\b[^.]{0,120}\binto\b[^.]{0,120}\balongside\b/i,
     );
     expect(summary).not.toMatch(/\bapp\b|maximi[sz]/i);
   });

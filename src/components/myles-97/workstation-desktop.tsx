@@ -98,6 +98,7 @@ export function WorkstationDesktop({
   const startButtonRef = useRef<HTMLButtonElement>(null);
   const remindersTriggerRef = useRef<HTMLButtonElement>(null);
   const recipeTriggerRef = useRef<HTMLButtonElement>(null);
+  const restoreStartFocusRef = useRef(false);
   const pendingWindowFocus = useRef(false);
   const minimized = new Set(state.minimizedPrograms);
   const projectById = new Map(programs.map((program) => [program.id, program]));
@@ -116,9 +117,15 @@ export function WorkstationDesktop({
     [dispatchWithWindowFocus],
   );
   const closeStart = useCallback(() => {
+    restoreStartFocusRef.current = true;
     setStartOpen(false);
-    startButtonRef.current?.focus();
   }, []);
+
+  useEffect(() => {
+    if (startOpen || !restoreStartFocusRef.current) return;
+    restoreStartFocusRef.current = false;
+    startButtonRef.current?.focus();
+  }, [startOpen]);
 
   useEffect(() => {
     if (!pendingWindowFocus.current) return;
@@ -153,132 +160,135 @@ export function WorkstationDesktop({
 
   return (
     <div className="myles97-desktop" aria-label="Myles 98 desktop">
-      <nav className="myles97-desktop-shortcuts" aria-label="Desktop shortcuts">
-        <button type="button" onClick={() => openProgram("selected-work")}>
-          <Myles97Icon name="folder" size={32} variant="color" aria-hidden="true" />
-          <span>Selected Work</span>
-        </button>
-        <button type="button" onClick={() => openProgram("about")}>
-          <Myles97Icon name="profile" size={32} variant="color" aria-hidden="true" />
-          <span>About Myles</span>
-        </button>
-        <button type="button" onClick={() => openProgram("loose-parts")}>
-          <Myles97Icon name="loose-parts" size={32} variant="color" aria-hidden="true" />
-          <span>Loose Parts</span>
-        </button>
-        <button type="button" onClick={() => openProgram("resume")}>
-          <Myles97Icon name="resume" size={32} variant="color" aria-hidden="true" />
-          <span>Résumé</span>
-        </button>
-      </nav>
+      <div className="myles97-desktop-stage" inert={startOpen ? true : undefined}>
+        <nav className="myles97-desktop-shortcuts" aria-label="Desktop shortcuts">
+          <button type="button" onClick={() => openProgram("selected-work")}>
+            <Myles97Icon name="folder" size={32} variant="color" aria-hidden="true" />
+            <span>Selected Work</span>
+          </button>
+          <button type="button" onClick={() => openProgram("about")}>
+            <Myles97Icon name="profile" size={32} variant="color" aria-hidden="true" />
+            <span>About Myles</span>
+          </button>
+          <button type="button" onClick={() => openProgram("loose-parts")}>
+            <Myles97Icon name="loose-parts" size={32} variant="color" aria-hidden="true" />
+            <span>Loose Parts</span>
+          </button>
+          <button type="button" onClick={() => openProgram("resume")}>
+            <Myles97Icon name="resume" size={32} variant="color" aria-hidden="true" />
+            <span>Résumé</span>
+          </button>
+        </nav>
 
-      {state.openPrograms.map((id, stackIndex) => {
-        if (minimized.has(id)) return null;
-        const props = commonWindowProps(id, stackIndex);
+        {state.openPrograms.map((id, stackIndex) => {
+          if (minimized.has(id)) return null;
+          const props = commonWindowProps(id, stackIndex);
 
-        if (id === "welcome") {
-          return (
-            <ProgramWindow key={id} {...props} title="Welcome to Myles 98">
-              <WelcomeProgram onSelectedWork={() => openProgram("selected-work")} />
-            </ProgramWindow>
-          );
-        }
+          if (id === "welcome") {
+            return (
+              <ProgramWindow key={id} {...props} title="Welcome to Myles 98">
+                <WelcomeProgram onSelectedWork={() => openProgram("selected-work")} />
+              </ProgramWindow>
+            );
+          }
 
-        if (id === "selected-work") {
+          if (id === "selected-work") {
+            return (
+              <ProgramWindow
+                key={id}
+                {...props}
+                title="Selected Work"
+                status={`${programs.length} portfolio projects`}
+              >
+                <SelectedWorkExplorer
+                  programs={programs}
+                  onOpen={(programId: ProjectProgramId) => openProgram(programId)}
+                  reduceMotion={state.displayPreferences.reduceMotion}
+                />
+              </ProgramWindow>
+            );
+          }
+
+          if (id === "display-properties") {
+            return (
+              <ProgramWindow key={id} {...props} title="Display Properties">
+                <DisplayProperties
+                  preferences={state.displayPreferences}
+                  onChange={(preferences) => dispatch({ type: "display", preferences })}
+                  onReset={() => dispatch({ type: "reset" })}
+                />
+              </ProgramWindow>
+            );
+          }
+
+          if (id === "trini-roti") {
+            return (
+              <ProgramWindow
+                key={id}
+                {...props}
+                title="Buss Up Shut.txt"
+                onClose={(programId) => {
+                  dispatch({ type: "close", id: programId });
+                  recipeTriggerRef.current?.focus();
+                }}
+              >
+                <RecipeNoteProgram />
+              </ProgramWindow>
+            );
+          }
+
+          if (id === "reminders") {
+            return (
+              <ProgramWindow
+                key={id}
+                {...props}
+                title="Reminders"
+                onClose={(programId) => {
+                  dispatch({ type: "close", id: programId });
+                  remindersTriggerRef.current?.focus();
+                }}
+              >
+                <RemindersProgram />
+              </ProgramWindow>
+            );
+          }
+
+          if (isSecondaryProgram(id)) {
+            return (
+              <ProgramWindow key={id} {...props} title={secondaryTitles[id]}>
+                <SecondaryProgram id={id} looseParts={looseParts} />
+              </ProgramWindow>
+            );
+          }
+
+          const project = projectById.get(id as ProjectProgramId);
+          if (!project) return null;
+
           return (
             <ProgramWindow
               key={id}
               {...props}
-              title="Selected Work"
-              status={`${programs.length} portfolio projects`}
+              title={project.appName}
+              status="Interactive preview"
             >
-              <SelectedWorkExplorer
-                programs={programs}
-                onOpen={(programId: ProjectProgramId) => openProgram(programId)}
+              <ProjectProgram
+                program={project}
+                reduceMotion={state.displayPreferences.reduceMotion}
               />
             </ProgramWindow>
           );
-        }
+        })}
 
-        if (id === "display-properties") {
-          return (
-            <ProgramWindow key={id} {...props} title="Display Properties">
-              <DisplayProperties
-                preferences={state.displayPreferences}
-                onChange={(preferences) => dispatch({ type: "display", preferences })}
-                onReset={() => dispatch({ type: "reset" })}
-              />
-            </ProgramWindow>
-          );
-        }
+        <RemindersWidget
+          triggerRef={remindersTriggerRef}
+          onOpen={() => openProgram("reminders")}
+        />
 
-        if (id === "trini-roti") {
-          return (
-            <ProgramWindow
-              key={id}
-              {...props}
-              title="Buss Up Shut.txt"
-              onClose={(programId) => {
-                dispatch({ type: "close", id: programId });
-                recipeTriggerRef.current?.focus();
-              }}
-            >
-              <RecipeNoteProgram />
-            </ProgramWindow>
-          );
-        }
-
-        if (id === "reminders") {
-          return (
-            <ProgramWindow
-              key={id}
-              {...props}
-              title="Reminders"
-              onClose={(programId) => {
-                dispatch({ type: "close", id: programId });
-                remindersTriggerRef.current?.focus();
-              }}
-            >
-              <RemindersProgram />
-            </ProgramWindow>
-          );
-        }
-
-        if (isSecondaryProgram(id)) {
-          return (
-            <ProgramWindow key={id} {...props} title={secondaryTitles[id]}>
-              <SecondaryProgram id={id} looseParts={looseParts} />
-            </ProgramWindow>
-          );
-        }
-
-        const project = projectById.get(id as ProjectProgramId);
-        if (!project) return null;
-
-        return (
-          <ProgramWindow
-            key={id}
-            {...props}
-            title={project.appName}
-            status="Interactive preview"
-          >
-            <ProjectProgram
-              program={project}
-              reduceMotion={state.displayPreferences.reduceMotion}
-            />
-          </ProgramWindow>
-        );
-      })}
-
-      <RemindersWidget
-        triggerRef={remindersTriggerRef}
-        onOpen={() => openProgram("reminders")}
-      />
-
-      <RecipeNote
-        triggerRef={recipeTriggerRef}
-        onOpen={() => openProgram("trini-roti")}
-      />
+        <RecipeNote
+          triggerRef={recipeTriggerRef}
+          onOpen={() => openProgram("trini-roti")}
+        />
+      </div>
 
       <StartMenu
         open={startOpen}
@@ -292,6 +302,7 @@ export function WorkstationDesktop({
         minimizedPrograms={state.minimizedPrograms}
         focusedProgram={state.focusedProgram}
         startOpen={startOpen}
+        inert={startOpen}
         startButtonRef={startButtonRef}
         onToggleStart={() => setStartOpen((open) => !open)}
         onFocus={(id) => dispatchWithWindowFocus({ type: "focus", id })}

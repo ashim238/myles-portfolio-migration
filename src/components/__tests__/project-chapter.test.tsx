@@ -79,13 +79,13 @@ describe("ProjectChapter", () => {
     expect(screen.getByText("What this shows")).toBeVisible();
     expect(
       screen.getByText(
-        "The artifacts connect observed needs to product areas and the individual booking flow.",
+        "I used the personas and journey maps to adjust my teammate's original information architecture, then built the Figma design system.",
       ),
     ).toBeVisible();
     expect(screen.getByText("Boundary")).toBeVisible();
     expect(
       screen.getByText(
-        "These remained internal planning artifacts because the studio project ended before engineering handoff.",
+        "The studio project ended before engineering handoff, and the intended tag-ranking logic was not wired into the later React build.",
       ),
     ).toBeVisible();
   });
@@ -119,11 +119,13 @@ describe("ProjectChapter", () => {
     expect(summary?.nextElementSibling).toBe(supportingRules);
     expect(
       screen.getByText(
-        "Headlines, body copy, imagery, and links can change. Section order, spacing, type, dividers, and the footer structure stay fixed.",
+        "Headlines, body copy, imagery, links, and middle-module order can change. Header and footer placement, spacing, type, and dividers stay fixed.",
       ),
     ).toBeVisible();
     expect(
-      screen.getByText("The counselor toolkit remains in progress."),
+      screen.getByText(
+        "The interactive switcher shows the weekly and event templates, not the welcome email.",
+      ),
     ).toBeVisible();
   });
 
@@ -133,7 +135,7 @@ describe("ProjectChapter", () => {
         entry={{
           id: "nv-build",
           stage: "Build",
-          title: "From studio concept to working booking flow",
+          title: "I rebuilt the booking flow in React",
         }}
         index={4}
         total={5}
@@ -150,7 +152,10 @@ describe("ProjectChapter", () => {
     );
     expect(screen.getByTestId("booking-demo").nextElementSibling).toBe(summary);
     expect(summary).toHaveAttribute("data-evidence-for", "navi-booking-demo");
-    expect(summary).not.toHaveTextContent("Boundary");
+    expect(summary).toHaveTextContent("Boundary");
+    expect(summary).toHaveTextContent(
+      "The semester ended before the team could test Learn, Plan, Go or booking.",
+    );
   });
 
   it("does not show Build and Built as adjacent duplicate labels", () => {
@@ -159,7 +164,7 @@ describe("ProjectChapter", () => {
         entry={{
           id: "nv-build",
           stage: "Build",
-          title: "From studio concept to working booking flow",
+          title: "I rebuilt the booking flow in React",
         }}
         index={4}
         total={5}
@@ -202,7 +207,7 @@ describe("ProjectChapter", () => {
     );
     expect(
       screen.getByText(
-        "Flattened hierarchy and native blocks reduced unnecessary HTML while preserving the brand.",
+        "I rebuilt the live template with a flatter hierarchy, fewer wrappers, and Mailchimp-native blocks.",
       ),
     ).toBeVisible();
     expect(
@@ -219,18 +224,18 @@ describe("ProjectChapter", () => {
         id: "fg-design",
         proof: "fresh-greens-pivot-journey",
         interpretation:
-          "Route chips and source cards explain the route preference, while the local reminder carries a useful daylight window beyond the open app.",
+          "Route cards show some of the reasons behind a recommendation. Fresh Greens waits until someone taps Schedule before asking for notification access.",
         caveat:
-          "The prototype does not prove that a preferred route is safer or that the reminder changes behavior.",
+          "The prototype does not prove that a preferred route is safer. Its current Safest route label overstates the evidence, and the reminder has not been shown to change behavior.",
       },
       {
         variant: "fresh-greens",
         id: "fg-trust",
         proof: "fresh-greens-report-moderation",
         interpretation:
-          "The prototype keeps reports reviewable instead of treating one account as universal fact.",
+          "Reports stay on the device first. With Supabase configured, they can enter the moderation path.",
         caveat:
-          "One report can affect route ranking now. Corroboration weighting, provenance, and trust levels are intended safeguards.",
+          "One report can affect route ranking now. Corroboration from distinct contributors, visible provenance, and route-level trust tiers are not built yet.",
       },
       {
         variant: "tiktok",
@@ -246,7 +251,7 @@ describe("ProjectChapter", () => {
         id: "tt-outcome",
         proof: "tiktok-light-academia-sequence",
         interpretation:
-          "The critique led me to keep the simple editorial structure and make the color and supporting details more upbeat.",
+          "The final direction records what changed during internal review. It does not show audience response.",
         caveat:
           "American Eagle selection was learned later through Global Creative Lab. No performance result is claimed.",
       },

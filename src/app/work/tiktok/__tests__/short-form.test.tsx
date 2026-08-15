@@ -103,6 +103,11 @@ describe("TikTok short-form case study", () => {
     expect(hero).not.toBeNull();
     expect(hero).toHaveClass("tt-cover--preview");
     expect(screen.queryByTestId("hero-three-phones")).not.toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "The templates needed to appeal to different styles and aesthetics, so I had room to think outside the box.",
+      ),
+    ).toBeVisible();
 
     expect(
       screen.getByRole("region", { name: "At a glance" }),
@@ -122,7 +127,7 @@ describe("TikTok short-form case study", () => {
     expect(outcome).not.toBeNull();
     expect(outcome).toHaveTextContent("Critique");
     expect(outcome).toHaveTextContent("My response");
-    expect(outcome).toHaveTextContent("Shipped result");
+    expect(outcome).toHaveTextContent("Launch-library result");
     expect(
       within(outcome as HTMLElement).getByRole("img", {
         name: "Light Academia process sketch",
@@ -190,10 +195,10 @@ describe("TikTok short-form case study", () => {
       Node.DOCUMENT_POSITION_FOLLOWING,
     );
     expect(brief).toHaveTextContent(
-      "The brief was to make static catalog templates that could work across product categories while keeping the product slots fixed.",
+      "The brief asked for three templates for clients in the fashion vertical.",
     );
     expect(brief).toHaveTextContent(
-      "I used type, color, and supporting graphics to give each direction its own visual logic.",
+      "I showed my first sketches to my manager and other Global Creative Lab members during our weekly GCL huddle.",
     );
 
     const facts = brief?.querySelector("dl");
@@ -231,7 +236,11 @@ describe("TikTok short-form case study", () => {
     expect(research).toHaveTextContent("WitchTok");
     expect(research).toHaveTextContent("Cottagecore");
     expect(research).toHaveTextContent(
-      "The final directions had to make sense for their audiences.",
+      "There was no one subculture that wholly represented the site.",
+    );
+    expect(research).toHaveTextContent("burner accounts");
+    expect(research).toHaveTextContent(
+      "I did have to flatten the aesthetics somewhat.",
     );
     expect(research).toHaveTextContent("Dopamine Dressing");
     expect(research).toHaveTextContent("e-Boy/e-Girl");
@@ -246,7 +255,7 @@ describe("TikTok short-form case study", () => {
     expect(within(system).getAllByText("Static template")).toHaveLength(3);
     expect(system).toHaveTextContent("layered Photoshop");
     expect(system).toHaveTextContent(
-      "I built each direction as a layered Photoshop file around the same product-slot map.",
+      "Once the three directions were set, I built each one as a layered Photoshop file around the same product-slot map.",
     );
     expect(system).toHaveTextContent(
       /most parts stayed within their own direction/i,
@@ -263,7 +272,7 @@ describe("TikTok short-form case study", () => {
     );
   });
 
-  it("keeps the artifact cards and shipped claim intact inside chapters", async () => {
+  it("keeps the artifact cards and confirmed launch-library result intact inside chapters", async () => {
     render(await TikTokPage());
 
     for (const templateName of [
@@ -300,25 +309,31 @@ describe("TikTok short-form case study", () => {
       .querySelector("#tt-outcome")
       ?.closest(".project-chapter") as HTMLElement;
     const labels = within(outcome)
-      .getAllByText(/^(Critique|My response|Shipped result)$/)
+      .getAllByText(/^(Critique|My response|Launch-library result)$/)
       .map((node) => node.textContent);
     const relationship = within(outcome).getByText(
       "I later learned through Global Creative Lab that American Eagle selected it.",
     );
 
-    expect(labels).toEqual(["Critique", "My response", "Shipped result"]);
+    expect(labels).toEqual([
+      "Critique",
+      "My response",
+      "Launch-library result",
+    ]);
     expect(outcome).toHaveTextContent(
-      "Global Creative Lab felt the simplicity was working and encouraged a more upbeat, deliberate direction.",
+      "The sketch notes called for smaller type, a subtler Light Academia treatment, reconsidered copy placement, and a calm pastel palette.",
     );
     expect(outcome).toHaveTextContent(
-      "I kept the fixed catalog slot and refined the editorial title, color, and supporting details.",
+      "I scaled down the type, moved the copy, kept the fixed catalog slot, and introduced the calmer palette.",
     );
     expect(outcome).toHaveTextContent(
       "Light Academia entered the launch library.",
     );
 
-    const shippedStep = within(outcome).getByText("Shipped result").closest("li");
-    expect(shippedStep?.compareDocumentPosition(relationship)).toBe(
+    const libraryStep = within(outcome)
+      .getByText("Launch-library result")
+      .closest("li");
+    expect(libraryStep?.compareDocumentPosition(relationship)).toBe(
       Node.DOCUMENT_POSITION_FOLLOWING,
     );
   });

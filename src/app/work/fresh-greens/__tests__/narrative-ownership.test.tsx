@@ -137,8 +137,8 @@ describe("Fresh Greens rendered narrative ownership", () => {
     expect(
       within(trust).getByText("Current prototype limit:"),
     ).toBeInTheDocument();
-    expect(trust).toHaveTextContent(/one report maps to one scored zone/i);
-    expect(trust).toHaveTextContent("Corroboration-weighted ranking");
+    expect(trust).toHaveTextContent(/one report creates a scored zone/i);
+    expect(trust).toHaveTextContent("corroboration weighting");
     expect(
       within(chapter(container, "fg-scope")).getByText("Built now"),
     ).toBeInTheDocument();
@@ -176,48 +176,71 @@ describe("Fresh Greens rendered narrative ownership", () => {
     const frame = chapter(container, "fg-problem");
     const research = chapter(container, "fg-research");
 
-    expect(frame).toHaveTextContent("drove below the speed limit");
+    expect(frame).toHaveTextContent("I'd slow down, avoid backroads");
     expect(research).toHaveTextContent(
-      "Drivers couldn't inspect conditions on each route before choosing.",
+      "Drivers couldn't compare the conditions they cared about across routes before choosing.",
     );
     expect(research).toHaveTextContent(
-      "Useful community knowledge lived outside navigation",
+      "Qualitative interviews were new to me, but I tried to navigate them like everyday conversations",
+    );
+    expect(research).toHaveTextContent(
+      "I wasn't the only person getting the heebie-jeebies during a drive",
     );
   });
 
-  it("frames the four trust states as intended before naming the current limit", async () => {
+  it("carries the failed concept, product constraints, and search correction through the six chapters", async () => {
+    const { container } = render(await FreshGreensPage());
+    const plan = chapter(container, "fg-design");
+    const respond = chapter(container, "fg-pulled-over");
+    const trust = chapter(container, "fg-trust");
+    const scope = chapter(container, "fg-scope");
+
+    expect(plan).toHaveTextContent(
+      "1. Compare route conditions before choosing",
+    );
+    expect(plan).toHaveTextContent("He was content, not impressed");
+    expect(plan).toHaveTextContent("Chicago to rural Georgia");
+    expect(plan).toHaveTextContent(
+      'current build still labels the top option "Safest route,"',
+    );
+    expect(respond).toHaveTextContent(
+      "One tap opens four support paths, including the pulled-over flow",
+    );
+    expect(respond).toHaveTextContent(
+      "I haven't tested this flow with drivers yet, let alone during a real encounter.",
+    );
+    expect(trust).toHaveTextContent("The full score and its weights aren't exposed yet");
+    expect(trust).toHaveTextContent("With Supabase configured");
+    expect(scope).toHaveTextContent(
+      "I used Figma to set the initial rules, then built them in code",
+    );
+    expect(scope).toHaveTextContent(/my own address was sitting in Recent/i);
+    expect(scope).toHaveTextContent("I added street addresses");
+  });
+
+  it("frames current trust behavior before naming the route-ranking limit", async () => {
     const { container } = render(await FreshGreensPage());
     const respond = chapter(container, "fg-pulled-over");
     const trust = chapter(container, "fg-trust");
     const trustCopy = trust.textContent ?? "";
 
-    expect(respond).toHaveTextContent("trusted-contact actions");
-    expect(trust).toHaveTextContent("community contributors");
-    expect(`${respond.textContent} ${trustCopy}`).not.toMatch(/trusted agents/i);
     expect(trust).toHaveTextContent(
-      "Each report remained one person's account",
+      "Show what influenced a route recommendation",
     );
-    expect(
-      trustCopy.indexOf("Each report remained"),
-    ).toBeLessThan(trustCopy.indexOf("Current prototype limit:"));
+    expect(`${respond.textContent} ${trustCopy}`).not.toMatch(/trusted agents/i);
+    expect(trust).toHaveTextContent("Reports stay on the device first");
+    expect(trustCopy.indexOf("Reports stay on the device first")).toBeLessThan(
+      trustCopy.indexOf("Current prototype limit:"),
+    );
     expect(trust).not.toHaveTextContent(
       "A single account is never hidden or treated as proof",
     );
+    expect(trust).toHaveTextContent(/one report creates a scored zone/i);
     expect(trust).toHaveTextContent(
-      "Over time, separate reports should carry more weight",
+      "I haven't added corroboration weighting, visible contributor provenance, or route-level trust tiers yet",
     );
     expect(trust).toHaveTextContent(
-      "time-sensitive hazards could appear sooner",
-    );
-    expect(trust).toHaveTextContent(
-      "Fresh Greens shows uncertainty where coverage is thin",
-    );
-    expect(trust).toHaveTextContent(/one report maps to one scored zone/i);
-    expect(trust).toHaveTextContent(
-      "Corroboration-weighted ranking is still an intended safeguard, not a built feature",
-    );
-    expect(trust).toHaveTextContent(
-      "Contributor provenance and trust levels aren't visible yet",
+      "Contributors can optionally describe the experience",
     );
   });
 
@@ -231,15 +254,20 @@ describe("Fresh Greens rendered narrative ownership", () => {
     expect(scopeCopy.indexOf("Built now")).toBeLessThan(
       scopeCopy.indexOf("What remains"),
     );
-    expect(scope).toHaveTextContent(
-      "I turned six interviews into a working React Native prototype for route comparison",
-    );
-    expect(scope).toHaveTextContent("can explain why it prefers one route");
-    expect(scope).toHaveTextContent(
-      "Respond: stress-state and failure-mode testing on real devices and configured builds",
+    expect(container).toHaveTextContent(
+      "Working React Native prototype across 26+ screens",
     );
     expect(scope).toHaveTextContent(
-      "before making any claim that a preferred route is safer",
+      "The prototype still hasn't shown that a route is safer",
+    );
+    expect(scope).toHaveTextContent(
+      "Respond: real-device stress-state and failure-mode testing in configured builds",
+    );
+    expect(scope).toHaveTextContent(
+      "Trust: route-level corroboration by distinct contributors",
+    );
+    expect(scope).toHaveTextContent(
+      "broader route-quality testing before any safety claim",
     );
     expect(scopeCopy).not.toMatch(
       /improves safety|made drivers safer|a safer route recommendation/i,
