@@ -2275,11 +2275,11 @@ button:focus-visible,
 @media (min-width: 768px) {
   .portfolio-endcap {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
     gap: 1.5rem;
     margin-top: 4rem;
-    padding-top: 1.25rem;
+    padding: 0.625rem 0.875rem;
     border-top: 1px solid var(--line);
   }
 }

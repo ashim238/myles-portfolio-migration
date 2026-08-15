@@ -83,7 +83,8 @@ describe("PortfolioEndcap", () => {
     const endcap = cssBlock(".portfolio-endcap", desktop);
     expect(endcap).toMatch(/display:\s*flex;/);
     expect(endcap).toMatch(/border-top:\s*1px solid var\(--line\);/);
-    expect(endcap).toMatch(/padding-top:\s*1\.25rem;/);
+    expect(endcap).toMatch(/align-items:\s*center;/);
+    expect(endcap).toMatch(/padding:\s*0\.625rem 0\.875rem;/);
     expect(cssBlock(".portfolio-endcap-links a")).toMatch(
       /min-height:\s*44px;/,
     );
