@@ -1,4 +1,6 @@
 :root {
+  --font-family-sans: var(--font-golos-text), system-ui, sans-serif;
+  --font-display: var(--font-mona-sans), system-ui, sans-serif;
   --background: #050505;
   --foreground: #f4f4f4;
   --muted: #c4c4c4;
@@ -16,7 +18,7 @@
   --duration-project-enter: 560ms;
   --ease-project-enter: cubic-bezier(0.33, 1, 0.68, 1);
 
-  /* Rhythm tuned for Instrument Sans (less tight default metrics than Geist) */
+  /* Rhythm tuned for Mona Sans display and Golos Text reading metrics. */
   --track-display: -0.026em;
   --track-title: -0.02em;
   --track-body: 0.008em;
@@ -96,6 +98,32 @@ body {
   font-family: var(--font-family-sans), system-ui, sans-serif;
   line-height: var(--lead-body);
   letter-spacing: var(--track-body);
+}
+
+/* Editorial hierarchy lives in Mona; body copy stays with the calmer Golos text face. */
+:where(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--font-display);
+}
+
+:where(button, input, select, textarea, nav) {
+  font-family: var(--font-display);
+}
+
+/* The Myles ’98 workstation has its own era-specific typography contract. */
+.myles97-shell :where(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--m97-ui-font);
+}
+
+.myles97-shell :where(button, input, select, textarea, nav) {
+  font-family: var(--m97-ui-font);
+}
+
+.reader-mode :where(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--m97-reader-font);
+}
+
+.reader-mode :where(button, input, select, textarea, nav) {
+  font-family: var(--m97-ui-font);
 }
 
 /* ------------------------------------------------------------------ */
@@ -2777,10 +2805,12 @@ button:focus-visible,
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.85rem 0.15rem;
+  padding: 0.85rem 1rem;
   color: inherit;
   cursor: pointer;
+  font-size: 1.125rem;
   font-weight: 650;
+  line-height: 1.25;
   list-style: none;
 }
 
@@ -2813,7 +2843,7 @@ button:focus-visible,
 
 .project-evidence-disclosure-content {
   min-width: 0;
-  padding: 1.5rem 0 0.4rem;
+  padding: 1.5rem 1rem 0.75rem;
   border-top: 1px solid var(--m98-paper-rule, var(--line));
 }
 

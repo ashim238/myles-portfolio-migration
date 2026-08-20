@@ -19,31 +19,31 @@ colors:
   tt-magenta: "#fe2c55"
 typography:
   display:
-    fontFamily: "Instrument Sans, system-ui, sans-serif"
+    fontFamily: "Mona Sans, system-ui, sans-serif"
     fontSize: "clamp(2.4rem, 6vw, 4.5rem)"
     fontWeight: 500
     lineHeight: 0.9
     letterSpacing: "-0.026em"
   headline:
-    fontFamily: "Instrument Sans, system-ui, sans-serif"
+    fontFamily: "Mona Sans, system-ui, sans-serif"
     fontSize: "clamp(1.7rem, 3vw, 2.5rem)"
     fontWeight: 500
     lineHeight: 1.16
     letterSpacing: "-0.02em"
   title:
-    fontFamily: "Instrument Sans, system-ui, sans-serif"
+    fontFamily: "Mona Sans, system-ui, sans-serif"
     fontSize: "clamp(1.15rem, 2.2vw, 1.35rem)"
     fontWeight: 500
     lineHeight: 1.3
     letterSpacing: "-0.02em"
   body:
-    fontFamily: "Instrument Sans, system-ui, sans-serif"
+    fontFamily: "Golos Text, system-ui, sans-serif"
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.58
     letterSpacing: "0.008em"
   label:
-    fontFamily: "Instrument Sans, system-ui, sans-serif"
+    fontFamily: "Mona Sans, system-ui, sans-serif"
     fontSize: "0.85rem"
     fontWeight: 500
     lineHeight: 1.4
@@ -151,10 +151,12 @@ The portfolio shell has no primary brand accent of its own. The primary color is
 
 ## 3. Typography
 
-**Display + Body Font:** Instrument Sans (with `system-ui, sans-serif` fallback)
+**Display Font:** Mona Sans (with `system-ui, sans-serif` fallback)
+
+**Body Font:** Golos Text (with `system-ui, sans-serif` fallback)
 **Mono Font:** Geist Mono (with `ui-monospace, monospace` fallback)
 
-**Character:** Instrument Sans is on impeccable's reflex-reject list for greenfield brand work, but identity-preservation wins here — the portfolio committed to it before the canon flagged it, and re-typesetting the whole site to escape a list would be costume-changing for no real reason. Instrument Sans at the weights used (400 body, 500 display) reads as quietly modern, slightly geometric, holds tight at display sizes. Geist Mono carries small monospace labels (figcaptions, hex values, project meta) without screaming "developer."
+**Character:** Mona Sans gives display text a more particular, softly technical shape without tipping into novelty. Golos Text keeps long-form case-study copy neutral and durable. Geist Mono carries small monospace labels (figcaptions, hex values, project meta) without screaming "developer."
 
 ### Hierarchy
 
@@ -214,7 +216,7 @@ Flat by default. Depth comes from typography hierarchy, generous spacing, and 1p
 ### Pullquote (`tt-pullquote`, `fg-pullquote`)
 
 - **Shape:** No card. No left-border. Centered text, max 56ch, surrounded by generous vertical margin.
-- **Typography:** Display-scale serif-like restraint — actually Instrument Sans at headline scale (`clamp(1.4rem, 2.6vw, 1.8rem)`, line-height 1.3, weight 400).
+- **Typography:** Display-scale restraint in Mona Sans at headline scale (`clamp(1.4rem, 2.6vw, 1.8rem)`, line-height 1.3, weight 400).
 - **Caption:** Sentence-case below the quote (`Working hypothesis · TikTok DSA, 2021`). Never tracked-uppercase mono.
 
 ### Lightbox (`ExpandableImage` + `LightboxProvider`)

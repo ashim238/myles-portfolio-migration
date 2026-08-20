@@ -1,5 +1,21 @@
 # Third-party asset notices
 
+## Portfolio typefaces
+
+### Mona Sans
+
+- Source: [GitHub Mona Sans](https://github.com/github/mona-sans)
+- Publisher: GitHub, Inc.
+- License: [SIL Open Font License 1.1](https://github.com/github/mona-sans/blob/main/LICENSE)
+- Local use: Self-hosted variable font for editorial display typography.
+
+### Golos Text
+
+- Source: [Golos Text](https://github.com/googlefonts/golos-text)
+- Publisher: Google Fonts
+- License: [SIL Open Font License 1.1](https://github.com/googlefonts/golos-text/blob/main/OFL.txt)
+- Local use: Self-hosted variable font for editorial body typography.
+
 ## TikTok project cover
 
 The flattened TikTok cover at `public/projects/tiktok/cover-phone-mockup.jpg` combines two licensed source images with Myles Ashitey's original Dopamine Dressing template artwork.

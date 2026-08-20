@@ -83,6 +83,7 @@ export function Myles97Shell({ programs, looseParts }: Myles97ShellProps) {
     hydrationStore.getServerSnapshot,
   );
   const pocket = usePocket97();
+  const [bootActive, setBootActive] = useState(false);
 
   useEffect(() => {
     const loaded = loadPersistedWorkstation();
@@ -116,25 +117,28 @@ export function Myles97Shell({ programs, looseParts }: Myles97ShellProps) {
       data-m97-motion={state.displayPreferences.reduceMotion ? "reduce" : "full"}
       data-m97-shell={pocket ? "pocket" : "workstation"}
     >
-      {pocket ? (
-        <Pocket97Shell
-          programs={programs}
-          looseParts={looseParts}
-          state={state}
-          dispatch={dispatch}
-        />
-      ) : (
-        <WorkstationDesktop
-          programs={programs}
-          looseParts={looseParts}
-          state={state}
-          dispatch={dispatch}
-        />
-      )}
+      <div inert={bootActive ? true : undefined} aria-hidden={bootActive || undefined}>
+        {pocket ? (
+          <Pocket97Shell
+            programs={programs}
+            looseParts={looseParts}
+            state={state}
+            dispatch={dispatch}
+          />
+        ) : (
+          <WorkstationDesktop
+            programs={programs}
+            looseParts={looseParts}
+            state={state}
+            dispatch={dispatch}
+          />
+        )}
+      </div>
       <BootSequence
         eligible={hydrated && !state.bootCompleted}
         reduceMotion={state.displayPreferences.reduceMotion}
         onComplete={completeBoot}
+        onActiveChange={setBootActive}
       />
     </main>
   );

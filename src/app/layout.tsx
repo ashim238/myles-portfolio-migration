@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Instrument_Sans } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
 import { ConsoleGreeting } from "@/components/console-greeting";
@@ -9,9 +10,18 @@ import { MobileNav } from "@/components/mobile-nav";
 import { ProjectEnterTransition } from "@/components/project-enter-transition";
 import { ScrollRevealFallback } from "@/components/scroll-reveal-fallback";
 
-const sans = Instrument_Sans({
-  variable: "--font-family-sans",
-  subsets: ["latin"],
+const monaSans = localFont({
+  src: "./fonts/MonaSansVF[wdth,wght,opsz,ital].woff2",
+  variable: "--font-mona-sans",
+  display: "swap",
+  weight: "200 900",
+});
+
+const golosText = localFont({
+  src: "./fonts/GolosText[wght].ttf",
+  variable: "--font-golos-text",
+  display: "swap",
+  weight: "400 900",
 });
 
 const geistMono = Geist_Mono({
@@ -54,7 +64,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${sans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${monaSans.variable} ${golosText.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>

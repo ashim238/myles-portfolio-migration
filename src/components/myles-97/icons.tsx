@@ -9,6 +9,7 @@ export type Myles97IconName =
   | "display"
   | "mail"
   | "app"
+  | "paintbrush"
   | "open-apps"
   | "reset-desktop"
   | "loose-parts"
@@ -88,6 +89,8 @@ export function iconForProgram(id: string): Myles97IconName {
       return "loose-parts";
     case "display-properties":
       return "display";
+    case "paint":
+      return "paintbrush";
     default:
       return "app";
   }
@@ -102,6 +105,7 @@ const MASTER_CONCEPT_BY_ICON: Record<Myles97IconName, string> = {
   display: "display-properties",
   mail: "email",
   app: "generic-app",
+  paintbrush: "paintbrush",
   "open-apps": "open-apps",
   "reset-desktop": "reset-desktop",
   "loose-parts": "loose-parts",
@@ -185,6 +189,7 @@ const SIDE_TONE_BY_ICON: Record<Myles97IconName, string> = {
   display: "#777777",
   mail: "#78929a",
   app: "#777777",
+  paintbrush: "#7d5d27",
   "open-apps": "#777777",
   "reset-desktop": "#7d5d27",
   "loose-parts": "#8b6b26",
@@ -247,6 +252,12 @@ function depthPlaneSpec(
           castShadow: ["M5 21H22V23H5Z", "M21 5H23V21H21Z"],
           side: ["M4 20H21V21H4Z", "M20 4H21V20H20Z"],
           highlight: ["M3 3H20V4H3Z", "M3 4H4V20H3Z"],
+        };
+      case "paintbrush":
+        return {
+          castShadow: ["M7 22H19V23H7Z"],
+          side: ["M6 20H18V22H6Z"],
+          highlight: ["M5 6H7V20H5Z"],
         };
       case "open-apps":
         return {
@@ -341,6 +352,12 @@ function depthPlaneSpec(
         castShadow: ["M6 28H30V30H6Z", "M28 6H30V28H28Z"],
         side: ["M5 27H28V28H5Z", "M27 5H28V27H27Z"],
         highlight: ["M4 4H27V5H4Z", "M4 5H5V27H4Z"],
+      };
+    case "paintbrush":
+      return {
+        castShadow: ["M9 30H25V31H9Z"],
+        side: ["M8 28H24V30H8Z"],
+        highlight: ["M6 8H8V28H6Z"],
       };
     case "open-apps":
       return {
@@ -475,6 +492,15 @@ function renderChromeGlyph(
           <path d="M3 3h10v3H3z" {...accent(palette, palette.blue)} />
           <path d="M2 6h12M6 6v8" />
           <rect x="3" y="8" width="2" height="4" {...secondaryAccent(palette, palette.yellow)} />
+        </>
+      );
+    case "paintbrush":
+      return (
+        <>
+          <path d="M6 1h4v1h1v5h2v5h-1v3h-2v1H6v-1H4v-3H3V7h2V2h1z" {...surface(palette, palette.orange)} />
+          <path d="M5 9h6v2H5z" {...surface(palette, palette.chrome)} />
+          <path d="M5 12h6v2h-1v1H6v-1H5z" {...accent(palette, palette.orange)} />
+          <path d="M6 14h4v2H6z" {...secondaryAccent(palette, palette.magenta)} />
         </>
       );
     case "open-apps":
@@ -652,6 +678,15 @@ function renderMenuGlyph(
           <path d="M3 9h18M9 9v12" />
           <rect x="5" y="12" width="3" height="6" {...secondaryAccent(palette, palette.yellow)} />
           <rect x="6" y="6" width="3" height="1" fill={fill(palette, palette.paper)} stroke="none" />
+        </>
+      );
+    case "paintbrush":
+      return (
+        <>
+          <path d="M9 1h6v2h2v8h2v8h-2v4h-2v1H9v-1H7v-4H5v-8h2V3h2z" {...surface(palette, palette.orange)} />
+          <path d="M7 13h10v4H7z" {...surface(palette, palette.chrome)} />
+          <path d="M8 18h8v4h-1v1H9v-1H8z" {...accent(palette, palette.orange)} />
+          <path d="M9 21h6v2h-1v1h-4v-1H9z" {...secondaryAccent(palette, palette.magenta)} />
         </>
       );
     case "open-apps":
@@ -835,6 +870,15 @@ function renderDiscoveryGlyph(
           <path d="M4 12h24M12 12v16" />
           <rect x="7" y="16" width="4" height="8" {...secondaryAccent(palette, palette.yellow)} />
           <rect x="8" y="8" width="4" height="2" fill={fill(palette, palette.paper)} stroke="none" />
+        </>
+      );
+    case "paintbrush":
+      return (
+        <>
+          <path d="M12 1h8v2h2v11h3v10h-2v6h-3v2H12v-2H9v-6H7V14h3V3h2z" {...surface(palette, palette.orange)} />
+          <path d="M9 16h14v6H9z" {...surface(palette, palette.chrome)} />
+          <path d="M10 23h12v6h-2v1h-8v-1h-2z" {...accent(palette, palette.orange)} />
+          <path d="M11 28h10v2h-2v1h-6v-1h-2z" {...secondaryAccent(palette, palette.magenta)} />
         </>
       );
     case "open-apps":

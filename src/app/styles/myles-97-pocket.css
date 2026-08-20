@@ -518,6 +518,28 @@
   .pocket97-app-content {
     padding: 12px;
   }
+
+  .pocket97-app-content .myles97-paint-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .pocket97-app-content .myles97-paint-canvas {
+    max-width: none;
+  }
+
+  .pocket97-app-content .myles97-paint-colors {
+    grid-template-columns: repeat(4, minmax(44px, 1fr));
+  }
+
+  .pocket97-app-content .myles97-paint-tool,
+  .pocket97-app-content .myles97-paint-swatch {
+    min-height: 44px;
+  }
+
+  .pocket97-app-content .myles97-paint-swatch {
+    width: auto;
+    height: 44px;
+  }
 }
 
 @media (forced-colors: active) {

@@ -28,6 +28,13 @@ function completeChapterTitle(chapter: ProjectTocItem) {
     : chapter.title;
 }
 
+function displayChapterTitle(title: string) {
+  // Chapters can carry a numbered action in their full heading. The ToC
+  // already supplies its own ordinal, so repeating it makes the compact
+  // navigation harder to scan, especially on a narrow screen.
+  return title.replace(/^\d+\.\s+/, "");
+}
+
 export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
   const [activeId, setActiveId] = useState<string>("");
   const [isOpen, setIsOpen] = useState(false);
@@ -394,7 +401,9 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
                   </span>
                 </>
               ) : null}
-              <span className="project-toc-title">{activeChapter?.title ?? ""}</span>
+              <span className="project-toc-title">
+                {activeChapter ? displayChapterTitle(activeChapter.title) : ""}
+              </span>
             </span>
           </span>
           <span className="project-toc-toggle-end">
@@ -447,7 +456,9 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
                           </span>
                         </>
                       ) : null}
-                      <span className="project-toc-title">{section.title}</span>
+                      <span className="project-toc-title">
+                        {displayChapterTitle(section.title)}
+                      </span>
                     </span>
                     <span className="project-toc-rail" aria-hidden="true" />
                   </a>

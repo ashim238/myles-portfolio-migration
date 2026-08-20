@@ -20,6 +20,11 @@ vi.mock("next/font/google", () => ({
   Lato: () => ({ variable: "--nv-font-body", className: "navi-body" }),
 }));
 
+// Local font files use the same build-time loader behavior as Google fonts.
+vi.mock("next/font/local", () => ({
+  default: () => ({ variable: "--font-local", className: "local-font" }),
+}));
+
 // jsdom does not implement matchMedia. Several components query
 // prefers-reduced-motion (and similar) in effects; stub a default
 // "no match" implementation so mounting them doesn't throw.

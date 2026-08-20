@@ -29,6 +29,7 @@ const MASTER_CONCEPT_BY_ICON: Record<Myles97IconName, string> = {
   display: "display-properties",
   mail: "email",
   app: "generic-app",
+  paintbrush: "paintbrush",
   "open-apps": "open-apps",
   "reset-desktop": "reset-desktop",
   "loose-parts": "loose-parts",
@@ -277,7 +278,7 @@ describe("Myles 98 program icon identity", () => {
     );
 
     expect(publicFiles.sort()).toEqual(documentedFiles.sort());
-    expect(publicFiles).toHaveLength(48);
+    expect(publicFiles).toHaveLength(51);
 
     for (const path of publicFiles) {
       expect(readFileSync(resolve(publicRoot, path), "utf8")).toBe(
@@ -296,6 +297,7 @@ describe("Myles 98 program icon identity", () => {
       "display",
       "mail",
       "app",
+      "paintbrush",
       "open-apps",
       "reset-desktop",
       "loose-parts",
@@ -365,6 +367,7 @@ describe("Myles 98 program icon identity", () => {
       "display",
       "mail",
       "app",
+      "paintbrush",
       "open-apps",
       "reset-desktop",
       "loose-parts",
@@ -476,6 +479,7 @@ describe("Myles 98 program icon identity", () => {
       "display",
       "mail",
       "app",
+      "paintbrush",
       "open-apps",
       "reset-desktop",
       "loose-parts",

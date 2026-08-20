@@ -264,6 +264,37 @@ describe("ProjectToc", () => {
     );
   });
 
+  it("keeps a numbered action heading readable in the compact ToC", () => {
+    vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
+    vi.stubGlobal("ResizeObserver", MockResizeObserver);
+
+    const { container } = render(
+      <main className="project-page">
+        <h2 id="plan">1. Compare route conditions before choosing</h2>
+        <ProjectToc
+          sections={[
+            {
+              id: "plan",
+              stage: "Plan",
+              title: "1. Compare route conditions before choosing",
+            },
+          ]}
+        />
+      </main>,
+    );
+
+    const chapter = screen.getByRole("link", {
+      name: "Plan: 1. Compare route conditions before choosing",
+    });
+    expect(chapter.querySelector(".project-toc-num")).toHaveTextContent("01.");
+    expect(chapter.querySelector(".project-toc-title")).toHaveTextContent(
+      "Compare route conditions before choosing",
+    );
+    expect(
+      container.querySelector(".project-toc-active-title .project-toc-title"),
+    ).toHaveTextContent("Compare route conditions before choosing");
+  });
+
   it("keeps a legacy section title as its accessible name", () => {
     vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
     vi.stubGlobal("ResizeObserver", MockResizeObserver);

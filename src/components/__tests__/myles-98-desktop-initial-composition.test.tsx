@@ -104,6 +104,18 @@ function overlaps(first: ReturnType<typeof windowRect>, second: ReturnType<typeo
 }
 
 describe("Myles 98 desktop initial composition", () => {
+  it("uses the dedicated paintbrush artwork for the MDT Paint desktop shortcut", () => {
+    render(<DesktopHarness />);
+
+    const shortcut = within(
+      screen.getByRole("navigation", { name: "Desktop shortcuts" }),
+    ).getByRole("button", { name: "MDT Paint" });
+
+    expect(
+      shortcut.querySelector("image[data-m98-icon-master]")?.getAttribute("href"),
+    ).toBe("/myles98-icons/paintbrush/paintbrush-32.svg");
+  });
+
   it("keeps Selected Work clear and foremost on a fresh desktop", () => {
     render(<DesktopHarness />);
 

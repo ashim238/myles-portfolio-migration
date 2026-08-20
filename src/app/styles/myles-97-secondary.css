@@ -60,7 +60,7 @@
   justify-self: center;
   width: min(196px, calc(100% - 28px));
   min-height: 124px;
-  margin: 24px 14px 0 0;
+  margin: 24px 0 0;
   padding: 0 12px 12px;
   border: 2px solid var(--m97-ink);
   background: var(--m97-chrome);

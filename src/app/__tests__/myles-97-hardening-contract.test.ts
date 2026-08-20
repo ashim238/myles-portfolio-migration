@@ -71,6 +71,20 @@ describe("Myles 98 hardening contract", () => {
     expect(transition).toContain("animation.cancel()");
   });
 
+  it("keeps project return motion on compositor-friendly properties", () => {
+    const desktop = read("src/app/styles/myles-97.css");
+    const returnCover = desktop.match(
+      /\.project-enter-overlay\[data-direction="return"\]\s*\.project-enter-program-cover\s*\{([\s\S]*?)\n\}/,
+    )?.[1];
+    const settleCover = desktop.match(
+      /\.project-enter-overlay\[data-direction="return"\]\[data-phase="settling"\]\s*\.project-enter-program-cover\s*\{([\s\S]*?)\n\}/,
+    )?.[1];
+
+    expect(returnCover).toContain("transform: translateY(-36px)");
+    expect(settleCover).toContain("transition: transform");
+    expect(settleCover).not.toContain("transition: top");
+  });
+
   it("places every global underlay control inside the inert transition surface", () => {
     const layout = read("src/app/layout.tsx");
     const transitionStart = layout.indexOf("<ProjectEnterTransition>");
@@ -119,15 +133,12 @@ describe("Myles 98 hardening contract", () => {
     expect(pocket).not.toMatch(/overflow-x:\s*(?:auto|scroll)/);
   });
 
-  it("gives the arrow-key move instruction enough titlebar space", () => {
+  it("keeps arrow-key movement as a compact, clearly-labelled footer control", () => {
     const desktop = read("src/app/styles/myles-97.css");
 
-    expect(desktop).toMatch(
-      /\.myles97-titlebar-move \.myles97-window-control \{[^}]*width: 96px;[^}]*white-space: nowrap;/,
-    );
-    expect(desktop).toMatch(
-      /\.myles97-titlebar-move \{[^}]*width: 104px;/,
-    );
+    expect(desktop).toMatch(/\.myles97-window-move \{[^}]*min-width: 58px;[^}]*height: 24px;/);
+    expect(desktop).toContain(".myles97-window-move-label");
+    expect(desktop).toContain(".myles97-window-move-glyph");
   });
 
   it("passes the saved reduced-motion preference to both Selected Work surfaces", () => {

@@ -12,18 +12,6 @@ const myles97Css = readFileSync(
   "utf8",
 );
 
-vi.mock("next/image", () => ({
-  default: ({
-    alt = "",
-    priority,
-    ...props
-  }: React.ImgHTMLAttributes<HTMLImageElement> & { priority?: boolean }) => {
-    void priority;
-    // eslint-disable-next-line @next/next/no-img-element
-    return <img {...props} alt={alt} />;
-  },
-}));
-
 describe("Myles 98 BootSequence", () => {
   beforeEach(() => {
     vi.useFakeTimers();
@@ -44,17 +32,17 @@ describe("Myles 98 BootSequence", () => {
     vi.restoreAllMocks();
   });
 
-  it("skips on the first key or pointer action and completes only once", () => {
+  it("provides an explicit skip action and completes only once", () => {
     const onComplete = vi.fn();
     render(<BootSequence eligible onComplete={onComplete} />);
 
+    expect(screen.getByText("MDT BIOS v0.98")).toBeInTheDocument();
     expect(screen.getByText("Loading selected work...")).toBeInTheDocument();
-    fireEvent.keyDown(window, { key: "Enter" });
+    fireEvent.click(screen.getByRole("button", { name: /Skip boot/ }));
 
     expect(onComplete).toHaveBeenCalledTimes(1);
     expect(screen.queryByText("Loading selected work...")).toBeNull();
 
-    fireEvent.pointerDown(window);
     act(() => vi.advanceTimersByTime(MYLES97_BOOT_MAX_MS + 100));
     expect(onComplete).toHaveBeenCalledTimes(1);
   });
@@ -68,18 +56,28 @@ describe("Myles 98 BootSequence", () => {
     expect(onComplete).toHaveBeenCalledTimes(1);
   });
 
-  it("keeps the logo as the boot identity", () => {
+  it("uses the MDT mark as the boot identity", () => {
     const { container } = render(
       <BootSequence eligible onComplete={vi.fn()} />,
     );
 
-    const logo = container.querySelector<HTMLImageElement>(".myles97-boot-logo");
-    expect(logo).toHaveAttribute("src", "/logomark.svg");
-    expect(logo).toHaveAttribute("width", "96");
-    expect(logo).toHaveAttribute("height", "96");
+    expect(container.querySelector(".myles97-boot-mark")).toHaveTextContent("MDT");
+    expect(screen.getByText("Myles Designs Things")).toBeInTheDocument();
   });
 
-  it("renders a decorative twelve-segment classic progress bar", () => {
+  it("keeps Tab predictable and exposes Escape as the keyboard exit", () => {
+    const onComplete = vi.fn();
+    render(<BootSequence eligible onComplete={onComplete} />);
+
+    expect(screen.getByRole("button", { name: /Skip boot/ })).toHaveFocus();
+    fireEvent.keyDown(window, { key: "Tab" });
+    expect(onComplete).not.toHaveBeenCalled();
+
+    fireEvent.keyDown(window, { key: "Escape" });
+    expect(onComplete).toHaveBeenCalledTimes(1);
+  });
+
+  it("renders a decorative sixteen-segment classic progress bar", () => {
     const { container } = render(
       <BootSequence eligible onComplete={vi.fn()} />,
     );
@@ -88,7 +86,7 @@ describe("Myles 98 BootSequence", () => {
     expect(progress).toHaveAttribute("aria-hidden", "true");
     expect(
       progress?.querySelectorAll(".myles97-boot-progress-segment"),
-    ).toHaveLength(12);
+    ).toHaveLength(16);
   });
 
   it("leaves every segment visible when motion is reduced", () => {

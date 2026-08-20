@@ -92,6 +92,10 @@ export function StartMenu({
           <Myles97Icon name="display" size={24} variant="color" aria-hidden="true" />
           <span>Display Properties</span>
         </button>
+        <button type="button" onClick={() => openThenClose("paint")}>
+          <Myles97Icon name="paintbrush" size={24} variant="color" aria-hidden="true" />
+          <span>MDT Paint</span>
+        </button>
         <div className="myles97-start-menu-separator" aria-hidden="true" />
         <button
           type="button"

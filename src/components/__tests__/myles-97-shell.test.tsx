@@ -2,6 +2,7 @@ import { act, fireEvent, render, screen, waitFor, within } from "@testing-librar
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { Myles97Shell } from "@/components/myles-97/myles-97-shell";
+import { LOCAL_WORKSTATION_KEY } from "@/lib/myles-97/persistence";
 import type { ProgramDefinition } from "@/lib/myles-97/programs";
 
 /* eslint-disable @next/next/no-img-element */
@@ -83,6 +84,10 @@ describe("Myles98 product shell", () => {
   beforeEach(() => {
     localStorage.clear();
     sessionStorage.clear();
+    localStorage.setItem(
+      LOCAL_WORKSTATION_KEY,
+      JSON.stringify({ version: 1, bootCompleted: true }),
+    );
   });
 
   it("renders the approved first impression with Selected Work focused beside Welcome", () => {
@@ -90,7 +95,7 @@ describe("Myles98 product shell", () => {
 
     expect(screen.getByRole("heading", { name: "Myles Ashitey" })).toBeInTheDocument();
     expect(
-      screen.getByText("Design, code, and everything in between."),
+      screen.getByText("I work across product design, research, and working prototypes."),
     ).toBeInTheDocument();
     expect(
       screen.getByText("Previously TikTok and UMG. Latest project: Fresh Greens."),
@@ -173,7 +178,7 @@ describe("Myles98 product shell", () => {
       ),
     );
 
-    expect(startMenuMasters).toHaveLength(7);
+    expect(startMenuMasters).toHaveLength(8);
     expect(
       startMenuMasters.map((master) => master.getAttribute("href")),
     ).toEqual([
@@ -183,6 +188,7 @@ describe("Myles98 product shell", () => {
       "/myles98-icons/resume/resume-24.svg",
       "/myles98-icons/email/email-24.svg",
       "/myles98-icons/display-properties/display-properties-24.svg",
+      "/myles98-icons/paintbrush/paintbrush-24.svg",
       "/myles98-icons/reset-desktop/reset-desktop-24.svg",
     ]);
     for (const master of startMenuMasters) {

@@ -13,10 +13,13 @@ vi.mock("@/lib/content", () => ({
 
 vi.mock("next/font/google", () => ({
   Geist_Mono: () => ({ variable: "--font-geist-mono" }),
-  Instrument_Sans: () => ({ variable: "--font-instrument-sans" }),
   Instrument_Serif: () => ({ variable: "--font-instrument-serif" }),
   Jost: () => ({ variable: "--font-jost" }),
   Lato: () => ({ variable: "--font-lato" }),
+}));
+
+vi.mock("next/font/local", () => ({
+  default: () => ({ variable: "--font-local" }),
 }));
 
 import { metadata as rootMetadata } from "@/app/layout";

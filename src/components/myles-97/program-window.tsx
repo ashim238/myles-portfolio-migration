@@ -1,6 +1,6 @@
 "use client";
 
-import type { CSSProperties, PropsWithChildren, ReactNode } from "react";
+import { useRef, type CSSProperties, type PropsWithChildren, type ReactNode } from "react";
 import type { ProgramId } from "@/lib/myles-97/programs";
 import type { WindowGeometry } from "@/lib/myles-97/state";
 import { clampWindowGeometry } from "@/lib/myles-97/state";
@@ -41,6 +41,7 @@ export function ProgramWindow({
   onMaximize,
   children,
 }: ProgramWindowProps) {
+  const windowRef = useRef<HTMLElement>(null);
   const { dragHandleProps, dragging, previewTransform } = useWindowDrag({
     geometry,
     useRenderedOrigin: isDefaultPosition,
@@ -65,13 +66,17 @@ export function ProgramWindow({
     }[key];
     if (!delta) return false;
 
+    const renderedBounds = isDefaultPosition ? windowRef.current?.getBoundingClientRect() : null;
+    const origin = renderedBounds && renderedBounds.width > 0 && renderedBounds.height > 0
+      ? { x: Math.round(renderedBounds.left), y: Math.round(renderedBounds.top) }
+      : geometry;
     onMove(
       id,
       clampWindowGeometry(
         {
           ...geometry,
-          x: geometry.x + delta.x,
-          y: geometry.y + delta.y,
+          x: origin.x + delta.x,
+          y: origin.y + delta.y,
         },
         {
           width: Math.max(window.innerWidth, 320),
@@ -84,6 +89,7 @@ export function ProgramWindow({
 
   return (
     <section
+      ref={windowRef}
       id={id}
       className="myles97-window"
       role="region"
@@ -113,21 +119,6 @@ export function ProgramWindow({
           {title}
         </strong>
         <div className="myles97-window-controls" aria-label={`${title} window controls`}>
-          <button
-            type="button"
-            className="myles97-hit-target myles97-titlebar-move"
-            data-m97-window-move={id}
-            aria-label={`Move ${title} with arrow keys`}
-            title="Move with arrow keys. Hold Shift for larger steps."
-            onKeyDown={(event) => {
-              if (!moveWithKeyboard(event.key, event.shiftKey)) return;
-              event.preventDefault();
-            }}
-          >
-            <span className="myles97-window-control" aria-hidden="true">
-              Move with ←↑↓→
-            </span>
-          </button>
           <button
             type="button"
             className="myles97-hit-target"
@@ -163,7 +154,30 @@ export function ProgramWindow({
         </div>
       </header>
       <div className="myles97-window-content">{children}</div>
-      {status ? <div className="myles97-window-status">{status}</div> : null}
+      <footer className="myles97-window-status">
+        <span className="myles97-window-status-copy">{status}</span>
+        <button
+          type="button"
+          className="myles97-window-move"
+          data-m97-window-move={id}
+          aria-label={`Move ${title} with arrow keys`}
+          title="Move with arrow keys. Hold Shift for larger steps."
+          onKeyDown={(event) => {
+            if (!moveWithKeyboard(event.key, event.shiftKey)) return;
+            event.preventDefault();
+          }}
+        >
+          <span className="myles97-window-move-label" aria-hidden="true">
+            Move
+          </span>
+          <span className="myles97-window-move-glyph" aria-hidden="true">
+            <span>↑</span>
+            <span>←</span>
+            <span>↓</span>
+            <span>→</span>
+          </span>
+        </button>
+      </footer>
     </section>
   );
 }

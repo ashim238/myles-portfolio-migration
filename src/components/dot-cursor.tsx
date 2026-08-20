@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const HOVER_SELECTORS =
   "a, button, [role='button'], label, summary, .work-card, .lightbox-trigger, .expandable-image, .project-toc-link";
@@ -10,12 +10,30 @@ function isCoarsePointer(): boolean {
   return window.matchMedia("(pointer: coarse)").matches;
 }
 
+function supportsCustomCursor(): boolean {
+  return !isCoarsePointer() && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 export function DotCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    if (isCoarsePointer()) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const pointer = window.matchMedia("(pointer: coarse)");
+    const update = () => setEnabled(supportsCustomCursor());
+
+    update();
+    motion.addEventListener("change", update);
+    pointer.addEventListener("change", update);
+    return () => {
+      motion.removeEventListener("change", update);
+      pointer.removeEventListener("change", update);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return;
 
     const dot = dotRef.current;
     if (!dot) return;
@@ -77,7 +95,7 @@ export function DotCursor() {
       window.removeEventListener("blur", release);
       if (frame) cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [enabled]);
 
   return (
     <div ref={dotRef} className="dot-cursor" aria-hidden="true">

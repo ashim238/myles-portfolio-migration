@@ -9,6 +9,7 @@ import {
 } from "@/components/myles-97/focus-management";
 import { iconForProgram, Myles97Icon } from "@/components/myles-97/icons";
 import type { LoosePartSummary } from "@/components/myles-97/loose-parts-program";
+import { PaintProgram } from "@/components/myles-97/paint-program";
 import { ProjectProgram } from "@/components/myles-97/project-program";
 import { RecipeNoteProgram } from "@/components/myles-97/recipe-note";
 import {
@@ -75,6 +76,7 @@ export function Pocket97Shell({
     if (isSecondaryProgram(id)) return secondaryTitles[id];
     if (id === "trini-roti") return "Buss Up Shut.txt";
     if (id === "display-properties") return "Display Properties";
+    if (id === "paint") return "MDT Paint";
     return id === "welcome" ? "Welcome" : "Selected Work";
   };
 
@@ -188,6 +190,8 @@ export function Pocket97Shell({
                     setActiveProgram(null);
                   }}
                 />
+              ) : activeProgram === "paint" ? (
+                <PaintProgram />
               ) : isSecondaryProgram(activeProgram) ? (
                 <SecondaryProgram id={activeProgram} looseParts={looseParts} />
               ) : null}
@@ -258,6 +262,10 @@ export function Pocket97Shell({
           <button type="button" onClick={() => openProgram("display-properties")}>
             <Myles97Icon name="display" size={24} variant="color" aria-hidden="true" />
             Display Properties
+          </button>
+          <button type="button" onClick={() => openProgram("paint")}>
+            <Myles97Icon name="paintbrush" size={24} variant="color" aria-hidden="true" />
+            MDT Paint
           </button>
           <a
             href={`mailto:${siteConfig.email}`}

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState, type Dispatch } from "react";
 import { DisplayProperties } from "@/components/myles-97/display-properties";
 import { Myles97Icon } from "@/components/myles-97/icons";
+import { PaintProgram } from "@/components/myles-97/paint-program";
 import type { LoosePartSummary } from "@/components/myles-97/loose-parts-program";
 import { ProgramWindow } from "@/components/myles-97/program-window";
 import { ProjectProgram } from "@/components/myles-97/project-program";
@@ -39,13 +40,14 @@ export type WorkstationDesktopProps = {
 
 const defaultGeometry: Partial<Record<ProgramId, WindowGeometry>> = {
   "selected-work": { x: 136, y: 112, width: 744, height: 536 },
-  welcome: { x: 896, y: 160, width: 352, height: 352 },
+  welcome: { x: 896, y: 64, width: 352, height: 352 },
   about: { x: 312, y: 124, width: 540, height: 430 },
   "loose-parts": { x: 232, y: 92, width: 720, height: 520 },
   resume: { x: 344, y: 112, width: 560, height: 470 },
   reminders: { x: 520, y: 126, width: 440, height: 390 },
   "trini-roti": { x: 472, y: 92, width: 520, height: 560 },
   "display-properties": { x: 504, y: 168, width: 448, height: 456 },
+  paint: { x: 372, y: 144, width: 454, height: 408 },
 };
 
 const secondaryTitles: Record<SecondaryProgramId, string> = {
@@ -182,6 +184,10 @@ export function WorkstationDesktop({
             <Myles97Icon name="resume" size={32} variant="color" aria-hidden="true" />
             <span>Résumé</span>
           </button>
+          <button type="button" onClick={() => openProgram("paint")}>
+            <Myles97Icon name="paintbrush" size={32} variant="color" aria-hidden="true" />
+            <span>MDT Paint</span>
+          </button>
         </nav>
 
         {state.openPrograms.map((id, stackIndex) => {
@@ -253,6 +259,14 @@ export function WorkstationDesktop({
                 }}
               >
                 <RemindersProgram />
+              </ProgramWindow>
+            );
+          }
+
+          if (id === "paint") {
+            return (
+              <ProgramWindow key={id} {...props} title="MDT Paint">
+                <PaintProgram />
               </ProgramWindow>
             );
           }

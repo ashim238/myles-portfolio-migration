@@ -14,11 +14,15 @@
   --m97-bevel-shadow: #808080;
   --m97-bevel-dark: #0a0a0a;
   --m97-bevel-raised:
-    inset 1px 1px 0 var(--m97-bevel-light),
-    inset -1px -1px 0 var(--m97-bevel-shadow);
+    inset 1px 1px 0 var(--m97-bevel-highlight),
+    inset 2px 2px 0 var(--m97-bevel-light),
+    inset -2px -2px 0 var(--m97-bevel-shadow),
+    inset -1px -1px 0 var(--m97-bevel-dark);
   --m97-bevel-recessed:
-    inset 1px 1px 0 var(--m97-bevel-shadow),
-    inset -1px -1px 0 var(--m97-bevel-light);
+    inset 1px 1px 0 var(--m97-bevel-dark),
+    inset 2px 2px 0 var(--m97-bevel-shadow),
+    inset -2px -2px 0 var(--m97-bevel-light),
+    inset -1px -1px 0 var(--m97-bevel-highlight);
   --m97-ui-font: Tahoma, Verdana, Geneva, sans-serif;
   --m97-reader-font: Georgia, "Times New Roman", serif;
   --m97-space-1: 4px;
@@ -73,52 +77,58 @@
 
 .myles97-boot-panel {
   display: grid;
-  width: min(360px, calc(100vw - 40px));
+  width: min(540px, calc(100vw - 40px));
+  gap: 12px;
+}
+
+.myles97-boot-post {
+  min-height: 80px;
+  color: #b8b8b8;
+  font-family: "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.35;
+  opacity: 1;
+}
+
+.myles97-boot-post p {
+  margin: 0;
+}
+
+.myles97-boot-identity {
+  display: grid;
   justify-items: center;
-  gap: 14px;
-  text-align: center;
+  gap: 6px;
+  opacity: 0;
+  animation: myles97-boot-identity 1ms steps(1, end) 360ms forwards;
 }
 
 .myles97-boot-mark {
-  position: relative;
-  display: grid;
-  width: 96px;
-  height: 96px;
-  place-items: center;
-  overflow: hidden;
-  border: 2px solid #fff;
-  background: var(--m97-signal);
-}
-
-.myles97-boot-pixels {
-  position: absolute;
-  z-index: 2;
-  inset: 0;
-  background:
-    linear-gradient(90deg, transparent 50%, var(--m97-ink) 50%) 0 0 / 24px 24px,
-    linear-gradient(transparent 50%, var(--m97-active) 50%) 0 0 / 24px 24px;
-  animation: myles97-boot-pixels 700ms steps(4, end) forwards;
-}
-
-.myles97-boot-logo {
-  width: 88px;
-  height: 88px;
-  opacity: 0;
-  animation: myles97-boot-logo 520ms steps(3, end) 260ms forwards;
+  display: inline-block;
+  color: #2e6dff;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: clamp(58px, 12vw, 88px);
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: -0.12em;
+  line-height: 0.76;
+  text-shadow: 2px 2px 0 #11317f;
+  transform: skewX(-12deg) scaleX(1.16);
 }
 
 .myles97-boot-name {
-  font-size: 28px;
-  letter-spacing: -0.04em;
+  color: #fff;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .myles97-boot-progress {
   display: grid;
   width: 100%;
   height: 18px;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-columns: repeat(16, minmax(0, 1fr));
   align-items: stretch;
-  gap: 2px;
+  gap: 1px;
   overflow: hidden;
   border: 2px solid #fff;
   padding: 2px;
@@ -128,33 +138,57 @@
   display: block;
   min-width: 0;
   height: 100%;
-  background: var(--m97-signal);
-  opacity: 1;
-  animation: myles97-boot-progress-segment 80ms steps(1, end) backwards;
+  background: #2e6dff;
+  opacity: 0;
+  animation: myles97-boot-progress-segment 1ms steps(1, end) backwards;
 }
 
-.myles97-boot-panel p,
+.myles97-boot-loading,
 .myles97-boot-skip {
   margin: 0;
   font-size: 12px;
 }
 
+.myles97-boot-loading {
+  color: #fff;
+  opacity: 0;
+  animation: myles97-boot-loading 1ms steps(1, end) 1360ms forwards;
+}
+
 .myles97-boot-skip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   color: #cfcfcf;
+  justify-self: start;
+  padding: 6px 8px;
+  border: 1px solid #cfcfcf;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
 }
 
-@keyframes myles97-boot-pixels {
-  0% { opacity: 1; transform: scale(1.2); }
-  70% { opacity: 0.5; transform: scale(1); }
-  100% { opacity: 0; transform: scale(0.85); }
+.myles97-boot-skip kbd {
+  padding: 1px 4px;
+  border: 1px solid #8d8d8d;
+  color: #fff;
+  font: 10px/1 var(--m97-ui-font);
 }
 
-@keyframes myles97-boot-logo {
+@keyframes myles97-boot-post {
+  to { opacity: 1; }
+}
+
+@keyframes myles97-boot-identity {
   to { opacity: 1; }
 }
 
 @keyframes myles97-boot-progress-segment {
   from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes myles97-boot-loading {
   to { opacity: 1; }
 }
 
@@ -199,10 +233,10 @@
 
 .myles97-titlebar {
   display: flex;
-  min-height: 44px;
+  min-height: 30px;
   align-items: center;
-  gap: var(--m97-space-2);
-  padding-left: var(--m97-space-2);
+  gap: var(--m97-space-1);
+  padding: 2px 3px 2px 5px;
   background: #666;
   color: #fff;
   cursor: grab;
@@ -232,12 +266,13 @@
   display: flex;
   flex: 0 0 auto;
   align-items: center;
+  gap: 2px;
 }
 
 .myles97-hit-target {
   display: inline-grid;
-  width: 44px;
-  height: 44px;
+  width: 32px;
+  height: 32px;
   place-items: center;
   border: 0;
   background: transparent;
@@ -262,17 +297,6 @@
   box-shadow: var(--m97-bevel-raised);
 }
 
-.myles97-titlebar-move .myles97-window-control {
-  width: 96px;
-  font-size: 9px;
-  letter-spacing: 0;
-  white-space: nowrap;
-}
-
-.myles97-titlebar-move {
-  width: 104px;
-}
-
 .myles97-hit-target:active .myles97-window-control {
   border-color: var(--m97-bevel-dark) var(--m97-bevel-highlight)
     var(--m97-bevel-highlight) var(--m97-bevel-dark);
@@ -293,15 +317,188 @@
 }
 
 .myles97-window-status {
-  min-height: 28px;
+  display: flex;
+  min-height: 30px;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--m97-space-2);
   margin: var(--m97-space-1);
-  padding: var(--m97-space-1) var(--m97-space-2);
+  padding: 2px 3px 2px var(--m97-space-2);
   border: 1px solid var(--m97-ink);
   border-color: var(--m97-bevel-dark) var(--m97-bevel-highlight)
     var(--m97-bevel-highlight) var(--m97-bevel-dark);
   background: #d7d7d7;
   font-size: 12px;
   box-shadow: var(--m97-bevel-recessed);
+}
+
+.myles97-window-status-copy {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.myles97-window-move {
+  display: inline-flex;
+  min-width: 58px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 0 3px;
+  border: 1px solid var(--m97-ink);
+  border-color: var(--m97-bevel-highlight) var(--m97-bevel-dark)
+    var(--m97-bevel-dark) var(--m97-bevel-highlight);
+  background: var(--m97-chrome);
+  color: var(--m97-ink);
+  cursor: pointer;
+  font: 700 9px/1 var(--m97-ui-font);
+  box-shadow: var(--m97-bevel-raised);
+}
+
+.myles97-window-move-label {
+  letter-spacing: 0.01em;
+}
+
+.myles97-window-move:active {
+  border-color: var(--m97-bevel-dark) var(--m97-bevel-highlight)
+    var(--m97-bevel-highlight) var(--m97-bevel-dark);
+  box-shadow: var(--m97-bevel-recessed);
+}
+
+.myles97-window-move-glyph {
+  display: grid;
+  grid-template-columns: repeat(3, 5px);
+  grid-template-rows: repeat(2, 5px);
+  align-items: center;
+  justify-items: center;
+  font-size: 6px;
+  line-height: 1;
+}
+
+.myles97-window-move-glyph span:first-child {
+  grid-column: 2;
+}
+
+.myles97-window-move-glyph span:not(:first-child) {
+  grid-row: 2;
+}
+
+.myles97-paint {
+  display: grid;
+  gap: var(--m97-space-2);
+  min-height: 0;
+}
+
+.myles97-paint-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--m97-space-1);
+}
+
+.myles97-paint-tool,
+.myles97-paint-swatch {
+  border: 1px solid var(--m97-ink);
+  border-color: var(--m97-bevel-highlight) var(--m97-bevel-dark)
+    var(--m97-bevel-dark) var(--m97-bevel-highlight);
+  background: var(--m97-chrome);
+  color: var(--m97-ink);
+  cursor: pointer;
+  font: 700 11px/1.2 var(--m97-ui-font);
+  box-shadow: var(--m97-bevel-raised);
+}
+
+.myles97-paint-tool {
+  min-height: 32px;
+  padding: 4px 7px;
+}
+
+.myles97-paint-tool[data-selected="true"],
+.myles97-paint-tool:active,
+.myles97-paint-swatch[data-selected="true"] {
+  border-color: var(--m97-bevel-dark) var(--m97-bevel-highlight)
+    var(--m97-bevel-highlight) var(--m97-bevel-dark);
+  background: #e2e2e2;
+  box-shadow: var(--m97-bevel-recessed);
+}
+
+.myles97-paint-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 304px) max-content;
+  gap: var(--m97-space-2);
+  align-items: start;
+}
+
+.myles97-paint-canvas-wrap {
+  position: relative;
+  width: min(100%, 304px);
+}
+
+.myles97-paint-canvas {
+  display: block;
+  width: min(100%, 304px);
+  max-width: 304px;
+  aspect-ratio: 304 / 208;
+  touch-action: none;
+  border: 2px solid var(--m97-ink);
+  border-color: var(--m97-bevel-dark) var(--m97-bevel-highlight)
+    var(--m97-bevel-highlight) var(--m97-bevel-dark);
+  background: #fff;
+  cursor: crosshair;
+  image-rendering: pixelated;
+}
+
+.myles97-paint-keyboard-cursor {
+  position: absolute;
+  left: var(--m97-paint-cursor-x);
+  top: var(--m97-paint-cursor-y);
+  width: 9px;
+  height: 9px;
+  border: 1px solid #111;
+  outline: 1px solid #fff;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.myles97-paint-colors {
+  display: grid;
+  grid-template-columns: repeat(2, 24px);
+  width: max-content;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--m97-ink);
+  border-color: var(--m97-bevel-dark) var(--m97-bevel-highlight)
+    var(--m97-bevel-highlight) var(--m97-bevel-dark);
+  background: #d7d7d7;
+  box-shadow: var(--m97-bevel-recessed);
+}
+
+.myles97-paint-swatch {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: var(--m97-paint-swatch);
+}
+
+.myles97-paint-help {
+  margin: 0;
+  color: #444;
+  font-size: 11px;
+}
+
+.myles97-paint-status {
+  margin: -4px 0 0;
+  color: #444;
+  font-size: 10px;
+}
+
+.myles97-paint-action {
+  min-height: 12px;
+  margin: -4px 0 0;
+  color: #243b86;
+  font-size: 10px;
+  font-weight: 700;
 }
 
 .myles97-window :is(button, a, input, select, textarea):focus-visible,
@@ -1044,7 +1241,7 @@
 
 .project-enter-overlay[data-direction="return"]
   .project-enter-program-cover {
-  top: 0;
+  transform: translateY(-36px);
 }
 
 .project-enter-overlay[data-direction="return"][data-phase="settling"]
@@ -1058,8 +1255,8 @@
 
 .project-enter-overlay[data-direction="return"][data-phase="settling"]
   .project-enter-program-cover {
-  top: 36px;
-  transition: top var(--duration-project-enter) var(--ease-project-enter);
+  transform: translateY(0);
+  transition: transform var(--duration-project-enter) var(--ease-project-enter);
 }
 
 @media (max-width: 899px) {
@@ -1091,6 +1288,10 @@
   .myles97-boot,
   .myles97-boot-mark,
   .myles97-boot-progress,
+  .myles97-paint-canvas,
+  .myles97-paint-colors,
+  .myles97-paint-tool,
+  .myles97-paint-swatch,
   .project-enter-frame--program,
   .project-enter-program,
   .project-enter-program-titlebar,
@@ -1127,13 +1328,29 @@
     color: CanvasText;
     text-shadow: none;
   }
+
+  .myles97-paint-swatch {
+    background: Canvas;
+    position: relative;
+  }
+
+  .myles97-paint-swatch::after {
+    content: attr(data-swatch);
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    color: CanvasText;
+    font-weight: 700;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .myles97-window,
   .myles97-primary-button,
-  .myles97-boot-pixels,
-  .myles97-boot-logo,
+  .myles97-boot-post,
+  .myles97-boot-identity,
+  .myles97-boot-loading,
   .myles97-boot-progress-segment,
   .project-enter-program-titlebar,
   .project-enter-program-cover {
@@ -1141,7 +1358,9 @@
     transition: none !important;
   }
 
-  .myles97-boot-logo,
+  .myles97-boot-post,
+  .myles97-boot-identity,
+  .myles97-boot-loading,
   .myles97-boot-progress-segment {
     opacity: 1;
   }
@@ -1149,8 +1368,9 @@
 
 [data-m97-motion="reduce"] .myles97-window,
 [data-m97-motion="reduce"] .myles97-primary-button,
-[data-m97-motion="reduce"] .myles97-boot-pixels,
-[data-m97-motion="reduce"] .myles97-boot-logo,
+[data-m97-motion="reduce"] .myles97-boot-post,
+[data-m97-motion="reduce"] .myles97-boot-identity,
+[data-m97-motion="reduce"] .myles97-boot-loading,
 [data-m97-motion="reduce"] .myles97-boot-progress-segment,
 [data-m97-motion="reduce"] .project-enter-program-titlebar,
 [data-m97-motion="reduce"] .project-enter-program-cover {
@@ -1158,7 +1378,9 @@
   transition: none !important;
 }
 
-[data-m97-motion="reduce"] .myles97-boot-logo,
+[data-m97-motion="reduce"] .myles97-boot-post,
+[data-m97-motion="reduce"] .myles97-boot-identity,
+[data-m97-motion="reduce"] .myles97-boot-loading,
 [data-m97-motion="reduce"] .myles97-boot-progress-segment {
   opacity: 1;
 }
