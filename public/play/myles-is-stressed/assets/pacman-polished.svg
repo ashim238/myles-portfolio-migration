@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" shape-rendering="crispEdges">
+  <!-- Front-facing MYLES: the original yellow fit, now with locs and black-and-gold glasses. -->
+  <path fill="#0d1025" d="M10 2h12v1h3v2h2v2h1v5h-1v3h-2v2h1v4h-2v3h-3v5h-4v-4h-2v4H8v-5H5v-3H3v-4h2v-4H4V8h1V6h2V4h3z"/>
+  <path fill="#202126" d="M9 4h3v7H9zm3-1h3v9h-3zm3 0h3v8h-3zm3 1h3v9h-3zm3 2h3v7h-3zM7 6h2v7H7zm16 2h2v7h-2z"/>
+  <path fill="#4b4a47" d="M9 5h1v3H9zm4-1h1v4h-1zm7 2h1v3h-1zM7 8h1v3H7z"/>
+  <path fill="#b86c38" d="M9 10h14v9h-2v3h-3v1h-7v-2H9z"/>
+  <path fill="#d89150" d="M11 11h8v2h2v5h-2v3h-5v-2h-3z"/>
+  <path fill="#11111a" d="M9 12h6v1h2v-1h6v1h1v5h-1v1h-6v-1h-2v1H9v-1H8v-5h1zm2 2v3h3v-3zm8 0v3h3v-3z"/>
+  <path fill="#f3bf34" d="M15 14h2v1h-2zm-6-1h1v1H9zm14 0h1v1h-1z"/>
+  <path fill="#f7f2d9" d="M12 14h2v3h-2z"/>
+  <path fill="#8d4a2e" d="M20 19h2v2h-2z"/>
+  <path fill="#f7ae00" d="M8 20h4v1h9v-1h3v2h2v5h-3v2H9v-2H6v-5h2z"/>
+  <path fill="#ffe222" d="M9 21h4v2h6v-1h3v2h-2v2H10v-2H8v-2h1z"/>
+  <path fill="#b8e300" d="M18 20h3v2h-3zm-9 5h2v2H9z"/>
+  <path fill="#f6f4e6" d="M9 27h14v2H9z"/>
+  <path fill="#101737" d="M10 29h5v3H7v-2h3zm7 0h5v1h3v2h-8z"/>
+  <path fill="#cbef00" d="M7 29h4v1H7zm14 0h4v1h-4z"/>
+  <path fill="#f4f2e8" d="M8 30h5v2H8zm11 0h5v2h-5z"/>
+</svg>

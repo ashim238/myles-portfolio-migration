@@ -315,4 +315,28 @@ export const playEntries: PlayEntry[] = [
     context: "Parsons - Narrative & Dynamic Systems",
     embedPath: "/play/loom/index.html",
   },
+  {
+    slug: "myles-is-stressed",
+    title: "MYLES IS STRESSED",
+    hook:
+      "A p5.js game sketch where 7th Street Burgers, chores, money, reading, and other everyday stressors chase me around in a maze.",
+    exploration:
+      "I drew the tiles, player, power-up, and stressor states as custom pixel assets, then used a short power-up window to make the pressure briefly reversible.",
+    question: "What happens when everyday stress becomes a game mechanic?",
+    medium: "p5.js, JavaScript, custom pixel sprites",
+    state: "complete",
+    whatChanged:
+      "A class midterm became a playable maze with custom pixel sprites, timed stressor releases, and a short power-up state.",
+    updated: "Fall 2024",
+    process: [
+      "maze rules",
+      "custom pixel sprites",
+      "stressor behaviors",
+      "playable p5.js sketch",
+    ],
+    tags: ["p5.js", "Game Design", "Pixel Art", "JavaScript"],
+    year: "2024",
+    context: "Parsons - Critical Computation",
+    embedPath: "/play/myles-is-stressed/index.html",
+  },
 ];
