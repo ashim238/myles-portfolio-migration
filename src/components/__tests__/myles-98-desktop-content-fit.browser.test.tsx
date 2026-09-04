@@ -201,7 +201,7 @@ async function projectPreviewGeometry(page: Page, programId: ProjectProgramId) {
 
 describe("Myles 98 desktop content fit", () => {
   it.each(laptopViewports)(
-    "keeps the real Selected Work and Welcome actions visible at $width×$height",
+    "keeps the real Work Stuff and Welcome actions visible at $width×$height",
     async (viewport) => {
       const markup = renderDesktopMarkup();
       const page = await browserPage(viewport, markup);

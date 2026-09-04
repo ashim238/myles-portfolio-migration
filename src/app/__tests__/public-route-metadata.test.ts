@@ -112,7 +112,7 @@ describe("public route metadata", () => {
       title: "Fresh Greens",
       description:
         "Fresh Greens is a working React Native navigation prototype for Black drivers, based on interviews with six Black drivers across the South.",
-      image: "/projects/fresh-greens/cover.png",
+      image: "/og/fresh-greens",
     },
     {
       path: "/work/navi",
@@ -120,7 +120,7 @@ describe("public route metadata", () => {
       title: "Navi",
       description:
         "A regenerative travel platform concept for NYC neighborhood experiences, developed in a graduate studio and rebuilt for this portfolio.",
-      image: "/projects/navi/cover.png",
+      image: "/og/navi",
     },
     {
       path: "/work/understandingfafsa",
@@ -128,7 +128,7 @@ describe("public route metadata", () => {
       title: "UnderstandingFAFSA",
       description:
         "The founder needed a newsletter she could edit herself, one that matched the personality of the new website. I designed a three-theme Mailchimp kit that she has used for roughly 20 sends. The first redesigned send had an observed ~52.6% open rate with Mailchimp Privacy Protection excluded, but this wasn't a controlled attribution test.",
-      image: "/projects/understandingfafsa/cover.png",
+      image: "/og/understandingfafsa",
     },
   ])("publishes route-aware social metadata for $path", (route) => {
     expectRouteMetadata(route);
@@ -141,7 +141,7 @@ describe("public route metadata", () => {
       title: "TikTok Dynamic Showcase Ads",
       description:
         "Three static fashion catalog templates designed for TikTok's Dynamic Showcase Ads during a 2021 Global Creative Lab internship. Light Academia entered the launch library.",
-      image: "/projects/tiktok/cover-phone-mockup.jpg",
+      image: "/og/tiktok",
     });
   });
 
@@ -170,7 +170,7 @@ describe("public route metadata", () => {
       "href",
       "/",
     );
-    expect(screen.getByRole("link", { name: "Open Selected Work" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Open Work Stuff" })).toHaveAttribute(
       "href",
       "/#selected-work",
     );

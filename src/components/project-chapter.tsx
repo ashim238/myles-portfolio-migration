@@ -105,11 +105,18 @@ export function ProjectChapter({
       <h2 id={entry.id} className="project-chapter-title">
         {entry.title}
       </h2>
-      <span className="project-chapter-motif" aria-hidden="true">
-        <span className="project-chapter-motif-line" />
-        <span className="project-chapter-motif-point project-chapter-motif-point--start" />
-        <span className="project-chapter-motif-point project-chapter-motif-point--end" />
-      </span>
+      <svg
+        className="project-chapter-motif"
+        viewBox="0 0 192 20"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <line className="project-chapter-motif-line" x1="6" y1="10" x2="186" y2="10" />
+        <line className="project-chapter-motif-accent" x1="6" y1="10" x2="186" y2="10" />
+        <circle className="project-chapter-motif-point project-chapter-motif-point--start" cx="6" cy="10" r="5" />
+        <circle className="project-chapter-motif-point project-chapter-motif-point--end" cx="186" cy="10" r="5" />
+      </svg>
       {chapterChildren.map((child, childIndex) => (
         <Fragment key={childIndex}>
           {child}

@@ -651,7 +651,9 @@ describe("Task 5 responsive adaptation", () => {
             const rect = target.getBoundingClientRect();
             return rect.width >= 44 && rect.height >= 44;
           }),
-          coverCount: document.querySelectorAll(".myles97-program-cover img").length,
+          coverCount: document.querySelectorAll(
+            ".myles97-program-cover img:not(.fg-focus-map-image)",
+          ).length,
         };
       });
 

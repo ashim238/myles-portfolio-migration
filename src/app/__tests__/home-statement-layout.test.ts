@@ -34,6 +34,11 @@ describe("Myles 98 homepage layout", () => {
     expect(shell).toMatch(/min-height:\s*100svh/);
     expect(shell).toMatch(/background:\s*var\(--m97-desktop\)/);
     expect(desktop).toMatch(/position:\s*relative/);
+    expect(desktop).toMatch(/radial-gradient\(/);
+    expect(desktop).toMatch(/ellipse at 18% 16%/);
+    expect(desktop).toMatch(/ellipse at 82% 84%/);
+    expect(desktop).toMatch(/16px 16px,\s*64px 64px,\s*64px 64px/);
+    expect(css).toMatch(/\.myles97-desktop::before\s*\{[^}]*content:\s*"M98";/);
   });
 
   it("keeps the approved welcome line prominent without overpowering program discovery", () => {

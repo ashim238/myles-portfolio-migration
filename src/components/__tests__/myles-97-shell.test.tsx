@@ -90,12 +90,12 @@ describe("Myles98 product shell", () => {
     );
   });
 
-  it("renders the approved first impression with Selected Work focused beside Welcome", () => {
+  it("renders the approved first impression with Work Stuff focused beside Welcome", () => {
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
 
     expect(screen.getByRole("heading", { name: "Myles Ashitey" })).toBeInTheDocument();
     expect(
-      screen.getByText("I work across product design, research, and working prototypes."),
+      screen.getByText("Design, code, and everything in between."),
     ).toBeInTheDocument();
     expect(
       screen.getByText("Previously TikTok and UMG. Latest project: Fresh Greens."),
@@ -105,7 +105,7 @@ describe("Myles98 product shell", () => {
       "data-focused",
       "false",
     );
-    expect(screen.getByRole("region", { name: "Selected Work" })).toHaveAttribute(
+    expect(screen.getByRole("region", { name: "Work Stuff" })).toHaveAttribute(
       "data-focused",
       "true",
     );
@@ -126,13 +126,13 @@ describe("Myles98 product shell", () => {
     expect(preloadSources).toEqual(["/projects/fresh-greens/cover.png"]);
   });
 
-  it("focuses Selected Work and launches a project program while preserving a native case-study link", async () => {
+  it("focuses Work Stuff and launches a project program while preserving a native case-study link", async () => {
     const user = userEvent.setup();
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
 
     const welcome = screen.getByRole("region", { name: "Welcome to Myles 98" });
     await user.click(within(welcome).getByRole("button", { name: "Browse projects" }));
-    const selectedWork = screen.getByRole("region", { name: "Selected Work" });
+    const selectedWork = screen.getByRole("region", { name: "Work Stuff" });
     expect(selectedWork).toHaveAttribute("data-focused", "true");
 
     const freshGreensLink = within(selectedWork).getByRole("link", {
@@ -151,9 +151,7 @@ describe("Myles98 product shell", () => {
     expect(freshGreensWindow).toHaveAttribute("data-focused", "true");
     await waitFor(() => {
       expect(
-        within(freshGreensWindow).getByRole("button", {
-          name: "Move Fresh Greens.exe with arrow keys",
-        }),
+        within(freshGreensWindow).getByLabelText(/Move Fresh Greens\.exe/),
       ).toHaveFocus();
     });
   });
@@ -171,7 +169,7 @@ describe("Myles98 product shell", () => {
     expect(startButton).toHaveAttribute("aria-haspopup", "dialog");
     await user.click(startButton);
     const startMenu = screen.getByRole("dialog", { name: "Start" });
-    const firstAction = within(startMenu).getByRole("button", { name: "Selected Work" });
+    const firstAction = within(startMenu).getByRole("button", { name: "Work Stuff" });
     const startMenuMasters = Array.from(
       startMenu.querySelectorAll<SVGImageElement>(
         "image[data-m98-icon-master]",
@@ -200,6 +198,7 @@ describe("Myles98 product shell", () => {
 
     expect(firstAction).toHaveFocus();
     expect(startMenu).toHaveAttribute("aria-modal", "true");
+    expect(startMenu).toHaveStyle({ transformOrigin: "bottom left" });
     expect(desktopStage).toHaveAttribute("inert");
     expect(taskbar).toHaveAttribute("inert");
     expect(within(startMenu).getByRole("button", { name: "About Myles" })).toBeInTheDocument();
@@ -282,7 +281,7 @@ describe("Myles98 product shell", () => {
 
     await user.click(screen.getByRole("button", { name: "Start" }));
     const startMenu = screen.getByRole("dialog", { name: "Start" });
-    const firstAction = within(startMenu).getByRole("button", { name: "Selected Work" });
+    const firstAction = within(startMenu).getByRole("button", { name: "Work Stuff" });
     const lastAction = within(startMenu).getByRole("button", { name: "Close Start" });
 
     expect(firstAction).toHaveFocus();
@@ -294,9 +293,7 @@ describe("Myles98 product shell", () => {
     await user.click(within(startMenu).getByRole("button", { name: "About Myles" }));
     await waitFor(() => {
       expect(
-        screen.getByRole("button", {
-          name: "Move About Myles with arrow keys",
-        }),
+        screen.getByLabelText(/Move About Myles/),
       ).toHaveFocus();
     });
     expect(screen.getByRole("button", { name: "Start" })).not.toHaveFocus();
@@ -313,28 +310,24 @@ describe("Myles98 product shell", () => {
     await user.click(
       within(screen.getByRole("navigation", { name: "Open programs" })).getByRole(
         "button",
-        { name: "Selected Work" },
+        { name: "Work Stuff" },
       ),
     );
     await waitFor(() => {
       expect(
-        screen.getByRole("button", {
-          name: "Move Selected Work with arrow keys",
-        }),
+        screen.getByLabelText(/Move Work Stuff/),
       ).toHaveFocus();
     });
 
     await user.click(
-      within(screen.getByRole("region", { name: "Selected Work" })).getByRole(
+      within(screen.getByRole("region", { name: "Work Stuff" })).getByRole(
         "button",
-        { name: "Close Selected Work" },
+        { name: "Close Work Stuff" },
       ),
     );
     await waitFor(() => {
       expect(
-        within(welcome).getByRole("button", {
-          name: "Move Welcome to Myles 98 with arrow keys",
-        }),
+        within(welcome).getByLabelText(/Move Welcome to Myles 98/),
       ).toHaveFocus();
     });
   });
@@ -343,14 +336,10 @@ describe("Myles98 product shell", () => {
     const user = userEvent.setup();
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
 
-    const selectedWork = screen.getByRole("region", { name: "Selected Work" });
+    const selectedWork = screen.getByRole("region", { name: "Work Stuff" });
     const welcome = screen.getByRole("region", { name: "Welcome to Myles 98" });
-    const selectedMove = within(selectedWork).getByRole("button", {
-      name: "Move Selected Work with arrow keys",
-    });
-    const welcomeMove = within(welcome).getByRole("button", {
-      name: "Move Welcome to Myles 98 with arrow keys",
-    });
+    const selectedMove = within(selectedWork).getByLabelText(/Move Work Stuff/);
+    const welcomeMove = within(welcome).getByLabelText(/Move Welcome to Myles 98/);
     const selectedLeft = selectedWork.style.left;
     const welcomeLeft = Number.parseInt(welcome.style.left, 10);
 
@@ -372,11 +361,9 @@ describe("Myles98 product shell", () => {
     const user = userEvent.setup();
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
 
-    const selectedWork = screen.getByRole("region", { name: "Selected Work" });
+    const selectedWork = screen.getByRole("region", { name: "Work Stuff" });
     const welcome = screen.getByRole("region", { name: "Welcome to Myles 98" });
-    const selectedMove = within(selectedWork).getByRole("button", {
-      name: "Move Selected Work with arrow keys",
-    });
+    const selectedMove = within(selectedWork).getByLabelText(/Move Work Stuff/);
     const welcomeAction = within(welcome).getByRole("button", {
       name: "Browse projects",
     });

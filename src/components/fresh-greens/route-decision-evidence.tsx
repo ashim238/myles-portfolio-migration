@@ -142,9 +142,49 @@ export function ReportRouteInfluenceEvidence() {
           </div>
           <p>6 min faster</p>
           <span className="fg-report-route-chip">Community flag</span>
-          <div className="fg-report-route-line" aria-hidden="true">
-            <span />
-          </div>
+          <svg
+            className="fg-report-route-line"
+            viewBox="0 0 400 72"
+            role="img"
+            aria-label="A community report appears 62 percent of the way from the route start to its destination."
+          >
+            <defs>
+              <linearGradient
+                id="fg-report-route-gradient"
+                x1="16"
+                y1="0"
+                x2="384"
+                y2="0"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop offset="0" stopColor="#f4bd45" />
+                <stop offset="0.58" stopColor="#aa725c" />
+                <stop offset="1" stopColor="#493d70" />
+              </linearGradient>
+            </defs>
+            <path className="fg-report-route-track" d="M16 36 H384" />
+            <circle className="fg-report-route-start" cx="16" cy="36" r="4" />
+            <g className="fg-report-route-marker">
+              <circle cx="244" cy="36" r="9" />
+              <text x="244" y="17" textAnchor="middle">Report</text>
+            </g>
+            <circle className="fg-report-route-destination" cx="384" cy="36" r="8" />
+            <text
+              className="fg-report-route-line-label fg-report-route-line-label--start"
+              x="16"
+              y="64"
+            >
+              Start
+            </text>
+            <text
+              className="fg-report-route-line-label fg-report-route-line-label--end"
+              x="384"
+              y="64"
+              textAnchor="end"
+            >
+              Destination
+            </text>
+          </svg>
         </article>
       </div>
 

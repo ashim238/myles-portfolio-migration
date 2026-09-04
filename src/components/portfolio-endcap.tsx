@@ -18,7 +18,7 @@ export function PortfolioEndcap({ context }: PortfolioEndcapProps) {
     >
       <p className="portfolio-endcap-label">Continue</p>
       <div className="portfolio-endcap-links">
-        <Link href="/#selected-work">Selected Work</Link>
+        <Link href="/#selected-work">Work Stuff</Link>
         <Link href={secondary.href}>{secondary.label}</Link>
       </div>
     </nav>

@@ -33,16 +33,21 @@
 
 .reader-mode.reader-mode .project-chapter-evidence-state {
   display: inline-flex;
-  min-height: 28px;
   align-items: center;
-  padding: 3px 8px;
-  border: 1px solid
-    color-mix(in srgb, var(--chapter-evidence-ink) 70%, transparent);
-  border-radius: 999px;
+  gap: 8px;
   color: var(--chapter-evidence-ink);
-  font: 700 12px/1 var(--m97-ui-font);
+  font: 700 11px/1.2 var(--m97-ui-font);
   letter-spacing: 0.02em;
   white-space: nowrap;
+}
+
+.reader-mode.reader-mode .project-chapter-evidence-state::before {
+  width: 4px;
+  height: 4px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: currentcolor;
+  content: "";
 }
 
 /* The first migration callsites share reading semantics, not visual chrome.
@@ -70,7 +75,7 @@
 .reader-mode.reader-mode
   .reader-evidence-summary-row
   + .reader-evidence-summary-row {
-  margin-top: 0.55rem;
+  margin-top: 0.9rem;
 }
 
 .reader-mode.reader-mode .reader-evidence-summary-label {

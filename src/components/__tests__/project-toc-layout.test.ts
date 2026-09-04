@@ -189,16 +189,18 @@ describe("ProjectToc responsive layout", () => {
 
   it("keeps a continuation fade on overflowing desktop chapter rails until spine mode", () => {
     const overflowRange = cssBlock(
-      "@media (min-width: 769px) and (max-width: 1599px)",
+      "@media (min-width: 769px)",
     );
     const rail = cssBlock(
-      ".project-toc-list:not(:focus-within)",
+      '.project-toc[data-toc-overflow="end"] .project-toc-list:not(:focus-within)',
       overflowRange,
     );
 
     expect(rail).toMatch(/mask-image:\s*linear-gradient/);
     expect(rail).toMatch(/transparent/);
     expect(rail).toMatch(/calc\(100% - 30px\)/);
+    expect(overflowRange).toContain('data-toc-overflow="start"');
+    expect(overflowRange).toContain('data-toc-overflow="both"');
   });
 
   it("raises the return control above mobile navigation and the safe area", () => {

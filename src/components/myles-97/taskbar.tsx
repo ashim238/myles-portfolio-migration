@@ -21,7 +21,7 @@ export type TaskbarProps = {
 
 const systemTitles: Partial<Record<ProgramId, string>> = {
   welcome: "Welcome to Myles 98",
-  "selected-work": "Selected Work",
+  "selected-work": "Work Stuff",
   about: "About Myles",
   "loose-parts": "Loose Parts",
   resume: "Résumé",
@@ -96,6 +96,7 @@ export function Taskbar({
               key={id}
               type="button"
               className="myles97-task-button"
+              data-m97-task-program={id}
               data-focused={isFocused ? "true" : "false"}
               data-minimized={isMinimized ? "true" : "false"}
               aria-pressed={isFocused}

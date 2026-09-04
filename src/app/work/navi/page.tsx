@@ -55,7 +55,7 @@ export const metadata: Metadata = createRouteMetadata({
   title: "Navi",
   description: NAVI_DESCRIPTION,
   path: "/work/navi",
-  image: "/projects/navi/cover.png",
+  image: "/og/navi",
   type: "article",
 });
 
@@ -76,7 +76,7 @@ export default async function NaviPage() {
       <nav className="project-topbar" aria-label="Breadcrumb">
         <TransitionLink href="/#work">
           <span aria-hidden="true">←</span>
-          Selected work
+          Work Stuff
         </TransitionLink>
       </nav>
 
@@ -212,7 +212,7 @@ export default async function NaviPage() {
                 breakdown.
               </li>
               <li>
-                <strong>Go</strong> shows eco-friendly ways to reach the event
+                <strong>Go</strong>{" "}shows eco-friendly ways to reach the event
                 from the visitor&apos;s current location.
               </li>
             </ul>

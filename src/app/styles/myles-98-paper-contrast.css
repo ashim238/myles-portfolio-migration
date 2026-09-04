@@ -7,12 +7,38 @@
   --m98-paper-text: var(--m97-reader-ink);
   --m98-paper-muted: #5b5953;
   --m98-paper-focus: #263cb8;
-  --m98-paper-panel: #ffffff;
+  --m98-paper-panel: color-mix(
+    in srgb,
+    var(--m97-reader-ink) 3%,
+    var(--m97-paper)
+  );
+  --m98-document-chrome: color-mix(
+    in srgb,
+    var(--m97-reader-ink) 8%,
+    var(--m97-paper)
+  );
+  --m98-document-accent: #263cb8;
   --m98-paper-rule: color-mix(
     in srgb,
     var(--m97-reader-ink) 28%,
     transparent
   );
+}
+
+.reader-mode.reader-mode.fg-page {
+  --m98-document-accent: #3d6447;
+}
+
+.reader-mode.reader-mode.uf-page {
+  --m98-document-accent: #004aad;
+}
+
+.reader-mode.reader-mode.nv-page {
+  --m98-document-accent: #9f3f0d;
+}
+
+.reader-mode.reader-mode.tt-page {
+  --m98-document-accent: #111111;
 }
 
 .reader-mode.reader-mode :is(a, button, input, select, textarea):focus-visible {
@@ -146,7 +172,7 @@
 }
 
 .reader-mode.reader-mode .project-work-jump-window-content {
-  background: var(--m98-paper-panel);
+  background: #efede5;
   color: var(--m98-paper-text);
 }
 

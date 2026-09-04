@@ -32,17 +32,17 @@ describe("Myles 98 product language", () => {
     expect(source).toContain("Pocket 98");
   });
 
-  it("uses Selected Work and Loose Parts in current navigation while preserving the /play URL", () => {
+  it("uses Work Stuff and Loose Parts in current navigation while preserving the /play URL", () => {
     const config = read("src/lib/site-config.ts");
     const mobile = read("src/components/mobile-nav.tsx");
     const play = read("src/app/play/page.tsx");
 
-    expect(config).toContain('label: "01. Selected Work"');
+    expect(config).toContain('label: "01. Work Stuff"');
     expect(config).toContain('href: "/#selected-work"');
     expect(config).toContain('label: "03. Loose Parts"');
     expect(config).not.toContain('label: "03. Play"');
 
-    expect(mobile).toContain('label: "Selected Work"');
+    expect(mobile).toContain('label: "Work Stuff"');
     expect(mobile).toContain('label: "Loose Parts"');
     expect(mobile).not.toContain('label: "Play"');
     expect(mobile).not.toContain('href: "/#work"');

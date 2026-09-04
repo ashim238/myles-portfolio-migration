@@ -135,6 +135,31 @@
   margin-inline: auto;
 }
 
+/* On wide screens, the title anchors the story to the broader editorial grid.
+   The body remains narrow enough for comfortable reading. */
+@media (min-width: 900px) {
+  .reader-mode.reader-mode:not(.tt-page) .project-hero {
+    width: min(100% - 64px, 76rem);
+  }
+
+  .reader-mode.reader-mode:not(.tt-page) .project-opening-facts {
+    width: min(100% - 64px, 76rem);
+  }
+
+  .reader-mode.reader-mode:not(.tt-page) .case-cut {
+    width: min(100% - 64px, 76rem);
+  }
+
+  .reader-mode.reader-mode:not(.tt-page) :is(
+    .project-opening-facts-list,
+    .project-opening-facts-action,
+    .case-cut-facts,
+    .case-cut-moves
+  ) {
+    max-width: 48rem;
+  }
+}
+
 .reader-mode.reader-mode .project-opening-facts-list {
   display: grid;
   gap: 0.6rem;
@@ -167,7 +192,7 @@
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 0.45rem 0.9rem;
-  margin-top: 0.85rem;
+  margin-top: 1.25rem;
   padding: 0.6rem 0.75rem;
   border: 1px solid var(--m97-reader-line);
   color: inherit;
@@ -275,6 +300,26 @@
 
 .reader-mode.reader-mode .project-toc-link--active .project-toc-dot {
   background: var(--m97-active);
+}
+
+/* The wide-screen chapter label floats outside the paper column. Keep its
+   surface and ink on Reader tokens instead of inheriting the dark desktop. */
+.reader-mode.reader-mode .project-toc-text {
+  border-color: var(--m97-reader-line);
+  background: var(--m97-paper);
+  color: var(--m97-reader-ink);
+}
+
+.reader-mode.reader-mode .project-work-jump-window-content {
+  background: var(--m97-paper);
+  color: var(--m97-reader-ink);
+}
+
+.reader-mode.reader-mode :is(
+  .project-work-jump-label,
+  .project-work-jump-bridge
+) {
+  color: var(--m97-reader-muted);
 }
 
 .reader-mode.reader-mode .project-work-jump,

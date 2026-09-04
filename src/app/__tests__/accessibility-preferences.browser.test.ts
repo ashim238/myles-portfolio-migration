@@ -122,7 +122,7 @@ function documentWithPreferences() {
       <body>
         <nav class="myles97-taskbar">
           <button class="preference-focus myles97-task-button" data-focused="true">
-            Selected Work
+            Work Stuff
           </button>
         </nav>
         <div class="myles97-start-menu">Start</div>

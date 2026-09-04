@@ -5,6 +5,7 @@ import { chromium, type Browser } from "playwright";
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 
 import { ProjectOpeningFacts } from "@/components/project-opening-facts";
+import { RecruiterCut } from "@/components/recruiter-cut";
 
 const styles = [
   "src/app/styles/base.css",
@@ -67,6 +68,11 @@ function openingMarkup(pageClass: string, title: string) {
         outcome="A working product prototype."
         proof={{ label: "Open the product proof", href: "#proof" }}
       />
+      <RecruiterCut
+        timeline="2025–2026"
+        tools="Figma, React Native, and TypeScript"
+        moves={[]}
+      />
     </main>,
   );
   const markup = container.innerHTML;
@@ -93,6 +99,11 @@ function tiktokOpeningMarkup() {
         scope="Three catalog directions inside a fixed product grid."
         outcome="A template selected for the launch library."
         proof={{ label: "Inspect the template system", href: "#proof" }}
+      />
+      <RecruiterCut
+        timeline="May–August 2021"
+        tools="Figma and After Effects"
+        moves={[]}
       />
     </main>,
   );
@@ -132,14 +143,16 @@ describe("Reader opening alignment", () => {
         const proof = document.querySelector<HTMLElement>(
           ".project-opening-facts-action",
         );
+        const atAGlance = document.querySelector<HTMLElement>(".case-cut");
 
-        if (!hero || !facts || !title || !proof) {
+        if (!hero || !facts || !title || !proof || !atAGlance) {
           throw new Error("Missing Reader opening geometry");
         }
 
         const heroBox = hero.getBoundingClientRect();
         const factsBox = facts.getBoundingClientRect();
         const proofBox = proof.getBoundingClientRect();
+        const atAGlanceBox = atAGlance.getBoundingClientRect();
 
         return {
           heroLeft: heroBox.left,
@@ -148,12 +161,16 @@ describe("Reader opening alignment", () => {
           factsRight: factsBox.right,
           proofLeft: proofBox.left,
           proofRight: proofBox.right,
+          atAGlanceLeft: atAGlanceBox.left,
+          atAGlanceRight: atAGlanceBox.right,
           titleAlign: getComputedStyle(title).textAlign,
         };
       });
 
       expect.soft(Math.abs(geometry.heroLeft - geometry.factsLeft)).toBeLessThanOrEqual(1);
       expect.soft(Math.abs(geometry.heroRight - geometry.factsRight)).toBeLessThanOrEqual(1);
+      expect.soft(Math.abs(geometry.heroLeft - geometry.atAGlanceLeft)).toBeLessThanOrEqual(1);
+      expect.soft(Math.abs(geometry.heroRight - geometry.atAGlanceRight)).toBeLessThanOrEqual(1);
       expect.soft(geometry.proofLeft).toBeGreaterThanOrEqual(geometry.factsLeft);
       expect.soft(geometry.proofRight).toBeLessThanOrEqual(geometry.factsRight);
       expect.soft(geometry.titleAlign).toBe("left");
@@ -187,23 +204,37 @@ describe("Reader opening alignment", () => {
         const facts = document.querySelector<HTMLElement>(
           ".project-opening-facts",
         );
+        const proof = document.querySelector<HTMLElement>(
+          ".project-opening-facts-action",
+        );
+        const atAGlance = document.querySelector<HTMLElement>(".case-cut");
 
-        if (!heroText || !facts) {
+        if (!heroText || !facts || !proof || !atAGlance) {
           throw new Error("Missing TikTok opening geometry");
         }
 
         const heroBox = heroText.getBoundingClientRect();
         const factsBox = facts.getBoundingClientRect();
+        const proofBox = proof.getBoundingClientRect();
+        const atAGlanceBox = atAGlance.getBoundingClientRect();
         return {
           heroLeft: heroBox.left,
           heroRight: heroBox.right,
           factsLeft: factsBox.left,
           factsRight: factsBox.right,
+          proofLeft: proofBox.left,
+          proofRight: proofBox.right,
+          atAGlanceLeft: atAGlanceBox.left,
+          atAGlanceRight: atAGlanceBox.right,
         };
       });
 
       expect.soft(Math.abs(geometry.heroLeft - geometry.factsLeft)).toBeLessThanOrEqual(1);
       expect.soft(Math.abs(geometry.heroRight - geometry.factsRight)).toBeLessThanOrEqual(1);
+      expect.soft(Math.abs(geometry.heroLeft - geometry.atAGlanceLeft)).toBeLessThanOrEqual(1);
+      expect.soft(Math.abs(geometry.heroRight - geometry.atAGlanceRight)).toBeLessThanOrEqual(1);
+      expect.soft(geometry.proofLeft).toBeGreaterThanOrEqual(geometry.factsLeft);
+      expect.soft(geometry.proofRight).toBeLessThanOrEqual(geometry.factsRight);
 
       await page.close();
     },

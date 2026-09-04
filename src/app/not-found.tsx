@@ -18,13 +18,13 @@ export default function NotFound() {
             <h1 id="not-found-heading">Page not found</h1>
             <p>
               This address does not point to a portfolio page. The desktop and
-              Selected Work are both still available.
+              Work Stuff are both still available.
             </p>
           </div>
         </div>
         <div className="myles97-system-dialog-actions">
           <Link href="/">Return to Desktop</Link>
-          <Link href="/#selected-work">Open Selected Work</Link>
+          <Link href="/#selected-work">Open Work Stuff</Link>
         </div>
       </section>
     </main>

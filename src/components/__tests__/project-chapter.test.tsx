@@ -29,6 +29,11 @@ describe("ProjectChapter", () => {
       "aria-hidden",
       "true",
     );
+    expect(container.querySelector(".project-chapter-motif")?.tagName).toBe("svg");
+    expect(container.querySelector(".project-chapter-motif-accent")).toHaveAttribute(
+      "x2",
+      "186",
+    );
     expect(container.querySelector(".project-chapter")).toHaveAttribute(
       "data-chapter-variant",
       "navi",

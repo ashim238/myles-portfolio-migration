@@ -36,7 +36,7 @@
 
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .project-chapter-motif-line::after {
+    .project-chapter-motif-accent {
       animation: projectChapterTrace linear both;
       animation-timeline: view();
       animation-range: entry 8% cover 34%;
@@ -48,7 +48,7 @@
   .project-chapter,
   .project-chapter-title,
   .project-evidence-heading,
-  .project-chapter-motif-line::after {
+  .project-chapter-motif-accent {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
@@ -293,17 +293,13 @@ main[data-project-slug="navi"] {
   --chapter-motif-accent: var(--nv-accent);
 }
 
-.nv-page .project-chapter-motif-line {
-  background: var(--line);
-}
-
-.nv-page .project-chapter-motif-line::after {
-  background: var(--chapter-motif-accent);
+.nv-page .project-chapter-motif-accent {
+  stroke-dasharray: 10 5;
 }
 
 .nv-page .project-chapter-motif-point {
-  border-color: var(--chapter-motif-accent);
-  background: var(--background);
+  fill: var(--background);
+  stroke: var(--chapter-motif-accent);
 }
 
 main[data-project-slug="understandingfafsa"] {
@@ -392,6 +388,13 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
   border: 1px solid var(--line);
   border-radius: 0.7rem;
   overflow: hidden;
+}
+
+@media (min-width: 761px) {
+  .case-lead-media {
+    width: 90%;
+    margin-inline: auto;
+  }
 }
 
 .case-lead-img,
@@ -1394,9 +1397,8 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
   );
 }
 
-/* TikTok · alternating cyan and magenta channels */
-.tt-page .project-toc-item:nth-child(odd) { --seg-color: var(--tt-cyan); }
-.tt-page .project-toc-item:nth-child(even) { --seg-color: var(--tt-magenta); }
+/* TikTok · one red signal channel against the warm Reader paper */
+.tt-page .project-toc-item { --seg-color: var(--tt-magenta); }
 
 .tt-page .project-toc-rail::after,
 .tt-page .project-toc-link--active .project-toc-dot,
@@ -1406,13 +1408,7 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 
 .tt-page .project-toc-progress {
   transform: none;
-  background: linear-gradient(
-    to right,
-    var(--tt-cyan) 0% 25%,
-    var(--tt-magenta) 25% 50%,
-    var(--tt-cyan) 50% 75%,
-    var(--tt-magenta) 75% 100%
-  );
+  background: var(--tt-magenta);
   -webkit-mask: linear-gradient(
     to right,
     #000 0 calc(var(--toc-progress, 0) * 100%),
@@ -1463,9 +1459,7 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 .uf-page .project-chapter[data-chapter-index="4"] { --chapter-motif-accent: var(--uf-accent-warm); }
 .uf-page .project-chapter[data-chapter-index="5"] { --chapter-motif-accent: var(--uf-accent-highlight); }
 
-.uf-page .project-chapter-motif-point {
-  border-radius: 0.12rem;
-}
+.uf-page .project-chapter-motif-point { r: 4px; }
 
 .uf-page .project-toc-rail::after,
 .uf-page .project-toc-link--active .project-toc-dot,

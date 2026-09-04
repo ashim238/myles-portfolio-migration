@@ -2,6 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import type { PointerEventHandler } from "react";
+import { animate } from "motion";
 import {
   clampWindowGeometry,
   type ViewportBounds,
@@ -11,6 +12,7 @@ import {
 type WindowDragOptions = {
   geometry: WindowGeometry;
   useRenderedOrigin?: boolean;
+  reduceMotion?: boolean;
   onCommit: (geometry: WindowGeometry) => void;
 };
 
@@ -22,6 +24,8 @@ type DragSession = {
   originY: number;
   deltaX: number;
   deltaY: number;
+  displayX: number;
+  displayY: number;
 };
 
 function browserViewport(): ViewportBounds {
@@ -31,7 +35,17 @@ function browserViewport(): ViewportBounds {
   };
 }
 
-export function useWindowDrag({ geometry, useRenderedOrigin = false, onCommit }: WindowDragOptions) {
+function rubberband(overshoot: number, dimension: number, constant = 0.35) {
+  return (overshoot * dimension * constant) /
+    (dimension + constant * Math.abs(overshoot));
+}
+
+export function useWindowDrag({
+  geometry,
+  useRenderedOrigin = false,
+  reduceMotion = false,
+  onCommit,
+}: WindowDragOptions) {
   const drag = useRef<DragSession | null>(null);
   const [preview, setPreview] = useState({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
@@ -65,6 +79,8 @@ export function useWindowDrag({ geometry, useRenderedOrigin = false, onCommit }:
       originY: useRenderedOrigin ? (windowElement?.offsetTop ?? geometry.y) : geometry.y,
       deltaX: 0,
       deltaY: 0,
+      displayX: 0,
+      displayY: 0,
     };
     setDragging(true);
     event.preventDefault();
@@ -81,13 +97,30 @@ export function useWindowDrag({ geometry, useRenderedOrigin = false, onCommit }:
 
     session.deltaX = event.clientX - session.startX;
     session.deltaY = event.clientY - session.startY;
-    setPreview({ x: session.deltaX, y: session.deltaY });
-  }, []);
+
+    const viewport = browserViewport();
+    const proposed = {
+      ...geometry,
+      x: session.originX + session.deltaX,
+      y: session.originY + session.deltaY,
+    };
+    const clamped = clampWindowGeometry(proposed, viewport);
+    session.displayX = clamped.x - session.originX +
+      rubberband(proposed.x - clamped.x, viewport.width);
+    session.displayY = clamped.y - session.originY +
+      rubberband(proposed.y - clamped.y, viewport.height);
+    setPreview({ x: session.displayX, y: session.displayY });
+  }, [geometry]);
 
   const onPointerUp = useCallback<PointerEventHandler<HTMLElement>>(
-    (event) => {
+    async (event) => {
       const session = drag.current;
       if (!session || session.pointerId !== event.pointerId) return;
+
+      if (session.deltaX === 0 && session.deltaY === 0) {
+        clearDrag(event.currentTarget, event.pointerId);
+        return;
+      }
 
       const next = clampWindowGeometry(
         {
@@ -97,10 +130,34 @@ export function useWindowDrag({ geometry, useRenderedOrigin = false, onCommit }:
         },
         browserViewport(),
       );
+      const targetX = next.x - session.originX;
+      const targetY = next.y - session.originY;
+      const hasBoundaryReturn =
+        Math.abs(targetX - session.displayX) > 0.5 ||
+        Math.abs(targetY - session.displayY) > 0.5;
+
+      if (!reduceMotion && hasBoundaryReturn) {
+        const windowElement = event.currentTarget.closest<HTMLElement>(".myles97-window");
+        if (windowElement) {
+          const returnAnimation = animate(
+            windowElement,
+            {
+              transform: `translate3d(${targetX}px, ${targetY}px, 0)`,
+            },
+            { type: "spring", bounce: 0, duration: 0.32 },
+          );
+          try {
+            await returnAnimation.finished;
+          } catch {
+            // A new gesture may intentionally interrupt the boundary return.
+          }
+        }
+      }
+
       onCommit(next);
       clearDrag(event.currentTarget, event.pointerId);
     },
-    [clearDrag, geometry, onCommit],
+    [clearDrag, geometry, onCommit, reduceMotion],
   );
 
   const onPointerCancel = useCallback<PointerEventHandler<HTMLElement>>(

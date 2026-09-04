@@ -38,12 +38,9 @@ describe("ProgramWindow", () => {
     );
     expect(screen.getByText("Program content")).toBeInTheDocument();
 
-    const move = screen.getByRole("button", {
-      name: "Move Fresh Greens.exe with arrow keys",
-    });
+    const move = screen.getByLabelText(/Move Fresh Greens\.exe/);
     expect(move).toHaveAttribute("data-m97-window-move", "fresh-greens");
-    expect(move).toHaveClass("myles97-window-move");
-    expect(move).toHaveTextContent("Move↑←↓→");
+    expect(move).toHaveClass("myles97-titlebar");
     move.focus();
     expect(move).toHaveFocus();
 
@@ -115,6 +112,53 @@ describe("ProgramWindow", () => {
     );
   });
 
+  it("adds elastic resistance beyond desktop bounds before committing the clamped position", () => {
+    const onMove = vi.fn();
+    const { container } = render(
+      <ProgramWindow
+        id="fresh-greens"
+        title="Fresh Greens.exe"
+        geometry={{ x: 40, y: 64, width: 720, height: 520 }}
+        focused
+        isDefaultPosition={false}
+        reduceMotion
+        onFocus={vi.fn()}
+        onMove={onMove}
+        onMinimize={vi.fn()}
+        onClose={vi.fn()}
+      >
+        <p>Program content</p>
+      </ProgramWindow>,
+    );
+
+    const region = screen.getByRole("region", { name: "Fresh Greens.exe" });
+    const titlebar = container.querySelector<HTMLElement>(".myles97-titlebar")!;
+    fireEvent.pointerDown(titlebar, {
+      pointerId: 9,
+      button: 0,
+      clientX: 100,
+      clientY: 100,
+    });
+    fireEvent.pointerMove(titlebar, {
+      pointerId: 9,
+      clientX: -400,
+      clientY: 100,
+    });
+
+    expect(region.style.transform).toMatch(/^translate3d\(-1\d{2}(?:\.\d+)?px, 0px, 0\)$/);
+    expect(region.style.transform).not.toContain("-500px");
+
+    fireEvent.pointerUp(titlebar, {
+      pointerId: 9,
+      clientX: -400,
+      clientY: 100,
+    });
+    expect(onMove).toHaveBeenCalledWith(
+      "fresh-greens",
+      expect.objectContaining({ x: 0, y: 64 }),
+    );
+  });
+
   it("raises an obscured window when keyboard focus enters it", () => {
     const onFocus = vi.fn();
 
@@ -138,7 +182,7 @@ describe("ProgramWindow", () => {
     expect(onFocus).toHaveBeenCalledWith("fresh-greens");
   });
 
-  it("moves with arrow keys through a dedicated clamped titlebar control", async () => {
+  it("moves with arrow keys through the focused title bar", async () => {
     const user = userEvent.setup();
     const onMove = vi.fn();
 
@@ -157,10 +201,8 @@ describe("ProgramWindow", () => {
       </ProgramWindow>,
     );
 
-    const move = screen.getByRole("button", {
-      name: "Move Fresh Greens.exe with arrow keys",
-    });
-    await user.click(move);
+    const move = screen.getByLabelText(/Move Fresh Greens\.exe/);
+    move.focus();
     await user.keyboard("{ArrowRight}");
 
     expect(onMove).toHaveBeenLastCalledWith("fresh-greens", {

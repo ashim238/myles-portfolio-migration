@@ -34,11 +34,29 @@ describe("ReportRouteInfluenceEvidence", () => {
       ),
     ).toBeInTheDocument();
     expect(screen.getByText("Community flag")).toBeInTheDocument();
+    expect(screen.getByText("Start")).toHaveClass(
+      "fg-report-route-line-label--start",
+    );
+    expect(screen.getByText("Report")).toBeInTheDocument();
+    expect(screen.getByText("Destination")).toHaveClass(
+      "fg-report-route-line-label--end",
+    );
     expect(
       screen.getByText(/portfolio reconstruction of the implemented report-to-route link/i),
     ).toBeInTheDocument();
     expect(screen.getByText(/one report can affect ranking/i)).toBeInTheDocument();
     expect(screen.getByText(/not corroboration/i)).toBeInTheDocument();
     expect(screen.queryByText(/verified|proves safe/i)).not.toBeInTheDocument();
+    const route = screen.getByRole("img", {
+      name: /community report appears 62 percent/i,
+    });
+    expect(route.querySelector(".fg-report-route-track")).toHaveAttribute(
+      "d",
+      "M16 36 H384",
+    );
+    expect(route.querySelector(".fg-report-route-marker circle")).toHaveAttribute(
+      "cx",
+      "244",
+    );
   });
 });

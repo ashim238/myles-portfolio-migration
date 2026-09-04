@@ -24,12 +24,12 @@ const CUBES = new Map<Grid, Cube[]>([
     { front: { fill: "#4e91bd", x: 7, y: 10, width: 3, height: 3 }, depth: 1, top: "#8dc7e5", side: "#2f628e" },
   ]],
   [24, [
-    { front: { fill: "#c94c4c", x: 5, y: 8, width: 5, height: 5 }, depth: 2, top: "#f38b78", side: "#8f3037" },
+    { front: { fill: "#c94c4c", x: 6, y: 8, width: 5, height: 5 }, depth: 2, top: "#f38b78", side: "#8f3037" },
     { front: { fill: "#e0af3d", x: 4, y: 15, width: 5, height: 5 }, depth: 2, top: "#ffe07b", side: "#a46f24" },
     { front: { fill: "#4e91bd", x: 12, y: 15, width: 5, height: 5 }, depth: 2, top: "#8dc7e5", side: "#2f628e" },
   ]],
   [32, [
-    { front: { fill: "#c94c4c", x: 8, y: 11, width: 7, height: 7 }, depth: 2, top: "#f38b78", side: "#8f3037" },
+    { front: { fill: "#c94c4c", x: 9, y: 11, width: 7, height: 7 }, depth: 2, top: "#f38b78", side: "#8f3037" },
     { front: { fill: "#e0af3d", x: 6, y: 20, width: 7, height: 7 }, depth: 2, top: "#ffe07b", side: "#a46f24" },
     { front: { fill: "#4e91bd", x: 17, y: 20, width: 7, height: 7 }, depth: 2, top: "#8dc7e5", side: "#2f628e" },
   ]],
@@ -37,17 +37,25 @@ const CUBES = new Map<Grid, Cube[]>([
 
 const HIGHLIGHTS = new Map<Grid, Rect[]>([
   [16, []],
-  [24, []],
-  [32, []],
+  [24, [
+    { fill: "#ffd1c7", x: 8, y: 7, width: 2, height: 1 },
+    { fill: "#fff6d3", x: 6, y: 14, width: 2, height: 1 },
+    { fill: "#d9f2ff", x: 14, y: 14, width: 2, height: 1 },
+  ]],
+  [32, [
+    { fill: "#ffd1c7", x: 11, y: 10, width: 3, height: 1 },
+    { fill: "#fff6d3", x: 9, y: 19, width: 2, height: 1 },
+    { fill: "#d9f2ff", x: 20, y: 19, width: 2, height: 1 },
+  ]],
 ]);
 
 const GRAIN_MARKS = new Map<Grid, Rect[]>([
   [16, []],
   [24, [
-    { fill: GRAIN_FILL, x: 6, y: 10, width: 2, height: 1 },
+    { fill: GRAIN_FILL, x: 7, y: 10, width: 2, height: 1 },
   ]],
   [32, [
-    { fill: GRAIN_FILL, x: 9, y: 13, width: 3, height: 1 },
+    { fill: GRAIN_FILL, x: 10, y: 13, width: 3, height: 1 },
   ]],
 ]);
 
@@ -137,7 +145,7 @@ function repositionUpperCube(source: string, grid: Grid, x: number) {
 function hasV6WoodenBlockAnatomy(source: string, grid: Grid) {
   const cubes = CUBES.get(grid)!;
   const fronts = rectsFor(source, FRONT_FILLS).sort((left, right) => left.y - right.y || left.x - right.x);
-  const highlights = rectsFor(source, ["#fff6d3", "#fff0c4"]).sort((left, right) => left.y - right.y || left.x - right.x);
+  const highlights = rectsFor(source, ["#ffd1c7", "#fff6d3", "#d9f2ff"]).sort((left, right) => left.y - right.y || left.x - right.x);
   const grain = rectsFor(source, [GRAIN_FILL]).sort((left, right) => left.y - right.y || left.x - right.x);
   const outlines = polygonsFor(source, [OUTLINE_FILL]);
   const tops = polygonsFor(source, TOP_FILLS);

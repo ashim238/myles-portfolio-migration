@@ -2633,42 +2633,32 @@ button:focus-visible,
 
 .project-chapter-motif {
   display: block;
-  position: relative;
   width: min(12rem, 44vw);
   height: 1.2rem;
   margin-top: 1.2rem;
+  overflow: visible;
+  color: var(--chapter-motif-accent);
 }
 
 .project-chapter-motif-line {
-  position: absolute;
-  left: 0.35rem;
-  right: 0.35rem;
-  top: 50%;
-  height: 1px;
-  background: var(--line);
+  stroke: var(--line);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
 }
 
-.project-chapter-motif-line::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--chapter-motif-accent);
+.project-chapter-motif-accent {
+  stroke: currentColor;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
   transform-origin: left center;
 }
 
 .project-chapter-motif-point {
-  position: absolute;
-  top: 50%;
-  width: 0.7rem;
-  height: 0.7rem;
-  border: 1px solid var(--chapter-motif-accent);
-  border-radius: 50%;
-  background: var(--background);
-  transform: translateY(-50%);
+  fill: var(--background);
+  stroke: currentColor;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
 }
-
-.project-chapter-motif-point--start { left: 0; }
-.project-chapter-motif-point--end { right: 0; }
 
 @media (prefers-reduced-motion: no-preference) {
   .project-sections > .project-section {
@@ -2806,12 +2796,30 @@ button:focus-visible,
   justify-content: space-between;
   gap: 1rem;
   padding: 0.85rem 1rem;
+  background: var(--m98-document-chrome, var(--m98-paper-panel, var(--surface)));
   color: inherit;
   cursor: pointer;
   font-size: 1.125rem;
   font-weight: 650;
   line-height: 1.25;
   list-style: none;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.project-evidence-disclosure > summary:hover {
+  background: color-mix(
+    in srgb,
+    var(--m98-document-accent, currentcolor) 8%,
+    var(--m98-document-chrome, var(--m98-paper-panel, var(--surface)))
+  );
+}
+
+.project-evidence-disclosure[open] {
+  border-top-color: var(--m98-document-accent, currentcolor);
+}
+
+.project-evidence-disclosure[open] > summary {
+  color: var(--m98-document-accent, currentcolor);
 }
 
 .project-evidence-disclosure > summary::-webkit-details-marker {
@@ -2830,11 +2838,13 @@ button:focus-visible,
   flex: 0 0 auto;
   place-items: center;
   border: 1px solid currentcolor;
-  border-radius: 50%;
+  border-color: currentcolor;
+  border-radius: 0;
+  background: var(--m98-paper-panel, var(--surface));
   font-size: 1.15rem;
   font-weight: 400;
   line-height: 1;
-  transition: transform 180ms ease;
+  transition: transform 180ms ease, background-color 160ms ease;
 }
 
 .project-evidence-disclosure[open] .project-evidence-disclosure-mark {
@@ -2852,6 +2862,7 @@ button:focus-visible,
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .project-evidence-disclosure > summary,
   .project-evidence-disclosure-mark {
     transition: none;
   }
@@ -3113,8 +3124,28 @@ button:focus-visible,
    so it scrolls. Fade both edges so the overflow reads as "scroll for more"
    instead of an abrupt cut. Dropped while a pill is keyboard-focused so focus
    rings near the edges are never clipped by the mask. */
-@media (min-width: 769px) and (max-width: 1599px) {
-  .project-toc-list:not(:focus-within) {
+@media (min-width: 769px) {
+  .project-toc[data-toc-overflow="end"] .project-toc-list:not(:focus-within) {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      #000 0,
+      #000 calc(100% - 30px),
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      #000 0,
+      #000 calc(100% - 30px),
+      transparent
+    );
+  }
+
+  .project-toc[data-toc-overflow="start"] .project-toc-list:not(:focus-within) {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 22px);
+    mask-image: linear-gradient(to right, transparent, #000 22px);
+  }
+
+  .project-toc[data-toc-overflow="both"] .project-toc-list:not(:focus-within) {
     -webkit-mask-image: linear-gradient(
       to right,
       transparent,

@@ -44,7 +44,7 @@ const programs: ProgramDefinition[] = [
   },
 ];
 
-describe("Selected Work evaluation paths", () => {
+describe("Work Stuff evaluation paths", () => {
   it("makes the case study primary and explains the interactive preview before either action", async () => {
     const user = userEvent.setup();
     const onOpen = vi.fn();
@@ -85,6 +85,47 @@ describe("Selected Work evaluation paths", () => {
     expect(within(tiktokCard).getByText("TikTok Catalog.studio")).toBeInTheDocument();
     expect(within(tiktokCard).getByText("Catalog-template studio")).toBeInTheDocument();
     expect(within(tiktokCard).queryByText("Shipped")).not.toBeInTheDocument();
+  });
+
+  it("gives Fresh Greens an authored route-scoring focus reveal", () => {
+    render(<SelectedWorkExplorer programs={programs} onOpen={vi.fn()} />);
+
+    const freshCard = screen.getByRole("listitem", { name: "Fresh Greens" });
+    expect(freshCard.querySelector("video")).toBeNull();
+    expect(freshCard.querySelector(".fg-focus-reveal")).toBeInTheDocument();
+    expect(freshCard.querySelector(".fg-focus-route-line")).toBeInTheDocument();
+    expect(freshCard).toHaveTextContent(
+      "Active route8 min0.4 mi remaining✓ All clear",
+    );
+    const images = freshCard.querySelectorAll("img");
+    expect(images[0]).toHaveAttribute(
+      "src",
+      "/projects/fresh-greens/cover.png",
+    );
+    expect(images[1]).toHaveAttribute(
+      "src",
+      "/projects/fresh-greens/v2/map-texture.png",
+    );
+
+    const route = freshCard.querySelector(".fg-focus-route-line");
+    const routeSvg = freshCard.querySelector(".fg-focus-route");
+    const origin = freshCard.querySelector(".fg-focus-origin circle:last-child");
+    const destination = freshCard.querySelector(
+      ".fg-focus-destination circle:last-child",
+    );
+    expect(route).toHaveAttribute(
+      "d",
+      "M88 655 L220 648 L382 636 L535 625 L648 616 L641 500 L635 364 L760 352 L902 340 L899 264",
+    );
+    expect(routeSvg).toHaveAttribute("viewBox", "0 0 1000 760");
+    expect(routeSvg).toHaveAttribute("preserveAspectRatio", "xMidYMid slice");
+    expect(route).toHaveAttribute("pathLength", "1");
+    expect(route).toHaveAttribute("stroke-dasharray", "1");
+    expect(route).toHaveAttribute("stroke-dashoffset", "1");
+    expect(origin).toHaveAttribute("cx", "88");
+    expect(origin).toHaveAttribute("cy", "655");
+    expect(destination).toHaveAttribute("cx", "899");
+    expect(destination).toHaveAttribute("cy", "264");
   });
 
   it("routes through the controller without faking a full-card animation", () => {

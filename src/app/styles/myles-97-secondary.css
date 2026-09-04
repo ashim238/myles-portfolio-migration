@@ -6,16 +6,12 @@
 }
 
 .myles97-roti-note {
-  position: relative;
-  right: auto;
-  bottom: auto;
-  grid-column: 3;
-  grid-row: 1;
-  align-self: end;
-  justify-self: center;
+  position: fixed;
+  right: 28px;
+  bottom: 84px;
   width: min(196px, calc(100% - 28px));
   min-height: 132px;
-  margin: 0 14px 86px 0;
+  margin: 0;
   padding: 16px;
   border: 1px solid #756942;
   background: #eadcab;
@@ -68,16 +64,21 @@
   cursor: pointer;
   font-family: var(--m97-ui-font);
   text-align: left;
-  box-shadow: 3px 4px 0 rgb(17 17 17 / 22%);
+  box-shadow: 2px 3px 0 rgb(17 17 17 / 14%);
 }
 
 .myles97-reminders-widget-title {
   display: block;
   margin: 0 -12px 12px;
   padding: 5px 7px;
-  background: var(--m97-active);
+  background: #666;
   color: #fff;
   font: 700 11px/1.2 var(--m97-ui-font);
+}
+
+.myles97-reminders-widget:is(:hover, :focus-visible)
+  .myles97-reminders-widget-title {
+  background: var(--m97-active);
 }
 
 .myles97-reminders-widget strong,

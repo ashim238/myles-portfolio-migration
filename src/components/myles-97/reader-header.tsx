@@ -36,17 +36,6 @@ export function ReaderHeader({ slug, title }: ReaderHeaderProps) {
 
   return (
     <header className="reader-header" aria-label="Reader controls">
-      <div className="reader-header-project">
-        <span aria-hidden="true">
-          <Myles97Icon
-            name={iconForProgram(slug)}
-            size={16}
-            compact
-            variant="color"
-          />
-        </span>
-        <strong>{appName}</strong>
-      </div>
       <Link
         className="reader-return"
         href="/"
@@ -67,6 +56,17 @@ export function ReaderHeader({ slug, title }: ReaderHeaderProps) {
           Desktop
         </span>
       </Link>
+      <div className="reader-header-project">
+        <span aria-hidden="true">
+          <Myles97Icon
+            name={iconForProgram(slug)}
+            size={16}
+            compact
+            variant="color"
+          />
+        </span>
+        <strong>{appName}</strong>
+      </div>
     </header>
   );
 }

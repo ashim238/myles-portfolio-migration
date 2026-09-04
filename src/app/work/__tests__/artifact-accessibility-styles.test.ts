@@ -99,7 +99,7 @@ describe("portfolio artifact accessibility styles", () => {
     const motifReveal = declarationBlock(".project-chapter-motif", polishStyles);
     const motifLine = declarationBlock(".project-chapter-motif-line", baseStyles);
     const motifAccent = declarationBlock(
-      ".project-chapter-motif-line::after",
+      ".project-chapter-motif-accent",
       baseStyles,
     );
 
@@ -116,8 +116,8 @@ describe("portfolio artifact accessibility styles", () => {
       expect(block).not.toContain("opacity: 0");
       expect(block).not.toContain("clip-path: inset(0 100%");
     }
-    expect(motifLine).toContain("background: var(--line)");
-    expect(motifAccent).toContain("background: var(--chapter-motif-accent)");
+    expect(motifLine).toContain("stroke: var(--line)");
+    expect(motifAccent).toContain("stroke: currentColor");
     expect(polishStyles).toMatch(
       /@media print[\s\S]*?\.project-page \.project-section,[\s\S]*?\.project-section > h2[\s\S]*?opacity: 1 !important;[\s\S]*?transform: none !important;/,
     );
@@ -170,21 +170,12 @@ describe("portfolio artifact accessibility styles", () => {
     expect(activeTitle).toContain("white-space: nowrap");
   });
 
-  it("scopes the TikTok cyan and magenta channel split to its case study", () => {
+  it("uses one legible red signal channel for the TikTok reading instrument", () => {
     expect(declarationBlock(".tt-page", baseStyles)).toContain(
       "--toc-accent: var(--tt-cyan)",
     );
     expect(
-      declarationBlock(
-        ".tt-page .project-toc-item:nth-child(odd)",
-        polishStyles,
-      ),
-    ).toContain("--seg-color: var(--tt-cyan)");
-    expect(
-      declarationBlock(
-        ".tt-page .project-toc-item:nth-child(even)",
-        polishStyles,
-      ),
+      declarationBlock(".tt-page .project-toc-item", polishStyles),
     ).toContain("--seg-color: var(--tt-magenta)");
     expect(
       declarationBlock(".tt-page .project-toc-rail::after", polishStyles),
@@ -199,16 +190,7 @@ describe("portfolio artifact accessibility styles", () => {
       ".tt-page .project-toc-progress",
       polishStyles,
     );
-    expect(mobileProgress).toContain("var(--tt-cyan)");
     expect(mobileProgress).toContain("var(--tt-magenta)");
-    for (const segment of [
-      "var(--tt-cyan) 0% 25%",
-      "var(--tt-magenta) 25% 50%",
-      "var(--tt-cyan) 50% 75%",
-      "var(--tt-magenta) 75% 100%",
-    ]) {
-      expect(mobileProgress).toContain(segment);
-    }
   });
 
   it("scopes Navi route rails and waypoint dots to its accent", () => {

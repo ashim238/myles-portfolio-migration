@@ -4,10 +4,9 @@ import { describe, expect, it } from "vitest";
 import { expectedMasterPath } from "../lib/myles98-icon-contract.mjs";
 
 const ROOT = "docs/design-assets/myles98-icons";
-const GRIDS = [16, 24, 32] as const;
 
 type Concept = "start" | "about-myles";
-type Grid = (typeof GRIDS)[number];
+type Grid = 16 | 24 | 32;
 type Point = { x: number; y: number };
 type Bounds = { minX: number; minY: number; maxX: number; maxY: number };
 type HorizontalFeature = { minX: number; maxX: number; y: number };

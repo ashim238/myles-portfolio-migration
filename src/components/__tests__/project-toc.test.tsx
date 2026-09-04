@@ -95,6 +95,39 @@ afterEach(() => {
 });
 
 describe("ProjectToc", () => {
+  it("reports which edge of an overflowing desktop rail has more chapters", () => {
+    vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
+    vi.stubGlobal("ResizeObserver", MockResizeObserver);
+
+    render(
+      <main className="project-page">
+        {chapters.map((chapter) => (
+          <h2 key={chapter.id} id={chapter.id}>{chapter.title}</h2>
+        ))}
+        <ProjectToc sections={chapters} />
+      </main>,
+    );
+
+    const nav = screen.getByRole("navigation", { name: "Case study chapters" });
+    const list = screen.getByRole("list");
+    Object.defineProperties(list, {
+      clientWidth: { configurable: true, value: 300 },
+      scrollWidth: { configurable: true, value: 800 },
+      scrollLeft: { configurable: true, writable: true, value: 0 },
+    });
+
+    fireEvent(window, new Event("resize"));
+    expect(nav).toHaveAttribute("data-toc-overflow", "end");
+
+    list.scrollLeft = 250;
+    fireEvent.scroll(list);
+    expect(nav).toHaveAttribute("data-toc-overflow", "both");
+
+    list.scrollLeft = 500;
+    fireEvent.scroll(list);
+    expect(nav).toHaveAttribute("data-toc-overflow", "start");
+  });
+
   it("marks collapsed navigation ready only after hydration", async () => {
     vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
     vi.stubGlobal("ResizeObserver", MockResizeObserver);
@@ -585,12 +618,65 @@ describe("ProjectToc", () => {
     expect(respond).toHaveAttribute("aria-current", "true");
 
     pageY = 850;
-    fireEvent.scroll(window);
+    fireEvent(window, new Event("scrollend"));
 
     await vi.waitFor(() => {
       expect(
         screen.getByRole("link", { name: "Plan: Plan chapter" }),
       ).toHaveAttribute("aria-current", "true");
+    });
+  });
+
+  it("activates the final chapter when a fragment jump reaches the document end", async () => {
+    vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
+    vi.stubGlobal("ResizeObserver", MockResizeObserver);
+
+    Object.defineProperty(window, "scrollY", {
+      configurable: true,
+      value: 1200,
+    });
+    Object.defineProperty(window, "innerHeight", {
+      configurable: true,
+      value: 800,
+    });
+    Object.defineProperty(document.documentElement, "scrollHeight", {
+      configurable: true,
+      value: 2000,
+    });
+    rects.set("trust", { top: 900, bottom: 920 });
+    rects.set("validate", { top: 1450, bottom: 1470 });
+
+    vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(
+      function getBoundingClientRect(this: HTMLElement) {
+        if (this.id && rects.has(this.id)) {
+          const rect = rects.get(this.id)!;
+          return mockRect(rect.top, rect.bottom) as DOMRect;
+        }
+        const heading = this.querySelector?.("h2");
+        if (heading?.id && rects.has(heading.id)) {
+          const rect = rects.get(heading.id)!;
+          return mockRect(rect.top, rect.bottom) as DOMRect;
+        }
+        return mockRect(0, 48) as DOMRect;
+      },
+    );
+
+    render(
+      <main className="project-page">
+        <section className="project-section"><h2 id="trust">Trust</h2></section>
+        <section className="project-section"><h2 id="validate">Validate</h2></section>
+        <ProjectToc sections={[
+          { id: "trust", stage: "Trust", title: "Trust" },
+          { id: "validate", stage: "Validate", title: "Validate" },
+        ]} />
+      </main>,
+    );
+
+    await vi.waitFor(() => {
+      expect(screen.getByRole("link", { name: "Validate: Validate" })).toHaveAttribute(
+        "aria-current",
+        "true",
+      );
     });
   });
 });

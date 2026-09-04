@@ -77,7 +77,7 @@ export function Pocket97Shell({
     if (id === "trini-roti") return "Buss Up Shut.txt";
     if (id === "display-properties") return "Display Properties";
     if (id === "paint") return "MDT Paint";
-    return id === "welcome" ? "Welcome" : "Selected Work";
+    return id === "welcome" ? "Welcome" : "Work Stuff";
   };
 
   const openProgram = (id: ProgramId) => {
@@ -217,7 +217,7 @@ export function Pocket97Shell({
 
             <section id="selected-work" className="pocket97-work" aria-labelledby="pocket97-work-title">
               <div className="pocket97-section-heading">
-                <h2 id="pocket97-work-title">Selected Work</h2>
+                <h2 id="pocket97-work-title">Work Stuff</h2>
                 <span>{programs.length} programs</span>
               </div>
               <SelectedWorkExplorer

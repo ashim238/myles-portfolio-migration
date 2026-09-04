@@ -228,8 +228,8 @@ describe("UnderstandingFAFSA case-study structure", () => {
     expect(page).toMatch(
       /UNDERSTANDING_FAFSA_AUDIT_ACTIONS[\s\S]*UNDERSTANDING_FAFSA_AUDIT_RULES[\s\S]*from\s*"@\/lib\/understandingfafsa-audit-rules"/,
     );
-    expect(page).toContain(
-      '<ol aria-label="Design changes from the newsletter audit">',
+    expect(page).toMatch(
+      /<ol[\s\S]*className="uf-audit-actions"[\s\S]*aria-label="Design changes from the newsletter audit"/,
     );
     expect(page).toMatch(
       /UNDERSTANDING_FAFSA_AUDIT_RULES\.map\(\(rule\) =>/,

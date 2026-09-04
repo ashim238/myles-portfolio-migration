@@ -14,7 +14,7 @@ describe("SystemDocumentShell", () => {
       name: "About Myles document controls",
     });
     expect(
-      within(header).getByRole("link", { name: "Selected Work" }),
+      within(header).getByRole("link", { name: "Work Stuff" }),
     ).toHaveAttribute("href", "/#selected-work");
     expect(
       within(header).getByRole("navigation", {

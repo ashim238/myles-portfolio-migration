@@ -34,7 +34,7 @@ export const metadata: Metadata = createRouteMetadata({
   description:
     "Fresh Greens is a working React Native navigation prototype for Black drivers, based on interviews with six Black drivers across the South.",
   path: "/work/fresh-greens",
-  image: "/projects/fresh-greens/cover.png",
+  image: "/og/fresh-greens",
   type: "article",
 });
 
@@ -51,7 +51,7 @@ export default async function FreshGreensPage() {
       <nav className="project-topbar" aria-label="Breadcrumb">
         <TransitionLink href="/#work">
           <span aria-hidden="true">←</span>
-          Selected work
+          Work Stuff
         </TransitionLink>
       </nav>
 

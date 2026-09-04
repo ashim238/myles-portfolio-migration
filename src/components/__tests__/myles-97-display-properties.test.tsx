@@ -14,7 +14,7 @@ describe("DisplayProperties", () => {
     document.documentElement.removeAttribute("data-theme");
   });
 
-  it("uses the canonical theme store for light and dark", async () => {
+  it("confirms a pending color-scheme change before applying it", async () => {
     localStorage.setItem("theme", "dark");
     document.documentElement.setAttribute("data-theme", "dark");
     const user = userEvent.setup();
@@ -29,6 +29,11 @@ describe("DisplayProperties", () => {
 
     await user.click(screen.getByRole("radio", { name: "Light" }));
 
+    expect(localStorage.getItem("theme")).toBe("dark");
+    expect(document.documentElement).toHaveAttribute("data-theme", "dark");
+
+    await user.click(screen.getByRole("button", { name: "Confirm changes" }));
+
     await waitFor(() => {
       expect(localStorage.getItem("theme")).toBe("light");
       expect(document.documentElement).toHaveAttribute("data-theme", "light");
@@ -36,7 +41,7 @@ describe("DisplayProperties", () => {
     });
   });
 
-  it("updates high contrast and reduced motion independently", async () => {
+  it("confirms pending accessibility changes together", async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
 
@@ -49,16 +54,32 @@ describe("DisplayProperties", () => {
     );
 
     await user.click(screen.getByRole("checkbox", { name: "High contrast" }));
+    await user.click(screen.getByRole("checkbox", { name: "Reduce motion" }));
+
+    expect(onChange).not.toHaveBeenCalled();
+    await user.click(screen.getByRole("button", { name: "Confirm changes" }));
     expect(onChange).toHaveBeenLastCalledWith({
       highContrast: true,
-      reduceMotion: false,
-    });
-
-    await user.click(screen.getByRole("checkbox", { name: "Reduce motion" }));
-    expect(onChange).toHaveBeenLastCalledWith({
-      highContrast: false,
       reduceMotion: true,
     });
+  });
+
+  it("disables confirmation until a setting has changed", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <DisplayProperties
+        preferences={preferences}
+        onChange={vi.fn()}
+        onReset={vi.fn()}
+      />,
+    );
+
+    const confirm = screen.getByRole("button", { name: "Confirm changes" });
+    expect(confirm).toBeDisabled();
+
+    await user.click(screen.getByRole("checkbox", { name: "High contrast" }));
+    expect(confirm).toBeEnabled();
   });
 
   it("requires explicit confirmation before resetting the desktop", async () => {
@@ -73,13 +94,31 @@ describe("DisplayProperties", () => {
       />,
     );
 
-    await user.click(screen.getByRole("button", { name: "Reset desktop…" }));
+    await user.click(
+      screen.getByRole("button", { name: "Reset portfolio…" }),
+    );
     expect(onReset).not.toHaveBeenCalled();
+    expect(screen.getByText("Reset portfolio?")).toBeInTheDocument();
     expect(
-      screen.getByText("Reset open programs, positions, and display preferences?"),
+      screen.getByText(
+        "This closes open programs and resets window positions, color scheme, contrast, and motion preferences.",
+      ),
     ).toBeInTheDocument();
 
-    await user.click(screen.getByRole("button", { name: "Confirm reset" }));
+    await user.click(screen.getByRole("button", { name: "Reset portfolio" }));
     expect(onReset).toHaveBeenCalledTimes(1);
+  });
+
+  it("opens the confirmation immediately when reset was requested from Start", () => {
+    render(
+      <DisplayProperties
+        preferences={preferences}
+        onChange={vi.fn()}
+        onReset={vi.fn()}
+        requestReset
+      />,
+    );
+
+    expect(screen.getByText("Reset portfolio?")).toBeInTheDocument();
   });
 });

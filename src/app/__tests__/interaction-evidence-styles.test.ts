@@ -54,11 +54,11 @@ describe("interaction evidence styling", () => {
     expect(choices).toContain("grid-template-columns: repeat(3, minmax(7.25rem, 1fr))");
     expect(choice).toContain("justify-content: flex-start");
     expect(choice).toContain("min-height: 44px");
-    expect(choice).toContain("border-radius: var(--rounded-md)");
+    expect(choice).toContain("border-radius: var(--fg-editorial-radius)");
     expect(choice).toContain("font-size: 0.85rem");
     expect(label).toContain("overflow-wrap: anywhere");
     expect(control).toContain("min-height: 44px");
-    expect(control).toContain("border-radius: var(--rounded-sm)");
+    expect(control).toContain("border-radius: var(--fg-editorial-radius)");
     expect(control).toContain("font-size: 0.85rem");
     expect(hidden).toContain("display: none");
   });

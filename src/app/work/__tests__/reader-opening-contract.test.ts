@@ -138,14 +138,24 @@ describe("Reader opening route contract", () => {
     );
   });
 
-  it("keeps Navi's hero and opening facts on one font-independent axis", () => {
-    const styles = readFileSync(
+  it("anchors non-TikTok titles and opening facts to one wider desktop grid", () => {
+    const readerStyles = readFileSync(
+      resolve(process.cwd(), "src/app/styles/reader-mode.css"),
+      "utf8",
+    );
+    const projectStyles = readFileSync(
       resolve(process.cwd(), "src/app/styles/portfolio-surfaces.css"),
       "utf8",
     );
 
-    expect(styles).toMatch(
-      /\.reader-mode\.reader-mode\.nv-page :is\(\s*\.project-hero,\s*\.project-opening-facts\s*\)\s*\{[^}]*width:\s*min\(100% - 32px, 48rem\);[^}]*margin-inline:\s*auto;/,
+    expect(readerStyles).toMatch(
+      /@media \(min-width: 900px\)\s*\{\s*\.reader-mode\.reader-mode:not\(\.tt-page\) \.project-hero\s*\{[^}]*width:\s*min\(100% - 64px, 76rem\);/,
+    );
+    expect(readerStyles).toMatch(
+      /\.reader-mode\.reader-mode:not\(\.tt-page\) \.project-opening-facts\s*\{[^}]*width:\s*min\(100% - 64px, 76rem\);/,
+    );
+    expect(projectStyles).toMatch(
+      /@media \(min-width: 900px\)\s*\{\s*\.reader-mode\.reader-mode\.nv-page :is\(\s*\.project-opening-facts\s*\)\s*\{[^}]*width:\s*min\(100% - 64px, 76rem\);/,
     );
   });
 

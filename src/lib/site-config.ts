@@ -55,7 +55,7 @@ export function createRouteMetadata({
 }
 
 export const navItems: NavItem[] = [
-  { label: "01. Selected Work", href: "/#selected-work" },
+  { label: "01. Work Stuff", href: "/#selected-work" },
   { label: "02. About", href: "/about" },
   { label: "03. Loose Parts", href: "/play" },
   { label: "04. Resume", href: siteConfig.resumeUrl },

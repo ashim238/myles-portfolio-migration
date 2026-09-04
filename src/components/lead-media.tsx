@@ -42,6 +42,7 @@ export function LeadMedia({
           width={width}
           height={height}
           sizes="(max-width: 760px) 100vw, min(90vw, 900px)"
+          loading="eager"
           priority
         />
       )}

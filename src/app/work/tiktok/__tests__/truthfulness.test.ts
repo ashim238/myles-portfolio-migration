@@ -142,7 +142,7 @@ describe("TikTok public truthfulness contract", () => {
       "public/projects/tiktok/cover-phone-mockup.jpg",
     );
 
-    expect(page).toContain('image: "/projects/tiktok/cover-phone-mockup.jpg"');
+    expect(page).toContain('image: "/og/tiktok"');
     expect(content).toContain(
       "coverImage: /projects/tiktok/cover-phone-mockup.jpg",
     );

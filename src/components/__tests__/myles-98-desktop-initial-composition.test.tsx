@@ -116,10 +116,10 @@ describe("Myles 98 desktop initial composition", () => {
     ).toBe("/myles98-icons/paintbrush/paintbrush-32.svg");
   });
 
-  it("keeps Selected Work clear and foremost on a fresh desktop", () => {
+  it("keeps Work Stuff clear and foremost on a fresh desktop", () => {
     render(<DesktopHarness />);
 
-    const selectedWork = screen.getByRole("region", { name: "Selected Work" });
+    const selectedWork = screen.getByRole("region", { name: "Work Stuff" });
     const welcome = screen.getByRole("region", { name: "Welcome to Myles 98" });
     const taskbar = screen.getByRole("navigation", { name: "Open programs" });
 
@@ -128,7 +128,7 @@ describe("Myles 98 desktop initial composition", () => {
     expect(selectedWork.getAttribute("data-focused")).toBe("true");
     expect(
       within(taskbar)
-        .getByRole("button", { name: "Selected Work" })
+        .getByRole("button", { name: "Work Stuff" })
         .getAttribute("aria-pressed"),
     ).toBe("true");
     expect(
@@ -142,7 +142,7 @@ describe("Myles 98 desktop initial composition", () => {
     render(<DesktopHarness bootCompleted />);
 
     const welcome = screen.getByRole("region", { name: "Welcome to Myles 98" });
-    const selectedWork = screen.getByRole("region", { name: "Selected Work" });
+    const selectedWork = screen.getByRole("region", { name: "Work Stuff" });
     const taskbar = screen.getByRole("navigation", { name: "Open programs" });
 
     expect(welcome.getAttribute("data-focused")).toBe("true");
@@ -157,7 +157,7 @@ describe("Myles 98 desktop initial composition", () => {
   it.each([1280, 1440])("keeps the fresh desktop inside the %ipx canvas", (viewportWidth) => {
     render(<DesktopHarness />);
 
-    const selectedWork = screen.getByRole("region", { name: "Selected Work" });
+    const selectedWork = screen.getByRole("region", { name: "Work Stuff" });
     const welcome = screen.getByRole("region", { name: "Welcome to Myles 98" });
 
     expect(windowRect(selectedWork).right).toBeLessThanOrEqual(viewportWidth);

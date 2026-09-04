@@ -361,7 +361,7 @@ describe("Myles 98 workstation depth system", () => {
         Object.fromEntries(geometryProperties.map((property) => [property, base[property]])),
       );
       expect(state.boxShadow, `${fixture.name} recessed shadow`).toBe(
-        "inset 1px 1px 0 #808080,inset -1px -1px 0 #dfdfdf",
+        "inset 1px 1px 0 #0a0a0a,inset 2px 2px 0 #808080,inset -2px -2px 0 #dfdfdf,inset -1px -1px 0 #fff",
       );
       expect(
         [
@@ -381,8 +381,8 @@ describe("Myles 98 workstation depth system", () => {
       if ("targetSelector" in fixture) {
         expect(
           computedSnapshot(fixture.state, fixture.targetSelector),
-          `${fixture.name} 44px target`,
-        ).toMatchObject({ height: "44px", width: "44px" });
+          `${fixture.name} 28px desktop target`,
+        ).toMatchObject({ height: "28px", width: "28px" });
       }
     }
   });
@@ -412,6 +412,10 @@ describe("Myles 98 workstation depth system", () => {
       .myles97-boot,
       .myles97-boot-mark,
       .myles97-boot-progress,
+      .myles97-paint-canvas,
+      .myles97-paint-colors,
+      .myles97-paint-tool,
+      .myles97-paint-swatch,
       .project-enter-frame--program,
       .project-enter-program,
       .project-enter-program-titlebar,

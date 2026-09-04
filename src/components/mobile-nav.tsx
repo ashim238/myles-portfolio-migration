@@ -7,7 +7,7 @@ import { siteConfig } from "@/lib/site-config";
 
 const items = [
   {
-    label: "Selected Work",
+    label: "Work Stuff",
     href: "/#selected-work",
     icon: (
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">

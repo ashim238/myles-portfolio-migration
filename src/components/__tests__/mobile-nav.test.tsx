@@ -50,7 +50,7 @@ describe("MobileNav route ownership", () => {
     );
   });
 
-  it("marks Selected Work current on the legacy /work index", () => {
+  it("marks Work Stuff current on the legacy /work index", () => {
     route.pathname = "/work";
     const { container } = render(
       <>
@@ -63,7 +63,7 @@ describe("MobileNav route ownership", () => {
       name: "Mobile navigation",
     });
     expect(
-      within(mobile).getByRole("link", { name: "Selected Work" }),
+      within(mobile).getByRole("link", { name: "Work Stuff" }),
     ).toHaveAttribute("aria-current", "page");
     expect(
       container.querySelector('.site-nav-list a[href="/#selected-work"]'),

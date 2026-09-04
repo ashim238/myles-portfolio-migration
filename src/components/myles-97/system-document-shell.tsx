@@ -32,7 +32,7 @@ export function SystemDocumentShell({
           <div className="myles98-document-titlebar">
             <Link className="myles98-document-back" href="/#selected-work">
               <span aria-hidden="true">←</span>
-              <span>Selected Work</span>
+              <span>Work Stuff</span>
             </Link>
 
             <div className="myles98-document-identity">

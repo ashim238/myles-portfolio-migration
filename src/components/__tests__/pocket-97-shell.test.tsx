@@ -178,7 +178,7 @@ describe("Pocket 98", () => {
 
     await screen.findByRole("navigation", { name: "Pocket 98 dock" });
     expect(
-      Array.from(container.querySelectorAll<HTMLImageElement>(".myles97-program-cover img"))
+      Array.from(container.querySelectorAll<HTMLImageElement>(".myles97-program-cover img:not(.fg-focus-map-image)"))
         .map((image) => image.getAttribute("src")),
     ).toEqual(programs.map((program) => program.coverImage));
 
@@ -234,7 +234,7 @@ describe("Pocket 98", () => {
       "href",
       "/work/fresh-greens",
     );
-    expect(screen.queryByRole("region", { name: "Selected Work" })).toBeNull();
+    expect(screen.queryByRole("region", { name: "Work Stuff" })).toBeNull();
 
     Object.defineProperty(app, "getBoundingClientRect", {
       configurable: true,
@@ -268,7 +268,7 @@ describe("Pocket 98", () => {
     window.removeEventListener(PROJECT_ENTER_REQUEST, onRequest);
 
     await user.click(within(app).getByRole("button", { name: "Back" }));
-    expect(screen.getByRole("heading", { name: "Selected Work" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Work Stuff" })).toBeInTheDocument();
   });
 
   it("opens Loose Parts from the dock and exposes it in Open Apps", async () => {

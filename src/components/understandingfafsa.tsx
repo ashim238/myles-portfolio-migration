@@ -938,26 +938,44 @@ export function FigmaMailchimpPair() {
   return (
     <div className="uf-figma-pair">
       <figure className="uf-figma-figure">
-        <ExpandableImage
-          src={figma.src}
-          alt="Figma: students block with layout guides, spacing rails, and type hierarchy."
-          width={figma.width}
-          height={figma.height}
-          sizes="(max-width: 768px) 92vw, 44vw"
-          style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
-        />
-        <figcaption>Figma: students block (design source)</figcaption>
+        <div className="uf-figma-figure-heading" aria-hidden="true">
+          <span>01</span>
+          <strong>Design source</strong>
+        </div>
+        <div className="uf-figma-image-frame">
+          <ExpandableImage
+            src={figma.src}
+            alt="Figma: students block with layout guides, spacing rails, and type hierarchy."
+            width={figma.width}
+            height={figma.height}
+            sizes="(max-width: 768px) 92vw, 44vw"
+            style={{ width: "100%", height: "auto", display: "block" }}
+          />
+        </div>
+        <figcaption>
+          <strong>Structured in Figma</strong>
+          <span>Layout, spacing, and type hierarchy before the build.</span>
+        </figcaption>
       </figure>
       <figure className="uf-figma-figure">
-        <ExpandableImage
-          src={mailchimp.src}
-          alt="Mailchimp: same students block after translation into editable modules."
-          width={mailchimp.width}
-          height={mailchimp.height}
-          sizes="(max-width: 768px) 92vw, 44vw"
-          style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
-        />
-        <figcaption>Mailchimp: students block (shipped module)</figcaption>
+        <div className="uf-figma-figure-heading" aria-hidden="true">
+          <span>02</span>
+          <strong>Shipped module</strong>
+        </div>
+        <div className="uf-figma-image-frame">
+          <ExpandableImage
+            src={mailchimp.src}
+            alt="Mailchimp: same students block after translation into editable modules."
+            width={mailchimp.width}
+            height={mailchimp.height}
+            sizes="(max-width: 768px) 92vw, 44vw"
+            style={{ width: "100%", height: "auto", display: "block" }}
+          />
+        </div>
+        <figcaption>
+          <strong>Translated into Mailchimp</strong>
+          <span>The same system, rebuilt as an editable production module.</span>
+        </figcaption>
       </figure>
     </div>
   );

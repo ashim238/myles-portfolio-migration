@@ -22,6 +22,10 @@ describe("LeadMedia", () => {
       "height",
       "1862",
     );
+    expect(screen.getByAltText("Fresh Greens cover")).toHaveAttribute(
+      "loading",
+      "eager",
+    );
     const figure = container.querySelector("figure");
     expect(figure).toHaveClass(
       "case-lead-media",

@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type ReactNode, type RefObject } from "react";
+import { AnimatePresence, motion, useIsPresent } from "motion/react";
 import {
   containTabFocus,
   focusFirstAvailable,
@@ -14,13 +15,51 @@ export type StartMenuProps = {
   onClose: () => void;
   onOpenProgram: (id: ProgramId) => void;
   onRequestReset: () => void;
+  reduceMotion?: boolean;
 };
+
+type AnimatedStartMenuProps = {
+  menuRef: RefObject<HTMLDivElement | null>;
+  reduceMotion: boolean;
+  children: ReactNode;
+};
+
+function AnimatedStartMenu({
+  menuRef,
+  reduceMotion,
+  children,
+}: AnimatedStartMenuProps) {
+  const isPresent = useIsPresent();
+
+  return (
+    <motion.div
+      ref={menuRef}
+      className="myles97-start-menu"
+      id="myles97-start-menu"
+      role={isPresent ? "dialog" : undefined}
+      aria-modal={isPresent ? "true" : undefined}
+      aria-label={isPresent ? "Start" : undefined}
+      aria-hidden={isPresent ? undefined : true}
+      inert={isPresent ? undefined : true}
+      tabIndex={isPresent ? -1 : undefined}
+      initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 6, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 4, scale: 0.985 }}
+      transition={{ duration: reduceMotion ? 0.12 : 0.2, ease: [0.23, 1, 0.32, 1] }}
+      style={{ transformOrigin: "bottom left" }}
+      onKeyDown={(event) => containTabFocus(event, menuRef.current)}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export function StartMenu({
   open,
   onClose,
   onOpenProgram,
   onRequestReset,
+  reduceMotion = false,
 }: StartMenuProps) {
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -46,23 +85,14 @@ export function StartMenu({
     };
   }, [onClose, open]);
 
-  if (!open) return null;
-
   const openThenClose = (id: ProgramId) => {
     onOpenProgram(id);
   };
 
   return (
-    <div
-      ref={menuRef}
-      className="myles97-start-menu"
-      id="myles97-start-menu"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Start"
-      tabIndex={-1}
-      onKeyDown={(event) => containTabFocus(event, menuRef.current)}
-    >
+    <AnimatePresence>
+      {open ? (
+        <AnimatedStartMenu menuRef={menuRef} reduceMotion={reduceMotion}>
       <div className="myles97-start-menu-brand" aria-hidden="true">
         <span>Myles</span>
         <strong>98</strong>
@@ -70,7 +100,7 @@ export function StartMenu({
       <div className="myles97-start-menu-items">
         <button type="button" onClick={() => openThenClose("selected-work")}>
           <Myles97Icon name="folder" size={24} variant="color" aria-hidden="true" />
-          <span>Selected Work</span>
+          <span>Work Stuff</span>
         </button>
         <button type="button" onClick={() => openThenClose("about")}>
           <Myles97Icon name="profile" size={24} variant="color" aria-hidden="true" />
@@ -112,6 +142,8 @@ export function StartMenu({
           <span>Close</span>
         </button>
       </div>
-    </div>
+        </AnimatedStartMenu>
+      ) : null}
+    </AnimatePresence>
   );
 }

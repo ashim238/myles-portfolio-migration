@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type Dispatch } from "react";
+import { animate } from "motion";
 import { DisplayProperties } from "@/components/myles-97/display-properties";
 import { Myles97Icon } from "@/components/myles-97/icons";
 import { PaintProgram } from "@/components/myles-97/paint-program";
@@ -30,6 +31,7 @@ import type {
   WorkstationAction,
   WorkstationState,
 } from "@/lib/myles-97/state";
+import { setTheme } from "@/lib/myles-97/theme";
 
 export type WorkstationDesktopProps = {
   programs: readonly ProgramDefinition[];
@@ -97,11 +99,13 @@ export function WorkstationDesktop({
   dispatch,
 }: WorkstationDesktopProps) {
   const [startOpen, setStartOpen] = useState(false);
+  const [resetRequested, setResetRequested] = useState(false);
   const startButtonRef = useRef<HTMLButtonElement>(null);
   const remindersTriggerRef = useRef<HTMLButtonElement>(null);
   const recipeTriggerRef = useRef<HTMLButtonElement>(null);
   const restoreStartFocusRef = useRef(false);
   const pendingWindowFocus = useRef(false);
+  const previouslyOpenPrograms = useRef(new Set(state.openPrograms));
   const minimized = new Set(state.minimizedPrograms);
   const projectById = new Map(programs.map((program) => [program.id, program]));
   const dispatchWithWindowFocus = useCallback(
@@ -118,6 +122,10 @@ export function WorkstationDesktop({
     },
     [dispatchWithWindowFocus],
   );
+  const requestReset = useCallback(() => {
+    setResetRequested(true);
+    openProgram("display-properties");
+  }, [openProgram]);
   const closeStart = useCallback(() => {
     restoreStartFocusRef.current = true;
     setStartOpen(false);
@@ -142,11 +150,98 @@ export function WorkstationDesktop({
     );
     if (!windowElement || windowElement.contains(document.activeElement)) return;
     windowElement
-      .querySelector<HTMLButtonElement>(
+      .querySelector<HTMLElement>(
         `[data-m97-window-move="${state.focusedProgram}"]`,
       )
       ?.focus();
   }, [state.focusedProgram, state.minimizedPrograms, state.openPrograms]);
+
+  useEffect(() => {
+    const previous = previouslyOpenPrograms.current;
+    const currentlyMinimized = new Set(state.minimizedPrograms);
+    const newlyOpened = state.openPrograms.filter(
+      (id) => !previous.has(id) && !currentlyMinimized.has(id),
+    );
+    previouslyOpenPrograms.current = new Set(state.openPrograms);
+    if (state.displayPreferences.reduceMotion) return;
+
+    const frame = window.requestAnimationFrame(() => {
+      for (const id of newlyOpened) {
+        const element = document.querySelector<HTMLElement>(
+          `[data-m97-program-window="${id}"]`,
+        );
+        if (!element) continue;
+        animate(
+          element,
+          { opacity: [0, 1], transform: ["scale(0.97)", "scale(1)"] },
+          { duration: 0.2, ease: [0.23, 1, 0.32, 1] },
+        );
+      }
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [state.displayPreferences.reduceMotion, state.minimizedPrograms, state.openPrograms]);
+
+  const taskbarTransform = useCallback((id: ProgramId, windowElement: HTMLElement) => {
+    const taskButton = document.querySelector<HTMLElement>(
+      `[data-m97-task-program="${id}"]`,
+    );
+    if (!taskButton) return null;
+    const windowRect = windowElement.getBoundingClientRect();
+    const taskRect = taskButton.getBoundingClientRect();
+    return {
+      x: taskRect.left + taskRect.width / 2 - (windowRect.left + windowRect.width / 2),
+      y: taskRect.top + taskRect.height / 2 - (windowRect.top + windowRect.height / 2),
+      scale: Math.max(0.08, Math.min(0.22, taskRect.width / windowRect.width)),
+    };
+  }, []);
+
+  const minimizeProgram = useCallback(async (id: ProgramId) => {
+    const windowElement = document.querySelector<HTMLElement>(
+      `[data-m97-program-window="${id}"]`,
+    );
+    const destination = windowElement ? taskbarTransform(id, windowElement) : null;
+    if (!state.displayPreferences.reduceMotion && windowElement && destination) {
+      const animation = animate(
+        windowElement,
+        {
+          opacity: 0.22,
+          transform: `translate3d(${destination.x}px, ${destination.y}px, 0) scale(${destination.scale})`,
+        },
+        { type: "spring", bounce: 0, duration: 0.32 },
+      );
+      try {
+        await animation.finished;
+      } catch {
+        // A competing window action can intentionally interrupt this motion.
+      }
+    }
+    dispatchWithWindowFocus({ type: "minimize", id });
+  }, [dispatchWithWindowFocus, state.displayPreferences.reduceMotion, taskbarTransform]);
+
+  const restoreProgram = useCallback((id: ProgramId) => {
+    dispatchWithWindowFocus({ type: "restore", id });
+    if (state.displayPreferences.reduceMotion) return;
+
+    window.requestAnimationFrame(() => {
+      const windowElement = document.querySelector<HTMLElement>(
+        `[data-m97-program-window="${id}"]`,
+      );
+      if (!windowElement) return;
+      const origin = taskbarTransform(id, windowElement);
+      if (!origin) return;
+      animate(
+        windowElement,
+        {
+          opacity: [0.22, 1],
+          transform: [
+            `translate3d(${origin.x}px, ${origin.y}px, 0) scale(${origin.scale})`,
+            "translate3d(0, 0, 0) scale(1)",
+          ],
+        },
+        { type: "spring", bounce: 0, duration: 0.36 },
+      );
+    });
+  }, [dispatchWithWindowFocus, state.displayPreferences.reduceMotion, taskbarTransform]);
 
   const commonWindowProps = (id: ProgramId, stackIndex: number) => ({
     id,
@@ -154,12 +249,14 @@ export function WorkstationDesktop({
     focused: state.focusedProgram === id,
     isDefaultPosition: state.windowGeometry[id] === undefined,
     stackIndex: 10 + stackIndex,
+    reduceMotion: state.displayPreferences.reduceMotion,
     onFocus: (programId: ProgramId) =>
       dispatchWithWindowFocus({ type: "focus", id: programId }),
     onMove: (programId: ProgramId, geometry: WindowGeometry) =>
       dispatch({ type: "move", id: programId, geometry }),
-    onMinimize: (programId: ProgramId) =>
-      dispatchWithWindowFocus({ type: "minimize", id: programId }),
+    onMinimize: (programId: ProgramId) => {
+      void minimizeProgram(programId);
+    },
     onClose: (programId: ProgramId) =>
       dispatchWithWindowFocus({ type: "close", id: programId }),
   });
@@ -170,7 +267,7 @@ export function WorkstationDesktop({
         <nav className="myles97-desktop-shortcuts" aria-label="Desktop shortcuts">
           <button type="button" onClick={() => openProgram("selected-work")}>
             <Myles97Icon name="folder" size={32} variant="color" aria-hidden="true" />
-            <span>Selected Work</span>
+            <span>Work Stuff</span>
           </button>
           <button type="button" onClick={() => openProgram("about")}>
             <Myles97Icon name="profile" size={32} variant="color" aria-hidden="true" />
@@ -207,7 +304,7 @@ export function WorkstationDesktop({
               <ProgramWindow
                 key={id}
                 {...props}
-                title="Selected Work"
+                title="Work Stuff"
                 status={`${programs.length} portfolio projects`}
               >
                 <SelectedWorkExplorer
@@ -225,7 +322,13 @@ export function WorkstationDesktop({
                 <DisplayProperties
                   preferences={state.displayPreferences}
                   onChange={(preferences) => dispatch({ type: "display", preferences })}
-                  onReset={() => dispatch({ type: "reset" })}
+                  requestReset={resetRequested}
+                  onResetRequestHandled={() => setResetRequested(false)}
+                  onReset={() => {
+                    setTheme("dark");
+                    setResetRequested(false);
+                    dispatch({ type: "reset" });
+                  }}
                 />
               </ProgramWindow>
             );
@@ -312,7 +415,8 @@ export function WorkstationDesktop({
         open={startOpen}
         onClose={closeStart}
         onOpenProgram={openProgram}
-        onRequestReset={() => openProgram("display-properties")}
+        onRequestReset={requestReset}
+        reduceMotion={state.displayPreferences.reduceMotion}
       />
       <Taskbar
         programs={programs}
@@ -324,8 +428,10 @@ export function WorkstationDesktop({
         startButtonRef={startButtonRef}
         onToggleStart={() => setStartOpen((open) => !open)}
         onFocus={(id) => dispatchWithWindowFocus({ type: "focus", id })}
-        onMinimize={(id) => dispatchWithWindowFocus({ type: "minimize", id })}
-        onRestore={(id) => dispatchWithWindowFocus({ type: "restore", id })}
+        onMinimize={(id) => {
+          void minimizeProgram(id);
+        }}
+        onRestore={restoreProgram}
       />
     </div>
   );

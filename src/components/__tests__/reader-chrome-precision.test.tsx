@@ -99,7 +99,7 @@ describe("dense Myles 98 chrome", () => {
   );
 
   it("keeps the Reader return name complete while exposing separate compact visual text", () => {
-    render(<ReaderHeader slug="understandingfafsa" title="FAFSA Mail" />);
+    const { container } = render(<ReaderHeader slug="understandingfafsa" title="FAFSA Mail" />);
 
     const returnLink = screen.getByRole("link", { name: "Return to Desktop" });
     expect(returnLink).toHaveAttribute("href", "/");
@@ -109,6 +109,8 @@ describe("dense Myles 98 chrome", () => {
     expect(returnLink.querySelector(".reader-return-label--compact")).toHaveTextContent(
       "Desktop",
     );
+    expect(container.querySelector(".reader-header")?.firstElementChild).toBe(returnLink);
+    expect(returnLink.nextElementSibling).toHaveClass("reader-header-project");
   });
 
   it("renders the audited compact FAFSA master in a program title bar with an inline fallback", () => {

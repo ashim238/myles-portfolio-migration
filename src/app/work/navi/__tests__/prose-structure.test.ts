@@ -14,6 +14,10 @@ const lateStyles = readFileSync(
   resolve(process.cwd(), "src/app/styles/late-polish.css"),
   "utf8",
 );
+const baseStyles = readFileSync(
+  resolve(process.cwd(), "src/app/styles/base.css"),
+  "utf8",
+);
 const portfolioStyles = readFileSync(
   resolve(process.cwd(), "src/app/styles/portfolio-surfaces.css"),
   "utf8",
@@ -268,14 +272,14 @@ describe("Navi case-study structure", () => {
     expect(getRuleBody(lateStyles, ".nv-page .project-chapter")).toMatch(
       /--chapter-motif-accent:\s*var\(--nv-accent\);/,
     );
-    expect(getRuleBody(lateStyles, ".nv-page .project-chapter-motif-line")).toMatch(
-      /background:\s*var\(--line\);/,
+    expect(getRuleBody(baseStyles, ".project-chapter-motif-line")).toMatch(
+      /stroke:\s*var\(--line\);/,
     );
-    expect(getRuleBody(lateStyles, ".nv-page .project-chapter-motif-line::after")).toMatch(
-      /background:\s*var\(--chapter-motif-accent\);/,
+    expect(getRuleBody(lateStyles, ".nv-page .project-chapter-motif-accent")).toMatch(
+      /stroke-dasharray:\s*10 5;/,
     );
     expect(getRuleBody(lateStyles, ".nv-page .project-chapter-motif-point")).toMatch(
-      /border-color:\s*var\(--chapter-motif-accent\);/,
+      /stroke:\s*var\(--chapter-motif-accent\);/,
     );
   });
 

@@ -103,7 +103,7 @@ describe("Myles 98 secondary programs", () => {
     const user = userEvent.setup();
     render(<DesktopHarness />);
 
-    const selectedWork = screen.getByRole("region", { name: "Selected Work" });
+    const selectedWork = screen.getByRole("region", { name: "Work Stuff" });
     const recipeTrigger = screen.getByRole("button", {
       name: /Open recipe note: Buss Up Shut Paratha Roti/,
     });
@@ -135,7 +135,7 @@ describe("Myles 98 secondary programs", () => {
     const user = userEvent.setup();
     render(<DesktopHarness />);
 
-    const selectedWork = screen.getByRole("region", { name: "Selected Work" });
+    const selectedWork = screen.getByRole("region", { name: "Work Stuff" });
     const reminderTrigger = screen.getByRole("button", {
       name: "Open Reminders",
     });
@@ -201,11 +201,11 @@ describe("Myles 98 secondary programs", () => {
     }
   });
 
-  it("explains an empty Loose Parts surface and recovers to Selected Work", () => {
+  it("explains an empty Loose Parts surface and recovers to Work Stuff", () => {
     render(<SecondaryProgram id="loose-parts" looseParts={[]} />);
 
     expect(screen.getByText("No experiments are in the lab right now.")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Return to Selected Work" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Return to Work Stuff" })).toHaveAttribute(
       "href",
       "/#selected-work",
     );

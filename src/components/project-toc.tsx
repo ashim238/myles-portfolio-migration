@@ -47,11 +47,43 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
   const toggleRef = useRef<HTMLButtonElement>(null);
   const backTopRef = useRef<HTMLButtonElement>(null);
   const reducedRef = useRef(false);
+  const requestedActiveIdRef = useRef("");
   const enhancementPartsRef = useRef({
     sections: false,
     sticky: false,
     resize: false,
   });
+
+  useEffect(() => {
+    const nav = tocRef.current;
+    const list = listRef.current;
+    if (!nav || !list) return;
+
+    const updateOverflowCue = () => {
+      const maxScroll = Math.max(0, list.scrollWidth - list.clientWidth);
+      const atStart = list.scrollLeft <= 2;
+      const atEnd = list.scrollLeft >= maxScroll - 2;
+      const overflow = maxScroll > 2;
+
+      nav.dataset.tocOverflow = !overflow
+        ? "none"
+        : atStart
+          ? "end"
+          : atEnd
+            ? "start"
+            : "both";
+    };
+
+    updateOverflowCue();
+    list.addEventListener("scroll", updateOverflowCue, { passive: true });
+    window.addEventListener("resize", updateOverflowCue);
+
+    return () => {
+      list.removeEventListener("scroll", updateOverflowCue);
+      window.removeEventListener("resize", updateOverflowCue);
+      delete nav.dataset.tocOverflow;
+    };
+  }, [sections]);
 
   const updateEnhancement = useCallback(
     (part: keyof typeof enhancementPartsRef.current, ready: boolean) => {
@@ -210,6 +242,29 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
         if (playhead < starts[index]) break;
         currentChapterIndex = index;
       }
+      const maxScroll = Math.max(
+        0,
+        document.documentElement.scrollHeight - window.innerHeight,
+      );
+      if (maxScroll > 2 && window.scrollY >= maxScroll - 2) {
+        currentChapterIndex = starts.length - 1;
+      }
+      const hashId = decodeURIComponent(window.location.hash.slice(1));
+      const hashIndex = anchorIds.indexOf(hashId);
+      if (hashIndex >= 0) {
+        const hashTop = starts[hashIndex] - window.scrollY;
+        const hashBandEnd = navH + Math.max(80, window.innerHeight * 0.25);
+        if (hashTop >= navH - 8 && hashTop <= hashBandEnd) {
+          currentChapterIndex = hashIndex;
+          if (requestedActiveIdRef.current === hashId) {
+            requestedActiveIdRef.current = "";
+          }
+        }
+      }
+      const requestedIndex = anchorIds.indexOf(requestedActiveIdRef.current);
+      if (requestedIndex >= 0) {
+        currentChapterIndex = requestedIndex;
+      }
       const hasUsableChapterGeometry =
         starts.length === 1 ||
         starts.some(
@@ -258,6 +313,27 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
       frame = requestAnimationFrame(render);
     };
 
+    const onScrollEnd = () => {
+      const requestedId = requestedActiveIdRef.current;
+      const requested = requestedId
+        ? document.getElementById(requestedId)
+        : null;
+      if (requested) {
+        const navH = nav.getBoundingClientRect().height || 48;
+        const targetTop = requested.getBoundingClientRect().top;
+        const targetBandEnd = navH + Math.max(80, window.innerHeight * 0.25);
+        const maxScroll = Math.max(
+          0,
+          document.documentElement.scrollHeight - window.innerHeight,
+        );
+        const targetReached =
+          (targetTop >= navH - 8 && targetTop <= targetBandEnd) ||
+          (maxScroll > 2 && window.scrollY >= maxScroll - 2);
+        if (targetReached) requestedActiveIdRef.current = "";
+      }
+      onScroll();
+    };
+
     // Remeasure when the article's height changes (images, fonts, expands).
     let ro: ResizeObserver | undefined;
     try {
@@ -275,10 +351,12 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
     measure();
     render();
     window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("scrollend", onScrollEnd, { passive: true });
     updateEnhancement("resize", true);
 
     return () => {
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("scrollend", onScrollEnd);
       ro?.disconnect();
       if (frame) cancelAnimationFrame(frame);
       updateEnhancement("resize", false);
@@ -303,6 +381,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
 
   const handleClick = useCallback(
     (id: string) => {
+      requestedActiveIdRef.current = id;
       commitActiveId(id);
       setIsOpen(false);
       if (isOpen) {

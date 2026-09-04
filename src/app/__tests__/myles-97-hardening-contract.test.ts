@@ -133,15 +133,17 @@ describe("Myles 98 hardening contract", () => {
     expect(pocket).not.toMatch(/overflow-x:\s*(?:auto|scroll)/);
   });
 
-  it("keeps arrow-key movement as a compact, clearly-labelled footer control", () => {
-    const desktop = read("src/app/styles/myles-97.css");
+  it("keeps arrow-key movement on the clearly labelled title bar", () => {
+    const windowSource = read("src/components/myles-97/program-window.tsx");
 
-    expect(desktop).toMatch(/\.myles97-window-move \{[^}]*min-width: 58px;[^}]*height: 24px;/);
-    expect(desktop).toContain(".myles97-window-move-label");
-    expect(desktop).toContain(".myles97-window-move-glyph");
+    expect(windowSource).toContain("data-m97-window-move={id}");
+    expect(windowSource).toContain(
+      "Move ${title}. Drag the title bar or use arrow keys. Hold Shift for larger steps.",
+    );
+    expect(windowSource).toContain("moveWithKeyboard(event.key, event.shiftKey)");
   });
 
-  it("passes the saved reduced-motion preference to both Selected Work surfaces", () => {
+  it("passes the saved reduced-motion preference to both Work Stuff surfaces", () => {
     for (const path of [
       "src/components/myles-97/workstation-desktop.tsx",
       "src/components/myles-97/pocket-97-shell.tsx",

@@ -12,6 +12,7 @@ type ProgramWindowProps = PropsWithChildren<{
   title: string;
   geometry: WindowGeometry;
   focused: boolean;
+  reduceMotion?: boolean;
   isDefaultPosition?: boolean;
   stackIndex?: number;
   status?: ReactNode;
@@ -31,6 +32,7 @@ export function ProgramWindow({
   title,
   geometry,
   focused,
+  reduceMotion = false,
   isDefaultPosition = true,
   stackIndex,
   status,
@@ -45,6 +47,7 @@ export function ProgramWindow({
   const { dragHandleProps, dragging, previewTransform } = useWindowDrag({
     geometry,
     useRenderedOrigin: isDefaultPosition,
+    reduceMotion,
     onCommit: (nextGeometry) => onMove(id, nextGeometry),
   });
   const titleId = `${id}-window-title`;
@@ -106,7 +109,18 @@ export function ProgramWindow({
         if (!focused) onFocus(id);
       }}
     >
-      <header className="myles97-titlebar" {...dragHandleProps}>
+      <header
+        className="myles97-titlebar"
+        data-m97-window-move={id}
+        tabIndex={0}
+        aria-label={`Move ${title}. Drag the title bar or use arrow keys. Hold Shift for larger steps.`}
+        onKeyDown={(event) => {
+          if (event.target !== event.currentTarget) return;
+          if (!moveWithKeyboard(event.key, event.shiftKey)) return;
+          event.preventDefault();
+        }}
+        {...dragHandleProps}
+      >
         <span className="myles97-titlebar-icon" aria-hidden="true">
           <Myles97Icon
             name={iconForProgram(id)}
@@ -156,27 +170,6 @@ export function ProgramWindow({
       <div className="myles97-window-content">{children}</div>
       <footer className="myles97-window-status">
         <span className="myles97-window-status-copy">{status}</span>
-        <button
-          type="button"
-          className="myles97-window-move"
-          data-m97-window-move={id}
-          aria-label={`Move ${title} with arrow keys`}
-          title="Move with arrow keys. Hold Shift for larger steps."
-          onKeyDown={(event) => {
-            if (!moveWithKeyboard(event.key, event.shiftKey)) return;
-            event.preventDefault();
-          }}
-        >
-          <span className="myles97-window-move-label" aria-hidden="true">
-            Move
-          </span>
-          <span className="myles97-window-move-glyph" aria-hidden="true">
-            <span>↑</span>
-            <span>←</span>
-            <span>↓</span>
-            <span>→</span>
-          </span>
-        </button>
       </footer>
     </section>
   );

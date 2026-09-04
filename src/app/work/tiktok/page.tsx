@@ -38,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: "TikTok Dynamic Showcase Ads",
       description: TIKTOK_DESCRIPTION,
       path: "/work/tiktok",
-      image: "/projects/tiktok/cover-phone-mockup.jpg",
+      image: "/og/tiktok",
       type: "article",
     }),
     robots: isPublic
@@ -67,7 +67,7 @@ export default async function TikTokPage() {
       <nav className="project-topbar" aria-label="Breadcrumb">
         <Link href="/#work">
           <span aria-hidden="true">←</span>
-          Selected work
+          Work Stuff
         </Link>
       </nav>
 
@@ -294,7 +294,17 @@ export default async function TikTokPage() {
               className="tt-outcome-sequence"
               aria-label="Light Academia iteration sequence"
             >
-              <li className="tt-outcome-step">
+              <svg
+                className="tt-outcome-connector"
+                viewBox="0 0 100 100"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <line className="tt-outcome-connector-horizontal" x1="8" y1="8" x2="92" y2="8" />
+                <line className="tt-outcome-connector-vertical" x1="50" y1="4" x2="50" y2="96" />
+              </svg>
+              <li className="tt-outcome-step tt-outcome-step--critique">
                 <p className="tt-outcome-step-label">Critique</p>
                 <figure>
                   <ExpandableImage

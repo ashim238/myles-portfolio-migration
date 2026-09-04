@@ -8,21 +8,40 @@ import {
   getThemeSnapshot,
   setTheme,
   subscribeTheme,
+  type Theme,
 } from "@/lib/myles-97/theme";
 
 type DisplayPropertiesProps = {
   preferences: DisplayPreferences;
   onChange: (preferences: DisplayPreferences) => void;
   onReset: () => void;
+  requestReset?: boolean;
+  onResetRequestHandled?: () => void;
 };
 
-export function DisplayProperties({ preferences, onChange, onReset }: DisplayPropertiesProps) {
-  const [confirmingReset, setConfirmingReset] = useState(false);
+export function DisplayProperties({
+  preferences,
+  onChange,
+  onReset,
+  requestReset = false,
+  onResetRequestHandled,
+}: DisplayPropertiesProps) {
+  const [confirmingReset, setConfirmingReset] = useState(requestReset);
+  const [draftTheme, setDraftTheme] = useState<Theme | null>(null);
+  const [draftPreferences, setDraftPreferences] =
+    useState<DisplayPreferences | null>(null);
+  const showResetConfirmation = confirmingReset || requestReset;
   const theme = useSyncExternalStore(
     (notify) => subscribeTheme(() => notify()),
     getThemeSnapshot,
     getThemeServerSnapshot,
   );
+  const selectedTheme = draftTheme ?? theme;
+  const selectedPreferences = draftPreferences ?? preferences;
+  const hasPendingChanges =
+    selectedTheme !== theme ||
+    selectedPreferences.highContrast !== preferences.highContrast ||
+    selectedPreferences.reduceMotion !== preferences.reduceMotion;
 
   useEffect(() => {
     applyThemeToDocument(theme);
@@ -39,8 +58,8 @@ export function DisplayProperties({ preferences, onChange, onReset }: DisplayPro
             type="radio"
             name="myles97-theme"
             value="light"
-            checked={theme === "light"}
-            onChange={() => setTheme("light")}
+            checked={selectedTheme === "light"}
+            onChange={() => setDraftTheme("light")}
           />
           Light
         </label>
@@ -49,8 +68,8 @@ export function DisplayProperties({ preferences, onChange, onReset }: DisplayPro
             type="radio"
             name="myles97-theme"
             value="dark"
-            checked={theme === "dark"}
-            onChange={() => setTheme("dark")}
+            checked={selectedTheme === "dark"}
+            onChange={() => setDraftTheme("dark")}
           />
           Dark
         </label>
@@ -61,24 +80,38 @@ export function DisplayProperties({ preferences, onChange, onReset }: DisplayPro
         <label>
           <input
             type="checkbox"
-            checked={preferences.highContrast}
-            onChange={(event) => onChange({ ...preferences, highContrast: event.currentTarget.checked })}
+            checked={selectedPreferences.highContrast}
+            onChange={(event) =>
+              setDraftPreferences({
+                ...selectedPreferences,
+                highContrast: event.currentTarget.checked,
+              })
+            }
           />
           High contrast
         </label>
         <label>
           <input
             type="checkbox"
-            checked={preferences.reduceMotion}
-            onChange={(event) => onChange({ ...preferences, reduceMotion: event.currentTarget.checked })}
+            checked={selectedPreferences.reduceMotion}
+            onChange={(event) =>
+              setDraftPreferences({
+                ...selectedPreferences,
+                reduceMotion: event.currentTarget.checked,
+              })
+            }
           />
           Reduce motion
         </label>
       </fieldset>
 
-      {confirmingReset ? (
+      {showResetConfirmation ? (
         <div className="myles97-reset-confirmation" role="alert">
-          <p>Reset open programs, positions, and display preferences?</p>
+          <p className="myles97-reset-confirmation-title">Reset portfolio?</p>
+          <p>
+            This closes open programs and resets window positions, color scheme,
+            contrast, and motion preferences.
+          </p>
           <div>
             <button
               type="button"
@@ -87,17 +120,35 @@ export function DisplayProperties({ preferences, onChange, onReset }: DisplayPro
                 onReset();
               }}
             >
-              Confirm reset
+              Reset portfolio
             </button>
-            <button type="button" onClick={() => setConfirmingReset(false)}>
+            <button
+              type="button"
+              onClick={() => {
+                setConfirmingReset(false);
+                onResetRequestHandled?.();
+              }}
+            >
               Cancel
             </button>
           </div>
         </div>
       ) : (
-        <button type="button" onClick={() => setConfirmingReset(true)}>
-          Reset desktop…
-        </button>
+        <div className="myles97-display-actions">
+          <button
+            type="button"
+            disabled={!hasPendingChanges}
+            onClick={() => {
+              setTheme(selectedTheme);
+              onChange(selectedPreferences);
+            }}
+          >
+            Confirm changes
+          </button>
+          <button type="button" onClick={() => setConfirmingReset(true)}>
+            Reset portfolio…
+          </button>
+        </div>
       )}
     </div>
   );

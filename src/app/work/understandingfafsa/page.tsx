@@ -54,7 +54,7 @@ export const metadata: Metadata = createRouteMetadata({
   title: "UnderstandingFAFSA",
   description: UF_DESCRIPTION,
   path: "/work/understandingfafsa",
-  image: "/projects/understandingfafsa/cover.png",
+  image: "/og/understandingfafsa",
   type: "article",
 });
 
@@ -75,7 +75,7 @@ export default async function UnderstandingFafsaPage() {
       <nav className="project-topbar" aria-label="Breadcrumb">
         <TransitionLink href="/#work">
           <span aria-hidden="true">←</span>
-          Selected work
+          Work Stuff
         </TransitionLink>
       </nav>
 
@@ -181,7 +181,10 @@ export default async function UnderstandingFafsaPage() {
               more comfortable deviating from the standing layout when a send
               needed something different.
             </p>
-            <ol aria-label="Design changes from the newsletter audit">
+            <ol
+              className="uf-audit-actions"
+              aria-label="Design changes from the newsletter audit"
+            >
               {UNDERSTANDING_FAFSA_AUDIT_RULES.map((rule) => (
                 <li key={rule.id}>
                   <p>{UNDERSTANDING_FAFSA_AUDIT_ACTIONS[rule.id]}</p>
