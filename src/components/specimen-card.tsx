@@ -42,7 +42,7 @@ export function SpecimenCard({
             type="button"
             className="specimen-image-btn"
             onClick={() => openLightbox(img.src, img.alt, 1200, 1600)}
-            aria-label={`Expand image: ${img.alt}`}
+            aria-label={`Expand image: ${img.label ? `${img.label}. ` : ""}${img.alt}`}
           >
             <Image
               src={img.src}

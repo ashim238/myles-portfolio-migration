@@ -74,6 +74,13 @@
   padding-bottom: clamp(72px, 10vw, 128px);
   background: var(--m97-paper);
   color: var(--m97-reader-ink);
+  scrollbar-color: color-mix(in srgb, var(--m97-reader-ink) 42%, var(--m97-paper)) var(--m97-paper);
+  scrollbar-width: thin;
+}
+
+.reader-mode.reader-mode ::selection {
+  background: color-mix(in srgb, var(--m97-active) 24%, var(--m97-paper));
+  color: var(--m97-reader-ink);
 }
 
 .reader-mode.reader-mode .project-topbar,
@@ -115,8 +122,8 @@
 
 .reader-mode.reader-mode .project-opening-facts {
   width: min(100% - 32px, 48rem);
-  margin: 1.5rem auto;
-  padding-block: 1rem;
+  margin: 1.75rem auto 2.75rem;
+  padding-block: 1.25rem 1.35rem;
   border-block: 1px solid var(--m97-reader-line);
   color: var(--m97-reader-ink);
   font-family: var(--m97-ui-font);
@@ -125,7 +132,7 @@
 .reader-mode.reader-mode .case-cut {
   width: min(100% - 32px, 48rem);
   max-width: none;
-  margin: 0 auto 2.2rem;
+  margin: 0 auto 2.8rem;
 }
 
 /* Editorial openings share one font-independent column. The hero keeps its
@@ -192,9 +199,10 @@
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 0.45rem 0.9rem;
-  margin-top: 1.25rem;
-  padding: 0.6rem 0.75rem;
+  margin-top: 1.7rem;
+  padding: 0.7rem 0.85rem;
   border: 1px solid var(--m97-reader-line);
+  background: color-mix(in srgb, var(--m97-reader-ink) 3%, var(--m97-paper));
   color: inherit;
   font-weight: 700;
   line-height: 1.35;
@@ -215,6 +223,7 @@
 
 .reader-mode.reader-mode .project-opening-facts-action:hover {
   border-color: var(--m97-reader-ink);
+  background: color-mix(in srgb, var(--m97-reader-ink) 7%, var(--m97-paper));
 }
 
 .reader-mode.reader-mode .project-opening-facts-action:hover
@@ -227,6 +236,16 @@
   .case-cut-moves li
 ) {
   color: var(--m97-reader-ink);
+}
+
+.reader-mode.reader-mode .case-cut-facts {
+  gap: 0.8rem;
+}
+
+.reader-mode.reader-mode .case-cut-moves {
+  margin-top: 0.35rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--m97-reader-line);
 }
 
 .reader-mode.reader-mode :is(
@@ -292,6 +311,24 @@
 
 .reader-mode.reader-mode .project-toc-link--active .project-toc-stage {
   color: currentColor;
+}
+
+.reader-mode.reader-mode .project-toc-track {
+  gap: 1rem;
+}
+
+.reader-mode.reader-mode .project-toc-link:hover {
+  background: color-mix(in srgb, var(--m97-reader-ink) 5%, var(--m97-paper));
+}
+
+.reader-mode.reader-mode .project-toc-link--active {
+  background: color-mix(in srgb, var(--m97-active) 10%, var(--m97-paper));
+}
+
+.reader-mode.reader-mode .project-toc-readout {
+  min-width: 8ch;
+  color: var(--m97-reader-muted);
+  text-align: right;
 }
 
 .reader-mode.reader-mode .project-toc-dot {

@@ -1246,9 +1246,15 @@
 }
 
 .myles97-display-actions {
+  position: sticky;
+  z-index: 2;
+  bottom: -1px;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  margin-inline: -2px;
+  padding: 10px 2px 2px;
+  background: linear-gradient(var(--m97-chrome), var(--m97-chrome));
 }
 
 .myles97-display-actions button {

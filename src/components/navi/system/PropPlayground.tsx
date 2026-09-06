@@ -49,7 +49,12 @@ export function PropPlayground({
           </fieldset>
         ))}
       </div>
-      <pre className="nv-playground-code" data-testid="nv-playground-code">
+      <pre
+        className="nv-playground-code"
+        data-testid="nv-playground-code"
+        tabIndex={0}
+        aria-label="Generated component code"
+      >
         {code}
       </pre>
     </div>

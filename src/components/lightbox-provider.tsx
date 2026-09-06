@@ -11,6 +11,10 @@ import {
 } from "react";
 import Image from "next/image";
 
+const MIN_ZOOM = 0.75;
+const MAX_ZOOM = 2.5;
+const ZOOM_STEP = 0.25;
+
 type LightboxState = {
   src: string;
   alt: string;
@@ -35,6 +39,8 @@ export function useLightbox() {
 
 export function LightboxProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<LightboxState>(null);
+  const [viewMode, setViewMode] = useState<"fit" | "actual">("fit");
+  const [zoom, setZoom] = useState(1);
   const contentRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
@@ -48,10 +54,29 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
     // Remember what opened the dialog so focus can return there on close.
     triggerRef.current =
       document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    setViewMode("fit");
+    setZoom(1);
     setState({ src, alt, width, height });
   }, []);
 
   const close = useCallback(() => setState(null), []);
+
+  const setFit = useCallback(() => {
+    setViewMode("fit");
+    setZoom(1);
+  }, []);
+
+  const setActual = useCallback(() => {
+    setViewMode("actual");
+    setZoom(1);
+  }, []);
+
+  const adjustZoom = useCallback((amount: number) => {
+    setViewMode("actual");
+    setZoom((current) =>
+      Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, Number((current + amount).toFixed(2)))),
+    );
+  }, []);
 
   useEffect(() => {
     if (!state) return;
@@ -66,11 +91,21 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
         close();
         return;
       }
-      // The close button is the only focusable control in the dialog; keep
-      // focus trapped on it so Tab never lands behind the modal.
+      // Keep focus within the dialog, while allowing keyboard users to reach
+      // the image viewport and each viewing control.
       if (e.key === "Tab") {
+        const focusable = Array.from(
+          frameRef.current?.querySelectorAll<HTMLElement>(
+            "button:not([disabled]), [tabindex=\"0\"]",
+          ) ?? [],
+        );
+        if (focusable.length === 0) return;
+        const currentIndex = focusable.indexOf(document.activeElement as HTMLElement);
+        const nextIndex = e.shiftKey
+          ? (currentIndex <= 0 ? focusable.length - 1 : currentIndex - 1)
+          : (currentIndex + 1) % focusable.length;
         e.preventDefault();
-        closeBtn?.focus();
+        focusable[nextIndex]?.focus();
       }
     };
     window.addEventListener("keydown", onKey);
@@ -109,6 +144,7 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
           <div
             ref={frameRef}
             className="lb-frame"
+            data-lb-view={viewMode}
             role="dialog"
             aria-modal="true"
             aria-label={state.alt}
@@ -118,14 +154,67 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
                 <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
             </button>
-            <Image
-              className="lb-image"
-              src={state.src}
-              alt={state.alt}
-              width={state.width}
-              height={state.height}
-              sizes="92vw"
-            />
+            <div
+              className="lb-viewport"
+              tabIndex={0}
+              role="region"
+              aria-label="Image viewing area. Use arrow keys or scroll to inspect the image."
+            >
+              <Image
+                className="lb-image"
+                src={state.src}
+                alt={state.alt}
+                width={state.width}
+                height={state.height}
+                sizes={viewMode === "fit" ? "92vw" : `${Math.round(zoom * 100)}vw`}
+                style={
+                  viewMode === "actual"
+                    ? { width: `${state.width * zoom}px`, height: `${state.height * zoom}px` }
+                    : undefined
+                }
+              />
+            </div>
+            <div className="lb-toolbar" aria-label="Image viewing controls">
+              <button
+                className="lb-control"
+                type="button"
+                onClick={setFit}
+                aria-pressed={viewMode === "fit"}
+              >
+                Fit
+              </button>
+              <button
+                className="lb-control"
+                type="button"
+                onClick={setActual}
+                aria-pressed={viewMode === "actual" && zoom === 1}
+              >
+                Actual size
+              </button>
+              <span className="lb-zoom-group">
+                <button
+                  className="lb-control lb-zoom-button"
+                  type="button"
+                  onClick={() => adjustZoom(-ZOOM_STEP)}
+                  disabled={zoom <= MIN_ZOOM}
+                  aria-label="Zoom out"
+                >
+                  −
+                </button>
+                <span className="lb-zoom-readout" aria-live="polite">
+                  {Math.round(zoom * 100)}%
+                </span>
+                <button
+                  className="lb-control lb-zoom-button"
+                  type="button"
+                  onClick={() => adjustZoom(ZOOM_STEP)}
+                  disabled={zoom >= MAX_ZOOM}
+                  aria-label="Zoom in"
+                >
+                  +
+                </button>
+              </span>
+            </div>
           </div>
         </>
       )}

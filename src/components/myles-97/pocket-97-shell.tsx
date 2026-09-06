@@ -188,6 +188,7 @@ export function Pocket97Shell({
                   onReset={() => {
                     dispatch({ type: "reset" });
                     setActiveProgram(null);
+                    window.requestAnimationFrame(() => workButtonRef.current?.focus());
                   }}
                 />
               ) : activeProgram === "paint" ? (

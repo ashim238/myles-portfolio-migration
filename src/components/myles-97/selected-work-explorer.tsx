@@ -23,6 +23,26 @@ export type SelectedWorkExplorerProps = {
 
 type FreshGreensRevealMode = "idle" | "pointer" | "focus";
 
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(() =>
+    typeof window !== "undefined" &&
+    typeof window.matchMedia === "function" &&
+    Boolean(window.matchMedia("(prefers-reduced-motion: reduce)")?.matches),
+  );
+
+  useEffect(() => {
+    if (typeof window.matchMedia !== "function") return;
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (!query) return;
+    const update = () => setReduced(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+
+  return reduced;
+}
+
 const FRESH_GREENS_ROUTE =
   // Native 1000 × 760 map coordinates: 16th Street → South Van Ness →
   // 14th Street → the northbound block. The SVG and raster share this crop.
@@ -290,6 +310,8 @@ export function SelectedWorkExplorer({
   onOpen,
   reduceMotion = false,
 }: SelectedWorkExplorerProps) {
+  const systemReduceMotion = usePrefersReducedMotion();
+  const effectiveReduceMotion = Boolean(reduceMotion || systemReduceMotion);
   const [freshGreensMode, setFreshGreensMode] =
     useState<FreshGreensRevealMode>("idle");
   const endFreshGreensFocus = (event: FocusEvent<HTMLLIElement>) => {
@@ -324,7 +346,13 @@ export function SelectedWorkExplorer({
               }
             }}
             onPointerLeave={() => {
-              if (program.id === "fresh-greens") setFreshGreensMode("idle");
+              if (program.id !== "fresh-greens") return;
+              const card = document.querySelector<HTMLElement>(
+                `[data-m97-selected-work-project="${program.id}"]`,
+              );
+              setFreshGreensMode(
+                card?.contains(document.activeElement) ? "focus" : "idle",
+              );
             }}
             onFocusCapture={() => {
               if (program.id === "fresh-greens") setFreshGreensMode("focus");
@@ -344,7 +372,7 @@ export function SelectedWorkExplorer({
                   program.id === "fresh-greens" ? (
                     <FreshGreensFocusReveal
                       mode={freshGreensMode}
-                      reduceMotion={reduceMotion}
+                      reduceMotion={effectiveReduceMotion}
                       coverSrc={program.coverImage}
                     />
                   ) : (

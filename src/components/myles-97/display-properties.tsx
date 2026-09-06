@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { DisplayPreferences } from "@/lib/myles-97/state";
 import {
   applyThemeToDocument,
@@ -30,6 +30,8 @@ export function DisplayProperties({
   const [draftTheme, setDraftTheme] = useState<Theme | null>(null);
   const [draftPreferences, setDraftPreferences] =
     useState<DisplayPreferences | null>(null);
+  const resetTriggerRef = useRef<HTMLButtonElement>(null);
+  const resetHeadingRef = useRef<HTMLParagraphElement>(null);
   const showResetConfirmation = confirmingReset || requestReset;
   const theme = useSyncExternalStore(
     (notify) => subscribeTheme(() => notify()),
@@ -42,6 +44,17 @@ export function DisplayProperties({
     selectedTheme !== theme ||
     selectedPreferences.highContrast !== preferences.highContrast ||
     selectedPreferences.reduceMotion !== preferences.reduceMotion;
+
+  useEffect(() => {
+    if (!showResetConfirmation) return;
+    window.requestAnimationFrame(() => resetHeadingRef.current?.focus());
+  }, [showResetConfirmation]);
+
+  const cancelReset = () => {
+    setConfirmingReset(false);
+    onResetRequestHandled?.();
+    window.requestAnimationFrame(() => resetTriggerRef.current?.focus());
+  };
 
   useEffect(() => {
     applyThemeToDocument(theme);
@@ -107,7 +120,13 @@ export function DisplayProperties({
 
       {showResetConfirmation ? (
         <div className="myles97-reset-confirmation" role="alert">
-          <p className="myles97-reset-confirmation-title">Reset portfolio?</p>
+          <p
+            ref={resetHeadingRef}
+            className="myles97-reset-confirmation-title"
+            tabIndex={-1}
+          >
+            Reset portfolio?
+          </p>
           <p>
             This closes open programs and resets window positions, color scheme,
             contrast, and motion preferences.
@@ -125,8 +144,7 @@ export function DisplayProperties({
             <button
               type="button"
               onClick={() => {
-                setConfirmingReset(false);
-                onResetRequestHandled?.();
+                cancelReset();
               }}
             >
               Cancel
@@ -145,7 +163,11 @@ export function DisplayProperties({
           >
             Confirm changes
           </button>
-          <button type="button" onClick={() => setConfirmingReset(true)}>
+          <button
+            ref={resetTriggerRef}
+            type="button"
+            onClick={() => setConfirmingReset(true)}
+          >
             Reset portfolio…
           </button>
         </div>

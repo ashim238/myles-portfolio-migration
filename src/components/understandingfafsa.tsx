@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import Image from "next/image";
-import { useCallback, useEffect, useId, useMemo, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { ExpandableImage } from "@/components/expandable-image";
 import {
   UF_ASSETS,
@@ -299,6 +299,8 @@ export function NewsletterComposer() {
   const [justAddedKey, setJustAddedKey] = useState<string | null>(null);
   const [dragKey, setDragKey] = useState<string | null>(null);
   const [dragOverKey, setDragOverKey] = useState<string | null>(null);
+  const [focusAfterRemoveRequest, setFocusAfterRemoveRequest] = useState(0);
+  const focusAfterRemoveTargetRef = useRef<string | "shelf" | null>(null);
   const reducedMotion = usePrefersReducedMotion();
   const blockMap = useMemo(() => {
     const m = new Map<ComposerBlockId, ComposerBlock>();
@@ -326,11 +328,26 @@ export function NewsletterComposer() {
   }, [totalBlockCount]);
 
   const removeRow = useCallback((key: string, name: string) => {
+    const index = rows.findIndex((row) => row.key === key);
+    focusAfterRemoveTargetRef.current = rows[index + 1]?.key ?? rows[index - 1]?.key ?? "shelf";
+    setFocusAfterRemoveRequest((request) => request + 1);
     setAnnouncement(
       `Removed ${name} block. ${totalBlockCount - 1} blocks remain.`,
     );
     setRows((prev) => prev.filter((r) => r.key !== key));
-  }, [totalBlockCount]);
+  }, [rows, totalBlockCount]);
+
+  useEffect(() => {
+    const focusAfterRemoveKey = focusAfterRemoveTargetRef.current;
+    if (!focusAfterRemoveKey) return;
+    const selector = focusAfterRemoveKey === "shelf"
+      ? "[data-uf-shelf-control]"
+      : `[data-uf-row-key="${CSS.escape(focusAfterRemoveKey)}"] .uf-composer-mini--remove`;
+    const target = document.querySelector<HTMLButtonElement>(selector);
+    if (!target) return;
+    target.focus();
+    focusAfterRemoveTargetRef.current = null;
+  }, [focusAfterRemoveRequest, rows]);
 
   const moveRow = useCallback((key: string, delta: -1 | 1, name: string, index: number) => {
     const direction = delta === -1 ? "up" : "down";
@@ -468,6 +485,7 @@ export function NewsletterComposer() {
                   <button
                     type="button"
                     className="uf-composer-shelf-btn"
+                    data-uf-shelf-control
                     onClick={() => addBlock(b.id)}
                     aria-label={`Add ${b.name} block. ${usedCount > 0 ? `In send: ${usedCount}.` : ""}`}
                   >
@@ -550,6 +568,7 @@ export function NewsletterComposer() {
                   return (
                     <li
                       key={row.key}
+                      data-uf-row-key={row.key}
                       className={`uf-composer-item${isDragging ? " uf-composer-item--dragging" : ""}${isDragOver ? " uf-composer-item--dragover" : ""}${isEntering && !reducedMotion ? " uf-composer-item--enter" : ""}`}
                     >
                       <div

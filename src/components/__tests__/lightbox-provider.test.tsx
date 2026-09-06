@@ -87,4 +87,56 @@ describe("LightboxProvider", () => {
     expect(providerContent).not.toHaveAttribute("aria-hidden");
     expect(trigger).toHaveFocus();
   });
+
+  it("supports fit, actual-size, and bounded zoom states", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <LightboxProvider>
+        <ExpandableImage
+          src="/projects/understandingfafsa/cover.png"
+          alt="UnderstandingFAFSA newsletter"
+          width={4000}
+          height={3000}
+        />
+      </LightboxProvider>,
+    );
+
+    await user.click(
+      screen.getByRole("button", {
+        name: "Expand image: UnderstandingFAFSA newsletter",
+      }),
+    );
+
+    const dialog = screen.getByRole("dialog", {
+      name: "UnderstandingFAFSA newsletter",
+    });
+    const frame = dialog;
+
+    expect(frame).toHaveAttribute("data-lb-view", "fit");
+    expect(screen.getByRole("button", { name: "Fit" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+
+    const viewport = screen.getByRole("region", {
+      name: "Image viewing area. Use arrow keys or scroll to inspect the image.",
+    });
+    expect(screen.getByRole("button", { name: "Close" })).toHaveFocus();
+    await user.tab();
+    expect(viewport).toHaveFocus();
+    await user.tab({ shift: true });
+    expect(screen.getByRole("button", { name: "Close" })).toHaveFocus();
+
+    await user.click(screen.getByRole("button", { name: "Actual size" }));
+    expect(frame).toHaveAttribute("data-lb-view", "actual");
+    expect(screen.getByText("100%")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Zoom in" }));
+    expect(screen.getByText("125%")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Fit" }));
+    expect(frame).toHaveAttribute("data-lb-view", "fit");
+    expect(screen.getByText("100%")).toBeInTheDocument();
+  });
 });

@@ -58,6 +58,7 @@ export function Calendar({
   labelledBy?: string;
 }) {
   const [fallbackDate] = useState(() => new Date());
+  const today = fallbackDate;
   const controlledDate = value ?? minDate ?? fallbackDate;
   const controlledDay = dayKey(controlledDate);
   const [view, setView] = useState<Date>(() => startOfMonth(controlledDate));
@@ -184,6 +185,7 @@ export function Calendar({
                   role="gridcell"
                   className={`nv-cal-cell${selected ? " nv-cal-cell--selected" : ""}`}
                   aria-selected={selected}
+                  aria-current={isSameDay(cell.date, today) ? "date" : undefined}
                   aria-label={formatLongDate(cell.date)}
                   tabIndex={isSameDay(cell.date, focusedDate) && !disabled ? 0 : -1}
                   disabled={disabled}

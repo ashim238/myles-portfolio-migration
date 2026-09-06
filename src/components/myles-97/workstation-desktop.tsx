@@ -58,6 +58,26 @@ const secondaryTitles: Record<SecondaryProgramId, string> = {
   resume: "Résumé",
 };
 
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(() =>
+    typeof window !== "undefined" &&
+    typeof window.matchMedia === "function" &&
+    Boolean(window.matchMedia("(prefers-reduced-motion: reduce)")?.matches),
+  );
+
+  useEffect(() => {
+    if (typeof window.matchMedia !== "function") return;
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (!query) return;
+    const update = () => setReduced(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+
+  return reduced;
+}
+
 function isSecondaryProgram(id: ProgramId): id is SecondaryProgramId {
   return id === "about" || id === "loose-parts" || id === "resume";
 }
@@ -98,6 +118,10 @@ export function WorkstationDesktop({
   state,
   dispatch,
 }: WorkstationDesktopProps) {
+  const systemReduceMotion = usePrefersReducedMotion();
+  const effectiveReduceMotion = Boolean(
+    state.displayPreferences.reduceMotion || systemReduceMotion,
+  );
   const [startOpen, setStartOpen] = useState(false);
   const [resetRequested, setResetRequested] = useState(false);
   const startButtonRef = useRef<HTMLButtonElement>(null);
@@ -163,7 +187,7 @@ export function WorkstationDesktop({
       (id) => !previous.has(id) && !currentlyMinimized.has(id),
     );
     previouslyOpenPrograms.current = new Set(state.openPrograms);
-    if (state.displayPreferences.reduceMotion) return;
+    if (effectiveReduceMotion) return;
 
     const frame = window.requestAnimationFrame(() => {
       for (const id of newlyOpened) {
@@ -179,7 +203,7 @@ export function WorkstationDesktop({
       }
     });
     return () => window.cancelAnimationFrame(frame);
-  }, [state.displayPreferences.reduceMotion, state.minimizedPrograms, state.openPrograms]);
+  }, [effectiveReduceMotion, state.minimizedPrograms, state.openPrograms]);
 
   const taskbarTransform = useCallback((id: ProgramId, windowElement: HTMLElement) => {
     const taskButton = document.querySelector<HTMLElement>(
@@ -200,7 +224,7 @@ export function WorkstationDesktop({
       `[data-m97-program-window="${id}"]`,
     );
     const destination = windowElement ? taskbarTransform(id, windowElement) : null;
-    if (!state.displayPreferences.reduceMotion && windowElement && destination) {
+    if (!effectiveReduceMotion && windowElement && destination) {
       const animation = animate(
         windowElement,
         {
@@ -216,11 +240,11 @@ export function WorkstationDesktop({
       }
     }
     dispatchWithWindowFocus({ type: "minimize", id });
-  }, [dispatchWithWindowFocus, state.displayPreferences.reduceMotion, taskbarTransform]);
+  }, [dispatchWithWindowFocus, effectiveReduceMotion, taskbarTransform]);
 
   const restoreProgram = useCallback((id: ProgramId) => {
     dispatchWithWindowFocus({ type: "restore", id });
-    if (state.displayPreferences.reduceMotion) return;
+    if (effectiveReduceMotion) return;
 
     window.requestAnimationFrame(() => {
       const windowElement = document.querySelector<HTMLElement>(
@@ -241,7 +265,7 @@ export function WorkstationDesktop({
         { type: "spring", bounce: 0, duration: 0.36 },
       );
     });
-  }, [dispatchWithWindowFocus, state.displayPreferences.reduceMotion, taskbarTransform]);
+  }, [dispatchWithWindowFocus, effectiveReduceMotion, taskbarTransform]);
 
   const commonWindowProps = (id: ProgramId, stackIndex: number) => ({
     id,
@@ -249,7 +273,7 @@ export function WorkstationDesktop({
     focused: state.focusedProgram === id,
     isDefaultPosition: state.windowGeometry[id] === undefined,
     stackIndex: 10 + stackIndex,
-    reduceMotion: state.displayPreferences.reduceMotion,
+    reduceMotion: effectiveReduceMotion,
     onFocus: (programId: ProgramId) =>
       dispatchWithWindowFocus({ type: "focus", id: programId }),
     onMove: (programId: ProgramId, geometry: WindowGeometry) =>
@@ -328,6 +352,7 @@ export function WorkstationDesktop({
                     setTheme("dark");
                     setResetRequested(false);
                     dispatch({ type: "reset" });
+                    window.requestAnimationFrame(() => startButtonRef.current?.focus());
                   }}
                 />
               </ProgramWindow>
@@ -394,7 +419,7 @@ export function WorkstationDesktop({
             >
               <ProjectProgram
                 program={project}
-                reduceMotion={state.displayPreferences.reduceMotion}
+                reduceMotion={effectiveReduceMotion}
               />
             </ProgramWindow>
           );
@@ -416,7 +441,7 @@ export function WorkstationDesktop({
         onClose={closeStart}
         onOpenProgram={openProgram}
         onRequestReset={requestReset}
-        reduceMotion={state.displayPreferences.reduceMotion}
+        reduceMotion={effectiveReduceMotion}
       />
       <Taskbar
         programs={programs}

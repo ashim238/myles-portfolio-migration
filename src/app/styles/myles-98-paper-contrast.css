@@ -511,9 +511,42 @@
   .play-entry-exploration,
   .play-entry-body dt,
   .play-entry-meta,
-  .play-entry-tag
+  .play-entry-tag,
+  .play-embed-fallback a
 ) {
   color: var(--m98-paper-muted);
+}
+
+/* These controls inherit the global dark-theme tokens in the shared Navi
+   stylesheet. Reader paper needs the same explicit ink family as the rest of
+   the document so labels do not become pale text on a light surface. */
+.reader-mode.reader-mode.nv-page :is(
+  .nv-matrix th[scope="row"],
+  .nv-ui-tab,
+  .nv-form-state-label,
+  .nv-ui-field span
+) {
+  color: var(--m98-paper-muted);
+}
+
+.reader-mode.reader-mode.nv-page :is(
+  .nv-ui-button--outline,
+  .nv-ui-tab--unselected:hover,
+  .nv-ui-tab--hover,
+  .nv-ui-field input,
+  .nv-ui-field select,
+  .nv-ui-field textarea
+) {
+  color: var(--m98-paper-text);
+}
+
+.reader-mode.reader-mode.nv-page :is(
+  .nv-ui-field input,
+  .nv-ui-field select,
+  .nv-ui-field textarea
+) {
+  border-color: var(--m98-paper-rule);
+  background: var(--m98-paper-panel);
 }
 
 .myles98-system-document :is(
