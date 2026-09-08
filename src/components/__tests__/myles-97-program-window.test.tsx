@@ -1,7 +1,11 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { ProgramWindow } from "@/components/myles-97/program-window";
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 describe("ProgramWindow", () => {
   it("exposes semantic window controls with accessible hit targets", async () => {
@@ -112,7 +116,58 @@ describe("ProgramWindow", () => {
     );
   });
 
+  it("coalesces rapid pointer samples into one visual update per animation frame", () => {
+    const scheduledFrames: FrameRequestCallback[] = [];
+    const requestFrame = vi
+      .spyOn(window, "requestAnimationFrame")
+      .mockImplementation((callback) => {
+        scheduledFrames.push(callback);
+        return scheduledFrames.length;
+      });
+    vi.spyOn(window, "cancelAnimationFrame").mockImplementation(() => undefined);
+
+    const { container } = render(
+      <ProgramWindow
+        id="fresh-greens"
+        title="Fresh Greens.exe"
+        geometry={{ x: 40, y: 64, width: 720, height: 520 }}
+        focused
+        isDefaultPosition={false}
+        onFocus={vi.fn()}
+        onMove={vi.fn()}
+        onMinimize={vi.fn()}
+        onClose={vi.fn()}
+      >
+        <p>Program content</p>
+      </ProgramWindow>,
+    );
+
+    const region = screen.getByRole("region", { name: "Fresh Greens.exe" });
+    const titlebar = container.querySelector<HTMLElement>(".myles97-titlebar")!;
+    fireEvent.pointerDown(titlebar, {
+      pointerId: 18,
+      button: 0,
+      clientX: 100,
+      clientY: 100,
+    });
+    fireEvent.pointerMove(titlebar, { pointerId: 18, clientX: 110, clientY: 105 });
+    fireEvent.pointerMove(titlebar, { pointerId: 18, clientX: 125, clientY: 115 });
+    fireEvent.pointerMove(titlebar, { pointerId: 18, clientX: 140, clientY: 132 });
+
+    expect(requestFrame).toHaveBeenCalledTimes(1);
+    expect(region.style.transform).toBe("");
+
+    scheduledFrames[0](16);
+    expect(region.style.transform).toBe("translate3d(40px, 32px, 0)");
+
+    requestFrame.mockRestore();
+  });
+
   it("adds elastic resistance beyond desktop bounds before committing the clamped position", () => {
+    vi.spyOn(window, "requestAnimationFrame").mockImplementation((callback) => {
+      callback(16);
+      return 1;
+    });
     const onMove = vi.fn();
     const { container } = render(
       <ProgramWindow

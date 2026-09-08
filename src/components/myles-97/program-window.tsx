@@ -44,7 +44,7 @@ export function ProgramWindow({
   children,
 }: ProgramWindowProps) {
   const windowRef = useRef<HTMLElement>(null);
-  const { dragHandleProps, dragging, previewTransform } = useWindowDrag({
+  const { dragHandleProps, dragging } = useWindowDrag({
     geometry,
     useRenderedOrigin: isDefaultPosition,
     reduceMotion,
@@ -56,7 +56,6 @@ export function ProgramWindow({
     top: geometry.y,
     width: geometry.width,
     height: geometry.height,
-    transform: previewTransform,
     zIndex: stackIndex,
   };
   const moveWithKeyboard = (key: string, shiftKey: boolean) => {

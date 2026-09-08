@@ -254,6 +254,11 @@ a {
   html.dot-cursor-ready .project-toc-link {
     cursor: none;
   }
+
+  html.dot-cursor-ready .myles97-titlebar,
+  html.dot-cursor-ready .myles97-window[data-dragging="true"] {
+    cursor: none;
+  }
 }
 
 .dot-cursor {

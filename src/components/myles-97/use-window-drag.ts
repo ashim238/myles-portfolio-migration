@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { PointerEventHandler } from "react";
 import { animate } from "motion";
 import {
@@ -17,6 +17,7 @@ type WindowDragOptions = {
 };
 
 type DragSession = {
+  windowElement: HTMLElement | null;
   pointerId: number;
   startX: number;
   startY: number;
@@ -47,7 +48,7 @@ export function useWindowDrag({
   onCommit,
 }: WindowDragOptions) {
   const drag = useRef<DragSession | null>(null);
-  const [preview, setPreview] = useState({ x: 0, y: 0 });
+  const previewFrame = useRef<number | null>(null);
   const [dragging, setDragging] = useState(false);
 
   const clearDrag = useCallback((element?: HTMLElement, pointerId?: number) => {
@@ -60,9 +61,17 @@ export function useWindowDrag({
         // Pointer capture support varies across browsers and test environments.
       }
     }
+    if (previewFrame.current !== null) {
+      cancelAnimationFrame(previewFrame.current);
+      previewFrame.current = null;
+    }
+    drag.current?.windowElement?.style.removeProperty("transform");
     drag.current = null;
-    setPreview({ x: 0, y: 0 });
     setDragging(false);
+  }, []);
+
+  useEffect(() => () => {
+    if (previewFrame.current !== null) cancelAnimationFrame(previewFrame.current);
   }, []);
 
   const onPointerDown = useCallback<PointerEventHandler<HTMLElement>>((event) => {
@@ -72,6 +81,7 @@ export function useWindowDrag({
     const windowElement = event.currentTarget.closest<HTMLElement>(".myles97-window");
 
     drag.current = {
+      windowElement,
       pointerId: event.pointerId,
       startX: event.clientX,
       startY: event.clientY,
@@ -109,7 +119,16 @@ export function useWindowDrag({
       rubberband(proposed.x - clamped.x, viewport.width);
     session.displayY = clamped.y - session.originY +
       rubberband(proposed.y - clamped.y, viewport.height);
-    setPreview({ x: session.displayX, y: session.displayY });
+
+    if (previewFrame.current === null) {
+      previewFrame.current = requestAnimationFrame(() => {
+        previewFrame.current = null;
+        const activeSession = drag.current;
+        if (!activeSession?.windowElement) return;
+        activeSession.windowElement.style.transform =
+          `translate3d(${activeSession.displayX}px, ${activeSession.displayY}px, 0)`;
+      });
+    }
   }, [geometry]);
 
   const onPointerUp = useCallback<PointerEventHandler<HTMLElement>>(
@@ -173,9 +192,5 @@ export function useWindowDrag({
       onPointerCancel,
     },
     dragging,
-    previewTransform:
-      preview.x === 0 && preview.y === 0
-        ? undefined
-        : `translate3d(${preview.x}px, ${preview.y}px, 0)`,
   };
 }

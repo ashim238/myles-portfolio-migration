@@ -40,6 +40,12 @@ describe("DotCursor", () => {
     expect(document.documentElement).not.toHaveClass("dot-cursor-ready");
   });
 
+  it("keeps draggable window chrome from rendering a second native cursor", () => {
+    expect(baseStyles).toMatch(
+      /html\.dot-cursor-ready \.myles97-titlebar,\s*html\.dot-cursor-ready \.myles97-window\[data-dragging="true"\]\s*\{\s*cursor:\s*none;/,
+    );
+  });
+
   it("keeps the native cursor when reduced motion is requested", () => {
     vi.mocked(window.matchMedia).mockImplementation((query: string) => ({
       matches: query === "(prefers-reduced-motion: reduce)",
