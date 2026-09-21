@@ -45,6 +45,68 @@ const programs: ProgramDefinition[] = [
 ];
 
 describe("Work Stuff evaluation paths", () => {
+  it("resolves keyboard focus without motion and does not replace the source scene", () => {
+    const { container } = render(<SelectedWorkExplorer programs={programs} onOpen={vi.fn()} />);
+    const card = screen.getByRole('listitem', { name: 'Fresh Greens' });
+    const scene = card.querySelector('.product-thumbnail-scene');
+    fireEvent.focus(within(card).getByRole('link'));
+    expect(card.querySelector('.product-thumbnail')).toHaveAttribute('data-reduced', 'true');
+    expect(card.querySelector('.product-thumbnail-scene')).toBe(scene);
+    expect(container.querySelector('.product-thumbnail-cover')).toBeNull();
+  });
+  it("uses one movable TikTok title and masks its baked-in duplicate", () => {
+    const { container } = render(<SelectedWorkExplorer programs={[programs[1]]} onOpen={vi.fn()} />);
+    const template = container.querySelector('image[href="/projects/tiktok/system/academia.webp"]');
+    expect(template).toHaveAttribute('mask');
+    expect(container.querySelectorAll('image[href="/projects/tiktok/system/academia-text.svg"]')).toHaveLength(1);
+    expect(container.querySelector('.motion-catalog-main .motion-catalog-type')).toBeInTheDocument();
+  });
+
+  it("keeps Navi search typography proportional to its header", () => {
+    const program = { ...programs[1], id: "navi" as const };
+    const { container } = render(<SelectedWorkExplorer programs={[program]} onOpen={vi.fn()} />);
+    expect(container.querySelector('.navi-thumbnail-search rect')).toHaveAttribute('height', '42');
+    expect(container.querySelector('.navi-thumbnail-search text')).toHaveAttribute('font-size', '14');
+  });
+  it("clips Fresh Greens source screens to rounded boundaries without invented taglines", () => {
+    const { container } = render(<SelectedWorkExplorer programs={[programs[0]]} onOpen={vi.fn()} />);
+    expect(container).not.toHaveTextContent("A clearer way forward");
+    expect(container.querySelector('.motion-phone clipPath rect')).toHaveAttribute('rx', '24');
+    expect(container.querySelector('.motion-focus-panel clipPath rect')).toHaveAttribute('rx', '16');
+    expect(container.querySelector('.motion-focus-panel g[clip-path]')).toBeInTheDocument();
+  });
+
+  it("contains FAFSA modules within the sheet and anchors decoration to the bottom edge", () => {
+    const program = { ...programs[1], id: "understandingfafsa" as const };
+    const { container } = render(<SelectedWorkExplorer programs={[program]} onOpen={vi.fn()} />);
+    expect(container.querySelector('.motion-mail-body')?.parentElement).toHaveAttribute('clip-path');
+    expect(container.querySelector('.motion-mail-links')).toBeNull();
+    expect(container.querySelector('.product-thumbnail-scene')).toHaveAttribute('preserveAspectRatio', 'xMidYMax meet');
+    const panel = container.querySelector('.motion-mail-label rect')!;
+    expect(Number(panel.getAttribute('x')) + Number(panel.getAttribute('width'))).toBeLessThanOrEqual(616);
+    expect(Number(panel.getAttribute('y')) + Number(panel.getAttribute('height'))).toBeLessThanOrEqual(336);
+  });
+  it.each(["fresh-greens", "understandingfafsa", "navi", "tiktok"] as const)(
+    "reveals %s on keyboard focus, keeps it between actions, and resets on exit",
+    (id) => {
+      const program = { ...programs[1], id, title: id, href: `/work/${id}` as const };
+      const { container } = render(<SelectedWorkExplorer programs={[program]} onOpen={vi.fn()} reduceMotion />);
+      const card = screen.getByRole("listitem", { name: id });
+      const scene = container.querySelector(".product-thumbnail")!;
+      const link = within(card).getByRole("link");
+      const button = within(card).getByRole("button");
+      expect(scene).toHaveAttribute("data-active", "false");
+      fireEvent.focus(link);
+      expect(scene).toHaveAttribute("data-active", "true");
+      expect(scene).toHaveAttribute("data-reduced", "true");
+      fireEvent.blur(link, { relatedTarget: button });
+      expect(scene).toHaveAttribute("data-active", "true");
+      fireEvent.blur(button, { relatedTarget: document.body });
+      expect(scene).toHaveAttribute("data-active", "false");
+      fireEvent.pointerEnter(card, { pointerType: "touch" });
+      expect(scene).toHaveAttribute("data-active", "false");
+    },
+  );
   it("makes the case study primary and explains the interactive preview before either action", async () => {
     const user = userEvent.setup();
     const onOpen = vi.fn();
@@ -87,45 +149,19 @@ describe("Work Stuff evaluation paths", () => {
     expect(within(tiktokCard).queryByText("Shipped")).not.toBeInTheDocument();
   });
 
-  it("gives Fresh Greens an authored route-scoring focus reveal", () => {
-    render(<SelectedWorkExplorer programs={programs} onOpen={vi.fn()} />);
-
-    const freshCard = screen.getByRole("listitem", { name: "Fresh Greens" });
-    expect(freshCard.querySelector("video")).toBeNull();
-    expect(freshCard.querySelector(".fg-focus-reveal")).toBeInTheDocument();
-    expect(freshCard.querySelector(".fg-focus-route-line")).toBeInTheDocument();
-    expect(freshCard).toHaveTextContent(
-      "Active route8 min0.4 mi remaining✓ All clear",
-    );
-    const images = freshCard.querySelectorAll("img");
-    expect(images[0]).toHaveAttribute(
-      "src",
-      "/projects/fresh-greens/cover.png",
-    );
-    expect(images[1]).toHaveAttribute(
-      "src",
-      "/projects/fresh-greens/v2/map-texture.png",
-    );
-
-    const route = freshCard.querySelector(".fg-focus-route-line");
-    const routeSvg = freshCard.querySelector(".fg-focus-route");
-    const origin = freshCard.querySelector(".fg-focus-origin circle:last-child");
-    const destination = freshCard.querySelector(
-      ".fg-focus-destination circle:last-child",
-    );
-    expect(route).toHaveAttribute(
-      "d",
-      "M88 655 L220 648 L382 636 L535 625 L648 616 L641 500 L635 364 L760 352 L902 340 L899 264",
-    );
-    expect(routeSvg).toHaveAttribute("viewBox", "0 0 1000 760");
-    expect(routeSvg).toHaveAttribute("preserveAspectRatio", "xMidYMid slice");
-    expect(route).toHaveAttribute("pathLength", "1");
-    expect(route).toHaveAttribute("stroke-dasharray", "1");
-    expect(route).toHaveAttribute("stroke-dashoffset", "1");
-    expect(origin).toHaveAttribute("cx", "88");
-    expect(origin).toHaveAttribute("cy", "655");
-    expect(destination).toHaveAttribute("cx", "899");
-    expect(destination).toHaveAttribute("cy", "264");
+  it.each([
+    ["fresh-greens", "/projects/fresh-greens/v2/route-preview.png"],
+    ["understandingfafsa", "/projects/understandingfafsa/modular-header.png"],
+    ["navi", "/projects/navi-demo/prospect-tunnel.jpg"],
+    ["tiktok", "/projects/tiktok/system/academia.webp"],
+  ] as const)("grounds %s in original project artwork", (id, source) => {
+    const program = { ...programs[1], id, title: id, href: `/work/${id}` as const };
+    const { container } = render(<SelectedWorkExplorer programs={[program]} onOpen={vi.fn()} />);
+    expect(container.querySelector(`image[href="${source}"]`)).toBeInTheDocument();
+    const scene = container.querySelector(".product-thumbnail-scene");
+    expect(scene).toHaveAttribute("viewBox", "0 0 640 360");
+    expect(scene).toHaveAttribute("aria-hidden", "true");
+    expect(container.querySelector("video")).toBeNull();
   });
 
   it("routes through the controller without faking a full-card animation", () => {

@@ -170,7 +170,7 @@ describe("Pocket 98", () => {
     expect(screen.getByRole("heading", { name: "Myles Ashitey" })).toBeInTheDocument();
   });
 
-  it("lays out the real Pocket home as a two-column tablet folio without losing project covers", async () => {
+  it("lays out the real Pocket home as a two-column tablet folio with continuous project scenes", async () => {
     installMatchMedia(true);
     const { container } = render(
       <Myles97Shell programs={programs} looseParts={looseParts} />,
@@ -178,9 +178,10 @@ describe("Pocket 98", () => {
 
     await screen.findByRole("navigation", { name: "Pocket 98 dock" });
     expect(
-      Array.from(container.querySelectorAll<HTMLImageElement>(".myles97-program-cover img:not(.fg-focus-map-image)"))
-        .map((image) => image.getAttribute("src")),
-    ).toEqual(programs.map((program) => program.coverImage));
+      Array.from(container.querySelectorAll(".product-thumbnail"))
+        .map((scene) => scene.getAttribute("data-project")),
+    ).toEqual(programs.map((program) => program.id));
+    expect(container.querySelectorAll('.product-thumbnail-scene image').length).toBeGreaterThanOrEqual(4);
 
     const tablet = cssBlock("@media (min-width: 768px) and (max-width: 1024px)");
     expect(cssBlock(".pocket97-stage", tablet)).toMatch(/width:\s*min\(100%,\s*64rem\);/);
