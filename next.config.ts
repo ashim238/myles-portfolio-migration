@@ -7,11 +7,11 @@ const impeccableLiveDevSource =
 
 const contentSecurityPolicy = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${developmentEvalSource}${impeccableLiveDevSource} https://cdnjs.cloudflare.com https://open.spotify.com`,
+  `script-src 'self' 'unsafe-inline'${developmentEvalSource}${impeccableLiveDevSource} https://cdnjs.cloudflare.com https://open.spotify.com https://embed-cdn.spotifycdn.com`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://cdn.prod.website-files.com https://placehold.co https://*.basemaps.cartocdn.com https://*.spotifycdn.com https://i.scdn.co",
   "font-src 'self' data:",
-  `connect-src 'self'${impeccableLiveDevSource}`,
+  `connect-src 'self'${impeccableLiveDevSource} https://open.spotify.com`,
   "media-src 'self' blob:",
   "worker-src 'self' blob:",
   "frame-src 'self' https://open.spotify.com",

@@ -47,6 +47,9 @@ describe("release security headers", () => {
       "script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com",
     );
     expect(contentSecurityPolicy).toContain("https://open.spotify.com");
+    expect(contentSecurityPolicy).toMatch(
+      /script-src[^;]*https:\/\/embed-cdn\.spotifycdn\.com/,
+    );
     expect(contentSecurityPolicy).toContain("style-src 'self' 'unsafe-inline'");
     expect(contentSecurityPolicy).toContain("img-src 'self' data: blob:");
     expect(contentSecurityPolicy).toContain("https://*.basemaps.cartocdn.com");
@@ -56,6 +59,9 @@ describe("release security headers", () => {
     expect(contentSecurityPolicy).toContain("worker-src 'self' blob:");
     expect(contentSecurityPolicy).toContain(
       "frame-src 'self' https://open.spotify.com",
+    );
+    expect(contentSecurityPolicy).toMatch(
+      /connect-src[^;]*https:\/\/open\.spotify\.com/,
     );
     expect(contentSecurityPolicy).not.toMatch(
       /connect-src[^;]*(?:api|accounts)\.spotify\.com/,
