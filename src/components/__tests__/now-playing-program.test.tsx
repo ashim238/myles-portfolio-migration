@@ -72,7 +72,10 @@ describe("Now Playing program", () => {
     vi.stubGlobal("fetch", vi.fn(() => apiResponse(null)));
   });
 
-  afterEach(() => vi.unstubAllGlobals());
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.unstubAllGlobals();
+  });
 
   it("opens on the curated Cannock Chase state with a dynamic month and no autoplay", async () => {
     render(<NowPlayingProgram now={new Date(2027, 1, 14, 12)} />);
@@ -125,21 +128,67 @@ describe("Now Playing program", () => {
     expect(screen.getByRole("button", { name: "Pause Cannock Chase" })).toBeEnabled();
   });
 
-  it("falls back to a working Spotify link when the embedded player is blocked", async () => {
+  it("keeps Spotify's replaceable mount inside a React-owned host", async () => {
+    render(<NowPlayingProgram />);
+
+    await waitFor(() => expect(embedMocks.createController).toHaveBeenCalledOnce());
+    const controllerMount = embedMocks.createController.mock.calls[0][0] as HTMLElement;
+
+    expect(controllerMount.parentElement).toHaveClass("now-playing-embed-host");
+  });
+
+  it("falls back to Spotify's standard embedded player when the controller is blocked", async () => {
     embedMocks.loadSpotifyIframeApi.mockRejectedValueOnce(
       new Error("blocked by browser"),
     );
     render(<NowPlayingProgram />);
 
-    const fallback = await screen.findByRole("link", {
-      name: "Play Cannock Chase in Spotify",
-    });
+    const fallback = await screen.findByTitle(
+      "Spotify player for Cannock Chase by Labi Siffre",
+    );
     expect(fallback).toHaveAttribute(
+      "src",
+      expect.stringContaining("open.spotify.com/embed/track/"),
+    );
+    expect(fallback).toHaveAttribute(
+      "allow",
+      expect.stringContaining("encrypted-media"),
+    );
+    expect(screen.queryByRole("button", { name: "Play Cannock Chase" })).toBeNull();
+    expect(screen.queryByText("Player unavailable")).toBeNull();
+    expect(screen.getByText("Spotify player")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Open in Spotify" })).toHaveAttribute(
       "href",
       expect.stringContaining("open.spotify.com/track/"),
     );
-    expect(screen.queryByRole("button", { name: "Play Cannock Chase" })).toBeNull();
-    expect(screen.getByText("Player unavailable")).toBeInTheDocument();
+  });
+
+  it("does not mark a cold Spotify player unavailable after only five seconds", async () => {
+    vi.useFakeTimers();
+    render(<NowPlayingProgram />);
+
+    await act(async () => {
+      await Promise.resolve();
+    });
+    expect(embedMocks.createController).toHaveBeenCalledOnce();
+
+    await act(async () => {
+      vi.advanceTimersByTime(5_001);
+      await Promise.resolve();
+    });
+
+    expect(screen.getByText("Loading player…")).toBeInTheDocument();
+    expect(screen.queryByText("Player unavailable")).toBeNull();
+
+    await act(async () => {
+      vi.advanceTimersByTime(10_000);
+      await Promise.resolve();
+    });
+
+    expect(
+      screen.getByTitle("Spotify player for Cannock Chase by Labi Siffre"),
+    ).toBeInTheDocument();
+    expect(screen.getByText("Spotify player")).toBeInTheDocument();
   });
 
   it("changes focus without making the read-only album rows interactive", async () => {

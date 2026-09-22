@@ -12,6 +12,7 @@ import {
 } from "@/lib/now-playing/spotify-embed";
 
 const POLL_INTERVAL_MS = 60_000;
+const PLAYER_READINESS_TIMEOUT_MS = 15_000;
 
 type NowPlayingProgramProps = {
   now?: Date;
@@ -68,19 +69,21 @@ export function NowPlayingProgram({ now }: NowPlayingProgramProps) {
     const host = embedHostRef.current;
     if (!host) return;
 
+    const controllerMount = document.createElement("div");
+    host.replaceChildren(controllerMount);
     let active = true;
     setPlayerReady(false);
     setPlayerPaused(true);
     setPlayerFailed(false);
     const readinessTimeout = window.setTimeout(() => {
       if (active) setPlayerFailed(true);
-    }, 5_000);
+    }, PLAYER_READINESS_TIMEOUT_MS);
 
     void loadSpotifyIframeApi()
       .then((api) => {
         if (!active) return;
         api.createController(
-          host,
+          controllerMount,
           {
             uri: `spotify:track:${selectedTrack.id}`,
             width: "100%",
@@ -189,25 +192,22 @@ export function NowPlayingProgram({ now }: NowPlayingProgramProps) {
             })}
           </ol>
           <div className="now-playing-embed">
-            <div
-              ref={embedHostRef}
-              className="now-playing-embed-host"
-              data-failed={playerFailed ? "true" : "false"}
-              aria-label={`Spotify player for ${selectedTrack.title} by ${selectedTrack.artist}`}
-            />
+            {playerFailed ? (
+              <iframe
+                className="now-playing-embed-fallback"
+                title={`Spotify player for ${selectedTrack.title} by ${selectedTrack.artist}`}
+                src={selectedTrack.embedUrl}
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              />
+            ) : (
+              <div
+                ref={embedHostRef}
+                className="now-playing-embed-host"
+                aria-label={`Spotify player for ${selectedTrack.title} by ${selectedTrack.artist}`}
+              />
+            )}
             <div className="now-playing-player-controls">
-              {playerFailed ? (
-                <a
-                  className="now-playing-play-toggle now-playing-play-fallback"
-                  aria-label={`Play ${selectedTrack.title} in Spotify`}
-                  href={selectedTrack.spotifyUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <span className="now-playing-play-icon" aria-hidden="true" />
-                  <span>Play in Spotify</span>
-                </a>
-              ) : (
+              {!playerFailed ? (
                 <button
                   type="button"
                   className="now-playing-play-toggle"
@@ -221,23 +221,21 @@ export function NowPlayingProgram({ now }: NowPlayingProgramProps) {
                   />
                   <span>{playerPaused ? "Play" : "Pause"}</span>
                 </button>
-              )}
+              ) : null}
               <span className="now-playing-player-state" aria-live="polite">
                 {playerFailed
-                  ? "Player unavailable"
+                  ? "Spotify player"
                   : playerReady
                     ? "Ready"
                     : "Loading player…"}
               </span>
-              {!playerFailed ? (
-                <a
-                  href={selectedTrack.spotifyUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Open in Spotify
-                </a>
-              ) : null}
+              <a
+                href={selectedTrack.spotifyUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Open in Spotify
+              </a>
             </div>
           </div>
         </section>
