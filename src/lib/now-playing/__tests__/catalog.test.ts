@@ -34,6 +34,15 @@ describe("Now Playing catalog", () => {
     }
   });
 
+  it("matches each curated player shell to Spotify's rendered embed surface", () => {
+    expect(CURRENT_ROTATION.map((track) => track.embedBackground)).toEqual([
+      "#485650",
+      "#9c190b",
+      "#90312a",
+      "#504f76",
+    ]);
+  });
+
   it("formats the visitor's month and year instead of storing a fixed label", () => {
     expect(formatRotationMonth(new Date(2027, 1, 14, 12))).toBe("FEB 2027");
   });

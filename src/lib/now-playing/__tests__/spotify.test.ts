@@ -20,6 +20,13 @@ function response(body: unknown, status = 200) {
   });
 }
 
+function htmlResponse(body: string, status = 200) {
+  return new Response(body, {
+    status,
+    headers: { "Content-Type": "text/html" },
+  });
+}
+
 describe("Spotify now-playing server adapter", () => {
   beforeEach(() => resetSpotifyTokenCacheForTests());
 
@@ -59,6 +66,11 @@ describe("Spotify now-playing server adapter", () => {
             { id: "other-track", name: "Other Song", duration_ms: 180_000 },
           ],
         }),
+      )
+      .mockResolvedValueOnce(
+        htmlResponse(
+          '<main style="--dynamic-background-base:rgba(156, 25, 11, 255)"></main>',
+        ),
       );
 
     const result = await getCurrentlyPlaying({ env: configuredEnv, fetchImpl });
@@ -79,6 +91,11 @@ describe("Spotify now-playing server adapter", () => {
       "https://api.spotify.com/v1/albums/live-album/tracks?limit=50",
       expect.objectContaining({ cache: "no-store" }),
     );
+    expect(fetchImpl).toHaveBeenNthCalledWith(
+      4,
+      "https://open.spotify.com/embed/track/live-track",
+      expect.not.objectContaining({ headers: expect.anything() }),
+    );
     expect(result).toEqual({
       id: "live-track",
       title: "Live Song",
@@ -88,6 +105,7 @@ describe("Spotify now-playing server adapter", () => {
       imageUrl: "https://i.scdn.co/image/live-cover",
       spotifyUrl: "https://open.spotify.com/track/live-track",
       embedUrl: "https://open.spotify.com/embed/track/live-track",
+      embedBackground: "#9c190b",
       albumTracks: [
         { id: "live-track", title: "Live Song", durationMs: 222_000 },
         { id: "other-track", title: "Other Song", durationMs: 180_000 },

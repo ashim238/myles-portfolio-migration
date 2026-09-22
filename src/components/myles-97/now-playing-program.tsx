@@ -11,8 +11,8 @@ import {
   type SpotifyEmbedController,
 } from "@/lib/now-playing/spotify-embed";
 
-const POLL_INTERVAL_MS = 60_000;
-const PLAYER_READINESS_TIMEOUT_MS = 5_000;
+const POLL_INTERVAL_MS = 30_000;
+const PLAYER_READINESS_TIMEOUT_MS = 15_000;
 
 type NowPlayingProgramProps = {
   now?: Date;
@@ -61,9 +61,14 @@ export function NowPlayingProgram({ now }: NowPlayingProgramProps) {
   useEffect(() => {
     const initialRequest = window.setTimeout(refreshLiveTrack, 0);
     const timer = window.setInterval(refreshLiveTrack, POLL_INTERVAL_MS);
+    const refreshOnFocus = () => {
+      void refreshLiveTrack();
+    };
+    window.addEventListener("focus", refreshOnFocus);
     return () => {
       window.clearTimeout(initialRequest);
       window.clearInterval(timer);
+      window.removeEventListener("focus", refreshOnFocus);
     };
   }, [refreshLiveTrack]);
 
@@ -161,6 +166,9 @@ export function NowPlayingProgram({ now }: NowPlayingProgramProps) {
       : playerPaused
         ? "ready"
         : "playing";
+  const playerSurface = {
+    backgroundColor: selectedTrack.embedBackground,
+  };
 
   return (
     <article className="now-playing-program">
@@ -237,7 +245,7 @@ export function NowPlayingProgram({ now }: NowPlayingProgramProps) {
                 aria-hidden="true"
               />
             </div>
-            <div className="now-playing-player-well">
+            <div className="now-playing-player-well" style={playerSurface}>
               {playerFailed ? (
                 <iframe
                   className="now-playing-embed-fallback"
@@ -249,6 +257,7 @@ export function NowPlayingProgram({ now }: NowPlayingProgramProps) {
                 <div
                   ref={embedHostRef}
                   className="now-playing-embed-host"
+                  style={playerSurface}
                   aria-label={`Spotify player for ${selectedTrack.title} by ${selectedTrack.artist}`}
                 />
               )}

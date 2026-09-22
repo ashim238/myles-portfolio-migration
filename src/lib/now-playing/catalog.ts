@@ -13,6 +13,7 @@ export type NowPlayingTrack = {
   imageUrl: string;
   spotifyUrl: string;
   embedUrl: string;
+  embedBackground: string;
   albumTracks: readonly AlbumTrack[];
 };
 
@@ -109,6 +110,7 @@ export const CURRENT_ROTATION = [
     albumId: "1rCeglxnRN7dpcIRPnamGH",
     imageUrl:
       "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e027f540528ec2efdf46ef697ec",
+    embedBackground: "#485650",
     albumTracks: albumTracks(cryingLaughingLovingLying),
   }),
   rotationTrack({
@@ -119,6 +121,7 @@ export const CURRENT_ROTATION = [
     albumId: "4FNo7grg0Z6cbOwgzNwyD9",
     imageUrl:
       "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0242ddfda3c299599d0e24ed58",
+    embedBackground: "#9c190b",
     albumTracks: albumTracks(ravage),
   }),
   rotationTrack({
@@ -129,6 +132,7 @@ export const CURRENT_ROTATION = [
     albumId: "2Zi7uv234eNZJfLPGUIkSD",
     imageUrl:
       "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e020c044e52637b2a8362e20659",
+    embedBackground: "#90312a",
     albumTracks: albumTracks(obviously),
   }),
   rotationTrack({
@@ -139,6 +143,7 @@ export const CURRENT_ROTATION = [
     albumId: "74DOWHisu2jlFvPid9YTGB",
     imageUrl:
       "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0247a51205061053303846cb79",
+    embedBackground: "#504f76",
     albumTracks: albumTracks(troupeauBleu),
   }),
 ] as const satisfies readonly NowPlayingTrack[];

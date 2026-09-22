@@ -272,7 +272,7 @@
   padding: 3px;
   overflow: hidden;
   border: 1px solid #555;
-  background: #121212;
+  background-color: #121212;
   box-shadow:
     inset 2px 2px 0 #555,
     inset -1px -1px 0 #e7e3d9;
@@ -282,9 +282,7 @@
   min-height: 80px;
   overflow: hidden;
   border-radius: 5px;
-  background:
-    radial-gradient(circle at 18px 18px, #2e2e2e 1px, transparent 1.5px) 0 0 / 9px 9px,
-    #121212;
+  background-color: #121212;
 }
 
 .now-playing-embed-host iframe,
@@ -294,7 +292,7 @@
   height: 80px;
   border: 0;
   border-radius: 5px;
-  background: #121212;
+  background: transparent;
 }
 
 .now-playing-player-controls {

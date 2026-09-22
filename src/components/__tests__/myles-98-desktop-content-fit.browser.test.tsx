@@ -310,6 +310,36 @@ describe("Myles 98 desktop content fit", () => {
     await page.close();
   });
 
+  it("lets the matched Spotify surface show through a blank player iframe", async () => {
+    const page = await browserPage(
+      laptopViewports[0],
+      `<div class="now-playing-player-well" style="background-color:#9c190b">
+        <div class="now-playing-embed-host" style="background-color:#9c190b">
+          <iframe title="Loading Spotify player"></iframe>
+        </div>
+      </div>`,
+    );
+
+    const colors = await page.locator(".now-playing-player-well").evaluate((well) => {
+      const host = well.querySelector<HTMLElement>(".now-playing-embed-host");
+      const frame = well.querySelector<HTMLIFrameElement>("iframe");
+      if (!host || !frame) throw new Error("Incomplete player shell");
+      return {
+        well: getComputedStyle(well).backgroundColor,
+        host: getComputedStyle(host).backgroundColor,
+        frame: getComputedStyle(frame).backgroundColor,
+      };
+    });
+
+    expect(colors).toEqual({
+      well: "rgb(156, 25, 11)",
+      host: "rgb(156, 25, 11)",
+      frame: "rgba(0, 0, 0, 0)",
+    });
+
+    await page.close();
+  });
+
   it.each(laptopViewports)(
     "opens all real project previews with complete artwork and actions at $width×$height",
     async (viewport) => {

@@ -18,9 +18,12 @@ type CachedAccessToken = {
 };
 
 let cachedAccessToken: CachedAccessToken | null = null;
+const cachedEmbedBackgrounds = new Map<string, string>();
+const DEFAULT_EMBED_BACKGROUND = "#535353";
 
 export function resetSpotifyTokenCacheForTests() {
   cachedAccessToken = null;
+  cachedEmbedBackgrounds.clear();
 }
 
 function serverCredentials(env: SpotifyEnvironment) {
@@ -104,6 +107,38 @@ function albumTracks(payload: unknown): AlbumTrack[] {
   });
 }
 
+async function embedBackground(trackId: string, fetchImpl: typeof fetch) {
+  const cached = cachedEmbedBackgrounds.get(trackId);
+  if (cached) return cached;
+
+  try {
+    const response = await fetchImpl(
+      `https://open.spotify.com/embed/track/${trackId}`,
+      { cache: "force-cache" },
+    );
+    if (!response.ok) return DEFAULT_EMBED_BACKGROUND;
+
+    const html = await response.text();
+    const match = html.match(
+      /--dynamic-background-base:rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})/i,
+    );
+    if (!match) return DEFAULT_EMBED_BACKGROUND;
+
+    const channels = match.slice(1, 4).map(Number);
+    if (channels.some((channel) => channel < 0 || channel > 255)) {
+      return DEFAULT_EMBED_BACKGROUND;
+    }
+
+    const color = `#${channels
+      .map((channel) => channel.toString(16).padStart(2, "0"))
+      .join("")}`;
+    cachedEmbedBackgrounds.set(trackId, color);
+    return color;
+  } catch {
+    return DEFAULT_EMBED_BACKGROUND;
+  }
+}
+
 export async function getCurrentlyPlaying({
   env = process.env,
   fetchImpl = fetch,
@@ -162,10 +197,14 @@ export async function getCurrentlyPlaying({
       return null;
     }
 
-    const tracksResponse = await fetchImpl(
-      `https://api.spotify.com/v1/albums/${albumId}/tracks?limit=50`,
-      requestOptions,
-    );
+    const embedUrl = `https://open.spotify.com/embed/track/${id}`;
+    const [tracksResponse, playerBackground] = await Promise.all([
+      fetchImpl(
+        `https://api.spotify.com/v1/albums/${albumId}/tracks?limit=50`,
+        requestOptions,
+      ),
+      embedBackground(id, fetchImpl),
+    ]);
     const tracks = tracksResponse.ok
       ? albumTracks(await tracksResponse.json())
       : [];
@@ -180,7 +219,8 @@ export async function getCurrentlyPlaying({
       albumId,
       imageUrl,
       spotifyUrl,
-      embedUrl: `https://open.spotify.com/embed/track/${id}`,
+      embedUrl,
+      embedBackground: playerBackground,
       albumTracks:
         tracks.length > 0
           ? tracks

@@ -31,6 +31,7 @@ const liveTrack: NowPlayingTrack = {
   imageUrl: "https://i.scdn.co/image/live-cover",
   spotifyUrl: "https://open.spotify.com/track/live-track",
   embedUrl: "https://open.spotify.com/embed/track/live-track",
+  embedBackground: "#9c190b",
   albumTracks: [
     { id: "live-track", title: "Live Song", durationMs: 210_000 },
     { id: "live-b-side", title: "Live B-side", durationMs: 180_000 },
@@ -190,17 +191,18 @@ describe("Now Playing program", () => {
     );
   });
 
-  it("falls back to Spotify's standard player after a five-second readiness budget", async () => {
+  it("lets Spotify initialize for fifteen seconds before using the fallback player", async () => {
     vi.useFakeTimers();
     render(<NowPlayingProgram />);
 
     await act(async () => {
+      vi.advanceTimersByTime(0);
       await Promise.resolve();
     });
     expect(embedMocks.createController).toHaveBeenCalledOnce();
 
     await act(async () => {
-      vi.advanceTimersByTime(4_999);
+      vi.advanceTimersByTime(14_999);
       await Promise.resolve();
     });
 
@@ -260,5 +262,58 @@ describe("Now Playing program", () => {
     expect(screen.queryByText("SPOTIFY · LIVE")).toBeNull();
     expect(screen.getByRole("heading", { name: "Red Potion" })).toBeInTheDocument();
     expect(screen.getByText(/CURRENT ROTATION/)).toBeInTheDocument();
+  });
+
+  it("refreshes the live track when the window regains focus", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockImplementationOnce(() => apiResponse(null))
+      .mockImplementation(() => apiResponse(liveTrack));
+    vi.stubGlobal("fetch", fetchMock);
+    render(<NowPlayingProgram />);
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledOnce());
+    expect(screen.getByRole("heading", { name: "Cannock Chase" })).toBeInTheDocument();
+
+    fireEvent.focus(window);
+
+    await waitFor(() => {
+      expect(fetchMock).toHaveBeenCalledTimes(2);
+      expect(screen.getByRole("heading", { name: "Live Song" })).toBeInTheDocument();
+      expect(screen.getByText("SPOTIFY · LIVE")).toBeInTheDocument();
+    });
+  });
+
+  it("checks for a new live track every thirty seconds while open", async () => {
+    vi.useFakeTimers();
+    const fetchMock = vi.fn(() => apiResponse(null));
+    vi.stubGlobal("fetch", fetchMock);
+    render(<NowPlayingProgram />);
+
+    await act(async () => {
+      vi.advanceTimersByTime(0);
+      await Promise.resolve();
+    });
+    expect(fetchMock).toHaveBeenCalledOnce();
+
+    await act(async () => {
+      vi.advanceTimersByTime(30_000);
+      await Promise.resolve();
+    });
+
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
+  it("uses the selected track's Spotify surface color for the embedded-player shell", async () => {
+    vi.stubGlobal("fetch", vi.fn(() => apiResponse(liveTrack)));
+    const { container } = render(<NowPlayingProgram />);
+
+    await screen.findByRole("heading", { name: "Live Song" });
+
+    const playerWell = container.querySelector<HTMLElement>(
+      ".now-playing-player-well",
+    );
+    expect(playerWell).toHaveStyle({ backgroundColor: "#9c190b" });
+    expect(playerWell?.style.backgroundImage).toBe("");
   });
 });
