@@ -9,6 +9,7 @@ export type SpotifyEmbedController = {
     event: "ready" | "playback_update",
     listener: (event?: SpotifyEmbedEvent) => void,
   ) => void;
+  loadEntity: (uri: string) => void;
   togglePlay: () => void;
   destroy: () => void;
 };
@@ -34,12 +35,22 @@ declare global {
 
 const SCRIPT_ID = "spotify-iframe-api";
 const SCRIPT_SRC = "https://open.spotify.com/embed/iframe-api/v1";
+const PRECONNECT_ID = "spotify-embed-preconnect";
+const SPOTIFY_ORIGIN = "https://open.spotify.com";
 
 let apiPromise: Promise<SpotifyIFrameApi> | null = null;
 
 export function loadSpotifyIframeApi(): Promise<SpotifyIFrameApi> {
   if (window.spotifyIframeApi) return Promise.resolve(window.spotifyIframeApi);
   if (apiPromise) return apiPromise;
+
+  if (!document.getElementById(PRECONNECT_ID)) {
+    const preconnect = document.createElement("link");
+    preconnect.id = PRECONNECT_ID;
+    preconnect.rel = "preconnect";
+    preconnect.href = SPOTIFY_ORIGIN;
+    document.head.append(preconnect);
+  }
 
   apiPromise = new Promise<SpotifyIFrameApi>((resolve, reject) => {
     window.onSpotifyIframeApiReady = (api) => {

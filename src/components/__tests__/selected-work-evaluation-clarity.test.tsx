@@ -68,6 +68,19 @@ describe("Work Stuff evaluation paths", () => {
     expect(container.querySelector('.navi-thumbnail-search rect')).toHaveAttribute('height', '42');
     expect(container.querySelector('.navi-thumbnail-search text')).toHaveAttribute('font-size', '14');
   });
+  it("keeps Navi carousel artwork inside the inset browser viewport", () => {
+    const program = { ...programs[1], id: "navi" as const };
+    const { container } = render(<SelectedWorkExplorer programs={[program]} onOpen={vi.fn()} />);
+    const neighbors = container.querySelector(".motion-navi-neighbors");
+    const clipReference = neighbors?.getAttribute("clip-path");
+
+    expect(clipReference).toMatch(/^url\(#.+\)$/);
+
+    const clipId = clipReference?.slice(5, -1);
+    const clipRect = container.querySelector(`clipPath#${clipId} rect`);
+    expect(clipRect).toHaveAttribute("x", "25");
+    expect(clipRect).toHaveAttribute("width", "578");
+  });
   it("clips Fresh Greens source screens to rounded boundaries without invented taglines", () => {
     const { container } = render(<SelectedWorkExplorer programs={[programs[0]]} onOpen={vi.fn()} />);
     expect(container).not.toHaveTextContent("A clearer way forward");

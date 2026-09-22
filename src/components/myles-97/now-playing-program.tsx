@@ -12,7 +12,7 @@ import {
 } from "@/lib/now-playing/spotify-embed";
 
 const POLL_INTERVAL_MS = 60_000;
-const PLAYER_READINESS_TIMEOUT_MS = 15_000;
+const PLAYER_READINESS_TIMEOUT_MS = 5_000;
 
 type NowPlayingProgramProps = {
   now?: Date;
@@ -36,6 +36,8 @@ export function NowPlayingProgram({ now }: NowPlayingProgramProps) {
   const visitorLocked = useRef(false);
   const embedHostRef = useRef<HTMLDivElement>(null);
   const embedControllerRef = useRef<SpotifyEmbedController | null>(null);
+  const selectedTrackIdRef = useRef(selectedTrack.id);
+  const loadedTrackIdRef = useRef<string | null>(null);
 
   const refreshLiveTrack = useCallback(async () => {
     try {
@@ -69,14 +71,22 @@ export function NowPlayingProgram({ now }: NowPlayingProgramProps) {
     const host = embedHostRef.current;
     if (!host) return;
 
+    const initialTrackId = selectedTrackIdRef.current;
     const controllerMount = document.createElement("div");
     host.replaceChildren(controllerMount);
     let active = true;
+    let abandoned = false;
     setPlayerReady(false);
     setPlayerPaused(true);
     setPlayerFailed(false);
     const readinessTimeout = window.setTimeout(() => {
-      if (active) setPlayerFailed(true);
+      if (active) {
+        abandoned = true;
+        embedControllerRef.current?.destroy();
+        embedControllerRef.current = null;
+        loadedTrackIdRef.current = null;
+        setPlayerFailed(true);
+      }
     }, PLAYER_READINESS_TIMEOUT_MS);
 
     void loadSpotifyIframeApi()
@@ -85,19 +95,24 @@ export function NowPlayingProgram({ now }: NowPlayingProgramProps) {
         api.createController(
           controllerMount,
           {
-            uri: `spotify:track:${selectedTrack.id}`,
+            uri: `spotify:track:${initialTrackId}`,
             width: "100%",
             height: 80,
           },
           (controller) => {
-            if (!active) {
+            if (!active || abandoned) {
               controller.destroy();
               return;
             }
 
             embedControllerRef.current = controller;
+            loadedTrackIdRef.current = initialTrackId;
+            if (selectedTrackIdRef.current !== initialTrackId) {
+              controller.loadEntity(`spotify:track:${selectedTrackIdRef.current}`);
+              loadedTrackIdRef.current = selectedTrackIdRef.current;
+            }
             controller.addListener("ready", () => {
-              if (active) {
+              if (active && !abandoned) {
                 window.clearTimeout(readinessTimeout);
                 setPlayerReady(true);
               }
@@ -120,14 +135,32 @@ export function NowPlayingProgram({ now }: NowPlayingProgramProps) {
       window.clearTimeout(readinessTimeout);
       embedControllerRef.current?.destroy();
       embedControllerRef.current = null;
+      loadedTrackIdRef.current = null;
       host.replaceChildren();
     };
+  }, []);
+
+  useEffect(() => {
+    selectedTrackIdRef.current = selectedTrack.id;
+    const controller = embedControllerRef.current;
+    if (!controller || loadedTrackIdRef.current === selectedTrack.id) return;
+
+    controller.loadEntity(`spotify:track:${selectedTrack.id}`);
+    loadedTrackIdRef.current = selectedTrack.id;
+    setPlayerPaused(true);
   }, [selectedTrack.id]);
 
   const selectedIsLive = liveTrack?.id === selectedTrack.id;
   const status = selectedIsLive
     ? "SPOTIFY · LIVE"
     : `CURRENT ROTATION · ${formatRotationMonth(now)}`;
+  const playerState = playerFailed
+    ? "fallback"
+    : !playerReady
+      ? "loading"
+      : playerPaused
+        ? "ready"
+        : "playing";
 
   return (
     <article className="now-playing-program">
@@ -195,21 +228,31 @@ export function NowPlayingProgram({ now }: NowPlayingProgramProps) {
               );
             })}
           </ol>
-          <div className="now-playing-embed">
-            {playerFailed ? (
-              <iframe
-                className="now-playing-embed-fallback"
-                title={`Spotify player for ${selectedTrack.title} by ${selectedTrack.artist}`}
-                src={selectedTrack.embedUrl}
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          <div className="now-playing-embed" data-player-state={playerState}>
+            <div className="now-playing-player-header">
+              <span>Embedded playback</span>
+              <span
+                className="now-playing-player-indicator"
+                data-state={playerState}
+                aria-hidden="true"
               />
-            ) : (
-              <div
-                ref={embedHostRef}
-                className="now-playing-embed-host"
-                aria-label={`Spotify player for ${selectedTrack.title} by ${selectedTrack.artist}`}
-              />
-            )}
+            </div>
+            <div className="now-playing-player-well">
+              {playerFailed ? (
+                <iframe
+                  className="now-playing-embed-fallback"
+                  title={`Spotify player for ${selectedTrack.title} by ${selectedTrack.artist}`}
+                  src={selectedTrack.embedUrl}
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                />
+              ) : (
+                <div
+                  ref={embedHostRef}
+                  className="now-playing-embed-host"
+                  aria-label={`Spotify player for ${selectedTrack.title} by ${selectedTrack.artist}`}
+                />
+              )}
+            </div>
             <div className="now-playing-player-controls">
               {!playerFailed ? (
                 <button
@@ -230,7 +273,9 @@ export function NowPlayingProgram({ now }: NowPlayingProgramProps) {
                 {playerFailed
                   ? "Spotify player"
                   : playerReady
-                    ? "Ready"
+                    ? playerPaused
+                      ? "Ready"
+                      : "Playing"
                     : "Loading player…"}
               </span>
               <a

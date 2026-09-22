@@ -80,7 +80,13 @@ function MailScene({ shadow }: { shadow: string }) {
 }
 
 function PlacesScene({ shadow }: { shadow: string }) {
+  const contentClip = `${shadow}-navi-content`;
   return <>
+    <defs>
+      <clipPath id={contentClip}>
+        <rect x="25" y="137" width="578" height="214" />
+      </clipPath>
+    </defs>
     <rect width="640" height="360" fill="#f0efe9" />
     <g className="motion-navi-browser" filter={`url(#${shadow})`}>
       <rect x="-28" y="37" width="698" height="370" rx="12" fill="#fff" />
@@ -92,7 +98,7 @@ function PlacesScene({ shadow }: { shadow: string }) {
         <text x="218" y="72" fill="#69645f" fontSize="14">Where do you want to explore?</text>
       </g>
       <text x="25" y="117" fill="#272329" fontSize="21" fontWeight="700">Handpicked by us →</text>
-      <g className="motion-navi-neighbors">
+      <g className="motion-navi-neighbors" clipPath={`url(#${contentClip})`}>
         <image href="/projects/navi-demo/prospect-trees.jpg" x="-115" y="140" width="168" height="151" preserveAspectRatio="xMidYMid slice" />
         <image href="/projects/navi-demo/prospect-pond.jpg" x="435" y="140" width="168" height="151" preserveAspectRatio="xMidYMid slice" />
         <text x="435" y="314" fill="#272329" fontSize="13" fontWeight="650">Explore the neighborhood</text>

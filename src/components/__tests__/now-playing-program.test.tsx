@@ -2,11 +2,15 @@ import { fireEvent, render, screen, waitFor, within } from "@testing-library/rea
 import { act } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { NowPlayingTrack } from "@/lib/now-playing/catalog";
-import type { SpotifyEmbedController } from "@/lib/now-playing/spotify-embed";
+import type {
+  SpotifyEmbedController,
+  SpotifyEmbedEvent,
+} from "@/lib/now-playing/spotify-embed";
 
 const embedMocks = vi.hoisted(() => ({
-  listeners: new Map<string, (event?: unknown) => void>(),
+  listeners: new Map<string, (event?: SpotifyEmbedEvent) => void>(),
   togglePlay: vi.fn(),
+  loadEntity: vi.fn(),
   destroy: vi.fn(),
   createController: vi.fn(),
   loadSpotifyIframeApi: vi.fn(),
@@ -41,7 +45,7 @@ function apiResponse(track: NowPlayingTrack | null) {
   );
 }
 
-function emit(event: string, payload?: unknown) {
+function emit(event: string, payload?: SpotifyEmbedEvent) {
   act(() => embedMocks.listeners.get(event)?.(payload));
 }
 
@@ -49,15 +53,20 @@ describe("Now Playing program", () => {
   beforeEach(() => {
     embedMocks.listeners.clear();
     embedMocks.togglePlay.mockReset();
+    embedMocks.loadEntity.mockReset();
     embedMocks.destroy.mockReset();
     embedMocks.createController.mockReset();
     embedMocks.loadSpotifyIframeApi.mockReset();
 
     const controller = {
-      addListener: vi.fn((event: string, callback: (payload?: unknown) => void) => {
+      addListener: vi.fn((
+        event: "ready" | "playback_update",
+        callback: (payload?: SpotifyEmbedEvent) => void,
+      ) => {
         embedMocks.listeners.set(event, callback);
       }),
       togglePlay: embedMocks.togglePlay,
+      loadEntity: embedMocks.loadEntity,
       destroy: embedMocks.destroy,
     } satisfies SpotifyEmbedController;
 
@@ -110,6 +119,17 @@ describe("Now Playing program", () => {
     expect(screen.getByRole("link", { name: "Open in Spotify" })).toHaveAttribute(
       "href",
       expect.stringContaining("open.spotify.com/track/"),
+    );
+  });
+
+  it("shows an immediate embedded-playback shell while Spotify loads", () => {
+    const { container } = render(<NowPlayingProgram />);
+
+    expect(screen.getByText("Embedded playback")).toBeInTheDocument();
+    expect(screen.getByText("Loading player…")).toBeInTheDocument();
+    expect(container.querySelector(".now-playing-player-indicator")).toHaveAttribute(
+      "data-state",
+      "loading",
     );
   });
 
@@ -170,7 +190,7 @@ describe("Now Playing program", () => {
     );
   });
 
-  it("does not mark a cold Spotify player unavailable after only five seconds", async () => {
+  it("falls back to Spotify's standard player after a five-second readiness budget", async () => {
     vi.useFakeTimers();
     render(<NowPlayingProgram />);
 
@@ -180,15 +200,14 @@ describe("Now Playing program", () => {
     expect(embedMocks.createController).toHaveBeenCalledOnce();
 
     await act(async () => {
-      vi.advanceTimersByTime(5_001);
+      vi.advanceTimersByTime(4_999);
       await Promise.resolve();
     });
 
     expect(screen.getByText("Loading player…")).toBeInTheDocument();
-    expect(screen.queryByText("Player unavailable")).toBeNull();
 
     await act(async () => {
-      vi.advanceTimersByTime(10_000);
+      vi.advanceTimersByTime(1);
       await Promise.resolve();
     });
 
@@ -218,8 +237,11 @@ describe("Now Playing program", () => {
     expect(chosenRow).toHaveAttribute("aria-current", "true");
     expect(otherRow).toHaveAttribute("data-selected", "false");
     expect(otherRow?.querySelector("button, a")).toBeNull();
-    await waitFor(() => expect(embedMocks.createController).toHaveBeenCalledTimes(2));
-    expect(embedMocks.destroy).toHaveBeenCalledOnce();
+    await waitFor(() => expect(embedMocks.loadEntity).toHaveBeenCalledWith(
+      "spotify:track:6THzboswz9kc4gfkmTTePN",
+    ));
+    expect(embedMocks.createController).toHaveBeenCalledOnce();
+    expect(embedMocks.destroy).not.toHaveBeenCalled();
   });
 
   it("features an active Spotify track but lets a visitor lock a rotation choice", async () => {
