@@ -15,6 +15,17 @@ const validSvg = (artwork: string) => `<svg xmlns="http://www.w3.org/2000/svg" v
   ${artwork}
 </svg>`;
 
+describe("Now Playing icon masters", () => {
+  it.each(ICON_GRIDS)("validates the dedicated %ipx music-note master", (grid) => {
+    const source = readFileSync(
+      `docs/design-assets/myles98-icons/masters/now-playing/now-playing-${grid}.svg`,
+      "utf8",
+    );
+
+    expect(validateMasterSource(source, { concept: "now-playing", grid })).toEqual([]);
+  });
+});
+
 const REFINED_TARGET_METADATA = {
   "selected-work": {
     intendedObject: "open project dossier folder containing two project cards",
@@ -150,6 +161,7 @@ describe("Myles 98 icon master contract", () => {
       "open-apps",
       "reset-desktop",
       "generic-app",
+      "now-playing",
       "fresh-greens",
       "understandingfafsa",
       "navi",
@@ -345,6 +357,7 @@ describe("Myles 98 icon master contract", () => {
       "open-apps": { "16": "Two overlapping windows", "24": "Distinct titlebars", "32": "Two layered application windows with separate content panes" },
       "reset-desktop": REFINED_TARGET_METADATA["reset-desktop"].tiers,
       "generic-app": { "16": "Single application window", "24": "Blue titlebar and inner pane", "32": "Neutral program window with restrained chrome depth" },
+      "now-playing": { "16": "Compact single music note", "24": "Blue music note with warm accent and pixel depth", "32": "Dimensional single music note with warm Myles 98 accents" },
       "fresh-greens": REFINED_TARGET_METADATA["fresh-greens"].tiers,
       understandingfafsa: REFINED_TARGET_METADATA.understandingfafsa.tiers,
       navi: { "16": "Pointed location marker", "24": "Two-plane location marker above a roofed storefront with scalloped awning", "32": "Pointed two-plane marker with orange cue above storefront facade, awning, window, and door" },

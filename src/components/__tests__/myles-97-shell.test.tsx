@@ -112,18 +112,16 @@ describe("Myles98 product shell", () => {
     expect(screen.getAllByRole("link", { name: /Read .* case study/ })).toHaveLength(4);
   });
 
-  it("preloads one universal above-fold cover candidate", () => {
+  it("renders one source-based thumbnail for every project", () => {
     const { container } = render(
       <Myles97Shell programs={programs} looseParts={looseParts} />,
     );
-    const preloadSources = Array.from(
-      container.querySelectorAll<HTMLImageElement>(
-        '.myles97-program-cover img[data-preload="true"]',
-      ),
-      (image) => image.getAttribute("src"),
-    );
 
-    expect(preloadSources).toEqual(["/projects/fresh-greens/cover.png"]);
+    expect(
+      Array.from(container.querySelectorAll(".product-thumbnail"), (thumbnail) =>
+        thumbnail.getAttribute("data-project"),
+      ),
+    ).toEqual(programs.map((program) => program.id));
   });
 
   it("focuses Work Stuff and launches a project program while preserving a native case-study link", async () => {
@@ -176,7 +174,7 @@ describe("Myles98 product shell", () => {
       ),
     );
 
-    expect(startMenuMasters).toHaveLength(8);
+    expect(startMenuMasters).toHaveLength(9);
     expect(
       startMenuMasters.map((master) => master.getAttribute("href")),
     ).toEqual([
@@ -184,6 +182,7 @@ describe("Myles98 product shell", () => {
       "/myles98-icons/about-myles/about-myles-24.svg",
       "/myles98-icons/loose-parts/loose-parts-24.svg",
       "/myles98-icons/resume/resume-24.svg",
+      "/myles98-icons/now-playing/now-playing-24.svg",
       "/myles98-icons/email/email-24.svg",
       "/myles98-icons/display-properties/display-properties-24.svg",
       "/myles98-icons/paintbrush/paintbrush-24.svg",
@@ -204,6 +203,7 @@ describe("Myles98 product shell", () => {
     expect(within(startMenu).getByRole("button", { name: "About Myles" })).toBeInTheDocument();
     expect(within(startMenu).getByRole("button", { name: "Loose Parts" })).toBeInTheDocument();
     expect(within(startMenu).getByRole("button", { name: "Résumé" })).toBeInTheDocument();
+    expect(within(startMenu).getByRole("button", { name: "Now Playing" })).toBeInTheDocument();
     expect(within(startMenu).getByRole("link", { name: "E-mail" })).toHaveAttribute(
       "href",
       "mailto:mylesashitey@gmail.com",
@@ -217,6 +217,38 @@ describe("Myles98 product shell", () => {
     expect(taskbar).not.toHaveAttribute("inert");
     await waitFor(() => expect(startButton).toHaveFocus());
     expect(screen.getByRole("region", { name: "Welcome to Myles 98" })).toBeInTheDocument();
+  });
+
+  it("launches Now Playing from Start without adding it to the initial desktop", async () => {
+    const user = userEvent.setup();
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(
+        new Response(JSON.stringify({ liveTrack: null }), {
+          headers: { "Content-Type": "application/json" },
+        }),
+      ),
+    );
+    render(<Myles97Shell programs={programs} looseParts={looseParts} />);
+
+    expect(screen.queryByRole("region", { name: "Now Playing" })).toBeNull();
+    await user.click(screen.getByRole("button", { name: "Start" }));
+    await user.click(
+      within(screen.getByRole("dialog", { name: "Start" })).getByRole("button", {
+        name: "Now Playing",
+      }),
+    );
+
+    const window = screen.getByRole("region", { name: "Now Playing" });
+    expect(window).toHaveAttribute("data-focused", "true");
+    expect(window).toHaveStyle({ height: "640px" });
+    expect(
+      within(window).getByRole("heading", { name: "What's been on repeat." }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Now Playing", pressed: true }),
+    ).toBeInTheDocument();
+    vi.unstubAllGlobals();
   });
 
   it("closes Start with the pointer and restores focus after releasing the desktop", async () => {

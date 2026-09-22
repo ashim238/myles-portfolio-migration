@@ -83,6 +83,12 @@ Update central settings in `src/lib/site-config.ts`:
 - email address
 - header kicker text
 
+## Spotify Now Playing
+
+The Now Playing program uses a curated rotation by default and can feature an active Spotify track when server credentials are configured. Playback remains paused until a visitor uses Spotify's embedded control.
+
+See [`docs/spotify-now-playing-setup.md`](docs/spotify-now-playing-setup.md) for the server-only environment variables, minimum scope, and safe setup process.
+
 ## Keep code clean
 
 - Reuse shared navigation and styles instead of duplicating route logic.

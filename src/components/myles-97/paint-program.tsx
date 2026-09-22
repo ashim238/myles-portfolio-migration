@@ -79,7 +79,7 @@ export function PaintProgram() {
   };
 
   return (
-    <section className="myles97-paint" aria-label="MDT Paint">
+    <section className="myles97-paint" aria-label="Paint">
       <div className="myles97-paint-toolbar" role="toolbar" aria-label="Paint tools">
         <button
           type="button"

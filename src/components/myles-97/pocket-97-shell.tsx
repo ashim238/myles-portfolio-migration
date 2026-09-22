@@ -9,6 +9,7 @@ import {
 } from "@/components/myles-97/focus-management";
 import { iconForProgram, Myles97Icon } from "@/components/myles-97/icons";
 import type { LoosePartSummary } from "@/components/myles-97/loose-parts-program";
+import { NowPlayingProgram } from "@/components/myles-97/now-playing-program";
 import { PaintProgram } from "@/components/myles-97/paint-program";
 import { ProjectProgram } from "@/components/myles-97/project-program";
 import { RecipeNoteProgram } from "@/components/myles-97/recipe-note";
@@ -76,7 +77,8 @@ export function Pocket97Shell({
     if (isSecondaryProgram(id)) return secondaryTitles[id];
     if (id === "trini-roti") return "Buss Up Shut.txt";
     if (id === "display-properties") return "Display Properties";
-    if (id === "paint") return "MDT Paint";
+    if (id === "paint") return "Paint";
+    if (id === "now-playing") return "Now Playing";
     return id === "welcome" ? "Welcome" : "Work Stuff";
   };
 
@@ -136,7 +138,11 @@ export function Pocket97Shell({
   }, [activeProgram, programFocusRequest]);
 
   const recentPrograms = state.recentPrograms.filter(
-    (id) => id !== "welcome" && id !== "selected-work" && id !== "reminders",
+    (id) =>
+      id !== "welcome" &&
+      id !== "selected-work" &&
+      id !== "reminders" &&
+      id !== "now-playing",
   );
 
   const activeProject = activeProgram
@@ -193,6 +199,8 @@ export function Pocket97Shell({
                 />
               ) : activeProgram === "paint" ? (
                 <PaintProgram />
+              ) : activeProgram === "now-playing" ? (
+                <NowPlayingProgram />
               ) : isSecondaryProgram(activeProgram) ? (
                 <SecondaryProgram id={activeProgram} looseParts={looseParts} />
               ) : null}
@@ -260,13 +268,17 @@ export function Pocket97Shell({
             <Myles97Icon name="resume" size={24} variant="color" aria-hidden="true" />
             Résumé
           </button>
+          <button type="button" onClick={() => openProgram("now-playing")}>
+            <Myles97Icon name="music" size={24} variant="color" aria-hidden="true" />
+            Now Playing
+          </button>
           <button type="button" onClick={() => openProgram("display-properties")}>
             <Myles97Icon name="display" size={24} variant="color" aria-hidden="true" />
             Display Properties
           </button>
           <button type="button" onClick={() => openProgram("paint")}>
             <Myles97Icon name="paintbrush" size={24} variant="color" aria-hidden="true" />
-            MDT Paint
+            Paint
           </button>
           <a
             href={`mailto:${siteConfig.email}`}

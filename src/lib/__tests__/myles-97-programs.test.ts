@@ -3,6 +3,7 @@ import {
   buildProgramRegistry,
   isProgramId,
   PROJECT_PROGRAM_BLUEPRINTS,
+  SYSTEM_PROGRAM_IDS,
 } from "@/lib/myles-97/programs";
 import type { Project } from "@/lib/content";
 
@@ -63,6 +64,8 @@ describe("Myles 98 program registry", () => {
     expect(isProgramId("fresh-greens")).toBe(true);
     expect(isProgramId("display-properties")).toBe(true);
     expect(isProgramId("reminders")).toBe(true);
+    expect(isProgramId("now-playing")).toBe(true);
     expect(isProgramId("not-a-program")).toBe(false);
+    expect(SYSTEM_PROGRAM_IDS).toContain("now-playing");
   });
 });

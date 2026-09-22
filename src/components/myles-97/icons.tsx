@@ -16,7 +16,8 @@ export type Myles97IconName =
   | "fresh-greens"
   | "fafsa"
   | "navi"
-  | "tiktok";
+  | "tiktok"
+  | "music";
 
 export type Myles97IconVariant = "mono" | "color";
 export type Myles97IconTier = "chrome" | "menu" | "discovery";
@@ -75,6 +76,8 @@ export function iconForProgram(id: string): Myles97IconName {
       return "navi";
     case "tiktok":
       return "tiktok";
+    case "now-playing":
+      return "music";
     case "selected-work":
       return "folder";
     case "about":
@@ -113,6 +116,7 @@ const MASTER_CONCEPT_BY_ICON: Record<Myles97IconName, string> = {
   fafsa: "understandingfafsa",
   navi: "navi",
   tiktok: "tiktok-catalog",
+  music: "now-playing",
 };
 
 function masterSourceFor(
@@ -197,6 +201,7 @@ const SIDE_TONE_BY_ICON: Record<Myles97IconName, string> = {
   fafsa: "#788190",
   navi: "#b74624",
   tiktok: "#3a3a3a",
+  music: "#0d2157",
 };
 
 function depthPlaneSpec(
@@ -301,6 +306,12 @@ function depthPlaneSpec(
           side: ["M3 19H22V20H3Z", "M21 5H22V19H21Z"],
           highlight: ["M2 4H21V5H2Z", "M2 5H3V19H2Z"],
         };
+      case "music":
+        return {
+          castShadow: ["M5 21H12V23H5Z", "M20 6H23V10H20Z"],
+          side: ["M4 19H11V21H4Z", "M18 5H22V7H18Z"],
+          highlight: ["M10 2H16V3H10Z", "M10 3H11V17H10Z"],
+        };
     }
   }
 
@@ -400,6 +411,12 @@ function depthPlaneSpec(
         castShadow: ["M5 28H31V30H5Z", "M30 7H31V28H30Z"],
         side: ["M3 27H30V28H3Z", "M28 6H30V27H28Z"],
         highlight: ["M2 5H29V6H2Z", "M2 6H3V27H2Z"],
+      };
+    case "music":
+      return {
+        castShadow: ["M6 28H16V31H6Z", "M27 8H31V13H27Z"],
+        side: ["M4 25H15V29H4Z", "M24 6H29V9H24Z"],
+        highlight: ["M13 2H21V3H13Z", "M13 3H14V22H13Z"],
       };
   }
 }
@@ -583,6 +600,13 @@ function renderChromeGlyph(
           <rect x="3" y="8" width="3" height="4" {...accent(palette, palette.cyan)} />
           <rect x="7" y="8" width="3" height="4" {...secondaryAccent(palette, palette.magenta)} />
           <rect x="11" y="8" width="2" height="4" {...tertiaryAccent(palette, palette.yellow)} />
+        </>
+      );
+    case "music":
+      return (
+        <>
+          <path d="M6 1h4v2h3v4h-3v5c0 2-2 3-4 3H3v-4h3z" {...accent(palette, palette.blue)} />
+          <rect x="7" y="2" width="1" height="8" {...secondaryAccent(palette, palette.yellow)} />
         </>
       );
   }
@@ -777,6 +801,14 @@ function renderMenuGlyph(
           <path d="M5 6h3M10 6h3" {...line(palette, palette.paper)} />
         </>
       );
+    case "music":
+      return (
+        <>
+          <path d="M10 2h6v2h5v6h-5v8c0 3-3 4-7 4H4v-6h6z" {...accent(palette, palette.blue)} />
+          <rect x="12" y="3" width="2" height="13" {...secondaryAccent(palette, palette.yellow)} />
+          <rect x="6" y="17" width="5" height="3" {...tertiaryAccent(palette, palette.orange)} />
+        </>
+      );
   }
 }
 
@@ -967,6 +999,14 @@ function renderDiscoveryGlyph(
           <rect x="13" y="16" width="6" height="8" {...secondaryAccent(palette, palette.magenta)} />
           <rect x="20" y="16" width="6" height="8" {...tertiaryAccent(palette, palette.yellow)} />
           <path d="M6 8h5M13 8h5" {...line(palette, palette.paper)} />
+        </>
+      );
+    case "music":
+      return (
+        <>
+          <path d="M13 2h8v3h8v8h-8v11c0 4-4 6-9 6H5v-8h8z" {...accent(palette, palette.blue)} />
+          <rect x="16" y="3" width="2" height="19" {...secondaryAccent(palette, palette.yellow)} />
+          <rect x="7" y="23" width="7" height="4" {...tertiaryAccent(palette, palette.orange)} />
         </>
       );
   }

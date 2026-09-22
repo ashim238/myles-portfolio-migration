@@ -215,6 +215,8 @@ describe("Myles 98 desktop content fit", () => {
           child.right <= parent.right &&
           child.bottom <= parent.bottom &&
           child.left >= parent.left;
+        const list = element.querySelector<HTMLElement>(".myles97-selected-work-list");
+        if (!list) throw new Error("Missing selected work list");
         const actions = Array.from(
           element.querySelectorAll<HTMLElement>(
             ".myles97-case-study-link, .myles97-program-launch",
@@ -223,25 +225,27 @@ describe("Myles 98 desktop content fit", () => {
         const covers = Array.from(
           element.querySelectorAll<HTMLElement>(".myles97-program-cover"),
         );
-        const images = Array.from(
-          element.querySelectorAll<HTMLImageElement>(".myles97-program-cover img"),
-        );
+        const listRect = list.getBoundingClientRect();
+        const visibleCount = (items: HTMLElement[]) =>
+          items.filter((item) => {
+            const rect = item.getBoundingClientRect();
+            return inside(rect, contentRect) && inside(rect, listRect);
+          }).length;
+        const initialVisibleActions = visibleCount(actions);
+        const initialVisibleCovers = visibleCount(covers);
+        const listHasVerticalOverflow = list.scrollHeight > list.clientHeight;
+
+        list.scrollTop = list.scrollHeight;
+
         return {
           noHorizontalScroll: element.scrollWidth === element.clientWidth,
           noVerticalScroll: element.scrollHeight === element.clientHeight,
-          visibleActions: actions.filter((action) =>
-            inside(action.getBoundingClientRect(), contentRect),
-          ).length,
-          visibleCovers: covers.filter((cover) =>
-            inside(cover.getBoundingClientRect(), contentRect),
-          ).length,
-          loadedImages: images.filter(
-            (image) =>
-              image.complete &&
-              image.naturalWidth > 0 &&
-              getComputedStyle(image).objectFit === "contain" &&
-              inside(image.getBoundingClientRect(), contentRect),
-          ).length,
+          listHasVerticalOverflow,
+          totalThumbnails: element.querySelectorAll(".product-thumbnail-scene").length,
+          initialVisibleActions,
+          initialVisibleCovers,
+          finalVisibleActions: visibleCount(actions),
+          finalVisibleCovers: visibleCount(covers),
         };
       });
       const welcomeFit = await contentFit(
@@ -254,9 +258,12 @@ describe("Myles 98 desktop content fit", () => {
       expect(selectedGeometry).toEqual({
         noHorizontalScroll: true,
         noVerticalScroll: true,
-        visibleActions: programs.length * 2,
-        visibleCovers: programs.length,
-        loadedImages: programs.length,
+        listHasVerticalOverflow: true,
+        totalThumbnails: programs.length,
+        initialVisibleActions: 4,
+        initialVisibleCovers: 2,
+        finalVisibleActions: programs.length * 2,
+        finalVisibleCovers: 2,
       });
       expect(welcomeFit).toEqual({
         noHorizontalScroll: true,

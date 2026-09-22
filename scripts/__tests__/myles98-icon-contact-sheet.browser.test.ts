@@ -92,12 +92,12 @@ describe("Myles 98 icon contact sheet browser rendering", () => {
     });
 
     expect(result.mode).toBe("labeled");
-    expect(result.labeledCards).toBe(144);
+    expect(result.labeledCards).toBe(153);
     expect(result.magnifiedSvgCount).toBe(0);
-    expect(result.magnifiedCanvasCount).toBe(288);
+    expect(result.magnifiedCanvasCount).toBe(306);
     expect(result.pixelBlocksAreUniform).toBe(true);
     for (const [surface, color] of surfaces) {
-      expect(result.surfaceResult[surface]).toHaveLength(96);
+      expect(result.surfaceResult[surface]).toHaveLength(102);
       expect(new Set(result.surfaceResult[surface])).toEqual(new Set([color]));
     }
     await page.close();
@@ -150,11 +150,11 @@ describe("Myles 98 icon contact sheet browser rendering", () => {
 
     expect(result.mode).toBe("unlabeled");
     expect(result.bodyVisible).toBe(true);
-    expect(result.blindCards).toBe(144);
-    expect(result.blindFamilies).toHaveLength(48);
-    expect(new Set(result.blindFamilies.map((family) => family.id))).toHaveLength(16);
-    expect(result.blindFamilies.slice(0, 16).map((family) => family.id)).toEqual(
-      result.blindFamilies.slice(16, 32).map((family) => family.id),
+    expect(result.blindCards).toBe(153);
+    expect(result.blindFamilies).toHaveLength(51);
+    expect(new Set(result.blindFamilies.map((family) => family.id))).toHaveLength(17);
+    expect(result.blindFamilies.slice(0, 17).map((family) => family.id)).toEqual(
+      result.blindFamilies.slice(17, 34).map((family) => family.id),
     );
     for (const family of result.blindFamilies) expect(family.grids).toEqual(["16", "24", "32"]);
     expect(result.labeledCardsVisible).toBe(0);
@@ -162,7 +162,7 @@ describe("Myles 98 icon contact sheet browser rendering", () => {
     expect(result.earlyLabeledStates).toHaveLength(1);
     expect(result.earlyLabeledStates).toEqual([{ mode: "unlabeled", display: "none" }]);
     for (const [surface, color] of surfaces) {
-      expect(result.blindWells[surface]).toHaveLength(96);
+      expect(result.blindWells[surface]).toHaveLength(102);
       expect(new Set(result.blindWells[surface])).toEqual(new Set([color]));
     }
     await page.close();

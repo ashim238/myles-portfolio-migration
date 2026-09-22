@@ -311,6 +311,9 @@ describe("Pocket 98", () => {
     expect(document.querySelector(".pocket97-stage")).toHaveAttribute("inert");
     expect(dock).toHaveAttribute("inert");
     expect(firstAction).toHaveFocus();
+    expect(
+      within(startSheet).getByRole("button", { name: "Now Playing" }),
+    ).toBeInTheDocument();
 
     await user.tab({ shift: true });
     expect(lastAction).toHaveFocus();
@@ -332,6 +335,35 @@ describe("Pocket 98", () => {
     await waitFor(() => {
       expect(within(dock).getByRole("button", { name: "Work" })).toHaveFocus();
     });
+  });
+
+  it("opens Now Playing as a Pocket 98 app", async () => {
+    installMatchMedia(true);
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(
+        new Response(JSON.stringify({ liveTrack: null }), {
+          headers: { "Content-Type": "application/json" },
+        }),
+      ),
+    );
+    const user = userEvent.setup();
+    render(<Myles97Shell programs={programs} looseParts={looseParts} />);
+
+    const dock = await screen.findByRole("navigation", { name: "Pocket 98 dock" });
+    await user.click(within(dock).getByRole("button", { name: "Start" }));
+    await user.click(
+      within(screen.getByRole("dialog", { name: "Pocket 98 Start" })).getByRole(
+        "button",
+        { name: "Now Playing" },
+      ),
+    );
+
+    const app = screen.getByRole("region", { name: /Now Playing/ });
+    expect(
+      within(app).getByRole("heading", { name: "What's been on repeat." }),
+    ).toBeInTheDocument();
+    expect(within(app).getByRole("button", { name: "Back" })).toHaveFocus();
   });
 
   it("offers a touch dismissal action for Start and restores its opener", async () => {

@@ -37,6 +37,7 @@ const MASTER_CONCEPT_BY_ICON: Record<Myles97IconName, string> = {
   fafsa: "understandingfafsa",
   navi: "navi",
   tiktok: "tiktok-catalog",
+  music: "now-playing",
 };
 
 const COLOR_ICON_NAMES = Object.keys(MASTER_CONCEPT_BY_ICON) as Myles97IconName[];
@@ -71,6 +72,7 @@ describe("Myles 98 program icon identity", () => {
     expect(iconForProgram("resume")).toBe("resume");
     expect(iconForProgram("trini-roti")).toBe("recipe");
     expect(iconForProgram("reminders")).toBe("document");
+    expect(iconForProgram("now-playing")).toBe("music");
   });
 
   it("maps rendered sizes onto explicit chrome, menu, and discovery drawings", () => {
@@ -278,7 +280,7 @@ describe("Myles 98 program icon identity", () => {
     );
 
     expect(publicFiles.sort()).toEqual(documentedFiles.sort());
-    expect(publicFiles).toHaveLength(51);
+    expect(publicFiles).toHaveLength(54);
 
     for (const path of publicFiles) {
       expect(readFileSync(resolve(publicRoot, path), "utf8")).toBe(
@@ -305,6 +307,7 @@ describe("Myles 98 program icon identity", () => {
       "fafsa",
       "navi",
       "tiktok",
+      "music",
     ];
     const sizes = [16, 20, 32];
     const { container } = render(
@@ -375,6 +378,7 @@ describe("Myles 98 program icon identity", () => {
       "fafsa",
       "navi",
       "tiktok",
+      "music",
     ];
     render(
       createElement(
@@ -487,6 +491,7 @@ describe("Myles 98 program icon identity", () => {
       "fafsa",
       "navi",
       "tiktok",
+      "music",
     ];
     const { container } = render(
       createElement(

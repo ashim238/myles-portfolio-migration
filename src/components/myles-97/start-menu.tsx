@@ -114,6 +114,10 @@ export function StartMenu({
           <Myles97Icon name="resume" size={24} variant="color" aria-hidden="true" />
           <span>Résumé</span>
         </button>
+        <button type="button" onClick={() => openThenClose("now-playing")}>
+          <Myles97Icon name="music" size={24} variant="color" aria-hidden="true" />
+          <span>Now Playing</span>
+        </button>
         <a href={`mailto:${siteConfig.email}`} onClick={onClose}>
           <Myles97Icon name="mail" size={24} variant="color" aria-hidden="true" />
           <span>E-mail</span>
@@ -124,7 +128,7 @@ export function StartMenu({
         </button>
         <button type="button" onClick={() => openThenClose("paint")}>
           <Myles97Icon name="paintbrush" size={24} variant="color" aria-hidden="true" />
-          <span>MDT Paint</span>
+          <span>Paint</span>
         </button>
         <div className="myles97-start-menu-separator" aria-hidden="true" />
         <button

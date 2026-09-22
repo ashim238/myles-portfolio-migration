@@ -104,12 +104,12 @@ function overlaps(first: ReturnType<typeof windowRect>, second: ReturnType<typeo
 }
 
 describe("Myles 98 desktop initial composition", () => {
-  it("uses the dedicated paintbrush artwork for the MDT Paint desktop shortcut", () => {
+  it("uses the dedicated paintbrush artwork for the Paint desktop shortcut", () => {
     render(<DesktopHarness />);
 
     const shortcut = within(
       screen.getByRole("navigation", { name: "Desktop shortcuts" }),
-    ).getByRole("button", { name: "MDT Paint" });
+    ).getByRole("button", { name: "Paint" });
 
     expect(
       shortcut.querySelector("image[data-m98-icon-master]")?.getAttribute("href"),

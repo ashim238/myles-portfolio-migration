@@ -14,13 +14,19 @@ const DEFAULT_DISPLAY: DisplayPreferences = {
   reduceMotion: false,
 };
 
+const EPHEMERAL_PROGRAMS = new Set<ProgramId>(["now-playing"]);
+
+function isPersistableProgram(id: ProgramId): boolean {
+  return !EPHEMERAL_PROGRAMS.has(id);
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
 
 function parsePrograms(value: unknown): ProgramId[] {
   if (!Array.isArray(value)) return [];
-  return Array.from(new Set(value.filter(isProgramId)));
+  return Array.from(new Set(value.filter(isProgramId))).filter(isPersistableProgram);
 }
 
 function parseGeometry(value: unknown): Partial<Record<ProgramId, WindowGeometry>> {
@@ -28,7 +34,7 @@ function parseGeometry(value: unknown): Partial<Record<ProgramId, WindowGeometry
   const geometry: Partial<Record<ProgramId, WindowGeometry>> = {};
 
   for (const [id, entry] of Object.entries(value)) {
-    if (!isProgramId(id) || !isRecord(entry)) continue;
+    if (!isProgramId(id) || !isPersistableProgram(id) || !isRecord(entry)) continue;
     const { x, y, width, height } = entry;
     if (![x, y, width, height].every((part) => typeof part === "number" && Number.isFinite(part))) {
       continue;
@@ -123,7 +129,7 @@ export function saveLocalWorkstation(state: WorkstationState): void {
       JSON.stringify({
         version: 1,
         bootCompleted: state.bootCompleted,
-        recentPrograms: state.recentPrograms,
+        recentPrograms: state.recentPrograms.filter(isPersistableProgram),
         displayPreferences: state.displayPreferences,
       }),
     );
@@ -135,14 +141,26 @@ export function saveLocalWorkstation(state: WorkstationState): void {
 export function saveSessionWorkstation(state: WorkstationState): void {
   if (typeof window === "undefined") return;
   try {
+    const openPrograms = state.openPrograms.filter(isPersistableProgram);
+    const minimizedPrograms = state.minimizedPrograms.filter(isPersistableProgram);
+    const focusedProgram =
+      state.focusedProgram && isPersistableProgram(state.focusedProgram)
+        ? state.focusedProgram
+        : fallbackFocus(openPrograms, minimizedPrograms);
+    const windowGeometry = Object.fromEntries(
+      Object.entries(state.windowGeometry).filter(
+        ([id]) => isProgramId(id) && isPersistableProgram(id),
+      ),
+    );
+
     window.sessionStorage.setItem(
       SESSION_WORKSTATION_KEY,
       JSON.stringify({
         version: 1,
-        openPrograms: state.openPrograms,
-        minimizedPrograms: state.minimizedPrograms,
-        focusedProgram: state.focusedProgram,
-        windowGeometry: state.windowGeometry,
+        openPrograms,
+        minimizedPrograms,
+        focusedProgram,
+        windowGeometry,
         desktopScrollY: state.desktopScrollY,
       }),
     );

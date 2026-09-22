@@ -355,20 +355,84 @@
 }
 
 .myles97-error-shell {
+  position: relative;
+  isolation: isolate;
   display: grid;
   min-height: 100svh;
+  overflow: hidden;
   place-items: center;
   padding: 24px;
-  background: var(--m97-desktop);
+  background:
+    radial-gradient(
+      ellipse at 18% 16%,
+      rgb(121 216 209 / 17%) 0%,
+      rgb(121 216 209 / 5%) 34%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse at 82% 84%,
+      rgb(7 27 42 / 28%) 0%,
+      transparent 52%
+    ),
+    linear-gradient(
+      132deg,
+      transparent 0 52%,
+      rgb(7 33 43 / 8%) 52% 68%,
+      transparent 68% 100%
+    ),
+    radial-gradient(circle, rgb(255 255 255 / 9%) 1px, transparent 1.5px),
+    linear-gradient(rgb(255 255 255 / 3.5%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 3.5%) 1px, transparent 1px),
+    var(--m97-desktop);
+  background-size:
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    16px 16px,
+    64px 64px,
+    64px 64px,
+    auto;
   color: var(--m97-ink);
   font-family: var(--m97-ui-font);
 }
 
+.myles97-error-shell::before {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  z-index: -1;
+  color: rgb(3 31 39 / 14%);
+  content: "M98";
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: -0.08em;
+  line-height: 0.72;
+  pointer-events: none;
+  text-shadow: 1px 1px 0 rgb(255 255 255 / 4%);
+  transform: translateX(-50%) skewX(-8deg);
+}
+
 .myles97-system-dialog {
+  position: relative;
+  z-index: 1;
   width: min(520px, 100%);
   border: 2px solid var(--m97-ink);
   background: var(--m97-chrome);
   box-shadow: 6px 7px 0 rgb(17 17 17 / 28%);
+}
+
+@keyframes myles97-error-dialog-settle {
+  from {
+    opacity: 1;
+    transform: translateY(8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .myles97-system-dialog-titlebar {
@@ -502,6 +566,17 @@
     background: Highlight;
     color: HighlightText;
   }
+
+  .myles97-error-shell::before {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .myles97-system-dialog {
+    animation: myles97-error-dialog-settle 250ms cubic-bezier(0.23, 1, 0.32, 1)
+      both;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -509,5 +584,11 @@
   .myles97-reminders-widget {
     transform: none;
     transition: none;
+  }
+
+  .myles97-system-dialog {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }

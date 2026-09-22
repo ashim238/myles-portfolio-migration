@@ -39,13 +39,13 @@ describe("Myles 98 icon contact sheet", () => {
     const labeled = document.querySelector<HTMLElement>('[data-review-mode="labeled"]');
 
     expect(labeled).not.toBeNull();
-    expect(document.querySelectorAll("[data-master]")).toHaveLength(48 * 3);
+    expect(document.querySelectorAll("[data-master]")).toHaveLength(51 * 3);
 
     for (const [surface, color] of Object.entries(surfaceColors)) {
       const section = document.querySelector<HTMLElement>(`#surface-${surface}`);
       expect(section).not.toBeNull();
       expect(section?.dataset.surfaceColor).toBe(color);
-      expect(section?.querySelectorAll("[data-master]")).toHaveLength(48);
+      expect(section?.querySelectorAll("[data-master]")).toHaveLength(51);
     }
 
     for (const icon of manifest.icons) {
@@ -91,12 +91,12 @@ describe("Myles 98 icon contact sheet", () => {
     const firstIds = firstFamilies.map((family) => family.dataset.reviewFamilyId);
     const secondIds = secondFamilies.map((family) => family.dataset.reviewFamilyId);
 
-    expect(firstFamilies).toHaveLength(16 * 3);
+    expect(firstFamilies).toHaveLength(17 * 3);
     expect(firstIds).toEqual(secondIds);
-    expect(new Set(firstIds)).toHaveLength(16);
-    expect(firstIds).toEqual(expect.arrayContaining(["M98-F001", "M98-F016"]));
-    expect(firstFamilies.slice(0, 16).map((family) => family.dataset.reviewFamilyId)).toEqual(
-      firstFamilies.slice(16, 32).map((family) => family.dataset.reviewFamilyId),
+    expect(new Set(firstIds)).toHaveLength(17);
+    expect(firstIds).toEqual(expect.arrayContaining(["M98-F001", "M98-F017"]));
+    expect(firstFamilies.slice(0, 17).map((family) => family.dataset.reviewFamilyId)).toEqual(
+      firstFamilies.slice(17, 34).map((family) => family.dataset.reviewFamilyId),
     );
     for (const family of firstFamilies) {
       expect([...family.querySelectorAll<HTMLElement>("[data-review-grid]")].map((card) => card.dataset.reviewGrid))
@@ -138,7 +138,7 @@ describe("Myles 98 icon contact sheet", () => {
     const completeFamilies = createBlindReviewFamilies(
       manifest.icons.flatMap((icon: { id: string }) => ICON_GRIDS.map((grid) => ({ concept: icon.id, grid }))),
     );
-    expect(completeFamilies).toHaveLength(16);
+    expect(completeFamilies).toHaveLength(17);
     expect(new Set(completeFamilies.map((family) => family.concept))).toEqual(new Set(manifest.icons.map((icon: { id: string }) => icon.id)));
     expect(completeFamilies.every((family) => family.masters.map((master) => master.grid).join(",") === "16,24,32")).toBe(true);
   });

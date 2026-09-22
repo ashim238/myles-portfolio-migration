@@ -89,4 +89,51 @@ describe("Myles 97 persistence", () => {
     expect(restored.minimizedPrograms).toEqual([]);
     expect(restored.focusedProgram).toBe("selected-work");
   });
+
+  it("keeps Now Playing ephemeral across page loads", () => {
+    const state: WorkstationState = {
+      ...createInitialWorkstationState(),
+      openPrograms: ["selected-work", "welcome", "now-playing"],
+      minimizedPrograms: ["now-playing"],
+      focusedProgram: "now-playing",
+      recentPrograms: ["welcome", "now-playing"],
+      windowGeometry: {
+        "now-playing": { x: 120, y: 48, width: 804, height: 640 },
+      },
+    };
+
+    saveLocalWorkstation(state);
+    saveSessionWorkstation(state);
+
+    const savedLocal = JSON.parse(
+      localStorage.getItem(LOCAL_WORKSTATION_KEY) ?? "{}",
+    );
+    const savedSession = JSON.parse(
+      sessionStorage.getItem(SESSION_WORKSTATION_KEY) ?? "{}",
+    );
+
+    expect(savedLocal.recentPrograms).not.toContain("now-playing");
+    expect(savedSession.openPrograms).not.toContain("now-playing");
+    expect(savedSession.minimizedPrograms).not.toContain("now-playing");
+    expect(savedSession.focusedProgram).toBe("welcome");
+    expect(savedSession.windowGeometry).not.toHaveProperty("now-playing");
+
+    sessionStorage.setItem(
+      SESSION_WORKSTATION_KEY,
+      JSON.stringify({
+        version: 1,
+        openPrograms: ["selected-work", "now-playing"],
+        minimizedPrograms: [],
+        focusedProgram: "now-playing",
+        windowGeometry: {
+          "now-playing": { x: 120, y: 48, width: 804, height: 640 },
+        },
+      }),
+    );
+
+    const restored = loadPersistedWorkstation();
+    expect(restored.openPrograms).toEqual(["selected-work"]);
+    expect(restored.focusedProgram).toBe("selected-work");
+    expect(restored.windowGeometry).not.toHaveProperty("now-playing");
+  });
 });

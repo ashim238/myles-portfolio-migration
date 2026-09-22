@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState, type Dispatch } from "react";
 import { animate } from "motion";
 import { DisplayProperties } from "@/components/myles-97/display-properties";
 import { Myles97Icon } from "@/components/myles-97/icons";
+import { NowPlayingProgram } from "@/components/myles-97/now-playing-program";
 import { PaintProgram } from "@/components/myles-97/paint-program";
 import type { LoosePartSummary } from "@/components/myles-97/loose-parts-program";
 import { ProgramWindow } from "@/components/myles-97/program-window";
@@ -50,6 +51,7 @@ const defaultGeometry: Partial<Record<ProgramId, WindowGeometry>> = {
   "trini-roti": { x: 472, y: 92, width: 520, height: 560 },
   "display-properties": { x: 504, y: 168, width: 448, height: 456 },
   paint: { x: 372, y: 144, width: 454, height: 408 },
+  "now-playing": { x: 238, y: 16, width: 804, height: 640 },
 };
 
 const secondaryTitles: Record<SecondaryProgramId, string> = {
@@ -307,7 +309,7 @@ export function WorkstationDesktop({
           </button>
           <button type="button" onClick={() => openProgram("paint")}>
             <Myles97Icon name="paintbrush" size={32} variant="color" aria-hidden="true" />
-            <span>MDT Paint</span>
+            <span>Paint</span>
           </button>
         </nav>
 
@@ -393,8 +395,20 @@ export function WorkstationDesktop({
 
           if (id === "paint") {
             return (
-              <ProgramWindow key={id} {...props} title="MDT Paint">
+              <ProgramWindow key={id} {...props} title="Paint">
                 <PaintProgram />
+              </ProgramWindow>
+            );
+          }
+
+          if (id === "now-playing") {
+            return (
+              <ProgramWindow
+                key={id}
+                {...props}
+                title="Now Playing"
+              >
+                <NowPlayingProgram />
               </ProgramWindow>
             );
           }

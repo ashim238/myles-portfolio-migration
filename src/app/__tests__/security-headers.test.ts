@@ -46,12 +46,20 @@ describe("release security headers", () => {
     expect(contentSecurityPolicy).toContain(
       "script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com",
     );
+    expect(contentSecurityPolicy).toContain("https://open.spotify.com");
     expect(contentSecurityPolicy).toContain("style-src 'self' 'unsafe-inline'");
     expect(contentSecurityPolicy).toContain("img-src 'self' data: blob:");
     expect(contentSecurityPolicy).toContain("https://*.basemaps.cartocdn.com");
+    expect(contentSecurityPolicy).toContain("https://*.spotifycdn.com");
+    expect(contentSecurityPolicy).toContain("https://i.scdn.co");
     expect(contentSecurityPolicy).toContain("media-src 'self' blob:");
     expect(contentSecurityPolicy).toContain("worker-src 'self' blob:");
-    expect(contentSecurityPolicy).toContain("frame-src 'self'");
+    expect(contentSecurityPolicy).toContain(
+      "frame-src 'self' https://open.spotify.com",
+    );
+    expect(contentSecurityPolicy).not.toMatch(
+      /connect-src[^;]*(?:api|accounts)\.spotify\.com/,
+    );
     expect(contentSecurityPolicy).toContain("object-src 'none'");
     expect(contentSecurityPolicy).toContain("frame-ancestors 'self'");
     expect(headers["X-Content-Type-Options"]).toBe("nosniff");
