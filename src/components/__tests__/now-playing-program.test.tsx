@@ -114,7 +114,10 @@ describe("Now Playing program", () => {
   });
 
   it("shows a working Play/Pause control after Spotify is ready", async () => {
-    render(<NowPlayingProgram />);
+    const { container } = render(<NowPlayingProgram />);
+    const equalizer = container.querySelector(".now-playing-equalizer");
+
+    expect(equalizer).toHaveAttribute("data-playing", "false");
 
     await waitFor(() => expect(embedMocks.createController).toHaveBeenCalledOnce());
     emit("ready");
@@ -126,6 +129,10 @@ describe("Now Playing program", () => {
 
     emit("playback_update", { data: { isPaused: false } });
     expect(screen.getByRole("button", { name: "Pause Cannock Chase" })).toBeEnabled();
+    expect(equalizer).toHaveAttribute("data-playing", "true");
+
+    emit("playback_update", { data: { isPaused: true } });
+    expect(equalizer).toHaveAttribute("data-playing", "false");
   });
 
   it("keeps Spotify's replaceable mount inside a React-owned host", async () => {

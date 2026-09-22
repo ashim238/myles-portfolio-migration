@@ -42,7 +42,7 @@ export type WorkstationDesktopProps = {
 };
 
 const defaultGeometry: Partial<Record<ProgramId, WindowGeometry>> = {
-  "selected-work": { x: 136, y: 112, width: 744, height: 536 },
+  "selected-work": { x: 136, y: 8, width: 744, height: 704 },
   welcome: { x: 896, y: 64, width: 352, height: 352 },
   about: { x: 312, y: 124, width: 540, height: 430 },
   "loose-parts": { x: 232, y: 92, width: 720, height: 520 },

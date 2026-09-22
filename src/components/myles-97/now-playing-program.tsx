@@ -136,7 +136,11 @@ export function NowPlayingProgram({ now }: NowPlayingProgramProps) {
           <p className="now-playing-status">{status}</p>
           <h2>What&apos;s been on repeat.</h2>
         </div>
-        <span className="now-playing-equalizer" aria-hidden="true">
+        <span
+          className="now-playing-equalizer"
+          data-playing={String(playerReady && !playerPaused)}
+          aria-hidden="true"
+        >
           <i />
           <i />
           <i />

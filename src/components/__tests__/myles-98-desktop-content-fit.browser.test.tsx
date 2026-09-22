@@ -20,6 +20,10 @@ const desktopStyles = readFileSync(
   resolve(__dirname, "../../app/styles/myles-97.css"),
   "utf8",
 );
+const nowPlayingStyles = readFileSync(
+  resolve(__dirname, "../../app/styles/myles-97-now-playing.css"),
+  "utf8",
+);
 const publicDirectory = resolve(__dirname, "../../../public");
 const laptopViewports = [
   { width: 1440, height: 900 },
@@ -78,6 +82,7 @@ function documentWith(desktopMarkup: string) {
           * { box-sizing: border-box; }
           html, body { margin: 0; }
           ${desktopStyles}
+          ${nowPlayingStyles}
         </style>
       </head>
       <body>
@@ -258,12 +263,12 @@ describe("Myles 98 desktop content fit", () => {
       expect(selectedGeometry).toEqual({
         noHorizontalScroll: true,
         noVerticalScroll: true,
-        listHasVerticalOverflow: true,
+        listHasVerticalOverflow: false,
         totalThumbnails: programs.length,
-        initialVisibleActions: 4,
-        initialVisibleCovers: 2,
+        initialVisibleActions: programs.length * 2,
+        initialVisibleCovers: programs.length,
         finalVisibleActions: programs.length * 2,
-        finalVisibleCovers: 2,
+        finalVisibleCovers: programs.length,
       });
       expect(welcomeFit).toEqual({
         noHorizontalScroll: true,
@@ -276,6 +281,34 @@ describe("Myles 98 desktop content fit", () => {
     },
     60_000,
   );
+
+  it("moves the Now Playing bars only during playback and honors reduced motion", async () => {
+    const page = await browserPage(
+      laptopViewports[0],
+      `<span class="now-playing-equalizer" data-playing="true" aria-hidden="true">
+        <i></i><i></i><i></i><i></i>
+      </span>`,
+    );
+    const bars = page.locator(".now-playing-equalizer i");
+
+    expect(await bars.first().evaluate((bar) => getComputedStyle(bar).animationName))
+      .not.toBe("none");
+
+    await page.locator(".now-playing-equalizer").evaluate((equalizer) => {
+      equalizer.setAttribute("data-playing", "false");
+    });
+    expect(await bars.first().evaluate((bar) => getComputedStyle(bar).animationName))
+      .toBe("none");
+
+    await page.locator(".now-playing-equalizer").evaluate((equalizer) => {
+      equalizer.setAttribute("data-playing", "true");
+    });
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    expect(await bars.first().evaluate((bar) => getComputedStyle(bar).animationName))
+      .toBe("none");
+
+    await page.close();
+  });
 
   it.each(laptopViewports)(
     "opens all real project previews with complete artwork and actions at $width×$height",

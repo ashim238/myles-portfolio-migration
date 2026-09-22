@@ -965,7 +965,7 @@
     .myles97-selected-work-list {
     min-height: 0;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: repeat(2, minmax(270px, 1fr));
+    grid-template-rows: repeat(2, minmax(245px, 1fr));
     overflow-y: auto;
   }
 
