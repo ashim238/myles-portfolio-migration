@@ -71,11 +71,6 @@ function MailScene({ shadow }: { shadow: string }) {
       </g>
       </g>
     </g>
-    <g className="motion-mail-label">
-      <rect x="436" y="254" width="180" height="82" rx="12" fill="#ff7033" />
-      <text x="454" y="281" fill="white" fontSize="12" fontWeight="700">BUILT IN MODULES</text>
-      <path d="M455 297h17v17h-17Zm24 0h17v17h-17Zm24 0h17v17h-17Z" fill="none" stroke="white" strokeWidth="1.5" />
-    </g>
   </>;
 }
 

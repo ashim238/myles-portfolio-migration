@@ -89,15 +89,13 @@ describe("Work Stuff evaluation paths", () => {
     expect(container.querySelector('.motion-focus-panel g[clip-path]')).toBeInTheDocument();
   });
 
-  it("contains FAFSA modules within the sheet and anchors decoration to the bottom edge", () => {
+  it("contains FAFSA source modules within the sheet without an invented overlay", () => {
     const program = { ...programs[1], id: "understandingfafsa" as const };
     const { container } = render(<SelectedWorkExplorer programs={[program]} onOpen={vi.fn()} />);
     expect(container.querySelector('.motion-mail-body')?.parentElement).toHaveAttribute('clip-path');
     expect(container.querySelector('.motion-mail-links')).toBeNull();
+    expect(container.querySelector('.motion-mail-label')).toBeNull();
     expect(container.querySelector('.product-thumbnail-scene')).toHaveAttribute('preserveAspectRatio', 'xMidYMax meet');
-    const panel = container.querySelector('.motion-mail-label rect')!;
-    expect(Number(panel.getAttribute('x')) + Number(panel.getAttribute('width'))).toBeLessThanOrEqual(616);
-    expect(Number(panel.getAttribute('y')) + Number(panel.getAttribute('height'))).toBeLessThanOrEqual(336);
   });
   it.each(["fresh-greens", "understandingfafsa", "navi", "tiktok"] as const)(
     "reveals %s on keyboard focus, keeps it between actions, and resets on exit",
