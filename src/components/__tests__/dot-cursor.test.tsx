@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -14,8 +14,9 @@ const polishStyles = readFileSync(
 );
 
 function declarationBlock(selector: string): string {
-  const start = baseStyles.indexOf(`${selector} {`);
-  if (start < 0) return "";
+  const match = baseStyles.indexOf(`\n${selector} {`);
+  if (match < 0) return "";
+  const start = match + 1;
   const open = baseStyles.indexOf("{", start);
   let depth = 0;
   for (let index = open; index < baseStyles.length; index += 1) {
@@ -44,6 +45,24 @@ describe("DotCursor", () => {
     expect(baseStyles).toMatch(
       /html\.dot-cursor-ready \.myles97-titlebar,\s*html\.dot-cursor-ready \.myles97-window\[data-dragging="true"\]\s*\{\s*cursor:\s*none;/,
     );
+  });
+
+  it("positions immediately during a pointer drag without waiting for a frame", () => {
+    const frame = vi.spyOn(window, "requestAnimationFrame").mockReturnValue(42);
+    const { container, unmount } = render(<DotCursor />);
+    const cursor = container.querySelector<HTMLElement>(".dot-cursor")!;
+
+    fireEvent.pointerDown(document, { pointerType: "mouse", button: 0 });
+    fireEvent.pointerMove(document, { pointerType: "mouse", clientX: 120, clientY: 80 });
+    expect(cursor.style.transform).toBe("translate3d(120px, 80px, 0)");
+    fireEvent.pointerMove(document, { pointerType: "mouse", clientX: 240, clientY: 160 });
+    expect(cursor.style.transform).toBe("translate3d(240px, 160px, 0)");
+    expect(frame).toHaveBeenCalledTimes(1);
+    expect(cursor).toHaveClass("dot-cursor--pressed");
+    fireEvent.pointerCancel(document);
+    expect(cursor).not.toHaveClass("dot-cursor--pressed");
+    unmount();
+    frame.mockRestore();
   });
 
   it("keeps the native cursor when reduced motion is requested", () => {

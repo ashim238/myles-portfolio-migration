@@ -44,12 +44,6 @@ export function DotCursor() {
 
     const render = () => {
       frame = 0;
-      dot.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-
-      if (!dot.classList.contains("dot-cursor--visible")) {
-        dot.classList.add("dot-cursor--visible");
-      }
-
       const target = document.elementFromPoint(x, y);
       if (!target) return;
 
@@ -60,9 +54,14 @@ export function DotCursor() {
       dot.classList.toggle("dot-cursor--hover", isHover && !isInput);
     };
 
-    const onMove = (event: MouseEvent) => {
+    const onMove = (event: PointerEvent) => {
+      if (event.pointerType === "touch") return;
       x = event.clientX;
       y = event.clientY;
+      // Position follows the same pointer stream as captured window drags.
+      // Only hit testing waits for a frame, never the visible pointer itself.
+      dot.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      dot.classList.add("dot-cursor--visible");
       if (!frame) frame = requestAnimationFrame(render);
     };
 
@@ -80,17 +79,19 @@ export function DotCursor() {
     };
 
     document.documentElement.classList.add("dot-cursor-ready");
-    document.addEventListener("mousemove", onMove, { passive: true });
-    document.addEventListener("mousedown", onDown, { passive: true });
-    document.addEventListener("mouseup", release, { passive: true });
+    document.addEventListener("pointermove", onMove, { passive: true });
+    document.addEventListener("pointerdown", onDown, { passive: true });
+    document.addEventListener("pointerup", release, { passive: true });
+    document.addEventListener("pointercancel", release, { passive: true });
     document.addEventListener("mouseleave", onLeave);
     window.addEventListener("blur", release);
 
     return () => {
       document.documentElement.classList.remove("dot-cursor-ready");
-      document.removeEventListener("mousemove", onMove);
-      document.removeEventListener("mousedown", onDown);
-      document.removeEventListener("mouseup", release);
+      document.removeEventListener("pointermove", onMove);
+      document.removeEventListener("pointerdown", onDown);
+      document.removeEventListener("pointerup", release);
+      document.removeEventListener("pointercancel", release);
       document.removeEventListener("mouseleave", onLeave);
       window.removeEventListener("blur", release);
       if (frame) cancelAnimationFrame(frame);

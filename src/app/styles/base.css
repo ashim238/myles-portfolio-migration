@@ -259,6 +259,16 @@ a {
   html.dot-cursor-ready .myles97-window[data-dragging="true"] {
     cursor: none;
   }
+
+  /* Captured drags use the browser cursor so feedback never waits on JS paint. */
+  html.dot-cursor-ready:has(.myles97-window[data-dragging="true"]),
+  html.dot-cursor-ready:has(.myles97-window[data-dragging="true"]) * {
+    cursor: grabbing !important;
+  }
+
+  html:has(.myles97-window[data-dragging="true"]) .dot-cursor {
+    display: none;
+  }
 }
 
 .dot-cursor {
