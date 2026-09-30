@@ -115,6 +115,60 @@ describe("Spotify now-playing server adapter", () => {
     expect(JSON.stringify(result)).not.toContain("refresh-token");
   });
 
+  it("returns the curated fallback when any credited artist is blocked", async () => {
+    const blockedArtistId = "1111111111111111111111";
+    const fetchImpl = vi
+      .fn()
+      .mockResolvedValueOnce(response({ access_token: "short-lived", expires_in: 3600 }))
+      .mockResolvedValueOnce(
+        response({
+          is_playing: true,
+          item: {
+            type: "track",
+            id: "collaboration-track",
+            name: "Collaboration",
+            duration_ms: 222_000,
+            external_urls: {
+              spotify: "https://open.spotify.com/track/collaboration-track",
+            },
+            artists: [
+              { id: "2222222222222222222222", name: "Allowed Artist" },
+              { id: blockedArtistId, name: "Blocked Artist" },
+            ],
+            album: {
+              id: "collaboration-album",
+              name: "Collaboration Album",
+              images: [{ url: "https://i.scdn.co/image/collaboration-cover" }],
+            },
+          },
+        }),
+      )
+      .mockResolvedValueOnce(
+        response({
+          items: [
+            { id: "collaboration-track", name: "Collaboration", duration_ms: 222_000 },
+          ],
+        }),
+      )
+      .mockResolvedValueOnce(
+        htmlResponse(
+          '<main style="--dynamic-background-base:rgba(156, 25, 11, 255)"></main>',
+        ),
+      );
+
+    await expect(
+      getCurrentlyPlaying({
+        env: {
+          ...configuredEnv,
+          SPOTIFY_BLOCKED_ARTIST_IDS: ` ${blockedArtistId},3333333333333333333333 `,
+        },
+        fetchImpl,
+      }),
+    ).resolves.toBeNull();
+
+    expect(fetchImpl).toHaveBeenCalledTimes(2);
+  });
+
   it("returns the curated fallback signal for inactive or failed requests", async () => {
     const inactiveFetch = vi
       .fn()

@@ -79,6 +79,15 @@ function text(value: unknown) {
   return typeof value === "string" && value.trim() ? value : null;
 }
 
+function blockedArtistIds(env: SpotifyEnvironment) {
+  return new Set(
+    (env.SPOTIFY_BLOCKED_ARTIST_IDS ?? "")
+      .split(",")
+      .map((id) => id.trim())
+      .filter(Boolean),
+  );
+}
+
 function safeHttpsUrl(value: unknown) {
   const candidate = text(value);
   if (!candidate) return null;
@@ -169,12 +178,19 @@ export async function getCurrentlyPlaying({
     const id = text(item.id);
     const title = text(item.name);
     const artists = Array.isArray(item.artists) ? item.artists : [];
-    const artist = artists
+    const artistCredits = artists
       .flatMap((entry) => {
         if (!entry || typeof entry !== "object") return [];
-        const name = text((entry as Record<string, unknown>).name);
-        return name ? [name] : [];
-      })
+        const credit = entry as Record<string, unknown>;
+        const name = text(credit.name);
+        return name ? [{ id: text(credit.id), name }] : [];
+      });
+    const blockedIds = blockedArtistIds(env);
+    if (artistCredits.some(({ id: artistId }) => artistId && blockedIds.has(artistId))) {
+      return null;
+    }
+    const artist = artistCredits
+      .map(({ name }) => name)
       .join(", ");
     const album = item.album && typeof item.album === "object"
       ? (item.album as Record<string, unknown>)
