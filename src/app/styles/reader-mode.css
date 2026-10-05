@@ -92,6 +92,14 @@
   margin-inline: auto;
 }
 
+/* Chapters sit on the same editorial canvas as the opening instead of
+   inheriting the page shell's raw left edge. The prose keeps its readable
+   measure; wider evidence can still use the rest of the canvas. */
+.reader-mode.reader-mode .project-chapter {
+  width: min(100% - 32px, 48rem);
+  margin-inline: auto;
+}
+
 .reader-mode.reader-mode .project-topbar {
   display: none;
 }
@@ -146,6 +154,10 @@
    The body remains narrow enough for comfortable reading. */
 @media (min-width: 900px) {
   .reader-mode.reader-mode:not(.tt-page) .project-hero {
+    width: min(100% - 64px, 76rem);
+  }
+
+  .reader-mode.reader-mode .project-chapter {
     width: min(100% - 64px, 76rem);
   }
 
@@ -281,6 +293,8 @@
 .reader-mode.reader-mode .project-toc {
   top: 54px;
   z-index: 115;
+  width: min(100% - 32px, 48rem);
+  margin-inline: auto;
   border-color: color-mix(in srgb, var(--m97-reader-ink) 28%, transparent);
   background: color-mix(in srgb, var(--m97-paper) 94%, transparent);
   color: var(--m97-reader-ink);
@@ -453,6 +467,7 @@
     position: sticky;
     top: 54px;
     bottom: auto;
+    width: 100%;
     margin: 0;
     padding: 0 16px;
     border-top: 0;
@@ -465,6 +480,25 @@
     max-height: calc(100dvh - 8.5rem - env(safe-area-inset-bottom, 0px));
   }
 
+}
+
+@media (min-width: 900px) and (max-width: 1599px) {
+  .reader-mode.reader-mode .project-toc {
+    width: min(100% - 64px, 76rem);
+  }
+}
+
+@media (min-width: 1600px) {
+  .reader-mode.reader-mode .project-toc {
+    width: 3.6rem;
+    margin: 0;
+  }
+
+  .reader-mode.reader-mode .project-toc-link:hover,
+  .reader-mode.reader-mode .project-toc-link:focus-visible,
+  .reader-mode.reader-mode .project-toc-link--active {
+    background: transparent;
+  }
 }
 
 @media (forced-colors: active) {

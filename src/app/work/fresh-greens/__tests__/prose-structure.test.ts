@@ -365,7 +365,7 @@ describe("Fresh Greens prose structure", () => {
     expect(copy).toContain("I didn't know whether that discomfort was mine alone");
     expect(copy).toContain("I spoke with six Black drivers");
 
-    expect(source).toContain(
+    expect(source).not.toContain(
       'href="https://nmaahc.si.edu/explore/stories/traveling-through-jim-crow-america"',
     );
     expect(copy).toContain("Plan");

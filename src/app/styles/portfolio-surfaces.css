@@ -2801,6 +2801,22 @@
   text-wrap: balance;
 }
 
+/* TikTok's art-directed opening uses a centered 48rem text column. Keep its
+   chapter copy on that same line while allowing wide template evidence to use
+   the shared 76rem chapter canvas. */
+.reader-mode.reader-mode.tt-page :is(
+  .project-chapter-meta,
+  .project-chapter-title,
+  .project-chapter-motif
+),
+.reader-mode.reader-mode.tt-page .project-chapter > :is(
+  .tt-section:not(.tt-section--wide),
+  .reader-evidence-summary
+) {
+  margin-left: max(0px, calc((100% - 48rem) / 2));
+  margin-right: auto;
+}
+
 /* ============================================================
    /play title — Pixar-style hop with squash & stretch
    One staggered hop per letter on page load. No idle loop.

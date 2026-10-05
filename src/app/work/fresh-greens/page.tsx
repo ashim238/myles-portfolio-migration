@@ -159,12 +159,7 @@ export default async function FreshGreensPage() {
             <p>
               I returned to the Green Book for the visual system. Its palette
               became a reference, not a claim that Fresh Greens is its digital
-              successor. {" "}
-              <a href="https://nmaahc.si.edu/explore/stories/traveling-through-jim-crow-america" rel="noreferrer" target="_blank">
-                Source: Smithsonian National Museum of African American History
-                and Culture
-              </a>
-              .
+              successor.
             </p>
             <p>
               On a trip from Chicago to rural Georgia, the driver needs to see
@@ -260,7 +255,7 @@ export default async function FreshGreensPage() {
               spacing problem became a shared theme rule.
             </p>
             <p>
-              Search broke first. My own address was sitting in Recent, so a
+              Search was the first thing to break. My own address was sitting in Recent, so a
               places-only search looked functional. I added street addresses
               and separated Recent from live results.
             </p>

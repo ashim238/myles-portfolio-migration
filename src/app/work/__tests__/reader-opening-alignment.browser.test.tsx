@@ -112,6 +112,41 @@ function tiktokOpeningMarkup() {
   return markup;
 }
 
+function chapterAlignmentMarkup(pageClass: string, title: string) {
+  const isTikTok = pageClass.includes("tt-page");
+  const opening = isTikTok
+    ? `<header class="tt-cover tt-cover--preview">
+        <div class="tt-cover-inner">
+          <p class="tt-eyebrow">Creative Strategist Intern · 2021</p>
+          <h1 class="project-hero-title tt-title">${title}</h1>
+          <p class="project-hero-lede tt-lede">Three templates built from one fixed product grid.</p>
+        </div>
+      </header>`
+    : `<section class="hero project-hero">
+        <p>Product design · 2025–2026</p>
+        <h1 class="project-hero-title">${title}</h1>
+        <p class="project-hero-lede">A concise description of the product and the people it supports.</p>
+      </section>`;
+  const sectionClass = isTikTok ? "tt-section" : "fg-section";
+
+  return `<main class="page-shell project-page reader-mode ${pageClass}">
+    ${opening}
+    <section class="project-chapter" data-chapter-index="1">
+      <p class="project-chapter-meta">
+        <span>Frame · Observed</span>
+        <span class="project-chapter-count">1 of 6</span>
+      </p>
+      <h2 class="project-chapter-title">A chapter title aligned to the opening</h2>
+      <svg class="project-chapter-motif" aria-hidden="true"></svg>
+      <div class="project-section ${sectionClass}">
+        <div class="project-section-body">
+          <p>The prose keeps a readable measure inside the broader editorial canvas.</p>
+        </div>
+      </div>
+    </section>
+  </main>`;
+}
+
 describe("Reader opening alignment", () => {
   it.each(editorialOpenings.flatMap((opening) =>
     viewports.map((viewport) => ({ ...opening, viewport })),
@@ -235,6 +270,68 @@ describe("Reader opening alignment", () => {
       expect.soft(Math.abs(geometry.heroRight - geometry.atAGlanceRight)).toBeLessThanOrEqual(1);
       expect.soft(geometry.proofLeft).toBeGreaterThanOrEqual(geometry.factsLeft);
       expect.soft(geometry.proofRight).toBeLessThanOrEqual(geometry.factsRight);
+
+      await page.close();
+    },
+  );
+
+  it.each([
+    { slug: "fresh-greens", pageClass: "fg-page", title: "Fresh Greens" },
+    { slug: "understandingfafsa", pageClass: "uf-page", title: "UnderstandingFAFSA" },
+    { slug: "navi", pageClass: "nv-page", title: "Navi" },
+    { slug: "tiktok", pageClass: "tt-page tt-preview-page", title: "TikTok Dynamic Showcase Ads" },
+  ].flatMap((opening) =>
+    [
+      { width: 768, height: 900 },
+      { width: 1280, height: 900 },
+      { width: 1800, height: 1000 },
+    ].map((viewport) => ({ ...opening, viewport })),
+  ))(
+    "aligns $slug chapter chrome and prose with its opening at $viewport.width px",
+    async ({ pageClass, title, viewport }) => {
+      const page = await browser.newPage({ viewport });
+      await page.setContent(`<!doctype html>
+        <html data-theme="light">
+          <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <style>
+              *, *::before, *::after { box-sizing: border-box; }
+              html, body { margin: 0; }
+              ${styles}
+            </style>
+          </head>
+          <body>${chapterAlignmentMarkup(pageClass, title)}</body>
+        </html>`);
+
+      const geometry = await page.evaluate(() => {
+        const opening = document.querySelector<HTMLElement>(
+          ".tt-page .tt-cover-inner, .project-hero",
+        );
+        const chapter = document.querySelector<HTMLElement>(".project-chapter");
+        const meta = document.querySelector<HTMLElement>(".project-chapter-meta");
+        const title = document.querySelector<HTMLElement>(".project-chapter-title");
+        const body = document.querySelector<HTMLElement>(".project-section-body");
+
+        if (!opening || !chapter || !meta || !title || !body) {
+          throw new Error("Missing Reader chapter geometry");
+        }
+
+        const openingBox = opening.getBoundingClientRect();
+        const chapterBox = chapter.getBoundingClientRect();
+        return {
+          openingLeft: openingBox.left,
+          chapterLeft: chapterBox.left,
+          chapterRight: chapterBox.right,
+          metaLeft: meta.getBoundingClientRect().left,
+          titleLeft: title.getBoundingClientRect().left,
+          bodyLeft: body.getBoundingClientRect().left,
+        };
+      });
+
+      expect.soft(Math.abs(geometry.metaLeft - geometry.openingLeft)).toBeLessThanOrEqual(1);
+      expect.soft(Math.abs(geometry.titleLeft - geometry.openingLeft)).toBeLessThanOrEqual(1);
+      expect.soft(Math.abs(geometry.bodyLeft - geometry.openingLeft)).toBeLessThanOrEqual(1);
+      expect.soft(Math.abs(geometry.chapterLeft - (viewport.width - geometry.chapterRight))).toBeLessThanOrEqual(1);
 
       await page.close();
     },

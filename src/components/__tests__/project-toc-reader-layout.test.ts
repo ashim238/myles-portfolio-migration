@@ -47,4 +47,19 @@ describe("ProjectToc Reader layout", () => {
     expect(toc).not.toMatch(/position:\s*fixed;/);
     expect(toc).not.toMatch(/z-index:\s*140;/);
   });
+
+  it("keeps the wide Reader spine transparent instead of drawing a stray active or hover block", () => {
+    const wideReader = cssBlock("@media (min-width: 1600px)");
+    const active = cssBlock(
+      ".reader-mode.reader-mode .project-toc-link--active",
+      wideReader,
+    );
+    const hover = cssBlock(
+      ".reader-mode.reader-mode .project-toc-link:hover",
+      wideReader,
+    );
+
+    expect(active).toMatch(/background:\s*transparent;/);
+    expect(hover).toMatch(/background:\s*transparent;/);
+  });
 });
