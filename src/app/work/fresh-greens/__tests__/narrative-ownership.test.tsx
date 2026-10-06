@@ -147,7 +147,7 @@ describe("Fresh Greens rendered narrative ownership", () => {
     ).toBeInTheDocument();
     expect(
       within(trust).getByText("Current prototype limit:"),
-    ).toBeInTheDocument();
+    ).toHaveClass("fg-prototype-limit-label");
     expect(trust).toHaveTextContent(/one report creates a scored zone/i);
     expect(trust).toHaveTextContent("corroboration weighting");
     expect(

@@ -215,7 +215,7 @@ export default async function FreshGreensPage() {
               Reports stay on the device first. With Supabase configured, they enter moderation.
             </p>
             <p>
-              <strong>Current prototype limit:</strong> One report
+              <strong className="fg-prototype-limit-label">Current prototype limit:</strong>One report
               creates a scored zone and can affect route ranking. I haven&apos;t added
               corroboration weighting, visible contributor provenance, or
               route-level trust tiers yet.

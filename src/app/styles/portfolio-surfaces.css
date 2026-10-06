@@ -53,6 +53,10 @@
   max-width: 65ch;
 }
 
+.fg-prototype-limit-label {
+  margin-right: 0.32em;
+}
+
 /* In wide sections, designed artifacts get to breathe — capped so they
    don't span the full page-shell, aligned left with the prose column. */
 .fg-section--wide .fg-token-figure,

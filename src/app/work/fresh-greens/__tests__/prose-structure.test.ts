@@ -455,6 +455,17 @@ describe("Fresh Greens prose structure", () => {
     expect(labelRule).not.toMatch(/font-family:\s*var\(--font-mono\)/);
   });
 
+  it("gives the prototype-limit label an explicit optical gap before its copy", () => {
+    const source = readPage();
+    const styles = readFileSync(portfolioStylesPath, "utf8");
+    const labelRule = styles.match(
+      /\.fg-prototype-limit-label\s*\{([^}]+)\}/,
+    )?.[1];
+
+    expect(source).toContain('className="fg-prototype-limit-label"');
+    expect(labelRule).toContain("margin-right: 0.32em");
+  });
+
   it("gives the three research problems enough horizontal measure", () => {
     const styles = readFileSync(portfolioStylesPath, "utf8");
     const gridRule = styles.match(/\.fg-evidence-boundaries\s*\{([^}]+)\}/)?.[1];
