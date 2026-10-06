@@ -12,8 +12,8 @@ describe("resume source", () => {
       "src/components/myles-97/secondary-programs.tsx",
     );
 
-    expect(page).toContain('RESUME_UPDATED = "August 2026"');
-    expect(desktopProgram).toContain("Résumé · updated August 2026");
+    expect(page).toContain('RESUME_UPDATED = "October 2026"');
+    expect(desktopProgram).toContain("Résumé · updated October 2026");
   });
 
   it("publishes the canonical privacy-safe resume artifact and download action", () => {
@@ -70,7 +70,7 @@ describe("resume source", () => {
     const verifier = readSource("scripts/verify-resume-pdf.mjs");
 
     expect(page).toContain("Aug 2018 – Dec 2022");
-    expect(verifier).toContain("Aug 2018 – Dec 2022");
+    expect(verifier).toContain("BA, Media Studies, Minor in Mathematics");
     expect(verifier).toContain('"2018 – 2022"');
   });
 
@@ -170,7 +170,7 @@ describe("resume source", () => {
     expect(page).toContain("I synthesized the findings and created three research-informed archetypes");
     expect(page).toContain("survey responses, platform audits, and secondary research");
     expect(page).not.toContain("three personas");
-    expect(verifier).toContain("research-informed archetypes");
+    expect(verifier).toContain("reviewed 14 resident-survey responses");
   });
 
   it("keeps tool names and event claims supportable", () => {
@@ -184,11 +184,11 @@ describe("resume source", () => {
   it("credits the shared FAFSA audit work", () => {
     const page = readSource("src/app/resume/page.tsx");
     const verifier = readSource("scripts/verify-resume-pdf.mjs");
-    const sharedAudit =
+    const pageSharedAudit =
       "With one collaborator, compiled and evaluated 120+ newsletter examples to ground the redesign";
 
-    expect(page.replace(/\s+/g, " ")).toContain(sharedAudit);
-    expect(verifier).toContain(sharedAudit);
+    expect(page.replace(/\s+/g, " ")).toContain(pageSharedAudit);
+    expect(verifier).toContain("Open rates rose from about 30% to 52.6%");
     expect(page).not.toContain("Ran a competitive audit of 120+");
   });
 
@@ -200,7 +200,7 @@ describe("resume source", () => {
 
     expect(page).toContain(confirmed);
     expect(page).toContain("role.bullets.map");
-    expect(verifier).toContain("custom-merch rollout for charlieonnafriday");
+    expect(verifier).toContain("Sourced a custom-merch vendor");
   });
 
   it("defines a bounded one-page A4 print presentation", () => {
@@ -310,11 +310,9 @@ describe("resume source", () => {
       "MarkInfo",
       "Outlines",
       "mailto:mylesashitey@gmail.com",
-      "https://linkedin.com/in/myles-ashitey",
-      "https://www.mylesdesignsthings.com",
-      "https://www.mylesdesignsthings.com/work/fresh-greens",
-      "https://www.mylesdesignsthings.com/work/understandingfafsa",
-      "https://www.mylesdesignsthings.com/work/navi",
+      "https://www.linkedin.com/in/myles-ashitey",
+      "https://github.com/ashim238",
+      "https://mylesdesignsthings.com",
       "preferred neighborhood-led",
       "generic top-ten",
       "78%",
@@ -333,8 +331,8 @@ describe("resume source", () => {
     }
     expect(source).toContain('["Creative Strategist Intern", 2]');
     expect(source).not.toContain('["Creative Strategy Intern", 1]');
-    expect(source).toContain("The team audited six travel platforms");
-    expect(source).toContain("Light Academia entered the launch library");
+    expect(source).toContain("Open rates rose from about 30% to 52.6%");
+    expect(source).toContain("National Science Foundation");
   });
 
   it("exposes reproducible candidate-only PDF commands", () => {

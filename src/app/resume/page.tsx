@@ -2,7 +2,7 @@ import { PortfolioEndcap } from "@/components/portfolio-endcap";
 import { SystemDocumentShell } from "@/components/myles-97/system-document-shell";
 import { createRouteMetadata, siteConfig } from "@/lib/site-config";
 
-const RESUME_UPDATED = "August 2026";
+const RESUME_UPDATED = "October 2026";
 
 type ResumeRole = {
   role: string;

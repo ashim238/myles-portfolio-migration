@@ -21,66 +21,64 @@ const STALE_CLAIMS = [
 ];
 const ORDER_SENTINELS = [
   "Myles Ashitey",
-  "Professional Summary",
-  "Independent Work",
+  "PROFESSIONAL SUMMARY",
+  "WORK EXPERIENCE",
+  "Julius Education",
+  "Aug 2026 - Present",
+  "Universal Music Group",
+  "Aug 2023 - Aug 2024",
+  "PROJECTS",
   "Fresh Greens",
   "UnderstandingFAFSA",
   "Navi",
-  "Work Experience",
-  "Aug 2023 – Aug 2024",
-  "Universal Music Group",
-  "May – Aug 2022",
-  "May – Aug 2021",
-  "Education",
-  "Skills",
+  "EDUCATION",
+  "SKILLS",
 ];
 const EXPECTED_COUNTS = new Map([
-  ["Professional Summary", 1],
-  ["Independent Work", 1],
-  ["Fresh Greens", 1],
-  ["Light Academia entered the launch library", 1],
-  ["UnderstandingFAFSA", 1],
-  ["With one collaborator, compiled and evaluated 120+ newsletter examples to ground the redesign", 1],
-  ["Navi", 1],
-  ["The team audited six travel platforms", 1],
-  ["research-informed archetypes", 1],
-  ["Work Experience", 1],
+  ["PROFESSIONAL SUMMARY", 1],
+  ["WORK EXPERIENCE", 1],
+  ["Julius Education", 1],
+  ["Product Design Intern", 1],
+  ["Universal Music Group - Island Records", 1],
   ["Creative Strategy Assistant", 1],
-  ["custom-merch rollout for charlieonnafriday", 1],
+  ["TikTok (ByteDance)", 2],
   ["Creative Strategist Intern", 2],
-  ["MFA, Design & Technology", 1],
-  ["BA, Media Studies", 1],
-  ["Aug 2018 – Dec 2022", 1],
-  ["Education", 1],
-  ["Skills", 1],
+  ["National Science Foundation", 1],
+  ["Undergraduate Research Assistant", 1],
+  ["PROJECTS", 1],
+  ["Fresh Greens", 1],
+  ["UnderstandingFAFSA", 1],
+  ["Navi", 1],
+  ["Open rates rose from about 30% to 52.6%", 1],
+  ["MFA, Design and Technology", 1],
+  ["BA, Media Studies, Minor in Mathematics", 1],
+  ["EDUCATION", 1],
+  ["SKILLS", 1],
 ]);
 const EXPECTED_H3_HEADINGS = new Map([
-  ["Fresh Greens", 1],
+  ["Julius Education", 1],
+  ["Universal Music Group - Island Records", 1],
+  ["TikTok (ByteDance)", 2],
+  ["National Science Foundation", 1],
+  ["Fresh Greens MFA Thesis", 1],
   ["UnderstandingFAFSA", 1],
   ["Navi", 1],
-  ["Creative Strategy Assistant", 1],
-  ["Creative Strategist Intern", 2],
-  ["MFA, Design & Technology", 1],
-  ["BA, Media Studies", 1],
+  ["MFA, Design and Technology | Parsons School of Design (The New School)", 1],
+  ["BA, Media Studies, Minor in Mathematics | Pomona College", 1],
 ]);
 const EXPECTED_H1_HEADINGS = new Map([["Myles Ashitey", 1]]);
 const EXPECTED_H2_HEADINGS = new Map([
-  ["Professional Summary", 1],
-  ["Independent Work", 1],
-  ["Work Experience", 1],
-  ["Education", 1],
-  ["Skills", 1],
+  ["PROFESSIONAL SUMMARY", 1],
+  ["WORK EXPERIENCE", 1],
+  ["PROJECTS", 1],
+  ["EDUCATION", 1],
+  ["SKILLS", 1],
 ]);
 const EXPECTED_LINKS = [
   { text: "mylesashitey@gmail.com", uri: "mailto:mylesashitey@gmail.com" },
-  { text: "LinkedIn", uri: "https://linkedin.com/in/myles-ashitey" },
-  { text: "mylesdesignsthings.com", uri: "https://www.mylesdesignsthings.com" },
-  { text: "Fresh Greens", uri: "https://www.mylesdesignsthings.com/work/fresh-greens" },
-  {
-    text: "UnderstandingFAFSA",
-    uri: "https://www.mylesdesignsthings.com/work/understandingfafsa",
-  },
-  { text: "Navi", uri: "https://www.mylesdesignsthings.com/work/navi" },
+  { text: "linkedin.com/in/myles-ashitey", uri: "https://www.linkedin.com/in/myles-ashitey" },
+  { text: "github.com/ashim238", uri: "https://github.com/ashim238" },
+  { text: "mylesdesignsthings.com", uri: "https://mylesdesignsthings.com" },
 ];
 const PDF_14_STRUCTURE_ROLES = new Set([
   "/Document", "/Part", "/Art", "/Sect", "/Div", "/BlockQuote", "/Caption",
@@ -425,8 +423,8 @@ async function verify(pdfArgument) {
     assert(info.tagged === "yes", "pdfinfo must report Tagged: yes.");
     assert(info.encrypted === "no", "Encrypted PDFs are not accepted.");
     assert(info.suspects === "no", "pdfinfo must report Suspects: no.");
-    assert(Math.abs(info.width - 595.28) <= 1, `Expected A4 width, found ${info.width}pt.`);
-    assert(Math.abs(info.height - 841.89) <= 1, `Expected A4 height, found ${info.height}pt.`);
+    assert(Math.abs(info.width - 612) <= 1, `Expected US Letter width, found ${info.width}pt.`);
+    assert(Math.abs(info.height - 792) <= 1, `Expected US Letter height, found ${info.height}pt.`);
 
     verifyFonts(run("pdffonts", [pdf]));
     run("pdftotext", [pdf, logicalPath]);
@@ -443,9 +441,11 @@ async function verify(pdfArgument) {
     for (const required of [
       "New York, NY",
       "mylesashitey@gmail.com",
-      "LinkedIn",
+      "linkedin.com/in/myles-ashitey",
+      "github.com/ashim238",
       "mylesdesignsthings.com",
-      "custom-merch rollout for charlieonnafriday",
+      "Sourced a custom-merch vendor",
+      "reviewed 14 resident-survey responses",
       "with Mailchimp Privacy Protection excluded",
     ]) {
       assert(logical.includes(required), `Extracted text is missing “${required}”.`);
@@ -467,7 +467,7 @@ async function verify(pdfArgument) {
     }
     assert(occurrences(structure.roles.join(" "), "/H1") === 1, "Expected exactly one H1 tag.");
     assert(occurrences(structure.roles.join(" "), "/H2") === 5, "Expected exactly five H2 tags.");
-    assert(occurrences(structure.roles.join(" "), "/H3") === 8, "Expected exactly eight H3 tags.");
+    assert(occurrences(structure.roles.join(" "), "/H3") === 10, "Expected exactly ten H3 tags.");
     verifyRoleSemantics(structure.pdfVersion, structure.roles, structure.roleMap);
     verifyHeadingAssociations(structure.h1Texts, EXPECTED_H1_HEADINGS, "H1");
     verifyHeadingAssociations(structure.h2Texts, EXPECTED_H2_HEADINGS, "H2");
@@ -478,16 +478,16 @@ async function verify(pdfArgument) {
       "Missing mailto:mylesashitey@gmail.com link annotation.",
     );
     assert(
-      structure.links.some((link) => link.startsWith("https://linkedin.com/in/myles-ashitey")),
-      "Missing https://linkedin.com/in/myles-ashitey link annotation.",
+      structure.links.some((link) => link.startsWith("https://www.linkedin.com/in/myles-ashitey")),
+      "Missing https://www.linkedin.com/in/myles-ashitey link annotation.",
     );
     assert(
-      structure.links.some((link) => link.startsWith("https://www.mylesdesignsthings.com")),
-      "Missing https://www.mylesdesignsthings.com link annotation.",
+      structure.links.some((link) => link.startsWith("https://mylesdesignsthings.com")),
+      "Missing https://mylesdesignsthings.com link annotation.",
     );
 
     console.log(
-      `Verified ${basename(pdf)} (${pdfBytes} bytes): one-page A4, tagged, ordered, linked, and font-complete.`,
+      `Verified ${basename(pdf)} (${pdfBytes} bytes): one-page US Letter, tagged, ordered, linked, and font-complete.`,
     );
   } finally {
     await rm(temporary, { recursive: true, force: true });
