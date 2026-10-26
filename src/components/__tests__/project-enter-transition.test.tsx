@@ -608,9 +608,9 @@ describe("ProjectEnterTransition", () => {
     expect(document.querySelector(".project-enter-program-title")).toHaveTextContent(
       "Fresh Greens.exe",
     );
-    expect(document.querySelector(".project-enter-program-cover img")).toHaveAttribute(
-      "src",
-      "/projects/fresh-greens/cover.png",
+    expect(document.querySelector(".project-enter-program-cover .product-thumbnail")).toHaveAttribute(
+      "data-project",
+      "fresh-greens",
     );
   });
 

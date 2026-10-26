@@ -41,6 +41,18 @@ describe("ProjectProgram", () => {
     vi.restoreAllMocks();
   });
 
+  it.each(["fresh-greens", "understandingfafsa", "navi", "tiktok"] as const)(
+    "uses the shared, expanded %s artwork instead of a legacy cover",
+    (id) => {
+      const { container } = render(<ProjectProgram program={{ ...program, id }} reduceMotion />);
+      const scene = container.querySelector('[data-project-program-cover] .product-thumbnail');
+      expect(scene).toHaveAttribute('data-project', id);
+      expect(scene).toHaveAttribute('data-active', 'true');
+      expect(scene).toHaveAttribute('data-reduced', 'true');
+      expect(container.querySelector('[data-project-program-cover] img')).toBeNull();
+    },
+  );
+
   it("dispatches a structured program transition for an unmodified click", () => {
     const onRequest = vi.fn((event: Event) => event.preventDefault());
     window.addEventListener(PROJECT_ENTER_REQUEST, onRequest);

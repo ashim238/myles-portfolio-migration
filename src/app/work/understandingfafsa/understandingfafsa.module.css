@@ -1,0 +1,23 @@
+.auditContext {
+  display: grid;
+  gap: 1rem;
+}
+
+.audienceNote {
+  align-self: end;
+  border-inline-start: 2px solid currentColor;
+  padding-inline-start: 0.875rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.auditContext + p {
+  margin-block-start: 0.9rem;
+}
+
+@media (min-width: 1100px) {
+  .auditContext {
+    grid-template-columns: minmax(0, 1fr) 11rem;
+    gap: 2rem;
+  }
+}

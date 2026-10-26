@@ -36,19 +36,14 @@ export default function AboutPage() {
           <div className="about-body">
             <p>
               I came to product design through creative strategy at TikTok
-              and Universal Music Group. I liked it, but missed the making
-              process, the feeling of building a concept from an idea into
-              something tangible. That led me to an MFA in Design and
-              Technology at Parsons, which I completed in 2026.
+              and Universal Music Group. I liked the work, but I wanted to
+              spend more time making things myself. That led me to an MFA in
+              Design and Technology at Parsons, which I completed in 2026.
             </p>
             <p>
-              My thesis became Fresh Greens, a React Native wayfinding
-              prototype for Black drivers. For UnderstandingFAFSA, I built
-              reusable newsletter templates. The first redesigned send had an observed 52.6% open rate
-              with Mailchimp Privacy Protection excluded. At TikTok, I designed
-              three catalog templates. Light Academia entered the launch library,
-              and I later learned through Global Creative Lab that American Eagle
-              selected it.
+              My thesis became Fresh Greens, a navigation prototype for Black
+              drivers. I&apos;ve also built reusable newsletter templates for
+              UnderstandingFAFSA and designed fashion ad templates at TikTok.
             </p>
             <p>
               Outside of work, I&apos;m a huge comic fan. Highly recommend

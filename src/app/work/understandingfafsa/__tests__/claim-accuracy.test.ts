@@ -57,7 +57,7 @@ describe("UnderstandingFAFSA outcome claims", () => {
     );
   });
 
-  it("leads the condensed project summary with the founder's need", () => {
+  it("introduces the templates and the founder's familiar workflow before reporting metrics", () => {
     const content = readFileSync(
       resolve(process.cwd(), "content/projects/understandingfafsa.md"),
       "utf8",
@@ -65,17 +65,15 @@ describe("UnderstandingFAFSA outcome claims", () => {
     const summary = content.match(/^summary: (.+)$/m)?.[1];
 
     expect(summary).toMatch(
-      /^The founder needed a newsletter she could edit herself/,
+      /^UnderstandingFAFSA's newsletter no longer matched its redesigned website/,
     );
-    expect(summary).toContain("three-theme Mailchimp kit");
-    expect(summary).toContain("roughly 20 sends");
-    expect(summary).toContain("observed");
-    expect(summary).toContain("Mailchimp Privacy Protection excluded");
-    expect(summary).toContain("wasn't a controlled attribution test");
+    expect(summary).toContain("three different color themes");
+    expect(summary).toContain("using Mailchimp, which she already knew");
+    expect(summary).not.toContain("52.6%");
     expect(summary).not.toMatch(/versus prior|around 30%/);
   });
 
-  it("spells out the Mailchimp measurement qualifier on condensed public surfaces", () => {
+  it("keeps the introduction consistent with metadata without leading with a metric", () => {
     const projectPage = readFileSync(
       resolve(process.cwd(), "src/app/work/understandingfafsa/page.tsx"),
       "utf8",
@@ -88,13 +86,10 @@ describe("UnderstandingFAFSA outcome claims", () => {
       /const UF_DESCRIPTION\s*=\s*"([^"]+)";/,
     );
 
-    expect(metadataDescription?.[1]).toContain(
-      "with Mailchimp Privacy Protection excluded",
-    );
+    expect(metadataDescription?.[1]).not.toContain("52.6%");
+    expect(metadataDescription?.[1]).toContain("using Mailchimp, which she already knew");
     expect(projectPage).toMatch(/\{project\?\.summary\s*\?\?\s*UF_DESCRIPTION\}/);
-    expect(aboutPage).toMatch(
-      /first redesigned send had an observed 52\.6% open rate\s+with Mailchimp Privacy Protection excluded/,
-    );
+    expect(aboutPage).not.toContain("52.6%");
   });
 
   it("describes the artifact without unsupported effect or performance claims", () => {
@@ -143,7 +138,7 @@ describe("UnderstandingFAFSA outcome claims", () => {
 
     expect(comparisonComponent).toContain("Prior sends · around 30% open rate");
     expect(comparisonComponent).toContain(
-      "First redesigned send · ~52.6% open rate (MPP excluded)",
+      "First newsletter using the new templates · ~52.6% open rate (MPP excluded)",
     );
     expect(comparisonComponent).toContain(
       "Newsletter mobile layouts and reported open rates",
@@ -169,7 +164,9 @@ describe("UnderstandingFAFSA outcome claims", () => {
     );
 
     for (const source of [about, resume]) {
-      expect(source).toMatch(/observed[^.]*52\.6%|52\.6%[^.]*observed/i);
+      if (source.includes("52.6%")) {
+        expect(source).toMatch(/observed[^.]*52\.6%|52\.6%[^.]*observed/i);
+      }
       expect(source).not.toMatch(/52\.6%[^.]*prior sends around 30%/i);
       expect(source).not.toMatch(/52\.6%[^.]*compared with prior sends/i);
     }

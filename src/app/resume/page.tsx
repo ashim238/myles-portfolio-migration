@@ -34,7 +34,7 @@ const INDEPENDENT_WORK: IndependentProject[] = [
     role: "Product Designer",
     dates: "Feb 2025 – Present",
     summary:
-      "Newsletter redesign for a nonprofit navigating financial aid. Built modular Figma to Mailchimp templates with locked and swappable rules so the founder could edit weekly sends herself and bring me back for new audiences or color pairings. With one collaborator, compiled and evaluated 120+ newsletter examples to ground the redesign. The first redesigned send had an observed 52.6% open rate with Mailchimp Privacy Protection excluded.",
+      "Newsletter redesign for a nonprofit navigating financial aid. Built modular Figma to Mailchimp templates with locked and swappable rules so the founder could edit weekly sends herself and bring me back for new audiences or color pairings. With one collaborator, compiled and evaluated 120+ newsletter examples to ground the redesign. The first newsletter using the new templates had an observed 52.6% open rate with Mailchimp Privacy Protection excluded.",
   },
   {
     name: "Navi",

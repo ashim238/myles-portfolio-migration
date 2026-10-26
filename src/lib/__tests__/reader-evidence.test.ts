@@ -216,7 +216,7 @@ describe("Reader evidence maps", () => {
       "The founder can change the content and module order without rebuilding the header, footer, spacing, type, or dividers.",
     );
     expect(results.dominantClaim).toBe(
-      "The founder has used the kit for roughly 20 sends. The first redesigned send had a ~52.6% open rate with MPP excluded.",
+      "The founder has used the kit for roughly 20 sends. The first newsletter using the new templates had a ~52.6% open rate with MPP excluded.",
     );
     expect(results.interpretation).toBe(
       "I include the open rate as context because it wasn't a controlled test. The founder still edits and sends the template herself each week.",

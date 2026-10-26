@@ -54,12 +54,12 @@ describe("Work Stuff evaluation paths", () => {
     expect(card.querySelector('.product-thumbnail-scene')).toBe(scene);
     expect(container.querySelector('.product-thumbnail-cover')).toBeNull();
   });
-  it("uses one movable TikTok title and masks its baked-in duplicate", () => {
+  it("keeps the original TikTok templates and one movable title without invented placeholders", () => {
     const { container } = render(<SelectedWorkExplorer programs={[programs[1]]} onOpen={vi.fn()} />);
-    const template = container.querySelector('image[href="/projects/tiktok/system/academia.webp"]');
-    expect(template).toHaveAttribute('mask');
+    expect(container.querySelector('image[href="/projects/tiktok/system/academia.webp"]')).toHaveAttribute('mask');
     expect(container.querySelectorAll('image[href="/projects/tiktok/system/academia-text.svg"]')).toHaveLength(1);
-    expect(container.querySelector('.motion-catalog-main .motion-catalog-type')).toBeInTheDocument();
+    expect(container.querySelector('image[href="/projects/tiktok/cover-phone-mockup.jpg"]')).toBeNull();
+    expect(container).not.toHaveTextContent('CATALOG IMAGE');
   });
 
   it("keeps Navi search typography proportional to its header", () => {
@@ -118,7 +118,7 @@ describe("Work Stuff evaluation paths", () => {
       expect(scene).toHaveAttribute("data-active", "false");
     },
   );
-  it("makes the case study primary and explains the interactive preview before either action", async () => {
+  it("makes the case study primary and explains the preview before either action", async () => {
     const user = userEvent.setup();
     const onOpen = vi.fn();
     render(<SelectedWorkExplorer programs={programs} onOpen={onOpen} />);
@@ -126,11 +126,11 @@ describe("Work Stuff evaluation paths", () => {
     expect(screen.getByText("Portfolio projects")).toBeInTheDocument();
     expect(
       screen.getByText(
-        "Read the full design story, or explore the interactive preview.",
+        "Read a case study or open a project preview.",
       ),
     ).toBeInTheDocument();
     expect(screen.getByRole("list", { name: "Portfolio projects" })).toHaveAccessibleDescription(
-      "Read the full design story, or explore the interactive preview.",
+      "Read a case study or open a project preview.",
     );
 
     const freshCard = screen.getByRole("listitem", { name: "Fresh Greens" });
@@ -138,7 +138,7 @@ describe("Work Stuff evaluation paths", () => {
       name: "Read Fresh Greens case study",
     });
     const previewButton = within(freshCard).getByRole("button", {
-      name: "Explore Fresh Greens.exe interactive preview",
+      name: "Explore Fresh Greens.exe preview",
     });
     const actions = Array.from(freshCard.querySelectorAll("a, button"));
 

@@ -51,7 +51,7 @@ describe("Myles 98 program registry", () => {
     ]);
     expect(programs.find((program) => program.id === "navi")).toMatchObject({
       title: "Navi Places",
-      summary: "Place-discovery application",
+      summary: "Neighborhood discovery",
       href: "/work/navi",
     });
   });

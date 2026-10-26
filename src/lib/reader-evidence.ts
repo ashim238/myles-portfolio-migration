@@ -416,7 +416,7 @@ export const READER_EVIDENCE_MAPS = {
       {
         chapterId: "uf-results",
         dominantClaim:
-          "The founder has used the kit for roughly 20 sends. The first redesigned send had a ~52.6% open rate with MPP excluded.",
+          "The founder has used the kit for roughly 20 sends. The first newsletter using the new templates had a ~52.6% open rate with MPP excluded.",
         claimClass: "outcome",
         evidenceState: "observed",
         dominantProof: {

@@ -1,8 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import type { MouseEvent } from "react";
-import { Myles97Icon } from "@/components/myles-97/icons";
+import { ProductThumbnail } from "@/components/myles-97/product-thumbnail";
 import { prefersReducedMotion } from "@/lib/home-intro";
 import type { ProgramDefinition } from "@/lib/myles-97/programs";
 import {
@@ -104,17 +103,7 @@ export function ProjectProgram({
   return (
     <div className="myles97-project-preview">
       <div className="myles97-project-preview-cover" data-project-program-cover>
-        {program.coverImage ? (
-          <Image
-            src={program.coverImage}
-            alt=""
-            width={960}
-            height={540}
-            sizes="(max-width: 900px) 80vw, 680px"
-          />
-        ) : (
-          <Myles97Icon name="app" size={56} aria-hidden="true" />
-        )}
+        <ProductThumbnail project={program.id} active reduced={reduceMotion} />
       </div>
       <div className="myles97-project-preview-copy">
         <p className="myles97-eyebrow">{program.applicationType}</p>
