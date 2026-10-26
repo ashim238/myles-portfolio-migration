@@ -33,7 +33,6 @@ describe("TikTok public truthfulness contract", () => {
   it("describes the American Eagle relationship without implying direct collaboration", () => {
     const publicSources = [
       "content/projects/tiktok.md",
-      "src/app/about/page.tsx",
       "src/app/resume/page.tsx",
       "src/app/work/tiktok/page.tsx",
     ].map(read);

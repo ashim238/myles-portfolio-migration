@@ -96,11 +96,11 @@ function PlacesScene({ shadow }: { shadow: string }) {
       <g className="motion-navi-neighbors" clipPath={`url(#${contentClip})`}>
         <image href="/projects/navi-demo/prospect-trees.jpg" x="-115" y="140" width="168" height="151" preserveAspectRatio="xMidYMid slice" />
         <image href="/projects/navi-demo/prospect-pond.jpg" x="435" y="140" width="168" height="151" preserveAspectRatio="xMidYMid slice" />
-        <text x="435" y="314" fill="#272329" fontSize="13" fontWeight="650">Explore the neighborhood</text>
+        <text x="435" y="314" fill="#272329" fontSize="12" fontWeight="650">Explore the neighborhood</text>
       </g>
       <g className="motion-navi-selected">
         <rect x="69" y="137" width="345" height="214" rx="11" fill="#fff" stroke="#e7e3db" />
-        <image href="/projects/navi-demo/prospect-tunnel.jpg" x="73" y="141" width="337" height="146" preserveAspectRatio="xMidYMid slice" />
+        <SourceCrop src="/projects/navi-demo/prospect-tunnel.jpg" x={73} y={141} width={337} height={146} radius={7} viewBox="0 0 1400 932" sourceWidth={1400} sourceHeight={932} />
         <rect x="86" y="152" width="88" height="23" rx="4" fill="#fff" />
         <text x="97" y="167" fill="#58515b" fontSize="10">Locally owned</text>
         <circle cx="387" cy="165" r="13" fill="#fff" /><path d="m381 163q0-6 6-2 6-4 6 2 0 4-6 8-6-4-6-8" fill="none" stroke="#867b87" strokeWidth="1.5" />
@@ -137,12 +137,6 @@ function CatalogScene({ shadow }: { shadow: string }) {
     <g className="motion-catalog-main" filter={`url(#${shadow})`}>
       <rect x="210" y="-38" width="226" height="420" fill="#ffcdb2" />
       <image href="/projects/tiktok/system/academia.webp" x="210" y="-24" width="226" height="402" mask={`url(#${titleMask})`} />
-      <g className="motion-catalog-slot">
-        <rect x="238" y="56" width="146" height="166" fill="#f7f7f7" />
-        <rect x="250" y="68" width="122" height="142" fill="none" stroke="#dbd4ca" strokeDasharray="3 4" />
-        <path d="M295 116h30v30h-30Zm15-10v10m0 30v10m-25-25h10m30 0h10" fill="none" stroke="#9d8c7f" strokeWidth="1.5" />
-        <text x="264" y="180" fill="#77695e" fontSize="11">CATALOG IMAGE</text>
-      </g>
     <g className="motion-catalog-type" filter={`url(#${shadow})`}>
       <g className="motion-catalog-type-backing"><rect x="274" y="230" width="334" height="114" fill="#fffaf3" /></g>
       <SourceCrop src="/projects/tiktok/system/academia-text.svg" x={292} y={240} width={298} height={96} viewBox="90 0 297 96" sourceWidth={387.8} sourceHeight={268.32} />

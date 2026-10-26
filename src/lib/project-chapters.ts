@@ -97,7 +97,7 @@ export const CASE_STUDY_CHAPTERS = {
     { id: "uf-audit", stage: "Research", title: "What 120 newsletters revealed" },
     { id: "uf-locked", stage: "Define", title: "Rules for fixed and swappable parts" },
     { id: "uf-figma", stage: "Build", title: "Rebuilding the system in Mailchimp" },
-    { id: "uf-results", stage: "Measure", title: "The first redesigned send" },
+    { id: "uf-results", stage: "Measure", title: "Using the templates each week" },
   ],
 } as const satisfies Record<
   ProjectChapterVariant,

@@ -429,7 +429,7 @@ export function WorkstationDesktop({
               key={id}
               {...props}
               title={project.appName}
-              status="Interactive preview"
+              status="Project preview"
             >
               <ProjectProgram
                 program={project}

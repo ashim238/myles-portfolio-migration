@@ -127,7 +127,7 @@ describe("public route metadata", () => {
       metadata: understandingFafsaMetadata,
       title: "UnderstandingFAFSA",
       description:
-        "The founder needed a newsletter she could edit herself, one that matched the personality of the new website. I designed a three-theme Mailchimp kit that she has used for roughly 20 sends. The first redesigned send had an observed ~52.6% open rate with Mailchimp Privacy Protection excluded, but this wasn't a controlled attribution test.",
+        "UnderstandingFAFSA's newsletter no longer matched its redesigned website. I designed and built a set of templates with three different color themes so the founder could put each issue together herself using Mailchimp, which she already knew.",
       image: "/og/understandingfafsa",
     },
   ])("publishes route-aware social metadata for $path", (route) => {

@@ -140,7 +140,7 @@ describe("Myles98 product shell", () => {
 
     await user.click(
       within(selectedWork).getByRole("button", {
-        name: "Explore Fresh Greens.exe interactive preview",
+        name: "Explore Fresh Greens.exe preview",
       }),
     );
     const freshGreensWindow = screen.getByRole("region", {

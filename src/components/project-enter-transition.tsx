@@ -4,6 +4,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Myles97Icon } from "@/components/myles-97/icons";
+import { ProductThumbnail } from "@/components/myles-97/product-thumbnail";
 import { TikTokCoverBlobs } from "@/components/tiktok-dsa";
 import { prefersReducedMotion } from "@/lib/home-intro";
 import {
@@ -227,7 +228,7 @@ function TransitionVisual({ visual }: { visual: ProjectEnterVisual }) {
         </span>
       </div>
       <div className="project-enter-program-cover">
-        <CoverVisual visual={visual.cover} />
+        <ProductThumbnail project={visual.programId} active reduced />
       </div>
     </div>
   );

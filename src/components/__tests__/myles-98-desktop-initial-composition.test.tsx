@@ -133,7 +133,7 @@ describe("Myles 98 desktop initial composition", () => {
     ).toBe("true");
     expect(
       (within(selectedWork).getByRole("button", {
-        name: "Explore Fresh Greens.exe interactive preview",
+        name: "Explore Fresh Greens.exe preview",
       }) as HTMLButtonElement).disabled,
     ).toBe(false);
   });

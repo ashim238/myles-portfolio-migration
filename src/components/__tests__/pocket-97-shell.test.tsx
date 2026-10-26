@@ -223,7 +223,7 @@ describe("Pocket 98", () => {
     await screen.findByRole("navigation", { name: "Pocket 98 dock" });
     await user.click(
       screen.getByRole("button", {
-        name: "Explore Fresh Greens.exe interactive preview",
+        name: "Explore Fresh Greens.exe preview",
       }),
     );
 

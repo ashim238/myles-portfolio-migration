@@ -34,7 +34,7 @@ const routes: RouteOpening[] = [
   {
     route: "understandingfafsa",
     proofName: "understandingFafsaProof",
-    proofLabel: "Build a sample send",
+    proofLabel: "Try the newsletter templates",
     proofHref: "#uf-locked",
     opening: '<section className="hero project-hero uf-hero"',
     openingClose: "</section>",

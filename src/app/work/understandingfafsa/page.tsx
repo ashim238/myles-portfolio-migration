@@ -26,12 +26,13 @@ import {
   UNDERSTANDING_FAFSA_AUDIT_ACTIONS,
   UNDERSTANDING_FAFSA_AUDIT_RULES,
 } from "@/lib/understandingfafsa-audit-rules";
+import styles from "./understandingfafsa.module.css";
 
 const UF_DESCRIPTION =
-  "The founder needed a newsletter she could edit herself, one that matched the personality of the new website. I designed a three-theme Mailchimp kit that she has used for roughly 20 sends. The first redesigned send had an observed ~52.6% open rate with Mailchimp Privacy Protection excluded, but this wasn't a controlled attribution test.";
+  "UnderstandingFAFSA's newsletter no longer matched its redesigned website. I designed and built a set of templates with three different color themes so the founder could put each issue together herself using Mailchimp, which she already knew.";
 const chapters = CASE_STUDY_CHAPTERS.understandingfafsa;
 const understandingFafsaProof = {
-  label: "Build a sample send",
+  label: "Try the newsletter templates",
   href: "#uf-locked",
 };
 
@@ -121,21 +122,24 @@ export default async function UnderstandingFafsaPage() {
       >
         <div className="project-section uf-section">
           <div className="project-section-body">
+            <div className={styles.auditContext}>
+              <p>
+                The founder, Kim, was concerned about falling open rates and how
+                the newsletter&apos;s design deviated from the website&apos;s fresh
+                new look. My initial audit noted super lengthy stretches of text,
+                inconsistent CTAs, and hierarchy that made emails difficult to scan.
+              </p>
+              <aside className={styles.audienceNote} aria-label="Audience context">
+                The audience was mobile-heavy, which made scanability especially
+                important.
+              </aside>
+            </div>
             <p>
-              UnderstandingFAFSA helps people navigate FAFSA. The founder had her
-              own issues with the newsletter. Open rates were down, and the design
-              stood in contrast with what was on the newly redesigned website. My
-              own audit aligned with that. The website redesign was well executed
-              and full of personality. The newsletter&apos;s overly long copy, uneven
-              CTAs, and poor hierarchy weren&apos;t doing the same. It needed a
-              refresh.
-            </p>
-            <p>
-              The founder had a busy schedule and a short turnaround once all the
-              articles were compiled and her editor had given them a gander. Her
-              experience with Figma was limited, and coding or editing HTML
-              wasn&apos;t her strength. The new system had to work inside Mailchimp
-              without requiring either skill.
+              Between sourcing content and editor corrections, Kim had a short
+              window to get newsletter materials buttoned up for weekly publishing.
+              She was a Mailchimp pro, but had limited experience with Figma or
+              frontend web dev work. The templates needed to fit the workflow
+              rather than make new responsibilities for her.
             </p>
           </div>
         </div>
@@ -146,10 +150,11 @@ export default async function UnderstandingFafsaPage() {
           </h3>
           <div className="project-section-body">
             <p>
-              Each send could include FAFSA filing windows, scholarship
-              deadlines, policy changes, and several calls to action. The founder
-              needed enough structure to put an issue together quickly, with room
-              to rearrange stories when the week called for it.
+              The UnderstandingFAFSA site had plenty of resources to help people
+              fill out the FAFSA. Each newsletter could highlight filing windows,
+              deadlines, policy changes, and resources that brought readers back
+              to the site. Kim needed a base to work from, with the leeway to
+              rearrange stories depending on the priorities for the week.
             </p>
           </div>
           <BeforeAfterPhones />
@@ -299,7 +304,7 @@ export default async function UnderstandingFafsaPage() {
               email client enacts limits. It&apos;s a constant back and forth.
             </p>
             <p>
-              The first redesigned send went out November 4, 2025. Mailchimp
+              The first newsletter using the new templates went out November 4, 2025. Mailchimp
               reported an observed <CountUp value="~52.6%" />{" "}open rate with
               MPP excluded, while earlier sends were around 30%. Because this
               wasn&apos;t a controlled attribution test, I don&apos;t attribute the

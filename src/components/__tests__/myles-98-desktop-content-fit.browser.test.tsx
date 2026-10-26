@@ -96,7 +96,7 @@ function renderDesktopMarkup(openProgram?: ProgramDefinition) {
   if (openProgram) {
     fireEvent.click(
       within(rendered.container).getByRole("button", {
-        name: `Explore ${openProgram.appName} interactive preview`,
+        name: `Explore ${openProgram.appName} preview`,
       }),
     );
     expect(
@@ -165,11 +165,11 @@ async function contentFit(page: Page, selector: string, childSelector: string) {
 async function projectPreviewGeometry(page: Page, programId: ProjectProgramId) {
   return page
     .locator(`[data-m97-program-window="${programId}"] .myles97-window-content`)
-    .evaluate((content) => {
+    .evaluate(async (content) => {
       const cover = content.querySelector<HTMLElement>(
         ".myles97-project-preview-cover",
       );
-      const image = cover?.querySelector<HTMLImageElement>("img");
+      const image = cover?.querySelector<SVGSVGElement>(".product-thumbnail-scene");
       const action = content.querySelector<HTMLElement>(".myles97-primary-button");
       if (!cover || !image || !action) throw new Error("Incomplete project preview");
 
@@ -182,7 +182,18 @@ async function projectPreviewGeometry(page: Page, programId: ProjectProgramId) {
         child.right <= parent.right &&
         child.bottom <= parent.bottom &&
         child.left >= parent.left;
-      const sourceAspectRatio = image.naturalWidth / image.naturalHeight;
+      const sourceAspectRatio = image.viewBox.baseVal.width / image.viewBox.baseVal.height;
+      const sources = Array.from(image.querySelectorAll("image"));
+      const loaded = await Promise.all(sources.map(async (source) => {
+        const asset = new Image();
+        asset.src = source.href.baseVal;
+        try {
+          await asset.decode();
+          return asset.naturalWidth > 0;
+        } catch {
+          return false;
+        }
+      }));
       const visibleImageWidth = Math.min(
         imageRect.width,
         imageRect.height * sourceAspectRatio,
@@ -195,8 +206,8 @@ async function projectPreviewGeometry(page: Page, programId: ProjectProgramId) {
         coverFullyVisible: inside(coverRect, contentRect),
         imageFullyVisible: inside(imageRect, coverRect) && inside(imageRect, contentRect),
         actionFullyVisible: inside(actionRect, contentRect),
-        objectFit: getComputedStyle(image).objectFit,
-        sourceLoaded: image.complete && image.naturalWidth > 0,
+        preserveAspectRatio: image.getAttribute("preserveAspectRatio"),
+        sourceLoaded: sources.length > 0 && loaded.every(Boolean),
         sourceAspectRatio,
         visibleImageWidth,
         visibleImageHeight,
@@ -356,13 +367,12 @@ describe("Myles 98 desktop content fit", () => {
           coverFullyVisible: true,
           imageFullyVisible: true,
           actionFullyVisible: true,
-          objectFit: "contain",
           sourceLoaded: true,
         });
-        expect(geometry.sourceAspectRatio, program.appName).toBeGreaterThan(1.3);
-        expect(geometry.sourceAspectRatio, program.appName).toBeLessThan(1.7);
+        expect(geometry.preserveAspectRatio, program.appName).toMatch(/ meet$/);
+        expect(geometry.sourceAspectRatio, program.appName).toBeCloseTo(640 / 360);
         expect(geometry.visibleImageWidth, program.appName).toBeGreaterThanOrEqual(300);
-        expect(geometry.visibleImageHeight, program.appName).toBeGreaterThanOrEqual(200);
+        expect(geometry.visibleImageHeight, program.appName).toBeGreaterThanOrEqual(160);
         await page.close();
       }
     },

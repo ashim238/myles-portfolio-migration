@@ -263,9 +263,9 @@ describe("UnderstandingFAFSA case-study structure", () => {
 
   it("keeps the founder's problem and Myles's original sentence shape", () => {
     expect(prose).toContain(
-      "The founder had her own issues with the newsletter. Open rates were down",
+      "The founder, Kim, was concerned about falling open rates",
     );
-    expect(prose).toContain("My own audit aligned with that.");
+    expect(prose).toContain("My initial audit noted super lengthy stretches of text");
     expect(prose).toContain(
       "The world of email marketing was somewhat foreign to me.",
     );
@@ -278,10 +278,10 @@ describe("UnderstandingFAFSA case-study structure", () => {
 
   it("preserves the founder constraints, ownership boundaries, validation, and ongoing use", () => {
     expect(prose).toMatch(
-      /open rates were down[\s\S]{0,180}newly redesigned website/i,
+      /falling open rates[\s\S]{0,180}website&apos;s fresh new look/i,
     );
     expect(prose).toMatch(
-      /short turnaround[\s\S]{0,180}(?:articles|copy)[\s\S]{0,120}editor/i,
+      /sourcing content and editor corrections[\s\S]{0,100}short[\s\S]{0,100}window/i,
     );
     expect(prose).toMatch(
       /email marketing was somewhat foreign[\s\S]{0,220}Figma[\s\S]{0,120}Mailchimp/i,
@@ -346,7 +346,7 @@ describe("UnderstandingFAFSA case-study structure", () => {
 
   it("centers founder autonomy before the rules and feasibility work that enabled it", () => {
     const brief =
-      "The new system had to work inside Mailchimp without requiring either skill.";
+      "The templates needed to fit the workflow rather than make new responsibilities for her.";
     const feasibility =
       "I hoped whatever I designed in Figma could be ported straight into Mailchimp.";
     const result =

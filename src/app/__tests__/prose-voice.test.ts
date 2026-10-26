@@ -11,10 +11,10 @@ describe("portfolio prose voice", () => {
     const source = read("src/app/about/page.tsx").replace(/\s+/g, " ");
 
     expect(source).toContain(
-      "My thesis became Fresh Greens, a React Native wayfinding prototype for Black drivers.",
+      "My thesis became Fresh Greens, a navigation prototype for Black drivers.",
     );
     expect(source).toContain(
-      "Light Academia entered the launch library, and I later learned through Global Creative Lab that American Eagle selected it.",
+      "UnderstandingFAFSA and designed fashion ad templates at TikTok.",
     );
     expect(source).not.toContain("the one template");
     expect(source).not.toContain("My thesis was a solo-built React Native wayfinding app");

@@ -396,7 +396,7 @@ describe("Task 5 responsive adaptation", () => {
     expect(await page.locator("[data-draggable-window]").count()).toBe(0);
     await page
       .getByRole("button", {
-        name: "Explore Fresh Greens.exe interactive preview",
+        name: "Explore Fresh Greens.exe preview",
       })
       .click();
     await page.waitForSelector(".pocket97-app");

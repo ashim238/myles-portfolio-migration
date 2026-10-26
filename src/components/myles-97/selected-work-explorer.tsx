@@ -120,7 +120,7 @@ export function SelectedWorkExplorer({
         <span>{programs.length} projects</span>
       </div>
       <p id="selected-work-guide" className="myles97-explorer-guide">
-        Read the full design story, or explore the interactive preview.
+        Read a case study or open a project preview.
       </p>
       <ul
         className="myles97-selected-work-list"
@@ -177,7 +177,7 @@ export function SelectedWorkExplorer({
               <button
                 type="button"
                 className="myles97-program-launch"
-                aria-label={`Explore ${program.appName} interactive preview`}
+                aria-label={`Explore ${program.appName} preview`}
                 onClick={() => onOpen(program.id)}
               >
                 Explore preview

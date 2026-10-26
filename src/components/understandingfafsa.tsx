@@ -123,7 +123,7 @@ const BEFORE_AFTER = [
   {
     asset: UF_ASSETS.mobileAfter,
     alt: "Redesigned newsletter on mobile with updated hierarchy and brand system, full scroll.",
-    label: "First redesigned send · ~52.6% open rate (MPP excluded)",
+    label: "First newsletter using the new templates · ~52.6% open rate (MPP excluded)",
     originalLabel: "redesigned newsletter",
     tilt: 2,
   },

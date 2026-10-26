@@ -51,19 +51,19 @@ export const PROJECT_PROGRAM_BLUEPRINTS = [
   {
     id: "understandingfafsa",
     appName: "FAFSA Mail.app",
-    applicationType: "Modular mail composer",
+    applicationType: "Newsletter templates",
     primaryEvidence: "observed",
   },
   {
     id: "navi",
     appName: "Navi Places.exe",
-    applicationType: "Place-discovery application",
+    applicationType: "Neighborhood discovery",
     primaryEvidence: "built",
   },
   {
     id: "tiktok",
     appName: "TikTok Catalog.studio",
-    applicationType: "Catalog-template studio",
+    applicationType: "Fashion ad templates",
     primaryEvidence: "shipped",
   },
 ] as const satisfies readonly ProjectProgramBlueprint[];
