@@ -519,7 +519,7 @@ describe("Task 5 responsive adaptation", () => {
     await page.close();
   }, 60_000);
 
-  it("keeps functional Pocket and compact recipe labels at 12px without clipping", async () => {
+  it("keeps Pocket dock labels readable and the recipe absent from both shells", async () => {
     const pocketPage = await hydratedBrowserPage("pocket", phoneViewports[1]);
     const dockLabels = await pocketPage.locator(".pocket97-dock button").evaluateAll(
       (buttons) =>
@@ -534,6 +534,7 @@ describe("Task 5 responsive adaptation", () => {
     expect(dockLabels).toEqual(
       dockLabels.map(() => ({ fontSize: 12, fits: true })),
     );
+    expect(await pocketPage.locator(".pocket97-recipe-card").count()).toBe(0);
     await pocketPage.close();
 
     const compactPage = await hydratedBrowserPage("pocket", {
@@ -541,20 +542,7 @@ describe("Task 5 responsive adaptation", () => {
       height: 900,
     });
     await compactPage.waitForSelector('[data-m97-shell="workstation"]');
-    const recipe = await compactPage.locator(".myles97-roti-note").evaluate((note) => {
-      const label = note.querySelector<HTMLElement>(".myles97-roti-label")!;
-      const preview = note.querySelector<HTMLElement>(":scope > span:last-child")!;
-      return {
-        labelFontSize: Number.parseFloat(getComputedStyle(label).fontSize),
-        previewFontSize: Number.parseFloat(getComputedStyle(preview).fontSize),
-        fits: note.scrollHeight <= note.clientHeight,
-      };
-    });
-    expect(recipe).toEqual({
-      labelFontSize: 12,
-      previewFontSize: 12,
-      fits: true,
-    });
+    expect(await compactPage.locator(".myles97-roti-note").count()).toBe(0);
     await compactPage.close();
   }, 60_000);
 
@@ -619,19 +607,17 @@ describe("Task 5 responsive adaptation", () => {
       const geometry = await page.evaluate(() => {
         const intro = document.querySelector<HTMLElement>(".pocket97-intro")!;
         const work = document.querySelector<HTMLElement>(".pocket97-work")!;
-        const recipe = document.querySelector<HTMLElement>(".pocket97-recipe-card")!;
         const dock = document.querySelector<HTMLElement>(".pocket97-dock")!;
         const cards = Array.from(
           document.querySelectorAll<HTMLElement>(".myles97-program-card"),
         );
         const targets = Array.from(
           document.querySelectorAll<HTMLElement>(
-            ".pocket97-dock button, .myles97-program-launch, .myles97-case-study-link, .pocket97-recipe-card",
+            ".pocket97-dock button, .myles97-program-launch, .myles97-case-study-link",
           ),
         );
         const introRect = intro.getBoundingClientRect();
         const workRect = work.getBoundingClientRect();
-        const recipeRect = recipe.getBoundingClientRect();
         const dockRect = dock.getBoundingClientRect();
         const cardRects = cards.map((card) => card.getBoundingClientRect());
 
@@ -639,9 +625,8 @@ describe("Task 5 responsive adaptation", () => {
           dockActions: dock.querySelectorAll("button").length,
           dockFixed: getComputedStyle(dock).position === "fixed",
           dockAtViewportBottom: Math.abs(dockRect.bottom - innerHeight) <= 1,
-          columnsSeparate: introRect.right <= workRect.left && recipeRect.right <= workRect.left,
+          columnsSeparate: introRect.right <= workRect.left,
           columnsStartTogether: Math.abs(introRect.top - workRect.top) <= 1,
-          recipeFollowsIntro: recipeRect.top >= introRect.bottom,
           twoCardRows:
             cardRects.length === 4 &&
             Math.abs(cardRects[0].top - cardRects[1].top) <= 1 &&
@@ -663,7 +648,6 @@ describe("Task 5 responsive adaptation", () => {
         dockAtViewportBottom: true,
         columnsSeparate: true,
         columnsStartTogether: true,
-        recipeFollowsIntro: true,
         twoCardRows: true,
         allTargets44: true,
         coverCount: programs.length,

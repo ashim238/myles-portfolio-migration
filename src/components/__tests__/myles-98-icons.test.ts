@@ -70,7 +70,7 @@ describe("Myles 98 program icon identity", () => {
     expect(iconForProgram("display-properties")).toBe("display");
     expect(iconForProgram("about")).toBe("profile");
     expect(iconForProgram("resume")).toBe("resume");
-    expect(iconForProgram("trini-roti")).toBe("recipe");
+    expect(iconForProgram("trini-roti")).toBe("app");
     expect(iconForProgram("reminders")).toBe("document");
     expect(iconForProgram("now-playing")).toBe("music");
   });

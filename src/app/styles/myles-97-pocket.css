@@ -128,33 +128,6 @@
   font-size: 12px;
 }
 
-.pocket97-recipe-card {
-  display: grid;
-  gap: 7px;
-  width: calc(100% - 18px);
-  min-height: 132px;
-  justify-self: center;
-  padding: 18px;
-  border: 1px solid #756942;
-  background: #eadcab;
-  color: var(--m97-ink);
-  cursor: pointer;
-  font-family: var(--m97-reader-font);
-  text-align: left;
-  box-shadow: 3px 4px 0 rgb(17 17 17 / 20%);
-  transform: rotate(1deg);
-}
-
-.pocket97-recipe-card strong {
-  font-size: 20px;
-  line-height: 1.1;
-}
-
-.pocket97-recipe-card > span:last-child {
-  font-size: 13px;
-  line-height: 1.45;
-}
-
 .pocket97-app {
   min-height: calc(100svh - 32px - 5rem - env(safe-area-inset-bottom, 0px));
 }
@@ -406,9 +379,7 @@
   }
 
   .pocket97-home {
-    grid-template-areas:
-      "intro work"
-      "recipe work";
+    grid-template-areas: "intro work";
     grid-template-columns: minmax(15rem, 0.72fr) minmax(0, 1.28fr);
     align-items: start;
   }
@@ -420,11 +391,6 @@
 
   .pocket97-work {
     grid-area: work;
-  }
-
-  .pocket97-recipe-card {
-    grid-area: recipe;
-    width: 100%;
   }
 
   .pocket97-shell .myles97-selected-work-list {
@@ -544,7 +510,6 @@
   .pocket97-work,
   .pocket97-app,
   .pocket97-intro-mark,
-  .pocket97-recipe-card,
   .pocket97-app-header,
   .pocket97-back,
   .pocket97-app-content,
@@ -570,7 +535,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pocket97-recipe-card,
   .pocket97-sheet,
   .pocket97-dock button {
     transform: none;

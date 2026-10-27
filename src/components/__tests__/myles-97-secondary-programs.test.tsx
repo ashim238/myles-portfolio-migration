@@ -1,7 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useReducer } from "react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { SecondaryProgram } from "@/components/myles-97/secondary-programs";
 import { WorkstationDesktop } from "@/components/myles-97/workstation-desktop";
 import { playEntries } from "@/lib/content";
@@ -95,43 +95,13 @@ function DesktopHarness() {
 }
 
 describe("Myles 98 secondary programs", () => {
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
-  it("places the recipe note after primary work and returns focus after closing it", async () => {
-    const user = userEvent.setup();
+  it("keeps the recipe note off the desktop", () => {
     render(<DesktopHarness />);
-
-    const selectedWork = screen.getByRole("region", { name: "Work Stuff" });
-    const recipeTrigger = screen.getByRole("button", {
-      name: /Open recipe note: Buss Up Shut Paratha Roti/,
-    });
-
-    expect(
-      selectedWork.compareDocumentPosition(recipeTrigger) &
-        Node.DOCUMENT_POSITION_FOLLOWING,
-    ).toBeTruthy();
-
-    await user.click(recipeTrigger);
-    const recipeWindow = screen.getByRole("region", { name: "Buss Up Shut.txt" });
-    expect(within(recipeWindow).getByRole("heading", { name: "Ingredients" })).toBeInTheDocument();
-    expect(within(recipeWindow).getByRole("heading", { name: "Method" })).toBeInTheDocument();
-    expect(
-      within(recipeWindow).getByRole("link", { name: /Immaculate Bites/ }),
-    ).toHaveAttribute("href", "https://www.africanbites.com/paratha-buss-shut/");
-    expect(recipeWindow).toHaveTextContent("Don't skip the rests!");
-    expect(recipeWindow).not.toHaveTextContent(
-      "The two rests are the part I would not skip.",
-    );
-
-    await user.click(
-      within(recipeWindow).getByRole("button", { name: "Close Buss Up Shut.txt" }),
-    );
-    expect(recipeTrigger).toHaveFocus();
+    expect(screen.queryByRole("button", { name: /Open recipe note/ })).not.toBeInTheDocument();
+    expect(screen.queryByRole("region", { name: "Buss Up Shut.txt" })).not.toBeInTheDocument();
   });
 
-  it("keeps Reminders as a personal desktop note list beside the recipe note", async () => {
+  it("keeps Reminders as a personal desktop note list", async () => {
     const user = userEvent.setup();
     render(<DesktopHarness />);
 
@@ -139,16 +109,9 @@ describe("Myles 98 secondary programs", () => {
     const reminderTrigger = screen.getByRole("button", {
       name: "Open Reminders",
     });
-    const recipeTrigger = screen.getByRole("button", {
-      name: /Open recipe note: Buss Up Shut Paratha Roti/,
-    });
 
     expect(
       selectedWork.compareDocumentPosition(reminderTrigger) &
-        Node.DOCUMENT_POSITION_FOLLOWING,
-    ).toBeTruthy();
-    expect(
-      reminderTrigger.compareDocumentPosition(recipeTrigger) &
         Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
 

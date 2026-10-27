@@ -27,7 +27,6 @@ const systemTitles: Partial<Record<ProgramId, string>> = {
   resume: "Résumé",
   "display-properties": "Display Properties",
   reminders: "Reminders",
-  "trini-roti": "Buss Up Shut.txt",
   paint: "Paint",
   "now-playing": "Now Playing",
 };
