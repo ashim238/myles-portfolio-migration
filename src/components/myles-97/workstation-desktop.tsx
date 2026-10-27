@@ -9,7 +9,6 @@ import { PaintProgram } from "@/components/myles-97/paint-program";
 import type { LoosePartSummary } from "@/components/myles-97/loose-parts-program";
 import { ProgramWindow } from "@/components/myles-97/program-window";
 import { ProjectProgram } from "@/components/myles-97/project-program";
-import { RecipeNote, RecipeNoteProgram } from "@/components/myles-97/recipe-note";
 import {
   RemindersProgram,
   RemindersWidget,
@@ -48,7 +47,6 @@ const defaultGeometry: Partial<Record<ProgramId, WindowGeometry>> = {
   "loose-parts": { x: 232, y: 92, width: 720, height: 520 },
   resume: { x: 344, y: 112, width: 560, height: 470 },
   reminders: { x: 520, y: 126, width: 440, height: 390 },
-  "trini-roti": { x: 472, y: 92, width: 520, height: 560 },
   "display-properties": { x: 504, y: 168, width: 448, height: 456 },
   paint: { x: 372, y: 144, width: 454, height: 408 },
   "now-playing": { x: 238, y: 16, width: 804, height: 640 },
@@ -128,7 +126,6 @@ export function WorkstationDesktop({
   const [resetRequested, setResetRequested] = useState(false);
   const startButtonRef = useRef<HTMLButtonElement>(null);
   const remindersTriggerRef = useRef<HTMLButtonElement>(null);
-  const recipeTriggerRef = useRef<HTMLButtonElement>(null);
   const restoreStartFocusRef = useRef(false);
   const pendingWindowFocus = useRef(false);
   const previouslyOpenPrograms = useRef(new Set(state.openPrograms));
@@ -361,22 +358,6 @@ export function WorkstationDesktop({
             );
           }
 
-          if (id === "trini-roti") {
-            return (
-              <ProgramWindow
-                key={id}
-                {...props}
-                title="Buss Up Shut.txt"
-                onClose={(programId) => {
-                  dispatch({ type: "close", id: programId });
-                  recipeTriggerRef.current?.focus();
-                }}
-              >
-                <RecipeNoteProgram />
-              </ProgramWindow>
-            );
-          }
-
           if (id === "reminders") {
             return (
               <ProgramWindow
@@ -442,11 +423,6 @@ export function WorkstationDesktop({
         <RemindersWidget
           triggerRef={remindersTriggerRef}
           onOpen={() => openProgram("reminders")}
-        />
-
-        <RecipeNote
-          triggerRef={recipeTriggerRef}
-          onOpen={() => openProgram("trini-roti")}
         />
       </div>
 

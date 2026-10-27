@@ -14,7 +14,6 @@ export type SystemProgramId =
   | "resume"
   | "display-properties"
   | "reminders"
-  | "trini-roti"
   | "paint"
   | "now-playing";
 
@@ -76,7 +75,6 @@ export const SYSTEM_PROGRAM_IDS = [
   "resume",
   "display-properties",
   "reminders",
-  "trini-roti",
   "paint",
   "now-playing",
 ] as const satisfies readonly SystemProgramId[];

@@ -86,8 +86,6 @@ export function iconForProgram(id: string): Myles97IconName {
       return "resume";
     case "reminders":
       return "document";
-    case "trini-roti":
-      return "recipe";
     case "loose-parts":
       return "loose-parts";
     case "display-properties":

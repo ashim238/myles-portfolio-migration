@@ -12,7 +12,6 @@ import type { LoosePartSummary } from "@/components/myles-97/loose-parts-program
 import { NowPlayingProgram } from "@/components/myles-97/now-playing-program";
 import { PaintProgram } from "@/components/myles-97/paint-program";
 import { ProjectProgram } from "@/components/myles-97/project-program";
-import { RecipeNoteProgram } from "@/components/myles-97/recipe-note";
 import {
   SecondaryProgram,
   type SecondaryProgramId,
@@ -23,7 +22,6 @@ import type {
   ProgramId,
   ProjectProgramId,
 } from "@/lib/myles-97/programs";
-import { TRINI_ROTI_RECIPE } from "@/lib/myles-97/recipe";
 import type {
   WorkstationAction,
   WorkstationState,
@@ -75,7 +73,6 @@ export function Pocket97Shell({
     const project = projectById.get(id as ProjectProgramId);
     if (project) return project.appName;
     if (isSecondaryProgram(id)) return secondaryTitles[id];
-    if (id === "trini-roti") return "Buss Up Shut.txt";
     if (id === "display-properties") return "Display Properties";
     if (id === "paint") return "Paint";
     if (id === "now-playing") return "Now Playing";
@@ -185,8 +182,6 @@ export function Pocket97Shell({
                   reduceMotion={state.displayPreferences.reduceMotion}
                   returnTarget="selected-work"
                 />
-              ) : activeProgram === "trini-roti" ? (
-                <RecipeNoteProgram />
               ) : activeProgram === "display-properties" ? (
                 <DisplayProperties
                   preferences={state.displayPreferences}
@@ -235,16 +230,6 @@ export function Pocket97Shell({
                 reduceMotion={state.displayPreferences.reduceMotion}
               />
             </section>
-
-            <button
-              type="button"
-              className="pocket97-recipe-card"
-              onClick={() => openProgram("trini-roti")}
-            >
-              <span className="myles97-roti-label">Recipe note</span>
-              <strong>{TRINI_ROTI_RECIPE.title}</strong>
-              <span>{TRINI_ROTI_RECIPE.preview}</span>
-            </button>
           </div>
         )}
       </div>

@@ -190,7 +190,7 @@ describe("Pocket 98", () => {
     );
     expect(cssBlock(".pocket97-intro", tablet)).toMatch(/grid-area:\s*intro;/);
     expect(cssBlock(".pocket97-work", tablet)).toMatch(/grid-area:\s*work;/);
-    expect(cssBlock(".pocket97-recipe-card", tablet)).toMatch(/grid-area:\s*recipe;/);
+    expect(container.querySelector(".pocket97-recipe-card")).toBeNull();
     expect(cssBlock(".pocket97-shell .myles97-selected-work-list", tablet)).toMatch(
       /grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\);/,
     );
