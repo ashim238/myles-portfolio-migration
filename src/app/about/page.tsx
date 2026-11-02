@@ -41,6 +41,11 @@ export default function AboutPage() {
               Design and Technology at Parsons, which I completed in 2026.
             </p>
             <p>
+              I&apos;m currently a Product Design Intern at Julius Education,
+              working on the corporate website, design-system components, and
+              mobile and accessibility improvements for Career Map.
+            </p>
+            <p>
               My thesis became Fresh Greens, a navigation prototype for Black
               drivers. I&apos;ve also built reusable newsletter templates for
               UnderstandingFAFSA and designed fashion ad templates at TikTok.

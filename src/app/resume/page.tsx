@@ -48,6 +48,16 @@ const INDEPENDENT_WORK: IndependentProject[] = [
 
 const EXPERIENCE: ResumeRole[] = [
   {
+    role: "Product Design Intern",
+    org: "Julius Education",
+    dates: "Aug 2026 – Present",
+    bullets: [
+      "Building Julius's corporate website page by page, including product-suite pages, using stakeholder feedback to shape a unified public-facing direction.",
+      "Building design-system components across Julius's dark-themed site and lighter, data-heavy products, refining geometry and corner treatments while establishing Storybook, Chromatic, and GitHub CI checks on each PR.",
+      "Supporting Career Map with mobile breakpoints and accessibility review, and developing a Claude skill to check future maps against accessibility requirements before release.",
+    ],
+  },
+  {
     role: "Creative Strategy Assistant",
     org: "Universal Music Group, Island Records",
     dates: "Aug 2023 – Aug 2024",

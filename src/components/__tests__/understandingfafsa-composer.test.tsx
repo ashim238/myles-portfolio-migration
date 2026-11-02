@@ -64,54 +64,19 @@ describe("UnderstandingFAFSA newsletter composer accessibility", () => {
     ).toBeInTheDocument();
   });
 
-  it("leaves phone-frame scrolling under the reader's control", () => {
-    render(<BeforeAfterPhones />);
-
-    const screenFrame = document.querySelector<HTMLElement>(
-      ".uf-phone-screen--scroll",
-    );
-    expect(screenFrame).not.toBeNull();
-    screenFrame!.scrollTop = 37;
-
-    fireEvent.scroll(window);
-
-    expect(screenFrame!.scrollTop).toBe(37);
-  });
-
-  it("names each phone frame for keyboard scrolling and keeps the evidence caveat beside it", () => {
-    render(<BeforeAfterPhones />);
-
-    const regions = screen.getAllByRole("region", {
-      name: /Scrollable full newsletter/,
-    });
-    expect(regions).toHaveLength(2);
-    for (const region of regions) {
-      expect(region).toHaveAttribute("tabindex", "0");
-    }
-    expect(
-      screen.getByText(
-        "Reported open rates are shown for context. This was not a controlled attribution test.",
-      ),
-    ).toBeInTheDocument();
-    const originalLinks = screen.getAllByRole("link", {
-      name: /Open original .* capture/,
-    });
-    expect(originalLinks).toHaveLength(2);
-    for (const link of originalLinks) {
+  it("shows readable opening excerpts without nested scrolling and preserves full-source links and the attribution limit", () => {
+    const { container } = render(<BeforeAfterPhones />);
+    expect(container.querySelector(".uf-phone-screen--scroll")).toBeNull();
+    expect(container.querySelectorAll(".uf-newsletter-excerpt")).toHaveLength(2);
+    expect(screen.getAllByRole("img")).toHaveLength(2);
+    expect(screen.getByText("Reported open rates are shown for context. This was not a controlled attribution test.")).toBeVisible();
+    const links = screen.getAllByRole("link", { name: /Open original .* capture/ });
+    expect(links.map(link => link.getAttribute("href"))).toEqual([
+      UF_ASSETS.mobileBefore.originalSrc, UF_ASSETS.mobileAfter.originalSrc,
+    ]);
+    for (const link of links) {
       expect(link).toHaveAttribute("target", "_blank");
       expect(link).toHaveAttribute("rel", "noopener noreferrer");
-    }
-
-    for (const region of regions) {
-      expect(within(region).getAllByRole("img")).toHaveLength(1);
-    }
-    const tiledImages = regions.flatMap((region) =>
-      Array.from(region.querySelectorAll("img")),
-    );
-    expect(tiledImages.length).toBeGreaterThan(2);
-    for (const image of tiledImages) {
-      expect(image).toHaveAttribute("loading", "lazy");
-      expect(image).toHaveAttribute("alt", "");
     }
   });
 
@@ -157,7 +122,7 @@ describe("UnderstandingFAFSA newsletter composer accessibility", () => {
     expect(weekly).toHaveAttribute("tabindex", "0");
     expect(
       screen.getByText(
-        "Scroll inside the frame to read the full send. Two of the three template types are shown here: weekly and event.",
+        "Scroll inside the frame to read the full send.",
       ),
     ).toBeInTheDocument();
     expect(
@@ -179,10 +144,8 @@ describe("UnderstandingFAFSA newsletter composer accessibility", () => {
       }),
     ).toBeNull();
     expect(
-      screen.getByText(
-        "Two of the three template types are shown here: weekly and event.",
-      ),
-    ).toBeInTheDocument();
+      screen.queryByText(/Two of the three template types/),
+    ).toBeNull();
     expect(screen.queryByText(/Counselor toolkit ships/)).toBeNull();
   });
 

@@ -190,36 +190,18 @@ describe("ProjectChapter", () => {
     );
   });
 
-  it("applies the same summary grammar to a featured FAFSA comparison", () => {
+  it("omits the FAFSA build summary where the narrative already explains the implementation and limit", () => {
     const { container } = render(
       <ProjectChapter
-        entry={{
-          id: "uf-figma",
-          stage: "Build",
-          title: "Rebuilding the system in Mailchimp",
-        }}
-        index={4}
-        total={5}
-        variant="understandingfafsa"
+        entry={{ id: "uf-figma", stage: "Build", title: "Rebuilding the system in Mailchimp" }}
+        index={4} total={5} variant="understandingfafsa"
       >
-        <p>Implementation comparison</p>
+        <p>Image compression reduced download weight, not the HTML source Gmail measures.</p>
       </ProjectChapter>,
     );
-
-    expect(container.querySelector(".reader-evidence-summary")).toHaveAttribute(
-      "data-evidence-for",
-      "fafsa-figma-mailchimp",
-    );
-    expect(
-      screen.getByText(
-        "I rebuilt the live template with a flatter hierarchy, fewer wrappers, and Mailchimp-native blocks.",
-      ),
-    ).toBeVisible();
-    expect(
-      screen.getByText(
-        "Image compression reduced download weight, not the HTML source Gmail measures.",
-      ),
-    ).toBeVisible();
+    expect(container.querySelector(".reader-evidence-summary")).toBeNull();
+    expect(container.querySelector(".project-chapter")).not.toHaveAttribute("aria-describedby");
+    expect(screen.getByText(/Image compression reduced download weight/)).toBeVisible();
   });
 
   it("extends proof-adjacent summaries to Fresh Greens and TikTok", () => {

@@ -137,19 +137,18 @@ export function BeforeAfterPhones() {
     >
       {BEFORE_AFTER.map((item) => (
         <figure key={item.label} className="uf-before-after-item">
-          <EmailPhoneFrame
-            tilt={item.tilt}
-            scrollable
-            scrollLabel={`${item.label}. Scrollable full newsletter.`}
-          >
-            <CaptureImage
-              asset={item.asset}
-              alt={item.alt}
-              sizes="(max-width: 768px) 72vw, 240px"
+          <div className="uf-newsletter-excerpt">
+            <Image
+              src={item.asset.tiles[0].src}
+              alt={item.alt.replace(", full scroll.", ". Opening excerpt.")}
+              width={item.asset.tiles[0].width}
+              height={item.asset.tiles[0].height}
+              sizes="(max-width: 639px) 88vw, 380px"
+              loading="lazy"
             />
-          </EmailPhoneFrame>
+          </div>
           <figcaption className="uf-before-after-label">{item.label}</figcaption>
-          <p className="uf-before-after-hint">Scroll inside the frame to read the full send.</p>
+          <p className="uf-before-after-hint">Opening excerpt. Open the original capture for the full newsletter.</p>
           <a
             href={item.asset.originalSrc}
             target="_blank"
@@ -714,7 +713,7 @@ const TEMPLATE_VARIANTS: Record<TemplateVariant, TemplateMeta> = {
     asset: UF_ASSETS.templateWeekly,
     alt: "Full weekly newsletter. Modular kit with emoji section headers and color theme variants.",
     descriptor: "Default send. Full modular kit assembled each week.",
-    note: "Scroll inside the frame to read the full send. Two of the three template types are shown here: weekly and event.",
+    note: "Scroll inside the frame to read the full send.",
     scrollable: true,
   },
   event: {
@@ -722,7 +721,7 @@ const TEMPLATE_VARIANTS: Record<TemplateVariant, TemplateMeta> = {
     asset: UF_ASSETS.templateEvent,
     alt: "Event-specific newsletter with fewer blocks for invites and recaps.",
     descriptor: "Event-specific send. RSVP-focused layout on the same system.",
-    note: "Two of the three template types are shown here: weekly and event.",
+    note: "",
     scrollable: false,
   },
 };
@@ -765,7 +764,7 @@ export function TemplateSwitcher() {
         />
       </div>
       <p className="uf-switcher-descriptor">{active.descriptor}</p>
-      <p className="uf-switcher-note">{active.note}</p>
+      {active.note ? <p className="uf-switcher-note">{active.note}</p> : null}
       {isTiledAsset(active.asset) ? (
         <a
           href={active.asset.originalSrc}
