@@ -159,7 +159,7 @@ export function SelectedWorkExplorer({
               </span>
               <span className="myles97-program-card-copy">
                 <strong>{program.title}</strong>
-                <span>{program.applicationType}</span>
+                <span>{program.cardSummary ?? program.applicationType}</span>
                 <span>{program.appName}</span>
               </span>
             </div>

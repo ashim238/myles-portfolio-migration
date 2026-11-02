@@ -30,7 +30,6 @@ const FEATURED_EVIDENCE_PLACEMENTS = new Map<string, number>([
   ["fresh-greens-route-comparison", 0],
   ["fresh-greens-report-route-influence", 0],
   ["fafsa-composer-demo", 0],
-  ["fafsa-figma-mailchimp", 0],
   ["tiktok-template-system", 0],
   ["tiktok-light-academia-sequence", 0],
 ]);

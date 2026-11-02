@@ -11,7 +11,7 @@ export function WelcomeProgram({ onSelectedWork }: WelcomeProgramProps) {
         <Image src="/logomark.svg" alt="" width={72} height={72} priority />
       </div>
       <div className="myles97-welcome-copy">
-        <p className="myles97-eyebrow">Welcome to Myles 98</p>
+        <p className="myles97-eyebrow">Product designer</p>
         <h1>Myles Ashitey</h1>
         <p className="myles97-welcome-statement">
           Design, code, and everything in between.

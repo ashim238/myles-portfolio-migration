@@ -7,8 +7,8 @@ const routes = [
     duration: "10 hr 48 min",
     arrival: "Arrive 7:10 PM",
     distance: "708 mi",
-    descriptor: "Safest route with current conditions",
-    conditions: ["Low light", "Road"],
+    descriptor: "Option 1",
+    conditions: ["Low light", "Rough pavement"],
     daylight: "More daylight near departure",
   },
   {
@@ -24,7 +24,7 @@ const routes = [
     arrival: "Arrive 7:25 PM",
     distance: "692 mi",
     descriptor: "15 min longer",
-    conditions: ["Police", "Road"],
+    conditions: ["Police", "Rough pavement"],
     daylight: "More of the drive after sunset",
   },
 ] as const;
@@ -99,8 +99,8 @@ export function RouteComparisonEvidence() {
       </div>
 
       <figcaption>
-        Portfolio reconstruction of the implemented pre-drive controls. The
-        route values are representative route data.
+        Portfolio reconstruction of the pre-drive controls, with a revised route
+        label. The route values are representative route data.
       </figcaption>
     </figure>
   );

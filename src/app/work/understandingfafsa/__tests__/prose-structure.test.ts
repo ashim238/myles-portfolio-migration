@@ -379,9 +379,6 @@ describe("UnderstandingFAFSA case-study structure", () => {
     );
     expect(prose).toContain("I owned the final visual design.");
     expect(prose).toMatch(/I rebuilt the live system[\s\S]{0,100}native blocks/i);
-    expect(prose).toMatch(
-      /founder[\s\S]{0,140}without (?:touching|editing) HTML/i,
-    );
     expect(prose).toMatch(/102 ?KB/i);
   });
 
@@ -414,9 +411,7 @@ describe("UnderstandingFAFSA case-study structure", () => {
     expect(prose).toContain(
       "I also left the founder with three email themes inspired by the brand palette.",
     );
-    expect(prose).toMatch(
-      /Within the founder&apos;s type choices, I locked spacing, type hierarchy, and dividers/i,
-    );
+    expect(prose).not.toContain("Within the founder&apos;s type choices");
     expect(prose).toMatch(
       /hoped whatever I designed in Figma[\s\S]{0,100}Mailchimp[\s\S]{0,100}That was not the case/i,
     );

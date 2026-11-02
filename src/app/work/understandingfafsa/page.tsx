@@ -228,15 +228,6 @@ export default async function UnderstandingFafsaPage() {
           <TemplateSwitcher />
         </section>
 
-        <div className="project-section uf-section project-section--wide uf-section--wide">
-          <div className="project-section-body">
-            <p>
-              Within the founder&apos;s type choices, I locked spacing, type
-              hierarchy, and dividers. The founder can swap content and copy,
-              then rearrange middle modules without touching HTML.
-            </p>
-          </div>
-        </div>
         <NewsletterComposerDemo />
         <ProjectEvidenceDisclosure summary="Open the supporting system details">
           <LockedSwappableView />

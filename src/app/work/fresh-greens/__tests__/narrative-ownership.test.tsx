@@ -217,7 +217,7 @@ describe("Fresh Greens rendered narrative ownership", () => {
     expect(plan).toHaveTextContent("He was content, not impressed");
     expect(plan).toHaveTextContent("Chicago to rural Georgia");
     expect(plan).toHaveTextContent(
-      'current build still labels the top option "Safest route,"',
+      'comparison below uses a neutral label',
     );
     expect(respond).toHaveTextContent(
       "One tap opens four support paths, including the pulled-over flow",

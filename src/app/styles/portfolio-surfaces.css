@@ -578,14 +578,17 @@
 
 .fg-route-proof-summary dl {
   display: grid;
-  gap: 0.55rem;
+  grid-template-columns: max-content max-content;
+  align-content: start;
+  gap: 0.55rem 0.7rem;
   margin: 0;
 }
 
 .fg-route-proof-summary dl div {
   display: grid;
-  grid-template-columns: auto auto;
-  gap: 0.7rem;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+  align-items: baseline;
 }
 
 .fg-route-proof-summary dt,
@@ -782,6 +785,7 @@
   }
 
   .fg-route-proof-summary dl div {
+    grid-column: auto;
     grid-template-columns: 1fr;
     gap: 0.15rem;
   }
@@ -4578,9 +4582,22 @@
   .uf-before-after {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 2.5rem;
-    max-width: 34rem;
+    max-width: 50rem;
     margin-inline: auto;
   }
+}
+
+.uf-newsletter-excerpt {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.uf-newsletter-excerpt img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .uf-before-after-item {

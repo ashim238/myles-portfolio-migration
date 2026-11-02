@@ -416,7 +416,7 @@ describe("Fresh Greens prose structure", () => {
       "People just need transparency into how the app is doing what it claims it does.",
     );
     expect(copy).toContain(
-      'The current build still labels the top option "Safest route,"',
+      'The comparison below uses a neutral label',
     );
     expect(copy).toContain("The full score and its weights aren't exposed yet.");
     expect(copy).toContain(

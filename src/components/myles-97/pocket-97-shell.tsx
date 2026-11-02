@@ -208,7 +208,7 @@ export function Pocket97Shell({
                 <Image src="/logomark.svg" alt="" width={72} height={72} priority />
               </div>
               <div>
-                <p className="myles97-eyebrow">Pocket 98</p>
+                <p className="myles97-eyebrow">Product designer</p>
                 <h1>Myles Ashitey</h1>
                 <p className="pocket97-statement">
                   Design, code, and everything in between.

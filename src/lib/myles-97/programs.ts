@@ -30,6 +30,7 @@ export type ProjectProgramBlueprint = {
   id: ProjectProgramId;
   appName: string;
   applicationType: string;
+  cardSummary?: string;
   primaryEvidence: EvidenceState;
 };
 
@@ -45,24 +46,28 @@ export const PROJECT_PROGRAM_BLUEPRINTS = [
     id: "fresh-greens",
     appName: "Fresh Greens.exe",
     applicationType: "Route-planning software",
+    cardSummary: "Navigation for Black drivers · Solo design + build",
     primaryEvidence: "built",
   },
   {
     id: "understandingfafsa",
     appName: "FAFSA Mail.app",
     applicationType: "Newsletter templates",
+    cardSummary: "Mailchimp kit · Founder edits weekly",
     primaryEvidence: "observed",
   },
   {
     id: "navi",
     appName: "Navi Places.exe",
     applicationType: "Neighborhood discovery",
+    cardSummary: "Neighborhood discovery · My system + React demo",
     primaryEvidence: "built",
   },
   {
     id: "tiktok",
     appName: "TikTok Catalog.studio",
     applicationType: "Fashion ad templates",
+    cardSummary: "3 fashion templates · Light Academia shipped",
     primaryEvidence: "shipped",
   },
 ] as const satisfies readonly ProjectProgramBlueprint[];

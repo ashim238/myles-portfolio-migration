@@ -170,9 +170,9 @@ export default async function FreshGreensPage() {
               feel adequately prepared for.
             </p>
             <p>
-              The current build still labels the top option &quot;Safest
-              route,&quot; ahead of the research. It needs to explain the tradeoff
-              and leave the choice with the driver.
+              The prototype&apos;s &quot;Safest route&quot; label went further than
+              the research supported. The comparison below uses a neutral label
+              and shows the conditions for the driver to weigh.
             </p>
           </div>
           <RouteComparisonEvidence />

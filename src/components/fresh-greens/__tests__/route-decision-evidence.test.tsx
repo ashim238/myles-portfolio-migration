@@ -11,9 +11,10 @@ describe("RouteComparisonEvidence", () => {
 
     expect(screen.getByText("1 of 3")).toBeInTheDocument();
     expect(
-      screen.getByText("Safest route with current conditions"),
+      screen.getByText("Option 1"),
     ).toBeInTheDocument();
     expect(screen.getByText("Low light")).toBeInTheDocument();
+    expect(screen.getByText("Rough pavement")).toBeInTheDocument();
     expect(screen.getByText(/representative route data/i)).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Next route" }));
