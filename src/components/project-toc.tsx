@@ -363,6 +363,37 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
     };
   }, [sections, readingEndId, updateEnhancement, commitActiveId]);
 
+  // On narrow screens enhancement collapses the initially visible chapter
+  // list after native fragment positioning. Reconcile that one layout change
+  // inside this document; never pull an embedding page or override user input.
+  useEffect(() => {
+    const hash = window.location.hash;
+    let id: string;
+    try { id = decodeURIComponent(hash.slice(1)); } catch { return; }
+    if (!sections.some(section => section.id === id) ||
+        tocRef.current?.dataset.tocReady !== "true") return;
+    let interrupted = false;
+    const stop = () => { interrupted = true; };
+    const inputs = ["wheel", "touchstart", "pointerdown", "keydown"] as const;
+    inputs.forEach(type => window.addEventListener(type, stop, { passive: true }));
+    let frame = requestAnimationFrame(() => {
+      frame = requestAnimationFrame(() => {
+        if (interrupted || window.location.hash !== hash) return;
+        const target = document.getElementById(id);
+        if (!target) return;
+        const offset = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+        window.scrollTo({
+          top: window.scrollY + target.getBoundingClientRect().top - offset,
+          behavior: "instant",
+        });
+      });
+    });
+    return () => {
+      cancelAnimationFrame(frame);
+      inputs.forEach(type => window.removeEventListener(type, stop));
+    };
+  }, [sections]);
+
   // Move only the chapter strip. scrollIntoView also scrolls its ancestors,
   // which can pull the article (or an embedding frame) away from a hash target.
   useEffect(() => {

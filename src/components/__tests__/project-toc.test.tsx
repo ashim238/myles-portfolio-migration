@@ -241,6 +241,30 @@ describe("ProjectToc", () => {
     expect(scrollStrip.mock.calls[0][0]).not.toHaveProperty("top");
   });
 
+  it.each([false, true])("reconciles initial hash after enhancement without overriding user input (%s)", (interrupted) => {
+    vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
+    vi.stubGlobal("ResizeObserver", MockResizeObserver);
+    const frames: FrameRequestCallback[] = [];
+    vi.spyOn(window, "requestAnimationFrame").mockImplementation(callback => {
+      frames.push(callback); return frames.length;
+    });
+    const scroll = vi.spyOn(window, "scrollTo").mockImplementation(() => {});
+    window.history.replaceState({}, "", "#overview");
+    const { unmount } = render(<main className="project-page">
+      <h2 id="overview" style={{ scrollMarginTop: 112 }}>Overview</h2>
+      <ProjectToc sections={[{ title: "Overview", id: "overview" }]} />
+    </main>);
+    const heading = screen.getByRole("heading");
+    vi.spyOn(heading, "getBoundingClientRect").mockReturnValue({ ...mockRect(200, 250), top: -29 });
+    if (interrupted) fireEvent.wheel(window);
+    frames.shift()?.(0);
+    frames.shift()?.(16);
+    if (interrupted) expect(scroll).not.toHaveBeenCalled();
+    else expect(scroll).toHaveBeenCalledWith({ top: window.scrollY - 141, behavior: "instant" });
+    unmount();
+    window.history.replaceState({}, "", "/");
+  });
+
   it("renders and announces chapter-aware labels", () => {
     vi.stubGlobal("IntersectionObserver", MockIntersectionObserver);
     vi.stubGlobal("ResizeObserver", MockResizeObserver);
