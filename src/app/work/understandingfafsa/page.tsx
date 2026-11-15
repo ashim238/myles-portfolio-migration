@@ -59,7 +59,12 @@ export const metadata: Metadata = createRouteMetadata({
   type: "article",
 });
 
-export default async function UnderstandingFafsaPage() {
+export default async function UnderstandingFafsaPage({ searchParams }: {
+  searchParams?: Promise<{ opening?: string }>;
+} = {}) {
+  // Preview-only alternative: compare the composition with a wider stacked lede.
+  const opening = process.env.VERCEL_ENV !== "production" &&
+    (await searchParams)?.opening === "wide" ? "wide" : "split";
   const project = await getProjectBySlug("understandingfafsa");
   if (!project || project.status !== "published") {
     notFound();
@@ -80,22 +85,23 @@ export default async function UnderstandingFafsaPage() {
         </TransitionLink>
       </nav>
 
-      <section className="hero project-hero uf-hero" aria-labelledby="uf-title">
+      <section className="hero project-hero uf-hero" aria-labelledby="uf-title" data-opening={opening}>
         <p className="uf-eyebrow">Product design · 2025–present</p>
         <h1 id="uf-title" className="project-hero-title uf-title">
           Understanding<wbr />FAFSA
         </h1>
-        <p className="project-hero-lede uf-lede">
-          {project?.summary ?? UF_DESCRIPTION}
-        </p>
+        <div className="uf-opening-detail">
+          <p className="project-hero-lede uf-lede">
+            {project?.summary ?? UF_DESCRIPTION}
+          </p>
+          <ProjectOpeningFacts
+            role="Product Designer"
+            scope="I owned the final visual design and Mailchimp build. Another designer, the founder, and I shaped the copy and base structure."
+            outcome="A three-theme kit the founder edits herself. She has launched roughly 20 sends since the redesign."
+            proof={understandingFafsaProof}
+          />
+        </div>
       </section>
-
-      <ProjectOpeningFacts
-        role="Product Designer"
-        scope="I owned the final visual design and Mailchimp build. Another designer, the founder, and I shaped the copy and base structure."
-        outcome="A three-theme kit the founder edits herself. She has launched roughly 20 sends since the redesign."
-        proof={understandingFafsaProof}
-      />
       <LeadMedia
         cover="/projects/understandingfafsa/cover.png"
         alt="Two phone mockups showing blue and orange UnderstandingFAFSA newsletter templates."

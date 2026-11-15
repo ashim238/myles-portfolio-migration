@@ -363,20 +363,20 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
     };
   }, [sections, readingEndId, updateEnhancement, commitActiveId]);
 
-  // Auto-scroll active item into view on desktop
+  // Move only the chapter strip. scrollIntoView also scrolls its ancestors,
+  // which can pull the article (or an embedding frame) away from a hash target.
   useEffect(() => {
-    const activeItem = activeItemRef.current;
-    if (
-      activeItem &&
-      listRef.current &&
-      typeof activeItem.scrollIntoView === "function"
-    ) {
-      activeItem.scrollIntoView({
-        behavior: reducedRef.current ? "auto" : "smooth",
-        block: "nearest",
-        inline: "center",
-      });
-    }
+    const item = activeItemRef.current;
+    const list = listRef.current;
+    if (!item || !list || list.scrollWidth <= list.clientWidth ||
+        list.clientWidth === 0 || typeof list.scrollTo !== "function") return;
+    const itemBox = item.getBoundingClientRect();
+    const listBox = list.getBoundingClientRect();
+    list.scrollTo({
+      left: list.scrollLeft + itemBox.left - listBox.left -
+        (list.clientWidth - itemBox.width) / 2,
+      behavior: reducedRef.current ? "auto" : "smooth",
+    });
   }, [activeId]);
 
   const handleClick = useCallback(

@@ -794,11 +794,11 @@
 .product-thumbnail-scene g[class^="motion-"] {
   transform-box: view-box;
   transform-origin: 320px 180px;
-  transition: transform 220ms var(--product-ease), opacity 180ms var(--product-ease);
+  transition: transform 240ms var(--product-ease), opacity 160ms var(--product-ease);
 }
-.motion-phone { transform: translate(138px, 0) scale(.82); }
-.motion-focus-panel { opacity: 0; transform: translate(-70px, 38px) scale(.84); }
-.motion-detail { opacity: 0; transform: translate(0, 10px); }
+.motion-phone { transform: translate(-36px, -8px) scale(.8); }
+.motion-focus-panel { opacity: 1; transform: translate(-8px, 0) scale(.96); }
+.motion-detail { opacity: 1; transform: none; }
 .motion-mail-sheet { transform: translate(12px, 8px) rotate(-3deg) scale(.94); }
 .motion-mail-header { transform: none; }
 .motion-mail-body { transform: translate(0, 10px); }
@@ -833,11 +833,11 @@
 
 @media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
   .product-thumbnail[data-active="true"][data-reduced="false"] g[class^="motion-"] {
-    transition-duration: 600ms, 200ms;
+    transition-duration: 320ms, 160ms;
   }
   .product-thumbnail[data-active="true"][data-reduced="false"] :is(.motion-mail-body, .motion-navi-selected, .motion-catalog-left, .motion-catalog-right) { transition-delay: 60ms; }
-  .product-thumbnail[data-active="true"][data-reduced="false"] :is(.motion-focus-panel, .motion-navi-detail, .motion-catalog-type) { transition-delay: 220ms; }
-  .product-thumbnail[data-active="true"][data-reduced="false"] :is(.motion-detail, .motion-catalog-type-backing) { transition-delay: 280ms; }
+  .product-thumbnail[data-active="true"][data-reduced="false"] :is(.motion-focus-panel, .motion-navi-detail, .motion-catalog-type) { transition-delay: 60ms; }
+  .product-thumbnail[data-active="true"][data-reduced="false"] :is(.motion-detail, .motion-catalog-type-backing) { transition-delay: 60ms; }
 }
 
 .product-thumbnail[data-reduced="true"] :is(g[class^="motion-"], .product-thumbnail-cover, .product-thumbnail-scene) { transition: none; }

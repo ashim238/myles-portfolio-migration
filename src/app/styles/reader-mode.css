@@ -527,3 +527,41 @@
     transition: none !important;
   }
 }
+
+/* FAFSA opening: one title, then story and project facts share the canvas.
+   Reading measure is derived from the composition, not an isolated ch cap. */
+.reader-mode.reader-mode.uf-page .uf-opening-detail {
+  display: grid;
+  gap: 1.75rem;
+  margin-top: 1.75rem;
+}
+.reader-mode.reader-mode.uf-page .uf-opening-detail .uf-lede {
+  max-width: none;
+  margin: 0;
+}
+.reader-mode.reader-mode.uf-page .uf-opening-detail .project-opening-facts {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+@media (min-width: 1000px) {
+  .reader-mode.reader-mode.uf-page .uf-opening-detail {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(2rem, 4vw, 4rem);
+  }
+  .reader-mode.reader-mode.uf-page .uf-opening-detail .project-opening-facts {
+    padding-top: 0.8rem;
+  }
+  .reader-mode.reader-mode.uf-page .uf-opening-detail .project-opening-facts-row {
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+  .reader-mode.reader-mode.uf-page [data-opening="wide"] .uf-opening-detail {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+  .reader-mode.reader-mode.uf-page [data-opening="wide"] .uf-lede {
+    max-width: 48rem;
+  }
+}

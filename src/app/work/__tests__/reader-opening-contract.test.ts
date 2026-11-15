@@ -60,7 +60,7 @@ function sourceFor(route: string): string {
 
 describe("Reader opening route contract", () => {
   it.each(routes)(
-    "places $route facts after the opening and before dominant media without replacing RecruiterCut",
+    "places $route facts after introductory copy and before dominant media without replacing RecruiterCut",
     ({ route, opening, openingClose, dominantMedia }) => {
       const source = sourceFor(route);
       const openingStart = source.indexOf(opening);
@@ -71,7 +71,13 @@ describe("Reader opening route contract", () => {
 
       expect(openingStart).toBeGreaterThanOrEqual(0);
       expect(openingEnd).toBeGreaterThan(openingStart);
-      expect(facts).toBeGreaterThan(openingEnd);
+      if (route === "understandingfafsa") {
+        const ledeEnd = source.indexOf("</p>", source.indexOf('className="project-hero-lede uf-lede"'));
+        expect(facts).toBeGreaterThan(ledeEnd);
+        expect(facts).toBeLessThan(openingEnd);
+      } else {
+        expect(facts).toBeGreaterThan(openingEnd);
+      }
       expect(media).toBeGreaterThan(facts);
       expect(recruiterCut).toBeGreaterThan(facts);
     },

@@ -223,13 +223,22 @@ describe("ProjectToc", () => {
       </main>,
     );
 
+    const list = screen.getByRole("list");
+    const scrollStrip = vi.fn();
+    Object.defineProperties(list, {
+      clientWidth: { configurable: true, value: 300 },
+      scrollWidth: { configurable: true, value: 900 },
+      scrollTo: { configurable: true, value: scrollStrip },
+    });
     fireEvent.click(screen.getByRole("link", { name: "Overview" }));
 
     await vi.waitFor(() => {
-      expect(HTMLElement.prototype.scrollIntoView).toHaveBeenCalledWith(
-        expect.objectContaining({ behavior: "auto" }),
+      expect(scrollStrip).toHaveBeenCalledWith(
+        expect.objectContaining({ behavior: "auto", left: expect.any(Number) }),
       );
     });
+    expect(HTMLElement.prototype.scrollIntoView).not.toHaveBeenCalled();
+    expect(scrollStrip.mock.calls[0][0]).not.toHaveProperty("top");
   });
 
   it("renders and announces chapter-aware labels", () => {
