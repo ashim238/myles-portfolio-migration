@@ -578,7 +578,9 @@ describe("ProjectToc", () => {
     );
 
     await vi.waitFor(() => {
-      expect(screen.getAllByText(/% · \d+ min left/)).toHaveLength(2);
+      // Progress text belongs to the desktop readout; the mobile toggle
+      // keeps only orientation and the visual progress hairline.
+      expect(screen.getAllByText(/% · \d+ min left/)).toHaveLength(1);
     });
 
     expect(screen.queryByText("Finished")).not.toBeInTheDocument();
