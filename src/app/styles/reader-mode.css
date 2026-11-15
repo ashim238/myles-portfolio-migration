@@ -453,8 +453,14 @@
   }
 }
 
-@media (max-width: 360px) {
-  .reader-mode.reader-mode .project-toc-readout-mobile {
+/* The collapsed control provides orientation; full titles live in the menu.
+   Keep stage labels visible even below the old 420px hiding breakpoint. */
+@media (max-width: 767px), (pointer: coarse) {
+  .reader-mode.reader-mode .project-toc-toggle .project-toc-stage {
+    display: inline;
+  }
+  .reader-mode.reader-mode .project-toc-toggle .project-toc-separator,
+  .reader-mode.reader-mode .project-toc-toggle .project-toc-active-title--short .project-toc-title {
     display: none;
   }
 }
