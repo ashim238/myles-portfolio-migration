@@ -5,7 +5,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Myles97Icon } from "@/components/myles-97/icons";
 import { ProductThumbnail } from "@/components/myles-97/product-thumbnail";
-import { TikTokCoverBlobs } from "@/components/tiktok-dsa";
 import { prefersReducedMotion } from "@/lib/home-intro";
 import {
   PROJECT_ENTER_COMPLETE,
@@ -194,8 +193,8 @@ function focusSettledRoute(
 function CoverVisual({ visual }: { visual: ProjectCoverVisual }) {
   if (visual.type === "tiktok") {
     return (
-      <div className="project-enter-tiktok work-thumb--tiktok-logo tt-cover--preview">
-        <TikTokCoverBlobs deferUntilVisible={false} />
+      <div className="project-enter-tiktok">
+        <ProductThumbnail project="tiktok" active reduced />
       </div>
     );
   }

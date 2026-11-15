@@ -52,10 +52,14 @@ const routes: RouteOpening[] = [
 ];
 
 function sourceFor(route: string): string {
-  return readFileSync(
+  const source = readFileSync(
     resolve(process.cwd(), `src/app/work/${route}/page.tsx`),
     "utf8",
   );
+  // TikTok's shared opening is also rendered by the controlled review route.
+  return route === "tiktok" ? source.replace("<TikTokOpening />", readFileSync(
+    resolve(process.cwd(), "src/components/tiktok-opening.tsx"), "utf8",
+  )) : source;
 }
 
 describe("Reader opening route contract", () => {

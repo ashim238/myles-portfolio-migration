@@ -198,57 +198,10 @@
   min-height: 100svh;
   overflow: auto;
   padding-bottom: 60px;
-  background:
-    radial-gradient(
-      ellipse at 18% 16%,
-      rgb(121 216 209 / 17%) 0%,
-      rgb(121 216 209 / 5%) 34%,
-      transparent 58%
-    ),
-    radial-gradient(
-      ellipse at 82% 84%,
-      rgb(7 27 42 / 28%) 0%,
-      transparent 52%
-    ),
-    linear-gradient(
-      132deg,
-      transparent 0 52%,
-      rgb(7 33 43 / 8%) 52% 68%,
-      transparent 68% 100%
-    ),
-    radial-gradient(circle, rgb(255 255 255 / 9%) 1px, transparent 1.5px),
-    linear-gradient(rgb(255 255 255 / 3.5%) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(255 255 255 / 3.5%) 1px, transparent 1px),
-    var(--m97-desktop);
-  background-size:
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    16px 16px,
-    64px 64px,
-    64px 64px,
-    auto;
+  background: var(--m97-desktop);
 }
 
-/* A quiet system mark makes the wallpaper feel authored without competing
-   with movable windows or shortcut labels. */
-.myles97-desktop::before {
-  position: fixed;
-  top: 24px;
-  left: 50%;
-  z-index: auto;
-  color: rgb(3 31 39 / 14%);
-  content: "M98";
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-  font-size: clamp(3rem, 6vw, 5.5rem);
-  font-style: italic;
-  font-weight: 900;
-  letter-spacing: -0.08em;
-  line-height: 0.72;
-  pointer-events: none;
-  text-shadow: 1px 1px 0 rgb(255 255 255 / 4%);
-  transform: translateX(-50%) skewX(-8deg);
-}
+/* A flat field lets project art and the active window establish hierarchy. */
 
 .myles97-window {
   position: absolute;
@@ -806,8 +759,8 @@
 .motion-navi-neighbors { transform: none; opacity: .8; }
 .motion-navi-selected { transform: none; }
 .motion-navi-detail { opacity: 0; transform: translate(35px, 22px) scale(.94); }
-.motion-catalog-left { transform: translate(66px, 16px) rotate(-4deg); }
-.motion-catalog-right { transform: translate(-64px, 0) rotate(4deg); }
+.motion-catalog-left { transform: translate(12px, 8px) rotate(-7deg); }
+.motion-catalog-right { transform: translate(-12px, 0) rotate(7deg); }
 .motion-catalog-main { transform: translate(0, 8px) scale(.96); }
 .product-thumbnail-scene g.motion-catalog-type {
   transform-origin: 0 0;
@@ -854,12 +807,12 @@
 }
 
 .myles97-program-card-copy strong {
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .myles97-program-card-copy > span {
   color: #555;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .myles97-program-actions {
@@ -876,14 +829,17 @@
   gap: 8px;
   padding: 8px 10px;
   border-right: 1px solid #777;
-  background: var(--m97-active);
-  color: #fff;
+  background: var(--m97-bevel-light);
+  color: var(--m97-ink);
+  box-shadow: var(--m97-bevel-raised);
   font: 700 12px/1.2 var(--m97-ui-font);
   text-decoration: none;
 }
 
 .myles97-case-study-link:hover {
-  background: #111;
+  background: #efefef;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .myles97-shell[data-m97-contrast="high"] .myles97-case-study-link {
@@ -900,12 +856,22 @@
   background: #e5e5e5;
   color: var(--m97-ink);
   cursor: pointer;
-  font: 700 12px/1.2 var(--m97-ui-font);
+  font: 400 12px/1.2 var(--m97-ui-font);
   text-align: center;
+  box-shadow: var(--m97-bevel-raised);
 }
 
 .myles97-program-launch:hover {
   background: #d1d1d1;
+}
+
+.myles97-case-study-link:active,
+.myles97-program-launch:active {
+  box-shadow: var(--m97-bevel-recessed);
+}
+
+.myles97-shell .myles97-program-actions :is(a, button):focus-visible {
+  outline-offset: -4px;
 }
 
 .myles97-project-preview {
@@ -925,7 +891,8 @@
 .myles97-project-preview-copy {
   display: grid;
   justify-items: start;
-  gap: 8px;
+  gap: 12px;
+  min-width: 0;
 }
 
 .myles97-project-preview-copy h2,
@@ -934,12 +901,13 @@
 }
 
 .myles97-project-preview-copy h2 {
-  font: 700 24px/1.05 var(--m97-ui-font);
+  font: 700 26px/1.15 var(--m97-ui-font);
+  overflow-wrap: anywhere;
 }
 
 .myles97-project-preview-copy > p:not(.myles97-eyebrow) {
   max-width: 62ch;
-  font: 14px/1.5 var(--m97-ui-font);
+  font: 16px/1.5 var(--m97-ui-font);
 }
 
 @media (min-width: 1025px) {
@@ -1000,13 +968,15 @@
 
   .myles97-desktop .myles97-project-preview {
     height: 100%;
-    grid-template-columns: minmax(0, 3fr) minmax(240px, 2fr);
-    align-items: stretch;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 24px;
   }
 
   .myles97-desktop .myles97-project-preview-cover {
     min-height: 0;
-    aspect-ratio: auto;
+    width: 100%;
+    aspect-ratio: 4 / 3;
   }
 
   .myles97-desktop .myles97-project-preview-copy {
@@ -1126,7 +1096,7 @@
   align-items: center;
   gap: 6px;
   padding: 5px 8px;
-  border-top: 2px solid var(--m97-ink);
+  border-top: 2px solid var(--m97-bevel-highlight);
   background: var(--m97-chrome);
   color: var(--m97-ink);
   font-family: var(--m97-ui-font);
@@ -1181,11 +1151,13 @@
   justify-content: flex-start;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-weight: 400;
 }
 
 .myles97-task-button[data-focused="true"] {
-  background: var(--m97-active);
-  color: #fff;
+  background: repeating-conic-gradient(#ededed 0% 25%, #dfdfdf 0% 50%) 0 0 / 2px 2px;
+  color: var(--m97-ink);
+  font-weight: 700;
 }
 
 .myles97-task-button[data-minimized="true"] {
