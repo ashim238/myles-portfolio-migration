@@ -501,8 +501,8 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
           aria-label={activeTitle || "Case study chapters"}
         >
           <span className="project-toc-toggle-label">
-            <span className="project-toc-num">{activeNum}.</span>
-            <span className="project-toc-active-title">
+            <span className="project-toc-num">{activeNum} ·</span>
+            <span className={`project-toc-active-title${activeChapter?.stage ? " project-toc-active-title--short" : ""}`}>
               {activeChapter?.stage ? (
                 <>
                   <span className="project-toc-stage">{activeChapter.stage}</span>
@@ -517,7 +517,6 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
             </span>
           </span>
           <span className="project-toc-toggle-end">
-            <span className="project-toc-readout-mobile js-toc-readout" aria-hidden="true" />
             <svg
               className={`project-toc-chevron${isOpen ? " project-toc-chevron--open" : ""}`}
               width="12"
