@@ -363,20 +363,51 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
     };
   }, [sections, readingEndId, updateEnhancement, commitActiveId]);
 
-  // Auto-scroll active item into view on desktop
+  // On narrow screens enhancement collapses the initially visible chapter
+  // list after native fragment positioning. Reconcile that one layout change
+  // inside this document; never pull an embedding page or override user input.
   useEffect(() => {
-    const activeItem = activeItemRef.current;
-    if (
-      activeItem &&
-      listRef.current &&
-      typeof activeItem.scrollIntoView === "function"
-    ) {
-      activeItem.scrollIntoView({
-        behavior: reducedRef.current ? "auto" : "smooth",
-        block: "nearest",
-        inline: "center",
+    const hash = window.location.hash;
+    let id: string;
+    try { id = decodeURIComponent(hash.slice(1)); } catch { return; }
+    if (!sections.some(section => section.id === id) ||
+        tocRef.current?.dataset.tocReady !== "true") return;
+    let interrupted = false;
+    const stop = () => { interrupted = true; };
+    const inputs = ["wheel", "touchstart", "pointerdown", "keydown"] as const;
+    inputs.forEach(type => window.addEventListener(type, stop, { passive: true }));
+    let frame = requestAnimationFrame(() => {
+      frame = requestAnimationFrame(() => {
+        if (interrupted || window.location.hash !== hash) return;
+        const target = document.getElementById(id);
+        if (!target) return;
+        const offset = parseFloat(getComputedStyle(target).scrollMarginTop) || 0;
+        window.scrollTo({
+          top: window.scrollY + target.getBoundingClientRect().top - offset,
+          behavior: "instant",
+        });
       });
-    }
+    });
+    return () => {
+      cancelAnimationFrame(frame);
+      inputs.forEach(type => window.removeEventListener(type, stop));
+    };
+  }, [sections]);
+
+  // Move only the chapter strip. scrollIntoView also scrolls its ancestors,
+  // which can pull the article (or an embedding frame) away from a hash target.
+  useEffect(() => {
+    const item = activeItemRef.current;
+    const list = listRef.current;
+    if (!item || !list || list.scrollWidth <= list.clientWidth ||
+        list.clientWidth === 0 || typeof list.scrollTo !== "function") return;
+    const itemBox = item.getBoundingClientRect();
+    const listBox = list.getBoundingClientRect();
+    list.scrollTo({
+      left: list.scrollLeft + itemBox.left - listBox.left -
+        (list.clientWidth - itemBox.width) / 2,
+      behavior: reducedRef.current ? "auto" : "smooth",
+    });
   }, [activeId]);
 
   const handleClick = useCallback(
@@ -385,7 +416,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
       commitActiveId(id);
       setIsOpen(false);
       if (isOpen) {
-        window.requestAnimationFrame(() => toggleRef.current?.focus());
+        window.requestAnimationFrame(() => toggleRef.current?.focus({ preventScroll: true }));
       }
     },
     [isOpen, commitActiveId],
@@ -457,7 +488,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
             the hairline beneath it. */}
         <button
           ref={toggleRef}
-          className="project-toc-toggle"
+          className="project-toc-toggle reader-control"
           onClick={() => setIsOpen(!isOpen)}
           onKeyDown={(event) => {
             if (event.key === "Escape" && isOpen) {
@@ -470,8 +501,8 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
           aria-label={activeTitle || "Case study chapters"}
         >
           <span className="project-toc-toggle-label">
-            <span className="project-toc-num">{activeNum}.</span>
-            <span className="project-toc-active-title">
+            <span className="project-toc-num">{activeNum} ·</span>
+            <span className={`project-toc-active-title${activeChapter?.stage ? " project-toc-active-title--short" : ""}`}>
               {activeChapter?.stage ? (
                 <>
                   <span className="project-toc-stage">{activeChapter.stage}</span>
@@ -486,7 +517,6 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
             </span>
           </span>
           <span className="project-toc-toggle-end">
-            <span className="project-toc-readout-mobile js-toc-readout" aria-hidden="true" />
             <svg
               className={`project-toc-chevron${isOpen ? " project-toc-chevron--open" : ""}`}
               width="12"
@@ -518,7 +548,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
                   <a
                     ref={isActive ? activeItemRef : undefined}
                     href={`#${section.id}`}
-                    className={`project-toc-link${isActive ? " project-toc-link--active" : ""}`}
+                    className={`project-toc-link reader-control${isActive ? " project-toc-link--active" : ""}`}
                     onClick={() => handleClick(section.id)}
                     onKeyDown={(event) => handleKeyDown(event, i)}
                     aria-current={isActive ? "true" : undefined}

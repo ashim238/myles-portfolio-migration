@@ -1,0 +1,22 @@
+# Composition pass — working decision record
+
+Baseline preview: 9ad71a14ddb51a1cf0c1ea03923163edc0d49816 / dpl_ExEFXmxXgNg71i7kYgXbiwRwg8dc.
+Production revalidated unchanged: 46b8d4b8f28df4a97a304938526fa7b8b7a739b4 / dpl_36nzK2TwvoVj3AeakepXCnPjKSf5.
+Branch: codex/windows98-composition-pass. No production promotion.
+
+## Standard declared before editing
+Attention should move from project identity to its evidence and then an explicit action. Chrome remains square, opaque, restrained and consistent with the existing Windows 98 bevel vocabulary. Project artwork keeps its identity and original files. Empty space must separate or group information; equal numeric padding is not sufficient if visible content collides. Thumbnail resting states should explain the work without hover. Motion should reinforce an already readable composition and retarget cleanly on interruption. Readable editorial type, responsive columns and touch-sized actions are intentional modern adaptations. These are art-direction choices, not claims about original Windows defaults.
+
+## Decisions and acceptance criteria
+1. TikTok Launch Library: measured live DOM badge ends 1.109px inside the card despite 16px declared padding. No-wrap flex caption has insufficient room for name + gap + unshrinkable status. Local correction: separate caption rows with a reserved status line shared by the three cards; square status geometry. Acceptance: visible label stays within card content padding at desktop and portrait sizes; full text remains available; rows align. Tradeoff: taller caption.
+2. FAFSA opening: 560px lede and a separate 768px facts block leave the right half of the full-width opening unused. Compare a 48rem stacked lede with a split composition (story 1.25fr, facts 1fr) below a full-width title. Acceptance: clear identity/story/facts hierarchy, no clipping or document overflow at 320/390/430px; stack before columns become cramped; unchanged content. Tradeoff: a denser desktop opening and shorter facts lines.
+3. Fresh Greens thumbnail: at 341×163px its resting state shows a narrow centered phone and leaves the useful route detail hidden until hover. Reveal the original route detail in the resting composition and reduce hover displacement. All four thumbnails retain source art. Shorten shared hover choreography from 600ms plus up to 280ms delay to 320ms plus at most 60ms. Acceptance: route and detail visible before interaction; clean interruption; no changed card geometry; zero transition with reduced motion/touch. Tradeoff: less theatrical reveal, more immediate evidence.
+4. Chapter tracking: scrollIntoView on the active link can scroll ancestor documents during initial tracking, competing with fragment navigation. Replace with horizontal scrolling of the actual list only, and only when it overflows. Acceptance: initial hash remains below reader controls; active tracking cannot move page vertically; chapter keyboard navigation preserved. Add behavior regression test.
+
+Controlled alternatives: /work/understandingfafsa?opening=wide (preview only) versus default split opening. Baseline and final desktop contact sheets compare identical displayed thumbnail sizes. TikTok comparison isolates the caption change. Production ignores the opening alternative.
+
+Verification to be appended after browser inspection. No independent reviewers are available; use randomized A/B order with four portfolio evaluators, ask them to identify role, outcome and evidence action, then navigate into/out of a project. Record errors and preference reasons separately. External validation remains outstanding.
+
+5. Case-study action arrow: baseline renders the text ↗ as a small hollow missing-glyph box under the declared Tahoma/Verdana/Geneva stack in the audit browser. Use a 12px inline SVG with an explicit arrow path, hidden from assistive technology because the link already has its full name. Acceptance: visible arrow, consistent size and baseline, unchanged accessible name. Actual selected platform fallback font was not established.
+
+Browser refinement: on portrait frames the inherited two-column Role/Scope grid made the long Scope value unnecessarily narrow. Stack facts into one readable column at the existing mobile breakpoint. The desktop split remains. Direct portrait fragments were also displaced by the hydrated chapter list collapsing after native hash positioning; reconcile the initial fragment after enhancement inside the current document only, and cancel on user input. Tests cover both alignment and cancellation.

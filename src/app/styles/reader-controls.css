@@ -1,0 +1,70 @@
+/* Portfolio-owned controls share the desktop's existing material/state tokens.
+   Explicit opt-in protects embedded project UI. Loaded before accessibility preferences. */
+:is(.reader-header, .reader-mode.reader-mode.tt-page, .reader-mode.reader-mode.uf-page, .reader-mode.reader-mode) .reader-control {
+  min-height: 44px;
+  border: 0;
+  border-radius: 0;
+  background: var(--m97-chrome);
+  color: var(--m97-ink);
+  box-shadow: var(--m97-bevel-raised);
+  font-family: var(--m97-ui-font);
+  text-decoration: none;
+  transform: none;
+  transition: none;
+}
+:is(.reader-header, .reader-mode.reader-mode.tt-page, .reader-mode.reader-mode.uf-page, .reader-mode.reader-mode) .reader-control:hover {
+  background: var(--m97-bevel-light);
+  color: var(--m97-ink);
+  transform: none;
+}
+:is(.reader-header, .reader-mode.reader-mode.tt-page, .reader-mode.reader-mode.uf-page, .reader-mode.reader-mode) .reader-control:is(:active, [aria-pressed="true"], [aria-expanded="true"], [aria-current="true"]) {
+  background: var(--m97-bevel-light);
+  color: var(--m97-ink);
+  box-shadow: var(--m97-bevel-recessed);
+  transform: none;
+}
+:is(.reader-header, .reader-mode.reader-mode.tt-page, .reader-mode.reader-mode.uf-page, .reader-mode.reader-mode) .reader-control:focus-visible {
+  outline: 2px solid var(--m98-paper-focus, var(--m97-active));
+  outline-offset: 2px;
+  border-radius: 0;
+}
+:is(.reader-header, .reader-mode.reader-mode.tt-page, .reader-mode.reader-mode.uf-page, .reader-mode.reader-mode) .reader-control:disabled {
+  color: #626262;
+  text-shadow: 1px 1px 0 var(--m97-bevel-highlight);
+  background: var(--m97-chrome);
+  box-shadow: var(--m97-bevel-raised);
+  cursor: default;
+}
+/* Opaque toolbar, stable geometry. Progress indicators remain separate from buttons. */
+.reader-mode.reader-mode .project-toc {
+  background: var(--m97-paper);
+  backdrop-filter: none;
+  border-radius: 0;
+}
+.reader-mode.reader-mode .project-toc-link--active.reader-control {
+  box-shadow: var(--m97-bevel-recessed);
+  background: var(--m97-bevel-light);
+}
+.reader-mode.reader-mode .project-toc-link.reader-control :is(.project-toc-stage, .project-toc-num, .project-toc-separator) {
+  color: inherit;
+}
+/* Keep the existing wide-screen rail compact rather than turning it into floating buttons. */
+@media (min-width: 1600px) {
+  .reader-mode.reader-mode .project-toc-link.reader-control {
+    background: transparent;
+    box-shadow: none;
+  }
+}
+@media (forced-colors: active) {
+  :is(.reader-header, .reader-mode.reader-mode.tt-page, .reader-mode.reader-mode.uf-page, .reader-mode.reader-mode) .reader-control {
+    border: 1px solid ButtonText;
+    background: ButtonFace;
+    color: ButtonText;
+    box-shadow: none;
+    text-shadow: none;
+  }
+  :is(.reader-header, .reader-mode.reader-mode.tt-page, .reader-mode.reader-mode.uf-page, .reader-mode.reader-mode) .reader-control:is([aria-pressed="true"], [aria-current="true"]) {
+    outline: 2px solid Highlight;
+    outline-offset: -4px;
+  }
+}

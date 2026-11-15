@@ -51,7 +51,7 @@ const surfaces: Surface[] = [
   {
     name: "UnderstandingFAFSA",
     slug: "understandingfafsa",
-    render: UnderstandingFafsaPage,
+    render: () => UnderstandingFafsaPage({}),
   },
 ];
 
@@ -125,7 +125,7 @@ describe("dedicated project route visibility", () => {
     {
       name: "UnderstandingFAFSA",
       slug: "understandingfafsa",
-      render: UnderstandingFafsaPage,
+      render: () => UnderstandingFafsaPage({}),
       cta: "Try the newsletter templates",
       href: "#uf-locked",
       artifactName: "Try the system",

@@ -417,8 +417,6 @@
    surrounding template controls and iteration notes are paper-backed. */
 .reader-mode.reader-mode.tt-page :is(
   [class*="briefFacts"] dd,
-  .tt-template-choice,
-  .tt-template-regions button,
   .tt-template-selected-caption,
   .tt-template-region-label,
   .tt-template-region-source,
@@ -441,7 +439,6 @@
 }
 
 .reader-mode.reader-mode.tt-page :is(
-  .tt-template-choice,
   .tt-template-region-source,
   .tt-outcome-step-label,
   .tt-outcome-step figure

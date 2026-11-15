@@ -41,7 +41,8 @@ export function LeadMedia({
           alt={alt}
           width={width}
           height={height}
-          sizes="(max-width: 760px) 100vw, min(90vw, 900px)"
+          // Match .page-shell's 1.4rem side padding and .case-lead-media's 90% desktop width.
+          sizes="(max-width: 760px) calc(100vw - 44.8px), calc(90vw - 40.32px)"
           loading="eager"
           priority
         />

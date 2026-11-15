@@ -1,0 +1,35 @@
+/* Preview-only alternatives. Each parameter isolates one composition decision. */
+.study[data-wallpaper="layered"] :global(.myles97-desktop) {
+  background:
+    radial-gradient(ellipse at 18% 16%, rgb(121 216 209 / 17%) 0%, rgb(121 216 209 / 5%) 34%, transparent 58%),
+    radial-gradient(ellipse at 82% 84%, rgb(7 27 42 / 28%) 0%, transparent 52%),
+    linear-gradient(132deg, transparent 0 52%, rgb(7 33 43 / 8%) 52% 68%, transparent 68% 100%),
+    radial-gradient(circle, rgb(255 255 255 / 9%) 1px, transparent 1.5px),
+    linear-gradient(rgb(255 255 255 / 3.5%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 3.5%) 1px, transparent 1px), var(--m97-desktop);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 16px 16px, 64px 64px, 64px 64px, auto;
+}
+.study[data-wallpaper="layered"] :global(.myles97-desktop)::before {
+  position: fixed; top: 24px; left: 50%; color: rgb(3 31 39 / 14%); content: "M98";
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: clamp(3rem, 6vw, 5.5rem); font-style: italic; font-weight: 900;
+  letter-spacing: -.08em; line-height: .72; pointer-events: none;
+  text-shadow: 1px 1px 0 rgb(255 255 255 / 4%); transform: translateX(-50%) skewX(-8deg);
+}
+.study[data-controls="blue"] :global(.myles97-case-study-link) { background: var(--m97-active); color: white; box-shadow: none; }
+.study[data-controls="blue"] :global(.myles97-program-launch) { box-shadow: none; font-weight: 700; }
+.study[data-controls="blue"] :global(.myles97-task-button) { font-weight: 700; }
+.study[data-controls="blue"] :global(.myles97-task-button[data-focused="true"]) { background: var(--m97-active); color: white; }
+.study[data-controls="blue"] :global(.myles97-taskbar) { border-top-color: var(--m97-ink); }
+@media (min-width: 1025px) {
+  .study[data-preview="legacy"] :global(.myles97-window:has(.myles97-project-preview)) { width: 720px !important; height: 520px !important; }
+  .study[data-preview="legacy"] :global(.myles97-project-preview) { grid-template-columns: minmax(0, 3fr) minmax(240px, 2fr); align-items: stretch; gap: 16px; }
+  .study[data-preview="legacy"] :global(.myles97-project-preview-cover) { aspect-ratio: auto; }
+}
+.study[data-preview="legacy"] :global(.myles97-project-preview-copy) { gap: 8px; }
+.study[data-preview="legacy"] :global(.myles97-project-preview-copy h2) { font-size: 24px; line-height: 1.05; }
+.study[data-preview="legacy"] :global(.myles97-project-preview-copy > p:not(.myles97-eyebrow)) { font-size: 14px; }
+.frames { padding: 24px; background: #f5f3ea; color: #171717; font: 14px/1.5 sans-serif; }
+.frames > div { display: flex; gap: 24px; flex-wrap: wrap; }
+.frames figure { margin: 16px 0; }
+.frames iframe { border: 1px solid #808080; box-sizing: content-box; }

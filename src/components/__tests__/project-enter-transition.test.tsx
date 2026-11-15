@@ -723,6 +723,10 @@ describe("ProjectEnterTransition", () => {
       await Promise.resolve();
     });
 
+    // The destination must be visible before the overlay fades, not only after
+    // cleanup. Otherwise an aspect mismatch exposes the empty backdrop.
+    expect(document.documentElement).not.toHaveClass("project-enter-settling");
+    expect(document.querySelector(".project-enter-overlay")).not.toBeNull();
     const animate = HTMLElement.prototype.animate as ReturnType<typeof vi.fn>;
     expect(
       animate.mock.calls.filter(
@@ -1096,7 +1100,7 @@ describe("ProjectEnterTransition", () => {
     expect(screen.getByRole("status")).toHaveTextContent("Myles Ashitey");
   });
 
-  it("carries the live TikTok cover treatment instead of a static image", async () => {
+  it("carries TikTok's source template composition without decorative autoplay", async () => {
     render(
       <ProjectEnterTransition>
         <main>Homepage</main>
@@ -1114,7 +1118,11 @@ describe("ProjectEnterTransition", () => {
       await Promise.resolve();
     });
 
-    expect(document.querySelector(".project-enter-tiktok .tt-cover-field")).not.toBeNull();
+    const scene = document.querySelector('.project-enter-tiktok [data-project="tiktok"]');
+    expect(scene).not.toBeNull();
+    expect(scene).toHaveAttribute("data-reduced", "true");
+    expect(scene?.querySelectorAll('image[href*="/projects/tiktok/system/"]').length).toBe(4);
+    expect(document.querySelector(".tt-cover-field")).toBeNull();
     expect(document.querySelector(".project-enter-image")).toBeNull();
   });
 

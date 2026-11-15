@@ -52,15 +52,19 @@ const routes: RouteOpening[] = [
 ];
 
 function sourceFor(route: string): string {
-  return readFileSync(
+  const source = readFileSync(
     resolve(process.cwd(), `src/app/work/${route}/page.tsx`),
     "utf8",
   );
+  // TikTok's shared opening is also rendered by the controlled review route.
+  return route === "tiktok" ? source.replace("<TikTokOpening />", readFileSync(
+    resolve(process.cwd(), "src/components/tiktok-opening.tsx"), "utf8",
+  )) : source;
 }
 
 describe("Reader opening route contract", () => {
   it.each(routes)(
-    "places $route facts after the opening and before dominant media without replacing RecruiterCut",
+    "places $route facts after introductory copy and before dominant media without replacing RecruiterCut",
     ({ route, opening, openingClose, dominantMedia }) => {
       const source = sourceFor(route);
       const openingStart = source.indexOf(opening);
@@ -71,7 +75,13 @@ describe("Reader opening route contract", () => {
 
       expect(openingStart).toBeGreaterThanOrEqual(0);
       expect(openingEnd).toBeGreaterThan(openingStart);
-      expect(facts).toBeGreaterThan(openingEnd);
+      if (route === "understandingfafsa") {
+        const ledeEnd = source.indexOf("</p>", source.indexOf('className="project-hero-lede uf-lede"'));
+        expect(facts).toBeGreaterThan(ledeEnd);
+        expect(facts).toBeLessThan(openingEnd);
+      } else {
+        expect(facts).toBeGreaterThan(openingEnd);
+      }
       expect(media).toBeGreaterThan(facts);
       expect(recruiterCut).toBeGreaterThan(facts);
     },

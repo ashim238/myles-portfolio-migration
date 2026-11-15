@@ -37,7 +37,7 @@ export function ReaderHeader({ slug, title }: ReaderHeaderProps) {
   return (
     <header className="reader-header" aria-label="Reader controls">
       <Link
-        className="reader-return"
+        className="reader-return reader-control"
         href="/"
         aria-label="Return to Desktop"
         onClick={(event) => {
