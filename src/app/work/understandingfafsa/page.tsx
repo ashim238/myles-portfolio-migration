@@ -61,7 +61,7 @@ export const metadata: Metadata = createRouteMetadata({
 
 export default async function UnderstandingFafsaPage({ searchParams }: {
   searchParams?: Promise<{ opening?: string }>;
-} = {}) {
+}) {
   // Preview-only alternative: compare the composition with a wider stacked lede.
   const opening = process.env.VERCEL_ENV !== "production" &&
     (await searchParams)?.opening === "wide" ? "wide" : "split";
