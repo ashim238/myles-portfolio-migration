@@ -16,3 +16,5 @@ Attention should move from project identity to its evidence and then an explicit
 Controlled alternatives: /work/understandingfafsa?opening=wide (preview only) versus default split opening. Baseline and final desktop contact sheets compare identical displayed thumbnail sizes. TikTok comparison isolates the caption change. Production ignores the opening alternative.
 
 Verification to be appended after browser inspection. No independent reviewers are available; use randomized A/B order with four portfolio evaluators, ask them to identify role, outcome and evidence action, then navigate into/out of a project. Record errors and preference reasons separately. External validation remains outstanding.
+
+5. Case-study action arrow: baseline renders the text ↗ as a small hollow missing-glyph box under the declared Tahoma/Verdana/Geneva stack in the audit browser. Use a 12px inline SVG with an explicit arrow path, hidden from assistive technology because the link already has its full name. Acceptance: visible arrow, consistent size and baseline, unchanged accessible name. Actual selected platform fallback font was not established.
