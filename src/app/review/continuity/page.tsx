@@ -1,7 +1,5 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Home from "@/app/page";
-import { ReaderShell } from "@/components/myles-97/reader-shell";
-import { TikTokOpening } from "@/components/tiktok-opening";
 import styles from "./study.module.css";
 
 export const metadata = { title: "Portfolio continuity review", robots: { index: false, follow: false } };
@@ -11,9 +9,7 @@ export default async function ContinuityReview({ searchParams }: {
 }) {
   if (process.env.VERCEL_ENV === "production") notFound();
   const params = await searchParams;
-  if (params.view === "tiktok") return <ReaderShell slug="tiktok" title="TikTok Dynamic Showcase Ads" className="tt-page tt-preview-page">
-    <TikTokOpening legacy={params.variant === "legacy"} />
-  </ReaderShell>;
+  if (params.view === "tiktok") redirect(`/review/continuity/tiktok${params.variant === "legacy" ? "?variant=legacy" : ""}`);
   if (params.view === "frames") {
     const routes: Record<string, string> = { home: "/", tiktok: "/work/tiktok", chapter: "/work/tiktok#tt-system", navi: "/work/navi", fafsa: "/work/understandingfafsa", fresh: "/work/fresh-greens" };
     const path = routes[params.screen ?? "home"] ?? "/";
