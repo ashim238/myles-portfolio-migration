@@ -2220,11 +2220,17 @@
 .tt-cover-work .product-thumbnail { min-height: 100%; }
 .tt-cover-work .product-thumbnail-scene { padding: 16px; }
 
+@media (min-width: 768px) {
+  .reader-mode.reader-mode.tt-page .tt-cover--work + .project-opening-facts {
+    width: min(calc(100% - 32px), calc(var(--content-max) - clamp(24px, 3vw, 48px) * 2));
+  }
+}
+
 @media (max-width: 767px) {
   .reader-mode.reader-mode.tt-page .tt-cover--work {
     grid-template-columns: minmax(0, 1fr);
   }
-  .reader-mode.reader-mode.tt-page .tt-cover--work .tt-cover-inner { padding: 24px; }
+  .reader-mode.reader-mode.tt-page .tt-cover--work .tt-cover-inner { padding: 20px 16px; }
   .reader-mode.reader-mode.tt-page .tt-cover--work .tt-eyebrow { max-width: none; }
   .tt-cover-work { aspect-ratio: 16 / 10; }
   .tt-cover-work .product-thumbnail { height: 100%; }
