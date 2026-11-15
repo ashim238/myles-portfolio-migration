@@ -3434,8 +3434,7 @@
 }
 
 .nv-page .nv-lede {
-  /* A font-independent opening measure; reader type no longer inherits a narrow 42ch. */
-  max-width: min(100%, 35rem);
+  max-width: 42ch;
   font-size: clamp(1.05rem, 2vw, 1.28rem);
 }
 

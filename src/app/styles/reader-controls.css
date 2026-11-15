@@ -17,7 +17,7 @@
   color: var(--m97-ink);
   transform: none;
 }
-:is(.reader-header, .reader-mode.reader-mode.tt-page, .reader-mode.reader-mode.uf-page, .reader-mode.reader-mode) .reader-control:is(:active, [aria-pressed="true"], [aria-expanded="true"], [aria-current="step"]) {
+:is(.reader-header, .reader-mode.reader-mode.tt-page, .reader-mode.reader-mode.uf-page, .reader-mode.reader-mode) .reader-control:is(:active, [aria-pressed="true"], [aria-expanded="true"], [aria-current="true"]) {
   background: var(--m97-bevel-light);
   color: var(--m97-ink);
   box-shadow: var(--m97-bevel-recessed);
@@ -63,7 +63,7 @@
     box-shadow: none;
     text-shadow: none;
   }
-  :is(.reader-header, .reader-mode.reader-mode.tt-page, .reader-mode.reader-mode.uf-page, .reader-mode.reader-mode) .reader-control:is([aria-pressed="true"], [aria-current="step"]) {
+  :is(.reader-header, .reader-mode.reader-mode.tt-page, .reader-mode.reader-mode.uf-page, .reader-mode.reader-mode) .reader-control:is([aria-pressed="true"], [aria-current="true"]) {
     outline: 2px solid Highlight;
     outline-offset: -4px;
   }
