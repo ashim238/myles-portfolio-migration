@@ -29,6 +29,10 @@ Historical references guide construction; the particular teal, blue, yellow, neu
 
 The rendered preview favored the flat field and neutral actions. New preview artwork measures about 390x293px and the adjacent reading column about 340px at a 1363px viewport. Summary text is 16/24px; all four titles and action labels fit. TikTok's desktop facts were aligned with the new title inset after inspecting the complete composition; portrait text padding was reduced to 16px so it follows the facts column. The taskbar's horizontally scrolling button strip can clip an outside focus ring, so its ring is inset 4px, matching the card actions. These are consequences of the chosen composition, not separate redesign work.
 
+## Motion verification finding
+
+Timestamped browser captures showed a blank frame during the aspect-mismatch fallback: the overlay faded while `project-enter-settling` still hid the destination. Remove that hiding class before the fallback fade begins. Keep the overlay and focus lock until settlement. Acceptance: actual destination content remains visible under the fading overlay; no empty intermediate screen; existing navigation, Escape and focus tests pass.
+
 ## Independent review protocol — outstanding
 
 Randomize matched alternatives without version labels. Ask portfolio evaluators to identify each project across home/preview/reader, locate the designer's role and supporting evidence, select a project, enter and return. Record task errors and explanations separately from visual preference. Compare one decision at a time; do not treat a small preference sample as objective proof of taste.

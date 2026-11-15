@@ -723,6 +723,10 @@ describe("ProjectEnterTransition", () => {
       await Promise.resolve();
     });
 
+    // The destination must be visible before the overlay fades, not only after
+    // cleanup. Otherwise an aspect mismatch exposes the empty backdrop.
+    expect(document.documentElement).not.toHaveClass("project-enter-settling");
+    expect(document.querySelector(".project-enter-overlay")).not.toBeNull();
     const animate = HTMLElement.prototype.animate as ReturnType<typeof vi.fn>;
     expect(
       animate.mock.calls.filter(

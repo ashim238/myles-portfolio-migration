@@ -337,6 +337,9 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
         return;
       }
 
+      // A geometry mismatch uses a crossfade instead of FLIP. Reveal the
+      // destination underneath it so fading the overlay cannot expose a blank page.
+      document.documentElement.classList.remove("project-enter-settling");
       const backdropAnim = backdrop.animate([{ opacity: 1 }, { opacity: 0 }], {
         duration: 220,
         easing: EASE_OUT_CUBIC,
