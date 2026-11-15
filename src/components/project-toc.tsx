@@ -416,7 +416,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
       commitActiveId(id);
       setIsOpen(false);
       if (isOpen) {
-        window.requestAnimationFrame(() => toggleRef.current?.focus());
+        window.requestAnimationFrame(() => toggleRef.current?.focus({ preventScroll: true }));
       }
     },
     [isOpen, commitActiveId],
