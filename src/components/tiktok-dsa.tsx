@@ -60,7 +60,7 @@ export function TikTokTemplateSystem() {
   );
 
   return (
-    <section className="tt-template-system" aria-label="TikTok template system">
+    <section id="tt-template-inspector" className="tt-template-system project-proof-target" aria-label="TikTok template system" tabIndex={-1}>
       <div
         className="tt-template-contact-sheet"
         role="group"

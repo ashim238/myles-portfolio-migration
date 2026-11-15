@@ -553,10 +553,11 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
                     onKeyDown={(event) => handleKeyDown(event, i)}
                     aria-current={isActive ? "true" : undefined}
                     aria-label={completeChapterTitle(section)}
+                    title={completeChapterTitle(section)}
                   >
                     <span className="project-toc-dot" aria-hidden="true" />
                     <span className="project-toc-num">{num}.</span>
-                    <span className="project-toc-text">
+                    <span className={`project-toc-text${section.stage ? " project-toc-text--short" : ""}`}>
                       {section.stage ? (
                         <>
                           <span className="project-toc-stage">{section.stage}</span>

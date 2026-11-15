@@ -26,7 +26,7 @@ import { createRouteMetadata } from "@/lib/site-config";
 const chapters = CASE_STUDY_CHAPTERS["fresh-greens"];
 const freshGreensProof = {
   label: "Try the safety-flow reconstruction",
-  href: "#fg-pulled-over",
+  href: "#fg-safety-reconstruction",
 };
 
 export const metadata: Metadata = createRouteMetadata({

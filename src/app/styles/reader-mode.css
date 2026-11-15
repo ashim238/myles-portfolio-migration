@@ -361,6 +361,16 @@
   color: var(--m97-reader-ink);
 }
 
+.reader-mode .project-proof-target {
+  scroll-margin-top: calc(var(--project-heading-offset) + 1rem);
+}
+
+@media (min-width: 1025px) {
+  .reader-mode .project-toc-text--short :is(.project-toc-title, .project-toc-separator) {
+    display: none;
+  }
+}
+
 .reader-mode.reader-mode .project-work-jump-window-content {
   background: var(--m97-paper);
   color: var(--m97-reader-ink);

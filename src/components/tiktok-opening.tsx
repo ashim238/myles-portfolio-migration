@@ -4,7 +4,7 @@ import { TikTokCoverBlobs, TikTokLogo } from "@/components/tiktok-dsa";
 
 const tiktokProof = {
   label: "Inspect the template system",
-  href: "#tt-system",
+  href: "#tt-template-inspector",
 };
 
 /** The legacy variant is used only by the protected review route. */

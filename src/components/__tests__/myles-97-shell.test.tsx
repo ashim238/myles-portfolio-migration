@@ -331,6 +331,20 @@ describe("Myles98 product shell", () => {
     expect(screen.getByRole("button", { name: "Start" })).not.toHaveFocus();
   });
 
+  it("keeps project links reachable while tabbing between windows", async () => {
+    const user = userEvent.setup();
+    render(<Myles97Shell programs={programs} looseParts={looseParts} />);
+    const browse = screen.getByRole("button", { name: "Browse projects" });
+    await act(async () => browse.focus());
+    const link = screen.getByRole("link", { name: "Read Fresh Greens case study" });
+    for (let step = 0; step < 5 && document.activeElement !== link; step++) {
+      await user.tab();
+    }
+    expect(link).toHaveFocus();
+    await user.click(browse);
+    await waitFor(() => expect(link).toHaveFocus());
+  });
+
   it("raises windows on keyboard entry and focuses the result of taskbar and close actions", async () => {
     const user = userEvent.setup();
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);

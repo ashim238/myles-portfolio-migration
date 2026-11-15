@@ -70,7 +70,9 @@ export function PulledOverJourney() {
 
   return (
     <div
-      className="fg-pulled-journey"
+      id="fg-safety-reconstruction"
+      className="fg-pulled-journey project-proof-target"
+      tabIndex={-1}
       aria-label="The pulled-over safety sequence"
       data-enhanced={enhanced ? "true" : undefined}
     >

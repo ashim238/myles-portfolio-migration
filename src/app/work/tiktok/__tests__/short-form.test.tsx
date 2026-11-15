@@ -54,7 +54,7 @@ vi.mock("@/components/tiktok-dsa", () => ({
   SystemOverviewBand: () => <figure data-testid="system-overview-band" />,
   TikTokCoverBlobs: () => <div aria-hidden="true" />,
   TikTokLogo: () => <span aria-hidden="true" />,
-  TikTokTemplateSystem: () => <section data-testid="template-system" />,
+  TikTokTemplateSystem: () => <section id="tt-template-inspector" data-testid="template-system" />,
 }));
 
 import TikTokPage from "@/app/work/tiktok/page";
@@ -80,16 +80,16 @@ describe("TikTok short-form case study", () => {
     getPublishedProjects.mockResolvedValue([project]);
   });
 
-  it("links the canonical opening proof to the rendered template-system explanation", async () => {
+  it("links the opening proof directly to the template inspector", async () => {
     const { container } = render(await TikTokPage());
 
     expect(
       screen.getByRole("link", {
         name: "Open proof: Inspect the template system",
       }),
-    ).toHaveAttribute("href", "#tt-system");
+    ).toHaveAttribute("href", "#tt-template-inspector");
 
-    const target = container.querySelector("#tt-system");
+    const target = container.querySelector("#tt-template-inspector");
     expect(target).not.toBeNull();
     const chapter = target?.closest(".project-chapter");
     expect(chapter).not.toBeNull();

@@ -26,6 +26,7 @@ import type {
   ProgramId,
   ProjectProgramId,
 } from "@/lib/myles-97/programs";
+import { SYSTEM_PROGRAM_IDS, PROJECT_PROGRAM_BLUEPRINTS } from "@/lib/myles-97/programs";
 import type {
   WindowGeometry,
   WorkstationAction,
@@ -57,6 +58,12 @@ const secondaryTitles: Record<SecondaryProgramId, string> = {
   "loose-parts": "Loose Parts",
   resume: "Résumé",
 };
+
+// Reading order stays fixed while openPrograms continues to own visual stacking.
+const windowReadingOrder: readonly ProgramId[] = [
+  ...SYSTEM_PROGRAM_IDS,
+  ...PROJECT_PROGRAM_BLUEPRINTS.map(({ id }) => id),
+];
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(() =>
@@ -128,6 +135,7 @@ export function WorkstationDesktop({
   const remindersTriggerRef = useRef<HTMLButtonElement>(null);
   const restoreStartFocusRef = useRef(false);
   const pendingWindowFocus = useRef(false);
+  const pendingProjectFocus = useRef(false);
   const previouslyOpenPrograms = useRef(new Set(state.openPrograms));
   const minimized = new Set(state.minimizedPrograms);
   const projectById = new Map(programs.map((program) => [program.id, program]));
@@ -166,6 +174,8 @@ export function WorkstationDesktop({
   useEffect(() => {
     if (!pendingWindowFocus.current) return;
     pendingWindowFocus.current = false;
+    const focusProject = pendingProjectFocus.current;
+    pendingProjectFocus.current = false;
     if (!state.focusedProgram) return;
 
     const windowElement = document.querySelector<HTMLElement>(
@@ -174,7 +184,9 @@ export function WorkstationDesktop({
     if (!windowElement || windowElement.contains(document.activeElement)) return;
     windowElement
       .querySelector<HTMLElement>(
-        `[data-m97-window-move="${state.focusedProgram}"]`,
+        focusProject && state.focusedProgram === "selected-work"
+          ? ".myles97-case-study-link"
+          : `[data-m97-window-move="${state.focusedProgram}"]`,
       )
       ?.focus();
   }, [state.focusedProgram, state.minimizedPrograms, state.openPrograms]);
@@ -310,14 +322,18 @@ export function WorkstationDesktop({
           </button>
         </nav>
 
-        {state.openPrograms.map((id, stackIndex) => {
+        {windowReadingOrder.filter((id) => state.openPrograms.includes(id)).map((id) => {
+          const stackIndex = state.openPrograms.indexOf(id);
           if (minimized.has(id)) return null;
           const props = commonWindowProps(id, stackIndex);
 
           if (id === "welcome") {
             return (
               <ProgramWindow key={id} {...props} title="Welcome to Myles 98">
-                <WelcomeProgram onSelectedWork={() => openProgram("selected-work")} />
+                <WelcomeProgram onSelectedWork={() => {
+                  pendingProjectFocus.current = true;
+                  openProgram("selected-work");
+                }} />
               </ProgramWindow>
             );
           }

@@ -99,6 +99,19 @@
   transform: translateY(-2px);
 }
 
+/* A quiet second item in the Welcome lane, clear of the initial work window. */
+@media (min-width: 1025px) {
+  .myles97-reminders-widget {
+    position: absolute;
+    grid-area: auto;
+    justify-self: start;
+    left: min(896px, calc(100vw - 368px));
+    top: 440px;
+    width: 352px;
+    margin: 0;
+  }
+}
+
 .myles97-recipe-program {
   display: grid;
   gap: 22px;
