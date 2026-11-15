@@ -870,7 +870,8 @@
   box-shadow: var(--m97-bevel-recessed);
 }
 
-.myles97-shell .myles97-program-actions :is(a, button):focus-visible {
+.myles97-shell .myles97-program-actions :is(a, button):focus-visible,
+.myles97-shell .myles97-task-button:focus-visible {
   outline-offset: -4px;
 }
 
