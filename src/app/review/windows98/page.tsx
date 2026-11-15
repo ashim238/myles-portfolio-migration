@@ -23,7 +23,7 @@ export default async function Review({ searchParams }: { searchParams: Promise<{
       </div>
       <p><a href="?view=home">Home</a> · <a href="?view=fafsa">FAFSA opening</a> · <a href="?view=tiktok">TikTok evidence</a></p>
       <div style={{ display: "flex", gap: 24, flexWrap: "wrap" }}>
-        {[390, 430].map(width => <figure key={width}><figcaption>{width} × 844 CSS px; touch hardware is not emulated</figcaption><iframe title={`${width}px ${view ?? "fafsa"}`} src={path} width={width} height={844} style={{ boxSizing: "content-box", border: "1px solid #808080", maxWidth: "100%", background: "#f5f3ea" }} /></figure>)}
+        {[320, 390, 430].map(width => <figure key={width}><figcaption>{width} × 844 CSS px; touch hardware is not emulated</figcaption><iframe title={`${width}px ${view ?? "fafsa"}`} src={path} width={width} height={844} style={{ boxSizing: "content-box", border: "1px solid #808080", maxWidth: "100%", background: "#f5f3ea" }} /></figure>)}
       </div>
       <h2>Actual newsletter variant controls</h2>
       <TemplateSwitcher />

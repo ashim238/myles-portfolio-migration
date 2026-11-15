@@ -5,7 +5,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Myles97Icon } from "@/components/myles-97/icons";
 import { ProductThumbnail } from "@/components/myles-97/product-thumbnail";
-import { TikTokCoverBlobs } from "@/components/tiktok-dsa";
 import { prefersReducedMotion } from "@/lib/home-intro";
 import {
   PROJECT_ENTER_COMPLETE,
@@ -194,8 +193,8 @@ function focusSettledRoute(
 function CoverVisual({ visual }: { visual: ProjectCoverVisual }) {
   if (visual.type === "tiktok") {
     return (
-      <div className="project-enter-tiktok work-thumb--tiktok-logo tt-cover--preview">
-        <TikTokCoverBlobs deferUntilVisible={false} />
+      <div className="project-enter-tiktok">
+        <ProductThumbnail project="tiktok" active reduced />
       </div>
     );
   }
@@ -338,6 +337,9 @@ export function ProjectEnterTransition({ children }: ProjectEnterTransitionProps
         return;
       }
 
+      // A geometry mismatch uses a crossfade instead of FLIP. Reveal the
+      // destination underneath it so fading the overlay cannot expose a blank page.
+      document.documentElement.classList.remove("project-enter-settling");
       const backdropAnim = backdrop.animate([{ opacity: 1 }, { opacity: 0 }], {
         duration: 220,
         easing: EASE_OUT_CUBIC,

@@ -90,8 +90,8 @@ function fallbackGeometry(id: ProgramId, stackIndex: number): WindowGeometry {
   return {
     x: 184 + offset,
     y: 104 + offset,
-    width: 720,
-    height: 520,
+    width: 800,
+    height: 500,
   };
 }
 

@@ -245,7 +245,7 @@ describe("UnderstandingFAFSA case-study structure", () => {
   });
 
   it("exposes the audit decisions as a named ordered list", async () => {
-    render(await UnderstandingFafsaPage());
+    render(await UnderstandingFafsaPage({}));
 
     const list = screen.getByRole("list", {
       name: "Design changes from the newsletter audit",
@@ -307,7 +307,7 @@ describe("UnderstandingFAFSA case-study structure", () => {
   });
 
   it("keeps the newsletter review framed as an audit rather than reader research", async () => {
-    render(await UnderstandingFafsaPage());
+    render(await UnderstandingFafsaPage({}));
 
     expect(screen.getAllByText(/120 newsletters/i).length).toBeGreaterThan(1);
     expect(prose).toContain("reviewed more than 120 newsletters");

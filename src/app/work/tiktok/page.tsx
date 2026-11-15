@@ -5,14 +5,12 @@ import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { ExpandableImage } from "@/components/expandable-image";
 import { ReaderShell } from "@/components/myles-97/reader-shell";
 import { ProjectChapter } from "@/components/project-chapter";
-import { ProjectOpeningFacts } from "@/components/project-opening-facts";
+import { TikTokOpening } from "@/components/tiktok-opening";
 import { ProjectToc } from "@/components/project-toc";
 import { ProjectWorkJump } from "@/components/project-work-jump";
 import { ProjectEvidenceDisclosure } from "@/components/project-evidence-disclosure";
 import { RecruiterCut } from "@/components/recruiter-cut";
 import {
-  TikTokCoverBlobs,
-  TikTokLogo,
   TikTokTemplateSystem,
 } from "@/components/tiktok-dsa";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
@@ -24,10 +22,6 @@ import styles from "./tiktok-four-beat.module.css";
 const TIKTOK_DESCRIPTION =
   "Three static fashion catalog templates designed for TikTok's Dynamic Showcase Ads during a 2021 Global Creative Lab internship. Light Academia entered the launch library.";
 const chapters = CASE_STUDY_CHAPTERS.tiktok;
-const tiktokProof = {
-  label: "Inspect the template system",
-  href: "#tt-system",
-};
 
 export async function generateMetadata(): Promise<Metadata> {
   const project = await getProjectBySlug("tiktok");
@@ -71,29 +65,7 @@ export default async function TikTokPage() {
         </Link>
       </nav>
 
-      <header className="tt-cover tt-cover--preview" data-project-enter-cover>
-        <TikTokCoverBlobs />
-        <div className="tt-cover-inner">
-          <p className="tt-eyebrow">
-            <TikTokLogo />
-            <span>Creative Strategist Intern · 2021</span>
-          </p>
-          <h1 id="tt-title" className="project-hero-title tt-title">
-            TikTok Dynamic Showcase Ads
-          </h1>
-          <p className="project-hero-lede tt-lede">
-            The templates needed to appeal to different styles and aesthetics,
-            so I had room to think outside the box.
-          </p>
-        </div>
-      </header>
-
-      <ProjectOpeningFacts
-        role="Creative Strategist Intern · Global Creative Lab"
-        scope="I designed three fashion catalog templates inside dimensions and product slots that were fixed before I received the brief."
-        outcome="Light Academia entered the launch library. I later learned through Global Creative Lab that American Eagle selected it."
-        proof={tiktokProof}
-      />
+      <TikTokOpening />
       <RecruiterCut
         timeline="May – August 2021"
         moves={[
