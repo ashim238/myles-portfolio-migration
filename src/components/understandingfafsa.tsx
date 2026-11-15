@@ -738,7 +738,7 @@ export function TemplateSwitcher() {
           <button
             key={key}
             type="button"
-            className={`uf-chip${variant === key ? " uf-chip--active" : ""}`}
+            className={`uf-chip reader-control${variant === key ? " uf-chip--active" : ""}`}
             aria-pressed={variant === key}
             onClick={() => setVariant(key)}
           >

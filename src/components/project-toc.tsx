@@ -457,7 +457,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
             the hairline beneath it. */}
         <button
           ref={toggleRef}
-          className="project-toc-toggle"
+          className="project-toc-toggle reader-control"
           onClick={() => setIsOpen(!isOpen)}
           onKeyDown={(event) => {
             if (event.key === "Escape" && isOpen) {
@@ -518,7 +518,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
                   <a
                     ref={isActive ? activeItemRef : undefined}
                     href={`#${section.id}`}
-                    className={`project-toc-link${isActive ? " project-toc-link--active" : ""}`}
+                    className={`project-toc-link reader-control${isActive ? " project-toc-link--active" : ""}`}
                     onClick={() => handleClick(section.id)}
                     onKeyDown={(event) => handleKeyDown(event, i)}
                     aria-current={isActive ? "true" : undefined}

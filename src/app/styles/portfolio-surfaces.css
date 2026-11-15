@@ -2825,6 +2825,12 @@
   margin-right: auto;
 }
 
+/* Wide exhibits keep their canvas; only their narrative joins the text column. */
+.reader-mode.reader-mode.tt-page .tt-section--wide > .project-section-body {
+  margin-left: max(0px, calc((100% - 48rem) / 2));
+  margin-right: auto;
+}
+
 /* ============================================================
    /play title — Pixar-style hop with squash & stretch
    One staggered hop per letter on page load. No idle loop.
@@ -3428,7 +3434,8 @@
 }
 
 .nv-page .nv-lede {
-  max-width: 42ch;
+  /* A font-independent opening measure; reader type no longer inherits a narrow 42ch. */
+  max-width: min(100%, 35rem);
   font-size: clamp(1.05rem, 2vw, 1.28rem);
 }
 
@@ -4452,7 +4459,8 @@
 }
 
 .uf-page .uf-lede {
-  max-width: 42ch;
+  /* A font-independent opening measure; reader type no longer inherits a narrow 42ch. */
+  max-width: min(100%, 35rem);
   font-size: clamp(1.05rem, 2vw, 1.28rem);
 }
 

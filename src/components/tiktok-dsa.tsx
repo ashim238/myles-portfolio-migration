@@ -70,7 +70,7 @@ export function TikTokTemplateSystem() {
           <button
             key={template.key}
             type="button"
-            className={`tt-template-choice${
+            className={`tt-template-choice reader-control${
               selected.key === template.key ? " tt-template-choice--selected" : ""
             }`}
             aria-label={`View ${template.name} template${
@@ -111,6 +111,7 @@ export function TikTokTemplateSystem() {
           <button
             key={item.key}
             type="button"
+            className="reader-control"
             aria-pressed={activeRegion === item.key}
             onClick={() => setSelectedRegion(item.key)}
           >
