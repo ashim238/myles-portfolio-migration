@@ -68,7 +68,7 @@ export default async function FreshGreensPage() {
 
       <ProjectOpeningFacts
         role="Solo, design and engineering"
-        scope="Six interviews helped me frame three problems: Plan, Respond, and Trust."
+        goal="Help Black drivers compare route conditions and find support when something goes wrong."
         outcome="Working React Native prototype across 26+ screens."
         proof={freshGreensProof}
       />

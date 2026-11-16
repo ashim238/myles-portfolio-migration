@@ -1,57 +1,4 @@
-/* Reader evidence state labels */
-.reader-mode.reader-mode .project-chapter-meta {
-  align-items: center;
-}
-
-.reader-mode.reader-mode .project-chapter-meta-primary {
-  display: inline-flex;
-  min-width: 0;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-}
-
-.reader-mode.reader-mode .project-chapter {
-  --chapter-evidence-ink: var(--m97-reader-ink);
-}
-
-.reader-mode.reader-mode.fg-page .project-chapter {
-  --chapter-evidence-ink: #3d6447;
-}
-
-.reader-mode.reader-mode.nv-page .project-chapter {
-  --chapter-evidence-ink: #9f3f0d;
-}
-
-.reader-mode.reader-mode.uf-page .project-chapter {
-  --chapter-evidence-ink: #164f73;
-}
-
-.reader-mode.reader-mode.tt-page .project-chapter {
-  --chapter-evidence-ink: #9d174d;
-}
-
-.reader-mode.reader-mode .project-chapter-evidence-state {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--chapter-evidence-ink);
-  font: 700 11px/1.2 var(--m97-ui-font);
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-}
-
-.reader-mode.reader-mode .project-chapter-evidence-state::before {
-  width: 4px;
-  height: 4px;
-  flex: 0 0 auto;
-  border-radius: 50%;
-  background: currentcolor;
-  content: "";
-}
-
-/* The first migration callsites share reading semantics, not visual chrome.
-   Each project keeps ownership of the artifact directly above this summary. */
+/* Reader evidence summaries sit directly below their supporting artifacts. */
 .reader-mode.reader-mode .reader-evidence-summary {
   width: min(100%, 68ch);
   margin-top: 1.25rem;
@@ -90,7 +37,6 @@
 }
 
 @media (forced-colors: active) {
-  .reader-mode.reader-mode .project-chapter-evidence-state,
   .reader-mode.reader-mode .reader-evidence-summary {
     border-color: CanvasText;
     color: CanvasText;

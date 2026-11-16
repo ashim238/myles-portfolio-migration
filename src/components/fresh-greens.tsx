@@ -107,181 +107,51 @@ export function HeroRouteIllustration() {
   );
 }
 
-/* ──────────────────────────────────────────
-   Three-layer architecture diagram
-   Inline SVG. The diagram earns its place: it makes the
-   "auditable public data" stance literal.
-   ────────────────────────────────────────── */
+const routeDataSources = [
+  { name: "OpenStreetMap", detail: "Lighting, land use, and parks" },
+  { name: "OSRM", detail: "Route geometry" },
+  { name: "SunCalc", detail: "Daylight along the route" },
+  { name: "Mapbox Search", detail: "Destinations" },
+  { name: "DOT-511", detail: "Demo adapter. Live feed unavailable in the prototype." },
+  { name: "Mapbox incidents", detail: "Traffic incidents" },
+  { name: "Open-Meteo", detail: "Weather and visibility" },
+  { name: "Community reports", detail: "Reports saved on the device first" },
+];
 
 export function ArchitectureDiagram() {
   return (
-    <figure className="fg-arch">
-      <div
-        className="fg-arch-scroll"
-        role="region"
-        tabIndex={0}
-        aria-label="Fresh Greens system architecture diagram"
-      >
-      <DrawOnView>
-      <svg
-        viewBox="0 0 1250 420"
-        xmlns="http://www.w3.org/2000/svg"
-        className="fg-arch-svg"
-        role="img"
-        aria-label="Three-layer architecture: eight source adapters support route geometry, search, context, and community reports. Route and zone data feed deterministic scoring, and the results render in the screen layer. DOT-511 is a demo adapter whose live feed is not wired. Community reports are local-first in the prototype, with a Supabase and Postgres path behind configuration, row-level security, device UUID checks, and moderation views."
-      >
-        <defs>
-          <marker
-            id="fg-arrow"
-            viewBox="0 0 10 10"
-            refX="8"
-            refY="5"
-            markerWidth="6"
-            markerHeight="6"
-            orient="auto"
-          >
-            <path d="M0,0 L10,5 L0,10 z" fill="currentColor" />
-          </marker>
-        </defs>
-
-        {/* Source labels — top row, 7 columns, smaller subtitle */}
-        <g className="fg-arch-sources" fontFamily="var(--font-mono)" fontSize="12" fill="currentColor">
-          <text x="30" y="32">OpenStreetMap</text>
-          <text x="30" y="50" fontSize="11" opacity="0.62">lighting · landuse · parks</text>
-
-          <text x="215" y="32">OSRM</text>
-          <text x="215" y="50" fontSize="11" opacity="0.62">route geometry</text>
-
-          <text x="325" y="32">SunCalc</text>
-          <text x="325" y="50" fontSize="11" opacity="0.62">solar geometry</text>
-
-          <text x="435" y="32">Mapbox Search</text>
-          <text x="435" y="50" fontSize="11" opacity="0.62">destinations</text>
-
-          <text x="550" y="32">DOT-511</text>
-          <text x="550" y="46" fontSize="10" opacity="0.64">demo adapter</text>
-          <text x="550" y="59" fontSize="9" opacity="0.64">live feed not wired</text>
-
-          <text x="690" y="32">Mapbox incidents</text>
-          <text x="690" y="50" fontSize="11" opacity="0.62">driving-traffic events</text>
-
-          <text x="850" y="32">Open-Meteo</text>
-          <text x="850" y="50" fontSize="11" opacity="0.62">weather + visibility</text>
-
-          <text x="975" y="32">Community reports</text>
-          <text x="975" y="50" fontSize="11" opacity="0.62">local-first · Supabase when configured</text>
-        </g>
-
-        {/* Arrows from sources into the adapter layer */}
-        <g data-draw stroke="currentColor" strokeWidth="1" fill="none" markerEnd="url(#fg-arrow)" opacity="0.45">
-          <line x1="100" y1="64" x2="100" y2="100" />
-          <line x1="250" y1="64" x2="250" y2="100" />
-          <line x1="360" y1="64" x2="360" y2="100" />
-          <line x1="475" y1="64" x2="475" y2="100" />
-          <line x1="600" y1="64" x2="600" y2="100" />
-          <line x1="750" y1="64" x2="750" y2="100" />
-          <line x1="900" y1="64" x2="900" y2="100" />
-          <line x1="1060" y1="64" x2="1060" y2="100" />
-        </g>
-
-        {/* Adapter layer */}
-        <g fill="currentColor">
-          <rect
-            x="30"
-            y="105"
-            width="1190"
-            height="68"
-            rx="6"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1"
-            opacity="0.5"
-          />
-          <text x="48" y="128" fontSize="11" fontFamily="var(--font-mono)" opacity="0.65">
-            Adapter layer
-          </text>
-          <text x="48" y="155" fontSize="14" fontWeight="500">
-            Converts provider responses into typed app data.
-          </text>
-        </g>
-
-        {/* Arrow adapter → scoring */}
-        <g
-          data-draw
-          stroke="currentColor"
-          strokeWidth="1.2"
-          fill="none"
-          markerEnd="url(#fg-arrow)"
-          opacity="0.65"
-        >
-          <line x1="625" y1="175" x2="625" y2="208" />
-        </g>
-
-        {/* Scoring layer — the highlight */}
-        <g fill="currentColor">
-          <rect
-            x="30"
-            y="213"
-            width="1190"
-            height="78"
-            rx="6"
-            fill="var(--fg-accent-soft)"
-            stroke="var(--fg-accent)"
-            strokeWidth="1.4"
-          />
-          <text
-            x="48"
-            y="236"
-            fontSize="11"
-            fontFamily="var(--font-mono)"
-            fill="var(--fg-accent)"
-          >
-            Scoring layer
-          </text>
-          <text x="48" y="263" fontSize="14" fontWeight="500">
-            Scores the same inputs the same way.
-          </text>
-        </g>
-
-        {/* Arrow scoring → screen */}
-        <g
-          data-draw
-          stroke="currentColor"
-          strokeWidth="1.2"
-          fill="none"
-          markerEnd="url(#fg-arrow)"
-          opacity="0.65"
-        >
-          <line x1="625" y1="293" x2="625" y2="326" />
-        </g>
-
-        {/* Screen layer */}
-        <g fill="currentColor">
-          <rect
-            x="30"
-            y="331"
-            width="1190"
-            height="68"
-            rx="6"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1"
-            opacity="0.5"
-          />
-          <text x="48" y="354" fontSize="11" fontFamily="var(--font-mono)" opacity="0.65">
-            Screen layer
-          </text>
-          <text x="48" y="381" fontSize="14" fontWeight="500">
-            Renders the result.
-          </text>
-        </g>
-      </svg>
-      </DrawOnView>
-      </div>
+    <figure className="fg-arch fg-route-scoring" aria-label="How Fresh Greens scores routes">
+      <ol className="fg-route-scoring-flow" role="list">
+        <li className="fg-route-scoring-step">
+          <h3>Data sources</h3>
+          <dl className="fg-route-scoring-sources">
+            {routeDataSources.map(({ name, detail }) => (
+              <div key={name}>
+                <dt>{name}</dt>
+                <dd>{detail}</dd>
+              </div>
+            ))}
+          </dl>
+        </li>
+        <li className="fg-route-scoring-step">
+          <span className="fg-route-scoring-arrow" aria-hidden="true">↓</span>
+          <h3>Data adapters</h3>
+          <p>Each adapter translates its source data into a format the app can use.</p>
+        </li>
+        <li className="fg-route-scoring-step fg-route-scoring-step--score">
+          <span className="fg-route-scoring-arrow" aria-hidden="true">↓</span>
+          <h3>Route scoring</h3>
+          <p>The app scores each route using route and zone data. The same inputs always produce the same score.</p>
+        </li>
+        <li className="fg-route-scoring-step">
+          <span className="fg-route-scoring-arrow" aria-hidden="true">↓</span>
+          <h3>Route comparison</h3>
+          <p>Drivers see the ranked routes and the conditions flagged along each one.</p>
+        </li>
+      </ol>
       <figcaption className="fg-arch-caption">
-        Community reports are local-first. Supabase, row-level security, device
-        checks, and moderation activate only when configured.
-        <span className="fg-arch-scrollhint"> Scroll the diagram to read it all.</span>
+        Community reports stay on the device unless Supabase is configured.
+        The backend uses row-level security, device checks, and moderation.
       </figcaption>
     </figure>
   );
@@ -290,10 +160,6 @@ export function ArchitectureDiagram() {
 /* ──────────────────────────────────────────
    Process knowledge graph
    Three knowledge sources merge into one queryable memory.
-   Deliberately echoes the architecture diagram above —
-   same wrapper, same mono labels, same accent-highlighted
-   central node — so the "medium echoes the message" claim
-   in the prose lands visually too.
    ────────────────────────────────────────── */
 
 export function ProcessGraph() {

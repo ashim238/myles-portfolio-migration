@@ -96,7 +96,7 @@ export default async function UnderstandingFafsaPage({ searchParams }: {
           </p>
           <ProjectOpeningFacts
             role="Product Designer"
-            scope="I owned the final visual design and Mailchimp build. Another designer, the founder, and I shaped the copy and base structure."
+            goal="Give the founder newsletter templates she could edit and send herself in Mailchimp."
             outcome="A three-theme kit the founder edits herself. She has launched roughly 20 sends since the redesign."
             proof={understandingFafsaProof}
           />

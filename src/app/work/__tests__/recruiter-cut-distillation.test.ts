@@ -7,7 +7,7 @@ type RouteContract = {
   route: string;
   opening: {
     role: string;
-    scope: string;
+    goal: string;
     outcome: string;
   };
   recruiter: {
@@ -23,7 +23,8 @@ const routes: RouteContract[] = [
     route: "fresh-greens",
     opening: {
       role: "Solo, design and engineering",
-      scope: "Six interviews helped me frame three problems: Plan, Respond, and Trust.",
+      goal:
+        "Help Black drivers compare route conditions and find support when something goes wrong.",
       outcome: "Working React Native prototype across 26+ screens.",
     },
     recruiter: {
@@ -37,8 +38,8 @@ const routes: RouteContract[] = [
     route: "tiktok",
     opening: {
       role: "Creative Strategist Intern · Global Creative Lab",
-      scope:
-        "I designed three fashion catalog templates inside dimensions and product slots that were fixed before I received the brief.",
+      goal:
+        "Give fashion brands three reusable templates for showing their catalogs on TikTok.",
       outcome:
         "Light Academia entered the launch library. I later learned through Global Creative Lab that American Eagle selected it.",
     },
@@ -55,8 +56,8 @@ const routes: RouteContract[] = [
     route: "navi",
     opening: {
       role: "UI/UX Designer",
-      scope:
-        "I synthesized 14 resident and stakeholder responses, including two Manhattan businesses, adjusted the information architecture, and created the design system.",
+      goal:
+        "Help visitors find and book experiences with local businesses in NYC.",
       outcome:
         "A functional team Figma prototype, followed by my solo React portfolio demo.",
     },
@@ -74,8 +75,8 @@ const routes: RouteContract[] = [
     route: "understandingfafsa",
     opening: {
       role: "Product Designer",
-      scope:
-        "I owned the final visual design and Mailchimp build. Another designer, the founder, and I shaped the copy and base structure.",
+      goal:
+        "Give the founder newsletter templates she could edit and send herself in Mailchimp.",
       outcome:
         "A three-theme kit the founder edits herself. She has launched roughly 20 sends since the redesign.",
     },
@@ -94,7 +95,9 @@ const routes: RouteContract[] = [
 function literalPropsFor(route: string, component: string) {
   const pagePath = resolve(
     process.cwd(),
-    `src/app/work/${route}/page.tsx`,
+    route === "tiktok" && component === "ProjectOpeningFacts"
+      ? "src/components/tiktok-opening.tsx"
+      : `src/app/work/${route}/page.tsx`,
   );
   const source = readFileSync(pagePath, "utf8");
   const sourceFile = ts.createSourceFile(
@@ -147,7 +150,7 @@ function literalPropsFor(route: string, component: string) {
 
 describe("case-study RecruiterCut distillation", () => {
   it.each(routes)(
-    "keeps $route opening facts canonical and unchanged",
+    "keeps $route opening facts focused on role, goal, and outcome",
     ({ route, opening }) => {
       const { props } = literalPropsFor(route, "ProjectOpeningFacts");
 

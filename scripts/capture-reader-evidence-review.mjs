@@ -10,7 +10,7 @@ const outputDir = resolve(
 const MIN_PROOF_TO_SUMMARY_GAP = 0;
 const MAX_PROOF_TO_SUMMARY_GAP = 64;
 const MIN_OPENING_FOLD_GAP = 8;
-const requiredOpeningFacts = ["Role", "Scope", "Outcome", "Proof"];
+const requiredOpeningFacts = ["Role", "Goal", "Outcome", "Proof"];
 const requestedThemes = (
   process.env.READER_EVIDENCE_REVIEW_THEMES ?? "dark,light"
 )

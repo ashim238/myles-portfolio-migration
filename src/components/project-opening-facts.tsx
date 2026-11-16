@@ -1,6 +1,6 @@
 type ProjectOpeningFactsProps = {
   role: string;
-  scope: string;
+  goal: string;
   outcome: string;
   proof: {
     label: string;
@@ -10,13 +10,13 @@ type ProjectOpeningFactsProps = {
 
 export function ProjectOpeningFacts({
   role,
-  scope,
+  goal,
   outcome,
   proof,
 }: ProjectOpeningFactsProps) {
   const facts = [
     { label: "Role", value: role },
-    { label: "Scope", value: scope },
+    { label: "Goal", value: goal },
     { label: "Outcome", value: outcome },
   ];
 

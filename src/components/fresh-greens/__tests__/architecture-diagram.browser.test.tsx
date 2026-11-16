@@ -9,6 +9,7 @@ import { ArchitectureDiagram } from "@/components/fresh-greens";
 const styles = [
   "src/app/styles/base.css",
   "src/app/styles/portfolio-surfaces.css",
+  "src/app/styles/myles-97.css",
   "src/app/styles/myles-98-paper-contrast.css",
 ]
   .map((file) => readFileSync(resolve(process.cwd(), file), "utf8"))
@@ -35,10 +36,13 @@ function architectureMarkup() {
   return markup;
 }
 
-async function renderedArchitecture(viewport: { width: number; height: number }) {
+async function renderedArchitecture(
+  viewport: { width: number; height: number },
+  theme = "light",
+) {
   const page = await browser.newPage({ viewport, reducedMotion: "reduce" });
   await page.setContent(`<!doctype html>
-    <html data-theme="light">
+    <html data-theme="${theme}">
       <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -60,62 +64,59 @@ async function renderedArchitecture(viewport: { width: number; height: number })
 
 describe("Fresh Greens architecture diagram geometry", () => {
   it.each([
+    { width: 320, height: 740 },
     { width: 390, height: 844 },
     { width: 820, height: 1180 },
     { width: 1050, height: 900 },
-  ])("stays readable and genuinely pannable at $width px", async (viewport) => {
+    { width: 1280, height: 900 },
+  ])("keeps all eight sources readable without panning at $width px", async (viewport) => {
     const page = await renderedArchitecture(viewport);
-    const geometry = await page.locator(".fg-arch-scroll").evaluate((scroller) => {
-      const svg = scroller.querySelector<SVGSVGElement>(".fg-arch-svg");
-      const labels = Array.from(
-        scroller.querySelectorAll<SVGTextElement>(".fg-arch-sources text"),
-      );
-      if (!svg || labels.length === 0) throw new Error("Missing architecture labels");
-      const smallestLabelHeight = Math.min(
-        ...labels.map((label) => label.getBoundingClientRect().height),
-      );
-      const before = scroller.scrollLeft;
-      scroller.scrollLeft = 120;
-      const after = scroller.scrollLeft;
-      scroller.scrollLeft = scroller.scrollWidth;
+    try {
+      const geometry = await page.locator(".fg-route-scoring").evaluate((diagram) => {
+        const diagramBox = diagram.getBoundingClientRect();
+        const labels = Array.from(diagram.querySelectorAll("dt, dd"));
+        const steps = Array.from(diagram.querySelectorAll(".fg-route-scoring-step"));
+        return {
+          scrollWidth: diagram.scrollWidth,
+          clientWidth: diagram.clientWidth,
+          right: diagramBox.right,
+          labelsFit: labels.every((label) => {
+            const box = label.getBoundingClientRect();
+            return box.width > 0 && box.left >= diagramBox.left && box.right <= diagramBox.right;
+          }),
+          smallestLabelSize: Math.min(
+            ...labels.map((label) => parseFloat(getComputedStyle(label).fontSize)),
+          ),
+          stepTops: steps.map((step) => step.getBoundingClientRect().top),
+        };
+      });
 
-      return {
-        clientWidth: scroller.clientWidth,
-        scrollWidth: scroller.scrollWidth,
-        svgWidth: svg.getBoundingClientRect().width,
-        smallestLabelHeight,
-        before,
-        after,
-        maximum: scroller.scrollLeft,
-        maskImage: getComputedStyle(scroller).maskImage,
-        webkitMaskImage: getComputedStyle(scroller).webkitMaskImage,
-      };
-    });
-
-    expect(geometry.scrollWidth - geometry.clientWidth).toBeGreaterThan(200);
-    expect(geometry.svgWidth).toBeGreaterThanOrEqual(1250);
-    expect(geometry.smallestLabelHeight).toBeGreaterThanOrEqual(8.5);
-    expect(geometry.before).toBe(0);
-    expect(geometry.after).toBeGreaterThan(0);
-    expect(geometry.maximum).toBeGreaterThan(geometry.after);
-    expect(geometry.maskImage).toBe("none");
-    expect(geometry.webkitMaskImage).toBe("none");
-    await page.close();
+      expect(geometry.scrollWidth).toBeLessThanOrEqual(geometry.clientWidth);
+      expect(geometry.right).toBeLessThanOrEqual(viewport.width);
+      expect(geometry.labelsFit).toBe(true);
+      expect(geometry.smallestLabelSize).toBeGreaterThanOrEqual(15);
+      expect(geometry.stepTops).toHaveLength(4);
+      expect(geometry.stepTops).toEqual([...geometry.stepTops].sort((a, b) => a - b));
+    } finally {
+      await page.close();
+    }
   });
 
-  it("keeps the final source subtitle inside the desktop SVG", async () => {
-    const page = await renderedArchitecture({ width: 1280, height: 900 });
-    const geometry = await page.locator(".fg-arch-svg").evaluate((svg) => {
-      const subtitle = Array.from(svg.querySelectorAll("text")).find((text) =>
-        text.textContent?.includes("local-first"),
+  it("uses paper text colors when the global theme is dark", async () => {
+    const page = await renderedArchitecture({ width: 390, height: 844 }, "dark");
+    try {
+      const colors = await page.locator(".fg-route-scoring").evaluate((diagram) =>
+        Array.from(diagram.querySelectorAll("h3, dd, figcaption"), (label) => ({
+          tag: label.tagName,
+          color: getComputedStyle(label).color,
+        })),
       );
-      if (!subtitle) throw new Error("Missing community-report subtitle");
-      const svgBox = svg.getBoundingClientRect();
-      const subtitleBox = subtitle.getBoundingClientRect();
-      return { svgRight: svgBox.right, subtitleRight: subtitleBox.right };
-    });
-
-    expect(geometry.subtitleRight).toBeLessThanOrEqual(geometry.svgRight - 12);
-    await page.close();
+      expect(colors).toHaveLength(13);
+      for (const label of colors) {
+        expect(label.color).toBe(label.tag === "H3" ? "rgb(23, 23, 23)" : "rgb(91, 89, 83)");
+      }
+    } finally {
+      await page.close();
+    }
   });
 });

@@ -379,12 +379,12 @@ describe("portfolio artifact accessibility styles", () => {
     expect(tocNumber).toContain("opacity: 1");
   });
 
-  it("names and focuses both Fresh Greens architecture scroll regions", () => {
+  it("names and focuses the Fresh Greens process graph scroll region", () => {
     const scrollRegions = freshGreensComponents.match(
       /className="fg-arch-scroll"[\s\S]{0,180}?role="region"[\s\S]{0,100}?tabIndex=\{0\}[\s\S]{0,180}?aria-label=/g,
     );
 
-    expect(scrollRegions).toHaveLength(2);
+    expect(scrollRegions).toHaveLength(1);
   });
 
   it("art-directs Navi research artifacts across mobile and reduced-motion states", () => {

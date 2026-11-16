@@ -24,7 +24,7 @@ export function TikTokOpening({ legacy = false }: { legacy?: boolean }) {
     </header>
     <ProjectOpeningFacts
       role="Creative Strategist Intern · Global Creative Lab"
-      scope="I designed three fashion catalog templates inside dimensions and product slots that were fixed before I received the brief."
+      goal="Give fashion brands three reusable templates for showing their catalogs on TikTok."
       outcome="Light Academia entered the launch library. I later learned through Global Creative Lab that American Eagle selected it."
       proof={tiktokProof}
     />

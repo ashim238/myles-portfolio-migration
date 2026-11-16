@@ -78,7 +78,7 @@ describe("TikTok public truthfulness contract", () => {
     const page = normalizeProse(read("src/app/work/tiktok/page.tsx"));
 
     expect(page).toMatch(/fashion vertical/i);
-    expect(page).toMatch(/dimensions and product slots (?:that )?were fixed/i);
+    expect(page).toMatch(/dimensions and product slots were set in stone before I received the brief/i);
     expect(page).toMatch(/weekly (?:Global Creative Lab|GCL) huddle/i);
     expect(page).toMatch(/traditional market research/i);
     expect(page).toMatch(/burner accounts/i);

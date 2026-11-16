@@ -199,7 +199,7 @@ describe("Reader opening route contract", () => {
     expect(reviewScript).toContain("actual clearance");
     expect(reviewScript).toContain("required ${MIN_OPENING_FOLD_GAP}px");
     expect(reviewScript).toContain(
-      'const requiredOpeningFacts = ["Role", "Scope", "Outcome", "Proof"];',
+      'const requiredOpeningFacts = ["Role", "Goal", "Outcome", "Proof"];',
     );
     expect(reviewScript).toContain("textContrastFailures");
     expect(reviewScript).toContain("effectiveOpacity");

@@ -7,7 +7,7 @@ describe("ProjectOpeningFacts", () => {
     render(
       <ProjectOpeningFacts
         role="Solo, design and engineering"
-        scope="Six interviews became a prototype spanning route comparison."
+        goal="Help Black drivers compare route conditions and find support when something goes wrong."
         outcome="Working React Native prototype across 26+ screens."
         proof={{
           label: "Try the safety-flow reconstruction",
@@ -24,7 +24,7 @@ describe("ProjectOpeningFacts", () => {
     expect(summary.tagName).toBe("SECTION");
     expect(summary.querySelector("dl")).not.toBeNull();
     expect(summary.querySelectorAll(".project-opening-facts-row")).toHaveLength(3);
-    expect(labels).toEqual(["Role", "Scope", "Outcome"]);
+    expect(labels).toEqual(["Role", "Goal", "Outcome"]);
     expect(labels.every((label) => label === label?.[0]?.toUpperCase() + label?.slice(1))).toBe(true);
     expect(summary.querySelector("[class*='card']")).toBeNull();
     const proofAction = screen.getByRole("link", {

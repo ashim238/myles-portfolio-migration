@@ -91,7 +91,7 @@ export default async function NaviPage() {
 
       <ProjectOpeningFacts
         role="UI/UX Designer"
-        scope="I synthesized 14 resident and stakeholder responses, including two Manhattan businesses, adjusted the information architecture, and created the design system."
+        goal="Help visitors find and book experiences with local businesses in NYC."
         outcome="A functional team Figma prototype, followed by my solo React portfolio demo."
         proof={naviProof}
       />

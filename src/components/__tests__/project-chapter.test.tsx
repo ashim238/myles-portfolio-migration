@@ -40,7 +40,7 @@ describe("ProjectChapter", () => {
     );
   });
 
-  it("exposes the mapped claim, evidence state, and dominant proof", () => {
+  it("keeps the evidence metadata without adding a chapter label", () => {
     const { container } = render(
       <ProjectChapter entry={entry} index={3} total={5} variant="navi">
         <p>Journey map evidence</p>
@@ -54,10 +54,8 @@ describe("ProjectChapter", () => {
       "data-dominant-proof",
       "navi-research-artifacts",
     );
-    expect(screen.getByText("Proposed")).toBeVisible();
-    expect(screen.getByText("Proposed").parentElement).toHaveTextContent(
-      "Evidence state: Proposed",
-    );
+    expect(screen.queryByText("Proposed")).not.toBeInTheDocument();
+    expect(screen.queryByText(/Evidence state:/)).not.toBeInTheDocument();
   });
 
   it("keeps interpretation and its boundary after a featured Navi proof", () => {
@@ -163,7 +161,7 @@ describe("ProjectChapter", () => {
     );
   });
 
-  it("does not show Build and Built as adjacent duplicate labels", () => {
+  it("keeps the Build stage without exposing the Built evidence label", () => {
     const { container } = render(
       <ProjectChapter
         entry={{
@@ -180,10 +178,8 @@ describe("ProjectChapter", () => {
     );
 
     expect(screen.getByText("Build")).toBeVisible();
-    expect(
-      container.querySelector(".project-chapter-evidence-state"),
-    ).not.toBeInTheDocument();
-    expect(screen.getByText("Evidence state: Built")).toHaveClass("sr-only");
+    expect(screen.queryByText("Built")).not.toBeInTheDocument();
+    expect(screen.queryByText(/Evidence state:/)).not.toBeInTheDocument();
     expect(container.querySelector(".project-chapter")).toHaveAttribute(
       "data-evidence-state",
       "built",

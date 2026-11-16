@@ -64,7 +64,7 @@ function openingMarkup(pageClass: string, title: string) {
       </section>
       <ProjectOpeningFacts
         role="Product Designer"
-        scope="Research, product strategy, and interface design."
+        goal="Help visitors find and book experiences with local businesses in NYC."
         outcome="A working product prototype."
         proof={{ label: "Open the product proof", href: "#proof" }}
       />
@@ -96,7 +96,7 @@ function tiktokOpeningMarkup() {
       </header>
       <ProjectOpeningFacts
         role="Creative Strategist Intern"
-        scope="Three catalog directions inside a fixed product grid."
+        goal="Give fashion brands three reusable templates for showing their catalogs on TikTok."
         outcome="A template selected for the launch library."
         proof={{ label: "Inspect the template system", href: "#proof" }}
       />

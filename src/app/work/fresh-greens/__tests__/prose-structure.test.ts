@@ -333,12 +333,9 @@ describe("Fresh Greens prose structure", () => {
     const page = readPage();
 
     expect(component).not.toContain("eight public data sources");
-    expect(component).toMatch(/eight source adapters/i);
     expect(component).not.toMatch(/eight data inputs pass/i);
-    expect(component).toContain("live feed not wired");
-    expect(component).toContain("local-first in the prototype");
-    expect(component).toContain("Supabase and Postgres path behind configuration");
-    expect(component).toContain("local-first · Supabase when configured");
+    expect(component).toContain("Demo adapter. Live feed unavailable in the prototype.");
+    expect(component).toContain("Community reports stay on the device unless Supabase is configured.");
     expect(component).not.toContain("the only non-reserved color");
     expect(component).not.toContain("Postgres + RLS");
     expect(component).not.toContain("held in Postgres under row-level security");

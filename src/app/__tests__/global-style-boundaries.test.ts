@@ -27,7 +27,7 @@ const sections = [
   ["styles/myles-97-now-playing.css", ".now-playing-program {"],
   ["styles/myles-97-secondary.css", "Myles 97 secondary programs and recovery surfaces"],
   ["styles/reader-mode.css", "Myles 97 Reader Mode"],
-  ["styles/reader-evidence.css", "Reader evidence state labels"],
+  ["styles/reader-evidence.css", "Reader evidence summaries"],
   ["styles/myles-97-pocket.css", "Pocket 97 capability-led mobile shell"],
   ["styles/myles-98-polish.css", "Myles 98 recording-review polish"],
   ["styles/myles-98-paper-contrast.css", "Paper-backed Myles 98 surfaces"],
