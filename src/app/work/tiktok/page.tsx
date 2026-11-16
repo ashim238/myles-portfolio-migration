@@ -260,7 +260,7 @@ export default async function TikTokPage() {
         total={chapters.length}
         variant="tiktok"
       >
-        <div className="project-section tt-section tt-preview-outcome">
+        <div className="project-section tt-section tt-section--wide tt-preview-outcome">
           {lightAcademia ? (
             <div className="tt-outcome-sequence">
               <ol className="tt-outcome-steps" aria-label="Light Academia iteration sequence">

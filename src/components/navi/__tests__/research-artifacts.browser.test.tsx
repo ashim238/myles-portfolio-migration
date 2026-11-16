@@ -29,7 +29,7 @@ afterAll(async () => {
 }, 60_000);
 
 describe("Navi research disclosure", () => {
-  it("opens on the research board without losing dark-surface contrast", async () => {
+  it("opens on the research board without losing paper-surface contrast", async () => {
     const rendered = render(<NaviResearchArtifacts />);
     const markup = rendered.container.innerHTML;
     rendered.unmount();
@@ -68,9 +68,9 @@ describe("Navi research disclosure", () => {
 
     expect(geometry).toMatchObject({
       open: true,
-      background: "rgb(10, 10, 10)",
-      color: "rgb(244, 244, 244)",
-      captionColor: "rgb(244, 244, 244)",
+      background: "rgb(239, 237, 229)",
+      color: "rgb(36, 41, 35)",
+      captionColor: "rgb(36, 41, 35)",
       overflow: 0,
     });
     expect(geometry.summaryHeight).toBeGreaterThanOrEqual(56);

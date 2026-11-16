@@ -55,6 +55,15 @@
     box-shadow: none;
   }
 }
+/* Selection stays visible alongside the independent keyboard focus ring. */
+.reader-mode.reader-mode.uf-page .uf-chip.reader-control[aria-pressed="true"] {
+  background: #f5dfcd;
+  box-shadow: var(--m97-bevel-recessed), inset 0 -3px #aa4012;
+}
+.reader-mode.reader-mode.tt-page .tt-template-choice--selected.reader-control {
+  box-shadow: var(--m97-bevel-recessed), inset 0 0 0 2px #18636a;
+}
+
 @media (forced-colors: active) {
   :is(.reader-header, .reader-mode.reader-mode.tt-page, .reader-mode.reader-mode.uf-page, .reader-mode.reader-mode) .reader-control {
     border: 1px solid ButtonText;

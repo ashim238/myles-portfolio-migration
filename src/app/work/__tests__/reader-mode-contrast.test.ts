@@ -102,7 +102,7 @@ describe("Reader Mode contrast ownership", () => {
     );
   });
 
-  it("keeps Navi's dark research board contrast-safe in every surrounding theme", () => {
+  it("keeps Navi's paper research board contrast-safe in every surrounding theme", () => {
     const boardSurface = portfolioCustomProperty("--nv-research-board-surface");
     const boardCard = portfolioCustomProperty("--nv-research-board-card");
     const boardInk = portfolioCustomProperty("--nv-research-board-ink");

@@ -1146,9 +1146,7 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 
 /* ── Pulled-over: emotional-peak evidence anchor ──────── */
 .project-chapter-title#fg-pulled-over {
-  font-size: clamp(2rem, 4vw, 3.2rem);
   letter-spacing: -0.028em;
-  line-height: 1.08;
 }
 
 /* ── Pivot: side-by-side on desktop ───────────────────── */

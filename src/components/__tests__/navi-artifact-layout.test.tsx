@@ -62,10 +62,10 @@ describe("Navi artifact layout", () => {
 
   it("owns readable heuristic-card colors independently of the surrounding theme", () => {
     expect(styles).toMatch(
-      /\.nv-heuristic\s*\{[^}]*--nv-heuristic-surface:\s*#161416;[^}]*--nv-heuristic-ink:\s*#f4f4f4;[^}]*--nv-heuristic-muted:\s*#c4c4c4;[^}]*--nv-heuristic-line:\s*#6b6870;/,
+      /\.nv-heuristic\s*\{[^}]*--nv-heuristic-surface:\s*#efede5;[^}]*--nv-heuristic-ink:\s*#242923;[^}]*--nv-heuristic-muted:\s*#50554d;[^}]*--nv-heuristic-line:\s*#bb4a14;/,
     );
     expect(styles).toMatch(
-      /\.nv-heuristic-card\s*\{[^}]*border:\s*1px solid var\(--nv-heuristic-line\);[^}]*background:\s*var\(--nv-heuristic-surface\);[^}]*color:\s*var\(--nv-heuristic-ink\);/,
+      /\.nv-heuristic-card\s*\{[^}]*border-left:\s*3px solid var\(--nv-heuristic-line\);[^}]*background:\s*var\(--nv-heuristic-surface\);[^}]*color:\s*var\(--nv-heuristic-ink\);/,
     );
     expect(styles).toMatch(
       /\.nv-heuristic-card h3\s*\{[^}]*color:\s*var\(--nv-heuristic-ink\);/,

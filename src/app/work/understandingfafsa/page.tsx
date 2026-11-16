@@ -247,7 +247,7 @@ export default async function UnderstandingFafsaPage({ searchParams }: {
         total={chapters.length}
         variant="understandingfafsa"
       >
-        <div className="project-section uf-section">
+        <div className="project-section uf-section uf-section--comparison">
           <div className="project-section-body">
             <p>
               Practice sends went to me, the other designer, the editor, and the

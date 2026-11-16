@@ -277,8 +277,8 @@
   color: var(--m98-paper-text);
 }
 
-/* Navi's system specimens are light product evidence. The research board is
-   intentionally dark and owns its own explicit board tokens elsewhere. */
+/* Navi's system specimens and research board use readable paper surfaces.
+   The board owns explicit tokens for its nested disclosures. */
 .reader-mode.reader-mode.nv-page :is(
   .nv-ring-value,
   .nv-type-sample,
@@ -439,9 +439,7 @@
 }
 
 .reader-mode.reader-mode.tt-page :is(
-  .tt-template-region-source,
-  .tt-outcome-step-label,
-  .tt-outcome-step figure
+  .tt-template-region-source
 ) {
   border-color: var(--m98-paper-rule);
   background: var(--m98-paper-panel);
@@ -575,4 +573,26 @@
   .reader-mode.reader-mode.tt-page .tt-cover :is(.tt-title, .tt-lede) {
     color: CanvasText;
   }
+}
+
+/* Selected evidence controls and artifact frames remain distinct from shell chrome. */
+.reader-mode.reader-mode.fg-page .fg-pulled-tab[aria-selected="true"] {
+  background: #dfeade;
+  border-color: #375d40;
+  box-shadow: inset 0 -3px #375d40;
+}
+.reader-mode.reader-mode.fg-page .fg-pulled-panel {
+  background: transparent;
+  border-color: transparent;
+  padding-inline: 0;
+}
+.reader-mode.reader-mode.tt-page .tt-outcome-step figure > button {
+  border-color: var(--m98-paper-rule);
+  background: #e9e6dd;
+}
+.reader-mode.reader-mode.tt-page .tt-outcome-step img {
+  border-radius: 0;
+}
+.reader-mode.reader-mode.uf-page .uf-switcher-preview--scroll {
+  border-radius: 2px;
 }

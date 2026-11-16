@@ -421,7 +421,7 @@ describe("portfolio artifact accessibility styles", () => {
     expect(pendingArtifactReveal).toContain("opacity: 1");
     expect(pendingArtifactReveal).toContain("transform: none");
     expect(artifacts).not.toMatch(/overflow-x:\s*(auto|scroll)/);
-    expect(researchBoard).toContain("gap: clamp(2rem, 4vw, 3.25rem)");
+    expect(researchBoard).toContain("gap: 1.5rem");
     expect(styles).toContain(
       "grid-template-columns: repeat(5, minmax(8.5rem, 1fr))",
     );
@@ -433,7 +433,7 @@ describe("portfolio artifact accessibility styles", () => {
       "background: var(--nv-research-board-surface)",
     );
     expect(researchBoard).toContain("color: var(--nv-research-board-ink)");
-    expect(researchBoard).toContain("border-radius: var(--rounded-md)");
+    expect(researchBoard).toContain("border-radius: 4px");
     expect(archetypeSheet).not.toContain("box-shadow");
     expect(costReview).not.toContain("box-shadow");
     expect(styles).toMatch(
