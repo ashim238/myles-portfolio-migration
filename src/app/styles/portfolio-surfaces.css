@@ -483,8 +483,13 @@
 }
 
 .fg-route-comparison-evidence,
-.fg-report-route-evidence {
+.fg-report-route-evidence,
+.fg-section.fg-scope {
   width: min(62rem, 100%);
+}
+
+.fg-route-comparison-evidence,
+.fg-report-route-evidence {
   margin: 2.5rem 0;
   padding: clamp(1rem, 2.4vw, 1.5rem);
   border: 1px solid var(--m98-paper-rule, var(--line));
@@ -1663,6 +1668,20 @@
 
 
 /* ── Scope columns ────────────────────────────────────── */
+
+.fg-section.fg-scope {
+  display: grid;
+  grid-template-columns: minmax(0, 65ch) minmax(0, 1fr);
+  max-width: none;
+}
+
+.fg-scope > :is(.project-section-body, .fg-en-route-video) {
+  grid-column: 1;
+}
+
+.fg-scope > :is(.fg-scope-grid, .project-evidence-disclosure) {
+  grid-column: 1 / -1;
+}
 
 .fg-scope-grid {
   margin-top: 2.2rem;
