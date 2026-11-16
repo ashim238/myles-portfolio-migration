@@ -2682,25 +2682,6 @@
   list-style: none;
 }
 
-.tt-outcome-connector {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  pointer-events: none;
-}
-
-.tt-outcome-connector line {
-  stroke: var(--tt-magenta);
-  stroke-width: 1;
-  vector-effect: non-scaling-stroke;
-}
-
-.tt-outcome-connector-vertical {
-  display: none;
-}
-
 .tt-outcome-step {
   position: relative;
   display: grid;
@@ -2746,8 +2727,10 @@
   object-fit: contain;
 }
 
-.tt-outcome-step--critique img {
-  filter: saturate(2.2) contrast(1.35) brightness(0.9);
+.tt-outcome-step--critique img,
+.lb-image[src*="lofi-light-academia.png"] {
+  background: #314951;
+  border-radius: 0.3rem;
 }
 
 .tt-outcome-step--shipped img {
@@ -2823,14 +2806,6 @@
   .tt-outcome-steps {
     grid-template-columns: 1fr;
     gap: 1.2rem;
-  }
-
-  .tt-outcome-connector-horizontal {
-    display: none;
-  }
-
-  .tt-outcome-connector-vertical {
-    display: block;
   }
 
   .tt-outcome-step {
@@ -4443,9 +4418,8 @@
 
 .nv-heatmap-map {
   width: 100%;
-  /* Wider on mobile so individual neighborhood paths clear the 44px tap-target
-     floor when the list and map stack; desktop keeps the smaller compass-style
-     map alongside the list. */
+  /* Geographic shapes vary in size. The adjacent list provides equivalent
+     44px-tall controls for neighborhoods that are harder to tap. */
   max-width: 18rem;
   height: auto;
   margin: 0 auto;
@@ -4475,9 +4449,25 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* The map is a read-only canvas; regions are never interactive. */
-.nv-heatmap-region {
+.nv-heatmap-region--context {
   pointer-events: none;
+}
+
+.nv-heatmap-region[role="button"] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+.nv-heatmap-region[role="button"]:hover {
+  fill: color-mix(in srgb, var(--nv-accent) 35%, transparent);
+}
+
+.nv-heatmap-region[role="button"]:focus-visible {
+  outline: none;
+  stroke: var(--foreground);
+  stroke-width: 2;
+  fill: color-mix(in srgb, var(--nv-accent) 55%, transparent);
+  animation: none;
 }
 
 .nv-heatmap-region--active {

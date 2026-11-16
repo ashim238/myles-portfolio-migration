@@ -207,6 +207,8 @@ const NAVI_LEARN_CONTEXT =
 export function HeatmapExplorer() {
   const [activeId, setActiveId] = useState("");
   const itemRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const regionRefs = useRef<Record<string, SVGPathElement | null>>({});
+  const listRef = useRef<HTMLUListElement>(null);
   const sorted = [...NAVI_HEATMAP_NEIGHBORHOODS].sort((a, b) => a.name.localeCompare(b.name));
   const activeName = sorted.find((n) => n.id === activeId)?.name ?? null;
 
@@ -214,22 +216,27 @@ export function HeatmapExplorer() {
     setActiveId(id);
   }, []);
 
-  // The named list is the sole control. Arrow keys are an optional shortcut
-  // alongside the native Tab order for its buttons.
+  // Both views share one selection. The map has one Tab stop, with arrow keys
+  // following the same alphabetical order as the list.
   const handleListKey = useCallback(
-    (e: React.KeyboardEvent<HTMLUListElement>) => {
+    (e: React.KeyboardEvent<Element>, fromMap = false) => {
       const ids = sorted.map((n) => n.id);
       const idx = ids.indexOf(activeId);
       let next = -1;
-      if (e.key === "ArrowDown") next = idx < 0 ? 0 : Math.min(ids.length - 1, idx + 1);
-      else if (e.key === "ArrowUp") next = idx < 0 ? ids.length - 1 : Math.max(0, idx - 1);
-      else if (e.key === "Escape") { setActiveId(""); return; }
+      if (e.key === "ArrowDown" || (fromMap && e.key === "ArrowRight")) next = idx < 0 ? 0 : Math.min(ids.length - 1, idx + 1);
+      else if (e.key === "ArrowUp" || (fromMap && e.key === "ArrowLeft")) next = idx < 0 ? ids.length - 1 : Math.max(0, idx - 1);
+      else if (e.key === "Escape") {
+        setActiveId("");
+        if (fromMap) regionRefs.current[ids[0]]?.focus({ preventScroll: true });
+        return;
+      }
       else if (e.key === "Home") next = 0;
       else if (e.key === "End") next = ids.length - 1;
       if (next < 0) return;
       e.preventDefault();
       setActiveId(ids[next]);
-      itemRefs.current[ids[next]]?.focus();
+      if (fromMap) regionRefs.current[ids[next]]?.focus({ preventScroll: true });
+      else itemRefs.current[ids[next]]?.focus();
     },
     [activeId, sorted],
   );
@@ -237,14 +244,23 @@ export function HeatmapExplorer() {
   useEffect(() => {
     if (!activeId) return;
     const btn = itemRefs.current[activeId];
-    if (!btn) return;
+    const list = listRef.current;
+    if (!btn || !list) return;
+    // Reveal the matching row inside its scroll area without moving the page
+    // away from the map, especially when the two views stack on a phone.
+    const rowBox = btn.getBoundingClientRect();
+    const listBox = list.getBoundingClientRect();
+    const delta = rowBox.top < listBox.top ? rowBox.top - listBox.top
+      : rowBox.bottom > listBox.bottom ? rowBox.bottom - listBox.bottom : 0;
+    if (!delta) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    btn.scrollIntoView({ block: "nearest", behavior: reduced ? "auto" : "smooth" });
+    list.scrollTo({ top: list.scrollTop + delta, behavior: reduced ? "auto" : "smooth" });
   }, [activeId]);
 
   return (
     <div className="nv-heatmap">
       <ul
+        ref={listRef}
         className="nv-heatmap-list"
         aria-label="Manhattan neighborhoods"
         onKeyDown={handleListKey}
@@ -266,9 +282,12 @@ export function HeatmapExplorer() {
         ))}
       </ul>
       <div className="nv-heatmap-map-wrap">
-        {/* Read-only canvas: the list drives it; the map reflects the choice.
-            aria-hidden because the list + the live caption carry the meaning. */}
-        <svg viewBox={NAVI_HEATMAP_VIEWBOX} className="nv-heatmap-map" aria-hidden="true">
+        <svg
+          viewBox={NAVI_HEATMAP_VIEWBOX}
+          className="nv-heatmap-map"
+          role="group"
+          aria-label="Manhattan neighborhood map"
+        >
           <defs>
             <clipPath id="nv-island-clip">
               <path d={NAVI_HEATMAP_SILHOUETTE} />
@@ -282,8 +301,23 @@ export function HeatmapExplorer() {
                 <path
                   key={r.id}
                   d={r.path}
+                  ref={(el) => { regionRefs.current[r.id] = el; }}
+                  role={r.selectable ? "button" : undefined}
+                  aria-label={r.selectable ? r.name : undefined}
+                  aria-pressed={r.selectable ? isActive : undefined}
+                  aria-hidden={r.selectable ? undefined : true}
+                  tabIndex={r.selectable ? (isActive || (!activeId && r.id === sorted[0].id) ? 0 : -1) : undefined}
+                  onClick={r.selectable ? () => selectNeighborhood(r.id) : undefined}
+                  onKeyDown={r.selectable ? (e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      selectNeighborhood(r.id);
+                    } else handleListKey(e, true);
+                  } : undefined}
                   className={`nv-heatmap-region${r.selectable ? "" : " nv-heatmap-region--context"}${isActive ? " nv-heatmap-region--active" : ""}`}
-                />
+                >
+                  {r.selectable && <title>{r.name}</title>}
+                </path>
               );
             })}
           </g>
@@ -302,7 +336,7 @@ export function HeatmapExplorer() {
               </span>
             </>
           ) : (
-            `Select from the list to preview how Learn would frame each of ${sorted.length} neighborhoods.`
+            `Select a neighborhood on the map or in the list to preview how Learn would frame each of ${sorted.length} neighborhoods.`
           )}
         </p>
       </div>

@@ -263,16 +263,6 @@ export default async function TikTokPage() {
         <div className="project-section tt-section tt-preview-outcome">
           {lightAcademia ? (
             <div className="tt-outcome-sequence">
-              <svg
-                className="tt-outcome-connector"
-                viewBox="0 0 100 100"
-                preserveAspectRatio="none"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <line className="tt-outcome-connector-horizontal" x1="8" y1="8" x2="92" y2="8" />
-                <line className="tt-outcome-connector-vertical" x1="50" y1="4" x2="50" y2="96" />
-              </svg>
               <ol className="tt-outcome-steps" aria-label="Light Academia iteration sequence">
               <li className="tt-outcome-step tt-outcome-step--critique">
                 <p className="tt-outcome-step-label">Critique</p>
@@ -280,8 +270,8 @@ export default async function TikTokPage() {
                   <ExpandableImage
                     src={lightAcademia.sketch}
                     alt="Light Academia process sketch"
-                    width={1600}
-                    height={900}
+                    width={4393}
+                    height={2741}
                     sizes="(max-width: 768px) 84vw, 280px"
                     style={{ width: "100%", height: "auto", display: "block" }}
                   />
