@@ -61,6 +61,7 @@ export function PivotJourney() {
                 alt="An early Fresh Greens screen from when it was a Google Maps feature: Google's own green turn banner, blue route line, and 3D map chrome, with Fresh Greens' Safety button and a hazard marker added down the side."
                 width={390}
                 height={844}
+                unoptimized
                 sizes="(max-width: 768px) 62vw, 300px"
                 className="fg-feature-shot"
               />
