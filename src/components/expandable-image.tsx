@@ -33,7 +33,7 @@ export function ExpandableImage({
     <button
       type="button"
       className="expandable-trigger"
-      onClick={() => openLightbox(src, alt, width, height)}
+      onClick={() => openLightbox(src, alt, width, height, { unoptimized })}
       aria-label={`Expand image: ${alt}`}
     >
       <Image

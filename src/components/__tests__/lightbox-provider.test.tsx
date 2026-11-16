@@ -51,6 +51,28 @@ describe("LightboxProvider", () => {
     expect(expandedImage).toHaveAttribute("height", "800");
   });
 
+  it("preserves lossless delivery when an image is enlarged", async () => {
+    const src = "/projects/fresh-greens/process/pivot-google-v1-screen.png";
+    render(
+      <LightboxProvider>
+        <ExpandableImage
+          src={src}
+          alt="First pass"
+          width={390}
+          height={844}
+          unoptimized
+        />
+      </LightboxProvider>,
+    );
+
+    expect(screen.getByRole("img", { name: "First pass" })).toHaveAttribute("src", src);
+    await userEvent.click(screen.getByRole("button", { name: "Expand image: First pass" }));
+    const expanded = within(screen.getByRole("dialog", { name: "First pass" }))
+      .getByRole("img", { name: "First pass" });
+    expect(expanded).toHaveAttribute("src", src);
+    expect(expanded).not.toHaveAttribute("srcset");
+  });
+
   it("makes provider content inert while open and restores it on close", async () => {
     const user = userEvent.setup();
 

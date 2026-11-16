@@ -20,6 +20,7 @@ type LightboxState = {
   alt: string;
   width: number;
   height: number;
+  unoptimized?: boolean;
 } | null;
 
 type LightboxCtx = {
@@ -28,6 +29,7 @@ type LightboxCtx = {
     alt: string,
     width: number,
     height: number,
+    options?: { unoptimized?: boolean },
   ) => void;
 };
 
@@ -50,13 +52,14 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
     alt: string,
     width: number,
     height: number,
+    options?: { unoptimized?: boolean },
   ) => {
     // Remember what opened the dialog so focus can return there on close.
     triggerRef.current =
       document.activeElement instanceof HTMLElement ? document.activeElement : null;
     setViewMode("fit");
     setZoom(1);
-    setState({ src, alt, width, height });
+    setState({ src, alt, width, height, unoptimized: options?.unoptimized });
   }, []);
 
   const close = useCallback(() => setState(null), []);
@@ -166,6 +169,7 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
                 alt={state.alt}
                 width={state.width}
                 height={state.height}
+                unoptimized={state.unoptimized}
                 sizes={viewMode === "fit" ? "92vw" : `${Math.round(zoom * 100)}vw`}
                 style={
                   viewMode === "actual"
