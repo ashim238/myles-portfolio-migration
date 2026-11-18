@@ -20,12 +20,14 @@ describe("NaviHeader", () => {
     ).toBeInTheDocument();
   });
 
-  it("offers a way out of the demo back to the case study", () => {
+  it("returns to the top-level case study when the demo is embedded", () => {
     render(<NaviHeader />);
     expect(screen.getByRole("link", { name: /case study/i })).toHaveAttribute(
       "href",
       "/work/navi",
     );
+    expect(screen.getByRole("link", { name: /case study/i })).toHaveAttribute("target", "_top");
+    expect(screen.getByRole("link", { name: "Explore" })).not.toHaveAttribute("target");
   });
 
   it("identifies every Navi-owned route as sample portfolio content", () => {

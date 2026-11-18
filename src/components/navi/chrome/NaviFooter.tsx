@@ -30,7 +30,7 @@ export function NaviFooter() {
             <ul>
               {c.links.map((l) => (
                 <li key={l.label}>
-                  <a href={l.href}>{l.label}</a>
+                  <a href={l.href} target={l.href === "/work/navi" ? "_top" : undefined}>{l.label}</a>
                 </li>
               ))}
             </ul>

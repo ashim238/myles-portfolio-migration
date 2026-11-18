@@ -34,6 +34,7 @@ export function NaviHeader() {
         <nav className="nv-nav" aria-label="Navi project navigation">
           <Link
             href="/work/navi"
+            target="_top"
             className="nv-nav-back"
             aria-label="Return to case study"
           >

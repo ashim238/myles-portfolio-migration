@@ -15,5 +15,7 @@ describe("NaviFooter", () => {
       "href",
       "/work/navi",
     );
+    expect(screen.getByRole("link", { name: "Read the case study" })).toHaveAttribute("target", "_top");
+    expect(screen.getByRole("link", { name: "Experiences" })).not.toHaveAttribute("target");
   });
 });
