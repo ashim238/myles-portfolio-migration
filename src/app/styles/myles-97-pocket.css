@@ -114,6 +114,14 @@
   grid-template-rows: minmax(150px, 42vw) auto;
 }
 
+.pocket97-shell .myles97-program-card[data-m97-selected-work-project="fresh-greens"] .myles97-program-summary {
+  grid-template-rows: auto auto;
+}
+
+.pocket97-shell .myles97-program-card[data-m97-selected-work-project="fresh-greens"] .myles97-program-cover {
+  aspect-ratio: 640 / 548;
+}
+
 .pocket97-shell .myles97-program-card-copy {
   padding: 12px;
 }

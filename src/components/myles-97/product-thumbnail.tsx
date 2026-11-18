@@ -29,7 +29,12 @@ export function ProductThumbnail({ project, active, reduced, expanded = false }:
     );
   }
   return <span className="product-thumbnail" data-project={project} data-active={active} data-reduced={reduced}>
-    <svg className="product-thumbnail-scene" viewBox="0 0 640 360" preserveAspectRatio={project === "understandingfafsa" ? "xMidYMax meet" : "xMidYMid meet"} focusable="false" aria-hidden="true">
+    {project === "understandingfafsa" && (
+      <svg className="mail-thumbnail-wave" viewBox="0 0 640 360" preserveAspectRatio="none" focusable="false" aria-hidden="true">
+        <path d="M0 296Q150 250 325 298T640 292V360H0" fill="#ebd7c9" />
+      </svg>
+    )}
+    <svg className="product-thumbnail-scene" viewBox="0 0 640 360" preserveAspectRatio="xMidYMid meet" focusable="false" aria-hidden="true">
       <defs><filter id={shadow} x="-40%" y="-40%" width="180%" height="200%">
         <feDropShadow dx="0" dy="12" stdDeviation="12" floodColor="#1d251c" floodOpacity=".14" />
       </filter></defs>
@@ -57,8 +62,6 @@ function MailScene({ shadow }: { shadow: string }) {
     <defs>
       <clipPath id={clip}><rect x="150" y="149" width="334" height="190" rx="3" /></clipPath>
     </defs>
-    <rect width="640" height="360" fill="#f4eae3" />
-    <path d="M0 296Q150 250 325 298T640 292V360H0" fill="#ebd7c9" />
     <path d="M140 24H122V335H140 M494 24H512V335H494" fill="none" stroke="#ccb9ac" />
     <g filter={`url(#${shadow})`}>
       <rect x="150" y="22" width="334" height="123" rx="3" fill="white" />

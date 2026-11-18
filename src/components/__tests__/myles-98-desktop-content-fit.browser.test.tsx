@@ -110,7 +110,7 @@ function renderDesktopMarkup(openProgram?: ProgramDefinition) {
   return markup;
 }
 
-async function browserPage(viewport: (typeof laptopViewports)[number], markup: string) {
+async function browserPage(viewport: { width: number; height: number }, markup: string) {
   const page = await browser.newPage({ viewport });
   await page.route("http://portfolio.test/**", async (route) => {
     const requestUrl = new URL(route.request().url());
@@ -216,6 +216,23 @@ async function projectPreviewGeometry(page: Page, programId: ProjectProgramId) {
 }
 
 describe("Myles 98 desktop content fit", () => {
+  it("fills the tall Work Stuff card with the full route and carries the FAFSA wave to both edges", async () => {
+    const page = await browserPage({ width: 1314, height: 1057 }, renderDesktopMarkup());
+    const fresh = page.locator('[data-m97-selected-work-project="fresh-greens"] .product-thumbnail');
+    const mail = page.locator('[data-m97-selected-work-project="understandingfafsa"] .product-thumbnail');
+    const [frame, driver, route, mailFrame, wave] = await Promise.all([
+      fresh, fresh.locator('.fresh-driver-art'), fresh.locator('.fresh-preview-route'),
+      mail, mail.locator('.mail-thumbnail-wave path'),
+    ].map(element => element.boundingBox()));
+    if (!frame || !driver || !route || !mailFrame || !wave) throw new Error("Missing thumbnail artwork");
+    expect(Math.abs(driver.x - frame.x)).toBeLessThan(4);
+    expect(Math.abs(route.x + route.width - frame.x - frame.width)).toBeLessThan(4);
+    expect(Math.abs(route.height - frame.height)).toBeLessThan(4);
+    expect(Math.abs(wave.x - mailFrame.x)).toBeLessThan(1);
+    expect(Math.abs(wave.width - mailFrame.width)).toBeLessThan(1);
+    await page.close();
+  });
+
   it.each(laptopViewports)(
     "keeps the real Work Stuff and Welcome actions visible at $width×$height",
     async (viewport) => {

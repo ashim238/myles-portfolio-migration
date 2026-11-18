@@ -95,7 +95,8 @@ describe("Work Stuff evaluation paths", () => {
     expect(container.querySelector('.motion-mail-body image')?.parentElement).toHaveAttribute('clip-path');
     expect(container.querySelector('.motion-mail-links')).toBeNull();
     expect(container.querySelector('.motion-mail-label')).toBeNull();
-    expect(container.querySelector('.product-thumbnail-scene')).toHaveAttribute('preserveAspectRatio', 'xMidYMax meet');
+    expect(container.querySelector('.product-thumbnail-scene')).toHaveAttribute('preserveAspectRatio', 'xMidYMid meet');
+    expect(container.querySelector('.mail-thumbnail-wave')).toHaveAttribute('preserveAspectRatio', 'none');
   });
   it.each(["fresh-greens", "understandingfafsa", "navi", "tiktok"] as const)(
     "reveals %s on keyboard focus, keeps it between actions, and resets on exit",
