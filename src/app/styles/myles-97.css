@@ -745,10 +745,15 @@
 
 .product-thumbnail[data-project="fresh-greens"] {
   background: white;
+  container-type: size;
+  --fresh-card-scene-width: min(100cqw, calc(100cqh * 640 / 360));
 }
 
-.product-thumbnail[data-project="fresh-greens"] .product-thumbnail-scene {
+.product-thumbnail[data-project="fresh-greens"]:not(.fresh-expanded-art) .product-thumbnail-scene {
   top: 50%;
+  left: auto;
+  right: 0;
+  width: var(--fresh-card-scene-width);
   height: auto;
   aspect-ratio: 16 / 9;
   overflow: visible;
@@ -759,13 +764,17 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 38.75%;
+  width: calc(100% - var(--fresh-card-scene-width) * 392 / 640);
   height: 100%;
   overflow: hidden;
 }
 
+.fresh-expanded-art .fresh-driver-art {
+  width: 35%;
+}
+
 .fresh-route-sheet {
-  transform: translateY(-95px);
+  transform: translateY(-57px);
 }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
@@ -1020,6 +1029,26 @@
   .myles97-desktop .myles97-project-preview-copy {
     align-content: center;
   }
+}
+
+.myles97-project-preview[data-project="fresh-greens"] .myles97-project-preview-cover {
+  aspect-ratio: 640 / 548;
+}
+
+.myles97-project-preview[data-project="fresh-greens"] .myles97-project-preview-copy > p {
+  text-wrap: pretty;
+}
+
+@media (min-width: 700px) {
+  .myles97-project-preview[data-project="fresh-greens"] {
+    grid-template-columns: minmax(0, 1.62fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 24px;
+  }
+}
+
+.pocket97-app:has(.fresh-expanded-art) {
+  min-height: 0;
 }
 
 .myles97-display-preview {

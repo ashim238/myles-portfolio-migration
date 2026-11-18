@@ -370,7 +370,8 @@ describe("Myles 98 desktop content fit", () => {
           sourceLoaded: true,
         });
         expect(geometry.preserveAspectRatio, program.appName).toMatch(/ meet$/);
-        expect(geometry.sourceAspectRatio, program.appName).toBeCloseTo(640 / 360);
+        const sourceHeight = program.id === "fresh-greens" ? 548 : 360;
+        expect(geometry.sourceAspectRatio, program.appName).toBeCloseTo(640 / sourceHeight);
         expect(geometry.visibleImageWidth, program.appName).toBeGreaterThanOrEqual(300);
         expect(geometry.visibleImageHeight, program.appName).toBeGreaterThanOrEqual(160);
         await page.close();

@@ -53,6 +53,14 @@ describe("ProjectProgram", () => {
     },
   );
 
+  it("keeps the map controls and route sheet in one original screen capture in the expanded Fresh Greens view", () => {
+    const { getByRole } = render(<ProjectProgram program={program} />);
+    const artwork = getByRole("img", { name: /Weeksville Heritage Center/ });
+    const route = artwork.querySelector(".product-thumbnail-scene");
+    expect(route?.querySelectorAll("image")).toHaveLength(1);
+    expect(route?.querySelector("image")).toHaveAttribute("href", "/projects/preview-art/weeksville-route-preview.webp");
+  });
+
   it("dispatches a structured program transition for an unmodified click", () => {
     const onRequest = vi.fn((event: Event) => event.preventDefault());
     window.addEventListener(PROJECT_ENTER_REQUEST, onRequest);

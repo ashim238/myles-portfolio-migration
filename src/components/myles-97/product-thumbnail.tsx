@@ -4,11 +4,20 @@ import { useId } from "react";
 import type { ProjectProgramId } from "@/lib/myles-97/programs";
 
 /** Motion studies use original artwork; SVG windows preserve source geometry. */
-export function ProductThumbnail({ project, active, reduced }: {
-  project: ProjectProgramId; active: boolean; reduced: boolean;
+export function ProductThumbnail({ project, active, reduced, expanded = false }: {
+  project: ProjectProgramId; active: boolean; reduced: boolean; expanded?: boolean;
 }) {
   const id = useId().replace(/:/g, "");
   const shadow = id + "-shadow";
+  if (project === "fresh-greens" && expanded) {
+    return <span className="product-thumbnail fresh-expanded-art" data-project={project} data-active={active} data-reduced={reduced}
+      role="img" aria-label="Fresh Greens driver illustration beside the route to Weeksville Heritage Center. The preview shows 30 minutes and an all-clear status.">
+      <svg className="product-thumbnail-scene" viewBox="0 0 640 548" preserveAspectRatio="xMidYMid meet" focusable="false" aria-hidden="true">
+        <image className="fresh-preview-route" x="224" width="416" height="548" href="/projects/preview-art/weeksville-route-preview.webp" />
+      </svg>
+      <FreshDriverArt />
+    </span>;
+  }
   return <span className="product-thumbnail" data-project={project} data-active={active} data-reduced={reduced}>
     <svg className="product-thumbnail-scene" viewBox="0 0 640 360" preserveAspectRatio={project === "understandingfafsa" ? "xMidYMax meet" : "xMidYMid meet"} focusable="false" aria-hidden="true">
       <defs><filter id={shadow} x="-40%" y="-40%" width="180%" height="200%">
@@ -16,12 +25,14 @@ export function ProductThumbnail({ project, active, reduced }: {
       </filter></defs>
       {project === "fresh-greens" ? <RouteScene /> : project === "understandingfafsa" ? <MailScene shadow={shadow} /> : project === "navi" ? <PlacesScene shadow={shadow} /> : <CatalogScene shadow={shadow} />}
     </svg>
-    {project === "fresh-greens" && (
-      <svg className="fresh-driver-art" viewBox="40 0 310 560" preserveAspectRatio="xMidYMin slice" focusable="false" aria-hidden="true">
-        <image href="/projects/preview-art/driver-location-journey.webp" width="390" height="560" />
-      </svg>
-    )}
+    {project === "fresh-greens" && <FreshDriverArt />}
   </span>;
+}
+
+function FreshDriverArt() {
+  return <svg className="fresh-driver-art" focusable="false" aria-hidden="true">
+    <image href="/projects/preview-art/driver-location-journey.webp" width="100%" height="100%" preserveAspectRatio="xMidYMin slice" />
+  </svg>;
 }
 
 function SourceCrop({ src, x, y, width, height, viewBox, sourceWidth, sourceHeight, radius = 0 }: {
@@ -42,14 +53,7 @@ function RouteScene() {
   return <>
     <rect x="0" y="-150" width="640" height="690" fill="white" />
     <g className="fresh-route-sheet">
-      <image href="/projects/preview-art/weeksville-map.webp" x="248" y="-105" width="392" height="297" />
-      {/* The original controls travel with the sheet, keeping a gap above its edge. */}
-      <clipPath id={sheetClip + "-controls"}>
-        <circle cx="621" cy="142" r="11.7" />
-        <circle cx="621" cy="170.9" r="11.7" />
-      </clipPath>
-      <image className="fresh-map-controls" href="/projects/preview-art/weeksville-map-controls.webp"
-        x="609" y="130" width="24" height="53" clipPath={`url(#${sheetClip}-controls)`} />
+      <image href="/projects/preview-art/weeksville-map-with-controls.webp" x="248" y="-116" width="392" height="308" />
       <rect x="248" y="192" width="392" height="400" fill="white" />
       <clipPath id={sheetClip}>
         <rect className="fresh-sheet-crop" x="248" y="192" width="392" height="234" />

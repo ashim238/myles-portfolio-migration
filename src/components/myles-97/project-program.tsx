@@ -101,9 +101,9 @@ export function ProjectProgram({
   };
 
   return (
-    <div className="myles97-project-preview">
+    <div className="myles97-project-preview" data-project={program.id}>
       <div className="myles97-project-preview-cover" data-project-program-cover>
-        <ProductThumbnail project={program.id} active reduced={reduceMotion} />
+        <ProductThumbnail project={program.id} active reduced={reduceMotion} expanded />
       </div>
       <div className="myles97-project-preview-copy">
         <p className="myles97-eyebrow">{program.applicationType}</p>
