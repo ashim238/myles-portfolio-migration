@@ -578,3 +578,17 @@
 .reader-mode .uf-lock-stage:focus-within { outline: 2px solid currentColor; outline-offset: 2px; }
 .reader-mode .uf-figma-figure figcaption { padding-block: 0 .75rem; }
 .reader-mode .nv-research-archetype-details > div { align-content: start; }
+
+/* Keep long captions at a reading measure within the wider exhibits. */
+.reader-mode .fg-reminder-evidence > figcaption,
+.reader-mode .fg-route-scoring > figcaption,
+.reader-mode .nv-survey-note,
+.reader-mode.tt-page .project-opening-facts-row dd {
+  max-inline-size: 72ch;
+}
+
+.reader-mode.tt-page .tt-preview-process-card > header > span,
+.reader-mode .nv-composition-eyebrow {
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
