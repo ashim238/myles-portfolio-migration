@@ -390,6 +390,29 @@
   color: var(--m98-paper-muted);
 }
 
+/* Reorder/remove icons sit on paper even when the surrounding site is dark. */
+.reader-mode.reader-mode.uf-page .uf-composer-mini {
+  color: var(--m98-paper-text);
+  border-color: var(--m98-paper-muted);
+  background: var(--m98-paper-panel);
+}
+
+.reader-mode.reader-mode.uf-page .uf-composer-mini:hover:not(:disabled) {
+  background: var(--uf-accent-soft);
+  border-color: var(--uf-accent-warm-text);
+}
+
+.reader-mode.reader-mode.uf-page .uf-composer-mini--remove:hover:not(:disabled) {
+  color: var(--uf-accent-warm-text);
+}
+
+.reader-mode.reader-mode.uf-page .uf-composer-mini:disabled {
+  color: var(--m98-paper-muted);
+  border-color: var(--m98-paper-rule);
+  background: transparent;
+  opacity: 1;
+}
+
 /* These are normal-size text labels. Their base muted token passes AA, so do
    not weaken the rendered color with component opacity. */
 .reader-mode.reader-mode :is(

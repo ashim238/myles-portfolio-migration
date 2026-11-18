@@ -5444,6 +5444,7 @@
   justify-content: center;
   width: 1.75rem;
   height: 1.75rem;
+  padding: 0;
   border: 1px solid var(--line);
   border-radius: 0.35rem;
   background: transparent;
@@ -5458,6 +5459,12 @@
 .uf-composer-mini:hover:not(:disabled) {
   background: var(--uf-accent-soft);
   border-color: var(--uf-accent-line);
+}
+
+.uf-composer-mini svg {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
 }
 
 .uf-composer-mini:active:not(:disabled) {
