@@ -423,6 +423,23 @@ describe("Task 5 responsive adaptation", () => {
     await page.close();
   }, 60_000);
 
+  it("reveals the focused preview link above the dock on a short phone", async () => {
+    const page = await hydratedBrowserPage("pocket", { width: 320, height: 568 });
+    await page.getByRole("button", { name: "Explore Fresh Greens.exe preview" }).press("Enter");
+    await page.waitForSelector(".pocket97-back:focus");
+    await page.keyboard.press("Tab");
+    const link = page.getByRole("link", { name: "Read Fresh Greens case study" });
+    const dock = page.locator(".pocket97-dock");
+    expect(await link.evaluate((element) => element === document.activeElement)).toBe(true);
+    await expect.poll(async () => {
+      const linkBounds = await link.boundingBox();
+      const dockBounds = await dock.boundingBox();
+      if (!linkBounds || !dockBounds) throw new Error("Missing preview link or dock");
+      return dockBounds.y - (linkBounds.y + linkBounds.height);
+    }).toBeGreaterThanOrEqual(2);
+    await page.close();
+  }, 60_000);
+
   it("hydrates Pocket Start as a modal sheet with isolated background and restored focus", async () => {
     const page = await hydratedBrowserPage("pocket", phoneViewports[0]);
     const start = page.getByRole("button", { name: "Start" });
