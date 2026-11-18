@@ -372,12 +372,18 @@
 }
 
 .myles97-paint-tool[data-selected="true"],
-.myles97-paint-tool:active,
+.myles97-paint-tool:active:not(:disabled),
 .myles97-paint-swatch[data-selected="true"] {
   border-color: var(--m97-bevel-dark) var(--m97-bevel-highlight)
     var(--m97-bevel-highlight) var(--m97-bevel-dark);
   background: #e2e2e2;
   box-shadow: var(--m97-bevel-recessed);
+}
+
+.myles97-paint-swatch[data-selected="true"] {
+  background: var(--m97-paint-swatch);
+  outline: 1px solid var(--m97-ink);
+  outline-offset: 1px;
 }
 
 .myles97-paint-workspace {
@@ -749,11 +755,27 @@
   transform: translateY(-50%);
 }
 
+.fresh-driver-art {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 38.75%;
+  height: 100%;
+  overflow: hidden;
+}
+
 .fresh-route-sheet {
   transform: translateY(-95px);
 }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  /* Crop the source above Go at rest, including on tall tablet cards. */
+  .product-thumbnail[data-active="false"][data-reduced="false"] .fresh-sheet-crop {
+    height: 173px;
+  }
+  .product-thumbnail[data-reduced="false"] .fresh-sheet-crop {
+    transition: height 360ms var(--product-ease);
+  }
   .product-thumbnail[data-reduced="false"] .fresh-route-sheet {
     transition: transform 360ms var(--product-ease);
   }
@@ -1056,10 +1078,12 @@
   box-shadow: var(--m97-bevel-recessed);
 }
 
-.myles97-display-preview button:disabled {
-  color: #6f6f6f;
+.myles97-display-preview button:disabled,
+.myles97-paint-tool:disabled {
+  color: #505050;
   cursor: default;
-  box-shadow: none;
+  text-shadow: 1px 1px var(--m97-bevel-highlight);
+  box-shadow: var(--m97-bevel-raised);
 }
 
 .myles97-display-actions {

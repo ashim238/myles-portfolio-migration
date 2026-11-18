@@ -23,8 +23,8 @@ export default function NotFound() {
           </div>
         </div>
         <div className="myles97-system-dialog-actions">
-          <Link href="/">Return to Desktop</Link>
-          <Link href="/#selected-work">Open Work Stuff</Link>
+          <Link className="reader-control" href="/">Return to Desktop</Link>
+          <Link className="reader-control" href="/#selected-work">Open Work Stuff</Link>
         </div>
       </section>
     </main>

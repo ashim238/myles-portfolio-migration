@@ -84,8 +84,8 @@ describe("Work Stuff evaluation paths", () => {
   it("pairs the original Fresh Greens driver illustration with the actual route sheet", () => {
     const { container } = render(<SelectedWorkExplorer programs={[programs[0]]} onOpen={vi.fn()} />);
     const scene = container.querySelector('.product-thumbnail-scene');
-    expect(scene?.querySelector('image[href="/projects/preview-art/driver-location-journey.webp"]')).toBeInTheDocument();
-    expect(scene?.querySelector('.fresh-route-sheet image')).toHaveAttribute('href', '/projects/preview-art/route-preview.webp');
+    expect(container.querySelector('.fresh-driver-art image[href="/projects/preview-art/driver-location-journey.webp"]')).toBeInTheDocument();
+    expect(scene?.querySelector('.fresh-route-sheet image[clip-path]:last-child')).toHaveAttribute('href', '/projects/preview-art/weeksville-route-sheet.webp');
     expect(scene?.querySelector('text')).toBeNull();
   });
 
@@ -161,7 +161,7 @@ describe("Work Stuff evaluation paths", () => {
   });
 
   it.each([
-    ["fresh-greens", "/projects/preview-art/route-preview.webp"],
+    ["fresh-greens", "/projects/preview-art/weeksville-route-sheet.webp"],
     ["understandingfafsa", "/projects/preview-art/modular-header.webp"],
     ["navi", "/projects/preview-art/prospect-tunnel.webp"],
     ["tiktok", "/projects/preview-art/academia.webp"],

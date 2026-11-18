@@ -49,6 +49,7 @@ export function RouteComparisonEvidence() {
       <div className="fg-route-proof-card" aria-live="polite">
         <div className="fg-route-proof-controls">
           <button
+            className="reader-control"
             type="button"
             aria-label="Previous route"
             disabled={selectedIndex === 0}
@@ -58,6 +59,7 @@ export function RouteComparisonEvidence() {
           </button>
           <span>{selectedIndex + 1} of {routes.length}</span>
           <button
+            className="reader-control"
             type="button"
             aria-label="Next route"
             disabled={selectedIndex === routes.length - 1}

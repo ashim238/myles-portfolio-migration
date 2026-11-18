@@ -11,9 +11,7 @@ export function ProjectEvidenceDisclosure({
     <details className="project-evidence-disclosure">
       <summary>
         <span>{summary}</span>
-        <span className="project-evidence-disclosure-mark" aria-hidden="true">
-          +
-        </span>
+        <span className="project-evidence-disclosure-mark" aria-hidden="true" />
       </summary>
       <div className="project-evidence-disclosure-content">{children}</div>
     </details>

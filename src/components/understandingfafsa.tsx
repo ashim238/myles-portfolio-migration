@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import { useLightbox } from "@/components/lightbox-provider";
 import { ExpandableImage } from "@/components/expandable-image";
 import {
   UF_ASSETS,
@@ -129,6 +130,28 @@ const BEFORE_AFTER = [
   },
 ] as const;
 
+function OriginalCapture({ asset, label, alt }: { asset: UfTiledAsset; label: string; alt: string }) {
+  const { openLightbox } = useLightbox();
+  return (
+    <a
+      className="uf-original-capture reader-control"
+      href={asset.originalSrc}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Open original ${label} capture`}
+      aria-haspopup="dialog"
+      onClick={(event) => {
+        if (event.button || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        event.currentTarget.focus({ preventScroll: true });
+        openLightbox(asset.originalSrc, alt, asset.width, asset.height, { initialView: "read", unoptimized: true });
+      }}
+    >
+      Open original capture <span aria-hidden="true">↗</span>
+    </a>
+  );
+}
+
 export function BeforeAfterPhones() {
   return (
     <div
@@ -149,14 +172,7 @@ export function BeforeAfterPhones() {
           </div>
           <figcaption className="uf-before-after-label">{item.label}</figcaption>
           <p className="uf-before-after-hint">Opening excerpt. Open the original capture for the full newsletter.</p>
-          <a
-            href={item.asset.originalSrc}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Open original ${item.originalLabel} capture`}
-          >
-            Open original capture <span aria-hidden="true">↗</span>
-          </a>
+          <OriginalCapture asset={item.asset} label={item.originalLabel} alt={item.alt} />
         </figure>
       ))}
       <p className="uf-before-after-evidence-note">
@@ -292,7 +308,19 @@ function seedRows(order: ComposerBlockId[]): ComposerRow[] {
   return order.map((id) => ({ key: makeInstanceId(id), id }));
 }
 
-export function NewsletterComposer() {
+function ComposerIntro() {
+  return (
+    <div className="uf-composer-toolbar-title">
+      <h3 className="uf-composer-intro-title">Try it: assemble a send</h3>
+      <p className="uf-composer-help">
+        Header and footer stay locked. Add middle blocks from the shelf, then drag or use the
+        arrows to reorder them.
+      </p>
+    </div>
+  );
+}
+
+export function NewsletterComposer({ showIntro = true }: { showIntro?: boolean } = {}) {
   const [rows, setRows] = useState<ComposerRow[]>(() => seedRows(COMPOSER_DEFAULT));
   const [announcement, setAnnouncement] = useState("");
   const [justAddedKey, setJustAddedKey] = useState<string | null>(null);
@@ -447,23 +475,17 @@ export function NewsletterComposer() {
       aria-label="Interactive newsletter composer"
     >
       <header className="uf-composer-toolbar">
-        <div className="uf-composer-toolbar-title">
-          <p className="uf-composer-eyebrow">Try it: assemble a send</p>
-          <p className="uf-composer-help">
-            Header and footer stay locked. Add middle blocks from the shelf, then drag or use the
-            arrows to reorder them.
-          </p>
-        </div>
+        {showIntro && <ComposerIntro />}
         <div className="uf-composer-toolbar-actions" role="group" aria-label="Composer actions">
           <button
             type="button"
-            className="uf-composer-btn uf-composer-btn--randomize"
+            className="uf-composer-btn uf-composer-btn--randomize reader-control"
             onClick={randomize}
             disabled={rows.length < 2}
           >
             Randomize
           </button>
-          <button type="button" className="uf-composer-btn" onClick={reset}>
+          <button type="button" className="uf-composer-btn reader-control" onClick={reset}>
             Reset
           </button>
         </div>
@@ -483,7 +505,7 @@ export function NewsletterComposer() {
                 <li key={b.id} className="uf-composer-shelf-item">
                   <button
                     type="button"
-                    className="uf-composer-shelf-btn"
+                    className="uf-composer-shelf-btn reader-control"
                     data-uf-shelf-control
                     onClick={() => addBlock(b.id)}
                     aria-label={`Add ${b.name} block. ${usedCount > 0 ? `In send: ${usedCount}.` : ""}`}
@@ -604,7 +626,7 @@ export function NewsletterComposer() {
                         <span className="uf-composer-item-controls" role="group" aria-label={`Reorder ${block.name}`}>
                           <button
                             type="button"
-                            className="uf-composer-mini"
+                            className="uf-composer-mini reader-control"
                             onClick={() => moveRow(row.key, -1, block.name, index)}
                             disabled={index === 0}
                             aria-label={`Move ${block.name} up`}
@@ -615,7 +637,7 @@ export function NewsletterComposer() {
                           </button>
                           <button
                             type="button"
-                            className="uf-composer-mini"
+                            className="uf-composer-mini reader-control"
                             onClick={() => moveRow(row.key, 1, block.name, index)}
                             disabled={index === rows.length - 1}
                             aria-label={`Move ${block.name} down`}
@@ -626,7 +648,7 @@ export function NewsletterComposer() {
                           </button>
                           <button
                             type="button"
-                            className="uf-composer-mini uf-composer-mini--remove"
+                            className="uf-composer-mini uf-composer-mini--remove reader-control"
                             onClick={() => removeRow(row.key, block.name)}
                             aria-label={`Remove ${block.name}`}
                           >
@@ -678,18 +700,30 @@ export function NewsletterComposerDemo() {
 
   return (
     <div className="uf-composer-demo">
-      <button
-        type="button"
-        className="uf-composer-demo-trigger"
-        aria-expanded={open}
-        aria-controls={contentId}
-        onClick={() => setOpen((current) => !current)}
-      >
-        Try the system
-      </button>
+      <div className="uf-composer-launch">
+        <Image
+          className="uf-composer-launch-sample"
+          src={UF_ASSETS.templateWeekly.tiles[0].src}
+          alt=""
+          width={108}
+          height={120}
+          sizes="88px"
+        />
+        <ComposerIntro />
+        <button
+          type="button"
+          className="uf-composer-demo-trigger reader-control"
+          aria-expanded={open}
+          aria-controls={contentId}
+          onClick={() => setOpen((current) => !current)}
+        >
+          {open ? "Close composer" : "Try the system"}
+          <span aria-hidden="true">{open ? "−" : "+"}</span>
+        </button>
+      </div>
       {open ? (
         <div id={contentId} className="uf-composer-demo-content">
-          <NewsletterComposer />
+          <NewsletterComposer showIntro={false} />
         </div>
       ) : null}
     </div>
@@ -766,14 +800,7 @@ export function TemplateSwitcher() {
       <p className="uf-switcher-descriptor">{active.descriptor}</p>
       {active.note ? <p className="uf-switcher-note">{active.note}</p> : null}
       {isTiledAsset(active.asset) ? (
-        <a
-          href={active.asset.originalSrc}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`Open original ${active.label} capture`}
-        >
-          Open original capture <span aria-hidden="true">↗</span>
-        </a>
+        <OriginalCapture asset={active.asset} label={active.label} alt={active.alt} />
       ) : null}
     </div>
   );

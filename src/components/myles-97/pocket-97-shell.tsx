@@ -159,7 +159,7 @@ export function Pocket97Shell({
               <button
                 ref={backButtonRef}
                 type="button"
-                className="pocket97-back"
+                className="pocket97-back reader-control"
                 onClick={returnHome}
               >
                 <span aria-hidden="true">←</span>

@@ -243,6 +243,7 @@
   left: 0;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 4px;
   min-height: calc(4.4rem + env(safe-area-inset-bottom, 0px));
   padding: 5px 6px env(safe-area-inset-bottom, 0px);
   border-top: 2px solid var(--m97-ink);
@@ -256,6 +257,7 @@
   min-height: 44px;
   place-items: center;
   align-content: center;
+  box-shadow: var(--m97-bevel-raised);
   gap: 3px;
   padding: 4px 2px;
   border: 0;
@@ -268,6 +270,7 @@
 
 .pocket97-dock button:active,
 .pocket97-dock button[aria-expanded="true"] {
+  box-shadow: var(--m97-bevel-recessed);
   background: var(--m97-active);
   color: #fff;
 }

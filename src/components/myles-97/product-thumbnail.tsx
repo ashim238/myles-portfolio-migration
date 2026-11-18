@@ -16,6 +16,11 @@ export function ProductThumbnail({ project, active, reduced }: {
       </filter></defs>
       {project === "fresh-greens" ? <RouteScene /> : project === "understandingfafsa" ? <MailScene shadow={shadow} /> : project === "navi" ? <PlacesScene shadow={shadow} /> : <CatalogScene shadow={shadow} />}
     </svg>
+    {project === "fresh-greens" && (
+      <svg className="fresh-driver-art" viewBox="40 0 310 560" preserveAspectRatio="xMidYMin slice" focusable="false" aria-hidden="true">
+        <image href="/projects/preview-art/driver-location-journey.webp" width="390" height="560" />
+      </svg>
+    )}
   </span>;
 }
 
@@ -33,23 +38,24 @@ function SourceCrop({ src, x, y, width, height, viewBox, sourceWidth, sourceHeig
 }
 
 function RouteScene() {
-  const route = "/projects/preview-art/route-preview.webp";
+  const sheetClip = useId().replace(/:/g, "") + "-route-sheet";
   return <>
     <rect x="0" y="-150" width="640" height="690" fill="white" />
-    <svg x="248" y="-104" width="392" height="308" viewBox="0 805 1290 875" preserveAspectRatio="xMidYMax slice" overflow="hidden">
-      <image href={route} width="1290" height="2796" />
-    </svg>
     <g className="fresh-route-sheet">
+      <image href="/projects/preview-art/weeksville-map.webp" x="248" y="-105" width="392" height="297" />
+      {/* The original controls travel with the sheet, keeping a gap above its edge. */}
+      <clipPath id={sheetClip + "-controls"}>
+        <circle cx="621" cy="142" r="11.7" />
+        <circle cx="621" cy="170.9" r="11.7" />
+      </clipPath>
+      <image className="fresh-map-controls" href="/projects/preview-art/weeksville-map-controls.webp"
+        x="609" y="130" width="24" height="53" clipPath={`url(#${sheetClip}-controls)`} />
       <rect x="248" y="192" width="392" height="400" fill="white" />
-      <svg x="248" y="192" width="392" height="234" viewBox="0 1943 1290 770" overflow="hidden">
-        <image href={route} width="1290" height="2796" />
-      </svg>
+      <clipPath id={sheetClip}>
+        <rect className="fresh-sheet-crop" x="248" y="192" width="392" height="234" />
+      </clipPath>
+      <image href="/projects/preview-art/weeksville-route-sheet.webp" x="248" y="192" width="392" height="234" clipPath={`url(#${sheetClip})`} />
     </g>
-    <svg x="0" y="-150" width="248" height="690" viewBox="40 -141 310 862" overflow="hidden">
-      <rect x="0" y="-180" width="390" height="600" fill="#ffb000" />
-      <rect x="0" y="410" width="390" height="330" fill="#003f04" />
-      <image href="/projects/preview-art/driver-location-journey.webp" width="390" height="560" />
-    </svg>
   </>;
 }
 

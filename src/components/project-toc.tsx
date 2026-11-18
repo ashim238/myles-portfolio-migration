@@ -603,7 +603,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
       <button
         ref={backTopRef}
         type="button"
-        className="reading-top"
+        className="reading-top reader-control"
         onClick={scrollToTop}
         aria-label="Back to top"
         aria-hidden="true"

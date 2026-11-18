@@ -15,7 +15,7 @@ const MIN_ZOOM = 0.75;
 const MAX_ZOOM = 2.5;
 const ZOOM_STEP = 0.25;
 
-type LightboxOptions = { unoptimized?: boolean; overlay?: ReactNode };
+type LightboxOptions = { unoptimized?: boolean; overlay?: ReactNode; initialView?: "read" };
 
 type LightboxState = LightboxOptions & {
   src: string;
@@ -42,7 +42,7 @@ export function useLightbox() {
 
 export function LightboxProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<LightboxState>(null);
-  const [viewMode, setViewMode] = useState<"fit" | "actual">("fit");
+  const [viewMode, setViewMode] = useState<"fit" | "actual" | "read">("fit");
   const [zoom, setZoom] = useState(1);
   const [fitScale, setFitScale] = useState(1);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -62,7 +62,7 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
     // Remember what opened the dialog so focus can return there on close.
     triggerRef.current =
       document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    setViewMode("fit");
+    setViewMode(options?.initialView ?? "fit");
     setZoom(1);
     setFitScale(1);
     setState({ src, alt, width, height, ...options });
@@ -93,10 +93,17 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const image = imageRef.current;
-    if (!image || !state || viewMode !== "fit") return;
+    if (!image || !state || viewMode === "actual") return;
     const measure = () => {
       const width = image.offsetWidth;
-      if (width > 0) setFitScale(width / state.width);
+      if (!width) return;
+      if (viewMode === "read") {
+        setZoom(width / state.width);
+        const viewport = image.closest(".lb-viewport");
+        if (viewport) setFitScale(Math.min(width / state.width, viewport.clientHeight / state.height));
+      } else {
+        setFitScale(width / state.width);
+      }
     };
     measure();
     if (typeof ResizeObserver === "undefined") return;
@@ -172,11 +179,12 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
             ref={frameRef}
             className="lb-frame"
             data-lb-view={viewMode}
+            data-lb-long-capture={state.initialView === "read" || undefined}
             role="dialog"
             aria-modal="true"
             aria-label={state.alt}
           >
-            <button className="lb-close" onClick={close} aria-label="Close">
+            <button className="lb-close reader-control" onClick={close} aria-label="Close">
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                 <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
@@ -200,13 +208,25 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
                   style={
                     viewMode === "actual"
                       ? { width: `${state.width * zoom}px`, height: `${state.height * zoom}px` }
-                      : undefined
+                      : viewMode === "read"
+                        ? { width: `min(92vw, 42rem, ${state.width}px)`, height: "auto" }
+                        : undefined
                   }
                 />
                 {state.overlay}
               </div>
             </div>
             <div className="lb-toolbar" aria-label="Image viewing controls">
+              {state.initialView === "read" && (
+                <button
+                  className="lb-control"
+                  type="button"
+                  onClick={() => setViewMode("read")}
+                  aria-pressed={viewMode === "read"}
+                >
+                  Read
+                </button>
+              )}
               <button
                 className="lb-control"
                 type="button"

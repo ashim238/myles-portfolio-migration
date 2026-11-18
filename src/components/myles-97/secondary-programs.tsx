@@ -72,7 +72,7 @@ function ResumePreview() {
         <Link className="myles97-primary-button" href={siteConfig.resumeUrl}>
           Open full résumé
         </Link>
-        <a href="/myles-ashitey-resume.pdf" download="myles-ashitey-resume.pdf">
+        <a className="reader-control" href="/myles-ashitey-resume.pdf" download="myles-ashitey-resume.pdf">
           Download PDF
         </a>
       </div>

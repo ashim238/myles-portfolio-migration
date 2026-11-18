@@ -138,7 +138,7 @@ export default function ResumePage() {
             visual systems and working React Native builds.
           </p>
           <a
-            className="resume-note"
+            className="resume-note reader-control"
             href="/myles-ashitey-resume.pdf"
             download="myles-ashitey-resume.pdf"
           >

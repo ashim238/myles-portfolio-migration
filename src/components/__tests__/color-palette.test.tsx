@@ -33,6 +33,8 @@ describe("ColorPalette", () => {
     );
     await user.click(screen.getByRole("button", { name: "Copy color #123456" }));
 
+    expect(screen.getByText("✓ Copied")).toBeVisible();
+    expect(screen.getByRole("status")).not.toHaveClass("sr-only");
     expect(writeText).toHaveBeenCalledWith("#123456");
     expect(await screen.findByRole("status")).toHaveTextContent("Copied #123456");
     expect(container.querySelector(".color-palette")).toHaveAttribute(

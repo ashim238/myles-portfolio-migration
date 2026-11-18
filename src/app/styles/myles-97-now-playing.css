@@ -314,21 +314,20 @@
   font: inherit;
   font-size: 11px;
   font-weight: 700;
-  box-shadow: 2px 2px 0 #777;
+  box-shadow: var(--m97-bevel-raised);
   cursor: pointer;
   text-decoration: none;
 }
 
 .now-playing-play-toggle:active:not(:disabled) {
-  translate: 1px 1px;
-  box-shadow: 1px 1px 0 #777;
+  box-shadow: var(--m97-bevel-recessed);
 }
 
 .now-playing-play-toggle:disabled {
   background: #d4d0c8;
   color: #666;
   cursor: wait;
-  box-shadow: none;
+  box-shadow: var(--m97-bevel-raised);
 }
 
 .now-playing-play-icon {
@@ -377,12 +376,13 @@
   color: #171717;
   cursor: pointer;
   text-align: left;
-  box-shadow: 2px 2px 0 #8a8a8a;
+  box-shadow: var(--m97-bevel-raised);
 }
 
+.now-playing-rotation button:active,
 .now-playing-rotation button[aria-pressed="true"] {
   background: var(--m97-signal);
-  box-shadow: inset 0 0 0 2px var(--now-playing-blue);
+  box-shadow: var(--m97-bevel-recessed), inset 0 -4px var(--now-playing-blue);
 }
 
 .now-playing-rotation-cover {

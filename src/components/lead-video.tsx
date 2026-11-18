@@ -122,11 +122,12 @@ export function LeadVideo({
       </video>
       {saveData && !loadVideo ? (
         <button
-          className="case-video-opt-in"
+          className="case-video-opt-in reader-control"
+          aria-label={`Load video. ${alt}`}
           type="button"
           onClick={() => setLoadVideo(true)}
         >
-          Load {alt} video
+          Load video
         </button>
       ) : null}
     </div>

@@ -31,7 +31,7 @@ export function ProjectOpeningFacts({
         ))}
       </dl>
       <a
-        className="project-opening-facts-action"
+        className="project-opening-facts-action reader-control"
         aria-label={`Open proof: ${proof.label}`}
         href={proof.href}
       >

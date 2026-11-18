@@ -38,7 +38,7 @@ export function NaviDemoEmbed() {
         sizes="92vw"
         style={{ width: "100%", height: "auto", display: "block" }}
       />
-      <Link href="/work/navi/demo" className="nv-demo-embed-mobile-cta">
+      <Link href="/work/navi/demo" className="nv-demo-embed-mobile-cta reader-control">
         Open the demo
         <span aria-hidden="true">↗</span>
       </Link>
@@ -88,7 +88,7 @@ export function NaviDemoEmbed() {
       <div className="nv-demo-embed-cta">
         <Link
           href="/work/navi/demo"
-          className="nv-system-cta-link"
+          className="nv-system-cta-link reader-control"
           target="_blank"
           rel="noopener noreferrer"
         >

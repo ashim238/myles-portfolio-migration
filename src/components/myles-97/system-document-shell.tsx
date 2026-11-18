@@ -30,7 +30,7 @@ export function SystemDocumentShell({
           aria-label={`${title} document controls`}
         >
           <div className="myles98-document-titlebar">
-            <Link className="myles98-document-back" href="/#selected-work">
+            <Link className="myles98-document-back reader-control" href="/#selected-work">
               <span aria-hidden="true">←</span>
               <span>Work Stuff</span>
             </Link>

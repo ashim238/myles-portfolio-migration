@@ -103,7 +103,7 @@ export function PulledOverJourney() {
               }
               aria-selected={enhanced ? selected : undefined}
               tabIndex={enhanced && selected ? 0 : -1}
-              className="fg-pulled-tab"
+              className="fg-pulled-tab reader-control"
               key={item.key}
               onClick={() => setActiveIndex(index)}
               onKeyDown={(event) => {
@@ -208,7 +208,7 @@ export function PulledOverJourney() {
                 >
                   {index > 0 ? (
                     <button
-                      className="fg-pulled-control fg-pulled-control--back"
+                      className="fg-pulled-control fg-pulled-control--back reader-control"
                       onClick={() => selectStep(index - 1)}
                       type="button"
                     >
@@ -217,7 +217,7 @@ export function PulledOverJourney() {
                   ) : null}
                   {step.key === "contact" ? (
                     <button
-                      className="fg-pulled-control fg-pulled-control--restart"
+                      className="fg-pulled-control fg-pulled-control--restart reader-control"
                       onClick={restartJourney}
                       type="button"
                     >
@@ -225,7 +225,7 @@ export function PulledOverJourney() {
                     </button>
                   ) : (
                     <button
-                      className="fg-pulled-control fg-pulled-control--continue"
+                      className="fg-pulled-control fg-pulled-control--continue reader-control"
                       disabled={step.key === "question" && answer === null}
                       onClick={() => selectStep(index + 1)}
                       type="button"

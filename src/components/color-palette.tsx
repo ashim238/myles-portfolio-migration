@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 type ColorPaletteProps = {
   colors: string[];
@@ -13,14 +13,19 @@ type CopyState =
 export function ColorPalette({ colors }: ColorPaletteProps) {
   const [copyState, setCopyState] = useState<CopyState>({ status: "idle" });
 
+  const latestRequest = useRef(0);
+
   async function handleCopy(hex: string, index: number) {
+    const request = ++latestRequest.current;
     try {
       if (!navigator.clipboard?.writeText) {
         throw new Error("Clipboard unavailable");
       }
       await navigator.clipboard.writeText(hex);
+      if (request !== latestRequest.current) return;
       setCopyState({ status: "copied", index, value: hex });
     } catch {
+      if (request !== latestRequest.current) return;
       setCopyState({ status: "error", index, value: hex });
     }
   }
@@ -34,6 +39,7 @@ export function ColorPalette({ colors }: ColorPaletteProps) {
 
   return (
     <div className="color-palette" data-copy-state={copyState.status}>
+      <p className="color-palette-hint">Select a color to copy its hex code.</p>
       {colors.map((hex, i) => (
         <button
           key={hex}
@@ -44,12 +50,14 @@ export function ColorPalette({ colors }: ColorPaletteProps) {
           aria-label={`Copy color ${hex}`}
         >
           <span className="color-swatch-circle" />
-          <span className="color-swatch-label">{hex}</span>
+          <span className="color-swatch-label">
+            {copyState.status === "copied" && copyState.index === i ? "✓ Copied" : hex}
+          </span>
         </button>
       ))}
       <p
         className={`color-palette-status${
-          copyState.status === "error"
+          copyState.status !== "idle"
             ? " color-palette-status--visible"
             : " sr-only"
         }`}

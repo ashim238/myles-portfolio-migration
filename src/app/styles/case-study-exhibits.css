@@ -592,3 +592,73 @@
   font-size: 0.8125rem;
   line-height: 1.35;
 }
+
+.reader-mode .uf-composer-launch {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr) auto;
+  gap: clamp(1rem, 3vw, 2rem);
+  align-items: center;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  border: 1px solid var(--m98-paper-rule);
+  border-top: 3px solid #b5491c;
+  background: #fffaf2;
+}
+.reader-mode .uf-composer-launch-sample {
+  width: 100%;
+  height: 6rem;
+  object-fit: cover;
+  object-position: top;
+  border: 1px solid var(--m98-paper-rule);
+}
+.reader-mode .uf-composer-intro-title {
+  margin: 0 0 0.4rem;
+  color: var(--m98-paper-text);
+  font: 600 clamp(1.25rem, 2.1vw, 1.65rem)/1.22 var(--m97-reader-font);
+}
+.reader-mode .uf-composer-demo-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.reader-mode .uf-composer-demo-trigger > span {
+  font: 700 1.125rem/1 var(--m97-ui-font);
+}
+.reader-mode .uf-composer-demo-content .uf-composer {
+  margin: 0;
+  border-top: 0;
+  border-radius: 0;
+}
+@media (max-width: 640px) {
+  .reader-mode .uf-composer-launch {
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    gap: 0.85rem;
+    align-items: start;
+  }
+  .reader-mode .uf-composer-launch-sample { height: 4.25rem; }
+  .reader-mode .uf-composer-demo-trigger {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}
+
+.reader-mode .uf-original-capture {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.reader-mode .uf-before-after-item .uf-original-capture { margin-top: 0.65rem; }
+@media (min-width: 640px) {
+  .reader-mode .uf-before-after-item {
+    display: grid;
+    grid-row: span 4;
+    grid-template-rows: subgrid;
+    row-gap: 0;
+    width: 100%;
+  }
+}

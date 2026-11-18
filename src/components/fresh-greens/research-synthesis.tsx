@@ -62,7 +62,7 @@ export function ResearchSynthesis() {
               }
               aria-selected={enhanced ? selected : undefined}
               tabIndex={enhanced && selected ? 0 : -1}
-              className="fg-synth-tab"
+              className="fg-synth-tab reader-control"
               key={marker.key}
               onClick={() => setActiveKey(marker.key)}
               onKeyDown={(event) => {

@@ -7,7 +7,7 @@ import { NewsletterComposer } from "@/components/understandingfafsa";
 
 const styles = [
   "base", "portfolio-surfaces", "late-polish", "myles-97", "reader-mode",
-  "myles-98-paper-contrast",
+  "myles-98-paper-contrast", "reader-controls", "accessibility-preferences",
 ].map(name => readFileSync(resolve(`src/app/styles/${name}.css`), "utf8")).join("\n");
 let browser: Browser;
 

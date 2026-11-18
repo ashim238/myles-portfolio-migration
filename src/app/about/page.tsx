@@ -19,15 +19,15 @@ export default function AboutPage() {
           </h1>
 
           <div className="about-actions about-page-actions">
-            <Link className="about-action" href="/#selected-work">
+            <Link className="about-action reader-control" href="/#selected-work">
               See the work
               <span aria-hidden="true">→</span>
             </Link>
-            <Link className="about-action" href="/resume">
+            <Link className="about-action reader-control" href="/resume">
               Read the résumé
               <span aria-hidden="true">→</span>
             </Link>
-            <a className="about-action" href={`mailto:${siteConfig.email}`}>
+            <a className="about-action reader-control" href={`mailto:${siteConfig.email}`}>
               Get in touch
               <span aria-hidden="true">↗</span>
             </a>

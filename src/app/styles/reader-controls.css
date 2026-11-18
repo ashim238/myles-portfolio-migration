@@ -1,6 +1,15 @@
 /* Portfolio-owned controls share the desktop's existing material/state tokens.
    Explicit opt-in protects embedded project UI. Loaded before accessibility preferences. */
-:is(.reader-header, .reader-mode.reader-mode.tt-page, .reader-mode.reader-mode.uf-page, .reader-mode.reader-mode) .reader-control {
+:is(
+  .reader-header,
+  .reader-mode.reader-mode:is(.fg-page, .nv-page, .tt-page, .uf-page),
+  .reader-mode,
+  .lb-frame,
+  .myles97-shell,
+  .pocket97-shell,
+  .myles98-document-canvas,
+  .myles97-error-shell
+) .reader-control {
   min-height: 44px;
   border: 0;
   border-radius: 0;
@@ -11,29 +20,49 @@
   text-decoration: none;
   transform: none;
   transition: none;
-}
-:is(.reader-header, .reader-mode.reader-mode.tt-page, .reader-mode.reader-mode.uf-page, .reader-mode.reader-mode) .reader-control:hover {
-  background: var(--m97-bevel-light);
-  color: var(--m97-ink);
-  transform: none;
-}
-:is(.reader-header, .reader-mode.reader-mode.tt-page, .reader-mode.reader-mode.uf-page, .reader-mode.reader-mode) .reader-control:is(:active, [aria-pressed="true"], [aria-expanded="true"], [aria-current="true"]) {
-  background: var(--m97-bevel-light);
-  color: var(--m97-ink);
-  box-shadow: var(--m97-bevel-recessed);
-  transform: none;
-}
-:is(.reader-header, .reader-mode.reader-mode.tt-page, .reader-mode.reader-mode.uf-page, .reader-mode.reader-mode) .reader-control:focus-visible {
-  outline: 2px solid var(--m98-paper-focus, var(--m97-active));
-  outline-offset: 2px;
-  border-radius: 0;
-}
-:is(.reader-header, .reader-mode.reader-mode.tt-page, .reader-mode.reader-mode.uf-page, .reader-mode.reader-mode) .reader-control:disabled {
-  color: #626262;
-  text-shadow: 1px 1px 0 var(--m97-bevel-highlight);
-  background: var(--m97-chrome);
-  box-shadow: var(--m97-bevel-raised);
-  cursor: default;
+
+  &:hover {
+    background: var(--m97-bevel-light);
+    color: var(--m97-ink);
+    transform: none;
+  }
+
+  &:is(:active, [aria-pressed="true"], [aria-expanded="true"], [aria-current="true"]) {
+    background: var(--m97-bevel-light);
+    color: var(--m97-ink);
+    box-shadow: var(--m97-bevel-recessed);
+    transform: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--m98-paper-focus, var(--m97-active));
+    outline-offset: 2px;
+    border-radius: 0;
+  }
+
+  &:disabled {
+    opacity: 1;
+    color: #505050;
+    text-shadow: 1px 1px 0 var(--m97-bevel-highlight);
+    background: var(--m97-chrome);
+    box-shadow: var(--m97-bevel-raised);
+    cursor: default;
+  }
+  @media (forced-colors: active) {
+    &,
+    &:disabled {
+      border: 1px solid ButtonText;
+      background: ButtonFace;
+      color: ButtonText;
+      box-shadow: none;
+      text-shadow: none;
+    }
+    &:disabled { color: GrayText; }
+    &:is([aria-pressed="true"], [aria-current="true"], [aria-selected="true"], [aria-expanded="true"]) {
+      outline: 2px solid Highlight;
+      outline-offset: -4px;
+    }
+  }
 }
 /* Opaque toolbar, stable geometry. Progress indicators remain separate from buttons. */
 .reader-mode.reader-mode .project-toc {
@@ -64,16 +93,133 @@
   box-shadow: var(--m97-bevel-recessed), inset 0 0 0 2px #18636a;
 }
 
-@media (forced-colors: active) {
-  :is(.reader-header, .reader-mode.reader-mode.tt-page, .reader-mode.reader-mode.uf-page, .reader-mode.reader-mode) .reader-control {
-    border: 1px solid ButtonText;
-    background: ButtonFace;
-    color: ButtonText;
-    box-shadow: none;
-    text-shadow: none;
+.reader-mode.reader-mode.nv-page .nv-demo-embed-mobile-cta.reader-control {
+  inset: auto auto 0.75rem 0.75rem;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  backdrop-filter: none;
+}
+
+/* The bevel carries the command state. Tabs and disclosure marks have their
+   own geometry so multi-line reading surfaces keep their hierarchy. */
+.reader-mode.reader-mode.fg-page .fg-pulled-control--continue.reader-control:enabled {
+  border: 1px solid var(--m97-ink);
+}
+.reader-mode.reader-mode.fg-page :is(.fg-pulled-tab, .fg-synth-tab).reader-control {
+  min-height: 4.25rem;
+  border-radius: 3px 3px 0 0;
+}
+.reader-mode.reader-mode.fg-page .reader-control[role="tab"][aria-selected="true"] {
+  background: var(--m97-paper);
+  box-shadow: var(--m97-bevel-raised), inset 0 -4px #375d40;
+  font-weight: 700;
+}
+.reader-mode.reader-mode .reading-top--show { opacity: 1; }
+.reader-mode.reader-mode.uf-page .uf-composer-mini.reader-control {
+  min-width: 44px;
+}
+.reader-mode.reader-mode .project-opening-facts-action-label { color: inherit; }
+.reader-mode.reader-mode .project-evidence-disclosure-mark {
+  position: relative;
+  width: 1.45rem;
+  height: 1.45rem;
+  border: 1px solid var(--m97-bevel-shadow);
+  background: var(--m97-chrome);
+  color: var(--m97-ink);
+  box-shadow: var(--m97-bevel-raised);
+  transform: none;
+  transition: none;
+}
+.project-evidence-disclosure-mark::before,
+.project-evidence-disclosure:not([open]) > summary .project-evidence-disclosure-mark::after {
+  content: "";
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 9px;
+  height: 2px;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+}
+.project-evidence-disclosure:not([open]) > summary .project-evidence-disclosure-mark::after {
+  width: 2px;
+  height: 9px;
+}
+.reader-mode.reader-mode .project-evidence-disclosure[open] .project-evidence-disclosure-mark {
+  box-shadow: var(--m97-bevel-recessed);
+}
+.reader-mode .color-palette .color-swatch-circle {
+  border-radius: 0;
+  border: 1px solid var(--m97-bevel-shadow);
+  box-shadow: var(--m97-bevel-recessed);
+  transform: none;
+  transition: none;
+}
+.reader-mode .color-palette .color-swatch:is(:hover, :focus-visible) .color-swatch-circle {
+  outline: 1px solid var(--m97-ink);
+  outline-offset: 2px;
+}
+.reader-mode .color-palette .color-swatch--copied .color-swatch-label {
+  color: var(--m98-paper-text, var(--m97-ink));
+  font-weight: 700;
+}
+/* Native inputs retain their labels, interaction and system rendering in forced colors. */
+@media (forced-colors: none) {
+  :is(.myles97-display-preview input, .myles97-reminder-checkbox, .fg-pulled-answer-input) {
+    appearance: none;
+    display: inline-grid;
+    place-content: center;
+    flex: none;
+    padding: 0;
+    border: 0;
+    background: white;
+    color: var(--m97-ink);
+    box-shadow: var(--m97-bevel-recessed);
   }
-  :is(.reader-header, .reader-mode.reader-mode.tt-page, .reader-mode.reader-mode.uf-page, .reader-mode.reader-mode) .reader-control:is([aria-pressed="true"], [aria-current="true"]) {
+  :is(.myles97-display-preview input, .fg-pulled-answer-input)[type="radio"] {
+    border-radius: 50%;
+  }
+  :is(.myles97-display-preview input, .fg-pulled-answer-input)[type="radio"]:checked::after {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  :is(.myles97-display-preview input, .myles97-reminder-checkbox)[type="checkbox"]:checked::after {
+    content: "";
+    width: 6px;
+    height: 10px;
+    border: solid currentColor;
+    border-width: 0 2px 2px 0;
+    transform: translateY(-1px) rotate(45deg);
+  }
+}
+.reader-mode.reader-mode.uf-page .uf-lock-palette-swatch {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: var(--m97-bevel-raised);
+  background: var(--m97-chrome);
+  transform: none;
+}
+.reader-mode.reader-mode.uf-page .uf-lock-palette-swatch[aria-pressed="true"] {
+  box-shadow: var(--m97-bevel-recessed);
+}
+.reader-mode.reader-mode.uf-page .uf-lock-palette-swatch > span[aria-hidden="true"] {
+  border-radius: 0;
+  box-shadow: inset 0 0 0 1px #0004;
+}
+@media (forced-colors: active) {
+  .reader-mode.reader-mode.uf-page .uf-lock-palette-swatch[aria-pressed="true"] {
     outline: 2px solid Highlight;
     outline-offset: -4px;
+  }
+  .reader-mode.reader-mode .project-evidence-disclosure-mark::before,
+  .reader-mode.reader-mode .project-evidence-disclosure-mark::after {
+    background: ButtonText;
+  }
+  :is(.uf-lock-palette-swatch > span[aria-hidden="true"], .color-swatch-circle) {
+    forced-color-adjust: none;
   }
 }

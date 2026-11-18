@@ -144,7 +144,7 @@ describe("LeadVideo", () => {
     expect(container.querySelector("source")).toBeNull();
     expect(container.querySelector("video")!.play).not.toHaveBeenCalled();
 
-    act(() => getByRole("button", { name: "Load Motion demo video" }).click());
+    act(() => getByRole("button", { name: "Load video. Motion demo" }).click());
 
     expect(container.querySelector("source")).toHaveAttribute("src", "/motion.mp4");
     expect(container.querySelector("video")!.play).not.toHaveBeenCalled();
