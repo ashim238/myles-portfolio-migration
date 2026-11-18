@@ -45,7 +45,7 @@
   box-shadow: var(--m97-bevel-recessed);
   background: var(--m97-bevel-light);
 }
-.reader-mode.reader-mode .project-toc-link.reader-control :is(.project-toc-stage, .project-toc-num, .project-toc-separator) {
+.reader-mode.reader-mode :is(.project-toc-link, .project-toc-toggle).reader-control :is(.project-toc-stage, .project-toc-num, .project-toc-separator) {
   color: inherit;
 }
 /* Keep the existing wide-screen rail compact rather than turning it into floating buttons. */

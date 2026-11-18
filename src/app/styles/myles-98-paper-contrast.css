@@ -277,6 +277,11 @@
   color: var(--m98-paper-text);
 }
 
+.reader-mode.reader-mode.fg-page .fg-route-proof-controls button:disabled {
+  color: var(--m98-paper-muted);
+  opacity: 1;
+}
+
 /* Navi's system specimens and research board use readable paper surfaces.
    The board owns explicit tokens for its nested disclosures. */
 .reader-mode.reader-mode.nv-page :is(
@@ -330,6 +335,32 @@
   color: var(--nv-accent-text);
 }
 
+/* The map sits on paper in both themes. Keep interactive boundaries visible
+   and distinguish keyboard focus from the orange selection fill. */
+.reader-mode.reader-mode.nv-page .nv-heatmap-silhouette {
+  fill: var(--m98-paper-panel);
+  stroke: var(--m98-paper-text);
+}
+
+.reader-mode.reader-mode.nv-page .nv-heatmap-region {
+  stroke: var(--m98-paper-rule);
+}
+
+.reader-mode.reader-mode.nv-page .nv-heatmap-region[role="button"] {
+  stroke: var(--m98-paper-muted);
+  stroke-width: 0.8;
+}
+
+.reader-mode.reader-mode.nv-page .nv-heatmap-region[role="button"].nv-heatmap-region--active {
+  stroke: var(--nv-accent-text);
+  stroke-width: 1.25;
+}
+
+.reader-mode.reader-mode.nv-page .nv-heatmap-region[role="button"]:focus-visible {
+  stroke: var(--m98-paper-focus);
+  stroke-width: 2;
+}
+
 /* UnderstandingFAFSA keeps the newsletter palette but uses the palette's
    darker ink variants for words and controls on Reader paper. */
 .reader-mode.reader-mode.uf-page {
@@ -365,7 +396,8 @@
   .uf-composer-demo-trigger,
   .uf-composer-btn,
   .uf-composer-shelf-name,
-  .uf-composer-item-name
+  .uf-composer-item-name,
+  .uf-figma-figure figcaption strong
 ) {
   color: var(--m98-paper-text);
 }
@@ -427,6 +459,7 @@
   .uf-segment,
   .uf-switcher-preview--scroll,
   .uf-composer,
+  .uf-composer-preview,
   .uf-composer-canvas,
   .uf-composer-pinned,
   .uf-composer-item,
