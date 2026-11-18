@@ -14,7 +14,7 @@ export function ProductThumbnail({ project, active, reduced }: {
       <defs><filter id={shadow} x="-40%" y="-40%" width="180%" height="200%">
         <feDropShadow dx="0" dy="12" stdDeviation="12" floodColor="#1d251c" floodOpacity=".14" />
       </filter></defs>
-      {project === "fresh-greens" ? <RouteScene shadow={shadow} /> : project === "understandingfafsa" ? <MailScene shadow={shadow} /> : project === "navi" ? <PlacesScene shadow={shadow} /> : <CatalogScene shadow={shadow} />}
+      {project === "fresh-greens" ? <RouteScene /> : project === "understandingfafsa" ? <MailScene shadow={shadow} /> : project === "navi" ? <PlacesScene shadow={shadow} /> : <CatalogScene shadow={shadow} />}
     </svg>
   </span>;
 }
@@ -32,27 +32,24 @@ function SourceCrop({ src, x, y, width, height, viewBox, sourceWidth, sourceHeig
   </g>;
 }
 
-function RouteScene({ shadow }: { shadow: string }) {
-  const src = "/projects/preview-art/route-preview.webp";
+function RouteScene() {
+  const route = "/projects/preview-art/route-preview.webp";
   return <>
-    <rect width="640" height="360" fill="#e7edde" />
-    <circle cx="130" cy="190" r="195" fill="#d4e2c8" />
-    <circle cx="130" cy="190" r="143" fill="none" stroke="#b9cfaa" opacity=".5" />
-    <circle cx="130" cy="190" r="190" fill="none" stroke="#b9cfaa" opacity=".5" />
-    <g className="motion-phone" filter={`url(#${shadow})`}>
-      <rect x="70" y="-16" width="192" height="408" rx="31" fill="#143922" />
-      <SourceCrop src={src} x={78} y={0} width={176} height={382} radius={24} viewBox="0 0 1290 2796" sourceWidth={1290} sourceHeight={2796} />
-      <rect x="135" y="3" width="61" height="15" rx="8" fill="#0c1c10" />
+    <rect x="0" y="-150" width="640" height="690" fill="white" />
+    <svg x="248" y="-104" width="392" height="308" viewBox="0 805 1290 875" preserveAspectRatio="xMidYMax slice" overflow="hidden">
+      <image href={route} width="1290" height="2796" />
+    </svg>
+    <g className="fresh-route-sheet">
+      <rect x="248" y="192" width="392" height="400" fill="white" />
+      <svg x="248" y="192" width="392" height="234" viewBox="0 1943 1290 770" overflow="hidden">
+        <image href={route} width="1290" height="2796" />
+      </svg>
     </g>
-    <g className="motion-focus-panel" filter={`url(#${shadow})`}>
-      <rect x="265" y="99" width="349" height="216" rx="23" fill="white" />
-      <SourceCrop src={src} x={280} y={116} width={319} height={186} radius={16} viewBox="52 1960 1180 720" sourceWidth={1290} sourceHeight={2796} />
-    </g>
-    <g className="motion-detail">
-      <text x="288" y="73" fill="#306639" fontSize="18" letterSpacing="2" fontWeight="700">FRESH GREENS</text>
-      <path d="M236 184H266" stroke="#306639" strokeWidth="1.5" strokeDasharray="3 4" />
-      <circle cx="236" cy="184" r="4" fill="#306639" stroke="white" strokeWidth="2" />
-    </g>
+    <svg x="0" y="-150" width="248" height="690" viewBox="40 -141 310 862" overflow="hidden">
+      <rect x="0" y="-180" width="390" height="600" fill="#ffb000" />
+      <rect x="0" y="410" width="390" height="330" fill="#003f04" />
+      <image href="/projects/preview-art/driver-location-journey.webp" width="390" height="560" />
+    </svg>
   </>;
 }
 

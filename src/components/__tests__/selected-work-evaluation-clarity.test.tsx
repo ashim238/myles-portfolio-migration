@@ -81,12 +81,12 @@ describe("Work Stuff evaluation paths", () => {
     expect(clipRect).toHaveAttribute("x", "25");
     expect(clipRect).toHaveAttribute("width", "578");
   });
-  it("clips Fresh Greens source screens to rounded boundaries without invented taglines", () => {
+  it("pairs the original Fresh Greens driver illustration with the actual route sheet", () => {
     const { container } = render(<SelectedWorkExplorer programs={[programs[0]]} onOpen={vi.fn()} />);
-    expect(container).not.toHaveTextContent("A clearer way forward");
-    expect(container.querySelector('.motion-phone clipPath rect')).toHaveAttribute('rx', '24');
-    expect(container.querySelector('.motion-focus-panel clipPath rect')).toHaveAttribute('rx', '16');
-    expect(container.querySelector('.motion-focus-panel g[clip-path]')).toBeInTheDocument();
+    const scene = container.querySelector('.product-thumbnail-scene');
+    expect(scene?.querySelector('image[href="/projects/preview-art/driver-location-journey.webp"]')).toBeInTheDocument();
+    expect(scene?.querySelector('.fresh-route-sheet image')).toHaveAttribute('href', '/projects/preview-art/route-preview.webp');
+    expect(scene?.querySelector('text')).toBeNull();
   });
 
   it("contains FAFSA source modules within the sheet without an invented overlay", () => {

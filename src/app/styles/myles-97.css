@@ -737,7 +737,32 @@
   font-family: var(--m97-ui-font);
 }
 
-.product-thumbnail[data-project="fresh-greens"] { background: #e7edde; }
+.product-thumbnail[data-project="fresh-greens"] {
+  background: white;
+}
+
+.product-thumbnail[data-project="fresh-greens"] .product-thumbnail-scene {
+  top: 50%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  overflow: visible;
+  transform: translateY(-50%);
+}
+
+.fresh-route-sheet {
+  transform: translateY(-95px);
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .product-thumbnail[data-reduced="false"] .fresh-route-sheet {
+    transition: transform 360ms var(--product-ease);
+  }
+
+  .product-thumbnail[data-active="false"][data-reduced="false"] .fresh-route-sheet {
+    transform: none;
+  }
+}
+
 .product-thumbnail[data-project="navi"] { background: #f0efe9; }
 .product-thumbnail[data-project="tiktok"] { background: #e9e2d9; }
 .product-thumbnail[data-project="understandingfafsa"] { background: #f4eae3; }
@@ -749,9 +774,6 @@
   transform-origin: 320px 180px;
   transition: transform 240ms var(--product-ease), opacity 160ms var(--product-ease);
 }
-.motion-phone { transform: translate(-36px, -8px) scale(.8); }
-.motion-focus-panel { opacity: 1; transform: translate(-8px, 0) scale(.96); }
-.motion-detail { opacity: 1; transform: none; }
 .motion-mail-body { transform: translate(48px, 22px); }
 .motion-navi-browser { transform: translate(0, 8px) scale(.97); }
 .motion-navi-neighbors { transform: none; opacity: .8; }
@@ -766,9 +788,6 @@
 }
 .motion-catalog-type-backing { opacity: 0; }
 
-.product-thumbnail[data-active="true"] .motion-phone { transform: translate(-58px, -8px) rotate(-4deg) scale(.8); }
-.product-thumbnail[data-active="true"] .motion-focus-panel,
-.product-thumbnail[data-active="true"] .motion-detail,
 .product-thumbnail[data-active="true"] .motion-mail-body,
 .product-thumbnail[data-active="true"] .motion-navi-browser,
 .product-thumbnail[data-active="true"] .motion-navi-selected,
@@ -785,8 +804,8 @@
     transition-duration: 320ms, 160ms;
   }
   .product-thumbnail[data-active="true"][data-reduced="false"] :is(.motion-mail-body, .motion-navi-selected, .motion-catalog-left, .motion-catalog-right) { transition-delay: 60ms; }
-  .product-thumbnail[data-active="true"][data-reduced="false"] :is(.motion-focus-panel, .motion-navi-detail, .motion-catalog-type) { transition-delay: 60ms; }
-  .product-thumbnail[data-active="true"][data-reduced="false"] :is(.motion-detail, .motion-catalog-type-backing) { transition-delay: 60ms; }
+  .product-thumbnail[data-active="true"][data-reduced="false"] :is(.motion-navi-detail, .motion-catalog-type) { transition-delay: 60ms; }
+  .product-thumbnail[data-active="true"][data-reduced="false"] .motion-catalog-type-backing { transition-delay: 60ms; }
 }
 
 .product-thumbnail[data-reduced="true"] :is(g[class^="motion-"], .product-thumbnail-cover, .product-thumbnail-scene) { transition: none; }
