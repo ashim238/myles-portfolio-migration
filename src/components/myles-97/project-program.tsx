@@ -1,6 +1,6 @@
 "use client";
 
-import type { MouseEvent } from "react";
+import { useId, type MouseEvent } from "react";
 import { ProductThumbnail } from "@/components/myles-97/product-thumbnail";
 import { prefersReducedMotion } from "@/lib/home-intro";
 import { FRESH_GREENS_ROLE, type ProgramDefinition } from "@/lib/myles-97/programs";
@@ -50,6 +50,7 @@ export function ProjectProgram({
   reduceMotion = false,
   returnTarget = "program",
 }: ProjectProgramProps) {
+  const captionId = useId();
   const visual: ProjectProgramVisual = {
     type: "program",
     programId: program.id,
@@ -110,9 +111,9 @@ export function ProjectProgram({
   return (
     <div className="myles97-project-preview" data-project={program.id}>
       {isFreshGreens ? (
-        <figure className="myles97-preview-figure">
+        <figure className="myles97-preview-figure" aria-labelledby={captionId}>
           {artwork}
-          <figcaption>Project preview</figcaption>
+          <figcaption id={captionId}>Project preview</figcaption>
         </figure>
       ) : artwork}
       <div className="myles97-project-preview-copy">
