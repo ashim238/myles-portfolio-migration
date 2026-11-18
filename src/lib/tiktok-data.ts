@@ -34,6 +34,8 @@ export type TikTokTemplate = {
   fullTemplate: string;
   fullTemplateSource: string;
   sketch: string;
+  sketchWidth: number;
+  sketchHeight: number;
   launchLibraryStatus: "confirmed" | "unknown";
   palette: readonly { hex: string; label: string }[];
   iterationNote: string;
@@ -61,6 +63,8 @@ export const TIKTOK_TEMPLATES = [
     fullTemplate: "/projects/tiktok/system/dopamine.webp",
     fullTemplateSource: "/projects/tiktok/system/dopamine.svg",
     sketch: "/projects/tiktok/lofi-dopamine.png",
+    sketchWidth: 1427,
+    sketchHeight: 865,
     launchLibraryStatus: "unknown",
     palette: AESTHETICS[0].palette,
     iterationNote:
@@ -83,6 +87,8 @@ export const TIKTOK_TEMPLATES = [
     fullTemplate: "/projects/tiktok/system/eboy.webp",
     fullTemplateSource: "/projects/tiktok/system/eboy.svg",
     sketch: "/projects/tiktok/lofi-eboy.png",
+    sketchWidth: 1637,
+    sketchHeight: 865,
     launchLibraryStatus: "unknown",
     palette: AESTHETICS[1].palette,
     iterationNote:
@@ -98,6 +104,8 @@ export const TIKTOK_TEMPLATES = [
     fullTemplate: "/projects/tiktok/system/academia.webp",
     fullTemplateSource: "/projects/tiktok/system/academia.svg",
     sketch: "/projects/tiktok/lofi-light-academia.png",
+    sketchWidth: 4393,
+    sketchHeight: 2741,
     launchLibraryStatus: "confirmed",
     palette: AESTHETICS[2].palette,
     iterationNote:

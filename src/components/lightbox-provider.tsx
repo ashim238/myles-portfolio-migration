@@ -15,12 +15,13 @@ const MIN_ZOOM = 0.75;
 const MAX_ZOOM = 2.5;
 const ZOOM_STEP = 0.25;
 
-type LightboxState = {
+type LightboxOptions = { unoptimized?: boolean; overlay?: ReactNode };
+
+type LightboxState = LightboxOptions & {
   src: string;
   alt: string;
   width: number;
   height: number;
-  unoptimized?: boolean;
 } | null;
 
 type LightboxCtx = {
@@ -29,7 +30,7 @@ type LightboxCtx = {
     alt: string,
     width: number,
     height: number,
-    options?: { unoptimized?: boolean },
+    options?: LightboxOptions,
   ) => void;
 };
 
@@ -43,6 +44,10 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<LightboxState>(null);
   const [viewMode, setViewMode] = useState<"fit" | "actual">("fit");
   const [zoom, setZoom] = useState(1);
+  const [fitScale, setFitScale] = useState(1);
+  const imageRef = useRef<HTMLImageElement>(null);
+  const visibleScale = viewMode === "fit" ? fitScale : zoom;
+  const minimumScale = Math.min(MIN_ZOOM, fitScale);
   const contentRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
@@ -52,14 +57,15 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
     alt: string,
     width: number,
     height: number,
-    options?: { unoptimized?: boolean },
+    options?: LightboxOptions,
   ) => {
     // Remember what opened the dialog so focus can return there on close.
     triggerRef.current =
       document.activeElement instanceof HTMLElement ? document.activeElement : null;
     setViewMode("fit");
     setZoom(1);
-    setState({ src, alt, width, height, unoptimized: options?.unoptimized });
+    setFitScale(1);
+    setState({ src, alt, width, height, ...options });
   }, []);
 
   const close = useCallback(() => setState(null), []);
@@ -74,12 +80,30 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
     setZoom(1);
   }, []);
 
-  const adjustZoom = useCallback((amount: number) => {
+  function adjustZoom(amount: number) {
+    // Step from the visible size. Large originals often fit at less than 25%.
+    const next = Math.min(MAX_ZOOM, Math.max(minimumScale, visibleScale + amount));
+    if (next === fitScale && amount < 0) {
+      setFit();
+      return;
+    }
+    setZoom(next);
     setViewMode("actual");
-    setZoom((current) =>
-      Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, Number((current + amount).toFixed(2)))),
-    );
-  }, []);
+  }
+
+  useEffect(() => {
+    const image = imageRef.current;
+    if (!image || !state || viewMode !== "fit") return;
+    const measure = () => {
+      const width = image.offsetWidth;
+      if (width > 0) setFitScale(width / state.width);
+    };
+    measure();
+    if (typeof ResizeObserver === "undefined") return;
+    const observer = new ResizeObserver(measure);
+    observer.observe(image);
+    return () => observer.disconnect();
+  }, [state, viewMode]);
 
   useEffect(() => {
     if (!state) return;
@@ -163,20 +187,24 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
               role="region"
               aria-label="Image viewing area. Use arrow keys or scroll to inspect the image."
             >
-              <Image
-                className="lb-image"
-                src={state.src}
-                alt={state.alt}
-                width={state.width}
-                height={state.height}
-                unoptimized={state.unoptimized}
-                sizes={viewMode === "fit" ? "92vw" : `${Math.round(zoom * 100)}vw`}
-                style={
-                  viewMode === "actual"
-                    ? { width: `${state.width * zoom}px`, height: `${state.height * zoom}px` }
-                    : undefined
-                }
-              />
+              <div className="lb-artwork">
+                <Image
+                  ref={imageRef}
+                  className="lb-image"
+                  src={state.src}
+                  alt={state.alt}
+                  width={state.width}
+                  height={state.height}
+                  unoptimized={viewMode === "actual" || state.unoptimized}
+                  sizes={viewMode === "fit" ? "92vw" : undefined}
+                  style={
+                    viewMode === "actual"
+                      ? { width: `${state.width * zoom}px`, height: `${state.height * zoom}px` }
+                      : undefined
+                  }
+                />
+                {state.overlay}
+              </div>
             </div>
             <div className="lb-toolbar" aria-label="Image viewing controls">
               <button
@@ -200,19 +228,19 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
                   className="lb-control lb-zoom-button"
                   type="button"
                   onClick={() => adjustZoom(-ZOOM_STEP)}
-                  disabled={zoom <= MIN_ZOOM}
+                  disabled={visibleScale <= minimumScale}
                   aria-label="Zoom out"
                 >
                   −
                 </button>
                 <span className="lb-zoom-readout" aria-live="polite">
-                  {Math.round(zoom * 100)}%
+                  {Math.round(visibleScale * 100)}%
                 </span>
                 <button
                   className="lb-control lb-zoom-button"
                   type="button"
                   onClick={() => adjustZoom(ZOOM_STEP)}
-                  disabled={zoom >= MAX_ZOOM}
+                  disabled={visibleScale >= MAX_ZOOM}
                   aria-label="Zoom in"
                 >
                   +

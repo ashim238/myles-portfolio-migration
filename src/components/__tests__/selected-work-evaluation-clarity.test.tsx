@@ -56,7 +56,7 @@ describe("Work Stuff evaluation paths", () => {
   });
   it("keeps the original TikTok templates and one movable title without invented placeholders", () => {
     const { container } = render(<SelectedWorkExplorer programs={[programs[1]]} onOpen={vi.fn()} />);
-    expect(container.querySelector('image[href="/projects/tiktok/system/academia.webp"]')).toHaveAttribute('mask');
+    expect(container.querySelector('image[href="/projects/preview-art/academia.webp"]')).toHaveAttribute('mask');
     expect(container.querySelectorAll('image[href="/projects/tiktok/system/academia-text.svg"]')).toHaveLength(1);
     expect(container.querySelector('image[href="/projects/tiktok/cover-phone-mockup.jpg"]')).toBeNull();
     expect(container).not.toHaveTextContent('CATALOG IMAGE');
@@ -92,7 +92,7 @@ describe("Work Stuff evaluation paths", () => {
   it("contains FAFSA source modules within the sheet without an invented overlay", () => {
     const program = { ...programs[1], id: "understandingfafsa" as const };
     const { container } = render(<SelectedWorkExplorer programs={[program]} onOpen={vi.fn()} />);
-    expect(container.querySelector('.motion-mail-body')?.parentElement).toHaveAttribute('clip-path');
+    expect(container.querySelector('.motion-mail-body image')?.parentElement).toHaveAttribute('clip-path');
     expect(container.querySelector('.motion-mail-links')).toBeNull();
     expect(container.querySelector('.motion-mail-label')).toBeNull();
     expect(container.querySelector('.product-thumbnail-scene')).toHaveAttribute('preserveAspectRatio', 'xMidYMax meet');
@@ -161,10 +161,10 @@ describe("Work Stuff evaluation paths", () => {
   });
 
   it.each([
-    ["fresh-greens", "/projects/fresh-greens/v2/route-preview.png"],
-    ["understandingfafsa", "/projects/understandingfafsa/modular-header.png"],
-    ["navi", "/projects/navi-demo/prospect-tunnel.jpg"],
-    ["tiktok", "/projects/tiktok/system/academia.webp"],
+    ["fresh-greens", "/projects/preview-art/route-preview.webp"],
+    ["understandingfafsa", "/projects/preview-art/modular-header.webp"],
+    ["navi", "/projects/preview-art/prospect-tunnel.webp"],
+    ["tiktok", "/projects/preview-art/academia.webp"],
   ] as const)("grounds %s in original project artwork", (id, source) => {
     const program = { ...programs[1], id, title: id, href: `/work/${id}` as const };
     const { container } = render(<SelectedWorkExplorer programs={[program]} onOpen={vi.fn()} />);

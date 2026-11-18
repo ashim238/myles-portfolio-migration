@@ -33,7 +33,7 @@ function SourceCrop({ src, x, y, width, height, viewBox, sourceWidth, sourceHeig
 }
 
 function RouteScene({ shadow }: { shadow: string }) {
-  const src = "/projects/fresh-greens/v2/route-preview.png";
+  const src = "/projects/preview-art/route-preview.webp";
   return <>
     <rect width="640" height="360" fill="#e7edde" />
     <circle cx="130" cy="190" r="195" fill="#d4e2c8" />
@@ -57,20 +57,28 @@ function RouteScene({ shadow }: { shadow: string }) {
 }
 
 function MailScene({ shadow }: { shadow: string }) {
-  const sheetClip = shadow + "-mail-sheet";
+  const clip = shadow + "-students";
   return <>
-    <defs><clipPath id={sheetClip}><rect x="116" y="-9" width="364" height="460" rx="7" /></clipPath></defs>
+    <defs>
+      <clipPath id={clip}><rect x="150" y="149" width="334" height="190" rx="3" /></clipPath>
+    </defs>
     <rect width="640" height="360" fill="#f4eae3" />
-    <path d="M0 291Q184 208 347 291T640 280V360H0" fill="#ebd7c9" />
-    <g className="motion-mail-sheet" filter={`url(#${shadow})`}>
-      <rect x="116" y="-9" width="364" height="460" rx="7" fill="#fff" />
-      <g clipPath={`url(#${sheetClip})`}>
-      <g className="motion-mail-header"><image href="/projects/understandingfafsa/modular-header.png" x="116" y="10" width="364" height="134" /></g>
-      <g className="motion-mail-body">
-        <image href="/projects/understandingfafsa/modular-students.png" x="130" y="145" width="336" height="535" />
-      </g>
+    <path d="M0 296Q150 250 325 298T640 292V360H0" fill="#ebd7c9" />
+    <path d="M140 24H122V335H140 M494 24H512V335H494" fill="none" stroke="#ccb9ac" />
+    <g filter={`url(#${shadow})`}>
+      <rect x="150" y="22" width="334" height="123" rx="3" fill="white" />
+      <image href="/projects/preview-art/modular-header.webp" x="150" y="22" width="334" height="123" />
+    </g>
+    <path d="M75 85H139" stroke="#164f73" strokeDasharray="3 3" />
+    <text x="28" y="77" fill="#164f73" fontSize="17" fontWeight="700">Locked</text>
+    <g className="motion-mail-body">
+      <rect x="150" y="149" width="334" height="190" rx="3" fill="white" stroke="#f26938" filter={`url(#${shadow})`} />
+      <g clipPath={`url(#${clip})`}>
+        <image href="/projects/preview-art/modular-students.webp" x="150" y="149" width="334" height="532" />
       </g>
     </g>
+    <path d="M506 242H568" stroke="#a8461f" strokeDasharray="3 3" />
+    <text x="520" y="230" fill="#a8461f" fontSize="15" fontWeight="700">Swappable</text>
   </>;
 }
 
@@ -94,13 +102,13 @@ function PlacesScene({ shadow }: { shadow: string }) {
       </g>
       <text x="25" y="117" fill="#272329" fontSize="21" fontWeight="700">Handpicked by us →</text>
       <g className="motion-navi-neighbors" clipPath={`url(#${contentClip})`}>
-        <image href="/projects/navi-demo/prospect-trees.jpg" x="-115" y="140" width="168" height="151" preserveAspectRatio="xMidYMid slice" />
-        <image href="/projects/navi-demo/prospect-pond.jpg" x="435" y="140" width="168" height="151" preserveAspectRatio="xMidYMid slice" />
+        <image href="/projects/preview-art/prospect-trees.webp" x="-115" y="140" width="168" height="151" preserveAspectRatio="xMidYMid slice" />
+        <image href="/projects/preview-art/prospect-pond.webp" x="435" y="140" width="168" height="151" preserveAspectRatio="xMidYMid slice" />
         <text x="435" y="314" fill="#272329" fontSize="12" fontWeight="650">Explore the neighborhood</text>
       </g>
       <g className="motion-navi-selected">
         <rect x="69" y="137" width="345" height="214" rx="11" fill="#fff" stroke="#e7e3db" />
-        <SourceCrop src="/projects/navi-demo/prospect-tunnel.jpg" x={73} y={141} width={337} height={146} radius={7} viewBox="0 0 1400 932" sourceWidth={1400} sourceHeight={932} />
+        <SourceCrop src="/projects/preview-art/prospect-tunnel.webp" x={73} y={141} width={337} height={146} radius={7} viewBox="0 0 1400 932" sourceWidth={1400} sourceHeight={932} />
         <rect x="86" y="152" width="88" height="23" rx="4" fill="#fff" />
         <text x="97" y="167" fill="#58515b" fontSize="10">Locally owned</text>
         <circle cx="387" cy="165" r="13" fill="#fff" /><path d="m381 163q0-6 6-2 6-4 6 2 0 4-6 8-6-4-6-8" fill="none" stroke="#867b87" strokeWidth="1.5" />
@@ -129,14 +137,14 @@ function CatalogScene({ shadow }: { shadow: string }) {
     </defs>
     <rect width="640" height="360" fill="#e9e2d9" />
     <g className="motion-catalog-left" filter={`url(#${shadow})`}>
-      <image href="/projects/tiktok/system/eboy.webp" x="58" y="-5" width="173" height="308" />
+      <image href="/projects/preview-art/eboy.webp" x="58" y="-5" width="173" height="308" />
     </g>
     <g className="motion-catalog-right" filter={`url(#${shadow})`}>
-      <image href="/projects/tiktok/system/dopamine.webp" x="413" y="53" width="173" height="308" />
+      <image href="/projects/preview-art/dopamine.webp" x="413" y="53" width="173" height="308" />
     </g>
     <g className="motion-catalog-main" filter={`url(#${shadow})`}>
       <rect x="210" y="-38" width="226" height="420" fill="#ffcdb2" />
-      <image href="/projects/tiktok/system/academia.webp" x="210" y="-24" width="226" height="402" mask={`url(#${titleMask})`} />
+      <image href="/projects/preview-art/academia.webp" x="210" y="-24" width="226" height="402" mask={`url(#${titleMask})`} />
     <g className="motion-catalog-type" filter={`url(#${shadow})`}>
       <g className="motion-catalog-type-backing"><rect x="274" y="230" width="334" height="114" fill="#fffaf3" /></g>
       <SourceCrop src="/projects/tiktok/system/academia-text.svg" x={292} y={240} width={298} height={96} viewBox="90 0 297 96" sourceWidth={387.8} sourceHeight={268.32} />

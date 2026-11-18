@@ -152,6 +152,9 @@ describe("LightboxProvider", () => {
 
     await user.click(screen.getByRole("button", { name: "Actual size" }));
     expect(frame).toHaveAttribute("data-lb-view", "actual");
+    const original = within(dialog).getByRole("img", { name: "UnderstandingFAFSA newsletter" });
+    expect(original).toHaveAttribute("src", "/projects/understandingfafsa/cover.png");
+    expect(original).not.toHaveAttribute("srcset");
     expect(screen.getByText("100%")).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Zoom in" }));

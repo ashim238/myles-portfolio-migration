@@ -215,8 +215,8 @@ export default async function TikTokPage() {
                         <ExpandableImage
                           src={template.sketch}
                           alt={`Original process sketch for ${template.name}`}
-                          width={1600}
-                          height={900}
+                          width={template.sketchWidth}
+                          height={template.sketchHeight}
                           sizes="(max-width: 768px) 100vw, 640px"
                           style={{
                             width: "100%",
@@ -272,7 +272,7 @@ export default async function TikTokPage() {
                     alt="Light Academia process sketch"
                     width={4393}
                     height={2741}
-                    sizes="(max-width: 768px) 84vw, 280px"
+                    sizes="(max-width: 700px) 84vw, (max-width: 1200px) 48vw, 608px"
                     style={{ width: "100%", height: "auto", display: "block" }}
                   />
                   <figcaption>
@@ -287,11 +287,12 @@ export default async function TikTokPage() {
                 <figure>
                   <ExpandableImage
                     src="/projects/tiktok/system/academia-text.svg"
+                    previewSrc="/projects/tiktok/system/academia-text-detail.svg"
                     alt="Light Academia editorial title asset"
                     width={388}
                     height={268}
-                    sizes="(max-width: 768px) 84vw, 280px"
-                    style={{ width: "100%", height: "auto", display: "block" }}
+                    sizes="140px"
+                    style={{ height: "auto", display: "block" }}
                   />
                   <figcaption>
                     I scaled down the type, moved the copy, kept the fixed

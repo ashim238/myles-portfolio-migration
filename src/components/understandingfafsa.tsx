@@ -231,7 +231,7 @@ export function ModularBlockGallery() {
             alt={block.alt}
             width={block.asset.width}
             height={block.asset.height}
-            sizes="(max-width: 768px) 92vw, 540px"
+            sizes="(max-width: 700px) 88vw, (max-width: 1200px) 56vw, 670px"
             style={{ width: "100%", height: "auto", display: "block", borderRadius: "0.35rem" }}
           />
         </div>
@@ -760,7 +760,7 @@ export function TemplateSwitcher() {
         <CaptureImage
           asset={active.asset}
           alt={active.alt}
-          sizes="(max-width: 768px) 92vw, 540px"
+          sizes="(max-width: 700px) 88vw, (max-width: 1200px) 56vw, 670px"
         />
       </div>
       <p className="uf-switcher-descriptor">{active.descriptor}</p>
@@ -815,6 +815,61 @@ export function LockedSwappableView() {
   const accentFill = `${accent}1a`; // ~10% alpha
   const rectTransition = reducedMotion ? undefined : "fill 260ms ease, stroke 260ms ease";
 
+  const imageDescription = focus === "both"
+    ? "Students block with the locked structural frame and swappable content regions marked together."
+    : focus === "locked"
+      ? "Students block with the locked structural frame highlighted."
+      : "Students block with the swappable content regions highlighted.";
+  const overlay = (
+    <span className="uf-annotations" aria-hidden="true">
+      <svg
+        className="uf-lock-overlay"
+        viewBox="0 0 600 955"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <g style={{ opacity: lockOpacity, transition: layerTransition }}>
+          <rect
+            x={LOCK_SWAP_FRAME.x}
+            y={LOCK_SWAP_FRAME.y}
+            width={LOCK_SWAP_FRAME.w}
+            height={LOCK_SWAP_FRAME.h}
+            rx={10}
+            fill="none"
+            stroke="#164f73"
+            strokeWidth={3}
+            strokeDasharray="10 7"
+          />
+        </g>
+        <g style={{ opacity: swapOpacity, transition: layerTransition }}>
+          {LOCK_SWAP_SWAPPABLE.map((r, i) => (
+            <rect
+              key={i}
+              x={r.x}
+              y={r.y}
+              width={r.w}
+              height={r.h}
+              rx={8}
+              fill={accentFill}
+              stroke={accent}
+              strokeWidth={3}
+              style={{ transition: rectTransition }}
+            />
+          ))}
+        </g>
+      </svg>
+      <span className="uf-annotation-tag uf-annotation-tag--locked" style={{ opacity: lockOpacity }}>
+        Locked
+      </span>
+      <span
+        className="uf-annotation-tag uf-annotation-tag--swappable"
+        style={{ opacity: swapOpacity, backgroundColor: accent, color: accent === "#164f73" ? "white" : "#141414" }}
+      >
+        Swappable
+      </span>
+    </span>
+  );
+
   return (
     <div className="uf-lock-toggle" aria-label="Locked structure and swappable content, shown together">
       <div className="uf-segment-row" role="group" aria-label="Annotation focus">
@@ -839,69 +894,33 @@ export function LockedSwappableView() {
             : "Showing the locked structural frame only."}
       </span>
 
+      <ul className="uf-lock-legend" role="list">
+        <li>
+          <span className="uf-lock-key uf-lock-key--swap" aria-hidden="true" />
+          <span>
+            <strong>Swappable</strong>: editors change each send (headlines, body copy, emoji icons,
+            article links, and middle-module order).
+          </span>
+        </li>
+        <li>
+          <span className="uf-lock-key uf-lock-key--lock" aria-hidden="true" />
+          <span>
+            <strong>Locked</strong>: structure holds every send (wave dividers, padding rails,
+            section rhythm, footer skeleton).
+          </span>
+        </li>
+      </ul>
+
       <div className="uf-lock-stage">
         <ExpandableImage
           src={base.src}
-          alt="Students block with the locked structural frame and swappable content regions marked together."
+          alt={imageDescription}
+          overlay={overlay}
           width={base.width}
           height={base.height}
-          sizes="(max-width: 768px) 92vw, 540px"
+          sizes="(max-width: 700px) 88vw, (max-width: 1200px) 56vw, 670px"
           style={{ width: "100%", height: "auto", display: "block" }}
         />
-        <svg
-          className="uf-lock-overlay"
-          viewBox="0 0 600 955"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          <g style={{ opacity: lockOpacity, transition: layerTransition }}>
-            <rect
-              x={LOCK_SWAP_FRAME.x}
-              y={LOCK_SWAP_FRAME.y}
-              width={LOCK_SWAP_FRAME.w}
-              height={LOCK_SWAP_FRAME.h}
-              rx={10}
-              fill="none"
-              stroke="#164f73"
-              strokeWidth={3}
-              strokeDasharray="10 7"
-            />
-            <g transform="translate(14 14)">
-              <rect width={84} height={26} rx={4} fill="#164f73" />
-              <text x={42} y={18} textAnchor="middle" fill="#fff" fontSize={15} fontWeight={600}>
-                Locked
-              </text>
-            </g>
-          </g>
-          <g style={{ opacity: swapOpacity, transition: layerTransition }}>
-            {LOCK_SWAP_SWAPPABLE.map((r, i) => (
-              <rect
-                key={i}
-                x={r.x}
-                y={r.y}
-                width={r.w}
-                height={r.h}
-                rx={8}
-                fill={accentFill}
-                stroke={accent}
-                strokeWidth={3}
-                style={{ transition: rectTransition }}
-              />
-            ))}
-            <g transform="translate(44 392)">
-              <rect
-                width={132}
-                height={26}
-                rx={4}
-                fill={accent}
-                style={{ transition: rectTransition }}
-              />
-              <text x={66} y={18} textAnchor="middle" fill="#fff" fontSize={15} fontWeight={600}>
-                Swappable
-              </text>
-            </g>
-          </g>
-        </svg>
       </div>
 
       <div
@@ -928,23 +947,6 @@ export function LockedSwappableView() {
           ))}
         </ul>
       </div>
-
-      <ul className="uf-lock-legend" role="list">
-        <li>
-          <span className="uf-lock-key uf-lock-key--swap" aria-hidden="true" />
-          <span>
-            <strong>Swappable</strong>: editors change each send (headlines, body copy, emoji icons,
-            article links, and middle-module order).
-          </span>
-        </li>
-        <li>
-          <span className="uf-lock-key uf-lock-key--lock" aria-hidden="true" />
-          <span>
-            <strong>Locked</strong>: structure holds every send (wave dividers, padding rails,
-            section rhythm, footer skeleton).
-          </span>
-        </li>
-      </ul>
     </div>
   );
 }
@@ -956,10 +958,14 @@ export function FigmaMailchimpPair() {
   return (
     <div className="uf-figma-pair">
       <figure className="uf-figma-figure">
-        <div className="uf-figma-figure-heading" aria-hidden="true">
-          <span>01</span>
-          <strong>Design source</strong>
-        </div>
+        <figcaption>
+          <div className="uf-figma-figure-heading" aria-hidden="true">
+            <span>01</span>
+            <strong>Design source</strong>
+          </div>
+          <strong>Structured in Figma</strong>
+          <span>Layout, spacing, and type hierarchy before the build.</span>
+        </figcaption>
         <div className="uf-figma-image-frame">
           <ExpandableImage
             src={figma.src}
@@ -970,16 +976,16 @@ export function FigmaMailchimpPair() {
             style={{ width: "100%", height: "auto", display: "block" }}
           />
         </div>
-        <figcaption>
-          <strong>Structured in Figma</strong>
-          <span>Layout, spacing, and type hierarchy before the build.</span>
-        </figcaption>
       </figure>
       <figure className="uf-figma-figure">
-        <div className="uf-figma-figure-heading" aria-hidden="true">
-          <span>02</span>
-          <strong>Shipped module</strong>
-        </div>
+        <figcaption>
+          <div className="uf-figma-figure-heading" aria-hidden="true">
+            <span>02</span>
+            <strong>Shipped module</strong>
+          </div>
+          <strong>Translated into Mailchimp</strong>
+          <span>The same system, rebuilt as an editable production module.</span>
+        </figcaption>
         <div className="uf-figma-image-frame">
           <ExpandableImage
             src={mailchimp.src}
@@ -990,10 +996,6 @@ export function FigmaMailchimpPair() {
             style={{ width: "100%", height: "auto", display: "block" }}
           />
         </div>
-        <figcaption>
-          <strong>Translated into Mailchimp</strong>
-          <span>The same system, rebuilt as an editable production module.</span>
-        </figcaption>
       </figure>
     </div>
   );

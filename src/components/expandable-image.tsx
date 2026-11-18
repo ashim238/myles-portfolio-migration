@@ -12,6 +12,9 @@ type Props = {
   className?: string;
   sizes?: string;
   priority?: boolean;
+  overlay?: React.ReactNode;
+  /** Optional detail crop for the inline image. The viewer opens the full source. */
+  previewSrc?: string;
   /** Opt out of Next's image optimizer (e.g. animated GIFs). */
   unoptimized?: boolean;
 };
@@ -25,6 +28,8 @@ export function ExpandableImage({
   className,
   sizes,
   priority,
+  overlay,
+  previewSrc,
   unoptimized,
 }: Props) {
   const { openLightbox } = useLightbox();
@@ -33,11 +38,11 @@ export function ExpandableImage({
     <button
       type="button"
       className="expandable-trigger"
-      onClick={() => openLightbox(src, alt, width, height, { unoptimized })}
+      onClick={() => openLightbox(src, alt, width, height, { unoptimized, overlay })}
       aria-label={`Expand image: ${alt}`}
     >
       <Image
-        src={src}
+        src={previewSrc ?? src}
         alt={alt}
         width={width}
         height={height}
@@ -49,6 +54,7 @@ export function ExpandableImage({
         priority={priority}
         unoptimized={unoptimized}
       />
+      {overlay}
     </button>
   );
 }

@@ -6661,3 +6661,71 @@
     transition: none !important;
   }
 }
+
+/* The image and annotations share one intrinsic-size scroll surface. */
+.lb-artwork {
+  position: relative;
+  flex: none;
+}
+.lb-frame[data-lb-view="fit"] :is(.lb-viewport, .lb-image) {
+  max-height: min(92vh, calc(100dvh - 10rem));
+}
+
+/* Raised actions, recessed selection and a separate keyboard focus indicator. */
+.lb-toolbar {
+  color-scheme: light;
+  border: 1px solid;
+  border-color: #fbfaf4 #373932 #373932 #fbfaf4;
+  border-radius: 2px;
+  padding: 5px;
+  gap: 4px;
+  color: #191b18;
+  background: #d5d3cb;
+  box-shadow: 0 2px 4px #0006;
+}
+.lb-toolbar .lb-control,
+.reader-mode.uf-page .uf-lock-toggle .uf-segment {
+  min-height: 44px;
+  padding-inline: 10px;
+  border: 1px solid;
+  border-color: #faf9f3 #57594f #57594f #faf9f3;
+  border-radius: 0;
+  background: #d5d3cb;
+  color: #191b18;
+  box-shadow: inset -1px -1px #aaa99f;
+}
+.lb-toolbar .lb-control:is([aria-pressed="true"], :active),
+.reader-mode.uf-page .uf-lock-toggle .uf-segment:is([aria-pressed="true"], :active) {
+  border-color: #56584f #fcfbf6 #fcfbf6 #56584f;
+  background: #c4c3b9;
+  box-shadow: inset 1px 1px #919386;
+  font-weight: 750;
+}
+.lb-toolbar .lb-control:focus-visible,
+.reader-mode.uf-page .uf-lock-toggle .uf-segment:focus-visible {
+  outline: 2px dotted #171a13;
+  outline-offset: -6px;
+}
+.lb-toolbar .lb-control:disabled {
+  color: #595b52;
+  background: #cecec4;
+  box-shadow: none;
+  opacity: 1;
+}
+.lb-toolbar .lb-zoom-button { min-width: 44px; }
+.lb-toolbar .lb-zoom-group { gap: 4px; border-left: 1px solid #9b9c92; padding-left: 7px; margin-left: 2px; }
+.lb-toolbar .lb-zoom-readout {
+  min-width: 46px;
+  padding: 5px 3px;
+  border: 1px solid;
+  border-color: #808176 #faf9f4 #faf9f4 #808176;
+  color: #20231d;
+  background: #eae9e2;
+  font-variant-numeric: tabular-nums;
+}
+@media (forced-colors: active) {
+  .lb-toolbar .lb-control[aria-pressed="true"],
+  .reader-mode.uf-page .uf-lock-toggle .uf-segment[aria-pressed="true"] {
+    border: 2px solid Highlight;
+  }
+}
