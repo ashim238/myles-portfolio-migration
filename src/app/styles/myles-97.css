@@ -744,53 +744,23 @@
 }
 
 .product-thumbnail[data-project="fresh-greens"] {
-  background: white;
-  container-type: size;
-  --fresh-card-scene-width: min(100cqw, calc(100cqh * 640 / 360));
+  background: #f1eee7;
 }
 
-.product-thumbnail[data-project="fresh-greens"]:not(.fresh-expanded-art) .product-thumbnail-scene {
-  top: 50%;
-  left: auto;
-  right: 0;
-  width: var(--fresh-card-scene-width);
-  height: auto;
-  aspect-ratio: 16 / 9;
-  overflow: visible;
-  transform: translateY(-50%);
+.fresh-location-pulse {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
-.fresh-driver-art {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: calc(100% - var(--fresh-card-scene-width) * 392 / 640);
-  height: 100%;
-  overflow: hidden;
+@keyframes fresh-location-pulse {
+  from { opacity: 0.85; transform: scale(1); }
+  to { opacity: 0; transform: scale(2.3); }
 }
 
-.fresh-expanded-art .fresh-driver-art {
-  width: 35%;
-}
-
-.fresh-route-sheet {
-  transform: translateY(-57px);
-}
-
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  /* Crop the source above Go at rest, including on tall tablet cards. */
-  .product-thumbnail[data-active="false"][data-reduced="false"] .fresh-sheet-crop {
-    height: 173px;
-  }
-  .product-thumbnail[data-reduced="false"] .fresh-sheet-crop {
-    transition: height 360ms var(--product-ease);
-  }
-  .product-thumbnail[data-reduced="false"] .fresh-route-sheet {
-    transition: transform 360ms var(--product-ease);
-  }
-
-  .product-thumbnail[data-active="false"][data-reduced="false"] .fresh-route-sheet {
-    transform: none;
+@media (prefers-reduced-motion: no-preference) {
+  .product-thumbnail[data-active="true"][data-reduced="false"] .fresh-location-pulse {
+    animation: fresh-location-pulse 1.5s ease-out infinite;
   }
 }
 
@@ -942,6 +912,26 @@
   min-width: 0;
 }
 
+.myles97-preview-figure {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  margin: 0;
+}
+
+.myles97-preview-figure figcaption,
+.myles97-preview-heading > span {
+  color: var(--m97-ink);
+  font: 400 13px/1.4 var(--m97-ui-font);
+}
+
+.myles97-preview-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+}
+
 .myles97-project-preview-copy h2,
 .myles97-project-preview-copy p {
   margin: 0;
@@ -1047,7 +1037,7 @@
   }
 }
 
-.pocket97-app:has(.fresh-expanded-art) {
+.pocket97-app:has(.myles97-project-preview[data-project="fresh-greens"]) {
   min-height: 0;
 }
 

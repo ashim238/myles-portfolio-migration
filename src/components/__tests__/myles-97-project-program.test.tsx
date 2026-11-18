@@ -57,8 +57,17 @@ describe("ProjectProgram", () => {
     const { getByRole } = render(<ProjectProgram program={program} />);
     const artwork = getByRole("img", { name: /Weeksville Heritage Center/ });
     const route = artwork.querySelector(".product-thumbnail-scene");
-    expect(route?.querySelectorAll("image")).toHaveLength(1);
-    expect(route?.querySelector("image")).toHaveAttribute("href", "/projects/preview-art/weeksville-route-preview.webp");
+    expect(route?.querySelector(".fresh-location-pulse")).toBeNull();
+    expect(route?.querySelector(".fresh-preview-route")).toHaveAttribute("href", "/projects/preview-art/weeksville-route-preview.webp");
+  });
+
+  it("pairs the Fresh Greens title with its role and captions the artwork", () => {
+    render(<ProjectProgram program={program} />);
+    const title = screen.getByRole("heading", { name: "Fresh Greens" });
+    expect(title.parentElement).toContainElement(screen.getByText("Solo design + build"));
+    const figure = screen.getByRole("figure", { name: "Project preview" });
+    expect(figure).toContainElement(screen.getByRole("img", { name: /Weeksville/ }));
+    expect(figure.lastElementChild?.tagName).toBe("FIGCAPTION");
   });
 
   it("dispatches a structured program transition for an unmodified click", () => {

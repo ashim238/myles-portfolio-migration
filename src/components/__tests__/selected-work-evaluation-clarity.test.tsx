@@ -84,8 +84,8 @@ describe("Work Stuff evaluation paths", () => {
   it("pairs the original Fresh Greens driver illustration with the actual route sheet", () => {
     const { container } = render(<SelectedWorkExplorer programs={[programs[0]]} onOpen={vi.fn()} />);
     const scene = container.querySelector('.product-thumbnail-scene');
-    expect(container.querySelector('.fresh-driver-art image[href="/projects/preview-art/driver-location-journey.webp"]')).toBeInTheDocument();
-    expect(scene?.querySelector('.fresh-route-sheet image[clip-path]:last-child')).toHaveAttribute('href', '/projects/preview-art/weeksville-route-sheet.webp');
+    expect(container.querySelector('image.fresh-driver-art[href="/projects/preview-art/driver-location-journey.webp"]')).toBeInTheDocument();
+    expect(scene?.querySelector('image.fresh-preview-route')).toHaveAttribute('href', '/projects/preview-art/weeksville-route-preview.webp');
     expect(scene?.querySelector('text')).toBeNull();
   });
 
@@ -161,7 +161,7 @@ describe("Work Stuff evaluation paths", () => {
   });
 
   it.each([
-    ["fresh-greens", "/projects/preview-art/weeksville-route-sheet.webp"],
+    ["fresh-greens", "/projects/preview-art/weeksville-route-preview.webp"],
     ["understandingfafsa", "/projects/preview-art/modular-header.webp"],
     ["navi", "/projects/preview-art/prospect-tunnel.webp"],
     ["tiktok", "/projects/preview-art/academia.webp"],
@@ -170,7 +170,7 @@ describe("Work Stuff evaluation paths", () => {
     const { container } = render(<SelectedWorkExplorer programs={[program]} onOpen={vi.fn()} />);
     expect(container.querySelector(`image[href="${source}"]`)).toBeInTheDocument();
     const scene = container.querySelector(".product-thumbnail-scene");
-    expect(scene).toHaveAttribute("viewBox", "0 0 640 360");
+    expect(scene).toHaveAttribute("viewBox", id === "fresh-greens" ? "0 0 640 548" : "0 0 640 360");
     expect(scene).toHaveAttribute("aria-hidden", "true");
     expect(container.querySelector("video")).toBeNull();
   });

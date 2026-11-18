@@ -9,30 +9,33 @@ export function ProductThumbnail({ project, active, reduced, expanded = false }:
 }) {
   const id = useId().replace(/:/g, "");
   const shadow = id + "-shadow";
-  if (project === "fresh-greens" && expanded) {
-    return <span className="product-thumbnail fresh-expanded-art" data-project={project} data-active={active} data-reduced={reduced}
-      role="img" aria-label="Fresh Greens driver illustration beside the route to Weeksville Heritage Center. The preview shows 30 minutes and an all-clear status.">
-      <svg className="product-thumbnail-scene" viewBox="0 0 640 548" preserveAspectRatio="xMidYMid meet" focusable="false" aria-hidden="true">
-        <image className="fresh-preview-route" x="224" width="416" height="548" href="/projects/preview-art/weeksville-route-preview.webp" />
-      </svg>
-      <FreshDriverArt />
-    </span>;
+  if (project === "fresh-greens") {
+    return (
+      <span
+        className="product-thumbnail"
+        data-project={project}
+        data-active={active}
+        data-reduced={reduced}
+        role={expanded ? "img" : undefined}
+        aria-hidden={expanded ? undefined : true}
+        aria-label={expanded ? "Fresh Greens driver illustration beside the route to Weeksville Heritage Center. The preview shows 30 minutes and an all-clear status." : undefined}
+      >
+        <svg className="product-thumbnail-scene" viewBox="0 0 640 548" preserveAspectRatio="xMidYMid meet" focusable="false" aria-hidden="true">
+          <image className="fresh-driver-art" href="/projects/preview-art/driver-location-journey.webp" width="224" height="548" preserveAspectRatio="xMidYMin slice" />
+          <image className="fresh-preview-route" href="/projects/preview-art/weeksville-route-preview.webp" x="224" width="416" height="548" />
+          {!expanded && <circle className="fresh-location-pulse" cx="432" cy="127.2" r="10" fill="none" stroke="#087af5" strokeWidth="3" />}
+        </svg>
+      </span>
+    );
   }
   return <span className="product-thumbnail" data-project={project} data-active={active} data-reduced={reduced}>
     <svg className="product-thumbnail-scene" viewBox="0 0 640 360" preserveAspectRatio={project === "understandingfafsa" ? "xMidYMax meet" : "xMidYMid meet"} focusable="false" aria-hidden="true">
       <defs><filter id={shadow} x="-40%" y="-40%" width="180%" height="200%">
         <feDropShadow dx="0" dy="12" stdDeviation="12" floodColor="#1d251c" floodOpacity=".14" />
       </filter></defs>
-      {project === "fresh-greens" ? <RouteScene /> : project === "understandingfafsa" ? <MailScene shadow={shadow} /> : project === "navi" ? <PlacesScene shadow={shadow} /> : <CatalogScene shadow={shadow} />}
+      {project === "understandingfafsa" ? <MailScene shadow={shadow} /> : project === "navi" ? <PlacesScene shadow={shadow} /> : <CatalogScene shadow={shadow} />}
     </svg>
-    {project === "fresh-greens" && <FreshDriverArt />}
   </span>;
-}
-
-function FreshDriverArt() {
-  return <svg className="fresh-driver-art" focusable="false" aria-hidden="true">
-    <image href="/projects/preview-art/driver-location-journey.webp" width="100%" height="100%" preserveAspectRatio="xMidYMin slice" />
-  </svg>;
 }
 
 function SourceCrop({ src, x, y, width, height, viewBox, sourceWidth, sourceHeight, radius = 0 }: {
@@ -46,21 +49,6 @@ function SourceCrop({ src, x, y, width, height, viewBox, sourceWidth, sourceHeig
     <image href={src} width={sourceWidth} height={sourceHeight} />
     </svg></g>
   </g>;
-}
-
-function RouteScene() {
-  const sheetClip = useId().replace(/:/g, "") + "-route-sheet";
-  return <>
-    <rect x="0" y="-150" width="640" height="690" fill="white" />
-    <g className="fresh-route-sheet">
-      <image href="/projects/preview-art/weeksville-map-with-controls.webp" x="248" y="-116" width="392" height="308" />
-      <rect x="248" y="192" width="392" height="400" fill="white" />
-      <clipPath id={sheetClip}>
-        <rect className="fresh-sheet-crop" x="248" y="192" width="392" height="234" />
-      </clipPath>
-      <image href="/projects/preview-art/weeksville-route-sheet.webp" x="248" y="192" width="392" height="234" clipPath={`url(#${sheetClip})`} />
-    </g>
-  </>;
 }
 
 function MailScene({ shadow }: { shadow: string }) {

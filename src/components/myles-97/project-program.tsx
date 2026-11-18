@@ -3,7 +3,7 @@
 import type { MouseEvent } from "react";
 import { ProductThumbnail } from "@/components/myles-97/product-thumbnail";
 import { prefersReducedMotion } from "@/lib/home-intro";
-import type { ProgramDefinition } from "@/lib/myles-97/programs";
+import { FRESH_GREENS_ROLE, type ProgramDefinition } from "@/lib/myles-97/programs";
 import {
   dispatchProjectEnterRequest,
   saveProjectReturnSnapshot,
@@ -100,14 +100,27 @@ export function ProjectProgram({
     if (handled) event.preventDefault();
   };
 
+  const isFreshGreens = program.id === "fresh-greens";
+  const artwork = (
+    <div className="myles97-project-preview-cover" data-project-program-cover>
+      <ProductThumbnail project={program.id} active reduced={reduceMotion} expanded />
+    </div>
+  );
+
   return (
     <div className="myles97-project-preview" data-project={program.id}>
-      <div className="myles97-project-preview-cover" data-project-program-cover>
-        <ProductThumbnail project={program.id} active reduced={reduceMotion} expanded />
-      </div>
+      {isFreshGreens ? (
+        <figure className="myles97-preview-figure">
+          {artwork}
+          <figcaption>Project preview</figcaption>
+        </figure>
+      ) : artwork}
       <div className="myles97-project-preview-copy">
         <p className="myles97-eyebrow">{program.applicationType}</p>
-        <h2>{program.title}</h2>
+        <div className="myles97-preview-heading">
+          <h2>{program.title}</h2>
+          {isFreshGreens && <span>{FRESH_GREENS_ROLE}</span>}
+        </div>
         <p>{program.summary}</p>
         <a
           className="myles97-primary-button"

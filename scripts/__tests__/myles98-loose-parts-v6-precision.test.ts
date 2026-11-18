@@ -19,43 +19,43 @@ type Pixel = { color: string; x: number; y: number };
 
 const CUBES = new Map<Grid, Cube[]>([
   [16, [
-    { front: { fill: "#c94c4c", x: 3, y: 6, width: 3, height: 3 }, depth: 1, top: "#f38b78", side: "#8f3037" },
-    { front: { fill: "#e0af3d", x: 2, y: 10, width: 3, height: 3 }, depth: 1, top: "#ffe07b", side: "#a46f24" },
-    { front: { fill: "#4e91bd", x: 7, y: 10, width: 3, height: 3 }, depth: 1, top: "#8dc7e5", side: "#2f628e" },
+    { front: { fill: "#c94c4c", x: 4, y: 3, width: 4, height: 4 }, depth: 2, top: "#f38b78", side: "#8f3037" },
+    { front: { fill: "#e0af3d", x: 2, y: 9, width: 4, height: 4 }, depth: 2, top: "#ffe07b", side: "#a46f24" },
+    { front: { fill: "#4e91bd", x: 9, y: 9, width: 4, height: 4 }, depth: 2, top: "#8dc7e5", side: "#2f628e" },
   ]],
   [24, [
-    { front: { fill: "#c94c4c", x: 6, y: 8, width: 5, height: 5 }, depth: 2, top: "#f38b78", side: "#8f3037" },
-    { front: { fill: "#e0af3d", x: 4, y: 15, width: 5, height: 5 }, depth: 2, top: "#ffe07b", side: "#a46f24" },
-    { front: { fill: "#4e91bd", x: 12, y: 15, width: 5, height: 5 }, depth: 2, top: "#8dc7e5", side: "#2f628e" },
+    { front: { fill: "#c94c4c", x: 4, y: 4, width: 7, height: 7 }, depth: 3, top: "#f38b78", side: "#8f3037" },
+    { front: { fill: "#e0af3d", x: 2, y: 14, width: 7, height: 7 }, depth: 3, top: "#ffe07b", side: "#a46f24" },
+    { front: { fill: "#4e91bd", x: 12, y: 14, width: 7, height: 7 }, depth: 3, top: "#8dc7e5", side: "#2f628e" },
   ]],
   [32, [
-    { front: { fill: "#c94c4c", x: 9, y: 11, width: 7, height: 7 }, depth: 2, top: "#f38b78", side: "#8f3037" },
-    { front: { fill: "#e0af3d", x: 6, y: 20, width: 7, height: 7 }, depth: 2, top: "#ffe07b", side: "#a46f24" },
-    { front: { fill: "#4e91bd", x: 17, y: 20, width: 7, height: 7 }, depth: 2, top: "#8dc7e5", side: "#2f628e" },
+    { front: { fill: "#c94c4c", x: 6, y: 5, width: 10, height: 10 }, depth: 3, top: "#f38b78", side: "#8f3037" },
+    { front: { fill: "#e0af3d", x: 3, y: 18, width: 10, height: 10 }, depth: 3, top: "#ffe07b", side: "#a46f24" },
+    { front: { fill: "#4e91bd", x: 17, y: 18, width: 10, height: 10 }, depth: 3, top: "#8dc7e5", side: "#2f628e" },
   ]],
 ]);
 
 const HIGHLIGHTS = new Map<Grid, Rect[]>([
   [16, []],
   [24, [
-    { fill: "#ffd1c7", x: 8, y: 7, width: 2, height: 1 },
-    { fill: "#fff6d3", x: 6, y: 14, width: 2, height: 1 },
-    { fill: "#d9f2ff", x: 14, y: 14, width: 2, height: 1 },
+    { fill: "#ffd1c7", x: 7, y: 3, width: 2, height: 1 },
+    { fill: "#fff6d3", x: 5, y: 13, width: 2, height: 1 },
+    { fill: "#d9f2ff", x: 15, y: 13, width: 2, height: 1 },
   ]],
   [32, [
-    { fill: "#ffd1c7", x: 11, y: 10, width: 3, height: 1 },
-    { fill: "#fff6d3", x: 9, y: 19, width: 2, height: 1 },
-    { fill: "#d9f2ff", x: 20, y: 19, width: 2, height: 1 },
+    { fill: "#ffd1c7", x: 9, y: 4, width: 3, height: 1 },
+    { fill: "#fff6d3", x: 6, y: 17, width: 3, height: 1 },
+    { fill: "#d9f2ff", x: 20, y: 17, width: 3, height: 1 },
   ]],
 ]);
 
 const GRAIN_MARKS = new Map<Grid, Rect[]>([
   [16, []],
   [24, [
-    { fill: GRAIN_FILL, x: 7, y: 10, width: 2, height: 1 },
+    { fill: GRAIN_FILL, x: 6, y: 8, width: 2, height: 1 },
   ]],
   [32, [
-    { fill: GRAIN_FILL, x: 10, y: 13, width: 3, height: 1 },
+    { fill: GRAIN_FILL, x: 8, y: 12, width: 3, height: 1 },
   ]],
 ]);
 
@@ -92,9 +92,9 @@ function sameRect(actual: Rect, expected: Rect) {
 function pointsForCube({ front, depth }: Cube) {
   const { x, y, width, height } = front;
   return {
-    outline: `${x - depth},${y} ${x},${y - depth} ${x + width},${y - depth} ${x + width + depth},${y} ${x + width + depth},${y + height} ${x + width},${y + height + depth} ${x},${y + height + depth} ${x - depth},${y + height}`,
-    side: `${x + width},${y} ${x + width + depth},${y - depth} ${x + width + depth},${y + height - depth} ${x + width},${y + height}`,
-    top: `${x},${y} ${x + depth},${y - depth} ${x + width},${y - depth} ${x + width},${y}`,
+    outline: `${x - 1},${y} ${x + depth - 1},${y - depth} ${x + width + depth},${y - depth} ${x + width + depth},${y + height - depth} ${x + width},${y + height + 1} ${x - 1},${y + height + 1}`,
+    side: `${x + width},${y} ${x + width + depth - 1},${y - depth + 1} ${x + width + depth - 1},${y + height - depth} ${x + width},${y + height}`,
+    top: `${x},${y} ${x + depth - 1},${y - depth + 1} ${x + width + depth - 2},${y - depth + 1} ${x + width - 1},${y}`,
   };
 }
 

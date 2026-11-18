@@ -41,12 +41,14 @@ export type ProgramDefinition = ProjectProgramBlueprint & {
   coverImage?: string;
 };
 
+export const FRESH_GREENS_ROLE = "Solo design + build";
+
 export const PROJECT_PROGRAM_BLUEPRINTS = [
   {
     id: "fresh-greens",
     appName: "Fresh Greens.exe",
     applicationType: "Route-planning software",
-    cardSummary: "Navigation for Black drivers · Solo design + build",
+    cardSummary: `Navigation for Black drivers · ${FRESH_GREENS_ROLE}`,
     primaryEvidence: "built",
   },
   {

@@ -426,7 +426,7 @@ export function WorkstationDesktop({
               key={id}
               {...props}
               title={project.appName}
-              status="Project preview"
+              status={project.id === "fresh-greens" ? null : "Project preview"}
             >
               <ProjectProgram
                 program={project}

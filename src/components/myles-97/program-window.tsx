@@ -167,9 +167,11 @@ export function ProgramWindow({
         </div>
       </header>
       <div className="myles97-window-content">{children}</div>
-      <footer className="myles97-window-status">
-        <span className="myles97-window-status-copy">{status}</span>
-      </footer>
+      {status !== null && (
+        <footer className="myles97-window-status">
+          <span className="myles97-window-status-copy">{status}</span>
+        </footer>
+      )}
     </section>
   );
 }
