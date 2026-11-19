@@ -4,8 +4,11 @@ import { describe, expect, it } from "vitest";
 import { ICON_CONCEPTS, ICON_GRIDS, expectedMasterPath } from "../lib/myles98-icon-contract.mjs";
 
 const ROOT = "docs/design-assets/myles98-icons";
-// These exact exceptions form deliberate object anatomy: Resume paperclip openings and Navi's separated destination stack.
+// These exact exceptions form deliberate object anatomy: the résumé paperclip, open CD hubs and Navi’s separated destination stack.
 const INTENTIONAL_ENCLOSED_TRANSPARENCY = new Map<string, string[]>([
+  ["now-playing-16", ["8,7", "9,7", "8,8", "9,8"]],
+  ["now-playing-24", ["11,10", "12,10", "10,11", "11,11", "12,11", "13,11", "10,12", "11,12", "12,12", "13,12", "11,13", "12,13"]],
+  ["now-playing-32", ["14,14", "15,14", "16,14", "17,14", "14,15", "15,15", "16,15", "17,15", "14,16", "15,16", "16,16", "17,16", "14,17", "15,17", "16,17", "17,17"]],
   ["resume-24", ["19,3", "19,4"]],
   ["resume-32", ["26,4", "27,4", "27,5", "27,6", "27,7", "27,8"]],
 ]);
@@ -127,6 +130,9 @@ describe("Myles 98 icon fill integrity", () => {
 
   it("locks every allowed topology exception to the exact final candidate", () => {
     expect([...INTENTIONAL_ENCLOSED_TRANSPARENCY]).toEqual([
+      ["now-playing-16", ["8,7", "9,7", "8,8", "9,8"]],
+      ["now-playing-24", ["11,10", "12,10", "10,11", "11,11", "12,11", "13,11", "10,12", "11,12", "12,12", "13,12", "11,13", "12,13"]],
+      ["now-playing-32", ["14,14", "15,14", "16,14", "17,14", "14,15", "15,15", "16,15", "17,15", "14,16", "15,16", "16,16", "17,16", "14,17", "15,17", "16,17", "17,17"]],
       ["resume-24", ["19,3", "19,4"]],
       ["resume-32", ["26,4", "27,4", "27,5", "27,6", "27,7", "27,8"]],
     ]);

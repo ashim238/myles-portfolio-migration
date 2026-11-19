@@ -501,11 +501,6 @@
   text-shadow: 1px 1px 0 rgb(17 17 17 / 65%);
 }
 
-.myles98-icon[data-m98-icon="paintbrush"] {
-  transform: rotate(-12deg);
-  transform-origin: center;
-}
-
 @media (min-width: 1025px) and (max-width: 1279px) {
   .myles97-window[data-m97-program-window="selected-work"] {
     width: calc(100vw - 521px) !important;

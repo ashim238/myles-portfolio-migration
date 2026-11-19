@@ -527,98 +527,14 @@ describe("Myles 98 program icon identity", () => {
     }
   });
 
-  it("groups Loose Parts into one recognizable parts tray at menu and discovery sizes", () => {
-    render(
-      createElement(
-        "div",
-        null,
-        createElement(Myles97Icon, {
-          name: "loose-parts",
-          size: 20,
-          title: "Loose Parts menu",
-        }),
-        createElement(Myles97Icon, {
-          name: "loose-parts",
-          size: 32,
-          title: "Loose Parts desktop",
-        }),
-      ),
-    );
-
-    for (const label of ["Loose Parts menu", "Loose Parts desktop"]) {
-      const icon = screen.getByRole("img", { name: label });
-      const tray = icon.querySelector<SVGRectElement>(
-        'rect[data-m98-loose-parts-object="tray"]',
-      );
-      const parts = Array.from(
-        icon.querySelectorAll<SVGGraphicsElement>(
-          '[data-m98-loose-parts-object="part"]',
-        ),
-      );
-
-      expect(tray).toBeInTheDocument();
-      expect(parts).toHaveLength(3);
-
-      const trayBounds = {
-        left: Number(tray?.getAttribute("x")),
-        top: Number(tray?.getAttribute("y")),
-        right:
-          Number(tray?.getAttribute("x")) +
-          Number(tray?.getAttribute("width")),
-        bottom:
-          Number(tray?.getAttribute("y")) +
-          Number(tray?.getAttribute("height")),
-      };
-
-      for (const part of parts) {
-        let bounds: typeof trayBounds;
-
-        if (part.tagName.toLowerCase() === "circle") {
-          const radius = Number(part.getAttribute("r"));
-          const cx = Number(part.getAttribute("cx"));
-          const cy = Number(part.getAttribute("cy"));
-          bounds = {
-            left: cx - radius,
-            top: cy - radius,
-            right: cx + radius,
-            bottom: cy + radius,
-          };
-        } else if (part.tagName.toLowerCase() === "rect") {
-          const left = Number(part.getAttribute("x"));
-          const top = Number(part.getAttribute("y"));
-          bounds = {
-            left,
-            top,
-            right: left + Number(part.getAttribute("width")),
-            bottom: top + Number(part.getAttribute("height")),
-          };
-        } else {
-          const triangle = part
-            .getAttribute("d")
-            ?.match(/^M(\d+) (\d+)h(\d+)l(-?\d+)(-?\d+)z$/);
-          expect(triangle).not.toBeNull();
-          const [, xValue, yValue, widthValue, dxValue, dyValue] =
-            triangle ?? [];
-          const x = Number(xValue);
-          const y = Number(yValue);
-          const width = Number(widthValue);
-          const dx = Number(dxValue);
-          const dy = Number(dyValue);
-          const xValues = [x, x + width, x + width + dx];
-          const yValues = [y, y, y + dy];
-          bounds = {
-            left: Math.min(...xValues),
-            top: Math.min(...yValues),
-            right: Math.max(...xValues),
-            bottom: Math.max(...yValues),
-          };
-        }
-
-        expect(bounds.left).toBeGreaterThanOrEqual(trayBounds.left);
-        expect(bounds.top).toBeGreaterThanOrEqual(trayBounds.top);
-        expect(bounds.right).toBeLessThanOrEqual(trayBounds.right);
-        expect(bounds.bottom).toBeLessThanOrEqual(trayBounds.bottom);
-      }
+  it.each([16, 24, 32])("keeps three outlined blocks in the %ipx mono and high-contrast views", (size) => {
+    for (const variant of ["mono", "color"] as const) {
+      const { container, unmount } = render(createElement(Myles97Icon, { name: "loose-parts", size, variant }));
+      const blocks = container.querySelector('[data-m98-symbol="loose-parts"]');
+      expect(blocks).toHaveAttribute("stroke", "currentColor");
+      expect(blocks?.querySelectorAll("path")).toHaveLength(3);
+      expect(new Set(Array.from(blocks!.children, (cube) => cube.getAttribute("d"))).size).toBe(3);
+      unmount();
     }
   });
 
@@ -727,6 +643,7 @@ describe("Myles 98 program icon identity", () => {
     const forcedColorStyles = iconStyles.slice(
       iconStyles.indexOf("@media (forced-colors: active)"),
     );
+    expect(forcedColorStyles).toMatch(/\.myles98-icon--color\s*\{[^}]*color:\s*CanvasText;/);
     const hiddenDepthRule = forcedColorStyles.match(
       /((?:\s*\[data-m98-icon-depth="[^"]+"\]\s*,?)+)\s*\{([^}]*)\}/,
     );
@@ -772,43 +689,11 @@ describe("Myles 98 program icon identity", () => {
     expect(iconStyles).not.toMatch(/:global\(/);
   });
 
-  it("reduces the compact FAFSA glyph to one application window and envelope", () => {
-    const { container, rerender } = render(
-      createElement(Myles97Icon, {
-        name: "fafsa",
-        size: 16,
-        compact: true,
-        title: "FAFSA Mail",
-      }),
-    );
-    const compactIcon = container.querySelector("svg");
-
-    expect(compactIcon).toHaveAttribute("data-myles97-icon-density", "compact");
-    expect(compactIcon).toHaveAttribute("data-m98-icon-tier", "chrome");
-    expect(compactIcon).toHaveAttribute("viewBox", "0 0 16 16");
-    expect(compactIcon).toHaveAttribute("stroke", "currentColor");
-    expect(compactIcon?.querySelectorAll("path")).toHaveLength(2);
-    expect(compactIcon?.querySelectorAll("rect")).toHaveLength(0);
-    expect(
-      Array.from(compactIcon?.querySelectorAll("path") ?? [], (path) =>
-        path.getAttribute("d"),
-      ),
-    ).toEqual([
-      "M1 3h14v11H1zM1 6h14",
-      "M3 8h10v4H3zM3 8l5 3 5-3",
-    ]);
-
-    rerender(
-      createElement(Myles97Icon, {
-        name: "fafsa",
-        size: 24,
-        title: "FAFSA Mail",
-      }),
-    );
-    const fullIcon = container.querySelector("svg");
-
-    expect(fullIcon).not.toHaveAttribute("data-myles97-icon-density", "compact");
-    expect(fullIcon?.querySelectorAll("rect")).toHaveLength(4);
+  it("keeps the folded paper edge, masthead and columns in the compact FAFSA glyph", () => {
+    const { container } = render(createElement(Myles97Icon, { name: "fafsa", size: 16 }));
+    const paths = container.querySelectorAll('[data-m98-symbol="fafsa"] path');
+    expect(paths[0]).toHaveAttribute("d", "M1 3H13V12H1ZM3 13H15V5");
+    expect(paths[1]).toHaveAttribute("d", "M3 5H11M7 7V11M3 8H5M9 8H11");
   });
 
   it("reduces the compact Navi glyph to a clear pin and center point", () => {

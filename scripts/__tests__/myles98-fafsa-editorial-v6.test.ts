@@ -66,7 +66,7 @@ function isPhysicalFoldedNewsletter(source: string, grid: Grid) {
     && rect.y + rect.height <= page!.y + page!.height
   ));
 
-  if (!page || !back || !shadow || !headline || !crease || !foldFace || !photo || mastheads.length !== 3) return false;
+  if (!page || !back || !shadow || !headline || !crease || !foldFace || !photo || mastheads.length !== (grid === 16 ? 1 : 3)) return false;
 
   const mastheadGaps = mastheads.slice(1).map((masthead, index) => masthead.x - (mastheads[index]!.x + mastheads[index]!.width));
   const hasBrowserBar = rects.some((rect) => (
@@ -84,7 +84,7 @@ function isPhysicalFoldedNewsletter(source: string, grid: Grid) {
     && mastheads.every((masthead) => (
       masthead.height === 1
       && masthead.y === page.y + 1
-      && masthead.width <= Math.ceil(page.width * 0.35)
+      && masthead.width <= Math.ceil(page.width * (grid === 16 ? 0.6 : 0.35))
     ))
     && mastheadGaps.every((gap) => gap >= 1)
     && headline.height === 1
@@ -100,7 +100,7 @@ function isPhysicalFoldedNewsletter(source: string, grid: Grid) {
     && foldFace.height >= (grid === 16 ? 3 : 4)
     && photo.y > headline.y
     && photo.width < page.width / 2
-    && copy.length >= (grid === 16 ? 3 : 8)
+    && copy.length >= (grid === 16 ? 2 : 8)
     && !hasBrowserBar;
 }
 

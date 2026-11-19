@@ -166,7 +166,7 @@ describe("Myles 98 final FAFSA and Reset icon metaphors", () => {
     expect(ink.height).toBe(1);
     expect(masthead.width / page.width).toBeLessThan(0.75);
     expect(masthead.height).toBe(1);
-    expect(componentCount(maskFor(raster, [MASTHEAD_RULE]), raster.width)).toBeGreaterThanOrEqual(3);
+    expect(componentCount(maskFor(raster, [MASTHEAD_RULE]), raster.width)).toBe(grid === 16 ? 1 : 3);
     expect(ink.maxY).toBeLessThan(feature.minY);
     expect(masthead.maxY).toBeLessThan(feature.minY);
     expect(feature.width).toBeLessThan(page.width / 2);

@@ -19,21 +19,21 @@ type Rect = { fill: string; height: number; width: number; x: number; y: number 
 
 const GPS = new Map<Grid, { bezel: Rect; control: Rect; housing: Rect; screen: Rect }>([
   [16, {
-    bezel: { fill: GPS_BEZEL, x: 4, y: 5, width: 8, height: 10 },
-    housing: { fill: GPS_HOUSING, x: 5, y: 6, width: 6, height: 9 },
-    screen: { fill: GPS_SCREEN, x: 6, y: 8, width: 4, height: 1 },
+    bezel: { fill: GPS_BEZEL, x: 3, y: 3, width: 10, height: 12 },
+    housing: { fill: GPS_HOUSING, x: 4, y: 4, width: 8, height: 11 },
+    screen: { fill: GPS_SCREEN, x: 5, y: 6, width: 6, height: 3 },
     control: { fill: GPS_CONTROL, x: 7, y: 11, width: 1, height: 3 },
   }],
   [24, {
-    bezel: { fill: GPS_BEZEL, x: 7, y: 6, width: 10, height: 17 },
-    housing: { fill: GPS_HOUSING, x: 8, y: 7, width: 8, height: 15 },
-    screen: { fill: GPS_SCREEN, x: 9, y: 9, width: 6, height: 3 },
+    bezel: { fill: GPS_BEZEL, x: 5, y: 4, width: 14, height: 19 },
+    housing: { fill: GPS_HOUSING, x: 6, y: 5, width: 12, height: 17 },
+    screen: { fill: GPS_SCREEN, x: 7, y: 7, width: 10, height: 5 },
     control: { fill: GPS_CONTROL, x: 11, y: 16, width: 1, height: 5 },
   }],
   [32, {
-    bezel: { fill: GPS_BEZEL, x: 9, y: 7, width: 14, height: 23 },
-    housing: { fill: GPS_HOUSING, x: 10, y: 8, width: 12, height: 21 },
-    screen: { fill: GPS_SCREEN, x: 12, y: 11, width: 8, height: 4 },
+    bezel: { fill: GPS_BEZEL, x: 7, y: 4, width: 18, height: 26 },
+    housing: { fill: GPS_HOUSING, x: 8, y: 5, width: 16, height: 24 },
+    screen: { fill: GPS_SCREEN, x: 10, y: 8, width: 12, height: 7 },
     control: { fill: GPS_CONTROL, x: 15, y: 19, width: 2, height: 7 },
   }],
 ]);

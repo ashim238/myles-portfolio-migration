@@ -577,6 +577,8 @@
 
 @media (forced-colors: active) {
   .myles98-icon--color {
+    color: CanvasText;
+    stroke: currentColor;
     filter: none;
   }
 

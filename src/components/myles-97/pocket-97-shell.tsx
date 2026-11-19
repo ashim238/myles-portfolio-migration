@@ -349,7 +349,7 @@ export function Pocket97Shell({
             setStartOpen((open) => !open);
           }}
         >
-          <Myles97Icon name="app" size={24} variant="color" aria-hidden="true" />
+          <Image src="/myles98-icons/start/start-24.svg" alt="" width={24} height={24} />
           <span>Start</span>
         </button>
         <button ref={workButtonRef} type="button" onClick={returnHome}>

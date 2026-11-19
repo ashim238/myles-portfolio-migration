@@ -147,7 +147,10 @@ function OriginalCapture({ asset, label, alt }: { asset: UfTiledAsset; label: st
         openLightbox(asset.originalSrc, alt, asset.width, asset.height, { initialView: "read", unoptimized: true });
       }}
     >
-      Open original capture <span aria-hidden="true">↗</span>
+      Open original capture
+      <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M2 6V2h4m4 0h4v4m0 4v4h-4m-4 0H2v-4" />
+      </svg>
     </a>
   );
 }

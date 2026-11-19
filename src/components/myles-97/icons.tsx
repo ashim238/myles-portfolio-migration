@@ -511,12 +511,10 @@ function renderChromeGlyph(
       );
     case "paintbrush":
       return (
-        <>
-          <path d="M6 1h4v1h1v5h2v5h-1v3h-2v1H6v-1H4v-3H3V7h2V2h1z" {...surface(palette, palette.orange)} />
-          <path d="M5 9h6v2H5z" {...surface(palette, palette.chrome)} />
-          <path d="M5 12h6v2h-1v1H6v-1H5z" {...accent(palette, palette.orange)} />
-          <path d="M6 14h4v2H6z" {...secondaryAccent(palette, palette.magenta)} />
-        </>
+        <g data-m98-symbol="paintbrush" fill="none" stroke="currentColor">
+          <path d="M12 2L14 1L15 2L9 9L7 7Z" />
+          <path d="M6 6L10 10L8 12L4 8ZM4 8L8 12L5 14L1 15L2 11Z" />
+        </g>
       );
     case "open-apps":
       return (
@@ -536,52 +534,26 @@ function renderChromeGlyph(
       );
     case "loose-parts":
       return (
-        <>
-          <rect
-            x="1"
-            y="3"
-            width="14"
-            height="12"
-            data-m98-loose-parts-object="tray"
-            {...surface(palette, palette.chrome)}
-          />
-          <circle
-            cx="5"
-            cy="8"
-            r="2"
-            data-m98-loose-parts-object="part"
-            {...accent(palette, palette.yellow)}
-          />
-          <rect
-            x="9"
-            y="6"
-            width="3"
-            height="3"
-            data-m98-loose-parts-object="part"
-            {...secondaryAccent(palette, palette.blue)}
-          />
-          <path
-            d="M5 13h5l-2-3z"
-            data-m98-loose-parts-object="part"
-            {...tertiaryAccent(palette, palette.teal)}
-          />
-        </>
+        <g data-m98-symbol="loose-parts" fill="none" stroke="currentColor">
+          <path d="M1 9L3 7H8V12L6 14H1ZM1 9H6L8 7M6 9V14" />
+          <path d="M8 9L10 7H15V12L13 14H8ZM8 9H13L15 7M13 9V14" />
+          <path d="M3 3L5 1H10V6L8 8H3ZM3 3H8L10 1M8 3V8" />
+        </g>
       );
     case "fresh-greens":
       return (
-        <>
-          <rect x="1" y="1" width="14" height="14" {...accent(palette, palette.green)} />
-          <rect x="2" y="2" width="4" height="4" {...secondaryAccent(palette, palette.yellow)} />
-          <path d="M2 13h4l2-3 2 1 4-6" {...line(palette, palette.paper)} />
-          <circle cx="13" cy="4" r="1" {...tertiaryAccent(palette, palette.orange)} />
-        </>
+        <g data-m98-symbol="fresh-greens" fill="none" stroke="currentColor">
+          <path d="M3 3H10V1H12V3H13V14H3Z" />
+          <path d="M5 5H11V9H5ZM6 8V7H9" />
+          <path d="M5 12H8M7 11V13M10 12H11" />
+        </g>
       );
     case "fafsa":
       return (
-        <>
-          <path d="M1 3h14v11H1zM1 6h14" />
-          <path d="M3 8h10v4H3zM3 8l5 3 5-3" />
-        </>
+        <g data-m98-symbol="fafsa" fill="none" stroke="currentColor">
+          <path d="M1 3H13V12H1ZM3 13H15V5" />
+          <path d="M3 5H11M7 7V11M3 8H5M9 8H11" />
+        </g>
       );
     case "navi":
       return (
@@ -592,20 +564,17 @@ function renderChromeGlyph(
       );
     case "tiktok":
       return (
-        <>
-          <rect x="1" y="2" width="14" height="12" {...surface(palette, "#111111")} />
-          <path d="M1 6h14" {...line(palette, palette.paper)} />
-          <rect x="3" y="8" width="3" height="4" {...accent(palette, palette.cyan)} />
-          <rect x="7" y="8" width="3" height="4" {...secondaryAccent(palette, palette.magenta)} />
-          <rect x="11" y="8" width="2" height="4" {...tertiaryAccent(palette, palette.yellow)} />
-        </>
+        <g data-m98-symbol="tiktok" fill="currentColor" stroke="none">
+          <path d="M8 2H10V3L12 5H14V7H12L10 6V11L9 13L7 14H4L2 12V9L4 7H7V9H5L4 10V11L5 12H6L8 11Z" />
+        </g>
       );
     case "music":
       return (
-        <>
-          <path d="M6 1h4v2h3v4h-3v5c0 2-2 3-4 3H3v-4h3z" {...accent(palette, palette.blue)} />
-          <rect x="7" y="2" width="1" height="8" {...secondaryAccent(palette, palette.yellow)} />
-        </>
+        <g data-m98-symbol="disc" fill="none" stroke="currentColor">
+          <circle cx="8" cy="8" r="6" />
+          <circle cx="8" cy="8" r="2" />
+          <path d="M3 7L5 4M11 12L13 10" />
+        </g>
       );
   }
 }
@@ -704,12 +673,10 @@ function renderMenuGlyph(
       );
     case "paintbrush":
       return (
-        <>
-          <path d="M9 1h6v2h2v8h2v8h-2v4h-2v1H9v-1H7v-4H5v-8h2V3h2z" {...surface(palette, palette.orange)} />
-          <path d="M7 13h10v4H7z" {...surface(palette, palette.chrome)} />
-          <path d="M8 18h8v4h-1v1H9v-1H8z" {...accent(palette, palette.orange)} />
-          <path d="M9 21h6v2h-1v1h-4v-1H9z" {...secondaryAccent(palette, palette.magenta)} />
-        </>
+        <g data-m98-symbol="paintbrush" fill="none" stroke="currentColor">
+          <path d="M18 3L21 2L22 3L14 14L10 10Z" />
+          <path d="M9 9L15 15L12 18L6 12ZM6 12L12 18L8 21L2 22L3 16Z" />
+        </g>
       );
     case "open-apps":
       return (
@@ -730,56 +697,26 @@ function renderMenuGlyph(
       );
     case "loose-parts":
       return (
-        <>
-          <rect
-            x="2"
-            y="5"
-            width="20"
-            height="16"
-            data-m98-loose-parts-object="tray"
-            {...surface(palette, palette.chrome)}
-          />
-          <path d="M3 10h18" />
-          <circle
-            cx="7"
-            cy="15"
-            r="3"
-            data-m98-loose-parts-object="part"
-            {...accent(palette, palette.yellow)}
-          />
-          <rect
-            x="13"
-            y="12"
-            width="5"
-            height="5"
-            data-m98-loose-parts-object="part"
-            {...secondaryAccent(palette, palette.blue)}
-          />
-          <path
-            d="M10 20h8l-4-5z"
-            data-m98-loose-parts-object="part"
-            {...tertiaryAccent(palette, palette.teal)}
-          />
-        </>
+        <g data-m98-symbol="loose-parts" fill="none" stroke="currentColor">
+          <path d="M2 14L4 10H12V18L9 21H2ZM2 14H9L12 10M9 14V21" />
+          <path d="M12 14L15 10H22V18L20 21H12ZM12 14H20L22 10M20 14V21" />
+          <path d="M4 4L8 2H15V9L12 12H4ZM4 4H12L15 2M12 4V12" />
+        </g>
       );
     case "fresh-greens":
       return (
-        <>
-          <rect x="2" y="2" width="20" height="20" {...accent(palette, palette.green)} />
-          <rect x="3" y="3" width="7" height="7" {...secondaryAccent(palette, palette.yellow)} />
-          <path d="M3 20h6l3-5 3 2 6-10" {...line(palette, palette.paper)} />
-          <circle cx="19" cy="6" r="2" {...tertiaryAccent(palette, palette.orange)} />
-        </>
+        <g data-m98-symbol="fresh-greens" fill="none" stroke="currentColor">
+          <path d="M4 4H15V2H18V4H20V21H4Z" />
+          <path d="M8 8H16V14H8ZM9 12V10H14" />
+          <path d="M8 18H12M10 16V20M15 18H16" />
+        </g>
       );
     case "fafsa":
       return (
-        <>
-          <rect x="2" y="5" width="15" height="13" {...surface(palette)} />
-          <path d="m3 7 6 5 7-5M3 17l5-7M16 17l-5-7" />
-          <rect x="19" y="4" width="3" height="4" {...accent(palette, palette.yellow)} />
-          <rect x="19" y="10" width="3" height="4" {...secondaryAccent(palette, palette.cyan)} />
-          <rect x="19" y="16" width="3" height="4" {...tertiaryAccent(palette, palette.magenta)} />
-        </>
+        <g data-m98-symbol="fafsa" fill="none" stroke="currentColor">
+          <path d="M2 4H20V18H2ZM4 20H22V8" />
+          <path d="M4 8H16M10 10V16M4 12H8M14 12H16" />
+        </g>
       );
     case "navi":
       return (
@@ -790,22 +727,17 @@ function renderMenuGlyph(
       );
     case "tiktok":
       return (
-        <>
-          <rect x="2" y="4" width="20" height="16" {...surface(palette, "#111111")} />
-          <path d="M2 9h20" {...line(palette, palette.paper)} />
-          <rect x="5" y="12" width="4" height="5" {...accent(palette, palette.cyan)} />
-          <rect x="10" y="12" width="4" height="5" {...secondaryAccent(palette, palette.magenta)} />
-          <rect x="15" y="12" width="4" height="5" {...tertiaryAccent(palette, palette.yellow)} />
-          <path d="M5 6h3M10 6h3" {...line(palette, palette.paper)} />
-        </>
+        <g data-m98-symbol="tiktok" fill="currentColor" stroke="none">
+          <path d="M12 3H15V4L18 8H21V10H18L15 9V16L14 20L10 21H6L3 18V14L6 10H10V14H8L6 15V16L8 18H9L12 16Z" />
+        </g>
       );
     case "music":
       return (
-        <>
-          <path d="M10 2h6v2h5v6h-5v8c0 3-3 4-7 4H4v-6h6z" {...accent(palette, palette.blue)} />
-          <rect x="12" y="3" width="2" height="13" {...secondaryAccent(palette, palette.yellow)} />
-          <rect x="6" y="17" width="5" height="3" {...tertiaryAccent(palette, palette.orange)} />
-        </>
+        <g data-m98-symbol="disc" fill="none" stroke="currentColor">
+          <circle cx="12" cy="12" r="10" />
+          <circle cx="12" cy="12" r="3" />
+          <path d="M4 10L8 6M16 18L20 15" />
+        </g>
       );
   }
 }
@@ -904,12 +836,10 @@ function renderDiscoveryGlyph(
       );
     case "paintbrush":
       return (
-        <>
-          <path d="M12 1h8v2h2v11h3v10h-2v6h-3v2H12v-2H9v-6H7V14h3V3h2z" {...surface(palette, palette.orange)} />
-          <path d="M9 16h14v6H9z" {...surface(palette, palette.chrome)} />
-          <path d="M10 23h12v6h-2v1h-8v-1h-2z" {...accent(palette, palette.orange)} />
-          <path d="M11 28h10v2h-2v1h-6v-1h-2z" {...secondaryAccent(palette, palette.magenta)} />
-        </>
+        <g data-m98-symbol="paintbrush" fill="none" stroke="currentColor">
+          <path d="M24 4L28 2L30 4L18 18L14 14Z" />
+          <path d="M12 12L20 20L16 24L8 16ZM8 16L16 24L10 28L2 30L4 22Z" />
+        </g>
       );
     case "open-apps":
       return (
@@ -930,56 +860,26 @@ function renderDiscoveryGlyph(
       );
     case "loose-parts":
       return (
-        <>
-          <rect
-            x="2"
-            y="5"
-            width="28"
-            height="23"
-            data-m98-loose-parts-object="tray"
-            {...surface(palette, palette.chrome)}
-          />
-          <path d="M3 13h26" />
-          <circle
-            cx="9"
-            cy="20"
-            r="4"
-            data-m98-loose-parts-object="part"
-            {...accent(palette, palette.yellow)}
-          />
-          <rect
-            x="18"
-            y="16"
-            width="7"
-            height="7"
-            data-m98-loose-parts-object="part"
-            {...secondaryAccent(palette, palette.blue)}
-          />
-          <path
-            d="M12 27h13l-7-8z"
-            data-m98-loose-parts-object="part"
-            {...tertiaryAccent(palette, palette.teal)}
-          />
-        </>
+        <g data-m98-symbol="loose-parts" fill="none" stroke="currentColor">
+          <path d="M2 18L6 14H16V24L12 28H2ZM2 18H12L16 14M12 18V28" />
+          <path d="M16 18L20 14H30V24L26 28H16ZM16 18H26L30 14M26 18V28" />
+          <path d="M6 6L10 2H20V12L16 16H6ZM6 6H16L20 2M16 6V16" />
+        </g>
       );
     case "fresh-greens":
       return (
-        <>
-          <rect x="2" y="2" width="28" height="28" {...accent(palette, palette.green)} />
-          <rect x="4" y="4" width="9" height="9" {...secondaryAccent(palette, palette.yellow)} />
-          <path d="M4 27h8l4-7 4 3 8-14" {...line(palette, palette.paper)} />
-          <circle cx="26" cy="7" r="3" {...tertiaryAccent(palette, palette.orange)} />
-        </>
+        <g data-m98-symbol="fresh-greens" fill="none" stroke="currentColor">
+          <path d="M6 6H20V2H24V6H26V28H6Z" />
+          <path d="M10 10H22V18H10ZM12 16V14H18" />
+          <path d="M10 24H16M14 22V26M20 24H22" />
+        </g>
       );
     case "fafsa":
       return (
-        <>
-          <rect x="2" y="8" width="21" height="18" {...surface(palette)} />
-          <path d="m4 10 9 8 8-8M4 24l7-9M21 24l-6-9" />
-          <rect x="25" y="5" width="5" height="6" {...accent(palette, palette.yellow)} />
-          <rect x="25" y="13" width="5" height="6" {...secondaryAccent(palette, palette.cyan)} />
-          <rect x="25" y="21" width="5" height="6" {...tertiaryAccent(palette, palette.magenta)} />
-        </>
+        <g data-m98-symbol="fafsa" fill="none" stroke="currentColor">
+          <path d="M2 6H26V24H2ZM6 26H30V10" />
+          <path d="M6 10H22M14 14V22M6 16H10M18 16H22" />
+        </g>
       );
     case "navi":
       return (
@@ -990,22 +890,17 @@ function renderDiscoveryGlyph(
       );
     case "tiktok":
       return (
-        <>
-          <rect x="2" y="5" width="28" height="23" {...surface(palette, "#111111")} />
-          <path d="M2 12h28" {...line(palette, palette.paper)} />
-          <rect x="6" y="16" width="6" height="8" {...accent(palette, palette.cyan)} />
-          <rect x="13" y="16" width="6" height="8" {...secondaryAccent(palette, palette.magenta)} />
-          <rect x="20" y="16" width="6" height="8" {...tertiaryAccent(palette, palette.yellow)} />
-          <path d="M6 8h5M13 8h5" {...line(palette, palette.paper)} />
-        </>
+        <g data-m98-symbol="tiktok" fill="currentColor" stroke="none">
+          <path d="M16 4H20V6L24 10H28V14H24L20 12V22L18 26L14 28H8L4 24V18L8 14H14V18H10L8 20V22L10 24H12L16 22Z" />
+        </g>
       );
     case "music":
       return (
-        <>
-          <path d="M13 2h8v3h8v8h-8v11c0 4-4 6-9 6H5v-8h8z" {...accent(palette, palette.blue)} />
-          <rect x="16" y="3" width="2" height="19" {...secondaryAccent(palette, palette.yellow)} />
-          <rect x="7" y="23" width="7" height="4" {...tertiaryAccent(palette, palette.orange)} />
-        </>
+        <g data-m98-symbol="disc" fill="none" stroke="currentColor">
+          <circle cx="16" cy="16" r="14" />
+          <circle cx="16" cy="16" r="4" />
+          <path d="M6 14L10 8M22 24L26 20" />
+        </g>
       );
   }
 }

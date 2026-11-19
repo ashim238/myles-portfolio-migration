@@ -150,9 +150,12 @@ describe("Pocket 98", () => {
       dock.querySelectorAll<SVGImageElement>("image[data-m98-icon-master]"),
     );
 
-    expect(dockMasters).toHaveLength(4);
+    const startMark = within(dock).getByRole("button", { name: "Start" }).querySelector("img");
+    expect(startMark).toHaveAttribute("src", "/myles98-icons/start/start-24.svg");
+    expect(startMark).toHaveAttribute("width", "24");
+    expect(startMark).toHaveAttribute("height", "24");
+    expect(dockMasters).toHaveLength(3);
     expect(dockMasters.map((master) => master.getAttribute("href"))).toEqual([
-      "/myles98-icons/generic-app/generic-app-24.svg",
       "/myles98-icons/selected-work/selected-work-24.svg",
       "/myles98-icons/loose-parts/loose-parts-24.svg",
       "/myles98-icons/open-apps/open-apps-24.svg",

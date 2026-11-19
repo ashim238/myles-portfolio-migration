@@ -1,10 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" shape-rendering="crispEdges">
-  <path fill="#121528" d="M9 1h6v2h2v8h2v8h-2v4h-2v1H9v-1H7v-4H5v-8h2V3h2z"/>
-  <path fill="#b86a2e" d="M10 3h4v1h1v8H9V4h1z"/>
-  <path fill="#f3a43e" d="M11 4h2v8h-2z"/>
-  <path fill="#c3f5ff" d="M7 13h10v4H7z"/>
-  <path fill="#8ca8bd" d="M8 17h8v1H8z"/>
-  <path fill="#b88d45" d="M8 18h8v4h-1v1H9v-1H8z"/>
-  <path fill="#e1bd71" d="M10 19h4v2h-4z"/>
-  <path fill="#c83f48" d="M9 21h6v2h-1v1h-4v-1H9z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" shape-rendering="crispEdges" data-m98-concept="paintbrush" data-m98-grid="24">
+  <polygon fill="#222735" points="22,1 23,2 23,4 14,13 15,15 11,20 7,22 2,23 1,22 2,17 5,13 9,9 11,10 20,1" />
+  <polygon fill="#784625" points="21,2 22,2 22,4 13,13 11,11" />
+  <polygon fill="#d99a53" points="20,2 22,2 22,4 13,12 12,11" />
+  <polygon fill="#fff4d5" points="20,2 22,2 13,11 12,11" />
+  <polygon fill="#784625" points="5,13 10,11 14,15 10,19 6,22 2,22 2,21 2,17" />
+  <polygon fill="#d99a53" points="5,13 9,11 12,14 8,19 4,21 3,18" />
+  <polygon fill="#f08c3a" points="5,16 6,14 10,13 8,16 4,19" />
+  <polygon fill="#b94b48" points="2,18 5,17 5,19 7,17 8,18 5,21 2,22 2,21" />
+  <polygon fill="#387fa5" points="8,11 10,9 14,13 13,16 12,16 6,12" />
+  <polygon fill="#9cd1e1" points="8,11 10,10 13,13 12,15 8,12" />
+  <polygon fill="#fff4d5" points="8,11 9,10 13,13 12,13" />
 </svg>
