@@ -636,7 +636,12 @@
   display: block;
   height: 10px;
   border-radius: 999px;
-  background: linear-gradient(90deg, #f4bd45 0 42%, #c98165 67%, #493d70 100%);
+  background: linear-gradient(
+    90deg,
+    #f4bd45 calc(var(--fg-dusk-midpoint) - 14%),
+    #c98165 var(--fg-dusk-midpoint),
+    #493d70 calc(var(--fg-dusk-midpoint) + 14%)
+  );
 }
 
 .fg-route-proof-daylight p {

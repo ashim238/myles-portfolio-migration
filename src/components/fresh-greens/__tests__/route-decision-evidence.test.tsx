@@ -23,6 +23,30 @@ describe("RouteComparisonEvidence", () => {
     expect(screen.getByText(/min faster/i)).toBeInTheDocument();
     expect(screen.getByText("Community flag")).toBeInTheDocument();
   });
+
+  it("moves dusk along the bar with the route caption in both directions", () => {
+    render(<RouteComparisonEvidence />);
+
+    function duskPosition(caption: string) {
+      const bar = screen.getByText(caption).previousElementSibling as HTMLElement;
+      return Number.parseFloat(bar.style.getPropertyValue("--fg-dusk-midpoint"));
+    }
+
+    const next = screen.getByRole("button", { name: "Next route" });
+    const previous = screen.getByRole("button", { name: "Previous route" });
+    const first = duskPosition("More daylight near departure");
+    fireEvent.click(next);
+    const second = duskPosition("Light fades near arrival");
+    fireEvent.click(next);
+    const third = duskPosition("More of the drive after sunset");
+
+    expect(second).toBeGreaterThan(first);
+    expect(third).toBeLessThan(first);
+    fireEvent.click(previous);
+    expect(duskPosition("Light fades near arrival")).toBe(second);
+    fireEvent.click(previous);
+    expect(duskPosition("More daylight near departure")).toBe(first);
+  });
 });
 
 describe("ReportRouteInfluenceEvidence", () => {

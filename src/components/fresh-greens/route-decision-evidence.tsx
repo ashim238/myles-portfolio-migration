@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { type CSSProperties, useState } from "react";
 
+// Dusk positions illustrate the route descriptions in this reconstruction.
 const routes = [
   {
     duration: "10 hr 48 min",
@@ -10,6 +11,7 @@ const routes = [
     descriptor: "Option 1",
     conditions: ["Low light", "Rough pavement"],
     daylight: "More daylight near departure",
+    duskMidpoint: "52%",
   },
   {
     duration: "10 hr 42 min",
@@ -18,6 +20,7 @@ const routes = [
     descriptor: "6 min faster",
     conditions: ["Community flag", "Wildlife"],
     daylight: "Light fades near arrival",
+    duskMidpoint: "85%",
   },
   {
     duration: "11 hr 03 min",
@@ -26,6 +29,7 @@ const routes = [
     descriptor: "15 min longer",
     conditions: ["Police", "Rough pavement"],
     daylight: "More of the drive after sunset",
+    duskMidpoint: "27%",
   },
 ] as const;
 
@@ -95,7 +99,10 @@ export function RouteComparisonEvidence() {
         </div>
 
         <div className="fg-route-proof-daylight">
-          <span aria-hidden="true" />
+          <span
+            aria-hidden="true"
+            style={{ "--fg-dusk-midpoint": route.duskMidpoint } as CSSProperties}
+          />
           <p>{route.daylight}</p>
         </div>
       </div>
