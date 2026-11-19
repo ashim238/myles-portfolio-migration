@@ -9,6 +9,7 @@ const styles = [
   "base", "portfolio-surfaces", "late-polish", "myles-97", "reader-mode",
   "myles-98-paper-contrast", "reader-controls", "accessibility-preferences",
 ].map(name => readFileSync(resolve(`src/app/styles/${name}.css`), "utf8")).join("\n");
+const commands = readFileSync(resolve("public/myles98-sprites/commands.svg"), "utf8");
 let browser: Browser;
 
 beforeAll(async () => {
@@ -38,8 +39,17 @@ for (const theme of ["light", "dark"]) {
         view.unmount();
         const page = await browser.newPage({ viewport: { width, height: 1000 }, reducedMotion: "reduce" });
         try {
-          await page.setContent(`<html data-theme="${theme}"><head><style>${styles}</style></head>
-            <body><main class="reader-mode uf-page">${markup}</main></body></html>`);
+          await page.route("http://portfolio.test/**", route => {
+            if (new URL(route.request().url()).pathname === "/myles98-sprites/commands.svg") {
+              return route.fulfill({ contentType: "image/svg+xml", body: commands });
+            }
+            return route.fulfill({
+              contentType: "text/html",
+              body: `<html data-theme="${theme}"><head><style>${styles}</style></head>
+                <body><main class="reader-mode uf-page">${markup}</main></body></html>`,
+            });
+          });
+          await page.goto("http://portfolio.test/");
           const controls = page.locator(".uf-composer-item-controls").last();
           const enabled = controls.locator("button:not(:disabled)").first();
           const remove = controls.locator(".uf-composer-mini--remove");
@@ -56,13 +66,15 @@ for (const theme of ["light", "dark"]) {
                 ctx.fillStyle = getComputedStyle(node).backgroundColor; ctx.fillRect(0, 0, 1, 1);
               }
               const background = Array.from(ctx.getImageData(0, 0, 1, 1).data);
-              ctx.fillStyle = getComputedStyle(el.querySelector("path")!).stroke; ctx.fillRect(0, 0, 1, 1);
-              return { background, ink: Array.from(ctx.getImageData(0, 0, 1, 1).data),
+              const sprite = el.querySelector("use")!;
+              ctx.fillStyle = getComputedStyle(sprite).color; ctx.fillRect(0, 0, 1, 1);
+              return { spriteWidth: sprite.getBBox().width, background, ink: Array.from(ctx.getImageData(0, 0, 1, 1).data),
                 outline: getComputedStyle(el).outlineStyle,
                 iconWidth: el.querySelector("svg")!.getBoundingClientRect().width,
                 targetHeight: el.getBoundingClientRect().height };
             });
             expect(contrast(pixels.ink, pixels.background), state).toBeGreaterThanOrEqual(3);
+            expect(pixels.spriteWidth).toBeGreaterThan(0);
             expect(pixels.iconWidth).toBe(16);
             expect(pixels.targetHeight).toBeGreaterThanOrEqual(width < 640 ? 44 : 24);
             if (state === "focus") expect(pixels.outline).not.toBe("none");

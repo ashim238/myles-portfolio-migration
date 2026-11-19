@@ -1,5 +1,6 @@
 "use client";
 
+import { CommandIcon } from "@/components/myles-97/command-icon";
 import Link from "next/link";
 import type { MouseEvent } from "react";
 import { iconForProgram, Myles97Icon } from "@/components/myles-97/icons";
@@ -48,7 +49,7 @@ export function ReaderHeader({ slug, title }: ReaderHeaderProps) {
           event.preventDefault();
         }}
       >
-        <span aria-hidden="true">←</span>
+        <CommandIcon name="back" />
         <span className="reader-return-label reader-return-label--full" aria-hidden="true">
           Return to Desktop
         </span>

@@ -21,13 +21,17 @@ function parseGroup(args) {
 
 /**
  * @param {{ id: string }[]} icons
- * @param {{ root?: string, fsApi?: { existsSync: (path: string) => boolean, readFileSync: (path: string, encoding: "utf8") => string } }} [options]
+ * @param {{ root?: string, masterPath?: (id: string, grid: number) => string, fsApi?: { existsSync: (path: string) => boolean, readFileSync: (path: string, encoding: "utf8") => string } }} [options]
  */
-export function verifyMasterFiles(icons, { root = repositoryRoot, fsApi = fs } = {}) {
+export function verifyMasterFiles(icons, {
+  root = repositoryRoot,
+  fsApi = fs,
+  masterPath = (concept, grid) => expectedMasterPath("docs/design-assets/myles98-icons", concept, grid),
+} = {}) {
   const errors = [];
   for (const icon of icons) {
     for (const grid of ICON_GRIDS) {
-      const relativePath = expectedMasterPath("docs/design-assets/myles98-icons", icon.id, grid);
+      const relativePath = masterPath(icon.id, grid);
       const absolutePath = path.join(root, relativePath);
       if (!fsApi.existsSync(absolutePath)) {
         errors.push(`MISSING ${relativePath}`);
@@ -65,12 +69,17 @@ function main() {
   }
 
   const icons = group ? manifest.icons.filter((icon) => icon.group === group) : manifest.icons;
-  const errors = verifyMasterFiles(icons);
+  const errors = [
+    ...verifyMasterFiles(icons),
+    ...verifyMasterFiles(icons, {
+      masterPath: (concept, grid) => `public/myles98-sprites/${concept}/${concept}-${grid}.svg`,
+    }),
+  ];
   if (errors.length > 0) {
     for (const error of errors) process.stderr.write(`${error}\n`);
     process.exit(1);
   }
-  process.stdout.write(`Verified ${icons.length * ICON_GRIDS.length} Myles 98 icon masters${group ? ` for ${group}` : ""}.\n`);
+  process.stdout.write(`Verified ${icons.length * ICON_GRIDS.length} Myles 98 icon masters in both the live and historical families${group ? ` for ${group}` : ""}.\n`);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) main();

@@ -80,7 +80,7 @@ describe("ProjectWorkJump", () => {
       container.querySelector(
         '[data-m98-next-project-window="navi"] image[data-m98-icon-master]',
       ),
-    ).toHaveAttribute("href", "/myles98-icons/navi/navi-16.svg");
+    ).toHaveAttribute("href", "/myles98-sprites/navi/navi-16.svg");
   });
 
   it("treats destination media as decorative inside the descriptive link", () => {

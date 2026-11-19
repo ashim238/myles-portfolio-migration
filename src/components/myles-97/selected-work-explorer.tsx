@@ -1,5 +1,6 @@
 "use client";
 
+import { CommandIcon } from "@/components/myles-97/command-icon";
 import Link from "next/link";
 import { useEffect, useState, type MouseEvent } from "react";
 import { ProductThumbnail } from "@/components/myles-97/product-thumbnail";
@@ -173,9 +174,7 @@ export function SelectedWorkExplorer({
                 }
               >
                 Read case study
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true" focusable="false">
-                  <path d="M3 9 9 3M3 3h6v6" stroke="currentColor" strokeWidth="1.5" />
-                </svg>
+                <CommandIcon name="external" />
               </Link>
               <button
                 type="button"

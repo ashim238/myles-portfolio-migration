@@ -1,5 +1,6 @@
 "use client";
 
+import { CommandIcon } from "@/components/myles-97/command-icon";
 import type { RefObject } from "react";
 import {
   TRINI_ROTI_RECIPE,
@@ -63,7 +64,7 @@ export function RecipeNoteProgram() {
         Adapted into this working note from{" "}
         <a href={TRINI_ROTI_SOURCE.href} target="_blank" rel="noreferrer">
           {TRINI_ROTI_SOURCE.label}
-          <span aria-hidden="true"> ↗</span>
+          <CommandIcon name="external" />
         </a>
         .
       </p>

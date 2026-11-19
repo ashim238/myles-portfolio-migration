@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState, type RefObject } from "react";
 import { iconForProgram, Myles97Icon } from "@/components/myles-97/icons";
 import type { ProgramDefinition, ProgramId } from "@/lib/myles-97/programs";
@@ -75,12 +74,7 @@ export function Taskbar({
         onClick={onToggleStart}
       >
         <span className="myles97-start-mark" aria-hidden="true">
-          <Image
-            src="/myles98-icons/start/start-24.svg"
-            alt=""
-            width={24}
-            height={24}
-          />
+          <Myles97Icon name="start" size={24} variant="color" />
         </span>
         <strong>Start</strong>
       </button>

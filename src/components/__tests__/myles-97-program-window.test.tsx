@@ -57,7 +57,7 @@ describe("ProgramWindow", () => {
       name: "Read Fresh Greens case study",
     });
     expect(maximize).toHaveClass("myles97-hit-target");
-    expect(maximize).toHaveTextContent("↗");
+    expect(maximize.querySelector("use")).toHaveAttribute("href", "/myles98-sprites/commands.svg#external");
     await user.click(maximize);
     expect(onMaximize).toHaveBeenCalledWith("fresh-greens");
 

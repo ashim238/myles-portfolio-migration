@@ -1,5 +1,6 @@
 "use client";
 
+import { CommandIcon } from "@/components/myles-97/command-icon";
 import { useRef, type CSSProperties, type PropsWithChildren, type ReactNode } from "react";
 import type { ProgramId } from "@/lib/myles-97/programs";
 import type { WindowGeometry } from "@/lib/myles-97/state";
@@ -139,7 +140,7 @@ export function ProgramWindow({
             onClick={() => onMinimize(id)}
           >
             <span className="myles97-window-control" aria-hidden="true">
-              –
+              <CommandIcon name="minimize" size={16} />
             </span>
           </button>
           {onMaximize ? (
@@ -150,7 +151,7 @@ export function ProgramWindow({
               onClick={() => onMaximize(id)}
             >
               <span className="myles97-window-control" aria-hidden="true">
-                ↗
+                <CommandIcon name="external" size={16} />
               </span>
             </button>
           ) : null}
@@ -161,7 +162,7 @@ export function ProgramWindow({
             onClick={() => onClose(id)}
           >
             <span className="myles97-window-control" aria-hidden="true">
-              ×
+              <CommandIcon name="close" size={16} />
             </span>
           </button>
         </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { CommandIcon } from "@/components/myles-97/command-icon";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { getThemeSnapshot, subscribeTheme, type Theme } from "@/lib/myles-97/theme";
 import styles from "./loom-embed.module.css";
@@ -71,7 +72,7 @@ export function LoomEmbed({ src, title }: LoomEmbedProps) {
       <p className={styles.fallback}>
         <a href={src} target="_blank" rel="noopener noreferrer">
           Open {title} in a new tab
-          <span aria-hidden="true">↗</span>
+          <CommandIcon name="external" />
         </a>
       </p>
     </div>

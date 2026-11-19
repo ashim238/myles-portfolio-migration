@@ -35,8 +35,8 @@ describe("ProjectOpeningFacts", () => {
     expect(proofAction).toHaveAttribute("href", "#fg-pulled-over");
     expect(proofAction).toHaveTextContent("Open proof");
     expect(proofAction).toHaveTextContent("Try the safety-flow reconstruction");
-    expect(proofAction.querySelector('[aria-hidden="true"]')).toHaveTextContent(
-      "→",
+    expect(proofAction.querySelector('svg[aria-hidden="true"] use')).toHaveAttribute(
+      "href", "/myles98-sprites/commands.svg#next",
     );
   });
 });

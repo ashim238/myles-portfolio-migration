@@ -1,5 +1,6 @@
 "use client";
 
+import { CommandIcon } from "@/components/myles-97/command-icon";
 import { useEffect, useRef, type ReactNode, type RefObject } from "react";
 import { AnimatePresence, motion, useIsPresent } from "motion/react";
 import {
@@ -142,7 +143,7 @@ export function StartMenu({
         </button>
         <div className="myles97-start-menu-separator" aria-hidden="true" />
         <button type="button" onClick={onClose} aria-label="Close Start">
-          <span aria-hidden="true">×</span>
+          <CommandIcon name="close" />
           <span>Close</span>
         </button>
       </div>

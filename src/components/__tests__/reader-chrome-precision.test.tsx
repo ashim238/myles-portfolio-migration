@@ -46,14 +46,14 @@ function expectCompactColorFafsaMaster(container: HTMLElement) {
   const master = icon.querySelector<SVGImageElement>(
     "image[data-m98-icon-master]",
   );
-  const fallback = icon.querySelector<SVGGElement>(
+  const fallback = icon.querySelector<SVGUseElement>(
     ".myles98-icon-fallback",
   );
 
   expect(icon).toHaveAttribute("data-m98-icon-variant", "color");
   expect(master).toHaveAttribute(
     "href",
-    "/myles98-icons/understandingfafsa/understandingfafsa-16.svg",
+    "/myles98-sprites/understandingfafsa/understandingfafsa-16.svg",
   );
   expect(master).toHaveAttribute(
     "data-m98-icon-master-concept",
@@ -63,7 +63,7 @@ function expectCompactColorFafsaMaster(container: HTMLElement) {
   expect(master).toHaveAttribute("width", "16");
   expect(master).toHaveAttribute("height", "16");
   expect(fallback).toHaveAttribute("aria-hidden", "true");
-  expect(fallback?.querySelectorAll("path")).toHaveLength(2);
+  expect(fallback).toHaveAttribute("href", "/myles98-sprites/monochrome.svg#understandingfafsa-16");
 }
 
 describe("dense Myles 98 chrome", () => {
@@ -93,7 +93,7 @@ describe("dense Myles 98 chrome", () => {
       expect(icon).toHaveAttribute("height", "16");
       expect(master).toHaveAttribute(
         "href",
-        `/myles98-icons/${concept}/${concept}-16.svg`,
+        `/myles98-sprites/${concept}/${concept}-16.svg`,
       );
     },
   );

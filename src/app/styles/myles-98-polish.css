@@ -578,7 +578,6 @@
 @media (forced-colors: active) {
   .myles98-icon--color {
     color: CanvasText;
-    stroke: currentColor;
     filter: none;
   }
 
@@ -588,28 +587,6 @@
 
   .myles98-icon-fallback {
     display: block;
-  }
-
-  [data-m98-icon-depth="shadow"],
-  [data-m98-icon-depth="highlight"] {
-    display: none;
-  }
-
-  .myles98-icon-surface {
-    fill: Canvas !important;
-    stroke: CanvasText !important;
-  }
-
-  .myles98-icon-accent,
-  .myles98-icon-accent-secondary,
-  .myles98-icon-accent-tertiary {
-    fill: CanvasText !important;
-    stroke: CanvasText !important;
-  }
-
-  .myles98-icon-line {
-    fill: none !important;
-    stroke: CanvasText !important;
   }
 
   .myles98-document-canvas,

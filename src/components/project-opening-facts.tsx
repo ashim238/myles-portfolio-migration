@@ -1,3 +1,5 @@
+import { CommandIcon } from "@/components/myles-97/command-icon";
+
 type ProjectOpeningFactsProps = {
   role: string;
   goal: string;
@@ -37,7 +39,7 @@ export function ProjectOpeningFacts({
       >
         <span className="project-opening-facts-action-label">Open proof</span>
         <span className="project-opening-facts-action-text">{proof.label}</span>
-        <span aria-hidden="true">→</span>
+        <CommandIcon name="next" />
       </a>
     </section>
   );

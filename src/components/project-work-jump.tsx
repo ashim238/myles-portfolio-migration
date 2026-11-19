@@ -1,3 +1,4 @@
+import { CommandIcon } from "@/components/myles-97/command-icon";
 import Image from "next/image";
 import { iconForProgram, Myles97Icon } from "@/components/myles-97/icons";
 import { TransitionLink } from "@/components/transition-link";
@@ -72,7 +73,7 @@ export function ProjectWorkJump({
                 </h2>
                 <span className="project-work-jump-bridge">{next.bridge}</span>
                 <span className="project-work-jump-cta">
-                  Read case study <span aria-hidden="true">→</span>
+                  Read case study <CommandIcon name="next" />
                 </span>
               </span>
               <span className="project-work-jump-media" aria-hidden="true">
@@ -99,7 +100,7 @@ export function ProjectWorkJump({
               </span>
             </span>
             <TransitionLink className="project-work-jump-view-all" href="/#work">
-              View all work <span aria-hidden="true">→</span>
+              View all work <CommandIcon name="next" />
             </TransitionLink>
           </div>
         </div>
@@ -109,7 +110,7 @@ export function ProjectWorkJump({
             More portfolio work
           </h2>
           <TransitionLink className="project-work-jump-view-all" href="/#work">
-            View all work <span aria-hidden="true">→</span>
+            View all work <CommandIcon name="next" />
           </TransitionLink>
         </>
       )}

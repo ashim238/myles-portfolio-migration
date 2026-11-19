@@ -1,3 +1,4 @@
+import { CommandIcon } from "@/components/myles-97/command-icon";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Myles97Icon, iconForProgram } from "@/components/myles-97/icons";
@@ -31,7 +32,7 @@ export function SystemDocumentShell({
         >
           <div className="myles98-document-titlebar">
             <Link className="myles98-document-back reader-control" href="/#selected-work">
-              <span aria-hidden="true">←</span>
+              <CommandIcon name="back" />
               <span>Work Stuff</span>
             </Link>
 

@@ -178,15 +178,15 @@ describe("Myles98 product shell", () => {
     expect(
       startMenuMasters.map((master) => master.getAttribute("href")),
     ).toEqual([
-      "/myles98-icons/selected-work/selected-work-24.svg",
-      "/myles98-icons/about-myles/about-myles-24.svg",
-      "/myles98-icons/loose-parts/loose-parts-24.svg",
-      "/myles98-icons/resume/resume-24.svg",
-      "/myles98-icons/now-playing/now-playing-24.svg",
-      "/myles98-icons/email/email-24.svg",
-      "/myles98-icons/display-properties/display-properties-24.svg",
-      "/myles98-icons/paintbrush/paintbrush-24.svg",
-      "/myles98-icons/reset-desktop/reset-desktop-24.svg",
+      "/myles98-sprites/selected-work/selected-work-24.svg",
+      "/myles98-sprites/about-myles/about-myles-24.svg",
+      "/myles98-sprites/loose-parts/loose-parts-24.svg",
+      "/myles98-sprites/resume/resume-24.svg",
+      "/myles98-sprites/now-playing/now-playing-24.svg",
+      "/myles98-sprites/email/email-24.svg",
+      "/myles98-sprites/display-properties/display-properties-24.svg",
+      "/myles98-sprites/paintbrush/paintbrush-24.svg",
+      "/myles98-sprites/reset-desktop/reset-desktop-24.svg",
     ]);
     for (const master of startMenuMasters) {
       expect(master).toHaveAttribute("data-m98-icon-master-grid", "24");

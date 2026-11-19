@@ -30,15 +30,15 @@ describe("Myles 98 taskbar", () => {
     );
 
     const start = screen.getByRole("button", { name: "Start" });
-    const portrait = container.querySelector<HTMLImageElement>(
-      ".myles97-start-mark img",
+    const portrait = container.querySelector<SVGImageElement>(
+      ".myles97-start-mark image",
     );
 
     expect(portrait).toHaveAttribute(
-      "src",
-      "/myles98-icons/start/start-24.svg",
+      "href",
+      "/myles98-sprites/start/start-24.svg",
     );
-    expect(portrait).not.toHaveAttribute("src", "/logomark.svg");
+    expect(portrait).not.toHaveAttribute("href", "/logomark.svg");
     expect(portrait).toHaveAttribute("width", "24");
     expect(portrait).toHaveAttribute("height", "24");
     expect(start).toHaveAttribute("aria-haspopup", "dialog");

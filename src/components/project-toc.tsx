@@ -1,5 +1,6 @@
 "use client";
 
+import { CommandIcon } from "@/components/myles-97/command-icon";
 import { useEffect, useRef, useState, useCallback } from "react";
 import type { ProjectChapterEntry } from "@/lib/project-chapters";
 
@@ -517,16 +518,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
             </span>
           </span>
           <span className="project-toc-toggle-end">
-            <svg
-              className={`project-toc-chevron${isOpen ? " project-toc-chevron--open" : ""}`}
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="none"
-              aria-hidden="true"
-            >
-              <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+            <CommandIcon name="down" size={12} className={`project-toc-chevron${isOpen ? " project-toc-chevron--open" : ""}`} />
           </span>
         </button>
 
@@ -609,9 +601,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
         aria-hidden="true"
         tabIndex={-1}
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          <path d="M8 13V3.5M8 3.5L3.5 8M8 3.5L12.5 8" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+        <CommandIcon name="to-top" />
       </button>
     </>
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import { CommandIcon } from "@/components/myles-97/command-icon";
 import {
   createContext,
   useContext,
@@ -185,9 +186,7 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
             aria-label={state.alt}
           >
             <button className="lb-close reader-control" onClick={close} aria-label="Close">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              </svg>
+              <CommandIcon name="close" />
             </button>
             <div
               className="lb-viewport"
@@ -251,7 +250,7 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
                   disabled={visibleScale <= minimumScale}
                   aria-label="Zoom out"
                 >
-                  −
+                  <CommandIcon name="subtract" />
                 </button>
                 <span className="lb-zoom-readout" aria-live="polite">
                   {Math.round(visibleScale * 100)}%
@@ -263,7 +262,7 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
                   disabled={visibleScale >= MAX_ZOOM}
                   aria-label="Zoom in"
                 >
-                  +
+                  <CommandIcon name="add" />
                 </button>
               </span>
             </div>

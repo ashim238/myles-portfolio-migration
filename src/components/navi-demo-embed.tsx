@@ -1,5 +1,6 @@
 "use client";
 
+import { CommandIcon } from "@/components/myles-97/command-icon";
 import { useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -40,7 +41,7 @@ export function NaviDemoEmbed() {
       />
       <Link href="/work/navi/demo" className="nv-demo-embed-mobile-cta reader-control">
         Open the demo
-        <span aria-hidden="true">↗</span>
+        <CommandIcon name="external" />
       </Link>
     </div>
   );
@@ -93,7 +94,7 @@ export function NaviDemoEmbed() {
           rel="noopener noreferrer"
         >
           Open full demo in a new tab
-          <span aria-hidden="true">↗</span>
+          <CommandIcon name="external" />
         </Link>
       </div>
     </div>

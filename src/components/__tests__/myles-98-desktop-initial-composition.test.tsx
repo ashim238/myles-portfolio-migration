@@ -113,7 +113,7 @@ describe("Myles 98 desktop initial composition", () => {
 
     expect(
       shortcut.querySelector("image[data-m98-icon-master]")?.getAttribute("href"),
-    ).toBe("/myles98-icons/paintbrush/paintbrush-32.svg");
+    ).toBe("/myles98-sprites/paintbrush/paintbrush-32.svg");
   });
 
   it("keeps Work Stuff clear and foremost on a fresh desktop", () => {

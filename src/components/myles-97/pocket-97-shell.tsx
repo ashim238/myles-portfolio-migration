@@ -1,5 +1,6 @@
 "use client";
 
+import { CommandIcon } from "@/components/myles-97/command-icon";
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState, type Dispatch } from "react";
 import { DisplayProperties } from "@/components/myles-97/display-properties";
@@ -162,7 +163,7 @@ export function Pocket97Shell({
                 className="pocket97-back reader-control"
                 onClick={returnHome}
               >
-                <span aria-hidden="true">←</span>
+                <CommandIcon name="back" />
                 Back
               </button>
               <span className="pocket97-app-identity">
@@ -349,7 +350,7 @@ export function Pocket97Shell({
             setStartOpen((open) => !open);
           }}
         >
-          <Image src="/myles98-icons/start/start-24.svg" alt="" width={24} height={24} />
+          <Myles97Icon name="start" size={24} variant="color" />
           <span>Start</span>
         </button>
         <button ref={workButtonRef} type="button" onClick={returnHome}>

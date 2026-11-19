@@ -1,5 +1,6 @@
 "use client";
 
+import { CommandIcon } from "@/components/myles-97/command-icon";
 import type { ReactNode } from "react";
 import Image from "next/image";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
@@ -148,9 +149,7 @@ function OriginalCapture({ asset, label, alt }: { asset: UfTiledAsset; label: st
       }}
     >
       Open original capture
-      <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-        <path d="M2 6V2h4m4 0h4v4m0 4v4h-4m-4 0H2v-4" />
-      </svg>
+      <CommandIcon name="enlarge" />
     </a>
   );
 }
@@ -527,7 +526,7 @@ export function NewsletterComposer({ showIntro = true }: { showIntro?: boolean }
                       <span className="uf-composer-shelf-role">{b.role}</span>
                     </span>
                     <span className="uf-composer-shelf-add" aria-hidden="true">
-                      {usedCount > 0 ? `+${usedCount}` : "+"}
+                      {usedCount > 0 ? `+${usedCount}` : <CommandIcon name="add" size={12} />}
                     </span>
                   </button>
                 </li>
@@ -552,9 +551,7 @@ export function NewsletterComposer({ showIntro = true }: { showIntro?: boolean }
             <div className="uf-composer-pinned" aria-label={`${pinnedTopBlock.name} (locked)`}>
               <div className="uf-composer-pinned-body">
                 <span className="uf-composer-pinned-lock" aria-hidden="true">
-                  <svg viewBox="0 0 12 14" width="12" height="14">
-                    <path d="M2 6V4a4 4 0 018 0v2h.5a1.5 1.5 0 011.5 1.5v4a1.5 1.5 0 01-1.5 1.5h-9A1.5 1.5 0 010 11.5v-4A1.5 1.5 0 011.5 6H2zm2 0h4V4a2 2 0 10-4 0v2z" fill="currentColor" />
-                  </svg>
+                  <CommandIcon name="locked" />
                 </span>
                 <span className="uf-composer-pinned-thumb">
                   <Image
@@ -605,12 +602,7 @@ export function NewsletterComposer({ showIntro = true }: { showIntro?: boolean }
                         onDragEnd={onDragEnd}
                       >
                         <span className="uf-composer-item-handle" aria-hidden="true" title="Drag to reorder">
-                          <span />
-                          <span />
-                          <span />
-                          <span />
-                          <span />
-                          <span />
+                          <CommandIcon name="reorder" />
                         </span>
                         <span className="uf-composer-item-thumb">
                           <Image
@@ -634,9 +626,7 @@ export function NewsletterComposer({ showIntro = true }: { showIntro?: boolean }
                             disabled={index === 0}
                             aria-label={`Move ${block.name} up`}
                           >
-                            <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
-                              <path d="M2 8l4-4 4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
+                            <CommandIcon name="up" />
                           </button>
                           <button
                             type="button"
@@ -645,9 +635,7 @@ export function NewsletterComposer({ showIntro = true }: { showIntro?: boolean }
                             disabled={index === rows.length - 1}
                             aria-label={`Move ${block.name} down`}
                           >
-                            <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
-                              <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
+                            <CommandIcon name="down" />
                           </button>
                           <button
                             type="button"
@@ -655,9 +643,7 @@ export function NewsletterComposer({ showIntro = true }: { showIntro?: boolean }
                             onClick={() => removeRow(row.key, block.name)}
                             aria-label={`Remove ${block.name}`}
                           >
-                            <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true">
-                              <path d="M3 3l6 6M9 3l-6 6" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-                            </svg>
+                            <CommandIcon name="close" />
                           </button>
                         </span>
                       </div>
@@ -670,9 +656,7 @@ export function NewsletterComposer({ showIntro = true }: { showIntro?: boolean }
             <div className="uf-composer-pinned" aria-label={`${pinnedBottomBlock.name} (locked)`}>
               <div className="uf-composer-pinned-body">
                 <span className="uf-composer-pinned-lock" aria-hidden="true">
-                  <svg viewBox="0 0 12 14" width="12" height="14">
-                    <path d="M2 6V4a4 4 0 018 0v2h.5a1.5 1.5 0 011.5 1.5v4a1.5 1.5 0 01-1.5 1.5h-9A1.5 1.5 0 010 11.5v-4A1.5 1.5 0 011.5 6H2zm2 0h4V4a2 2 0 10-4 0v2z" fill="currentColor" />
-                  </svg>
+                  <CommandIcon name="locked" />
                 </span>
                 <span className="uf-composer-pinned-thumb">
                   <Image
@@ -721,7 +705,7 @@ export function NewsletterComposerDemo() {
           onClick={() => setOpen((current) => !current)}
         >
           {open ? "Close composer" : "Try the system"}
-          <span aria-hidden="true">{open ? "−" : "+"}</span>
+          <CommandIcon name={open ? "subtract" : "add"} />
         </button>
       </div>
       {open ? (

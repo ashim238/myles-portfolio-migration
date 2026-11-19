@@ -1,3 +1,4 @@
+import { CommandIcon } from "@/components/myles-97/command-icon";
 import Link from "next/link";
 
 export type LoosePartSummary = {
@@ -52,7 +53,7 @@ export function LoosePartsProgram({
               </span>
             </div>
             <Link href={`/play#${entry.slug}`} aria-label={`Open ${entry.title} in Loose Parts`}>
-              Open <span aria-hidden="true">↗</span>
+              Open <CommandIcon name="external" />
             </Link>
           </li>
         ))}

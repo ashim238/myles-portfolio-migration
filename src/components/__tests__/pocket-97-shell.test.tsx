@@ -150,15 +150,16 @@ describe("Pocket 98", () => {
       dock.querySelectorAll<SVGImageElement>("image[data-m98-icon-master]"),
     );
 
-    const startMark = within(dock).getByRole("button", { name: "Start" }).querySelector("img");
-    expect(startMark).toHaveAttribute("src", "/myles98-icons/start/start-24.svg");
+    const startMark = within(dock).getByRole("button", { name: "Start" }).querySelector("image");
+    expect(startMark).toHaveAttribute("href", "/myles98-sprites/start/start-24.svg");
     expect(startMark).toHaveAttribute("width", "24");
     expect(startMark).toHaveAttribute("height", "24");
-    expect(dockMasters).toHaveLength(3);
+    expect(dockMasters).toHaveLength(4);
     expect(dockMasters.map((master) => master.getAttribute("href"))).toEqual([
-      "/myles98-icons/selected-work/selected-work-24.svg",
-      "/myles98-icons/loose-parts/loose-parts-24.svg",
-      "/myles98-icons/open-apps/open-apps-24.svg",
+      "/myles98-sprites/start/start-24.svg",
+      "/myles98-sprites/selected-work/selected-work-24.svg",
+      "/myles98-sprites/loose-parts/loose-parts-24.svg",
+      "/myles98-sprites/open-apps/open-apps-24.svg",
     ]);
     for (const master of dockMasters) {
       expect(master).toHaveAttribute("data-m98-icon-master-grid", "24");
