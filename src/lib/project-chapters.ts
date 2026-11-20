@@ -84,7 +84,7 @@ export const CASE_STUDY_CHAPTERS = {
     {
       id: "tt-system",
       stage: "Build",
-      title: "One slot map, three visual systems",
+      title: "How I designed around the product photo",
     },
     {
       id: "tt-outcome",
