@@ -25,7 +25,7 @@ const publicDir = path.join(process.cwd(), "public");
 const imageDimensionsCache = new Map<string, { width: number; height: number }>();
 const FALLBACK_DIMENSIONS = { width: 1400, height: 900 };
 
-async function readImageDimensions(
+export async function readImageDimensions(
   src: string,
 ): Promise<{ width: number; height: number }> {
   if (!src.startsWith("/")) return FALLBACK_DIMENSIONS;
@@ -60,6 +60,7 @@ export type Project = {
   order: number;
   tags: string[];
   coverImage?: string;
+  coverAlt?: string;
   highlightQuote?: string;
   outcomeMetricLabel?: string;
   outcomeMetricValue?: string;
@@ -166,6 +167,7 @@ async function parseProjectFrontmatter(
     status,
     order: Number(data.order ?? 999),
     tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
+    coverAlt: data.coverAlt ? String(data.coverAlt) : undefined,
     coverImage: data.coverImage ? String(data.coverImage) : undefined,
     highlightQuote: data.highlightQuote ? String(data.highlightQuote) : undefined,
     outcomeMetricLabel: data.outcomeMetricLabel

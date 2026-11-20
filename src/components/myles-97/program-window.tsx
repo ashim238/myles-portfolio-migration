@@ -12,6 +12,7 @@ type ProgramWindowProps = PropsWithChildren<{
   id: ProgramId;
   title: string;
   geometry: WindowGeometry;
+  fitContent?: boolean;
   focused: boolean;
   reduceMotion?: boolean;
   isDefaultPosition?: boolean;
@@ -32,6 +33,7 @@ export function ProgramWindow({
   id,
   title,
   geometry,
+  fitContent = false,
   focused,
   reduceMotion = false,
   isDefaultPosition = true,
@@ -56,7 +58,8 @@ export function ProgramWindow({
     left: geometry.x,
     top: geometry.y,
     width: geometry.width,
-    height: geometry.height,
+    height: fitContent ? "auto" : geometry.height,
+    maxHeight: fitContent ? geometry.height : undefined,
     zIndex: stackIndex,
   };
   const moveWithKeyboard = (key: string, shiftKey: boolean) => {

@@ -115,7 +115,8 @@ describe("Myles 98 hardening contract", () => {
 
     const leadMedia = read("src/components/lead-media.tsx");
     const projectCover = read("src/components/project-cover.tsx");
-    const tiktok = read("src/app/work/tiktok/page.tsx");
+    const tiktok = read("src/components/tiktok-opening.tsx");
+    expect(read("src/app/work/tiktok/page.tsx")).toContain("<TikTokOpening");
     expect(leadMedia).toContain("data-project-enter-cover");
     expect(projectCover).toContain("data-project-enter-cover");
     expect(tiktok).toContain("data-project-enter-cover");

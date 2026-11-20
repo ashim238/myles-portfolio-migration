@@ -24,7 +24,7 @@ describe("Navi chapter chronology", () => {
     expect(
       Array.from(
         pageSource.matchAll(
-          /<ProjectChapter\s+entry=\{chapters\[(\d)\]\}\s+index=\{(\d)\}\s+total=\{chapters\.length\}\s+variant="navi"\s*>/g,
+          /<ProjectChapter\s+entry=\{chapters\[(\d)\]\}\s+index=\{(\d)\}\s+total=\{chapters\.length\}\s+variant="navi"(?=[\s>])/g,
         ),
         ([, entry, index]) => ({ entry: Number(entry), index: Number(index) }),
       ),

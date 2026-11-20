@@ -10,6 +10,12 @@ type SystemDocumentShellProps = {
   children: ReactNode;
 };
 
+const documentTabs = [
+  { program: "about", href: "/about", label: "About" },
+  { program: "loose-parts", href: "/play", label: "Loose Parts" },
+  { program: "resume", href: "/resume", label: "Résumé" },
+] as const;
+
 export function SystemDocumentShell({
   program,
   title,
@@ -56,8 +62,13 @@ export function SystemDocumentShell({
               <span aria-hidden="true">/</span>
               <strong>{title}</strong>
             </span>
-            <span className="myles98-document-kind" aria-hidden="true">
-              Document
+            <span className="document-tabs">
+              {documentTabs.map((tab) => (
+                <Link key={tab.program} href={tab.href} aria-current={program === tab.program ? "page" : undefined}>
+                  <Myles97Icon name={iconForProgram(tab.program)} size={16} aria-hidden="true" />
+                  {tab.label}
+                </Link>
+              ))}
             </span>
           </nav>
         </header>

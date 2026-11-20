@@ -34,7 +34,6 @@ const auditActionCopy = [
   "I gave longer sends clearer breaks and more direct section titles to make them easier to scan.",
   "I locked spacing, type hierarchy, and dividers while leaving content and module order swappable.",
   "I built the kit in Mailchimp so the founder could assemble each issue without touching HTML.",
-  "I flattened the hierarchy and cut extra wrappers once practice sends exposed Gmail clipping.",
   "I made welcome, weekly, and shorter event templates so different sends could hold different amounts of content.",
 ] as const;
 const readerFacingProperties = new Set([
@@ -224,7 +223,7 @@ describe("UnderstandingFAFSA case-study structure", () => {
     }
   });
 
-  it("renders the five audit decisions as a direct action list", () => {
+  it("renders the newsletter audit decisions as a direct action list", () => {
     expect(page).toMatch(
       /UNDERSTANDING_FAFSA_AUDIT_ACTIONS[\s\S]*UNDERSTANDING_FAFSA_AUDIT_RULES[\s\S]*from\s*"@\/lib\/understandingfafsa-audit-rules"/,
     );
@@ -253,7 +252,8 @@ describe("UnderstandingFAFSA case-study structure", () => {
     const items = within(list).getAllByRole("listitem");
 
     expect(list.tagName).toBe("OL");
-    expect(items).toHaveLength(5);
+    expect(items).toHaveLength(auditActionCopy.length);
+    expect(list).not.toHaveTextContent(/Gmail clipping/i);
     for (const [index, item] of items.entries()) {
       expect(item).toHaveTextContent(auditActionCopy[index]);
       expect(within(item).queryByText("Finding:")).not.toBeInTheDocument();

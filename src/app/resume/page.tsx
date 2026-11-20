@@ -180,6 +180,14 @@ export default function ResumePage() {
         </section>
       </header>
 
+      <nav className="resume-contents" aria-label="Résumé sections">
+        {[
+          ["resume-independent-title", "Independent Work"],
+          ["resume-experience-title", "Work Experience"],
+          ["resume-education-title", "Education"],
+          ["resume-skills-title", "Skills"],
+        ].map(([id, label]) => <a key={id} href={`#${id}`}>{label}</a>)}
+      </nav>
       <section className="resume-experience" aria-labelledby="resume-independent-title">
         <h2 id="resume-independent-title" className="resume-section-heading">
           Independent Work

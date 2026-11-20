@@ -17,7 +17,7 @@ const routes: RouteOpening[] = [
     route: "fresh-greens",
     proofName: "freshGreensProof",
     proofLabel: "Try the safety-flow reconstruction",
-    proofHref: "#fg-pulled-over",
+    proofHref: "#fg-safety-reconstruction",
     opening: '<section className="hero project-hero fg-hero"',
     openingClose: "</section>",
     dominantMedia: "<LeadMedia",
@@ -44,7 +44,7 @@ const routes: RouteOpening[] = [
     route: "tiktok",
     proofName: "tiktokProof",
     proofLabel: "Inspect the template system",
-    proofHref: "#tt-system",
+    proofHref: "#tt-template-inspector",
     opening: "data-project-enter-cover",
     openingClose: "</header>",
     dominantMedia: "<RecruiterCut",
@@ -64,25 +64,24 @@ function sourceFor(route: string): string {
 
 describe("Reader opening route contract", () => {
   it.each(routes)(
-    "places $route facts after introductory copy and before dominant media without replacing RecruiterCut",
+    "places $route opening artwork, facts, and the full summary in reading order",
     ({ route, opening, openingClose, dominantMedia }) => {
       const source = sourceFor(route);
       const openingStart = source.indexOf(opening);
       const openingEnd = source.indexOf(openingClose, openingStart) + openingClose.length;
       const facts = source.indexOf("<ProjectOpeningFacts");
-      const media = source.indexOf(dominantMedia, facts);
+      const media = source.indexOf(dominantMedia, openingStart);
       const recruiterCut = source.indexOf("<RecruiterCut", facts);
 
       expect(openingStart).toBeGreaterThanOrEqual(0);
       expect(openingEnd).toBeGreaterThan(openingStart);
-      if (route === "understandingfafsa") {
-        const ledeEnd = source.indexOf("</p>", source.indexOf('className="project-hero-lede uf-lede"'));
-        expect(facts).toBeGreaterThan(ledeEnd);
-        expect(facts).toBeLessThan(openingEnd);
+      expect(facts).toBeGreaterThan(openingEnd);
+      if (route === "tiktok") {
+        expect(media).toBeGreaterThan(facts);
       } else {
-        expect(facts).toBeGreaterThan(openingEnd);
+        expect(media).toBeGreaterThan(openingEnd);
+        expect(media).toBeLessThan(facts);
       }
-      expect(media).toBeGreaterThan(facts);
       expect(recruiterCut).toBeGreaterThan(facts);
     },
   );

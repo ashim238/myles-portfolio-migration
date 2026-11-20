@@ -1,4 +1,5 @@
 import { ExpandableImage } from "@/components/expandable-image";
+import { LoosePartShelf } from "@/components/myles-97/loose-part-shelf";
 import { LoomEmbed } from "@/components/loom-embed";
 import { SystemDocumentShell } from "@/components/myles-97/system-document-shell";
 import { PortfolioEndcap } from "@/components/portfolio-endcap";
@@ -35,7 +36,10 @@ export default function PlayPage() {
       </section>
 
       <section className="play-section" aria-label="In the lab">
-        <p className="play-section-label">In the lab</p>
+        <nav className="lab-shelf" aria-label="Experiments">
+          <p className="play-section-label">In the lab</p>
+          <LoosePartShelf entries={playEntries} inLab />
+        </nav>
 
         <ol className="play-entries" role="list">
           {playEntries.map((entry, index) => (
@@ -52,6 +56,37 @@ export default function PlayPage() {
               <div className="play-entry-body">
                 {entry.exploration ? (
                   <p className="play-entry-exploration">{entry.exploration}</p>
+                ) : null}
+
+                {entry.embedPath ? (
+                  <LoomEmbed src={entry.embedPath} title={entry.title} />
+                ) : null}
+
+                {entry.specimen && entry.images ? (
+                  <SpecimenCard
+                    designation={entry.specimen.designation}
+                    classification={entry.specimen.classification}
+                    material={entry.specimen.material}
+                    status={entry.specimen.status}
+                    images={entry.images}
+                    priority={index === 0}
+                  />
+                ) : entry.images && entry.images.length > 0 ? (
+                  <div
+                    className={`play-images play-images--${entry.images.length}`}
+                  >
+                    {entry.images.map((image) => (
+                      <ExpandableImage
+                        key={image.src}
+                        src={image.src}
+                        alt={image.alt}
+                        width={1200}
+                        height={1600}
+                        sizes="(max-width: 900px) 92vw, 720px"
+                        style={{ width: "100%", height: "auto", display: "block" }}
+                      />
+                    ))}
+                  </div>
                 ) : null}
 
                 <dl className={styles.experimentNotes}>
@@ -92,37 +127,6 @@ export default function PlayPage() {
                       <li key={step}>{step}</li>
                     ))}
                   </ol>
-                ) : null}
-
-                {entry.embedPath ? (
-                  <LoomEmbed src={entry.embedPath} title={entry.title} />
-                ) : null}
-
-                {entry.specimen && entry.images ? (
-                  <SpecimenCard
-                    designation={entry.specimen.designation}
-                    classification={entry.specimen.classification}
-                    material={entry.specimen.material}
-                    status={entry.specimen.status}
-                    images={entry.images}
-                    priority={index === 0}
-                  />
-                ) : entry.images && entry.images.length > 0 ? (
-                  <div
-                    className={`play-images play-images--${entry.images.length}`}
-                  >
-                    {entry.images.map((image) => (
-                      <ExpandableImage
-                        key={image.src}
-                        src={image.src}
-                        alt={image.alt}
-                        width={1200}
-                        height={1600}
-                        sizes="(max-width: 900px) 92vw, 720px"
-                        style={{ width: "100%", height: "auto", display: "block" }}
-                      />
-                    ))}
-                  </div>
                 ) : null}
               </div>
 

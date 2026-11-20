@@ -181,11 +181,12 @@ describe("Pocket 98", () => {
     );
 
     await screen.findByRole("navigation", { name: "Pocket 98 dock" });
+    fireEvent.click(within(container).getByRole("radio", { name: "Thumbnails" }));
     expect(
       Array.from(container.querySelectorAll(".product-thumbnail"))
         .map((scene) => scene.getAttribute("data-project")),
     ).toEqual(programs.map((program) => program.id));
-    expect(container.querySelectorAll('.product-thumbnail-scene image').length).toBeGreaterThanOrEqual(4);
+    expect(container.querySelectorAll('.publication-cover')).toHaveLength(4);
 
     const tablet = cssBlock("@media (min-width: 768px) and (max-width: 1024px)");
     expect(cssBlock(".pocket97-stage", tablet)).toMatch(/width:\s*min\(100%,\s*64rem\);/);

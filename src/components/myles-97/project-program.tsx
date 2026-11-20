@@ -1,7 +1,10 @@
 "use client";
 
-import { useId, type MouseEvent } from "react";
-import { ProductThumbnail } from "@/components/myles-97/product-thumbnail";
+import type { MouseEvent } from "react";
+import { isFeaturedProject } from "@/lib/myles-97/programs";
+import { StudyCover } from "./study-cover";
+import { ExpandableImage } from "@/components/expandable-image";
+import { ProjectSampleViewer } from "./project-sample-viewer";
 import { prefersReducedMotion } from "@/lib/home-intro";
 import { FRESH_GREENS_ROLE, type ProgramDefinition } from "@/lib/myles-97/programs";
 import {
@@ -50,7 +53,6 @@ export function ProjectProgram({
   reduceMotion = false,
   returnTarget = "program",
 }: ProjectProgramProps) {
-  const captionId = useId();
   const visual: ProjectProgramVisual = {
     type: "program",
     programId: program.id,
@@ -102,24 +104,18 @@ export function ProjectProgram({
   };
 
   const isFreshGreens = program.id === "fresh-greens";
-  const artwork = (
-    <div className="myles97-project-preview-cover" data-project-program-cover>
-      <ProductThumbnail project={program.id} active reduced={reduceMotion} expanded />
-    </div>
-  );
-
   return (
     <div className="myles97-project-preview" data-project={program.id}>
-      {isFreshGreens ? (
-        <figure className="myles97-preview-figure" aria-labelledby={captionId}>
-          {artwork}
-          <figcaption id={captionId}>Project preview</figcaption>
-        </figure>
-      ) : artwork}
+      {isFeaturedProject(program.id) ? (
+        <ProjectSampleViewer key={program.id} project={program.id} title={program.title} reduced={reduceMotion} />
+      ) : program.previewImage ? (
+        <ExpandableImage {...program.previewImage} alt={program.previewImage.alt ?? program.title}
+          sizes="(max-width: 760px) 90vw, 480px" />
+      ) : <StudyCover program={program} />}
       <div className="myles97-project-preview-copy">
         <p className="myles97-eyebrow">{program.applicationType}</p>
         <div className="myles97-preview-heading">
-          <h2>{program.title}</h2>
+          <h2>{program.title === "UnderstandingFAFSA" ? <>Understanding<wbr />FAFSA</> : program.title}</h2>
           {isFreshGreens && <span>{FRESH_GREENS_ROLE}</span>}
         </div>
         <p>{program.summary}</p>

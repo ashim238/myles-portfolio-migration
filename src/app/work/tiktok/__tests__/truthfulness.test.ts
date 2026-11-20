@@ -11,7 +11,7 @@ const normalizeProse = (source: string) =>
 
 describe("TikTok public truthfulness contract", () => {
   it("uses the confirmed canonical role and original template names", () => {
-    const page = read("src/app/work/tiktok/page.tsx");
+    const page = read("src/app/work/tiktok/page.tsx") + read("src/components/tiktok-opening.tsx");
     const content = read("content/projects/tiktok.md");
 
     expect(page).toContain(
@@ -46,7 +46,7 @@ describe("TikTok public truthfulness contract", () => {
   });
 
   it("uses confirmed launch-library language on public outcome surfaces", () => {
-    const page = read("src/app/work/tiktok/page.tsx");
+    const page = read("src/app/work/tiktok/page.tsx") + read("src/components/tiktok-opening.tsx");
     const resume = read("src/app/resume/page.tsx");
 
     expect(page).toContain("Launch-library result");
@@ -58,7 +58,7 @@ describe("TikTok public truthfulness contract", () => {
   });
 
   it("keeps review notes paraphrased and excludes unsupported outcome claims", () => {
-    const page = read("src/app/work/tiktok/page.tsx");
+    const page = read("src/app/work/tiktok/page.tsx") + read("src/components/tiktok-opening.tsx");
     const data = read("src/lib/tiktok-data.ts");
     const publicCaseStudy = `${page}\n${data}`;
 
@@ -133,7 +133,7 @@ describe("TikTok public truthfulness contract", () => {
   });
 
   it("uses the populated single-phone mockup for the public cover", () => {
-    const page = read("src/app/work/tiktok/page.tsx");
+    const page = read("src/app/work/tiktok/page.tsx") + read("src/components/tiktok-opening.tsx");
     const content = read("content/projects/tiktok.md");
     const notices = read("THIRD_PARTY_NOTICES.md");
     const cover = resolve(

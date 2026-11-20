@@ -561,7 +561,8 @@
 
 @media (min-width: 768px) and (pointer: fine) {
   .myles97-window[data-m97-program-window="loose-parts"] {
-    max-height: 400px;
+    height: fit-content !important;
+    max-height: min(550px,calc(100dvh - 156px));
   }
 }
 

@@ -15,11 +15,17 @@ const expectedImports = [
   '@import "./styles/myles-97-pocket.css";',
   '@import "./styles/myles-98-polish.css";',
   '@import "./styles/myles-98-paper-contrast.css";',
+  '@import "./styles/image-viewer.css";',
+  '@import "./styles/reader-controls.css";',
+  '@import "./styles/workstation-documents.css";',
+  '@import "./styles/archive-layout.css";',
+  '@import "./styles/project-artwork.css";',
   '@import "./styles/accessibility-preferences.css";',
 ];
 
 const sections = [
   ["styles/base.css", ":root {"],
+  ["styles/image-viewer.css", ".lb-frame {"],
   ["styles/portfolio-surfaces.css", "Fresh Greens case study"],
   ["styles/navi-minisite.css", "Navi mini-site scope (.nv-ui)"],
   ["styles/late-polish.css", "Motion-play: non-gating section-heading emphasis"],

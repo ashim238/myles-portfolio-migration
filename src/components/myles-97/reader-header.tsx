@@ -4,7 +4,7 @@ import { CommandIcon } from "@/components/myles-97/command-icon";
 import Link from "next/link";
 import type { MouseEvent } from "react";
 import { iconForProgram, Myles97Icon } from "@/components/myles-97/icons";
-import { PROJECT_PROGRAM_BLUEPRINTS } from "@/lib/myles-97/programs";
+import { PROJECT_PROGRAM_BLUEPRINTS, projectSlug } from "@/lib/myles-97/programs";
 import {
   dispatchProjectReturnRequest,
   readProjectReturnSnapshot,
@@ -44,7 +44,7 @@ export function ReaderHeader({ slug, title }: ReaderHeaderProps) {
         onClick={(event) => {
           if (shouldUseNativeNavigation(event)) return;
           const snapshot = readProjectReturnSnapshot();
-          if (!snapshot || snapshot.slug !== slug) return;
+          if (!snapshot || projectSlug(snapshot.slug) !== slug) return;
           if (!dispatchProjectReturnRequest(snapshot)) return;
           event.preventDefault();
         }}

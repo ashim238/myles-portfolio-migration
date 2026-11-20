@@ -8,14 +8,14 @@ const readerStyles = readFileSync(
 );
 
 describe("UnderstandingFAFSA opening layout", () => {
-  it("compacts only the mobile facts grid so lead media arrives sooner", () => {
+  it("gives each mobile opening fact a full line", () => {
     const mobile = readerStyles.match(
       /@media \(max-width: 767px\)\s*\{([\s\S]*?)\n\}/,
     )?.[1];
 
     expect(mobile).toBeDefined();
     expect(mobile).toMatch(
-      /\.reader-mode\.reader-mode\.uf-page \.project-opening-facts-list\s*\{[\s\S]*?grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\);/,
+      /\.reader-mode\.reader-mode\.uf-page \.project-opening-facts-list\s*\{[\s\S]*?grid-template-columns:\s*1fr;/,
     );
     expect(mobile).toMatch(
       /\.reader-mode\.reader-mode\.uf-page \.project-opening-facts-row:last-child\s*\{[\s\S]*?grid-column:\s*1 \/ -1;/,

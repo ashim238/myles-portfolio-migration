@@ -6,7 +6,7 @@ import { ProjectEvidenceDisclosure } from "@/components/project-evidence-disclos
 
 const styles = readFileSync(resolve(process.cwd(), "src/app/styles/base.css"), "utf8");
 const disclosureCallsites = [
-  ["Fresh Greens", "src/app/work/fresh-greens/page.tsx", 3],
+  ["Fresh Greens", "src/app/work/fresh-greens/page.tsx", 4],
   ["TikTok", "src/app/work/tiktok/page.tsx", 1],
   ["Understanding FAFSA", "src/app/work/understandingfafsa/page.tsx", 1],
   ["Navi", "src/components/navi/research-artifacts.tsx", 1],

@@ -42,10 +42,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const project = await getProjectBySlug(slug);
-  if (!project) return {};
+  if (!project || project.status === "hidden") return {};
 
   return {
     title: project.title,
+    ...(project.status === "draft" ? { robots: { index: false, follow: false } } : {}),
     description: project.summary,
     openGraph: {
       title: project.title,
@@ -67,8 +68,17 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
     notFound();
   }
 
+  const usedIds = new Set<string>();
+  const entries = project.sections.map((section, index) => {
+    const base = `section-${slugify(section.title) || index + 1}`;
+    let id = base;
+    for (let suffix = 2; usedIds.has(id); suffix++) id = `${base}-${suffix}`;
+    usedIds.add(id);
+    return { id, title: section.title };
+  });
+
   return (
-    <ReaderShell slug={slug} title={project.title}>
+    <ReaderShell slug={slug} title={project.title} className="document-study">
       <nav className="project-topbar" aria-label="Breadcrumb">
         <TransitionLink href="/#work">
           <span aria-hidden="true">←</span>
@@ -76,37 +86,39 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
         </TransitionLink>
       </nav>
 
-      <section className="hero project-hero" aria-labelledby="project-title">
-        <h1 id="project-title" className="project-hero-title">
-          {project.title}
-        </h1>
-        <p className="project-hero-lede">{project.summary}</p>
-      </section>
+      <div className="case-frontispiece">
+        <section className="hero project-hero" aria-labelledby="project-title">
+          <h1 id="project-title" className="project-hero-title">
+            {project.title}
+          </h1>
+          <p className="project-hero-lede">{project.summary}</p>
+        </section>
 
-      {project.coverImage ? (
-        <ProjectCover
-          src={project.coverImage}
-          alt={`${project.title} cover`}
-          priority
-        />
-      ) : null}
-
-      <dl className="project-meta" aria-label="Project details">
-        <div className="project-meta-field">
-          <dt>Role</dt>
-          <dd>{project.role}</dd>
-        </div>
-        <div className="project-meta-field">
-          <dt>Timeframe</dt>
-          <dd>{project.timeframe}</dd>
-        </div>
-        {project.tags.length > 0 ? (
-          <div className="project-meta-field project-meta-field--tags">
-            <dt>Tags</dt>
-            <dd>{project.tags.join(" · ")}</dd>
-          </div>
+        {project.coverImage ? (
+          <ProjectCover
+            src={project.coverImage}
+            alt={project.coverAlt ?? `${project.title} cover`}
+            priority
+          />
         ) : null}
-      </dl>
+
+        <dl className="project-meta" aria-label="Project details">
+          <div className="project-meta-field">
+            <dt>Role</dt>
+            <dd>{project.role}</dd>
+          </div>
+          <div className="project-meta-field">
+            <dt>Timeframe</dt>
+            <dd>{project.timeframe}</dd>
+          </div>
+          {project.tags.length > 0 ? (
+            <div className="project-meta-field project-meta-field--tags">
+              <dt>Tags</dt>
+              <dd>{project.tags.join(" · ")}</dd>
+            </div>
+          ) : null}
+        </dl>
+      </div>
 
       <ProjectHighlight
         quote={project.highlightQuote}
@@ -115,24 +127,22 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
       />
 
       {project.sections.length > 0 ? (
-        <>
-          <ProjectToc
-            sections={project.sections.map((s) => ({
-              title: s.title,
-              id: `section-${slugify(s.title)}`,
-            }))}
-          />
-          <section className="project-sections">
-            {project.sections.map((section) => (
+        <div className="case-book">
+          <aside className="book-index" aria-label="Chapter index">
+            <ProjectToc sections={entries} />
+          </aside>
+          <div className="book-pages">
+            {project.sections.map((section, index) => (
               <ProjectSectionCard
-                key={section.title}
+                key={entries[index].id}
                 section={section}
                 projectTitle={project.title}
-                id={`section-${slugify(section.title)}`}
+                id={entries[index].id}
+                position={{ index: index + 1, total: entries.length }}
               />
             ))}
-          </section>
-        </>
+          </div>
+        </div>
       ) : null}
 
       {project.bodyHtml.trim() ? (

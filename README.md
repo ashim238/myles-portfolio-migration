@@ -15,12 +15,7 @@ Open `http://localhost:3000`.
 
 ## Content editing (CMS-like workflow)
 
-Project content lives in:
-
-- `content/projects/navi.md`
-- `content/projects/understandingfafsa.md`
-
-Each file uses frontmatter + markdown body.
+Each file in `content/projects/` holds the project metadata, chapters and artwork. Start with the [case-study authoring guide in DESIGN.md](DESIGN.md#publish-another-case-study). The shared template supplies the Work Stuff listing, preview window and Reader layout.
 
 ### Frontmatter fields
 
@@ -31,7 +26,8 @@ Each file uses frontmatter + markdown body.
 - `status`: `published` or `draft`
 - `order`: sort order on homepage
 - `tags`: optional labels
-- `coverImage`: optional image URL for homepage card
+- `coverImage`: optional original for the folder cover and Reader opening
+- `coverAlt`: description of the visible work
 - `sections`: optional structured blocks for case-study layout
 - `highlightQuote`: optional pull-quote on project page
 - `outcomeMetricLabel` + `outcomeMetricValue`: optional outcome callout
@@ -44,7 +40,7 @@ Use `status: draft` while writing. Switch to `published` when ready to show on t
 sections:
   - title: Context
     body: Brief context paragraph.
-    image: https://example.com/mockup.png
+    image: /projects/project-slug/mockup.webp
     imageAlt: Mockup description
 ```
 

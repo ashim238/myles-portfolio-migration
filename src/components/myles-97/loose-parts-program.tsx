@@ -1,4 +1,4 @@
-import { CommandIcon } from "@/components/myles-97/command-icon";
+import { LoosePartShelf } from "./loose-part-shelf";
 import Link from "next/link";
 
 export type LoosePartSummary = {
@@ -6,13 +6,6 @@ export type LoosePartSummary = {
   title: string;
   medium: string;
   state: "live" | "testing" | "complete" | "archived";
-};
-
-const PLAY_STATE_LABELS: Record<LoosePartSummary["state"], string> = {
-  live: "Live",
-  testing: "Testing",
-  complete: "Complete",
-  archived: "Archived",
 };
 
 export function LoosePartsProgram({
@@ -39,25 +32,7 @@ export function LoosePartsProgram({
         <h2>Loose Parts</h2>
         <p>Small builds, material tests, and interaction studies collected in the full Loose Parts lab.</p>
       </header>
-      <ol className="myles97-loose-parts-list" role="list">
-        {entries.map((entry, index) => (
-          <li key={entry.slug}>
-            <span className="myles97-loose-parts-index" aria-hidden="true">
-              {String(index + 1).padStart(2, "0")}
-            </span>
-            <div>
-              <strong>{entry.title}</strong>
-              <span>{entry.medium}</span>
-              <span className="myles97-evidence-badge">
-                {PLAY_STATE_LABELS[entry.state]}
-              </span>
-            </div>
-            <Link href={`/play#${entry.slug}`} aria-label={`Open ${entry.title} in Loose Parts`}>
-              Open <CommandIcon name="external" />
-            </Link>
-          </li>
-        ))}
-      </ol>
+      <LoosePartShelf entries={entries} />
     </div>
   );
 }

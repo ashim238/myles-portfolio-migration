@@ -118,7 +118,7 @@ describe("dedicated project route visibility", () => {
       slug: "fresh-greens",
       render: FreshGreensPage,
       cta: "Try the safety-flow reconstruction",
-      href: "#fg-pulled-over",
+      href: "#fg-safety-reconstruction",
       artifactName: "Interactive case-study reconstruction",
       artifactRole: "heading" as const,
     },

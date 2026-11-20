@@ -24,6 +24,9 @@ const nowPlayingStyles = readFileSync(
   resolve(__dirname, "../../app/styles/myles-97-now-playing.css"),
   "utf8",
 );
+const archiveStyles = ["workstation-documents.css", "archive-layout.css", "project-artwork.css"]
+  .map((file) => readFileSync(resolve(__dirname, "../../app/styles", file), "utf8"))
+  .join("\n");
 const publicDirectory = resolve(__dirname, "../../../public");
 const laptopViewports = [
   { width: 1440, height: 900 },
@@ -83,6 +86,7 @@ function documentWith(desktopMarkup: string) {
           html, body { margin: 0; }
           ${desktopStyles}
           ${nowPlayingStyles}
+          ${archiveStyles}
         </style>
       </head>
       <body>
@@ -93,6 +97,7 @@ function documentWith(desktopMarkup: string) {
 
 function renderDesktopMarkup(openProgram?: ProgramDefinition) {
   const rendered = render(<DesktopHarness />);
+  fireEvent.click(within(rendered.container).getByRole("radio", { name: "Thumbnails" }));
   if (openProgram) {
     fireEvent.click(
       within(rendered.container).getByRole("button", {
@@ -166,10 +171,8 @@ async function projectPreviewGeometry(page: Page, programId: ProjectProgramId) {
   return page
     .locator(`[data-m97-program-window="${programId}"] .myles97-window-content`)
     .evaluate(async (content) => {
-      const cover = content.querySelector<HTMLElement>(
-        ".myles97-project-preview-cover",
-      );
-      const image = cover?.querySelector<SVGSVGElement>(".product-thumbnail-scene");
+      const cover = content.querySelector<HTMLElement>(".sample-browser");
+      const image = cover?.querySelector<HTMLElement>(".sample-detail .artwork-crop, .sample-comparison-capture");
       const action = content.querySelector<HTMLElement>(".myles97-primary-button");
       if (!cover || !image || !action) throw new Error("Incomplete project preview");
 
@@ -182,54 +185,40 @@ async function projectPreviewGeometry(page: Page, programId: ProjectProgramId) {
         child.right <= parent.right &&
         child.bottom <= parent.bottom &&
         child.left >= parent.left;
-      const sourceAspectRatio = image.viewBox.baseVal.width / image.viewBox.baseVal.height;
-      const sources = Array.from(image.querySelectorAll("image"));
-      const loaded = await Promise.all(sources.map(async (source) => {
-        const asset = new Image();
-        asset.src = source.href.baseVal;
-        try {
-          await asset.decode();
-          return asset.naturalWidth > 0;
-        } catch {
-          return false;
-        }
-      }));
-      const visibleImageWidth = Math.min(
-        imageRect.width,
-        imageRect.height * sourceAspectRatio,
-      );
-      const visibleImageHeight = visibleImageWidth / sourceAspectRatio;
-
+      const sources = Array.from(cover.querySelectorAll("img"));
+      await Promise.all(sources.map(source => source.decode()));
       return {
         noHorizontalScroll: content.scrollWidth === content.clientWidth,
         noVerticalScroll: content.scrollHeight === content.clientHeight,
         coverFullyVisible: inside(coverRect, contentRect),
         imageFullyVisible: inside(imageRect, coverRect) && inside(imageRect, contentRect),
         actionFullyVisible: inside(actionRect, contentRect),
-        preserveAspectRatio: image.getAttribute("preserveAspectRatio"),
-        sourceLoaded: sources.length > 0 && loaded.every(Boolean),
-        sourceAspectRatio,
-        visibleImageWidth,
-        visibleImageHeight,
+        sourceLoaded: sources.length === 2 && sources.every(source => source.naturalWidth > 0),
+        visibleImageWidth: imageRect.width,
       };
     });
 }
 
 describe("Myles 98 desktop content fit", () => {
-  it("fills the tall Work Stuff card with the full route and carries the FAFSA wave to both edges", async () => {
+  it("keeps the atlas location and route ticket fully visible in thumbnail view", async () => {
     const page = await browserPage({ width: 1314, height: 1057 }, renderDesktopMarkup());
-    const fresh = page.locator('[data-m97-selected-work-project="fresh-greens"] .product-thumbnail');
-    const mail = page.locator('[data-m97-selected-work-project="understandingfafsa"] .product-thumbnail');
-    const [frame, driver, route, mailFrame, wave] = await Promise.all([
-      fresh, fresh.locator('.fresh-driver-art'), fresh.locator('.fresh-preview-route'),
-      mail, mail.locator('.mail-thumbnail-wave path'),
-    ].map(element => element.boundingBox()));
-    if (!frame || !driver || !route || !mailFrame || !wave) throw new Error("Missing thumbnail artwork");
-    expect(Math.abs(driver.x - frame.x)).toBeLessThan(4);
-    expect(Math.abs(route.x + route.width - frame.x - frame.width)).toBeLessThan(4);
-    expect(Math.abs(route.height - frame.height)).toBeLessThan(4);
-    expect(Math.abs(wave.x - mailFrame.x)).toBeLessThan(1);
-    expect(Math.abs(wave.width - mailFrame.width)).toBeLessThan(1);
+    const cover = page.locator('.publication-cover[data-project="fresh-greens"]');
+    const art = await cover.boundingBox();
+    const ticket = await cover.locator(".atlas-ticket").boundingBox();
+    const dot = await cover.locator(".atlas-map").evaluate(el => {
+      const rect = el.getBoundingClientRect();
+      const matrix = new DOMMatrix(getComputedStyle(el).transform);
+      // The location dot is printed in the native screenshot at (645, 692) of 1290 × 850.
+      const dy = (.814 - .5) * parseFloat(getComputedStyle(el).height);
+      return { x:rect.x + rect.width/2 + matrix.c*dy, y:rect.y + rect.height/2 + matrix.d*dy };
+    });
+    if (!art || !ticket) throw new Error("Missing route artwork");
+    for (const edge of [[ticket.x,ticket.y],[ticket.x+ticket.width,ticket.y+ticket.height],[dot.x,dot.y]]) {
+      expect(edge[0]).toBeGreaterThanOrEqual(art.x);
+      expect(edge[0]).toBeLessThanOrEqual(art.x+art.width);
+      expect(edge[1]).toBeGreaterThanOrEqual(art.y);
+      expect(edge[1]).toBeLessThanOrEqual(art.y+art.height);
+    }
     await page.close();
   });
 
@@ -274,7 +263,7 @@ describe("Myles 98 desktop content fit", () => {
           noHorizontalScroll: element.scrollWidth === element.clientWidth,
           noVerticalScroll: element.scrollHeight === element.clientHeight,
           listHasVerticalOverflow,
-          totalThumbnails: element.querySelectorAll(".product-thumbnail-scene").length,
+          totalThumbnails: element.querySelectorAll(".publication-cover").length,
           initialVisibleActions,
           initialVisibleCovers,
           finalVisibleActions: visibleCount(actions),
@@ -386,11 +375,7 @@ describe("Myles 98 desktop content fit", () => {
           actionFullyVisible: true,
           sourceLoaded: true,
         });
-        expect(geometry.preserveAspectRatio, program.appName).toMatch(/ meet$/);
-        const sourceHeight = program.id === "fresh-greens" ? 548 : 360;
-        expect(geometry.sourceAspectRatio, program.appName).toBeCloseTo(640 / sourceHeight);
-        expect(geometry.visibleImageWidth, program.appName).toBeGreaterThanOrEqual(300);
-        expect(geometry.visibleImageHeight, program.appName).toBeGreaterThanOrEqual(160);
+        expect(geometry.visibleImageWidth, program.appName).toBeGreaterThan(135);
         await page.close();
       }
     },

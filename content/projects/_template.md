@@ -1,40 +1,25 @@
 ---
 slug: project-slug
 title: Project Title
-summary: One-line project summary for the homepage.
+summary: What changed, for whom, and why it mattered.
 role: Product Designer
-timeframe: Month YYYY - Month YYYY
+timeframe: Month YYYY – Month YYYY
 status: draft
 order: 99
-coverImage:
-highlightQuote:
-outcomeMetricLabel:
-outcomeMetricValue:
 tags:
   - Product Design
+# Add the cover and a description of the visible work.
+# coverImage: /projects/project-slug/cover.webp
+# coverAlt: Describe the design decision visible in the cover.
 sections:
-  - title: Context
-    body: Add context.
-  - title: Problem
-    body: Describe the core problem.
-  - title: Process
-    body: Explain your process and decisions.
-  - title: Outcome
-    body: Summarize results and next steps.
+  - title: What needed to change
+    body: Describe the situation and the part you owned.
+  - title: The decision
+    body: Explain one choice and the evidence behind it.
+    # The first section image also opens in the Work Stuff preview.
+    # images:
+    #   - src: /projects/project-slug/detail.webp
+    #     alt: Describe what the reader should notice.
+  - title: What happened
+    body: Describe the outcome you observed and any limits on the evidence.
 ---
-
-## Context
-
-Add context.
-
-## Problem
-
-Describe the core problem.
-
-## Process
-
-Explain your process, tradeoffs, and decisions.
-
-## Outcome
-
-Summarize results and next steps.

@@ -91,6 +91,29 @@ components:
 
 # Design System: Myles Ashitey Portfolio
 
+## Publish another case study
+
+Start with `npm run new:project -- --title="Project Name"`. It creates one draft from `content/projects/_template.md`. Open `/work/<slug>` locally to read it. Set `status: published` and choose its `order` when ready for Work Stuff. A draft URL is accessible to anyone who has the link if you deploy it. Use `hidden` for work that should return a 404.
+
+| Surface | What to supply | What the site provides |
+| --- | --- | --- |
+| Work Stuff | Title, one-sentence summary, role and a recognizable cover | Preview pane, Thumbnails and Details on desktop and Pocket, keyboard selection, and a project window |
+| Open preview | A section image that shows the decision at usable size, with alt text | The first section image as an expandable work sample and a link into the case study |
+| Reader opening | Timeframe, optional cover image and cover description | Document title, metadata and a two-column opening when space permits |
+| Chapters | A specific heading, a short account of the decision and the original evidence | Chapter index, reading measure, full-size image viewer and a return path to the desktop |
+
+Put approved public assets under `public/projects/<slug>/` and reference them from Markdown as `/projects/<slug>/…`. Use a section's `images` list with `src` and `alt`; the starter includes a commented example. If the project has no cover, the folder uses the first piece of evidence, then the document icon. The shared reader accepts additional Markdown after the structured chapters.
+
+### Visual decisions to carry forward
+
+- Keep the Work Stuff gradient, blue selection, beveled controls and pixel icons on the desktop. The window frame tells visitors how to act. Let original product colors, typography and imagery identify the project inside it.
+- Make the cover recognizable at folder size. Use the open preview to reveal a legible design decision. Fresh Greens uses an atlas on the cover and the actual route screen inside. UnderstandingFAFSA opens the newsletter comparison. A single original and a good crop are enough for a new study.
+- Use the existing book grid. At 1080px the opening can place its evidence beside the text. At 1200px the chapter index moves to the left rail. Keep body paragraphs near 65 characters per line and let the artifact span the evidence column. Align a caption with the artwork it explains.
+- Distinguish interactive controls from the image of a control. Keep the accessible name, focus outline, pressed state and reduced-motion behavior supplied by the shared components. Only add a Layers action when there are actual components or source crops to compare.
+- Open Work Stuff at 375px and 1440px. Select the new title in each folder view, open its preview with the keyboard, enlarge the evidence and return. Read the longest heading and the first screen of the original in each theme. Repeat at the layout switches when changing the grid. Run `npm run validate:content`, `npm test` and `npm run build`.
+
+The reusable page lives in `src/app/work/[slug]/page.tsx`. Window layout is in `src/app/styles/archive-layout.css` and Reader layout in `workstation-documents.css`. For a project that warrants custom art direction, the four authored covers are in `product-thumbnail.tsx` and their source samples in `src/lib/myles-97/preview-originals.ts`. A dedicated route or an illustrated cover is optional.
+
 ## 1. Overview
 
 **Creative North Star: "The Open Studio"**
@@ -198,14 +221,9 @@ Flat by default. Depth comes from typography hierarchy, generous spacing, and 1p
 - **States:** Default `var(--foreground)`. Hover: shift to `var(--accent)` of current page scope (sage on Fresh Greens; cyan-or-magenta on TikTok via channel logo).
 - **Mobile:** Same vertical list; touch targets pass 44×44.
 
-### Project Cards (homepage Work list)
+### Work Stuff project cards
 
-- **Corner Style:** `var(--rounded-md)` (0.7rem).
-- **Background:** `var(--surface)` (one tonal step from page background).
-- **Border:** None at rest; 1px `var(--line)` on hover.
-- **Internal Padding:** ~1.6rem.
-- **Content:** Title (headline scale) + summary line + tags + cover image. No icon-heading-body 3-up grid (PRODUCT.md anti-reference).
-- **States:** Hover lifts the title color one tonal step; image scale unchanged.
+The default Preview pane pairs file selection with one project. Thumbnails shows the covers together. Details makes titles and summaries easy to scan. All three use `SelectedWorkExplorer`, the same project data and the same reading and preview actions.
 
 ### Sticky Section TOC (`ProjectToc`)
 
@@ -248,10 +266,10 @@ Flat by default. Depth comes from typography hierarchy, generous spacing, and 1p
 - **Do** keep shared-shell, project-namespace, and artifact-local values in their owning layer; document narrowly scoped hardware and semantic shape exceptions.
 
 ### Don't:
-- **Don't** use side-stripe borders (`border-left: Npx solid var(--accent)` where N > 1). Absolute ban; the most recognizable tell of AI-generated UI. Replace with full borders, background tints, leading numbers, oversized leading glyphs, or nothing.
+- **Don't** use side-stripe borders (`border-left: Npx solid var(--accent)` where N > 1). The document jacket spine and active file treatment are intentional exceptions. Replace with full borders, background tints, leading numbers, oversized leading glyphs, or nothing.
 - **Don't** add tiny uppercase tracked eyebrows (`ABOUT`, `PROCESS`, `WORK`) above section headings. PRODUCT.md anti-reference: "SaaS-marketing landing-page tropes."
 - **Don't** add numbered section markers (`01 · About`, `02 · Process`) above section headings as decorative scaffolding. Numbers earn their place only when the section IS a sequence and the order carries information.
-- **Don't** use cream/sand/beige body backgrounds. PRODUCT.md anti-reference: "the 2026 AI default." The dark + light system here is deliberate; neither defaults to warm-neutral.
+- **Keep** the Reader paper and Work Stuff surfaces defined by the active theme. Avoid introducing additional cream/sand/beige backgrounds. PRODUCT.md anti-reference: "the 2026 AI default." The dark + light system here is deliberate; neither defaults to warm-neutral.
 - **Don't** ship identical card grids (icon + heading + body × 3) as a default layout pattern. PRODUCT.md anti-reference.
 - **Don't** use gradient text (`background-clip: text` with a gradient). Decorative, never meaningful.
 - **Don't** use glassmorphism (decorative `backdrop-filter: blur`) as a default container style.

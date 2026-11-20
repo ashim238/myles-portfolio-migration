@@ -6,6 +6,7 @@ import {
   useContext,
   useState,
   useEffect,
+  useLayoutEffect,
   useCallback,
   useRef,
   type ReactNode,
@@ -16,7 +17,7 @@ const MIN_ZOOM = 0.75;
 const MAX_ZOOM = 2.5;
 const ZOOM_STEP = 0.25;
 
-type LightboxOptions = { unoptimized?: boolean; overlay?: ReactNode; initialView?: "read" };
+type LightboxOptions = { unoptimized?: boolean; overlay?: ReactNode; initialView?: "read"; initialCrop?: readonly [number, number, number, number] };
 
 type LightboxState = LightboxOptions & {
   src: string;
@@ -51,6 +52,7 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
   const minimumScale = Math.min(MIN_ZOOM, fitScale);
   const contentRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
+  const initialRegionRef = useRef<LightboxOptions["initialCrop"]>(undefined);
   const triggerRef = useRef<HTMLElement | null>(null);
 
   const openLightbox = useCallback((
@@ -63,6 +65,7 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
     // Remember what opened the dialog so focus can return there on close.
     triggerRef.current =
       document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    initialRegionRef.current = options?.initialCrop;
     setViewMode(options?.initialView ?? "fit");
     setZoom(1);
     setFitScale(1);
@@ -91,6 +94,29 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
     setZoom(next);
     setViewMode("actual");
   }
+
+  // Preserve the subject the visitor just inspected when opening its full source.
+  useLayoutEffect(() => {
+    const crop = initialRegionRef.current;
+    const viewport = frameRef.current?.querySelector<HTMLElement>(".lb-viewport");
+    const image = imageRef.current;
+    if (!crop || !state || !viewport || !image) return;
+    const [x, y, w, h] = crop;
+    if (viewMode === "fit") {
+      const width = Math.min(window.innerWidth * .92, window.innerWidth - 22);
+      const height = Math.max(viewport.clientHeight, window.innerHeight * .60);
+      const target = Math.min(1, width * .86 / (state.width * w), height * .86 / (state.height * h));
+      setFitScale(image.offsetWidth / state.width);
+      setZoom(Math.max(target, image.offsetWidth / state.width));
+      setViewMode("actual");
+      return;
+    }
+    if (viewMode === "actual") {
+      viewport.scrollLeft = (x + w / 2) * image.offsetWidth - viewport.clientWidth / 2;
+      viewport.scrollTop = (y + h / 2) * image.offsetHeight - viewport.clientHeight / 2;
+      initialRegionRef.current = undefined;
+    }
+  }, [state, viewMode]);
 
   useEffect(() => {
     const image = imageRef.current;
@@ -185,86 +211,91 @@ export function LightboxProvider({ children }: { children: ReactNode }) {
             aria-modal="true"
             aria-label={state.alt}
           >
-            <button className="lb-close reader-control" onClick={close} aria-label="Close">
-              <CommandIcon name="close" />
-            </button>
-            <div
-              className="lb-viewport"
-              tabIndex={0}
-              role="region"
-              aria-label="Image viewing area. Use arrow keys or scroll to inspect the image."
-            >
-              <div className="lb-artwork">
-                <Image
-                  ref={imageRef}
-                  className="lb-image"
-                  src={state.src}
-                  alt={state.alt}
-                  width={state.width}
-                  height={state.height}
-                  unoptimized={viewMode === "actual" || state.unoptimized}
-                  sizes={viewMode === "fit" ? "92vw" : undefined}
-                  style={
-                    viewMode === "actual"
-                      ? { width: `${state.width * zoom}px`, height: `${state.height * zoom}px` }
-                      : viewMode === "read"
-                        ? { width: `min(92vw, 42rem, ${state.width}px)`, height: "auto" }
-                        : undefined
-                  }
-                />
-                {state.overlay}
+            <div className="lb-document">
+              <div className="lb-document-heading">
+                <span title={state.alt}>{state.alt}</span>
+                <button className="lb-close reader-control" onClick={close} aria-label="Close">
+                  <CommandIcon name="close" />
+                </button>
               </div>
-            </div>
-            <div className="lb-toolbar" aria-label="Image viewing controls">
-              {state.initialView === "read" && (
+              <div
+                className="lb-viewport"
+                tabIndex={0}
+                role="region"
+                aria-label="Image viewing area. Use arrow keys or scroll to inspect the image."
+              >
+                <div className="lb-artwork">
+                  <Image
+                    ref={imageRef}
+                    className="lb-image"
+                    src={state.src}
+                    alt={state.alt}
+                    width={state.width}
+                    height={state.height}
+                    unoptimized={viewMode === "actual" || state.unoptimized}
+                    sizes={viewMode === "fit" ? "92vw" : undefined}
+                    style={
+                      viewMode === "actual"
+                        ? { width: `${state.width * zoom}px`, height: `${state.height * zoom}px` }
+                        : viewMode === "read"
+                          ? { width: `min(92vw, 42rem, ${state.width}px)`, height: "auto" }
+                          : undefined
+                    }
+                  />
+                  {state.overlay}
+                </div>
+              </div>
+              <div className="lb-toolbar" aria-label="Image viewing controls">
+                {state.initialView === "read" && (
+                  <button
+                    className="lb-control"
+                    type="button"
+                    onClick={() => setViewMode("read")}
+                    aria-pressed={viewMode === "read"}
+                  >
+                    Read
+                  </button>
+                )}
                 <button
                   className="lb-control"
                   type="button"
-                  onClick={() => setViewMode("read")}
-                  aria-pressed={viewMode === "read"}
+                  onClick={setFit}
+                  aria-pressed={viewMode === "fit"}
                 >
-                  Read
+                  Fit
                 </button>
-              )}
-              <button
-                className="lb-control"
-                type="button"
-                onClick={setFit}
-                aria-pressed={viewMode === "fit"}
-              >
-                Fit
-              </button>
-              <button
-                className="lb-control"
-                type="button"
-                onClick={setActual}
-                aria-pressed={viewMode === "actual" && zoom === 1}
-              >
-                Actual size
-              </button>
-              <span className="lb-zoom-group">
                 <button
-                  className="lb-control lb-zoom-button"
+                  className="lb-control"
                   type="button"
-                  onClick={() => adjustZoom(-ZOOM_STEP)}
-                  disabled={visibleScale <= minimumScale}
-                  aria-label="Zoom out"
+                  onClick={setActual}
+                  aria-pressed={viewMode === "actual" && zoom === 1}
                 >
-                  <CommandIcon name="subtract" />
+                  Actual size
                 </button>
-                <span className="lb-zoom-readout" aria-live="polite">
-                  {Math.round(visibleScale * 100)}%
+                <span className="lb-zoom-group">
+                  <button
+                    className="lb-control lb-zoom-button"
+                    type="button"
+                    onClick={() => adjustZoom(-ZOOM_STEP)}
+                    disabled={visibleScale <= minimumScale}
+                    aria-label="Zoom out"
+                  >
+                    <CommandIcon name="subtract" />
+                  </button>
+                  <span className="lb-zoom-readout" aria-live="polite">
+                    {Math.round(visibleScale * 100)}%
+                  </span>
+                  <button
+                    className="lb-control lb-zoom-button"
+                    type="button"
+                    onClick={() => adjustZoom(ZOOM_STEP)}
+                    disabled={visibleScale >= MAX_ZOOM}
+                    aria-label="Zoom in"
+                  >
+                    <CommandIcon name="add" />
+                  </button>
                 </span>
-                <button
-                  className="lb-control lb-zoom-button"
-                  type="button"
-                  onClick={() => adjustZoom(ZOOM_STEP)}
-                  disabled={visibleScale >= MAX_ZOOM}
-                  aria-label="Zoom in"
-                >
-                  <CommandIcon name="add" />
-                </button>
-              </span>
+              </div>
             </div>
           </div>
         </>

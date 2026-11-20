@@ -6,6 +6,7 @@ type ProjectSectionCardProps = {
   section: ProjectSection;
   projectTitle: string;
   id?: string;
+  position?: { index: number; total: number };
 };
 
 /**
@@ -27,10 +28,13 @@ function variantForAspect(width: number, height: number): "tall" | "portrait" | 
   return "landscape";
 }
 
-export function ProjectSectionCard({ section, projectTitle, id }: ProjectSectionCardProps) {
+export function ProjectSectionCard({ section, projectTitle, id, position }: ProjectSectionCardProps) {
   return (
-    <article className="project-section" id={id}>
-      <h2>{section.title}</h2>
+    <article className={position ? "project-chapter" : "project-section"} aria-labelledby={id}>
+      <header className="chapter-opening">
+        {position && <p className="project-chapter-meta"><span className="project-chapter-count">{position.index} of {position.total}</span></p>}
+        <h2 id={id} className="project-chapter-title">{section.title}</h2>
+      </header>
       <div
         className="project-section-body"
         dangerouslySetInnerHTML={{ __html: section.bodyHtml }}

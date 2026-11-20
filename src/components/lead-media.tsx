@@ -3,6 +3,7 @@ import { LeadVideo } from "@/components/lead-video";
 
 type LeadMediaProps = {
   cover: string;
+  smallCover?: string;
   alt: string;
   clip?: string;
   width: number;
@@ -12,6 +13,7 @@ type LeadMediaProps = {
 
 export function LeadMedia({
   cover,
+  smallCover,
   alt,
   clip,
   width,
@@ -23,7 +25,7 @@ export function LeadMedia({
 
   return (
     <figure
-      className={`case-lead-media${presentationClass}`}
+      className={`case-lead-media${presentationClass}`} data-prepared-cover={Boolean(smallCover) || undefined}
       data-project-enter-cover
     >
       {clip ? (
@@ -34,6 +36,13 @@ export function LeadMedia({
           width={width}
           height={height}
         />
+      ) : smallCover ? (
+        <picture>
+          <source srcSet={`${smallCover} 640w, ${cover} 1280w`}
+            sizes="(max-width: 1079px) min(90vw, 688px), (max-width: 1399px) 46vw, 584px" />
+          <Image className="case-lead-img" src={cover} alt={alt} width={width} height={height}
+            unoptimized loading="eager" fetchPriority="high" />
+        </picture>
       ) : (
         <Image
           className="case-lead-img"

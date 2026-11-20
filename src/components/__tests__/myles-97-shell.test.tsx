@@ -117,6 +117,7 @@ describe("Myles98 product shell", () => {
       <Myles97Shell programs={programs} looseParts={looseParts} />,
     );
 
+    fireEvent.click(within(container).getByRole("radio", { name: "Thumbnails" }));
     expect(
       Array.from(container.querySelectorAll(".product-thumbnail"), (thumbnail) =>
         thumbnail.getAttribute("data-project"),
@@ -337,7 +338,7 @@ describe("Myles98 product shell", () => {
     const browse = screen.getByRole("button", { name: "Browse projects" });
     await act(async () => browse.focus());
     const link = screen.getByRole("link", { name: "Read Fresh Greens case study" });
-    for (let step = 0; step < 5 && document.activeElement !== link; step++) {
+    for (let step = 0; step < 14 && document.activeElement !== link; step++) {
       await user.tab();
     }
     expect(link).toHaveFocus();

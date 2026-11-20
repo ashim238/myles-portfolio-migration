@@ -5,6 +5,7 @@
 
 import type { ReactNode } from "react";
 import { DrawOnView } from "@/components/draw-on-view";
+import { RouteSourceList } from "@/components/fresh-greens/route-source-list";
 import { RESERVED_LANES, type ReservedLane } from "@/lib/fresh-greens/palette";
 
 /* ──────────────────────────────────────────
@@ -123,15 +124,7 @@ export function ArchitectureDiagram() {
     <figure className="fg-arch fg-route-scoring" aria-label="How Fresh Greens scores routes">
       <ol className="fg-route-scoring-flow" role="list">
         <li className="fg-route-scoring-step">
-          <h3>Data sources</h3>
-          <dl className="fg-route-scoring-sources">
-            {routeDataSources.map(({ name, detail }) => (
-              <div key={name}>
-                <dt>{name}</dt>
-                <dd>{detail}</dd>
-              </div>
-            ))}
-          </dl>
+          <RouteSourceList sources={routeDataSources} />
         </li>
         <li className="fg-route-scoring-step">
           <span className="fg-route-scoring-arrow" aria-hidden="true">↓</span>

@@ -79,7 +79,7 @@ export const CASE_STUDY_CHAPTERS = {
     {
       id: "tt-research",
       stage: "Choose",
-      title: "Why three directions moved forward",
+      title: "Finding three fashion directions on TikTok",
     },
     {
       id: "tt-system",

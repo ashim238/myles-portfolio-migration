@@ -7,13 +7,23 @@ function routeSource(path: string) {
 }
 
 describe("case-study lead-media geometry", () => {
-  it("uses verified Fresh Greens dimensions and presentation", () => {
-    const source = routeSource("src/app/work/fresh-greens/page.tsx");
+  it.each(["fresh-greens", "navi", "understandingfafsa"])("declares the actual opening dimensions and serves two source sizes for %s", async (slug) => {
+    const source = routeSource(`src/app/work/${slug}/page.tsx`);
+    const media = source.match(/<LeadMedia[\s\S]*?\/>/)?.[0] ?? "";
+    const { default: sharp } = await import("sharp");
+    for (const width of [640, 1280]) {
+      const file = `/projects/${slug}/opening-${width}.webp`;
+      const info = await sharp(resolve(process.cwd(), "public" + file)).metadata();
+      expect(info.width).toBe(width);
+      expect(media).toContain(file);
+      if (width === 1280) {
+        expect(media).toContain(`width={${width}}`);
+        expect(media).toContain(`height={${info.height}}`);
+      }
+    }
+  });
 
-    expect(source).toMatch(
-      /<LeadMedia[\s\S]*?cover="\/projects\/fresh-greens\/cover\.png"[\s\S]*?width=\{2560\}[\s\S]*?height=\{1862\}[\s\S]*?presentation="fresh-greens"[\s\S]*?\/>/,
-    );
-
+  it("preserves the optimized Fresh Greens route poster", () => {
     const original = resolve(
       process.cwd(),
       "public/projects/fresh-greens/v2/en-route.png",
@@ -26,15 +36,4 @@ describe("case-study lead-media geometry", () => {
     expect(statSync(poster).size).toBeLessThan(statSync(original).size);
   });
 
-  it("uses verified Navi dimensions", () => {
-    expect(routeSource("src/app/work/navi/page.tsx")).toMatch(
-      /<LeadMedia[\s\S]*?cover="\/projects\/navi\/cover\.png"[\s\S]*?width=\{2048\}[\s\S]*?height=\{1365\}[\s\S]*?\/>/,
-    );
-  });
-
-  it("uses verified Understanding FAFSA dimensions", () => {
-    expect(routeSource("src/app/work/understandingfafsa/page.tsx")).toMatch(
-      /<LeadMedia[\s\S]*?cover="\/projects\/understandingfafsa\/cover\.png"[\s\S]*?width=\{4000\}[\s\S]*?height=\{3000\}[\s\S]*?\/>/,
-    );
-  });
 });

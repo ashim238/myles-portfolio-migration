@@ -1,0 +1,286 @@
+/* Shared by the desktop preview windows, case studies and Loose Parts. */
+/* The provider content needs one inert subtree without adding a layout box. */
+.lb-content {
+  display: contents;
+}
+
+/* Backdrop — separate element, full-screen, click closes */
+.lb-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: lb-fade 180ms ease both;
+  cursor: zoom-out;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .lb-backdrop {
+    background: rgba(0, 0, 0, 0.92);
+  }
+}
+
+/* Image frame — centered above backdrop */
+.lb-frame {
+  position: fixed;
+  inset: 0;
+  z-index: 9001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  overflow: auto;
+  padding: 4.5rem 1rem 5.5rem;
+  pointer-events: none;
+  animation: lb-scale 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.lb-frame > * {
+  pointer-events: auto;
+}
+
+.lb-viewport {
+  display: flex;
+  max-width: 92vw;
+  max-height: 92vh;
+  overflow: auto;
+  border-radius: 0.7rem;
+  pointer-events: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: rgb(255 255 255 / 45%) rgb(255 255 255 / 10%);
+  scrollbar-width: thin;
+}
+
+.lb-viewport:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 4px;
+}
+
+.lb-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-height: 92vh;
+  max-width: 92vw;
+  object-fit: contain;
+}
+
+.lb-frame[data-lb-view="actual"] .lb-viewport {
+  max-width: min(92vw, calc(100vw - 2rem));
+  max-height: min(78vh, calc(100vh - 10rem));
+}
+
+.lb-frame[data-lb-view="actual"] .lb-image {
+  max-width: none;
+  max-height: none;
+}
+
+.lb-toolbar {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  left: 50%;
+  z-index: 9002;
+  display: inline-flex;
+  width: max-content;
+  max-width: calc(100vw - 2rem);
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.3rem;
+  transform: translateX(-50%);
+  border: 1px solid rgb(255 255 255 / 25%);
+  border-radius: 0.55rem;
+  background: rgb(20 20 20 / 88%);
+  color: #fff;
+  box-shadow: 0 0.4rem 1.5rem rgb(0 0 0 / 30%);
+  pointer-events: auto;
+}
+
+.lb-control {
+  min-height: 2.2rem;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid transparent;
+  border-radius: 0.3rem;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: 600 0.76rem/1 var(--m97-ui-font);
+}
+
+.lb-control:hover:not(:disabled),
+.lb-control[aria-pressed="true"] {
+  border-color: rgb(255 255 255 / 45%);
+  background: rgb(255 255 255 / 15%);
+}
+
+.lb-control:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.lb-control:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.lb-zoom-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  margin-left: 0.15rem;
+  padding-left: 0.35rem;
+  border-left: 1px solid rgb(255 255 255 / 24%);
+}
+
+.lb-zoom-button {
+  min-width: 2.2rem;
+  padding-inline: 0.35rem;
+  font-size: 1rem;
+}
+
+.lb-zoom-readout {
+  min-width: 2.7rem;
+  color: rgb(255 255 255 / 80%);
+  font: 600 0.72rem/1 var(--m97-ui-font);
+  text-align: center;
+}
+
+@keyframes lb-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes lb-scale {
+  from { transform: scale(0.94); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+.lb-close {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 9002;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 160ms ease;
+  pointer-events: auto;
+}
+
+.lb-close:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+@media (max-width: 520px) {
+  .lb-frame {
+    padding-inline: 0.5rem;
+  }
+
+  .lb-toolbar {
+    right: 0.5rem;
+    bottom: 0.5rem;
+    left: 0.5rem;
+    width: auto;
+    max-width: none;
+    transform: none;
+  }
+
+  .lb-control {
+    flex: 1 1 auto;
+    padding-inline: 0.4rem;
+    font-size: 0.7rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lb-backdrop,
+  .lb-frame {
+    animation: none;
+  }
+}
+
+/* The image and annotations share one intrinsic-size scroll surface. */
+.lb-artwork {
+  align-self: flex-start;
+  position: relative;
+  flex: none;
+}
+.lb-frame[data-lb-view="fit"] :is(.lb-viewport, .lb-image) {
+  max-height: min(92vh, calc(100dvh - 10rem));
+}
+
+/* Raised actions, recessed selection and a separate keyboard focus indicator. */
+.lb-toolbar {
+  color-scheme: light;
+  border: 1px solid;
+  border-color: #fbfaf4 #373932 #373932 #fbfaf4;
+  border-radius: 2px;
+  padding: 5px;
+  gap: 4px;
+  color: #191b18;
+  background: #d5d3cb;
+  box-shadow: 0 2px 4px #0006;
+}
+.lb-toolbar .lb-control {
+  min-height: 44px;
+  padding-inline: 10px;
+  border: 1px solid;
+  border-color: #faf9f3 #57594f #57594f #faf9f3;
+  border-radius: 0;
+  background: #d5d3cb;
+  color: #191b18;
+  box-shadow: inset -1px -1px #aaa99f;
+}
+.lb-toolbar .lb-control:is([aria-pressed="true"], :active) {
+  border-color: #56584f #fcfbf6 #fcfbf6 #56584f;
+  background: #c4c3b9;
+  box-shadow: inset 1px 1px #919386;
+  font-weight: 750;
+}
+.lb-toolbar .lb-control:focus-visible {
+  outline: 2px dotted #171a13;
+  outline-offset: -6px;
+}
+.lb-toolbar .lb-control:disabled {
+  color: #595b52;
+  background: #cecec4;
+  box-shadow: none;
+  opacity: 1;
+}
+.lb-toolbar .lb-zoom-button { min-width: 44px; }
+.lb-toolbar .lb-zoom-group { gap: 4px; border-left: 1px solid #9b9c92; padding-left: 7px; margin-left: 2px; }
+.lb-toolbar .lb-zoom-readout {
+  min-width: 46px;
+  padding: 5px 3px;
+  border: 1px solid;
+  border-color: #808176 #faf9f4 #faf9f4 #808176;
+  color: #20231d;
+  background: #eae9e2;
+  font-variant-numeric: tabular-nums;
+}
+@media (forced-colors: active) {
+  .lb-toolbar .lb-control[aria-pressed="true"] {
+    border: 2px solid Highlight;
+  }
+}
+
+.lb-frame[data-lb-view="read"] .lb-viewport {
+  max-height: min(92vh, calc(100dvh - 10rem));
+}
+.lb-frame[data-lb-view="read"] .lb-image {
+  max-width: none;
+  max-height: none;
+}
+.lb-frame[data-lb-long-capture] .lb-toolbar {
+  flex-wrap: wrap;
+}

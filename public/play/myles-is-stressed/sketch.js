@@ -372,7 +372,7 @@ function setup() {
 
   statusEl = document.getElementById("game-status");
   setupAssetLoads();
-  bindKeyScrollBlocker();
+  bindGameControls();
   startNewRound();
   setStatus(STATUS.intro);
 }
@@ -402,27 +402,15 @@ function draw() {
   updateGameplay();
 }
 
-function keyPressed() {
-  if (keyCode === 32) {
-    if (gameState === "intro") {
-      gameState = "running";
-      setStatus(STATUS.running);
-      return;
-    }
-    if (gameState === "gameOver" || gameState === "win") {
-      startNewRound();
-      gameState = "running";
-      setStatus(STATUS.running);
-      return;
-    }
-  }
+function startOrRetry() {
+  if (gameState === "running") return;
+  if (gameState !== "intro") startNewRound();
+  gameState = "running";
+  setStatus(STATUS.running);
+}
 
-  if (gameState !== "running") return;
-
-  const direction = keyToDirection(keyCode);
-  if (direction === null) return;
-
-  if (canMoveToDirection(direction)) {
+function movePlayer(direction) {
+  if (gameState === "running" && canMoveToDirection(direction)) {
     pacman.move(direction);
     resolvePlayerCollisions();
   }
@@ -789,14 +777,6 @@ function manhattanDistance(first, second) {
   return Math.abs(first.x - second.x) + Math.abs(first.y - second.y);
 }
 
-function keyToDirection(keyCodeValue) {
-  if (keyCodeValue === RIGHT_ARROW) return 0;
-  if (keyCodeValue === DOWN_ARROW) return 1;
-  if (keyCodeValue === LEFT_ARROW) return 2;
-  if (keyCodeValue === UP_ARROW) return 3;
-  return null;
-}
-
 function touching(a, b) {
   const distanceBetween = dist(
     a.x + a.w / 2,
@@ -814,10 +794,21 @@ function wrapActor(actor) {
   if (actor.y >= height) actor.y = 0;
 }
 
-function bindKeyScrollBlocker() {
+function bindGameControls() {
+  document.getElementById("start-game").addEventListener("click", startOrRetry);
+  for (const button of document.querySelectorAll("[data-direction]")) {
+    button.addEventListener("click", () => movePlayer(Number(button.dataset.direction)));
+  }
+  const arrows = ["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp"];
   window.addEventListener("keydown", (event) => {
-    if ([32, 37, 38, 39, 40].includes(event.keyCode)) {
+    if (event.altKey || event.ctrlKey || event.metaKey) return;
+    const direction = arrows.indexOf(event.key);
+    if (direction >= 0) {
       event.preventDefault();
+      movePlayer(direction);
+    } else if (event.code === "Space" && !event.target.closest?.("button")) {
+      event.preventDefault();
+      startOrRetry();
     }
   });
 }
@@ -825,6 +816,12 @@ function bindKeyScrollBlocker() {
 function setStatus(message) {
   if (statusEl) {
     statusEl.textContent = message;
+  }
+  const start = document.getElementById("start-game");
+  start.disabled = gameState === "running";
+  start.textContent = gameState === "win" || gameState === "gameOver" ? "Restart" : "Start";
+  for (const button of document.querySelectorAll("[data-direction]")) {
+    button.disabled = gameState !== "running";
   }
 }
 

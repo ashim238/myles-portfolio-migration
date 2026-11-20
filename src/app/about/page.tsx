@@ -1,3 +1,4 @@
+import { Myles97Icon } from "@/components/myles-97/icons";
 import Link from "next/link";
 import { SystemDocumentShell } from "@/components/myles-97/system-document-shell";
 import { createRouteMetadata, siteConfig } from "@/lib/site-config";
@@ -58,12 +59,14 @@ export default function AboutPage() {
               design, RPGs, or a bit of both, my email is below.
             </p>
           </div>
+
         </div>
 
         <section className="about-aside" aria-labelledby="about-details-title">
           <h2 className="sr-only" id="about-details-title">
             Quick details
           </h2>
+          <Myles97Icon name="profile" size={96} variant="color" className="address-portrait" />
           <dl className="about-details">
             <div className="about-detail">
               <dt>Based in</dt>

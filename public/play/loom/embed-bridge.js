@@ -1,4 +1,6 @@
 (() => {
+  const labReturn = document.querySelector(".lab-return");
+  if (labReturn && window.parent === window) labReturn.hidden = false;
   const origin = window.location.origin;
   const systemQuery = window.matchMedia("(prefers-color-scheme: light)");
   const contentRoot = document.querySelector("[data-embed-content]");

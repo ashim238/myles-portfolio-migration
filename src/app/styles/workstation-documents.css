@@ -1,0 +1,228 @@
+/* A folder for discovering work, a document for reading, and a separate
+   inspection window for original assets. Project artwork owns its own colors. */
+@media screen and (forced-colors: none) {
+  .myles97-shell:not([data-m97-contrast="high"]) .myles97-window[data-focused="true"] .myles97-titlebar,
+  .pocket97-shell:not([data-m97-contrast="high"]) .pocket97-app-header,
+  .myles98-document-titlebar,
+  .reader-header,
+  .lb-document-heading {
+    background: var(--m98-title-surface);
+    color: #fff;
+  }
+  .reader-header .reader-header-project strong { color: #fff; }
+}
+
+/* The stage and page count act as the folio of each chapter. */
+.reader-mode .project-chapter .chapter-opening {
+  --folio-line: color-mix(in srgb,var(--m97-reader-ink) 36%,var(--m97-paper));
+  display: grid;
+  align-items: start;
+  gap: 12px;
+  border-top: 1px solid var(--folio-line);
+  padding-top: 14px;
+  margin-bottom: clamp(22px,3vw,40px);
+}
+.reader-mode.reader-mode .project-chapter .chapter-opening .project-chapter-meta {
+  justify-content: flex-start;
+  align-items: baseline;
+  gap: 9px;
+  margin: 0;
+  color: var(--m97-reader-muted);
+  font: 12px/1.4 var(--m97-ui-font);
+}
+.reader-mode .chapter-opening .project-chapter-stage { color: var(--m97-reader-ink); font-weight: 700; }
+.reader-mode.reader-mode .project-chapter .chapter-opening .project-chapter-title {
+  margin: 0;
+  padding: 0;
+  max-width: 29ch;
+  font: 500 clamp(31px,4vw,58px)/1.06 var(--m97-reader-font);
+  letter-spacing: -.035em;
+}
+.reader-mode .chapter-opening + .project-chapter-motif { display: none; }
+@media (min-width: 900px) {
+  .reader-mode .project-chapter .chapter-opening {
+    grid-template-columns: minmax(8rem,0.24fr) minmax(0,1fr);
+    align-items: start;
+    padding-top: 22px;
+    column-gap: clamp(24px,4vw,56px);
+  }
+  .reader-mode.reader-mode .project-chapter .chapter-opening .project-chapter-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding-top: 4px;
+  }
+}
+@media (min-width: 768px) and (max-width: 1599px) and (forced-colors: none) {
+  .reader-mode.reader-mode .project-toc-list { gap: 2px; align-items: end; }
+  .reader-mode.reader-mode .project-toc-list .project-toc-link.reader-control {
+    border: 1px solid;
+    border-color: #fff #888 #777 #999;
+    box-shadow: none;
+    border-radius: 4px 4px 0 0;
+    padding-inline: 11px;
+    background: #dcdcd5;
+    color: #363b3d;
+  }
+  .reader-mode.reader-mode .project-toc-list .project-toc-link--active.reader-control {
+    background: var(--m97-paper);
+    color: #152e65;
+    box-shadow: inset 0 3px #244b87;
+    border-bottom-color: var(--m97-paper);
+  }
+  .reader-mode.reader-mode .project-toc-list .project-toc-text { background: transparent; }
+  .reader-mode.reader-mode .project-toc-dot { display: none; }
+}
+
+/* Let the image and controls determine the window width. Its title can
+   truncate without changing the size of the art. The backdrop stays clickable. */
+.lb-frame { padding: max(6px,1.3vmin); }
+.lb-document {
+  display: grid;
+  grid-template-columns: minmax(0,auto);
+  justify-items: stretch;
+  width: fit-content;
+  max-width: 100%;
+  padding: 3px;
+  background: #c5c6c3;
+  color: #15171b;
+  box-shadow: var(--m97-bevel-raised),4px 5px 0 #0005;
+}
+.lb-document-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 2px 2px 9px;
+  background-color: #172e70;
+  color: white;
+  font: 700 13px/1.2 var(--m97-ui-font);
+}
+.lb-document-heading > span { flex: 1; width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.lb-document .lb-close { position: static; width: 44px; height: 44px; min-height: 44px; margin: 0; flex: none; }
+.lb-document .lb-viewport {
+  margin: 2px auto 0;
+  max-width: min(92vw,calc(100vw - 22px));
+  max-height: calc(100dvh - 9rem);
+  border-radius: 0;
+  scrollbar-color: #787e80 #e1e2df;
+}
+.lb-document .lb-viewport:focus-visible { outline: 2px solid #163d79; outline-offset: -2px; }
+.lb-frame .lb-document .lb-toolbar {
+  position: static;
+  width: auto;
+  max-width: none;
+  margin: 2px 0 0;
+  transform: none;
+  flex-wrap: wrap;
+  justify-content: center;
+  box-shadow: none;
+  border-width: 1px 0 0;
+  border-radius: 0;
+}
+@media (max-width: 520px) {
+  .lb-document .lb-toolbar { gap: 2px; padding-inline: 2px; }
+  .lb-document .lb-zoom-group { gap: 1px; margin: 0; padding-left: 2px; }
+}
+
+.reader-mode .case-frontispiece { display: flow-root; }
+@media (min-width: 1080px) {
+  .reader-mode.reader-mode .case-frontispiece {
+    display: grid;
+    width: min(calc(100% - 64px),76rem);
+    grid-template-columns: minmax(0,.92fr) minmax(0,1.08fr);
+    grid-template-rows: auto auto;
+    column-gap: clamp(36px,4.5vw,76px);
+    align-items: start;
+    margin: clamp(28px,4vw,62px) auto 38px;
+  }
+  .reader-mode.reader-mode .case-frontispiece > .project-hero,
+  .reader-mode.reader-mode .case-frontispiece > .project-opening-facts {
+    grid-column: 1;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+  }
+  .reader-mode.reader-mode .case-frontispiece > .project-hero { padding: 0; }
+  .reader-mode.reader-mode .case-frontispiece .project-hero-title {
+    max-width: 100%;
+    font-size: clamp(48px,5vw,78px);
+    line-height: .98;
+    letter-spacing: -.05em;
+  }
+  .reader-mode.reader-mode .case-frontispiece .project-hero-lede { max-width: 41ch; }
+  .reader-mode.reader-mode.uf-page .case-frontispiece .uf-opening-detail { display: grid; grid-template-columns: 1fr; gap: 0; margin-top: 1.3rem; }
+  .reader-mode.reader-mode .case-frontispiece .project-opening-facts { margin: 1.3rem 0 0; }
+  .reader-mode.reader-mode .case-frontispiece > .case-lead-media {
+    grid-area: 1 / 2 / 3;
+    align-self: start;
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    border: 1px solid #9b9d94;
+  }
+  .case-frontispiece .case-lead-media--fresh-greens {
+    aspect-ratio: 2560 / 1862;
+    --fg-cover-scale: 1;
+  }
+  .reader-mode.uf-page .case-frontispiece .case-lead-img {
+    transform: scale(1.36);
+    transform-origin: 50% 50%;
+  }
+}
+
+.myles98-system-document.myles98-system-document { box-shadow: none; }
+.myles98-system-document :is(.about-heading,.resume-heading) { font-family: var(--m97-reader-font); font-weight: 500; }
+.myles98-system-document .play-entry { border-top: 1px solid var(--m98-paper-rule); border-bottom: 0; }
+.myles98-system-document .play-entry-index { color: var(--m98-paper-text); font-variant-numeric: tabular-nums; }
+@media (min-width: 960px) {
+  .myles98-system-document .play-section { max-width: none; }
+  .myles98-system-document .play-entry-body:has(.specimen-card) {
+    grid-template-columns: minmax(0,1.25fr) minmax(0,1fr);
+    column-gap: clamp(24px,4vw,54px);
+    align-items: start;
+  }
+  .play-entry-body:has(.specimen-card) > .specimen-card { grid-area: 1 / 1 / span 4; width: 100%; margin: 0; }
+  .play-entry-body:has(.specimen-card) > :not(.specimen-card) { grid-column: 2; }
+}
+
+/* The reader picks up the spine of the publication that opened it. */
+.reader-mode[data-project-slug="fresh-greens"] { --folio-cloth:#234e40; --folio-edge:#c8d799; }
+.reader-mode[data-project-slug="understandingfafsa"] { --folio-cloth:#723920; --folio-edge:#e9ac82; }
+.reader-mode[data-project-slug="navi"] { --folio-cloth:#344f42; --folio-edge:#a6bea3; }
+.reader-mode[data-project-slug="tiktok"] { --folio-cloth:#433138; --folio-edge:#d5b2a5; }
+.reader-mode.reader-mode :is(.case-frontispiece,.tt-cover--work) {
+  border-inline-start:clamp(5px,.7vw,10px) solid var(--folio-cloth);
+}
+.reader-mode.reader-mode .case-book .chapter-opening {
+  border-top:2px solid var(--folio-cloth); position:relative;
+}
+.reader-mode .case-book .chapter-opening .project-chapter-stage {
+  border-bottom:2px solid var(--folio-edge); padding-bottom:3px;
+}
+@media (min-width:1200px) and (forced-colors:none) {
+  .reader-mode .book-index .book-index-label { background:var(--folio-cloth); }
+  .reader-mode.reader-mode .case-book .book-index .project-toc-link--active.reader-control {
+    background:color-mix(in srgb,var(--folio-edge) 48%,#fff); color:#202a26;
+    box-shadow:inset 4px 0 var(--folio-cloth);
+  }
+}
+
+@media (forced-colors:none) {
+  .reader-mode.reader-mode[data-project-slug] .project-opening-facts-action-label {
+    justify-self:start; align-self:center; padding:4px 7px;
+    background:var(--folio-cloth); color:#fff; font:670 12px/1.25 var(--m97-ui-font);
+  }
+}
+
+/* File-based studies share the same jacket, index, and reading measure. */
+.document-study { --folio-cloth: #27465b; --folio-edge: #b9cbd1; }
+.document-study .project-section-body { max-inline-size: 65ch; }
+.document-study .project-chapter > .project-section-images { margin-block-start: 1.5rem; }
+.document-study .case-frontispiece > .project-meta { margin: 1.5rem 0 0; }
+@media (min-width: 1080px) {
+  .document-study .case-frontispiece > .project-cover { grid-area: 1 / 2 / 3; width: 100%; margin: 0; }
+  .document-study .case-frontispiece > .project-meta { grid-column: 1; }
+  .reader-mode.document-study .case-frontispiece:not(:has(.project-cover)) { grid-template-columns: minmax(0,65ch); }
+}
+.study-cover { display: grid; position: relative; place-items: center; aspect-ratio: 16/9; background: #e8e9e1; }
+.study-cover img { object-fit: contain; }

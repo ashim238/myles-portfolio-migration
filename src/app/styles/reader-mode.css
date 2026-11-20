@@ -100,6 +100,17 @@
   margin-inline: auto;
 }
 
+/* The illustrated chapter motif already separates the heading from the
+   evidence. Keep the stage, title and first section on one clear baseline. */
+.reader-mode .project-chapter-title::before,
+.reader-mode .project-chapter-motif + .project-section > .project-evidence-heading:first-child::before {
+  content: none;
+}
+
+.reader-mode .project-chapter-title {
+  padding-block-start: 0;
+}
+
 .reader-mode.reader-mode .project-topbar {
   display: none;
 }
@@ -504,6 +515,22 @@
     max-height: calc(100dvh - 8.5rem - env(safe-area-inset-bottom, 0px));
   }
 
+  /* Dock the return command beside the pinned chapter selector. A floating
+     button at the bottom covers the contents of full-width phone exhibits. */
+  .reader-mode .reading-top {
+    display: none;
+  }
+
+  .reader-mode .project-toc--sticky:has(~ .reading-top--show) .project-toc-toggle {
+    width: calc(100% - 50px);
+  }
+
+  .reader-mode .project-toc--sticky ~ .reading-top--show {
+    display: grid;
+    inset: 54px calc(var(--page-shell-gutter) + 16px) auto auto;
+    z-index: 119;
+    transform: none;
+  }
 }
 
 @media (min-width: 900px) and (max-width: 1599px) {

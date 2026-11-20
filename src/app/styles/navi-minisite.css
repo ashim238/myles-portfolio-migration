@@ -501,6 +501,7 @@
 }
 .nv-search-icon { display: inline-flex; flex: none; color: var(--nv-text-muted); }
 .nv-search-input { flex: 1; min-width: 0; min-height: 44px; border: none; outline: none; background: none; font: inherit; }
+.nv-search-input::placeholder { color: var(--nv-text-muted); opacity: 1; }
 
 /* ── CarouselArrow + PaginationDots ─────────────────────────────── */
 .nv-carousel-arrow {
@@ -1903,4 +1904,33 @@
     min-width: 44px;
     min-height: 44px;
   }
+}
+
+/* Within the original Navi product, discovery, booking and host profiles each
+   lead with the information a visitor needs to use that particular screen. */
+.nv-feed .nv-feed-head { padding-block: clamp(8px,2vw,24px); border-block-end: 2px solid var(--nv-text); }
+.nv-feed .nv-feed-head h1 { max-width: 17ch; font-size: clamp(32px,4.6vw,64px); line-height: 1.04; letter-spacing: -.045em; }
+.nv-feed .nv-feed-grid { grid-template-columns: repeat(auto-fit,minmax(min(100%,240px),1fr)); }
+.nv-feed .nv-exp-card-title { font-size: clamp(17px,1.4vw,21px); line-height: 1.2; }
+.nv-search-page .nv-search-head { padding-bottom: var(--nv-sp-md); border-bottom: 2px solid var(--nv-text); }
+.nv-search-page .nv-search-count { font-size: clamp(23px,2.8vw,36px); }
+.nv-detail .nv-detail-head h1,.nv-host .nv-host-head h1,.nv-neighborhood .nv-neighborhood-head h1,
+.nv-impact-page .nv-impact-intro h1,.nv-system .nv-system-head h1 { font-size: clamp(34px,4.8vw,64px); line-height: 1.04; letter-spacing: -.04em; text-wrap: balance; }
+.nv-detail .nv-detail-head { padding-block: var(--nv-sp-lg); border-top: 2px solid var(--nv-text); }
+.nv-impact-theme { border-top: 1px solid var(--nv-border); padding-top: var(--nv-sp-lg); }
+.nv-host-empty { border-block: 2px solid var(--nv-text); text-align: left; }
+.nv-host-empty .nv-btn { justify-self: start; }
+@media (min-width: 850px) {
+  .nv-feed .nv-feed-head { grid-template-columns: minmax(0,1fr) minmax(230px,.66fr); align-items: end; gap: 36px; }
+  .nv-detail .nv-detail-jacket { display: grid; grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); gap: clamp(28px,4vw,60px); align-items: center; margin-block: 16px 32px; }
+  .nv-detail-jacket .nv-gallery-carousel { min-width: 0; margin: 0; }
+  .nv-host { grid-template-columns: minmax(0,.7fr) minmax(0,1.3fr); gap: var(--nv-sp-lg) var(--nv-sp-xl); align-content: start; }
+  .nv-host > :is(.nv-host-back,.nv-host-footer) { grid-column: 1/-1; }
+  .nv-host > :is(.nv-host-head,.nv-host-bio,.nv-host-rating) { grid-column: 1; }
+  .nv-host > .nv-host-experiences { grid-column: 2; grid-row: 2 / span 3; align-content: start; border-inline-start: 1px solid var(--nv-border); padding-inline-start: var(--nv-sp-lg); }
+  .nv-neighborhood .nv-neighborhood-head { border-inline-start: 5px solid var(--nv-action); padding-inline-start: 18px; }
+  .nv-impact-page > .nv-impact-intro { grid-template-columns: minmax(0,1fr) minmax(0,1.1fr); max-width: none; gap: var(--nv-sp-xl); }
+  .nv-system .nv-chapter { display: grid; grid-template-columns: minmax(145px,.36fr) minmax(0,1fr); gap: clamp(24px,4vw,50px); align-items: start; }
+  .nv-system .nv-chapter-head { position: sticky; top: 6rem; }
+  .nv-system .nv-chapter-body { min-width: 0; }
 }

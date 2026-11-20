@@ -77,15 +77,17 @@ export function ExperienceView({
       <p className="nv-detail-back">
         <Link href="/work/navi/demo/search">← Back to results</Link>
       </p>
-      <GalleryCarousel photos={e.photos} />
-      <header className="nv-detail-head">
-        <h1>{e.title}</h1>
-        <ul className="nv-detail-facts" aria-label="At a glance">
-          <li>{e.duration}</li>
-          <li>{e.groupSize}</li>
-          <li>{e.language}</li>
-        </ul>
-      </header>
+      <div className="nv-detail-jacket">
+        <header className="nv-detail-head">
+          <h1>{e.title}</h1>
+          <ul className="nv-detail-facts" aria-label="At a glance">
+            <li>{e.duration}</li>
+            <li>{e.groupSize}</li>
+            <li>{e.language}</li>
+          </ul>
+        </header>
+        <GalleryCarousel photos={e.photos} />
+      </div>
       <div className="nv-detail-body">
         <div className="nv-detail-main">
           <PillRow

@@ -1,9 +1,10 @@
 "use client";
 
+import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { useCallback, useEffect, useRef, useState, type Dispatch } from "react";
 import { animate } from "motion";
 import { DisplayProperties } from "@/components/myles-97/display-properties";
-import { Myles97Icon } from "@/components/myles-97/icons";
+import { Myles97Icon, iconForProgram } from "@/components/myles-97/icons";
 import { NowPlayingProgram } from "@/components/myles-97/now-playing-program";
 import { PaintProgram } from "@/components/myles-97/paint-program";
 import type { LoosePartSummary } from "@/components/myles-97/loose-parts-program";
@@ -26,7 +27,7 @@ import type {
   ProgramId,
   ProjectProgramId,
 } from "@/lib/myles-97/programs";
-import { SYSTEM_PROGRAM_IDS, PROJECT_PROGRAM_BLUEPRINTS } from "@/lib/myles-97/programs";
+import { SYSTEM_PROGRAM_IDS } from "@/lib/myles-97/programs";
 import type {
   WindowGeometry,
   WorkstationAction,
@@ -53,37 +54,16 @@ const defaultGeometry: Partial<Record<ProgramId, WindowGeometry>> = {
   "now-playing": { x: 238, y: 16, width: 804, height: 640 },
 };
 
+const desktopPlaces = [
+  ["selected-work", "Work Stuff"], ["about", "About Myles"], ["loose-parts", "Loose Parts"],
+  ["resume", "Résumé"], ["paint", "Paint"],
+] as const;
+
 const secondaryTitles: Record<SecondaryProgramId, string> = {
   about: "About Myles",
   "loose-parts": "Loose Parts",
   resume: "Résumé",
 };
-
-// Reading order stays fixed while openPrograms continues to own visual stacking.
-const windowReadingOrder: readonly ProgramId[] = [
-  ...SYSTEM_PROGRAM_IDS,
-  ...PROJECT_PROGRAM_BLUEPRINTS.map(({ id }) => id),
-];
-
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(() =>
-    typeof window !== "undefined" &&
-    typeof window.matchMedia === "function" &&
-    Boolean(window.matchMedia("(prefers-reduced-motion: reduce)")?.matches),
-  );
-
-  useEffect(() => {
-    if (typeof window.matchMedia !== "function") return;
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (!query) return;
-    const update = () => setReduced(query.matches);
-    update();
-    query.addEventListener("change", update);
-    return () => query.removeEventListener("change", update);
-  }, []);
-
-  return reduced;
-}
 
 function isSecondaryProgram(id: ProgramId): id is SecondaryProgramId {
   return id === "about" || id === "loose-parts" || id === "resume";
@@ -138,6 +118,7 @@ export function WorkstationDesktop({
   const pendingProjectFocus = useRef(false);
   const previouslyOpenPrograms = useRef(new Set(state.openPrograms));
   const minimized = new Set(state.minimizedPrograms);
+  const windowReadingOrder = [...SYSTEM_PROGRAM_IDS, ...programs.map(program => program.id)];
   const projectById = new Map(programs.map((program) => [program.id, program]));
   const dispatchWithWindowFocus = useCallback(
     (action: WorkstationAction) => {
@@ -185,7 +166,7 @@ export function WorkstationDesktop({
     windowElement
       .querySelector<HTMLElement>(
         focusProject && state.focusedProgram === "selected-work"
-          ? ".myles97-case-study-link"
+          ? ".myles97-program-card:not([hidden]) .myles97-case-study-link"
           : `[data-m97-window-move="${state.focusedProgram}"]`,
       )
       ?.focus();
@@ -300,26 +281,14 @@ export function WorkstationDesktop({
     <div className="myles97-desktop" aria-label="Myles 98 desktop">
       <div className="myles97-desktop-stage" inert={startOpen ? true : undefined}>
         <nav className="myles97-desktop-shortcuts" aria-label="Desktop shortcuts">
-          <button type="button" onClick={() => openProgram("selected-work")}>
-            <Myles97Icon name="folder" size={32} variant="color" aria-hidden="true" />
-            <span>Work Stuff</span>
-          </button>
-          <button type="button" onClick={() => openProgram("about")}>
-            <Myles97Icon name="profile" size={32} variant="color" aria-hidden="true" />
-            <span>About Myles</span>
-          </button>
-          <button type="button" onClick={() => openProgram("loose-parts")}>
-            <Myles97Icon name="loose-parts" size={32} variant="color" aria-hidden="true" />
-            <span>Loose Parts</span>
-          </button>
-          <button type="button" onClick={() => openProgram("resume")}>
-            <Myles97Icon name="resume" size={32} variant="color" aria-hidden="true" />
-            <span>Résumé</span>
-          </button>
-          <button type="button" onClick={() => openProgram("paint")}>
-            <Myles97Icon name="paintbrush" size={32} variant="color" aria-hidden="true" />
-            <span>Paint</span>
-          </button>
+          <span className="desktop-places-heading" aria-hidden="true">Desktop</span>
+          {desktopPlaces.map(([id, label]) => (
+            <button key={id} type="button" onClick={() => openProgram(id)}
+              aria-current={state.focusedProgram === id ? "location" : undefined}>
+              <Myles97Icon name={iconForProgram(id)} size={32} variant="color" aria-hidden="true" />
+              <span>{label}</span>
+            </button>
+          ))}
         </nav>
 
         {windowReadingOrder.filter((id) => state.openPrograms.includes(id)).map((id) => {
@@ -412,7 +381,8 @@ export function WorkstationDesktop({
 
           if (isSecondaryProgram(id)) {
             return (
-              <ProgramWindow key={id} {...props} title={secondaryTitles[id]}>
+              <ProgramWindow key={id} {...props} title={secondaryTitles[id]}
+                status={id === "loose-parts" ? `${looseParts.length} experiment${looseParts.length === 1 ? "" : "s"}` : null}>
                 <SecondaryProgram id={id} looseParts={looseParts} />
               </ProgramWindow>
             );
@@ -426,6 +396,7 @@ export function WorkstationDesktop({
               key={id}
               {...props}
               title={project.appName}
+              fitContent
               status={project.id === "fresh-greens" ? null : "Project preview"}
             >
               <ProjectProgram

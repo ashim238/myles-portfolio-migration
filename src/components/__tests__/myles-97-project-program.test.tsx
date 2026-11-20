@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { projectSamples } from "@/lib/myles-97/preview-originals";
 import { ProjectProgram } from "@/components/myles-97/project-program";
 import {
   PROJECT_ENTER_REQUEST,
@@ -41,33 +42,65 @@ describe("ProjectProgram", () => {
     vi.restoreAllMocks();
   });
 
-  it.each(["fresh-greens", "understandingfafsa", "navi", "tiktok"] as const)(
-    "uses the shared, expanded %s artwork instead of a legacy cover",
-    (id) => {
+  it.each(["fresh-greens", "navi", "tiktok"] as const)(
+    "registers each %s detail against its own source", (id) => {
       const { container } = render(<ProjectProgram program={{ ...program, id }} reduceMotion />);
-      const scene = container.querySelector('[data-project-program-cover] .product-thumbnail');
-      expect(scene).toHaveAttribute('data-project', id);
-      expect(scene).toHaveAttribute('data-active', 'true');
-      expect(scene).toHaveAttribute('data-reduced', 'true');
-      expect(container.querySelector('[data-project-program-cover] img')).toBeNull();
+      const samples = projectSamples[id];
+      expect(screen.getAllByRole("radio")).toHaveLength(samples.length + 1);
+      for (const [index, sample] of samples.entries()) {
+        const select = screen.getByRole("radio", { name: sample.label });
+        fireEvent.click(select);
+        expect(select).toBeChecked();
+        expect(screen.getByRole("figure", { name: sample.alt })).toHaveTextContent(sample.detail);
+        expect(screen.getByRole("button", { name: `Enlarge ${sample.label} original` })).toBeVisible();
+        expect(screen.getByText(new RegExp(`${index + 1} of ${samples.length}`))).toBeVisible();
+        expect(container.querySelector(".sample-page img")).toHaveAttribute("src", sample.src);
+        expect(container.querySelector(".artwork-crop img")).toHaveAttribute("src", sample.src);
+      }
     },
   );
 
-  it("keeps the map controls and route sheet in one original screen capture in the expanded Fresh Greens view", () => {
-    const { getByRole } = render(<ProjectProgram program={program} />);
-    const artwork = getByRole("img", { name: /Weeksville Heritage Center/ });
-    const route = artwork.querySelector(".product-thumbnail-scene");
-    expect(route?.querySelector(".fresh-location-pulse")).toBeNull();
-    expect(route?.querySelector(".fresh-preview-route")).toHaveAttribute("href", "/projects/preview-art/weeksville-route-preview.webp");
+  it("keeps the same evening route when switching from Plan to Drive", () => {
+    const { container } = render(<ProjectProgram program={program} reduceMotion />);
+    fireEvent.change(screen.getByRole("combobox", { name: "Route" }), { target: { value: "brixton" } });
+    expect(container.querySelector(".artwork-crop img")).toHaveAttribute("src", expect.stringContaining("brixton-evening-preview.png"));
+    fireEvent.click(screen.getByRole("radio", { name: "Drive" }));
+    expect(container.querySelector(".artwork-crop img")).toHaveAttribute("src", expect.stringContaining("04-brixton-evening-navigation.png"));
+    fireEvent.click(screen.getByRole("radio", { name: "Map key" }));
+    expect(screen.queryByRole("combobox")).toBeNull();
+    expect(container.querySelector(".artwork-crop img")).toHaveAttribute("src", expect.stringContaining("05-brixton-navigation-key-reopened.png"));
   });
 
-  it("pairs the Fresh Greens title with its role and captions the artwork", () => {
+  it("opens the FAFSA preview with both original sends and offers the built Mailchimp sample", () => {
+    const { container } = render(<ProjectProgram program={{ ...program, id: "understandingfafsa" }} reduceMotion />);
+    expect(screen.getByRole("radio", { name: "Compare sends" })).toBeChecked();
+    for (const sample of projectSamples.understandingfafsa.slice(0, 2)) {
+      const button = screen.getByRole("button", { name: `Enlarge ${sample.label} original` });
+      expect(button.querySelector("img")).toHaveAttribute("src", sample.src);
+    }
+    fireEvent.click(screen.getByRole("radio", { name: "Mailchimp" }));
+    expect(container.querySelector(".artwork-crop img")).toHaveAttribute("src", projectSamples.understandingfafsa[2].src);
+    expect(screen.getByText(/2 of 2/)).toBeVisible();
+  });
+
+  it("reassembles the projected parts and returns to the original sample", () => {
+    render(<ProjectProgram program={program} reduceMotion />);
+    fireEvent.click(screen.getByRole("radio", { name: "Layers" }));
+    const drawing = screen.getByRole("button", { name: /View layers/ });
+    expect(drawing).toHaveAttribute("aria-pressed", "false");
+    fireEvent.click(drawing);
+    expect(drawing).toHaveAttribute("aria-pressed", "true");
+    expect(drawing).toHaveAccessibleDescription(expect.stringContaining("Street map"));
+    fireEvent.click(drawing);
+    expect(drawing).toHaveAttribute("aria-pressed", "false");
+    fireEvent.click(screen.getByRole("radio", { name: "Plan" }));
+    expect(screen.getByRole("button", { name: "Enlarge Plan original" })).toBeVisible();
+  });
+
+  it("pairs the project title with the designer's role", () => {
     render(<ProjectProgram program={program} />);
-    const title = screen.getByRole("heading", { name: "Fresh Greens" });
-    expect(title.parentElement).toContainElement(screen.getByText("Solo design + build"));
-    const figure = screen.getByRole("figure", { name: "Project preview" });
-    expect(figure).toContainElement(screen.getByRole("img", { name: /Weeksville/ }));
-    expect(figure.lastElementChild?.tagName).toBe("FIGCAPTION");
+    expect(screen.getByRole("heading", { name: "Fresh Greens" }).parentElement)
+      .toContainElement(screen.getByText("Solo design + build"));
   });
 
   it("dispatches a structured program transition for an unmodified click", () => {

@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
   <body>
+    <nav class="lab-return" aria-label="Experiment location" hidden><a href="/play#myles-is-stressed">← Loose Parts</a></nav>
     <main class="app-shell" data-embed-content>
       <header class="panel">
         <h1>MYLES IS STRESSED</h1>
@@ -25,6 +26,15 @@
       </section>
       <section class="panel canvas-wrap">
         <div id="game-canvas" role="img" aria-label="MYLES IS STRESSED gameplay canvas"></div>
+        <div class="game-controls" role="group" aria-label="Maze controls">
+          <button type="button" id="start-game" disabled>Start</button>
+          <div class="direction-pad" role="group" aria-label="Move">
+            <button type="button" class="up" data-direction="3" aria-label="Move up" disabled>↑</button>
+            <button type="button" class="left" data-direction="2" aria-label="Move left" disabled>←</button>
+            <button type="button" class="down" data-direction="1" aria-label="Move down" disabled>↓</button>
+            <button type="button" class="right" data-direction="0" aria-label="Move right" disabled>→</button>
+          </div>
+        </div>
       </section>
     </main>
     <script src="embed-bridge.js"></script>

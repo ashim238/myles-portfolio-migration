@@ -37,6 +37,9 @@ const styles = [
   "../../app/styles/myles-97-secondary.css",
   "../../app/styles/myles-97-pocket.css",
   "../../app/styles/reader-mode.css",
+  "../../app/styles/workstation-documents.css",
+  "../../app/styles/archive-layout.css",
+  "../../app/styles/project-artwork.css",
 ]
   .map((path) => readFileSync(resolve(testDirectory, path), "utf8"))
   .join("\n");
@@ -291,6 +294,7 @@ async function hydratedBrowserPage(
 
 function renderPocketMarkup() {
   const rendered = render(<PocketHarness />);
+  fireEvent.click(rendered.getByRole("radio", { name: "Thumbnails" }));
   const markup = rendered.container.innerHTML;
   rendered.unmount();
   return markup;
@@ -329,12 +333,14 @@ async function assertNoHorizontalOverflow(page: Page) {
     offenders: Array.from(document.querySelectorAll<HTMLElement>("body *"))
       .map((element) => {
         const rect = element.getBoundingClientRect();
+        const mount = element.parentElement?.closest(".publication-cover");
+        const clip = mount && getComputedStyle(mount).overflowX === "hidden" ? mount.getBoundingClientRect() : null;
         return {
           selector: element.id
             ? `#${element.id}`
             : `${element.tagName.toLowerCase()}.${Array.from(element.classList).join(".")}`,
-          left: rect.left,
-          right: rect.right,
+          left: clip ? Math.max(rect.left, clip.left) : rect.left,
+          right: clip ? Math.min(rect.right, clip.right) : rect.right,
           scrollWidth: element.scrollWidth,
           clientWidth: element.clientWidth,
           overflowX: getComputedStyle(element).overflowX,
@@ -427,6 +433,12 @@ describe("Task 5 responsive adaptation", () => {
     const page = await hydratedBrowserPage("pocket", { width: 320, height: 568 });
     await page.getByRole("button", { name: "Explore Fresh Greens.exe preview" }).press("Enter");
     await page.waitForSelector(".pocket97-back:focus");
+    await page.keyboard.press("Tab");
+    expect(await page.getByRole("radio", { name: "Plan" }).evaluate(el => el === document.activeElement)).toBe(true);
+    await page.keyboard.press("Tab");
+    expect(await page.getByRole("combobox", { name: "Route" }).evaluate(el => el === document.activeElement)).toBe(true);
+    await page.keyboard.press("Tab");
+    expect(await page.getByRole("button", { name: /Enlarge/ }).evaluate(el => el === document.activeElement)).toBe(true);
     await page.keyboard.press("Tab");
     const link = page.getByRole("link", { name: "Read Fresh Greens case study" });
     const dock = page.locator(".pocket97-dock");
@@ -582,9 +594,9 @@ describe("Task 5 responsive adaptation", () => {
         (element) => getComputedStyle(element).display,
       ),
     ).toBe("none");
-    expect(await pocketPage.getByRole("link", { name: /Read .* case study/ }).count()).toBe(
-      programs.length,
-    );
+    const caseStudyLinks = pocketPage.getByRole("link", { name: /Read .* case study/ });
+    const destinations = await caseStudyLinks.evaluateAll(links => links.map(link => link.getAttribute("href")));
+    expect(new Set(destinations)).toEqual(new Set(programs.map(program => program.href)));
     await assertNoHorizontalOverflow(pocketPage);
     await pocketPage.close();
 
@@ -642,8 +654,8 @@ describe("Task 5 responsive adaptation", () => {
           dockActions: dock.querySelectorAll("button").length,
           dockFixed: getComputedStyle(dock).position === "fixed",
           dockAtViewportBottom: Math.abs(dockRect.bottom - innerHeight) <= 1,
-          columnsSeparate: introRect.right <= workRect.left,
-          columnsStartTogether: Math.abs(introRect.top - workRect.top) <= 1,
+          introAboveWork: introRect.bottom <= workRect.top + 1,
+          edgesAlign: Math.abs(introRect.left - workRect.left) <= 1,
           twoCardRows:
             cardRects.length === 4 &&
             Math.abs(cardRects[0].top - cardRects[1].top) <= 1 &&
@@ -654,7 +666,7 @@ describe("Task 5 responsive adaptation", () => {
             return rect.width >= 44 && rect.height >= 44;
           }),
           coverCount: document.querySelectorAll(
-            ".myles97-program-cover .product-thumbnail-scene",
+            ".myles97-program-cover .publication-cover",
           ).length,
         };
       });
@@ -663,8 +675,8 @@ describe("Task 5 responsive adaptation", () => {
         dockActions: 4,
         dockFixed: true,
         dockAtViewportBottom: true,
-        columnsSeparate: true,
-        columnsStartTogether: true,
+        introAboveWork: true,
+        edgesAlign: true,
         twoCardRows: true,
         allTargets44: true,
         coverCount: programs.length,
@@ -720,9 +732,7 @@ describe("Task 5 responsive adaptation", () => {
           stageDisplay: getComputedStyle(
             document.querySelector<HTMLElement>(".project-toc-stage")!,
           ).display,
-          readoutVisible: getComputedStyle(
-            document.querySelector<HTMLElement>(".project-toc-readout-mobile")!,
-          ).display !== "none",
+          readoutVisible: Boolean(document.querySelector(".project-toc-readout-mobile")),
           listDisplay: getComputedStyle(
             document.querySelector<HTMLElement>(".project-toc-list")!,
           ).display,
@@ -738,10 +748,10 @@ describe("Task 5 responsive adaptation", () => {
         toggleTarget44: true,
         fullLabelDisplay: "none",
         compactLabelVisible: true,
-        stageDisplay: "none",
+        stageDisplay: "block",
         listDisplay: "none",
       });
-      expect(closed.readoutVisible).toBe(viewport.width > 360);
+      expect(closed.readoutVisible).toBe(false);
       await closedPage.close();
 
       const openPage = await browserPage(viewport, markup.open);

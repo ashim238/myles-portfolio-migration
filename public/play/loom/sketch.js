@@ -8,16 +8,15 @@ const FRAME = {
   centerLowerY: 0.515,
   bottomY: 0.775,
   pillarWidth: 0.02,
-  pillarHeight: 0.59,
   roundness: 5,
   pointCount: 20,
   pointRadius: 2
 };
 
 const COLORS = {
-  background: [245, 243, 239],
-  frame: [213, 176, 124],
-  frameDark: [206, 164, 120],
+  background: [249, 243, 222],
+  frame: [211, 156, 94],
+  frameDark: [177, 119, 68],
   shadow: [0, 0, 0, 20],
   point: [50, 50, 50]
 };
@@ -56,8 +55,10 @@ function setup() {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function draw() {
   background(...COLORS.background);
+  drawDraftGrid();
   drawPillars();
   drawHorizontalBars();
+  drawJoinery();
   drawStrings();
   drawPoints();
   drawLegend();
@@ -176,6 +177,20 @@ function recalculateLoomPoints() {
   }
 }
 
+// Ten subdivisions across the loom make thread angles comparable on each redraw.
+function drawDraftGrid() {
+  const interval = width * FRAME.barWidth / 10;
+  strokeWeight(1);
+  for (let x = width * FRAME.margin; x < width; x += interval / 2) {
+    stroke(134, 130, 96, 36);
+    line(x, height * 0.15, x, height * 0.9);
+  }
+  for (let y = height * 0.15; y < height * 0.91; y += interval / 2) {
+    line(width * FRAME.margin, y, width * (1 - FRAME.margin), y);
+  }
+  noStroke();
+}
+
 function drawHorizontalBars() {
   noStroke();
 
@@ -234,17 +249,36 @@ function drawHorizontalBars() {
 function drawPillars() {
   const leftPillarX = width * FRAME.margin;
   const rightPillarX = width * (1 - FRAME.margin - FRAME.pillarWidth);
-  const pillarY = height * FRAME.topY;
-  const pillarHeight = height * FRAME.pillarHeight;
+  // Join the beams behind their faces so only the horizontal rails have end caps.
+  const pillarY = height * (FRAME.topY + FRAME.thickBarHeight / 2);
+  const pillarHeight = height * (FRAME.bottomY - FRAME.topY);
   const pillarWidth = width * FRAME.pillarWidth;
+  const shadowWidth = pillarWidth / 3;
 
+  noStroke();
   fill(...COLORS.frame);
-  rect(leftPillarX, pillarY, pillarWidth, pillarHeight, FRAME.roundness);
-  rect(rightPillarX, pillarY, pillarWidth, pillarHeight, FRAME.roundness);
+  rect(leftPillarX, pillarY, pillarWidth, pillarHeight);
+  rect(rightPillarX, pillarY, pillarWidth, pillarHeight);
 
   fill(...COLORS.shadow);
-  rect(leftPillarX + pillarWidth / 2, pillarY, pillarWidth / 2, pillarHeight, FRAME.roundness);
-  rect(rightPillarX, pillarY, pillarWidth / 2, pillarHeight, FRAME.roundness);
+  rect(leftPillarX + pillarWidth - shadowWidth, pillarY, shadowWidth, pillarHeight);
+  rect(rightPillarX, pillarY, shadowWidth, pillarHeight);
+}
+
+// A peg marks each half-lap joint. Match the rail faces and their shadow direction.
+function drawJoinery() {
+  const stile = width * FRAME.pillarWidth;
+  const radius = Math.max(1.4, stile * 0.17);
+  noStroke();
+  for (const x of [width * FRAME.margin + stile / 2, width * (1 - FRAME.margin) - stile / 2]) {
+    for (const rail of [FRAME.topY, FRAME.bottomY]) {
+      const y = height * (rail + FRAME.thickBarHeight / 2);
+      fill(128, 87, 55);
+      circle(x, y, radius * 2);
+      fill(228, 193, 147);
+      circle(x - radius * 0.24, y - radius * 0.24, radius);
+    }
+  }
 }
 
 function drawStrings() {

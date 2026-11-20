@@ -1,5 +1,6 @@
 "use client";
 
+import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { CommandIcon } from "@/components/myles-97/command-icon";
 import type { ReactNode } from "react";
 import Image from "next/image";
@@ -11,20 +12,6 @@ import {
   type UfAsset,
   type UfTiledAsset,
 } from "@/lib/understandingfafsa-assets";
-
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setReduced(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
-
-  return reduced;
-}
 
 function isTiledAsset(asset: UfAsset | UfTiledAsset): asset is UfTiledAsset {
   return "tiles" in asset;
@@ -119,6 +106,7 @@ const BEFORE_AFTER = [
     asset: UF_ASSETS.mobileBefore,
     alt: "Old newsletter template on mobile before the redesign, full scroll.",
     label: "Prior sends · around 30% open rate",
+    opening: "mobile-before-opening.webp",
     originalLabel: "prior newsletter",
     tilt: -2,
   },
@@ -126,6 +114,7 @@ const BEFORE_AFTER = [
     asset: UF_ASSETS.mobileAfter,
     alt: "Redesigned newsletter on mobile with updated hierarchy and brand system, full scroll.",
     label: "First newsletter using the new templates · ~52.6% open rate (MPP excluded)",
+    opening: "mobile-after-opening.webp",
     originalLabel: "redesigned newsletter",
     tilt: 2,
   },
@@ -160,23 +149,28 @@ export function BeforeAfterPhones() {
       className="uf-before-after"
       aria-label="Newsletter mobile layouts and reported open rates"
     >
-      {BEFORE_AFTER.map((item) => (
-        <figure key={item.label} className="uf-before-after-item">
-          <div className="uf-newsletter-excerpt">
-            <Image
-              src={item.asset.tiles[0].src}
-              alt={item.alt.replace(", full scroll.", ". Opening excerpt.")}
-              width={item.asset.tiles[0].width}
-              height={item.asset.tiles[0].height}
-              sizes="(max-width: 639px) 88vw, 380px"
-              loading="lazy"
-            />
-          </div>
-          <figcaption className="uf-before-after-label">{item.label}</figcaption>
-          <p className="uf-before-after-hint">Opening excerpt. Open the original capture for the full newsletter.</p>
-          <OriginalCapture asset={item.asset} label={item.originalLabel} alt={item.alt} />
-        </figure>
-      ))}
+      {BEFORE_AFTER.map((item) => {
+        const [edition, rate] = item.label.split(" · ");
+        return (
+          <figure key={item.label} className="uf-before-after-item">
+            <figcaption className="uf-before-after-label">
+              <strong>{edition}</strong><span className="sr-only"> · </span>{rate}
+            </figcaption>
+            <div className="uf-newsletter-excerpt">
+              <Image
+                src={`/projects/understandingfafsa/display/${item.opening}`}
+                alt={item.alt.replace(", full scroll.", ". Opening excerpt.")}
+                width={item.asset.width}
+                height={Math.ceil(item.asset.width * 1.25)}
+                unoptimized
+                loading="lazy"
+              />
+            </div>
+            <p className="uf-before-after-hint">Opening excerpt. Open the original capture for the full newsletter.</p>
+            <OriginalCapture asset={item.asset} label={item.originalLabel} alt={item.alt} />
+          </figure>
+        );
+      })}
       <p className="uf-before-after-evidence-note">
         Reported open rates are shown for context. This was not a controlled attribution test.
       </p>
@@ -966,11 +960,17 @@ export function LockedSwappableView() {
 }
 
 export function FigmaMailchimpPair() {
+  const [view, setView] = useState<"Opening" | "Body" | "Full module">("Opening");
   const figma = UF_ASSETS.figmaSection;
   const mailchimp = UF_ASSETS.mailchimpSection;
 
   return (
-    <div className="uf-figma-pair">
+    <div className="uf-proof-bench" data-view={view}>
+      <div className="uf-proof-toolbar" role="group" aria-label="Compare the same part of both modules">
+        {(["Opening", "Body", "Full module"] as const).map(v =>
+          <button key={v} type="button" aria-pressed={v === view} onClick={() => setView(v)}>{v}</button>)}
+      </div>
+      <div className="uf-figma-pair">
       <figure className="uf-figma-figure">
         <figcaption>
           <div className="uf-figma-figure-heading" aria-hidden="true">
@@ -983,7 +983,7 @@ export function FigmaMailchimpPair() {
         <div className="uf-figma-image-frame">
           <ExpandableImage
             src={figma.src}
-            alt="Figma: students block with layout guides, spacing rails, and type hierarchy."
+            alt="Figma newsletter design with the headline Don’t worry. Many schools offer big discounts!"
             width={figma.width}
             height={figma.height}
             sizes="(max-width: 768px) 92vw, 44vw"
@@ -1003,7 +1003,7 @@ export function FigmaMailchimpPair() {
         <div className="uf-figma-image-frame">
           <ExpandableImage
             src={mailchimp.src}
-            alt="Mailchimp: same students block after translation into editable modules."
+            alt="Mailchimp newsletter with the Smart Choices section and the headline Why College Grad Rates Matter."
             width={mailchimp.width}
             height={mailchimp.height}
             sizes="(max-width: 768px) 92vw, 44vw"
@@ -1011,6 +1011,7 @@ export function FigmaMailchimpPair() {
           />
         </div>
       </figure>
+      </div>
     </div>
   );
 }

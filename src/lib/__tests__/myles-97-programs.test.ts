@@ -56,6 +56,17 @@ describe("Myles 98 program registry", () => {
     });
   });
 
+  it("opens a newly published Markdown study using its own evidence and skips drafts", () => {
+    const proof = { src: "/projects/example/detail.webp", alt: "A selected route", width: 800, height: 500 };
+    const study = { ...project("example", "Example"), sections: [{ title: "Decision", bodyHtml: "", images: [proof] }] };
+    const entries = buildProgramRegistry([study, { ...study, slug: "draft", status: "draft" }]);
+    expect(entries.find(entry => entry.href === "/work/example")).toMatchObject({
+      id: "study-example", title: "Example", previewImage: proof,
+    });
+    expect(entries.some(entry => entry.href === "/work/draft")).toBe(false);
+    expect(isProgramId("study-example")).toBe(true);
+  });
+
   it("contains no Microsoft asset references", () => {
     expect(JSON.stringify(PROJECT_PROGRAM_BLUEPRINTS)).not.toMatch(/windows|microsoft|start\.wav/i);
   });

@@ -68,7 +68,7 @@ describe("Navi evidence claims", () => {
     expect(projectPage).not.toMatch(/14(?:-response)? resident survey/i);
     expect(
       projectPage.indexOf("resident and stakeholder responses"),
-    ).toBeLessThan(projectPage.indexOf("<SurveyStatRings"));
+    ).toBeLessThan(projectPage.indexOf("<SurveyResponseChart"));
     expect(projectPage).toMatch(/including two\s+Manhattan businesses/i);
     expect(projectPage).toMatch(
       /I collected[\s\S]{0,120}resident and stakeholder responses/i,
@@ -168,7 +168,7 @@ describe("Navi evidence claims", () => {
       "RecruiterCut",
       "HeatmapExplorer",
       "HeuristicInsightCards",
-      "SurveyStatRings",
+      "SurveyResponseChart",
       "NaviResearchArtifacts",
       "CompositionStrip",
       "NaviDemoEmbed",

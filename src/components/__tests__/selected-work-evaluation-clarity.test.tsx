@@ -45,80 +45,45 @@ const programs: ProgramDefinition[] = [
 ];
 
 describe("Work Stuff evaluation paths", () => {
-  it("resolves keyboard focus without motion and does not replace the source scene", () => {
-    const { container } = render(<SelectedWorkExplorer programs={programs} onOpen={vi.fn()} />);
-    const card = screen.getByRole('listitem', { name: 'Fresh Greens' });
-    const scene = card.querySelector('.product-thumbnail-scene');
-    fireEvent.focus(within(card).getByRole('link'));
-    expect(card.querySelector('.product-thumbnail')).toHaveAttribute('data-reduced', 'true');
-    expect(card.querySelector('.product-thumbnail-scene')).toBe(scene);
-    expect(container.querySelector('.product-thumbnail-cover')).toBeNull();
-  });
-  it("keeps the original TikTok templates and one movable title without invented placeholders", () => {
-    const { container } = render(<SelectedWorkExplorer programs={[programs[1]]} onOpen={vi.fn()} />);
-    expect(container.querySelector('image[href="/projects/preview-art/academia.webp"]')).toHaveAttribute('mask');
-    expect(container.querySelectorAll('image[href="/projects/tiktok/system/academia-text.svg"]')).toHaveLength(1);
-    expect(container.querySelector('image[href="/projects/tiktok/cover-phone-mockup.jpg"]')).toBeNull();
-    expect(container).not.toHaveTextContent('CATALOG IMAGE');
-  });
-
-  it("keeps Navi search typography proportional to its header", () => {
-    const program = { ...programs[1], id: "navi" as const };
-    const { container } = render(<SelectedWorkExplorer programs={[program]} onOpen={vi.fn()} />);
-    expect(container.querySelector('.navi-thumbnail-search rect')).toHaveAttribute('height', '42');
-    expect(container.querySelector('.navi-thumbnail-search text')).toHaveAttribute('font-size', '14');
-  });
-  it("keeps Navi carousel artwork inside the inset browser viewport", () => {
-    const program = { ...programs[1], id: "navi" as const };
-    const { container } = render(<SelectedWorkExplorer programs={[program]} onOpen={vi.fn()} />);
-    const neighbors = container.querySelector(".motion-navi-neighbors");
-    const clipReference = neighbors?.getAttribute("clip-path");
-
-    expect(clipReference).toMatch(/^url\(#.+\)$/);
-
-    const clipId = clipReference?.slice(5, -1);
-    const clipRect = container.querySelector(`clipPath#${clipId} rect`);
-    expect(clipRect).toHaveAttribute("x", "25");
-    expect(clipRect).toHaveAttribute("width", "578");
-  });
-  it("pairs the original Fresh Greens driver illustration with the actual route sheet", () => {
-    const { container } = render(<SelectedWorkExplorer programs={[programs[0]]} onOpen={vi.fn()} />);
-    const scene = container.querySelector('.product-thumbnail-scene');
-    expect(container.querySelector('image.fresh-driver-art[href="/projects/preview-art/driver-location-journey.webp"]')).toBeInTheDocument();
-    expect(scene?.querySelector('image.fresh-preview-route')).toHaveAttribute('href', '/projects/preview-art/weeksville-route-preview.webp');
-    expect(scene?.querySelector('text')).toBeNull();
+  it("opens the artwork on keyboard focus and closes when focus moves to the reading link", async () => {
+    const user = userEvent.setup();
+    render(<SelectedWorkExplorer programs={programs} onOpen={vi.fn()} reduceMotion />);
+    const card = screen.getByRole("listitem", { name:"Fresh Greens" });
+    const cover = within(card).getByRole("button", { name:/View layers/ });
+    within(card).getByRole("link").focus();
+    await user.tab({ shift:true });
+    expect(cover).toHaveFocus();
+    expect(cover).toHaveAttribute("aria-pressed","true");
+    await user.keyboard("{Escape}");
+    expect(cover).toHaveAttribute("aria-pressed","false");
+    await user.keyboard("{Enter}");
+    expect(cover).toHaveAttribute("aria-pressed","true");
+    await user.tab();
+    expect(within(card).getByRole("link")).toHaveFocus();
+    expect(cover).toHaveAttribute("aria-pressed","false");
   });
 
-  it("contains FAFSA source modules within the sheet without an invented overlay", () => {
-    const program = { ...programs[1], id: "understandingfafsa" as const };
-    const { container } = render(<SelectedWorkExplorer programs={[program]} onOpen={vi.fn()} />);
-    expect(container.querySelector('.motion-mail-body image')?.parentElement).toHaveAttribute('clip-path');
-    expect(container.querySelector('.motion-mail-links')).toBeNull();
-    expect(container.querySelector('.motion-mail-label')).toBeNull();
-    expect(container.querySelector('.product-thumbnail-scene')).toHaveAttribute('preserveAspectRatio', 'xMidYMid meet');
-    expect(container.querySelector('.mail-thumbnail-wave')).toHaveAttribute('preserveAspectRatio', 'none');
-  });
   it.each(["fresh-greens", "understandingfafsa", "navi", "tiktok"] as const)(
-    "reveals %s on keyboard focus, keeps it between actions, and resets on exit",
-    (id) => {
-      const program = { ...programs[1], id, title: id, href: `/work/${id}` as const };
-      const { container } = render(<SelectedWorkExplorer programs={[program]} onOpen={vi.fn()} reduceMotion />);
-      const card = screen.getByRole("listitem", { name: id });
-      const scene = container.querySelector(".product-thumbnail")!;
-      const link = within(card).getByRole("link");
-      const button = within(card).getByRole("button");
-      expect(scene).toHaveAttribute("data-active", "false");
-      fireEvent.focus(link);
-      expect(scene).toHaveAttribute("data-active", "true");
-      expect(scene).toHaveAttribute("data-reduced", "true");
-      fireEvent.blur(link, { relatedTarget: button });
-      expect(scene).toHaveAttribute("data-active", "true");
-      fireEvent.blur(button, { relatedTarget: document.body });
-      expect(scene).toHaveAttribute("data-active", "false");
-      fireEvent.pointerEnter(card, { pointerType: "touch" });
-      expect(scene).toHaveAttribute("data-active", "false");
-    },
-  );
+    "opens the %s drawing only while the mouse is on the artwork", (id) => {
+      const media = vi.spyOn(window, "matchMedia").mockImplementation(query =>
+        ({ matches:query === "(any-hover: hover)", addEventListener:vi.fn(), removeEventListener:vi.fn() }) as unknown as MediaQueryList);
+      try {
+        render(<SelectedWorkExplorer programs={[{ ...programs[0], id }]} onOpen={vi.fn()} />);
+        const cover = screen.getByRole("button", { name:/View layers/ });
+        fireEvent.pointerEnter(cover, { pointerType:"touch" });
+        expect(cover).toHaveAttribute("aria-pressed","false");
+        fireEvent.pointerEnter(cover, { pointerType:"mouse" });
+        expect(cover).toHaveAttribute("aria-pressed","true");
+        fireEvent.pointerDown(cover, { pointerType:"mouse" });
+        fireEvent.pointerUp(cover, { pointerType:"mouse" });
+        fireEvent.click(cover, { detail:1 });
+        expect(cover).toHaveAttribute("aria-pressed","true");
+        fireEvent.pointerLeave(cover, { pointerType:"mouse" });
+        expect(cover).toHaveAttribute("aria-pressed","false");
+      } finally {
+        media.mockRestore();
+      }
+    });
   it("makes the case study primary and explains the preview before either action", async () => {
     const user = userEvent.setup();
     const onOpen = vi.fn();
@@ -141,7 +106,7 @@ describe("Work Stuff evaluation paths", () => {
     const previewButton = within(freshCard).getByRole("button", {
       name: "Explore Fresh Greens.exe preview",
     });
-    const actions = Array.from(freshCard.querySelectorAll("a, button"));
+    const actions = Array.from(freshCard.querySelectorAll(".myles97-program-actions :is(a, button)"));
 
     expect(actions).toEqual([caseStudyLink, previewButton]);
     expect(caseStudyLink).toHaveAttribute("href", "/work/fresh-greens");
@@ -154,6 +119,7 @@ describe("Work Stuff evaluation paths", () => {
   it("uses the project title as the card identity and keeps the app name as preview context", () => {
     render(<SelectedWorkExplorer programs={programs} onOpen={vi.fn()} />);
 
+    fireEvent.click(screen.getByRole("radio", { name: "Thumbnails" }));
     const tiktokCard = screen.getByRole("listitem", { name: "TikTok DSA" });
     expect(within(tiktokCard).getByText("TikTok DSA")).toBeInTheDocument();
     expect(within(tiktokCard).getByText("TikTok Catalog.studio")).toBeInTheDocument();
@@ -162,18 +128,25 @@ describe("Work Stuff evaluation paths", () => {
   });
 
   it.each([
-    ["fresh-greens", "/projects/preview-art/weeksville-route-preview.webp"],
-    ["understandingfafsa", "/projects/preview-art/modular-header.webp"],
-    ["navi", "/projects/preview-art/prospect-tunnel.webp"],
-    ["tiktok", "/projects/preview-art/academia.webp"],
-  ] as const)("grounds %s in original project artwork", (id, source) => {
+    ["fresh-greens", "Street map", ".atlas-map"],
+    ["understandingfafsa", "Story block", ".mail-edition"],
+    ["navi", "Reservation", ".postcard-photo"],
+    ["tiktok", "Catalog slot", ".catalog-proofs"],
+  ] as const)("opens and reassembles the %s publication with the original scene in place", (id, detail, artwork) => {
     const program = { ...programs[1], id, title: id, href: `/work/${id}` as const };
     const { container } = render(<SelectedWorkExplorer programs={[program]} onOpen={vi.fn()} />);
-    expect(container.querySelector(`image[href="${source}"]`)).toBeInTheDocument();
-    const scene = container.querySelector(".product-thumbnail-scene");
-    expect(scene).toHaveAttribute("viewBox", id === "fresh-greens" ? "0 0 640 548" : "0 0 640 360");
-    expect(scene).toHaveAttribute("aria-hidden", "true");
-    expect(container.querySelector("video")).toBeNull();
+    const cover = container.querySelector(".publication-cover");
+    const toggle = screen.getByRole("button", {name: /View layers/});
+    expect(cover).toHaveAttribute("aria-hidden", "true");
+    expect(cover?.querySelector(artwork)).toBeInTheDocument();
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAccessibleDescription(expect.stringContaining(detail));
+    expect(toggle).toHaveAttribute("aria-pressed", "true");
+    expect(cover).toHaveAttribute("data-inspect", "true");
+    fireEvent.keyDown(toggle, {key: "Escape"});
+    expect(toggle).toHaveAttribute("aria-pressed", "false");
+    expect(cover?.querySelector(artwork)).toBeInTheDocument();
+    expect(screen.getByRole("listitem", {name:id})).toBeInTheDocument();
   });
 
   it("routes through the controller without faking a full-card animation", () => {

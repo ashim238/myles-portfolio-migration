@@ -8,7 +8,7 @@ import {
   NAVI_HEATMAP_SILHOUETTE,
   NAVI_HEATMAP_VIEWBOX,
 } from "@/lib/navi-heatmap-data";
-import { NAVI_SURVEY_STATS } from "@/lib/navi-survey-data";
+import { NAVI_SURVEY_META, NAVI_SURVEY_STATS } from "@/lib/navi-survey-data";
 
 /* ── Shared reveal helpers ───────────────────────────── */
 
@@ -75,50 +75,18 @@ export function HeuristicInsightCards() {
   );
 }
 
-/* ── Survey stat rings ───────────────────────────────── */
-
-function SurveyRing({ value, label, caption }: { value: number; label: string; caption: string }) {
-  const radius = 54;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (value / 100) * circumference;
-
+export function SurveyResponseChart() {
+  const total = NAVI_SURVEY_META.responseCount;
   return (
-    <figure className="nv-ring nv-reveal">
-      <div className="nv-ring-plot">
-        <svg viewBox="0 0 140 140" className="nv-ring-svg" aria-hidden="true">
-          <circle className="nv-ring-track" cx="70" cy="70" r={radius} />
-          <circle
-            className="nv-ring-progress"
-            cx="70"
-            cy="70"
-            r={radius}
-            style={
-              {
-                strokeDasharray: circumference,
-                strokeDashoffset: offset,
-              } as React.CSSProperties
-            }
-          />
-        </svg>
-        <div className="nv-ring-center">
-          <span className="nv-ring-value">{label}</span>
-        </div>
-      </div>
-      <figcaption className="nv-ring-caption">{caption}</figcaption>
-    </figure>
-  );
-}
-
-export function SurveyStatRings() {
-  return (
-    <div className="nv-rings" aria-label="Survey response highlights">
-      {NAVI_SURVEY_STATS.map((stat) => (
-        <SurveyRing
-          key={stat.id}
-          value={stat.value}
-          label={stat.label}
-          caption={stat.caption}
-        />
+    <div className="nv-response-chart" role="group" aria-label="Survey response highlights">
+      {NAVI_SURVEY_STATS.map(stat => (
+        <figure key={stat.id} className="nv-response-row">
+          <figcaption><strong>{stat.label}</strong><span>{stat.caption}</span></figcaption>
+          <div className="nv-response-units" aria-hidden="true" style={{gridTemplateColumns: `repeat(${total}, minmax(0, 1fr))`}}>
+            {Array.from({length: total}, (_, i) => <i key={i} data-counted={i < stat.count} />)}
+          </div>
+          <small>{stat.count} of {total} responses</small>
+        </figure>
       ))}
     </div>
   );

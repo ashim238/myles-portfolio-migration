@@ -193,6 +193,11 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
     let regionStart = 0;
     let regionEnd = 1;
 
+    const chromeHeight = () =>
+      getComputedStyle(nav).getPropertyValue("--toc-side-index").trim() === "1"
+        ? document.querySelector(".reader-header")?.getBoundingClientRect().height || 48
+        : nav.getBoundingClientRect().height || 48;
+
     const measure = () => {
       const anchors = sections
         .map((s) => document.getElementById(s.id))
@@ -235,7 +240,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
 
       // The reading "playhead": a line just below the sticky bar, so a section
       // counts as read once its text has cleared the chrome.
-      const navH = nav.getBoundingClientRect().height || 48;
+      const navH = chromeHeight();
       const playhead = window.scrollY + navH + 8;
 
       let currentChapterIndex = 0;
@@ -320,7 +325,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
         ? document.getElementById(requestedId)
         : null;
       if (requested) {
-        const navH = nav.getBoundingClientRect().height || 48;
+        const navH = chromeHeight();
         const targetTop = requested.getBoundingClientRect().top;
         const targetBandEnd = navH + Math.max(80, window.innerHeight * 0.25);
         const maxScroll = Math.max(
@@ -485,6 +490,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
         className={`project-toc${isSticky ? " project-toc--sticky" : ""}`}
         aria-label="Case study chapters"
       >
+        <p className="book-index-label" aria-hidden="true">Contents</p>
         {/* Mobile: collapsed current-section bar. The overall progress fills
             the hairline beneath it. */}
         <button

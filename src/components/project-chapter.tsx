@@ -17,6 +17,7 @@ type ProjectChapterProps = {
   index: number;
   total: number;
   variant: ProjectChapterVariant;
+  lead?: ReactNode;
   children: ReactNode;
 };
 
@@ -48,6 +49,7 @@ export function ProjectChapter({
   index,
   total,
   variant,
+  lead,
   children,
 }: ProjectChapterProps) {
   const evidence = findChapterEvidence(variant, entry.id);
@@ -75,15 +77,18 @@ export function ProjectChapter({
       data-evidence-state={evidence?.evidenceState}
       data-dominant-proof={evidence?.dominantProof.id}
     >
-      <p className="project-chapter-meta">
-        <span className="project-chapter-stage">{entry.stage}</span>
-        <span className="project-chapter-count">
-          {index} of {total}
-        </span>
-      </p>
-      <h2 id={entry.id} className="project-chapter-title">
-        {entry.title}
-      </h2>
+      <header className="chapter-opening" data-has-lead={lead ? true : undefined}>
+        <p className="project-chapter-meta">
+          <span className="project-chapter-stage">{entry.stage}</span>
+          <span className="project-chapter-count">
+            {index} of {total}
+          </span>
+        </p>
+        <h2 id={entry.id} className="project-chapter-title">
+          {entry.title}
+        </h2>
+        {lead && <div className="chapter-deck">{lead}</div>}
+      </header>
       <svg
         className="project-chapter-motif"
         viewBox="0 0 192 20"

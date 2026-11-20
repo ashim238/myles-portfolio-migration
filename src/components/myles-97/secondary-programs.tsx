@@ -1,3 +1,4 @@
+import { Myles97Icon } from "@/components/myles-97/icons";
 import Link from "next/link";
 import {
   LoosePartsProgram,
@@ -13,7 +14,8 @@ export type SecondaryProgramId = Extract<
 
 function AboutPreview() {
   return (
-    <div className="myles97-secondary-program">
+    <div className="myles97-secondary-program program-file-card">
+      <Myles97Icon name="profile" size={64} variant="color" className="program-file-sprite" />
       <p className="myles97-eyebrow">About</p>
       <h2>{siteConfig.name}</h2>
       <p>
@@ -46,7 +48,8 @@ function AboutPreview() {
 
 function ResumePreview() {
   return (
-    <div className="myles97-secondary-program">
+    <div className="myles97-secondary-program program-file-card">
+      <Myles97Icon name="resume" size={64} variant="color" className="program-file-sprite" />
       <p className="myles97-eyebrow">Résumé · updated October 2026</p>
       <h2>{siteConfig.name}</h2>
       <p>

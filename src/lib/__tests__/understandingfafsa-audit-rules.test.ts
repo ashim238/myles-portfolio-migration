@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { UNDERSTANDING_FAFSA_AUDIT_RULES } from "@/lib/understandingfafsa-audit-rules";
 
 describe("UnderstandingFAFSA audit-to-rule contract", () => {
-  it("keeps the five approved findings in causal order", () => {
+  it("keeps the design findings from the newsletter audit in order", () => {
     expect(UNDERSTANDING_FAFSA_AUDIT_RULES).toEqual([
       {
         id: "scanning",
@@ -22,12 +22,6 @@ describe("UnderstandingFAFSA audit-to-rule contract", () => {
         finding: "The founder assembled every issue",
         response:
           "A Mailchimp-native kit that can be edited without touching HTML",
-      },
-      {
-        id: "gmail-clipping",
-        finding: "Gmail clips large HTML emails",
-        response:
-          "Flatter hierarchy, fewer wrappers and blocks, and selective native components",
       },
       {
         id: "send-density",

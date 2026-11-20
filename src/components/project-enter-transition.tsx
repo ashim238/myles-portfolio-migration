@@ -4,6 +4,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Myles97Icon } from "@/components/myles-97/icons";
+import { isFeaturedProject, projectSlug } from "@/lib/myles-97/programs";
 import { ProductThumbnail } from "@/components/myles-97/product-thumbnail";
 import { prefersReducedMotion } from "@/lib/home-intro";
 import {
@@ -139,7 +140,7 @@ function commitFrameDestination(
 }
 
 function caseStudyPath(slug: string): string {
-  return `/work/${slug}`;
+  return `/work/${projectSlug(slug)}`;
 }
 
 function routeMain(): HTMLElement | null {
@@ -194,7 +195,7 @@ function CoverVisual({ visual }: { visual: ProjectCoverVisual }) {
   if (visual.type === "tiktok") {
     return (
       <div className="project-enter-tiktok">
-        <ProductThumbnail project="tiktok" active reduced />
+        <ProductThumbnail project="tiktok" reduced />
       </div>
     );
   }
@@ -227,7 +228,7 @@ function TransitionVisual({ visual }: { visual: ProjectEnterVisual }) {
         </span>
       </div>
       <div className="project-enter-program-cover">
-        <ProductThumbnail project={visual.programId} active reduced />
+        {isFeaturedProject(visual.programId) ? <ProductThumbnail project={visual.programId} reduced /> : <CoverVisual visual={visual.cover} />}
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 function slugify(input) {
   return input
@@ -36,44 +37,24 @@ const slug = slugify(title);
 const projectsDir = path.join(process.cwd(), "content", "projects");
 const filePath = path.join(projectsDir, `${slug}.md`);
 
-const template = `---
-slug: ${slug}
-title: ${title}
-summary: ${summary}
-role: ${role}
-timeframe: ${timeframe}
-status: ${status}
-order: 99
-tags:
-  - Product Design
----
-
-## Context
-
-Add context.
-
-## Problem
-
-Describe the core problem.
-
-## Process
-
-Explain the process and decisions.
-
-## Outcome
-
-Summarize outcomes and next steps.
-`;
-
-try {
-  await fs.access(filePath);
-  console.error(`File already exists: ${filePath}`);
+if (!slug) {
+  console.error("Use a title with a letter or number for its URL.");
   process.exit(1);
-} catch {
-  // File does not exist.
 }
 
-await fs.mkdir(projectsDir, { recursive: true });
-await fs.writeFile(filePath, template, "utf-8");
+const templatePath = fileURLToPath(new URL("../content/projects/_template.md", import.meta.url));
+const template = await fs.readFile(templatePath, "utf8");
+const fields = { slug, title, summary, role, timeframe, status };
+const draft = template.replace(/^(slug|title|summary|role|timeframe|status): .*$/gm,
+  (_, key) => key + ": " + JSON.stringify(fields[key])).replaceAll("/project-slug/", "/" + slug + "/");
 
-console.log(`Created ${path.relative(process.cwd(), filePath)}`);
+await fs.mkdir(projectsDir, { recursive: true });
+try {
+  await fs.writeFile(filePath, draft, { encoding: "utf8", flag: "wx" });
+} catch (error) {
+  if (error.code !== "EEXIST") throw error;
+  console.error(`File already exists: ${filePath}`);
+  process.exit(1);
+}
+
+console.log(`Created ${path.relative(process.cwd(), filePath)}. Preview at /work/${slug}.`);

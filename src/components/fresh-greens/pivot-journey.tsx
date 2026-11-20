@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { PhoneFrame } from "@/components/fresh-greens";
 import { ExpandableImage } from "@/components/expandable-image";
+import { arrivalLightSamples } from "@/lib/myles-97/preview-originals";
 
 /**
  * The problem-led Plan comparison: v1 put safety controls inside Google Maps,
@@ -78,8 +79,8 @@ export function PivotJourney() {
           <div className="fg-pivot-phone">
             <PhoneFrame variant="screenshot">
               <ExpandableImage
-                src="/projects/fresh-greens/v2/route-preview.png"
-                alt="The distinct Fresh Greens route preview: a daylight-graded route line with a sun-to-moon legend, an All clear safety chip, a note that a station you trust is on the route, and a green Go button on a warm surface."
+                src={arrivalLightSamples[0].src}
+                alt="The standalone Weeksville preview shows Daylight beside the arrival time, one road condition, three visible light-level line samples and a green Go button."
                 width={1290}
                 height={2796}
                 sizes="(max-width: 768px) 62vw, 300px"

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { ArtworkCrop, type CropBounds } from "@/components/artwork-crop";
 import { ExpandableImage } from "@/components/expandable-image";
 import {
   useEffect,
@@ -48,6 +49,11 @@ export function TikTokTemplateSystem() {
     (asset) => asset.region === activeRegion,
   );
 
+  const detailBounds: CropBounds | undefined = regionOverlay && [
+    Math.max(0, regionOverlay.left / 100 - .026), Math.max(0, regionOverlay.top / 100 - .026),
+    Math.min(1 - Math.max(0, regionOverlay.left / 100 - .026), regionOverlay.width / 100 + .052),
+    Math.min(1 - Math.max(0, regionOverlay.top / 100 - .026), regionOverlay.height / 100 + .052),
+  ];
   return (
     <section id="tt-template-inspector" className="tt-template-system project-proof-target" aria-label="TikTok template system" tabIndex={-1}>
       <div
@@ -121,7 +127,7 @@ export function TikTokTemplateSystem() {
               alt={`${selected.name} static Dynamic Showcase Ad template`}
               width={1080}
               height={1920}
-              sizes="(max-width: 720px) 17rem, 20rem"
+              sizes="(max-width: 720px) clamp(10rem, 25svh, 17rem), 22.5rem"
               loading="lazy"
               fetchPriority="low"
             />
@@ -146,6 +152,9 @@ export function TikTokTemplateSystem() {
             <span>{selected.iterationNote}</span>
           </div>
           <div className="tt-template-region-copy" aria-live="polite">
+            {detailBounds && originalRegionAssets.length === 0 && <div className="tt-register-detail">
+              <ArtworkCrop src={selected.fullTemplate} width={1080} height={1920} bounds={detailBounds} sizes="(max-width: 700px) 100vw, 950px" />
+            </div>}
             <p>{selected.regionNotes[activeRegion]}</p>
             {originalRegionAssets.length > 0 ? (
               <div className="tt-template-original-assets">

@@ -1,6 +1,8 @@
-import { ProductThumbnail } from "@/components/myles-97/product-thumbnail";
+import Image from "next/image";
+import { Fragment } from "react";
 import { ProjectOpeningFacts } from "@/components/project-opening-facts";
 import { TikTokCoverBlobs, TikTokLogo } from "@/components/tiktok-dsa";
+import { TIKTOK_TEMPLATES } from "@/lib/tiktok-data";
 
 const tiktokProof = {
   label: "Inspect the template system",
@@ -18,8 +20,16 @@ export function TikTokOpening({ legacy = false }: { legacy?: boolean }) {
         <p className="project-hero-lede tt-lede">The templates needed to appeal to different styles and aesthetics,
           so I had room to think outside the box.</p>
       </div>
-      {legacy ? null : <div className="tt-cover-work" role="img" aria-label="The three original fashion template directions: e-Boy/e-Girl, Light Academia and Dopamine Dressing.">
-        <ProductThumbnail project="tiktok" active reduced />
+      {legacy ? null : <div className="tt-cover-work tt-original-plates" aria-label="Original catalog templates" role="group">
+        {TIKTOK_TEMPLATES.map(template => (
+          <figure key={template.key} className="tt-original-plate">
+            <Image src={template.fullTemplate} alt={template.name + " catalog template"} width={1080} height={1920}
+              unoptimized loading="eager" />
+            <figcaption>{template.name.split(/(?<=[a-z])(?=[A-Z])|(?<=\/)/).map((word, index) => (
+              <Fragment key={word}>{index > 0 && <wbr />}{word}</Fragment>
+            ))}</figcaption>
+          </figure>
+        ))}
       </div>}
     </header>
     <ProjectOpeningFacts

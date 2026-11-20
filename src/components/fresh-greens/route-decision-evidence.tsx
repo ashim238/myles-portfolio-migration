@@ -83,7 +83,7 @@ export function RouteComparisonEvidence() {
           <dl>
             <div>
               <dt>Arrival</dt>
-              <dd>{route.arrival}</dd>
+              <dd>{route.arrival.replace(/^Arrive /, "")}</dd>
             </div>
             <div>
               <dt>Distance</dt>
@@ -99,6 +99,9 @@ export function RouteComparisonEvidence() {
         </div>
 
         <div className="fg-route-proof-daylight">
+          <div className="fg-daylight-ends" aria-hidden="true">
+            <span>Departure</span><span>{route.arrival}</span>
+          </div>
           <span
             aria-hidden="true"
             style={{ "--fg-dusk-midpoint": route.duskMidpoint } as CSSProperties}

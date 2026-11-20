@@ -265,7 +265,7 @@ describe("Fresh Greens prose structure", () => {
     expect(source).toMatch(
       /<LeadVideo[\s\S]*?clip="\/projects\/fresh-greens\/process\/active-nav-flat-route\.mp4"[\s\S]*?poster="\/projects\/fresh-greens\/v2\/en-route\.png"[\s\S]*?width=\{1290\}[\s\S]*?height=\{2796\}/,
     );
-    expect(source).toContain("En-route prototype on a simulated route.");
+    expect(source).toContain("Earlier build, simulated San Francisco route.");
   });
 
   it("names the second route-planning state without portfolio shorthand", () => {
@@ -408,7 +408,7 @@ describe("Fresh Greens prose structure", () => {
     expect(copy).not.toContain(
       "The driver isn't expecting perfection. They're expecting",
     );
-    expect(copy).toContain("Worst comes to worst, a Black driver needs to be informed.");
+    expect(copy).toContain("I didn't want someone scrolling during a stop to find what applied.");
     expect(copy).toContain(
       "People just need transparency into how the app is doing what it claims it does.",
     );

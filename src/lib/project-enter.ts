@@ -1,5 +1,6 @@
 import {
-  isProgramId,
+  isProjectProgramId,
+  projectSlug,
   type ProjectProgramId,
 } from "@/lib/myles-97/programs";
 
@@ -61,16 +62,6 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function isFiniteNumber(value: unknown): value is number {
   return typeof value === "number" && Number.isFinite(value);
-}
-
-function isProjectProgramId(value: unknown): value is ProjectProgramId {
-  return (
-    isProgramId(value) &&
-    (value === "fresh-greens" ||
-      value === "understandingfafsa" ||
-      value === "navi" ||
-      value === "tiktok")
-  );
 }
 
 function isRect(value: unknown): value is ProjectEnterRect {
@@ -175,7 +166,7 @@ export const PROJECT_ENTER_SETTLE_MS = 560;
 
 export function queryProjectCover(slug: string): HTMLElement | null {
   const page = document.querySelector<HTMLElement>(
-    `.project-page[data-project-slug="${slug}"]`,
+    `.project-page[data-project-slug="${projectSlug(slug)}"]`,
   );
   if (!page) return null;
 

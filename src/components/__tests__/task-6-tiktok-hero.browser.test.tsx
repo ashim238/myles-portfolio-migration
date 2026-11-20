@@ -35,7 +35,11 @@ const styles = [
   "../../app/styles/myles-97-pocket.css",
   "../../app/styles/myles-98-polish.css",
   "../../app/styles/myles-98-paper-contrast.css",
+  "../../app/styles/workstation-documents.css",
+  "../../app/styles/archive-layout.css",
+  "../../app/styles/project-artwork.css",
   "../../app/styles/portfolio-surfaces.css",
+  "../../app/styles/case-study-exhibits.css",
 ]
   .map((path) => readFileSync(resolve(testDirectory, path), "utf8"))
   .join("\n");
@@ -109,7 +113,7 @@ function documentWith(content: string) {
 
 describe("Task 6 TikTok mobile hero polish", () => {
   it.each(mobileViewports)(
-    "keeps the production fallback art clear of hero copy at $width×$height",
+    "keeps the original catalog templates clear of hero copy at $width×$height",
     async (viewport) => {
       const page = await browser.newPage({
         viewport,
@@ -120,10 +124,10 @@ describe("Task 6 TikTok mobile hero polish", () => {
 
       const geometry = await page.evaluate(() => {
         const cluster = document.querySelector<HTMLElement>(
-          "header.tt-cover--preview .tt-cover-cluster",
+          "header.tt-cover--preview .tt-original-plates",
         )!;
         const poster = document.querySelector<HTMLElement>(
-          "header.tt-cover--preview .tt-cover-poster",
+          "header.tt-cover--preview .tt-original-plate img",
         )!;
         const title = document.querySelector<HTMLElement>(
           "header.tt-cover--preview .tt-title",

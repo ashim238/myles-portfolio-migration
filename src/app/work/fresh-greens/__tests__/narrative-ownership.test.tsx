@@ -161,13 +161,13 @@ describe("Fresh Greens rendered narrative ownership", () => {
     expect(
       within(chapter(container, "fg-scope")).getByText("What remains"),
     ).toBeInTheDocument();
-    expect(container.querySelector('a[href="#fg-pulled-over"]')).not.toBeNull();
+    expect(container.querySelector('a[href="#fg-safety-reconstruction"]')).not.toBeNull();
 
     expect(container.querySelectorAll(".project-chapter")).toHaveLength(6);
     expect(
       Array.from(
         container.querySelectorAll<HTMLElement>(
-          ".project-chapter > .project-chapter-title",
+          ".project-chapter > header > .project-chapter-title",
         ),
         (heading) => heading.id,
       ),
@@ -220,7 +220,7 @@ describe("Fresh Greens rendered narrative ownership", () => {
       'comparison below uses a neutral label',
     );
     expect(respond).toHaveTextContent(
-      "One tap opens four support paths, including the pulled-over flow",
+      "In the pulled-over flow, I ask “Are you armed?” first. Which guidance applies depends on the driver's answer and the state they're in.",
     );
     expect(respond).toHaveTextContent(
       "I haven't tested this flow with drivers yet, let alone during a real encounter.",

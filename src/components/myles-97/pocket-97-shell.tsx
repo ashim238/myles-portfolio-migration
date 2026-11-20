@@ -220,12 +220,9 @@ export function Pocket97Shell({
               </div>
             </header>
 
-            <section id="selected-work" className="pocket97-work" aria-labelledby="pocket97-work-title">
-              <div className="pocket97-section-heading">
-                <h2 id="pocket97-work-title">Work Stuff</h2>
-                <span>{programs.length} programs</span>
-              </div>
+            <section id="selected-work" className="pocket97-work" aria-label="Work Stuff">
               <SelectedWorkExplorer
+                heading="Work Stuff"
                 programs={programs}
                 onOpen={(id) => openProgram(id)}
                 reduceMotion={state.displayPreferences.reduceMotion}
@@ -353,11 +350,11 @@ export function Pocket97Shell({
           <Myles97Icon name="start" size={24} variant="color" />
           <span>Start</span>
         </button>
-        <button ref={workButtonRef} type="button" onClick={returnHome}>
+        <button ref={workButtonRef} type="button" aria-current={!activeProgram ? "location" : undefined} onClick={returnHome}>
           <Myles97Icon name="folder" size={24} variant="color" aria-hidden="true" />
           <span>Work</span>
         </button>
-        <button type="button" onClick={() => openProgram("loose-parts")}>
+        <button type="button" aria-current={activeProgram === "loose-parts" ? "location" : undefined} onClick={() => openProgram("loose-parts")}>
           <Myles97Icon name="loose-parts" size={24} variant="color" aria-hidden="true" />
           <span>Loose Parts</span>
         </button>

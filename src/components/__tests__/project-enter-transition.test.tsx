@@ -1121,8 +1121,8 @@ describe("ProjectEnterTransition", () => {
     const scene = document.querySelector('.project-enter-tiktok [data-project="tiktok"]');
     expect(scene).not.toBeNull();
     expect(scene).toHaveAttribute("data-reduced", "true");
-    expect(scene?.querySelectorAll('image[href^="/projects/preview-art/"]').length).toBe(3);
-    expect(scene?.querySelector('image[href$="/academia-text.svg"]')).toBeInTheDocument();
+    expect(scene?.querySelectorAll('.catalog-proof')).toHaveLength(3);
+    expect(scene?.querySelector('.catalog-proof--academia')).toBeInTheDocument();
     expect(document.querySelector(".tt-cover-field")).toBeNull();
     expect(document.querySelector(".project-enter-image")).toBeNull();
   });

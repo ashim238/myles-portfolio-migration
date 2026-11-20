@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import {
   CompositionStrip,
   HeuristicInsightCards,
-  SurveyStatRings,
+  SurveyResponseChart,
 } from "@/components/navi";
 import { NAVI_HEURISTIC_INSIGHTS } from "@/lib/navi-heuristic-data";
 
@@ -29,23 +29,15 @@ describe("Navi artifact layout", () => {
     );
   });
 
-  it("centers each survey value against its ring independently of the caption", () => {
-    const { container } = render(<SurveyStatRings />);
-
-    for (const ring of container.querySelectorAll(".nv-ring")) {
-      const plot = ring.querySelector(".nv-ring-plot");
-      expect(plot).not.toBeNull();
-      expect(plot?.querySelector(".nv-ring-svg")).not.toBeNull();
-      expect(plot?.querySelector(".nv-ring-center")).not.toBeNull();
+  it("represents the fourteen responses on a common count scale", () => {
+    const { container } = render(<SurveyResponseChart />);
+    const rows = [...container.querySelectorAll(".nv-response-row")];
+    expect(rows).toHaveLength(2);
+    for (const [row, count] of [[rows[0], 10], [rows[1], 7]] as const) {
+      expect(row.querySelectorAll(".nv-response-units i")).toHaveLength(14);
+      expect(row.querySelectorAll('[data-counted="true"]')).toHaveLength(count);
+      expect(row).toHaveTextContent(`${count} of 14 responses`);
     }
-
-    expect(styles).toMatch(
-      /\.nv-ring-plot\s*\{[^}]*display: grid;[^}]*place-items: center;/,
-    );
-    expect(styles).not.toMatch(
-      /\.nv-ring-center\s*\{[^}]*position: absolute;/,
-    );
-    expect(styles).not.toMatch(/\.nv-ring-center\s*\{[^}]*padding-bottom:/);
   });
 
   it("keeps composition-card feedback flat and restrained", () => {

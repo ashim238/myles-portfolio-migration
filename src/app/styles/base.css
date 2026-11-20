@@ -328,9 +328,10 @@ a {
 /* ── end dot cursor ─────────────────────────────────────────────── */
 
 .page-shell {
+  --page-shell-gutter: 1.4rem;
   width: min(var(--content-max), 100%);
   margin: 0 auto;
-  padding: 1.2rem 1.4rem 4.5rem;
+  padding: 1.2rem var(--page-shell-gutter) 4.5rem;
 }
 
 /* Project cover zoom — home work card into case study */

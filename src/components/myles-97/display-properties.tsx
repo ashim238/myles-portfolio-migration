@@ -64,6 +64,10 @@ export function DisplayProperties({
     <div className="myles97-display-preview">
       <p>Choose the portfolio color scheme and accessibility preferences.</p>
 
+      <div className="display-monitor" aria-hidden="true" data-scheme={selectedTheme}
+        data-contrast={selectedPreferences.highContrast}>
+        <div className="monitor-desktop"><i /><b /><span /></div>
+      </div>
       <fieldset>
         <legend>Color scheme</legend>
         <label>

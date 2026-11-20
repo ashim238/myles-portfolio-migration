@@ -47,7 +47,7 @@ describe("TikTokTemplateSystem", () => {
     });
     expect(selectedImage).toHaveAttribute(
       "sizes",
-      "(max-width: 720px) 17rem, 20rem",
+      "(max-width: 720px) clamp(10rem, 25svh, 17rem), 22.5rem",
     );
     expect(selectedImage).toHaveAttribute("loading", "lazy");
     expect(selectedImage).toHaveAttribute("srcset");

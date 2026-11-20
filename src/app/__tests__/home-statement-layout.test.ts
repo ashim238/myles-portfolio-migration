@@ -34,11 +34,7 @@ describe("Myles 98 homepage layout", () => {
     expect(shell).toMatch(/min-height:\s*100svh/);
     expect(shell).toMatch(/background:\s*var\(--m97-desktop\)/);
     expect(desktop).toMatch(/position:\s*relative/);
-    expect(desktop).toMatch(/radial-gradient\(/);
-    expect(desktop).toMatch(/ellipse at 18% 16%/);
-    expect(desktop).toMatch(/ellipse at 82% 84%/);
-    expect(desktop).toMatch(/16px 16px,\s*64px 64px,\s*64px 64px/);
-    expect(css).toMatch(/\.myles97-desktop::before\s*\{[^}]*content:\s*"M98";/);
+    expect(desktop).toMatch(/background:\s*var\(--m97-desktop\)/);
   });
 
   it("keeps the approved welcome line prominent without overpowering program discovery", () => {
@@ -84,7 +80,7 @@ describe("Myles 98 homepage layout", () => {
 
     expect(guide).toMatch(/font-size:\s*12px/);
     expect(caseStudy).toMatch(/font:\s*700 12px\/1\.2 var\(--m97-ui-font\)/);
-    expect(preview).toMatch(/font:\s*700 12px\/1\.2 var\(--m97-ui-font\)/);
+    expect(preview).toMatch(/font:\s*400 12px\/1\.2 var\(--m97-ui-font\)/);
   });
 
   it("preserves the primary case-study action in the custom high-contrast mode", () => {
