@@ -2928,11 +2928,6 @@
 
 .tt-page .project-chapter-title {
   margin: 0 0 1.25rem;
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
-  font-weight: 500;
-  line-height: 1.18;
-  letter-spacing: var(--track-display);
-  text-wrap: balance;
 }
 
 /* TikTok's art-directed opening uses a centered 48rem text column. Keep its

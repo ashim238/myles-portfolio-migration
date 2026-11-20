@@ -78,7 +78,7 @@
   color: inherit;
 }
 /* Keep the existing wide-screen rail compact rather than turning it into floating buttons. */
-@media (min-width: 1600px) {
+@media (min-width: 1600px) and (not (pointer: coarse)) {
   .reader-mode.reader-mode .project-toc-link.reader-control {
     background: transparent;
     box-shadow: none;

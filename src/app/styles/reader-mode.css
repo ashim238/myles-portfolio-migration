@@ -365,6 +365,14 @@
   scroll-margin-top: calc(var(--project-heading-offset) + 1rem);
 }
 
+/* The fragment targets the heading. Leave its stage and count visible above it
+   when the chapter list sits across the top of the page. */
+@media (768px <= width < 1600px) {
+  .reader-mode .project-chapter-title[id] {
+    scroll-margin-top: calc(var(--project-heading-offset) + 3.5rem);
+  }
+}
+
 @media (min-width: 1025px) {
   .reader-mode .project-toc-text--short :is(.project-toc-title, .project-toc-separator) {
     display: none;
@@ -473,12 +481,12 @@
   .reader-mode.reader-mode .project-toc-toggle .project-toc-active-title--short .project-toc-title {
     display: none;
   }
-}
 
-/* Once the existing TOC enhancements are ready, coarse/narrow Reader Mode
-   keeps the collapsed chapter control in the sticky reading lane. Without JS
-   the full chapter list remains in normal document flow through base.css. */
-@media (max-width: 767px), (pointer: coarse) {
+  .reader-mode .project-chapter-title[id] {
+    scroll-margin-top: calc(var(--project-heading-offset) + 2rem);
+  }
+
+  /* Keep the enhanced chapter control sticky while the fallback list stays in flow. */
   .reader-mode.reader-mode .project-toc[data-toc-ready="true"] {
     position: sticky;
     top: 54px;
@@ -504,8 +512,12 @@
   }
 }
 
-@media (min-width: 1600px) {
+@media (min-width: 1600px) and (not (pointer: coarse)) {
+  /* The chapter canvas is 76rem wide. Keep the entire rail in its left gutter. */
   .reader-mode.reader-mode .project-toc {
+    top: 50%;
+    right: calc(50% + 38rem + 1rem);
+    left: auto;
     width: 3.6rem;
     margin: 0;
   }

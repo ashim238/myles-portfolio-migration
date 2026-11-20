@@ -49,7 +49,10 @@ describe("ProjectToc Reader layout", () => {
   });
 
   it("keeps the wide Reader spine transparent instead of drawing a stray active or hover block", () => {
-    const wideReader = cssBlock("@media (min-width: 1600px)");
+    const wideReader = cssBlock("@media (min-width: 1600px) and (not (pointer: coarse))");
+    const rail = cssBlock(".reader-mode.reader-mode .project-toc", wideReader);
+    expect(rail).toMatch(/top:\s*50%;/);
+    expect(rail).toMatch(/right:\s*calc\(50% \+ 38rem \+ 1rem\);/);
     const active = cssBlock(
       ".reader-mode.reader-mode .project-toc-link--active",
       wideReader,

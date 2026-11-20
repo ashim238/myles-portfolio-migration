@@ -165,10 +165,10 @@ describe("ProjectToc responsive layout", () => {
     expect(focusedHelp).toMatch(/white-space:\s*nowrap;/);
   });
 
-  it("keeps 1440px horizontal and starts the vertical spine at 1600px", () => {
+  it("keeps 1440px horizontal and uses the wide side rail on non-touch pointers", () => {
     expect(styles).not.toContain("@media (min-width: 1280px)");
     expect(styles).not.toContain("@media (min-width: 1440px)");
-    const wide = cssBlock("@media (min-width: 1600px)");
+    const wide = cssBlock("@media (min-width: 1600px) and (not (pointer: coarse))");
     const toc = cssBlock(".project-toc", wide);
     const link = cssBlock(".project-toc-link", wide);
     const rail = cssBlock(".project-toc-rail", wide);
