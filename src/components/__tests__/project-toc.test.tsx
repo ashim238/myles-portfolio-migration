@@ -307,6 +307,7 @@ describe("ProjectToc", () => {
     expect(
       screen.getByRole("button", { name: "Research: What drivers changed" }),
     ).toBeInTheDocument();
+    expect(container.querySelector(".project-toc-toggle .project-toc-readout-mobile")).toBeNull();
     expect(
       container.querySelector(
         ".project-toc-active-title .project-toc-stage",

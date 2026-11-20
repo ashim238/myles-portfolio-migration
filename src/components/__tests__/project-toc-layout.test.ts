@@ -112,7 +112,7 @@ describe("ProjectToc responsive layout", () => {
     expect(collapsedTitle).toMatch(/text-overflow:\s*ellipsis;/);
   });
 
-  it("gives compact phones the title before stage and decorative read-time", () => {
+  it("shows the stage in the compact toggle and gives the title room in the menu", () => {
     const compact = cssBlock("@media (max-width: 420px)", readerStyles);
     expect(
       cssBlock(".reader-mode.reader-mode .project-toc-stage", compact),
@@ -121,9 +121,12 @@ describe("ProjectToc responsive layout", () => {
       /\.reader-mode\.reader-mode \.project-toc-separator\s*\{?[^}]*display:\s*none;/,
     );
 
-    const narrow = cssBlock("@media (max-width: 360px)", readerStyles);
+    const mobile = cssBlock("@media (max-width: 767px), (pointer: coarse)", readerStyles);
     expect(
-      cssBlock(".reader-mode.reader-mode .project-toc-readout-mobile", narrow),
+      cssBlock(".reader-mode.reader-mode .project-toc-toggle .project-toc-stage", mobile),
+    ).toMatch(/display:\s*inline;/);
+    expect(
+      cssBlock(".reader-mode.reader-mode .project-toc-toggle .project-toc-active-title--short .project-toc-title", mobile),
     ).toMatch(/display:\s*none;/);
   });
 
