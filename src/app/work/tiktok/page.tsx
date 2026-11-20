@@ -16,7 +16,7 @@ import {
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
 import { CASE_STUDY_CHAPTERS } from "@/lib/project-chapters";
 import { createRouteMetadata } from "@/lib/site-config";
-import { TIKTOK_TEMPLATES } from "@/lib/tiktok-data";
+import { LIGHT_ACADEMIA_TITLE, TIKTOK_TEMPLATES } from "@/lib/tiktok-data";
 import styles from "./tiktok-four-beat.module.css";
 
 const TIKTOK_DESCRIPTION =
@@ -286,12 +286,8 @@ export default async function TikTokPage() {
                 <p className="tt-outcome-step-label">My response</p>
                 <figure>
                   <ExpandableImage
-                    src="/projects/tiktok/system/academia-text.svg"
-                    previewSrc="/projects/tiktok/system/academia-text-detail.svg"
-                    alt="Light Academia editorial title asset"
-                    width={388}
-                    height={268}
-                    sizes="140px"
+                    src={LIGHT_ACADEMIA_TITLE.src}
+                    {...LIGHT_ACADEMIA_TITLE.detail}
                     style={{ height: "auto", display: "block" }}
                   />
                   <figcaption>

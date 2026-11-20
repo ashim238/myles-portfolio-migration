@@ -173,6 +173,17 @@ describe("TikTokTemplateSystem", () => {
         name: "View #LightAcademia template, confirmed in the launch library",
       }),
     );
+    fireEvent.click(screen.getByRole("button", { name: "Title" }));
+    const detail = screen.getByRole("button", {
+      name: "Expand image: Light Academia editorial title asset",
+    });
+    expect(within(detail).getByRole("img")).toHaveAttribute(
+      "src",
+      "/projects/tiktok/system/academia-text-detail.svg",
+    );
+    expect(
+      container.querySelector("[data-template-region='lightacademia-title']"),
+    ).toBeInTheDocument();
     fireEvent.click(
       screen.getByRole("button", { name: "Supporting graphics" }),
     );

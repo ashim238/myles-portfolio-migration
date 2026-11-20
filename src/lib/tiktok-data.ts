@@ -44,6 +44,7 @@ export type TikTokTemplate = {
     src: string;
     label: string;
     region: TikTokTemplateRegion;
+    detail?: { previewSrc: string; alt: string; width: number; height: number };
   }[];
 };
 
@@ -55,6 +56,16 @@ export type TikTokRegionBox = {
   width: number;
   height: number;
 };
+
+export const LIGHT_ACADEMIA_TITLE = {
+  src: "/projects/tiktok/system/academia-text.svg",
+  detail: {
+    previewSrc: "/projects/tiktok/system/academia-text-detail.svg",
+    alt: "Light Academia editorial title asset",
+    width: 388,
+    height: 268,
+  },
+} as const;
 
 export const TIKTOK_TEMPLATES = [
   {
@@ -111,12 +122,13 @@ export const TIKTOK_TEMPLATES = [
     iterationNote:
       "The sketch records the internal critique that shaped the final Light Academia direction.",
     regionOverlays: {
-      title: { left: 61.11, top: 13.28, width: 35.91, height: 13.98 },
+      // The four-line masthead occupies x660–949, y264–343 on the 1080 × 1920 export.
+      title: { left: 60.19, top: 13.23, width: 28.7, height: 5.21 },
       catalog: { left: 10.84, top: 18.75, width: 66.94, height: 42.71 },
     },
     componentAssets: [
       {
-        src: "/projects/tiktok/system/academia-text.svg",
+        ...LIGHT_ACADEMIA_TITLE,
         label: "Original editorial title asset",
         region: "title",
       },

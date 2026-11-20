@@ -168,13 +168,14 @@
 }
 
 .reader-mode.tt-page .tt-outcome-step:nth-child(2) .expandable-trigger {
+  box-sizing: border-box;
   justify-content: flex-end;
   height: 120px;
   padding: 16px 24px;
 }
 
 .reader-mode.tt-page .tt-outcome-step:nth-child(2) img {
-  width: 140px;
+  width: min(100%, 302px);
   height: auto;
   max-height: 100%;
   object-fit: contain;

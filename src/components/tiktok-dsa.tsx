@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { ExpandableImage } from "@/components/expandable-image";
 import {
   useEffect,
   useRef,
@@ -160,15 +161,22 @@ export function TikTokTemplateSystem() {
             {originalRegionAssets.length > 0 ? (
               <div className="tt-template-original-assets">
                 {originalRegionAssets.map((asset) => (
-                  <figure key={asset.src}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={asset.src}
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                      fetchPriority="low"
-                    />
+                  <figure
+                    key={asset.src}
+                    className={asset.detail ? "tt-template-asset-detail" : undefined}
+                  >
+                    {asset.detail ? (
+                      <ExpandableImage src={asset.src} {...asset.detail} />
+                    ) : (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={asset.src}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                        fetchPriority="low"
+                      />
+                    )}
                     <figcaption>{asset.label}</figcaption>
                   </figure>
                 ))}

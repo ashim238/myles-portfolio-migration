@@ -83,7 +83,7 @@ describe("TikTok preview template data", () => {
       catalog: { left: 11.11, top: 13.33, width: 66.67, height: 48.33 },
     });
     expect(templates?.[2].regionOverlays).toEqual({
-      title: { left: 61.11, top: 13.28, width: 35.91, height: 13.98 },
+      title: { left: 60.19, top: 13.23, width: 28.7, height: 5.21 },
       catalog: { left: 10.84, top: 18.75, width: 66.94, height: 42.71 },
     });
   });
