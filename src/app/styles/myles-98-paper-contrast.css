@@ -474,8 +474,6 @@
 .reader-mode.reader-mode.tt-page :is(
   [class*="briefFacts"] dd,
   .tt-template-selected-caption,
-  .tt-template-region-label,
-  .tt-template-region-source,
   .tt-preview-process-card h3,
   .tt-preview-iteration strong,
   .tt-outcome-step-label
@@ -492,13 +490,6 @@
   .tt-outcome-step figcaption
 ) {
   color: var(--m98-paper-muted);
-}
-
-.reader-mode.reader-mode.tt-page :is(
-  .tt-template-region-source
-) {
-  border-color: var(--m98-paper-rule);
-  background: var(--m98-paper-panel);
 }
 
 .reader-mode.reader-mode.tt-page :is(

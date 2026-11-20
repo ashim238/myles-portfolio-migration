@@ -40,11 +40,12 @@ export type TikTokTemplate = {
   palette: readonly { hex: string; label: string }[];
   iterationNote: string;
   regionOverlays: Partial<Record<TikTokTemplateRegion, TikTokRegionBox>>;
+  regionNotes: { catalog: string; title?: string; supporting?: string };
   componentAssets: readonly {
     src: string;
     label: string;
     region: TikTokTemplateRegion;
-    detail?: { previewSrc: string; alt: string; width: number; height: number };
+    detail?: { previewSrc?: string; alt: string; width: number; height: number };
   }[];
 };
 
@@ -81,14 +82,19 @@ export const TIKTOK_TEMPLATES = [
     iterationNote:
       "The sketch explores brand colors and copy such as #OOTD. I rejected the direction once the copy felt like it was trying too hard to belong and the visuals felt too TikTok-branded.",
     regionOverlays: {
-      title: { left: 20.37, top: 13.02, width: 47.67, height: 4.92 },
+      title: { left: 19.81, top: 12.71, width: 49.54, height: 5.94 },
       catalog: { left: 12.45, top: 19.18, width: 64.48, height: 41.97 },
+    },
+    regionNotes: {
+      title: "“FIT CHECK” sits just above the photo. The black shadow keeps the white letters legible against the blue and teal.",
+      catalog: "The brand’s product photo goes inside the pink frame below “FIT CHECK.”",
     },
     componentAssets: [
       {
         src: "/projects/tiktok/system/dopamine-title.svg",
         label: "Original title asset",
         region: "title",
+        detail: { alt: "FIT CHECK title artwork", width: 515, height: 95 },
       },
     ],
   },
@@ -106,6 +112,9 @@ export const TIKTOK_TEMPLATES = [
       "The notes warned that the direction might stray too far from the guidelines. I was asked to build it out and find a way to make the nearly colorless treatment appealing.",
     regionOverlays: {
       catalog: { left: 11.11, top: 13.33, width: 66.67, height: 48.33 },
+    },
+    regionNotes: {
+      catalog: "The gray panel is where the product photo goes. A strip of tape overlaps its upper-right corner, and the space above it has no headline.",
     },
     componentAssets: [],
   },
@@ -125,6 +134,11 @@ export const TIKTOK_TEMPLATES = [
       // The four-line masthead occupies x660–949, y264–343 on the 1080 × 1920 export.
       title: { left: 60.19, top: 13.23, width: 28.7, height: 5.21 },
       catalog: { left: 10.84, top: 18.75, width: 66.94, height: 42.71 },
+    },
+    regionNotes: {
+      title: "The Style Zine masthead sits above the product photo. The season and two smaller lines of type align with its right edge.",
+      catalog: "The white rectangle holds the product photo. The masthead sits above it and the barcode runs along its left edge.",
+      supporting: "The barcode sits in the left margin, beside the product photo.",
     },
     componentAssets: [
       {

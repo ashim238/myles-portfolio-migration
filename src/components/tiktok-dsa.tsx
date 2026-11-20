@@ -16,21 +16,9 @@ import {
 } from "@/lib/tiktok-data";
 
 const TEMPLATE_REGIONS = [
-  {
-    key: "title",
-    label: "Title",
-    note: "Typography and placement change with the subculture. Some directions don't use a separate title treatment.",
-  },
-  {
-    key: "catalog",
-    label: "Catalog slot",
-    note: "Brands add product imagery and catalog details to the fixed slot shown here.",
-  },
-  {
-    key: "supporting",
-    label: "Supporting graphics",
-    note: "Original frame, texture, and ornament assets appear below when they were available in the source files.",
-  },
+  { key: "title", label: "Title" },
+  { key: "catalog", label: "Catalog slot" },
+  { key: "supporting", label: "Supporting graphics" },
 ] as const;
 
 type TemplateRegion = TikTokTemplateRegion;
@@ -103,52 +91,54 @@ export function TikTokTemplateSystem() {
         ))}
       </div>
 
-      <div
-        className="tt-template-regions"
-        role="group"
-        aria-label="Inspect template parts"
-      >
-        {availableRegions.map((item) => (
-          <button
-            key={item.key}
-            type="button"
-            className="reader-control"
-            aria-pressed={activeRegion === item.key}
-            onClick={() => setSelectedRegion(item.key)}
-          >
-            {item.label}
-          </button>
-        ))}
-      </div>
-
       <figure
         key={selected.key}
         className="tt-template-selected"
+        data-template={selected.key}
         aria-label={`Selected template: ${selected.name}`}
       >
-        <div className="tt-template-selected-image">
-          <Image
-            src={selected.fullTemplate}
-            alt={`${selected.name} static Dynamic Showcase Ad template`}
-            width={1080}
-            height={1920}
-            sizes="(max-width: 720px) 17rem, 20rem"
-            loading="lazy"
-            fetchPriority="low"
-          />
-          {regionOverlay ? (
-            <span
-              className="tt-template-region-overlay"
-              data-template-region={`${selected.key}-${activeRegion}`}
-              style={{
-                left: `${regionOverlay.left}%`,
-                top: `${regionOverlay.top}%`,
-                width: `${regionOverlay.width}%`,
-                height: `${regionOverlay.height}%`,
-              }}
-              aria-hidden="true"
+        <div className="tt-template-proof">
+          {availableRegions.length > 1 ? (
+            <div className="tt-template-regions" role="group" aria-label="Inspect template parts">
+              {availableRegions.map((item) => (
+                <button
+                  key={item.key}
+                  type="button"
+                  className="reader-control"
+                  aria-pressed={activeRegion === item.key}
+                  onClick={() => setSelectedRegion(item.key)}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div className="tt-template-region-heading">{region.label}</div>
+          )}
+          <div className="tt-template-selected-image">
+            <Image
+              src={selected.fullTemplate}
+              alt={`${selected.name} static Dynamic Showcase Ad template`}
+              width={1080}
+              height={1920}
+              sizes="(max-width: 720px) 17rem, 20rem"
+              loading="lazy"
+              fetchPriority="low"
             />
-          ) : null}
+            {regionOverlay ? (
+              <span
+                className="tt-template-region-overlay"
+                data-template-region={`${selected.key}-${activeRegion}`}
+                style={{
+                  left: `${regionOverlay.left}%`,
+                  top: `${regionOverlay.top}%`,
+                  width: `${regionOverlay.width}%`,
+                  height: `${regionOverlay.height}%`,
+                }}
+                aria-hidden="true"
+              />
+            ) : null}
+          </div>
         </div>
         <figcaption className="tt-template-selected-caption">
           <div>
@@ -156,8 +146,7 @@ export function TikTokTemplateSystem() {
             <span>{selected.iterationNote}</span>
           </div>
           <div className="tt-template-region-copy" aria-live="polite">
-            <span className="tt-template-region-label">{region.label}</span>
-            <p>{region.note}</p>
+            <p>{selected.regionNotes[activeRegion]}</p>
             {originalRegionAssets.length > 0 ? (
               <div className="tt-template-original-assets">
                 {originalRegionAssets.map((asset) => (
@@ -181,11 +170,7 @@ export function TikTokTemplateSystem() {
                   </figure>
                 ))}
               </div>
-            ) : (
-              <span className="tt-template-region-source">
-                Source-aligned region overlay
-              </span>
-            )}
+            ) : null}
           </div>
         </figcaption>
       </figure>

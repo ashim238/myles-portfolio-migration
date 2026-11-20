@@ -76,7 +76,7 @@ describe("TikTok preview template data", () => {
 
   it("stores source-aligned region geometry with each artifact", () => {
     expect(templates?.[0].regionOverlays).toEqual({
-      title: { left: 20.37, top: 13.02, width: 47.67, height: 4.92 },
+      title: { left: 19.81, top: 12.71, width: 49.54, height: 5.94 },
       catalog: { left: 12.45, top: 19.18, width: 64.48, height: 41.97 },
     });
     expect(templates?.[1].regionOverlays).toEqual({

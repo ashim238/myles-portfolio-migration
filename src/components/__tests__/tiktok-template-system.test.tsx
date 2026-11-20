@@ -121,7 +121,7 @@ describe("TikTokTemplateSystem", () => {
     });
 
     expect(catalog).toHaveAttribute("aria-pressed", "true");
-    expect(screen.getByText("Source-aligned region overlay")).toBeInTheDocument();
+    expect(screen.getByText(/product photo goes inside the pink frame/)).toBeVisible();
 
     fireEvent.click(title);
 
@@ -133,10 +133,9 @@ describe("TikTokTemplateSystem", () => {
       screen.getByRole("button", { name: "View #e-Boy/#e-Girl template" }),
     );
 
-    expect(within(controls).getAllByRole("button")).toHaveLength(1);
-    expect(
-      within(controls).getByRole("button", { name: "Catalog slot" }),
-    ).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByText("Catalog slot")).toBeVisible();
+    expect(screen.getByText(/gray panel is where the product photo goes/)).toBeVisible();
+    expect(screen.queryByRole("button", { name: "Catalog slot" })).not.toBeInTheDocument();
     expect(
       screen.queryByRole("button", { name: "Title" }),
     ).not.toBeInTheDocument();

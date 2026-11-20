@@ -2419,32 +2419,41 @@
   text-transform: uppercase;
 }
 
+.tt-template-proof {
+  width: min(100%, 360px);
+  margin-inline: auto;
+}
+
 .tt-template-regions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
-  margin: 2.4rem 0 1.6rem;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 2px;
+  margin-bottom: 6px;
 }
 
 .tt-template-regions button {
   min-height: 44px;
-  padding: 0.55rem 0.8rem;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--foreground);
+  padding: 0.375rem;
   cursor: pointer;
   font: inherit;
-  font-size: 0.82rem;
-  transition:
-    background 160ms ease,
-    border-color 160ms ease;
+  font-size: 0.875rem;
+  line-height: 1.15;
+  text-wrap: balance;
 }
 
 .tt-template-regions button[aria-pressed="true"] {
-  border-color: var(--tt-magenta);
-  background: color-mix(in srgb, var(--tt-magenta) 12%, transparent);
+  font-weight: 700;
+}
+
+.tt-template-region-heading {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid var(--m98-paper-rule);
+  color: var(--m98-paper-text);
+  font: 700 0.875rem var(--m97-ui-font);
 }
 
 .tt-template-regions button:focus-visible {
@@ -2457,15 +2466,14 @@
   grid-template-columns: minmax(15rem, 0.8fr) minmax(0, 1.2fr);
   gap: clamp(2.4rem, 6vw, 5rem);
   align-items: center;
-  margin: 0;
-  padding: clamp(2.4rem, 5vw, 4rem) 0;
+  margin: 1.5rem 0 0;
+  padding: clamp(1rem, 2vw, 1.75rem) 0;
   border-block: 1px solid var(--line);
 }
 
 .tt-template-selected-image {
   position: relative;
-  width: min(100%, 360px);
-  margin: 0 auto;
+  width: 100%;
   overflow: hidden;
   border-radius: 2px;
 }
@@ -2478,22 +2486,9 @@
 
 .tt-template-region-overlay {
   position: absolute;
-  border: 2px solid var(--tt-cyan);
-  border-radius: 0.3rem;
-  background: color-mix(in srgb, var(--tt-cyan) 18%, transparent);
-  box-shadow: 0 0 0 999px rgba(5, 5, 9, 0.26);
+  outline: 1px solid #141414;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 999px rgb(5 5 9 / 22%);
   pointer-events: none;
-  transition:
-    left 220ms cubic-bezier(0.22, 1, 0.36, 1),
-    top 220ms cubic-bezier(0.22, 1, 0.36, 1),
-    width 220ms cubic-bezier(0.22, 1, 0.36, 1),
-    height 220ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.tt-template-region-overlay[data-template-region="lightacademia-title"] {
-  border: 1px solid #141414;
-  border-radius: 0;
-  background: transparent;
 }
 
 .tt-template-selected-caption {
@@ -2530,23 +2525,6 @@
   line-height: 1.55;
 }
 
-.tt-template-region-label {
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.tt-template-region-source {
-  width: fit-content;
-  padding: 0.3rem 0.5rem;
-  border-radius: 0.3rem;
-  background: color-mix(in srgb, var(--foreground) 8%, transparent);
-  color: var(--foreground);
-  font-size: 0.72rem;
-}
-
 .tt-template-original-assets {
   display: flex;
   flex-wrap: wrap;
@@ -2578,9 +2556,15 @@
 }
 
 /* Sampled from the shipped template behind its transparent black lettering. */
-.tt-template-original-assets .tt-template-asset-detail,
+.tt-template-selected[data-template="lightacademia"] .tt-template-asset-detail,
 .lb-image[src$="/academia-text.svg"] {
   background: #ffcdb2;
+  color: #141414;
+}
+
+.tt-template-selected[data-template="dopamine"] .tt-template-asset-detail,
+.lb-image[src$="/dopamine-title.svg"] {
+  background: #74f0ed;
   color: #141414;
 }
 
@@ -2828,13 +2812,19 @@
     grid-template-columns: 1fr;
   }
 
-  .tt-template-selected-image {
+  .tt-template-proof {
     max-width: 17rem;
   }
 
   .tt-template-selected {
-    gap: 2.4rem;
-    padding-block: 2.4rem;
+    gap: 1rem;
+    padding-block: 1rem;
+  }
+
+  .tt-template-region-copy {
+    grid-row: 1;
+    border: 0;
+    padding: 0;
   }
 
   .tt-preview-final {
