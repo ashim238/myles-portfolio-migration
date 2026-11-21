@@ -89,7 +89,6 @@ const SKILLS: { label: string; items: string[] }[] = [
     label: "Design",
     items: [
       "End-to-end product & UX design",
-      "User research",
       "Design thinking",
       "IA",
       "Prototyping",
