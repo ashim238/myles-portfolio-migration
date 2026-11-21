@@ -27,8 +27,8 @@ const STEPS = [
     label: "Reassurance",
     image: "pulled-over-guidance",
     decision: "Recording starts when microphone access is available.",
-    detail: "Guidance comes next, with a trusted contact one step away.",
-    alt: "The pulled-over guidance screen saying We'll walk you through what to do and confirming that recording has started.",
+    detail: "Read or listen, then continue to your trusted contact.",
+    alt: "The pulled-over guidance screen headed Read the following, with a Read aloud option, recording timer, and Continue button.",
   },
   {
     key: "contact",
@@ -151,6 +151,7 @@ export function PulledOverJourney() {
                   alt={step.alt}
                   width={1290}
                   height={2796}
+                  unoptimized={step.key === "contact"}
                   sizes="(max-width: 720px) 66vw, 300px"
                   className="fg-feature-shot"
                 />
