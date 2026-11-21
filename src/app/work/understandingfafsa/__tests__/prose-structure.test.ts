@@ -303,7 +303,7 @@ describe("UnderstandingFAFSA case-study structure", () => {
     expect(prose).toMatch(/roughly 20 sends/i);
     expect(prose).toMatch(/three (?:email )?themes/i);
     expect(prose).toMatch(/specific audience[\s\S]{0,120}color pairing/i);
-    expect(prose).toContain("It&apos;s a constant back and forth.");
+    expect(prose).toContain("It&apos;s a constant back-and-forth.");
   });
 
   it("keeps the newsletter review framed as an audit rather than reader research", async () => {

@@ -47,8 +47,8 @@ const routes: RouteContract[] = [
       timeline: "May – August 2021",
       moves: [
         "Review: I showed early sketches in weekly GCL huddles and refined the directions through internal critique.",
-        "Research: market research and burner accounts helped me study how different TikTok subcultures presented themselves.",
-        "Boundary: the work was reviewed internally. I did not receive selection rationale, performance data, or the final fate of the other templates.",
+        "Research: I used market research and burner accounts to study how different TikTok subcultures presented themselves.",
+        "Boundary: The work was reviewed internally. I wasn't told why American Eagle chose Light Academia or what happened to the other two templates. I didn't receive performance data.",
       ],
     },
   },

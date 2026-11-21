@@ -508,7 +508,7 @@ export function ProjectToc({ sections, readingEndId }: ProjectTocProps) {
           aria-label={activeTitle || "Case study chapters"}
         >
           <span className="project-toc-toggle-label">
-            <span className="project-toc-num">{activeNum} ·</span>
+            <span className="project-toc-num">{activeNum}</span>
             <span className={`project-toc-active-title${activeChapter?.stage ? " project-toc-active-title--short" : ""}`}>
               {activeChapter?.stage ? (
                 <>

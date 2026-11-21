@@ -67,7 +67,8 @@ describe("ProjectProgram", () => {
     fireEvent.click(screen.getByRole("radio", { name: "Drive" }));
     expect(container.querySelector(".artwork-crop img")).toHaveAttribute("src", expect.stringContaining("04-brixton-evening-navigation.png"));
     fireEvent.click(screen.getByRole("radio", { name: "Map key" }));
-    expect(screen.queryByRole("combobox")).toBeNull();
+    expect(container.querySelector(".artwork-crop img")).toHaveAttribute("src", expect.stringContaining("01-weeksville-daylight-preview.png"));
+    fireEvent.change(screen.getByRole("combobox", { name: "Map key view" }), { target: { value: "drive" } });
     expect(container.querySelector(".artwork-crop img")).toHaveAttribute("src", expect.stringContaining("05-brixton-navigation-key-reopened.png"));
   });
 

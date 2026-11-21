@@ -112,7 +112,7 @@ export function RouteComparisonEvidence() {
 
       <figcaption>
         Portfolio reconstruction of the pre-drive controls, with a revised route
-        label. The route values are representative route data.
+        label. The values are representative route data.
       </figcaption>
     </figure>
   );

@@ -430,7 +430,7 @@ export default function SystemPage() {
         >
           <Tag tone="neutral">Cooking</Tag>
           <Tag tone="popular">Popular</Tag>
-          <Tag tone="local">Locally-owned</Tag>
+          <Tag tone="local">Locally owned</Tag>
         </Specimen>
 
         <Specimen

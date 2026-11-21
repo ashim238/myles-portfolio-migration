@@ -198,7 +198,7 @@ describe("Fresh Greens pulled-over journey", () => {
     );
     expect(
       screen.getByText(
-        "This web reconstruction does not place a call, send a message, or share location.",
+        "This web reconstruction does not place a call, send a message, or share your location.",
       ),
     ).toBeInTheDocument();
   });

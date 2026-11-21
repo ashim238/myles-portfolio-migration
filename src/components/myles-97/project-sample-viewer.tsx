@@ -25,8 +25,11 @@ function SampleBrowser({ project, samples, layers }: {
   const comparison = project === "understandingfafsa";
   const [index, setIndex] = useState<number | "layers">(project === "navi" ? 2 : 0);
   const [route, setRoute] = useState("weeksville");
+  const [keyView, setKeyView] = useState("plan");
   const selected = samples[typeof index === "number" ? index : 0];
-  const sample = route === "brixton" && selected.evening ? selected.evening : selected;
+  const routeSample = route === "brixton" ? selected.evening : undefined;
+  const keySample = keyView === "drive" ? selected.driving : undefined;
+  const sample = keySample ?? routeSample ?? selected;
   const [x, y, w, h] = sample.crop;
   const { openLightbox } = useLightbox();
   const full = sample.full ?? sample;
@@ -50,6 +53,13 @@ function SampleBrowser({ project, samples, layers }: {
         <select value={route} onChange={event => setRoute(event.target.value)}>
           <option value="weeksville">Weeksville · daylight</option>
           <option value="brixton">Brixton · after dark</option>
+        </select>
+      </label>}
+      {index !== "layers" && selected.driving && <label className="sample-route-choice">
+        Map key view
+        <select value={keyView} onChange={event => setKeyView(event.target.value)}>
+          <option value="plan">Before Go</option>
+          <option value="drive">During a drive</option>
         </select>
       </label>}
       {index === "layers" ? <div className="sample-assembly">

@@ -147,8 +147,8 @@ export default async function UnderstandingFafsaPage({ searchParams }: {
                 <p>
                   Between sourcing content and editor corrections, Kim had a short
                   window to get newsletter materials buttoned up for weekly publishing.
-                  She was a Mailchimp pro, but had limited experience with Figma or
-                  frontend web dev work. The templates needed to fit the workflow
+                  She was a Mailchimp pro but had limited experience with Figma or
+                  front-end web development. The templates needed to fit the workflow
                   rather than make new responsibilities for her.
                 </p>
               </div>
@@ -307,8 +307,8 @@ export default async function UnderstandingFafsaPage({ searchParams }: {
               <div className="project-section-body">
                 <p>
                   I still build custom icons, banners, and dividers when a send calls
-                  for them. I get to see how far I can push the template before an
-                  email client enacts limits. It&apos;s a constant back and forth.
+                  for them. I get to see how far I can push the template before I
+                  hit an email client&apos;s limits. It&apos;s a constant back-and-forth.
                 </p>
                 <p>
                   The first newsletter using the new templates went out November 4, 2025. Mailchimp

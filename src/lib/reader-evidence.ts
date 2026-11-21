@@ -133,7 +133,7 @@ export const READER_EVIDENCE_MAPS = {
         interpretation:
           "The heatmap was super surface-level. Learn, Plan, Go was our attempt to remove some of the barriers to branching out and exploring the city.",
         caveat:
-          "Fourteen responses, including two local businesses, informed the concept but do not represent all New Yorkers.",
+          "Fourteen responses, including two from local businesses, informed the concept but do not represent all New Yorkers.",
       },
       {
         chapterId: "nv-framework",
@@ -172,7 +172,7 @@ export const READER_EVIDENCE_MAPS = {
         interpretation:
           "The design students focused on the layout. We made the cards the same height and cut down the copy and tags. The React demo now supports browsing, search, host detail, and a sample reservation.",
         caveat:
-          "The semester ended before the team could test Learn, Plan, Go or booking. The current Go view lists travel options but does not calculate a live route from current location.",
+          "The semester ended before the team could test Learn, Plan, Go or booking. The current Go view lists travel options but does not calculate a live route from the visitor's current location.",
       },
       {
         chapterId: "nv-outcome",

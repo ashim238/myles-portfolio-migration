@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, statSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 
@@ -23,17 +23,15 @@ describe("case-study lead-media geometry", () => {
     }
   });
 
-  it("preserves the optimized Fresh Greens route poster", () => {
-    const original = resolve(
-      process.cwd(),
-      "public/projects/fresh-greens/v2/en-route.png",
-    );
-    const poster = resolve(
-      process.cwd(),
-      "public/projects/fresh-greens/v2/en-route.webp",
-    );
-    expect(existsSync(poster)).toBe(true);
-    expect(statSync(poster).size).toBeLessThan(statSync(original).size);
+  it("serves the simulator recording and a poster at the declared phone dimensions", async () => {
+    const media = routeSource("src/app/work/fresh-greens/page.tsx").match(/<LeadVideo[\s\S]*?\/>/)![0];
+    const clip = media.match(/clip="([^"]+)"/)![1];
+    const poster = media.match(/poster="([^"]+)"/)![1];
+    const { default: sharp } = await import("sharp");
+    const info = await sharp(resolve(process.cwd(), "public" + poster)).metadata();
+    expect(existsSync(resolve(process.cwd(), "public" + clip))).toBe(true);
+    expect(media).toContain(`width={${info.width}}`);
+    expect(media).toContain(`height={${info.height}}`);
   });
 
 });

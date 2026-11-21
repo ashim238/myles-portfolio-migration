@@ -198,7 +198,7 @@ export function PulledOverJourney() {
                 {step.key === "contact" ? (
                   <p className="fg-pulled-contact-note">
                     This web reconstruction does not place a call, send a message,
-                    or share location.
+                    or share your location.
                   </p>
                 ) : null}
                 <div

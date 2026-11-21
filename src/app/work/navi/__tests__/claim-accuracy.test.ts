@@ -69,7 +69,7 @@ describe("Navi evidence claims", () => {
     expect(
       projectPage.indexOf("resident and stakeholder responses"),
     ).toBeLessThan(projectPage.indexOf("<SurveyResponseChart"));
-    expect(projectPage).toMatch(/including two\s+Manhattan businesses/i);
+    expect(projectPage).toMatch(/including two from\s+Manhattan businesses/i);
     expect(projectPage).toMatch(
       /I collected[\s\S]{0,120}resident and stakeholder responses/i,
     );

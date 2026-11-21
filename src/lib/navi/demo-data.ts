@@ -2448,7 +2448,7 @@ export function getExperienceBySlug(slug: string): Experience | undefined {
 }
 
 export function tagLabelFor(e: Experience): string {
-  if (e.tone === "local") return "Locally-owned";
+  if (e.tone === "local") return "Locally owned";
   if (e.tone === "popular") return "Popular";
   return e.category;
 }

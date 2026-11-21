@@ -263,9 +263,9 @@ describe("Fresh Greens prose structure", () => {
     expect(source).not.toContain('name="route-preview"');
     expect(source).not.toContain("thesis-zone-flow.png");
     expect(source).toMatch(
-      /<LeadVideo[\s\S]*?clip="\/projects\/fresh-greens\/process\/active-nav-flat-route\.mp4"[\s\S]*?poster="\/projects\/fresh-greens\/v2\/en-route\.png"[\s\S]*?width=\{1290\}[\s\S]*?height=\{2796\}/,
+      /<LeadVideo[\s\S]*?clip="\/projects\/fresh-greens\/daylight-key\/weeksville-drive\.mp4"[\s\S]*?poster="\/projects\/fresh-greens\/daylight-key\/weeksville-drive\.webp"[\s\S]*?width=\{1290\}[\s\S]*?height=\{2796\}/,
     );
-    expect(source).toContain("Earlier build, simulated San Francisco route.");
+    expect(source).toContain("simulated Weeksville drive");
   });
 
   it("names the second route-planning state without portfolio shorthand", () => {

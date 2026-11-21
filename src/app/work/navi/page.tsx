@@ -152,9 +152,8 @@ export default async function NaviPage() {
               <h3 className="project-evidence-heading" id="nv-research">Platform audits and resident research</h3>
               <div className="project-section-body">
                 <p>
-                  Interviews were hard to recruit, so surveys became the primary
-                  method. I collected 14 resident and stakeholder responses,
-                  including two Manhattan businesses, and spoke with NYC Tourism.
+                  Finding interview participants was hard, so we relied on surveys. I collected 14 resident and stakeholder responses,
+                  including two from Manhattan businesses, and spoke with NYC Tourism.
                   The sample included longtime residents and many college-aged
                   people, so it doesn&apos;t stand in for all NYC residents.
                 </p>
@@ -226,7 +225,7 @@ export default async function NaviPage() {
                     small-business cost breakdown.
                   </li>
                   <li>
-                    I pictured <strong>Go</strong> showing eco-friendly routes from
+                    I pictured <strong>Go</strong>{" "}showing eco-friendly routes from
                     the visitor&apos;s current location.
                   </li>
                 </ul>

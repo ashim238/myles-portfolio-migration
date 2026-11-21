@@ -10,8 +10,8 @@ describe("Tag", () => {
   });
 
   it("applies the local tone (category, distinct from rating green)", () => {
-    render(<Tag tone="local">Locally-owned</Tag>);
-    expect(screen.getByText("Locally-owned")).toHaveClass("nv-tag--local");
+    render(<Tag tone="local">Locally owned</Tag>);
+    expect(screen.getByText("Locally owned")).toHaveClass("nv-tag--local");
   });
 
   it("applies the popular tone", () => {

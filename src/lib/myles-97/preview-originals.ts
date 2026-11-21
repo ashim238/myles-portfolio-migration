@@ -13,6 +13,7 @@ export type ArtSample = {
   crop: readonly [number, number, number, number];
   full?: { src: string; width: number; height: number; read?: boolean };
   evening?: ArtSample;
+  driving?: ArtSample;
 };
 
 const route = "/projects/fresh-greens/v2";
@@ -39,8 +40,12 @@ export const arrivalLightSamples: readonly ArtSample[] = [
     evening: routeCapture("Drive", "After dark beside the ETA", "Active navigation shows a 9:52 after-dark ETA, 1.2 miles and seven minutes remaining.",
       "04-brixton-evening-navigation", [118, 730, 194, 103]),
   },
-  routeCapture("Map key", "Brixton map key", "The reopened map key beside the Brixton route shows a solid amber line for daylight, dashes for dusk and dots for after dark.",
-    "05-brixton-navigation-key-reopened", [10, 516, 146, 141]),
+  {
+    ...routeCapture("Map key", "Before Go · Weeksville", "The key above the route sheet shows Daylight, Dusk, and After dark in one row.",
+      "01-weeksville-daylight-preview", [10, 467, 257, 65]),
+    driving: routeCapture("Map key", "During a drive · Brixton", "The reopened map key beside the Brixton route shows a solid amber line for daylight, dashes for dusk, and dots for after dark.",
+      "05-brixton-navigation-key-reopened", [10, 516, 146, 141]),
+  },
 ];
 
 function emailSample(after: boolean): ArtSample {

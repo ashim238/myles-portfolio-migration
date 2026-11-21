@@ -204,7 +204,7 @@ export default async function FreshGreensPage() {
                 </p>
               </div>
               <RouteComparisonEvidence />
-              <ProjectEvidenceDisclosure summary="See arrival light in Plan, Drive and the map key">
+              <ProjectEvidenceDisclosure summary="See arrival light in Plan, Drive, and the map key">
                 <FreshGreensCaptureViewer />
               </ProjectEvidenceDisclosure>
               <ProjectEvidenceDisclosure summary="View the visual pivot and daylight reminder">
@@ -348,14 +348,14 @@ export default async function FreshGreensPage() {
                 data-evidence-chapter="fg-scope"
               >
                 <LeadVideo
-                  clip="/projects/fresh-greens/process/active-nav-flat-route.mp4"
-                  poster="/projects/fresh-greens/v2/en-route.png"
+                  clip="/projects/fresh-greens/daylight-key/weeksville-drive.mp4"
+                  poster="/projects/fresh-greens/daylight-key/weeksville-drive.webp"
                   width={1290}
                   height={2796}
-                  alt="Fresh Greens running turn-by-turn navigation on a simulated downtown San Francisco route, with a turn card, moving route map, safety controls, current speed, and daylight arrival visible."
+                  alt="Simulated drive to Weeksville Heritage Center. The map follows the car along Utica Avenue. The map key opens and closes, and After dark stays beside the arrival time."
                 />
                 <figcaption className="fg-safety-visual-caption">
-                  Earlier build, simulated San Francisco route.
+                  Map key during a simulated Weeksville drive.
                 </figcaption>
               </figure>
             </div>

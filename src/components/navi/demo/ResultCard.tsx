@@ -7,7 +7,7 @@ import type { ExperienceSummary } from "@/lib/navi/experience-summary";
 
 function statusBadge(tone: ExperienceSummary["tone"]) {
   if (tone === "popular") return "Popular";
-  if (tone === "local") return "Locally-owned";
+  if (tone === "local") return "Locally owned";
   return null;
 }
 
