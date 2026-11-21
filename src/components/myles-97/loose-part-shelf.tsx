@@ -2,7 +2,7 @@ import Link from "next/link";
 import { CommandIcon } from "./command-icon";
 import type { LoosePartSummary } from "./loose-parts-program";
 
-const samples = new Set(["sukunas-finger", "loom", "myles-is-stressed"]);
+const samples = new Set(["igor", "sukunas-finger", "loom", "myles-is-stressed"]);
 
 export function LoosePartShelf({ entries, inLab = false }: {
   entries: readonly LoosePartSummary[];

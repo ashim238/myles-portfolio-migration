@@ -228,6 +228,14 @@ export async function getProjectBySlug(slug: string): Promise<Project | null> {
 
 export type PlayState = "live" | "testing" | "complete" | "archived";
 
+export type PlayImage = {
+  src: string;
+  alt: string;
+  label: string;
+  width: number;
+  height: number;
+};
+
 export type PlayEntry = {
   slug: string;
   title: string;
@@ -242,12 +250,12 @@ export type PlayEntry = {
   updated: string;
   process?: readonly string[];
   tags: string[];
-  year: string;
+  year?: string;
   context: string;
   /** Interactive embed (iframe). For digital / browser-runnable pieces. */
   embedPath?: string;
   /** Image-based media. For physical / 3D / printed work. */
-  images?: Array<{ src: string; alt: string; label?: string }>;
+  images?: PlayImage[];
   /** Specimen dossier metadata — renders a museum-card treatment. */
   specimen?: {
     designation: string;
@@ -258,6 +266,65 @@ export type PlayEntry = {
 };
 
 export const playEntries: PlayEntry[] = [
+  {
+    slug: "igor",
+    title: "IGOR",
+    hook:
+      "I painted a new cover for Tyler, The Creator’s IGOR. The blond wig and blue jacket come from his stage persona. Behind the sunglasses, I kept his face expressionless.",
+    question:
+      "How could I get the energy of IGOR’s stage shows and the heartbreak on the record into the same portrait?",
+    medium: "Album artwork and packaging",
+    state: "complete",
+    whatChanged:
+      "I carried the portrait over to the record sleeve, CD, stickers, and Spotify screens. For the pin, I used just the words “Vote 4 Igor.”",
+    updated: "November 2026",
+    tags: ["Illustration", "Album packaging"],
+    context: "Design and art direction by Myles Ashitey",
+    images: [
+      {
+        src: "/play/igor/cd-package.webp",
+        label: "CD package",
+        alt: "A pink jewel case and matching disc show IGOR in profile, wearing a blond wig, dark sunglasses, and a blue jacket.",
+        width: 2048, height: 1365,
+      },
+      {
+        src: "/play/igor/sketch.webp",
+        label: "First sketch",
+        alt: "Blue line drawing of the wig, glasses, and upturned collar. Loose construction lines cross the cheek and neck.",
+        width: 1456, height: 2048,
+      },
+      {
+        src: "/play/igor/portrait.webp",
+        label: "Painted portrait",
+        alt: "The finished portrait faces right against brushy pink, with blue sketch marks still visible over the cheek and hair.",
+        width: 1533, height: 2048,
+      },
+      {
+        src: "/play/igor/record-sleeve.webp",
+        label: "Record sleeve",
+        alt: "Square pink record sleeve against black. The painted portrait faces left, with the blue collar extending to the bottom edge.",
+        width: 2048, height: 1448,
+      },
+      {
+        src: "/play/igor/spotify.webp",
+        label: "Spotify mockup",
+        alt: "Three Spotify screens show the redesigned cover in the library, on the player for I THINK, and above the album track list.",
+        width: 2048, height: 1163,
+      },
+      {
+        src: "/play/igor/stickers.webp",
+        label: "Stickers",
+        alt: "Rows of round pink stickers repeat the painted portrait at a smaller scale.",
+        width: 2048, height: 1365,
+      },
+      {
+        src: "/play/igor/pin.webp",
+        label: "Campaign pin",
+        alt: "The pink front of a pin reads “VOTE 4 IGOR” in black lettering. Its silver pin back sits beside it.",
+        width: 2048, height: 1365,
+      },
+    ],
+  },
   {
     slug: "sukunas-finger",
     title: "Sukuna's finger",
@@ -285,11 +352,13 @@ export const playEntries: PlayEntry[] = [
         src: "/play/sukunas-finger/01.jpg",
         alt: "Sukuna's finger sculpt resting in a 3D-printed tray with cotton bedding: burgundy skin with green undertones, painted wounds and lesions, layer lines visible on the tray exterior.",
         label: "Full specimen",
+        width: 3024, height: 4032,
       },
       {
         src: "/play/sukunas-finger/02.jpg",
         alt: "Texture detail of the Sukuna's finger sculpt: the painted skin surface, wound finishes, and color variation across the burgundy tones.",
         label: "Surface detail",
+        width: 3024, height: 4032,
       },
     ],
     specimen: {

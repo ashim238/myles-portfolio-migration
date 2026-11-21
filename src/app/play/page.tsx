@@ -1,4 +1,4 @@
-import { ExpandableImage } from "@/components/expandable-image";
+import { PlayArtworkGallery } from "@/components/play-artwork-gallery";
 import { LoosePartShelf } from "@/components/myles-97/loose-part-shelf";
 import { LoomEmbed } from "@/components/loom-embed";
 import { SystemDocumentShell } from "@/components/myles-97/system-document-shell";
@@ -72,21 +72,7 @@ export default function PlayPage() {
                     priority={index === 0}
                   />
                 ) : entry.images && entry.images.length > 0 ? (
-                  <div
-                    className={`play-images play-images--${entry.images.length}`}
-                  >
-                    {entry.images.map((image) => (
-                      <ExpandableImage
-                        key={image.src}
-                        src={image.src}
-                        alt={image.alt}
-                        width={1200}
-                        height={1600}
-                        sizes="(max-width: 900px) 92vw, 720px"
-                        style={{ width: "100%", height: "auto", display: "block" }}
-                      />
-                    ))}
-                  </div>
+                  <PlayArtworkGallery title={entry.title} images={entry.images} />
                 ) : null}
 
                 <dl className={styles.experimentNotes}>
@@ -132,7 +118,7 @@ export default function PlayPage() {
 
               <div className="play-entry-footer">
                 <p className="play-entry-meta">
-                  {entry.context} &middot; {entry.year}
+                  {entry.context}{entry.year && <> &middot; {entry.year}</>}
                 </p>
                 <ul
                   className="play-entry-tags"
