@@ -170,7 +170,7 @@ describe("public route metadata", () => {
       "href",
       "/",
     );
-    expect(screen.getByRole("link", { name: "Open Work Stuff" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Open Projects" })).toHaveAttribute(
       "href",
       "/#selected-work",
     );

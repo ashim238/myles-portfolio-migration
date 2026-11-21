@@ -17,14 +17,13 @@ export default function NotFound() {
             <p className="myles97-eyebrow">System message</p>
             <h1 id="not-found-heading">Page not found</h1>
             <p>
-              This address does not point to a portfolio page. The desktop and
-              Work Stuff are both still available.
+              This address does not point to a portfolio page. You can return to the desktop or open the Projects folder.
             </p>
           </div>
         </div>
         <div className="myles97-system-dialog-actions">
           <Link className="reader-control" href="/">Return to Desktop</Link>
-          <Link className="reader-control" href="/#selected-work">Open Work Stuff</Link>
+          <Link className="reader-control" href="/#selected-work">Open Projects</Link>
         </div>
       </section>
     </main>

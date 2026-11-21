@@ -112,7 +112,7 @@ export async function GET(
             }}
           >
             <span>mylesdesignsthings.com</span>
-            <span>Work Stuff</span>
+            <span>Projects</span>
           </div>
         </div>
       </div>

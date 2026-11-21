@@ -15,7 +15,7 @@ Open `http://localhost:3000`.
 
 ## Content editing (CMS-like workflow)
 
-Each file in `content/projects/` holds the project metadata, chapters and artwork. Start with the [case-study authoring guide in DESIGN.md](DESIGN.md#publish-another-case-study). The shared template supplies the Work Stuff listing, preview window and Reader layout.
+Each file in `content/projects/` holds the project metadata, chapters and artwork. Start with the [case-study authoring guide in DESIGN.md](DESIGN.md#publish-another-case-study). The shared template supplies the Projects listing, preview window and Reader layout.
 
 ### Frontmatter fields
 

@@ -101,7 +101,7 @@ export function StartMenu({
       <div className="myles97-start-menu-items">
         <button type="button" onClick={() => openThenClose("selected-work")}>
           <Myles97Icon name="folder" size={24} variant="color" aria-hidden="true" />
-          <span>Work Stuff</span>
+          <span>Projects</span>
         </button>
         <button type="button" onClick={() => openThenClose("about")}>
           <Myles97Icon name="profile" size={24} variant="color" aria-hidden="true" />

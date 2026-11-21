@@ -93,11 +93,11 @@ components:
 
 ## Publish another case study
 
-Start with `npm run new:project -- --title="Project Name"`. It creates one draft from `content/projects/_template.md`. Open `/work/<slug>` locally to read it. Set `status: published` and choose its `order` when ready for Work Stuff. A draft URL is accessible to anyone who has the link if you deploy it. Use `hidden` for work that should return a 404.
+Start with `npm run new:project -- --title="Project Name"`. It creates one draft from `content/projects/_template.md`. Open `/work/<slug>` locally to read it. Set `status: published` and choose its `order` when ready for Projects. A draft URL is accessible to anyone who has the link if you deploy it. Use `hidden` for work that should return a 404.
 
 | Surface | What to supply | What the site provides |
 | --- | --- | --- |
-| Work Stuff | Title, one-sentence summary, role and a recognizable cover | Preview pane, Thumbnails and Details on desktop and Pocket, keyboard selection, and a project window |
+| Projects | Title, one-sentence summary, role and a recognizable cover | Preview pane, Thumbnails and Details on desktop and Pocket, keyboard selection, and a project window |
 | Open preview | A section image that shows the decision at usable size, with alt text | The first section image as an expandable work sample and a link into the case study |
 | Reader opening | Timeframe, optional cover image and cover description | Document title, metadata and a two-column opening when space permits |
 | Chapters | A specific heading, a short account of the decision and the original evidence | Chapter index, reading measure, full-size image viewer and a return path to the desktop |
@@ -106,11 +106,11 @@ Put approved public assets under `public/projects/<slug>/` and reference them fr
 
 ### Visual decisions to carry forward
 
-- Keep the Work Stuff gradient, blue selection, beveled controls and pixel icons on the desktop. The window frame tells visitors how to act. Let original product colors, typography and imagery identify the project inside it.
+- Keep the Projects gradient, blue selection, beveled controls and pixel icons on the desktop. The window frame tells visitors how to act. Let original product colors, typography and imagery identify the project inside it.
 - Make the cover recognizable at folder size. Use the open preview to reveal a legible design decision. Fresh Greens uses an atlas on the cover and the actual route screen inside. UnderstandingFAFSA opens the newsletter comparison. A single original and a good crop are enough for a new study.
 - Use the existing book grid. At 1080px the opening can place its evidence beside the text. At 1200px the chapter index moves to the left rail. Keep body paragraphs near 65 characters per line and let the artifact span the evidence column. Align a caption with the artwork it explains.
 - Distinguish interactive controls from the image of a control. Keep the accessible name, focus outline, pressed state and reduced-motion behavior supplied by the shared components. Only add a Layers action when there are actual components or source crops to compare.
-- Open Work Stuff at 375px and 1440px. Select the new title in each folder view, open its preview with the keyboard, enlarge the evidence and return. Read the longest heading and the first screen of the original in each theme. Repeat at the layout switches when changing the grid. Run `npm run validate:content`, `npm test` and `npm run build`.
+- Open Projects at 375px and 1440px. Select the new title in each folder view, open its preview with the keyboard, enlarge the evidence and return. Read the longest heading and the first screen of the original in each theme. Repeat at the layout switches when changing the grid. Run `npm run validate:content`, `npm test` and `npm run build`.
 
 The reusable page lives in `src/app/work/[slug]/page.tsx`. Window layout is in `src/app/styles/archive-layout.css` and Reader layout in `workstation-documents.css`. For a project that warrants custom art direction, the four authored covers are in `product-thumbnail.tsx` and their source samples in `src/lib/myles-97/preview-originals.ts`. A dedicated route or an illustrated cover is optional.
 
@@ -221,7 +221,7 @@ Flat by default. Depth comes from typography hierarchy, generous spacing, and 1p
 - **States:** Default `var(--foreground)`. Hover: shift to `var(--accent)` of current page scope (sage on Fresh Greens; cyan-or-magenta on TikTok via channel logo).
 - **Mobile:** Same vertical list; touch targets pass 44×44.
 
-### Work Stuff project cards
+### Projects project cards
 
 The default Preview pane pairs file selection with one project. Thumbnails shows the covers together. Details makes titles and summaries easy to scan. All three use `SelectedWorkExplorer`, the same project data and the same reading and preview actions.
 
@@ -269,7 +269,7 @@ The default Preview pane pairs file selection with one project. Thumbnails shows
 - **Don't** use side-stripe borders (`border-left: Npx solid var(--accent)` where N > 1). The document jacket spine and active file treatment are intentional exceptions. Replace with full borders, background tints, leading numbers, oversized leading glyphs, or nothing.
 - **Don't** add tiny uppercase tracked eyebrows (`ABOUT`, `PROCESS`, `WORK`) above section headings. PRODUCT.md anti-reference: "SaaS-marketing landing-page tropes."
 - **Don't** add numbered section markers (`01 · About`, `02 · Process`) above section headings as decorative scaffolding. Numbers earn their place only when the section IS a sequence and the order carries information.
-- **Keep** the Reader paper and Work Stuff surfaces defined by the active theme. Avoid introducing additional cream/sand/beige backgrounds. PRODUCT.md anti-reference: "the 2026 AI default." The dark + light system here is deliberate; neither defaults to warm-neutral.
+- **Keep** the Reader paper and Projects surfaces defined by the active theme. Avoid introducing additional cream/sand/beige backgrounds. PRODUCT.md anti-reference: "the 2026 AI default." The dark + light system here is deliberate; neither defaults to warm-neutral.
 - **Don't** ship identical card grids (icon + heading + body × 3) as a default layout pattern. PRODUCT.md anti-reference.
 - **Don't** use gradient text (`background-clip: text` with a gradient). Decorative, never meaningful.
 - **Don't** use glassmorphism (decorative `backdrop-filter: blur`) as a default container style.

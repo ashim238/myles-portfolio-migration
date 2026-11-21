@@ -424,7 +424,7 @@ describe("Task 5 responsive adaptation", () => {
     await back.click();
     await page.waitForSelector(".pocket97-home");
     await page.waitForFunction(
-      () => document.activeElement?.textContent?.trim() === "Work",
+      () => document.activeElement?.textContent?.trim() === "Projects",
     );
     await page.close();
   }, 60_000);

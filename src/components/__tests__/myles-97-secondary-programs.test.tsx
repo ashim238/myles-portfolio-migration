@@ -101,11 +101,26 @@ describe("Myles 98 secondary programs", () => {
     expect(screen.queryByRole("region", { name: "Buss Up Shut.txt" })).not.toBeInTheDocument();
   });
 
+  it("moves the Reminders widget without opening it and still accepts a click after a drag", async () => {
+    const user = userEvent.setup();
+    render(<DesktopHarness />);
+    const widget = screen.getByRole("button", { name: "Open Reminders" });
+    await user.pointer([
+      { target: widget, coords: { x: 10, y: 10 }, keys: "[MouseLeft>]" },
+      { target: widget, coords: { x: 40, y: 10 } },
+      { keys: "[/MouseLeft]" },
+    ]);
+    expect(widget).toHaveStyle({ left: "30px" });
+    expect(screen.queryByRole("region", { name: "Reminders" })).toBeNull();
+    await user.click(widget);
+    expect(screen.getByRole("region", { name: "Reminders" })).toBeInTheDocument();
+  });
+
   it("keeps Reminders as a personal desktop note list", async () => {
     const user = userEvent.setup();
     render(<DesktopHarness />);
 
-    const selectedWork = screen.getByRole("region", { name: "Work Stuff" });
+    const selectedWork = screen.getByRole("region", { name: "Projects" });
     const reminderTrigger = screen.getByRole("button", {
       name: "Open Reminders",
     });
@@ -164,11 +179,11 @@ describe("Myles 98 secondary programs", () => {
     }
   });
 
-  it("explains an empty Loose Parts surface and recovers to Work Stuff", () => {
+  it("explains an empty Loose Parts surface and recovers to Projects", () => {
     render(<SecondaryProgram id="loose-parts" looseParts={[]} />);
 
     expect(screen.getByText("No experiments are in the lab right now.")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Return to Work Stuff" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Return to Projects" })).toHaveAttribute(
       "href",
       "/#selected-work",
     );

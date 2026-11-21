@@ -62,12 +62,15 @@
   background: var(--m97-chrome);
   color: var(--m97-ink);
   cursor: pointer;
+  touch-action: none;
+  user-select: none;
   font-family: var(--m97-ui-font);
   text-align: left;
   box-shadow: 2px 3px 0 rgb(17 17 17 / 14%);
 }
 
 .myles97-reminders-widget-title {
+  cursor: grab;
   display: block;
   margin: 0 -12px 12px;
   padding: 5px 7px;
@@ -95,8 +98,19 @@
   font: 11px/1.4 var(--m97-ui-font);
 }
 
-.myles97-reminders-widget:hover {
-  transform: translateY(-2px);
+.myles97-reminders-widget[data-moved] {
+  position: fixed;
+  grid-area: auto;
+  margin: 0;
+}
+
+.myles97-reminders-widget:is(:focus, [data-dragging]) {
+  z-index: 40;
+}
+
+.myles97-reminders-widget[data-dragging],
+.myles97-reminders-widget[data-dragging] .myles97-reminders-widget-title {
+  cursor: grabbing;
 }
 
 /* A quiet second item in the Welcome lane, clear of the initial work window. */

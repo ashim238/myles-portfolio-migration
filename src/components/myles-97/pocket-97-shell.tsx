@@ -77,7 +77,7 @@ export function Pocket97Shell({
     if (id === "display-properties") return "Display Properties";
     if (id === "paint") return "Paint";
     if (id === "now-playing") return "Now Playing";
-    return id === "welcome" ? "Welcome" : "Work Stuff";
+    return id === "welcome" ? "Welcome" : "Projects";
   };
 
   const openProgram = (id: ProgramId) => {
@@ -220,9 +220,9 @@ export function Pocket97Shell({
               </div>
             </header>
 
-            <section id="selected-work" className="pocket97-work" aria-label="Work Stuff">
+            <section id="selected-work" className="pocket97-work" aria-label="Projects">
               <SelectedWorkExplorer
-                heading="Work Stuff"
+                heading="Projects"
                 programs={programs}
                 onOpen={(id) => openProgram(id)}
                 reduceMotion={state.displayPreferences.reduceMotion}
@@ -352,7 +352,7 @@ export function Pocket97Shell({
         </button>
         <button ref={workButtonRef} type="button" aria-current={!activeProgram ? "location" : undefined} onClick={returnHome}>
           <Myles97Icon name="folder" size={24} variant="color" aria-hidden="true" />
-          <span>Work</span>
+          <span>Projects</span>
         </button>
         <button type="button" aria-current={activeProgram === "loose-parts" ? "location" : undefined} onClick={() => openProgram("loose-parts")}>
           <Myles97Icon name="loose-parts" size={24} variant="color" aria-hidden="true" />

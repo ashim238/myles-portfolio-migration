@@ -26,7 +26,6 @@ import {
   UNDERSTANDING_FAFSA_AUDIT_ACTIONS,
   UNDERSTANDING_FAFSA_AUDIT_RULES,
 } from "@/lib/understandingfafsa-audit-rules";
-import styles from "./understandingfafsa.module.css";
 
 const UF_DESCRIPTION =
   "UnderstandingFAFSA's newsletter no longer matched its redesigned website. I designed and built a set of templates with three different color themes so the founder could put each issue together herself using Mailchimp, which she already knew.";
@@ -81,7 +80,7 @@ export default async function UnderstandingFafsaPage({ searchParams }: {
       <nav className="project-topbar" aria-label="Breadcrumb">
         <TransitionLink href="/#work">
           <span aria-hidden="true">←</span>
-          Work Stuff
+          Projects
         </TransitionLink>
       </nav>
 
@@ -132,18 +131,13 @@ export default async function UnderstandingFafsaPage({ searchParams }: {
           >
             <div className="project-section uf-section">
               <div className="project-section-body">
-                <div className={styles.auditContext}>
-                  <p>
-                    The founder, Kim, was concerned about falling open rates and how
-                    the newsletter&apos;s design deviated from the website&apos;s fresh
-                    new look. My initial audit noted super lengthy stretches of text,
-                    inconsistent CTAs, and hierarchy that made emails difficult to scan.
-                  </p>
-                  <aside className={styles.audienceNote} aria-label="Audience context">
-                    The audience was mobile-heavy, which made scanability especially
-                    important.
-                  </aside>
-                </div>
+                <p>
+                  The founder, Kim, was concerned about falling open rates and how
+                  the newsletter&apos;s design deviated from the website&apos;s fresh
+                  new look. My initial audit noted super lengthy stretches of text,
+                  inconsistent CTAs, and hierarchy that made emails difficult to scan.
+                  Most readers opened the newsletter on their phones.
+                </p>
                 <p>
                   Between sourcing content and editor corrections, Kim had a short
                   window to get newsletter materials buttoned up for weekly publishing.
@@ -176,20 +170,18 @@ export default async function UnderstandingFafsaPage({ searchParams }: {
             index={2}
             total={chapters.length}
             variant="understandingfafsa"
-            lead={
-              <p>
-                A collaborator and I reviewed more than 120 newsletters. We looked
-                at clarity, personalization, tone, visual appeal, and brand
-                consistency.
-                Revenews, The 74, Next by Jeff Selingo, Medium, and Folderly gave
-                us a broad comparison set. I kept coming back to Snacks because its
-                copy felt lively and it used color to make scanning easier. HubSpot
-                gave me the idea for livelier dividers.
-              </p>
-            }
           >
             <div className="project-section uf-section">
               <div className="project-section-body">
+                <p>
+                  A collaborator and I reviewed more than 120 newsletters. We looked
+                  at clarity, personalization, tone, visual appeal, and brand
+                  consistency.
+                  Revenews, The 74, Next by Jeff Selingo, Medium, and Folderly gave
+                  us a broad comparison set. I kept coming back to Snacks because its
+                  copy felt lively and it used color to make scanning easier. HubSpot
+                  gave me the idea for livelier dividers.
+                </p>
                 <p>
                   I owned the final visual design. Another designer, the founder, and
                   I worked together on the copy and base structure. The required
@@ -252,17 +244,14 @@ export default async function UnderstandingFafsaPage({ searchParams }: {
             index={4}
             total={chapters.length}
             variant="understandingfafsa"
-            lead={
-              <p>
-                Practice sends went to me, the other designer, the editor, and the
-                founder. Usually, at least one person opened a practice send on
-                mobile and another on desktop. Those sends exposed Gmail&apos;s 102 KB
-                HTML clipping limit and dark-mode color inversion.
-              </p>
-            }
           >
             <div className="project-section uf-section uf-section--comparison">
               <div className="project-section-body">
+                <p>
+                  Practice sends went to me, the other designer, the editor, and the
+                  founder. Usually, at least one person opened a practice send on
+                  mobile and another on desktop.
+                </p>
                 <p>
                   <mark className="case-highlight">
                     Gmail clips emails once the HTML source crosses 102 KB.
@@ -294,17 +283,15 @@ export default async function UnderstandingFafsaPage({ searchParams }: {
             index={5}
             total={chapters.length}
             variant="understandingfafsa"
-            lead={
-              <p>
-                The founder has launched roughly 20 sends since the redesign and
-                edits the template herself each week. She gets in touch when the
-                layout needs to adapt for a specific audience or she wants a color
-                pairing that isn&apos;t in the original three themes.
-              </p>
-            }
           >
             <div className="project-section uf-section">
               <div className="project-section-body">
+                <p>
+                  The founder has launched roughly 20 sends since the redesign and
+                  edits the template herself each week. She gets in touch when the
+                  layout needs to adapt for a specific audience or she wants a color
+                  pairing that isn&apos;t in the original three themes.
+                </p>
                 <p>
                   I still build custom icons, banners, and dividers when a send calls
                   for them. I get to see how far I can push the template before I

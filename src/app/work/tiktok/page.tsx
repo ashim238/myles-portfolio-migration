@@ -61,7 +61,7 @@ export default async function TikTokPage() {
       <nav className="project-topbar" aria-label="Breadcrumb">
         <Link href="/#work">
           <span aria-hidden="true">←</span>
-          Work Stuff
+          Projects
         </Link>
       </nav>
 
@@ -85,18 +85,16 @@ export default async function TikTokPage() {
             index={1}
             total={chapters.length}
             variant="tiktok"
-            lead={
-              <p>
-                The brief asked for three templates for clients in the fashion
-                vertical. Each one had to hold a fashion product catalog while
-                appealing to a different style or aesthetic, but the dimensions
-                and product slots were set in stone before I received the brief.
-                I could change the type, color, texture, and supporting graphics.
-              </p>
-            }
           >
             <div className="project-section tt-section">
               <div className="project-section-body">
+                <p>
+                  The brief asked for three templates for clients in the fashion
+                  vertical. Each one had to hold a fashion product catalog while
+                  appealing to a different style or aesthetic, but the dimensions
+                  and product slots were set in stone before I received the brief.
+                  I could change the type, color, texture, and supporting graphics.
+                </p>
                 <p>
                   I showed my first sketches to my manager and other Global Creative
                   Lab members during our weekly GCL huddle. I think there was enough
@@ -140,18 +138,16 @@ export default async function TikTokPage() {
             index={2}
             total={chapters.length}
             variant="tiktok"
-            lead={
-              <p>
-                One point the team drove home during the internship was that
-                TikTok tailors the feed to what someone engages with. No surprise
-                there. Some subcultures drew a bigger crowd than others. There was
-                no one subculture that wholly represented the site. That pushed me
-                toward looking at several of them.
-              </p>
-            }
           >
             <div className="project-section tt-section">
               <div className="project-section-body">
+                <p>
+                  One point the team drove home during the internship was that
+                  TikTok tailors the feed to what someone engages with. No surprise
+                  there. Some subcultures drew a bigger crowd than others. There was
+                  no one subculture that wholly represented the site. That pushed me
+                  toward looking at several of them.
+                </p>
                 <p>
                   I did traditional market research. I also made burner accounts and
                   changed what each one engaged with to see what surfaced. Within
@@ -176,17 +172,15 @@ export default async function TikTokPage() {
             index={3}
             total={chapters.length}
             variant="tiktok"
-            lead={
-              <p>
-                The saturated colors I saw in Dopamine Dressing posts were already
-                close to TikTok&apos;s own palette. I leaned into that overlap
-                and tried #OOTD in an early sketch. I wanted the ad to feel at
-                home among the outfit posts in someone&apos;s feed.
-              </p>
-            }
           >
             <div className="project-section tt-section tt-section--wide">
               <div className="project-section-body">
+                <p>
+                  The saturated colors I saw in Dopamine Dressing posts were already
+                  close to TikTok&apos;s own palette. I leaned into that overlap
+                  and tried #OOTD in an early sketch. I wanted the ad to feel at
+                  home among the outfit posts in someone&apos;s feed.
+                </p>
                 <p>
                   I dropped that sketch because the copy felt like it was trying
                   too hard and the whole thing looked like an ad for TikTok. A fashion

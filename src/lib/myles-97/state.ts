@@ -7,6 +7,18 @@ export type WindowGeometry = {
   height: number;
 };
 
+export type DesktopPoint = Pick<WindowGeometry, "x" | "y">;
+
+export function keyboardMoveOffset(key: string, shiftKey: boolean): DesktopPoint | undefined {
+  const step = shiftKey ? 64 : 16;
+  return {
+    ArrowLeft: { x: -step, y: 0 },
+    ArrowRight: { x: step, y: 0 },
+    ArrowUp: { x: 0, y: -step },
+    ArrowDown: { x: 0, y: step },
+  }[key];
+}
+
 export type ViewportBounds = {
   width: number;
   height: number;
@@ -25,6 +37,7 @@ export type WorkstationState = {
   focusedProgram: ProgramId | null;
   recentPrograms: ProgramId[];
   windowGeometry: Partial<Record<ProgramId, WindowGeometry>>;
+  reminderWidgetPosition: DesktopPoint | null;
   desktopScrollY: number;
   displayPreferences: DisplayPreferences;
 };
@@ -36,6 +49,7 @@ export type WorkstationAction =
   | { type: "boot-complete" }
   | { type: "display"; preferences: DisplayPreferences }
   | { type: "desktop-scroll"; y: number }
+  | { type: "move-reminder-widget"; position: DesktopPoint }
   | { type: "reset" };
 
 const DEFAULT_VIEWPORT: ViewportBounds = { width: 1440, height: 900 };
@@ -52,6 +66,7 @@ export function createInitialWorkstationState(): WorkstationState {
     focusedProgram: "selected-work",
     recentPrograms: ["welcome", "selected-work"],
     windowGeometry: {},
+    reminderWidgetPosition: null,
     desktopScrollY: 0,
     displayPreferences: {
       highContrast: false,
@@ -202,6 +217,8 @@ export function workstationReducer(
       return { ...state, bootCompleted: true };
     case "display":
       return { ...state, displayPreferences: { ...action.preferences } };
+    case "move-reminder-widget":
+      return { ...state, reminderWidgetPosition: action.position };
     case "desktop-scroll":
       return { ...state, desktopScrollY: Math.max(0, action.y) };
     case "reset":

@@ -76,7 +76,7 @@ export default async function NaviPage() {
       <nav className="project-topbar" aria-label="Breadcrumb">
         <TransitionLink href="/#work">
           <span aria-hidden="true">←</span>
-          Work Stuff
+          Projects
         </TransitionLink>
       </nav>
 
@@ -123,17 +123,15 @@ export default async function NaviPage() {
             index={1}
             total={chapters.length}
             variant="navi"
-            lead={
-              <p>
-                The brief asked how regenerative tourism could be participatory
-                and contributive for visitors, local businesses and artisans,
-                and longtime residents. The Manhattan heatmap was our first idea,
-                not live tourist-density data.
-              </p>
-            }
           >
-
             <section className="project-section nv-section" aria-labelledby="nv-heatmap">
+              <div className="project-section-body">
+                <p>
+                  The brief asked how regenerative tourism could be participatory
+                  and contributive for visitors, local businesses and artisans,
+                  and longtime residents. The Manhattan heatmap was our first idea.
+                </p>
+              </div>
               <h3 className="project-evidence-heading" id="nv-heatmap">
                 The first prototype: a Manhattan heatmap
               </h3>
@@ -166,9 +164,9 @@ export default async function NaviPage() {
             </section>
 
             <div className="project-section nv-section">
-              <p className="case-section-lead">Two survey concerns appeared most often.</p>
               <div className="project-section-body">
                 <p>
+                  Two survey concerns appeared most often.{" "}
                   {overcrowdingStat.count} of {NAVI_SURVEY_META.responseCount} responses (
                   {overcrowdingStat.label}) named overcrowding and over-tourism.{" "}
                   {authenticExperienceStat.count} of {NAVI_SURVEY_META.responseCount} (
@@ -198,17 +196,15 @@ export default async function NaviPage() {
             index={3}
             total={chapters.length}
             variant="navi"
-            lead={
-              <p className="case-section-lead">
-                I grouped responses into three archetypes: digital nomads,
-                ethical travelers, and visitors already contributing to
-                communities. These were early audience hypotheses, not validated
-                market segments.
-              </p>
-            }
           >
             <div className="project-section nv-section project-section--wide nv-section--wide">
               <div className="project-section-body">
+                <p>
+                  I grouped responses into three archetypes: digital nomads,
+                  ethical travelers, and visitors already contributing to
+                  communities. These were early audience hypotheses, not validated
+                  market segments.
+                </p>
                 <p>
                   I used <mark className="case-highlight">Learn, Plan, Go</mark>{" "}
                   to shape our studio prototype.
@@ -306,15 +302,15 @@ export default async function NaviPage() {
             index={5}
             total={chapters.length}
             variant="navi"
-            lead={
-              <p>
-                I could see NYC Tourism as a future partner, but that partnership
-                hasn&apos;t happened. The browser demo supports the individual flow. I
-                still need to test it with residents, travelers, and local hosts.
-              </p>
-            }
           >
             <div className="project-section nv-section nv-closing">
+              <div className="project-section-body">
+                <p>
+                  I could see NYC Tourism as a future partner, but that partnership
+                  hasn&apos;t happened. The browser demo supports the individual flow. I
+                  still need to test it with residents, travelers, and local hosts.
+                </p>
+              </div>
               <div className="nv-validation-ledger">
                 <section aria-labelledby="nv-current-rebuild">
                   <h3 id="nv-current-rebuild">Working now</h3>

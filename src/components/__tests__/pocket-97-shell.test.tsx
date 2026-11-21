@@ -240,7 +240,7 @@ describe("Pocket 98", () => {
       "href",
       "/work/fresh-greens",
     );
-    expect(screen.queryByRole("region", { name: "Work Stuff" })).toBeNull();
+    expect(screen.queryByRole("region", { name: "Projects" })).toBeNull();
 
     Object.defineProperty(app, "getBoundingClientRect", {
       configurable: true,
@@ -274,7 +274,7 @@ describe("Pocket 98", () => {
     window.removeEventListener(PROJECT_ENTER_REQUEST, onRequest);
 
     await user.click(within(app).getByRole("button", { name: "Back" }));
-    expect(screen.getByRole("heading", { name: "Work Stuff" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Projects" })).toBeInTheDocument();
   });
 
   it("opens Loose Parts from the dock and exposes it in Open Apps", async () => {
@@ -338,7 +338,7 @@ describe("Pocket 98", () => {
 
     await user.click(within(app).getByRole("button", { name: "Back" }));
     await waitFor(() => {
-      expect(within(dock).getByRole("button", { name: "Work" })).toHaveFocus();
+      expect(within(dock).getByRole("button", { name: "Projects" })).toHaveFocus();
     });
   });
 

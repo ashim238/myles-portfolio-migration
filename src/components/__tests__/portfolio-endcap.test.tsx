@@ -47,13 +47,13 @@ function cssAtRuleContaining(atRule: string, needle: string) {
 }
 
 describe("PortfolioEndcap", () => {
-  it("keeps Work Stuff primary and adapts the secondary destination", () => {
+  it("keeps Projects primary and adapts the secondary destination", () => {
     const play = render(<PortfolioEndcap context="play" />);
     const playNav = screen.getByRole("navigation", {
       name: "Continue exploring",
     });
     expect(
-      within(playNav).getByRole("link", { name: "Work Stuff" }),
+      within(playNav).getByRole("link", { name: "Projects" }),
     ).toHaveAttribute("href", "/#selected-work");
     expect(within(playNav).getByRole("link", { name: "Résumé" })).toHaveAttribute(
       "href",
@@ -66,7 +66,7 @@ describe("PortfolioEndcap", () => {
       name: "Continue exploring",
     });
     expect(
-      within(resumeNav).getByRole("link", { name: "Work Stuff" }),
+      within(resumeNav).getByRole("link", { name: "Projects" }),
     ).toHaveAttribute("href", "/#selected-work");
     expect(
       within(resumeNav).getByRole("link", { name: "Loose Parts" }),

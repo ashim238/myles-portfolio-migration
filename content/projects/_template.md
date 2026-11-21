@@ -16,7 +16,7 @@ sections:
     body: Describe the situation and the part you owned.
   - title: The decision
     body: Explain one choice and the evidence behind it.
-    # The first section image also opens in the Work Stuff preview.
+    # The first section image also opens in the Projects preview.
     # images:
     #   - src: /projects/project-slug/detail.webp
     #     alt: Describe what the reader should notice.

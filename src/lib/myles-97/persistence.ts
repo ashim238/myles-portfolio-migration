@@ -50,6 +50,13 @@ function parseGeometry(value: unknown): Partial<Record<ProgramId, WindowGeometry
   return geometry;
 }
 
+function parseWidgetPosition(value: unknown) {
+  if (!isRecord(value)) return null;
+  const { x, y } = value;
+  if (typeof x !== "number" || typeof y !== "number" || !Number.isFinite(x) || !Number.isFinite(y)) return null;
+  return { x, y };
+}
+
 function parseDisplay(value: unknown): DisplayPreferences {
   if (!isRecord(value)) return { ...DEFAULT_DISPLAY };
   return {
@@ -110,6 +117,7 @@ export function loadPersistedWorkstation(): WorkstationState {
       focusedProgram,
       recentPrograms: local ? parsePrograms(local.recentPrograms) : initial.recentPrograms,
       windowGeometry: session ? parseGeometry(session.windowGeometry) : {},
+      reminderWidgetPosition: parseWidgetPosition(session?.reminderWidgetPosition),
       desktopScrollY:
         typeof session?.desktopScrollY === "number" && Number.isFinite(session.desktopScrollY)
           ? Math.max(0, session.desktopScrollY)
@@ -161,6 +169,7 @@ export function saveSessionWorkstation(state: WorkstationState): void {
         minimizedPrograms,
         focusedProgram,
         windowGeometry,
+        reminderWidgetPosition: state.reminderWidgetPosition,
         desktopScrollY: state.desktopScrollY,
       }),
     );

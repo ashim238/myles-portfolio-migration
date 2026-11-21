@@ -144,7 +144,7 @@ describe("Myles 98 hardening contract", () => {
     expect(windowSource).toContain("moveWithKeyboard(event.key, event.shiftKey)");
   });
 
-  it("passes the saved reduced-motion preference to both Work Stuff surfaces", () => {
+  it("passes the saved reduced-motion preference to both Projects surfaces", () => {
     for (const path of [
       "src/components/myles-97/workstation-desktop.tsx",
       "src/components/myles-97/pocket-97-shell.tsx",

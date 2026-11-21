@@ -80,18 +80,21 @@
 /* A Help contents pane beside a typeset document. Both columns remain in normal order. */
 .book-index,.book-pages { display: contents; }
 .book-index-label { display: none; }
-.reader-mode .chapter-opening .chapter-deck { max-width: 52ch; color: var(--m97-reader-ink); font: 400 clamp(18px,1.4vw,22px)/1.52 var(--m97-reader-font); }
-.reader-mode .chapter-opening .chapter-deck p { margin: 0; font: inherit; }
 .reader-mode .case-book .chapter-opening {
+  grid-template-columns: minmax(0, 1fr);
   border-color: var(--m98-document-accent); border-top-width: 3px; row-gap: .85rem;
+}
+/* Align narrative paragraphs with the chapter heading. Exhibits keep their own widths. */
+.reader-mode .case-book .project-chapter > .project-section > .project-section-body {
+  max-width: 40.3rem;
+  margin-inline: 0;
+}
+.reader-mode .case-book .project-section-body + .project-evidence-heading {
+  margin-block-start: 1.5rem;
 }
 .reader-mode .case-book .chapter-opening .project-chapter-meta { flex-direction: row; align-items: baseline; }
 .reader-mode .case-book .chapter-opening .project-chapter-stage { color: var(--m98-document-accent); }
 @media (min-width: 800px) {
-  .reader-mode .case-book .chapter-opening { grid-template-columns: 1fr; }
-  .reader-mode .case-book .chapter-opening[data-has-lead] {
-    grid-template-columns: minmax(0,1fr) minmax(0,.93fr); column-gap: clamp(25px,4vw,65px);
-  }
   .reader-mode .case-book .chapter-opening .project-chapter-meta { grid-column: 1/-1; }
   .reader-mode .case-book .chapter-opening .project-chapter-title { font-size: clamp(35px,3.6vw,56px); text-wrap: balance; }
 }
@@ -246,7 +249,7 @@
   .myles97-desktop .myles97-window[data-m97-program-window="selected-work"] { width: min(876px,calc(100vw - 475px)) !important; }
   .myles97-desktop .myles97-window[data-m97-default-position="true"][data-m97-program-window="selected-work"] { left: 120px !important; top: 22px !important; }
   .myles97-desktop .myles97-window[data-m97-default-position="true"][data-m97-program-window="welcome"],
-  .myles97-desktop .myles97-reminders-widget { left: min(1016px,calc(100vw - 334px)) !important; }
+  .myles97-desktop .myles97-reminders-widget:not([data-moved]) { left: min(1016px,calc(100vw - 334px)) !important; }
   .myles97-desktop .myles97-window[data-m97-program-window="welcome"] { max-width: 314px; }
   .myles97-desktop .myles97-reminders-widget { width: 314px; top: 395px; }
   .myles97-desktop .myles97-window[data-m97-program-window="selected-work"]:has(.myles97-explorer[data-work-view=preview]) { height: auto !important; }

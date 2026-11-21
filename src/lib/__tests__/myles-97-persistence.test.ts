@@ -46,6 +46,7 @@ describe("Myles 97 persistence", () => {
       windowGeometry: {
         "fresh-greens": { x: 80, y: 64, width: 720, height: 520 },
       },
+      reminderWidgetPosition: { x: 570, y: 100 },
       desktopScrollY: 240,
       displayPreferences: { highContrast: true, reduceMotion: false },
     };
@@ -60,11 +61,13 @@ describe("Myles 97 persistence", () => {
     });
     expect(JSON.parse(sessionStorage.getItem(SESSION_WORKSTATION_KEY) ?? "{}")).toMatchObject({
       focusedProgram: "fresh-greens",
+      reminderWidgetPosition: { x: 570, y: 100 },
       desktopScrollY: 240,
     });
 
     const restored = loadPersistedWorkstation();
     expect(restored.focusedProgram).toBe("fresh-greens");
+    expect(restored.reminderWidgetPosition).toEqual({ x: 570, y: 100 });
     expect(restored.windowGeometry["fresh-greens"]).toEqual({
       x: 80,
       y: 64,

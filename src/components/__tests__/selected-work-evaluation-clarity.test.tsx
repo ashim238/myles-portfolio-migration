@@ -44,7 +44,7 @@ const programs: ProgramDefinition[] = [
   },
 ];
 
-describe("Work Stuff evaluation paths", () => {
+describe("Projects evaluation paths", () => {
   it("opens the artwork on keyboard focus and closes when focus moves to the reading link", async () => {
     const user = userEvent.setup();
     render(<SelectedWorkExplorer programs={programs} onOpen={vi.fn()} reduceMotion />);

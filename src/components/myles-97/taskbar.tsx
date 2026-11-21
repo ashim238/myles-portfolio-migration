@@ -20,7 +20,7 @@ export type TaskbarProps = {
 
 const systemTitles: Partial<Record<ProgramId, string>> = {
   welcome: "Welcome to Myles 98",
-  "selected-work": "Work Stuff",
+  "selected-work": "Projects",
   about: "About Myles",
   "loose-parts": "Loose Parts",
   resume: "Résumé",

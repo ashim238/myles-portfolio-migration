@@ -39,7 +39,7 @@ export function SystemDocumentShell({
           <div className="myles98-document-titlebar">
             <Link className="myles98-document-back reader-control" href="/#selected-work">
               <CommandIcon name="back" />
-              <span>Work Stuff</span>
+              <span>Projects</span>
             </Link>
 
             <div className="myles98-document-identity">

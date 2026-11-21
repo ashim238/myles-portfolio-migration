@@ -55,7 +55,7 @@ const defaultGeometry: Partial<Record<ProgramId, WindowGeometry>> = {
 };
 
 const desktopPlaces = [
-  ["selected-work", "Work Stuff"], ["about", "About Myles"], ["loose-parts", "Loose Parts"],
+  ["selected-work", "Projects"], ["about", "About Myles"], ["loose-parts", "Loose Parts"],
   ["resume", "Résumé"], ["paint", "Paint"],
 ] as const;
 
@@ -312,7 +312,7 @@ export function WorkstationDesktop({
               <ProgramWindow
                 key={id}
                 {...props}
-                title="Work Stuff"
+                title="Projects"
                 status={`${programs.length} portfolio projects`}
               >
                 <SelectedWorkExplorer
@@ -409,6 +409,8 @@ export function WorkstationDesktop({
 
         <RemindersWidget
           triggerRef={remindersTriggerRef}
+          position={state.reminderWidgetPosition}
+          onMove={(position) => dispatch({ type: "move-reminder-widget", position })}
           onOpen={() => openProgram("reminders")}
         />
       </div>

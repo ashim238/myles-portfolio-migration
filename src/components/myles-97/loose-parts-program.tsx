@@ -19,7 +19,7 @@ export function LoosePartsProgram({
         <h2>Loose Parts</h2>
         <p>No experiments are in the lab right now.</p>
         <Link className="myles97-primary-button" href="/#selected-work">
-          Return to Work Stuff
+          Return to Projects
         </Link>
       </div>
     );

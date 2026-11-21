@@ -52,7 +52,7 @@ export default async function FreshGreensPage() {
       <nav className="project-topbar" aria-label="Breadcrumb">
         <TransitionLink href="/#work">
           <span aria-hidden="true">←</span>
-          Work Stuff
+          Projects
         </TransitionLink>
       </nav>
 
@@ -98,16 +98,14 @@ export default async function FreshGreensPage() {
             index={1}
             total={chapters.length}
             variant="fresh-greens"
-            lead={
-              <p>
-                I moved there from Brooklyn as a kid. Driving was the only
-                practical way to get around, but I didn&apos;t know New Jersey like the
-                back of my hand.
-              </p>
-            }
           >
             <div className="project-section fg-section">
               <div className="project-section-body">
+                <p>
+                  I moved there from Brooklyn as a kid. Driving was the only
+                  practical way to get around, but I didn&apos;t know New Jersey like the
+                  back of my hand.
+                </p>
                 <p>
                   Whether I was dropping my mom at the bus station early or driving
                   back from Cape May late, there were stretches that made me
@@ -130,17 +128,14 @@ export default async function FreshGreensPage() {
             index={2}
             total={chapters.length}
             variant="fresh-greens"
-            lead={
-              <p className="case-section-lead">
-                Qualitative interviews were new to me, but I tried to navigate them
-                like everyday conversations. Unfortunately, I wasn&apos;t the only
-                person getting the heebie-jeebies during a drive.
-              </p>
-            }
           >
             <div className="project-section fg-section fg-section--wide">
-
               <div className="project-section-body">
+                <p>
+                  Qualitative interviews were new to me, but I tried to navigate them
+                  like everyday conversations. Unfortunately, I wasn&apos;t the only
+                  person getting the heebie-jeebies during a drive.
+                </p>
                 <p>
                   Drivers already relied on tools like Google Maps.
                 </p>
@@ -172,18 +167,16 @@ export default async function FreshGreensPage() {
             index={3}
             total={chapters.length}
             variant="fresh-greens"
-            lead={
-              <p>
-                I showed my thesis advisor my first pass, a Google Maps plug-in.
-                He was content, not impressed. Google&apos;s route still dominated
-                the screen. I wanted drivers to compare daylight before choosing
-                a route. I was about a month from delivering it, so I kept the
-                information architecture and designed a standalone app.
-              </p>
-            }
           >
             <section className="project-section fg-section fg-section--wide">
               <div className="project-section-body">
+                <p>
+                  I showed my thesis advisor my first pass, a Google Maps plug-in.
+                  He was content, not impressed. Google&apos;s route still dominated
+                  the screen. I wanted drivers to compare daylight before choosing
+                  a route. I was about a month from delivering it, so I kept the
+                  information architecture and designed a standalone app.
+                </p>
                 <p>
                   I returned to the Green Book for the visual system. Its palette
                   became a reference, not a claim that Fresh Greens is its digital
@@ -219,15 +212,15 @@ export default async function FreshGreensPage() {
             index={4}
             total={chapters.length}
             variant="fresh-greens"
-            lead={
-              <p>
-                In the pulled-over flow, I ask “Are you armed?” first. Which guidance
-                applies depends on the driver&apos;s answer and the state they&apos;re in.
-                I didn&apos;t want someone scrolling during a stop to find what applied.
-              </p>
-            }
           >
             <section className="project-section fg-section fg-section--wide">
+              <div className="project-section-body">
+                <p>
+                  In the pulled-over flow, I ask “Are you armed?” first. Which guidance
+                  applies depends on the driver&apos;s answer and the state they&apos;re in.
+                  I didn&apos;t want someone scrolling during a stop to find what applied.
+                </p>
+              </div>
               <PulledOverJourney />
               <div className="project-section-body">
                 <p>
@@ -243,17 +236,15 @@ export default async function FreshGreensPage() {
             index={5}
             total={chapters.length}
             variant="fresh-greens"
-            lead={
-              <p>
-                People just need transparency into how the app is doing what it
-                claims it does. Route chips and cards show public sources and
-                community-report influence. The full score and its weights aren&apos;t
-                exposed yet.
-              </p>
-            }
           >
             <div className="project-section fg-section fg-section--wide">
               <div className="project-section-body">
+                <p>
+                  People just need transparency into how the app is doing what it
+                  claims it does. Route chips and cards show public sources and
+                  community-report influence. The full score and its weights aren&apos;t
+                  exposed yet.
+                </p>
                 <p>
                   Reports stay on the device first. With Supabase configured, they enter moderation.
                 </p>
@@ -295,15 +286,13 @@ export default async function FreshGreensPage() {
             index={6}
             total={chapters.length}
             variant="fresh-greens"
-            lead={
-              <p>
-                I used Figma to set the initial rules, then built them in code. A
-                spacing problem became a shared theme rule.
-              </p>
-            }
           >
             <div className="project-section fg-section fg-scope">
               <div className="project-section-body">
+                <p>
+                  I used Figma to set the initial rules, then built them in code. A
+                  spacing problem became a shared theme rule.
+                </p>
                 <p>
                   Search was the first thing to break. My own address was sitting in Recent, so a
                   places-only search looked functional. I added street addresses

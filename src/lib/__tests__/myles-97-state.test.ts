@@ -6,7 +6,7 @@ import {
 } from "@/lib/myles-97/state";
 
 describe("workstationReducer", () => {
-  it("opens Work Stuff foremost beside Welcome", () => {
+  it("opens Projects foremost beside Welcome", () => {
     const state = createInitialWorkstationState();
     expect(state.openPrograms).toEqual(["welcome", "selected-work"]);
     expect(state.focusedProgram).toBe("selected-work");

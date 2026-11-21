@@ -385,7 +385,7 @@ describe("UnderstandingFAFSA case-study structure", () => {
   it("separates Gmail HTML clipping work from PNG download weight", () => {
     expect(prose).not.toContain("The fix arrived through test sends");
     expect(prose).toContain(
-      "Those sends exposed Gmail&apos;s 102 KB HTML clipping limit and dark-mode color inversion.",
+      "Usually, at least one person opened a practice send on mobile and another on desktop.",
     );
     expect(prose).toContain(
       "Gmail clips emails once the HTML source crosses 102 KB.",

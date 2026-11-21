@@ -21,10 +21,10 @@ describe("Myles 98 secondary route shell", () => {
     expect(source).not.toContain('aria-label="Breadcrumb"');
   });
 
-  it("keeps the Work Stuff return affordance at the document-shell level", () => {
+  it("keeps the Projects return affordance at the document-shell level", () => {
     const shell = read("src/components/myles-97/system-document-shell.tsx");
     expect(shell).toContain('href="/#selected-work"');
-    expect(shell).toContain("Work Stuff");
+    expect(shell).toContain("Projects");
 
     const window = read("src/components/myles-97/program-window.tsx");
     expect(window).toContain("id={id}");

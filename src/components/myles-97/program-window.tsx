@@ -4,7 +4,7 @@ import { CommandIcon } from "@/components/myles-97/command-icon";
 import { useRef, type CSSProperties, type PropsWithChildren, type ReactNode } from "react";
 import type { ProgramId } from "@/lib/myles-97/programs";
 import type { WindowGeometry } from "@/lib/myles-97/state";
-import { clampWindowGeometry } from "@/lib/myles-97/state";
+import { clampWindowGeometry, keyboardMoveOffset } from "@/lib/myles-97/state";
 import { iconForProgram, Myles97Icon } from "@/components/myles-97/icons";
 import { useWindowDrag } from "@/components/myles-97/use-window-drag";
 
@@ -63,13 +63,7 @@ export function ProgramWindow({
     zIndex: stackIndex,
   };
   const moveWithKeyboard = (key: string, shiftKey: boolean) => {
-    const distance = shiftKey ? 64 : 16;
-    const delta = {
-      ArrowLeft: { x: -distance, y: 0 },
-      ArrowRight: { x: distance, y: 0 },
-      ArrowUp: { x: 0, y: -distance },
-      ArrowDown: { x: 0, y: distance },
-    }[key];
+    const delta = keyboardMoveOffset(key, shiftKey);
     if (!delta) return false;
 
     const renderedBounds = isDefaultPosition ? windowRef.current?.getBoundingClientRect() : null;

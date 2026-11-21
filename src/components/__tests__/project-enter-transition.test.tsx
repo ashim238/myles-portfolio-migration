@@ -423,7 +423,7 @@ describe("ProjectEnterTransition", () => {
     expect(screen.getByRole("status")).toHaveTextContent("Myles Ashitey");
   });
 
-  it("restores focus to Work Stuff even when its project preview is already open", async () => {
+  it("restores focus to Projects even when its project preview is already open", async () => {
     navigation.pathname = "/work/fresh-greens";
     const { rerender } = render(
       <ProjectEnterTransition>

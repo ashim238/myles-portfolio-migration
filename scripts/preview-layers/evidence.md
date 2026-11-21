@@ -1,6 +1,6 @@
 # Project preview layers
 
-Work Stuff starts with the project jacket. The Layers tab starts with the assembled model. Both open to the same spread. A mouse hover opens the jacket. Leaving the artwork restores it. Keyboard focus reveals the pieces, Escape closes them, and touch toggles them. The part names are available to screen readers. All lettering on the spread comes from the work.
+The Projects folder opens with the project jacket. The Layers tab starts with the assembled model. Both open to the same spread. A mouse hover opens the jacket. Leaving the artwork restores it. Keyboard focus reveals the pieces, Escape closes them, and touch toggles them. The part names are available to screen readers. All lettering on the spread comes from the work.
 
 | Project | Source artwork | Arrangement |
 | --- | --- | --- |
