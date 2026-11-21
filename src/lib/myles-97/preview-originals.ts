@@ -63,7 +63,7 @@ function emailSample(after: boolean): ArtSample {
 export const projectSamples: Record<FeaturedProjectId, readonly ArtSample[]> = {
   "fresh-greens": [
     ...arrivalLightSamples,
-    { label: "Support", detail: "Support options", alt: "The four choices in the Fresh Greens safety toolkit.", src: route + "/safety-toolkit.png", width: 1290, height: 2796, crop: [.025, .19, .95, .395] },
+    { label: "Support", detail: "Support options", alt: "The four choices in the Fresh Greens safety toolkit.", src: route + "/safety-toolkit.png", width: 1290, height: 2796, crop: [.025, .215, .95, .33] },
   ],
   understandingfafsa: [
     emailSample(true), emailSample(false),

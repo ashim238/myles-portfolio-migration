@@ -151,7 +151,7 @@ export function PulledOverJourney() {
                   alt={step.alt}
                   width={1290}
                   height={2796}
-                  unoptimized={step.key === "contact"}
+                  unoptimized={step.key !== "reassurance"}
                   sizes="(max-width: 720px) 66vw, 300px"
                   className="fg-feature-shot"
                 />
