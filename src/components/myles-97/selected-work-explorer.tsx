@@ -5,7 +5,7 @@ import { CommandIcon } from "@/components/myles-97/command-icon";
 import { iconForProgram, Myles97Icon } from "@/components/myles-97/icons";
 import Link from "next/link";
 import { useId, useState, useSyncExternalStore, type MouseEvent, type ReactNode } from "react";
-import { isFeaturedProject } from "@/lib/myles-97/programs";
+import { FRESH_GREENS_ROLE, isFeaturedProject } from "@/lib/myles-97/programs";
 import { StudyCover } from "./study-cover";
 import { ProductThumbnail } from "@/components/myles-97/product-thumbnail";
 import type { ProgramDefinition } from "@/lib/myles-97/programs";
@@ -216,7 +216,9 @@ export function SelectedWorkExplorer({
               <span className="myles97-program-card-copy">
                 <Myles97Icon name={iconForProgram(program.id)} variant="color" size={24} />
                 <strong>{program.title === "UnderstandingFAFSA" ? <>Understanding<wbr />FAFSA</> : program.title}</strong>
-                <span>{program.cardSummary ?? program.applicationType}</span>
+                <span>{view === "preview" && program.id === "fresh-greens"
+                  ? FRESH_GREENS_ROLE
+                  : program.cardSummary ?? program.applicationType}</span>
                 {view === "preview" ? <span className="archive-file-description">{program.summary}</span> : <span>{program.appName}</span>}
               </span>
             </ProjectEntry>

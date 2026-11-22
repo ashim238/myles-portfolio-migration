@@ -9,10 +9,10 @@ export function DepartureReminderEvidence() {
       data-evidence-chapter="fg-design"
     >
       <div className="fg-reminder-copy">
-        <p className="fg-reminder-kicker">Daylight came up in all six interviews</p>
+        <p className="fg-reminder-kicker">Portfolio reconstruction</p>
         <h3 id="fg-reminder-title">A daylight departure reminder.</h3>
         <p>
-          I built the reminder around that pattern.
+          Daylight came up in all six interviews. I built the reminder around that pattern.
         </p>
       </div>
 

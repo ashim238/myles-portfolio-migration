@@ -51,6 +51,32 @@ describe("LightboxProvider", () => {
     expect(expandedImage).toHaveAttribute("height", "800");
   });
 
+  it("sizes the inline drawing and the full phone screen independently", async () => {
+    render(
+      <LightboxProvider>
+        <ExpandableImage
+          src="/projects/fresh-greens/process/onboarding/permissions-screen.webp"
+          previewSrc="/projects/fresh-greens/process/onboarding/permissions-car.svg"
+          previewSize={{ width: 116, height: 81 }}
+          width={1290}
+          height={2796}
+          alt="Permissions car"
+          expandedAlt="Permissions screen with the location and microphone requests"
+          unoptimized
+        />
+      </LightboxProvider>,
+    );
+
+    const preview = screen.getByRole("img", { name: "Permissions car" });
+    expect(preview).toHaveAttribute("width", "116");
+    expect(preview).toHaveAttribute("height", "81");
+    await userEvent.click(screen.getByRole("button", { name: /open full screen: permissions screen/i }));
+    const original = within(screen.getByRole("dialog")).getByRole("img");
+    expect(original).toHaveAttribute("width", "1290");
+    expect(original).toHaveAttribute("height", "2796");
+    expect(original).toHaveAccessibleName("Permissions screen with the location and microphone requests");
+  });
+
   it("preserves lossless delivery when an image is enlarged", async () => {
     const src = "/projects/fresh-greens/process/pivot-google-v1-screen.png";
     render(

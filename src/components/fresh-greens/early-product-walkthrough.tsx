@@ -103,7 +103,7 @@ export function EarlyProductWalkthrough() {
       <header className={styles.header}>
         <p className={styles.kicker}>Interactive walkthrough</p>
         <h3 id="fg-walkthrough-title">Drive to Windrush Square</h3>
-        <p>Use the outlined controls to explore these screens from the iOS prototype.</p>
+        <p>Follow one trip captured in the iOS prototype. Select the outlined controls on the phone to try it.</p>
       </header>
       <div className={styles.instructions}>
         <div aria-live="polite" aria-atomic="true">

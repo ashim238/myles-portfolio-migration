@@ -128,10 +128,14 @@ export default async function FreshGreensPage() {
             variant="fresh-greens"
           >
             <div className="project-section fg-section fg-section--wide">
+              <dl className={origins.participants} aria-label="Interview participants">
+                <div><dt>Who I spoke with</dt><dd>Six Black drivers of different genders</dd></div>
+                <div><dt>Where they drove</dt><dd>Across the South</dd></div>
+                <div><dt>Age range</dt><dd>19 to 34</dd></div>
+              </dl>
               <div className="project-section-body">
                 <p>
-                  I spoke with <strong>six Black drivers across the South, ages 19 to 34.</strong>{" "}
-                  The group included people of different genders. I asked each person to walk me through a drive
+                  I asked each person to walk me through a drive
                   they knew well. Drivers already relied on tools like Google Maps.
                   I wanted to hear what the directions left out.
                 </p>

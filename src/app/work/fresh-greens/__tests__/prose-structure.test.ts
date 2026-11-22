@@ -232,7 +232,7 @@ describe("Fresh Greens prose structure", () => {
     expect(source).not.toContain("Warm surfaces and a reserved serif");
     expect(source).not.toContain("Four colors and the daylight gradient");
     expect(source).not.toContain("The honest split between");
-    expect(copy).toContain("I spoke with six Black drivers");
+    expect(copy).toContain("Six Black drivers of different genders");
   });
 
   it("keeps only decision-bearing artifacts in the primary reading path", () => {
@@ -352,7 +352,7 @@ describe("Fresh Greens prose structure", () => {
     expect(copy).toContain("I moved from Brooklyn to South Jersey");
     expect(source).toContain('href="https://www.loc.gov/item/2016298176/"');
     expect(source).toContain("<EarlyProductWalkthrough />");
-    expect(copy).toContain("ages 19 to 34");
+    expect(copy).toContain("19 to 34");
     expect(source).toContain("<blockquote>“If they showed the gradient of light");
     expect(copy).toContain("Plan");
     expect(copy).toContain("Respond");

@@ -1,4 +1,5 @@
 import { ExpandableImage } from "@/components/expandable-image";
+import { CommandIcon } from "@/components/myles-97/command-icon";
 import { COLOR_TOKENS } from "@/lib/fresh-greens/design-tokens";
 import styles from "./visual-origins.module.css";
 
@@ -9,11 +10,72 @@ const colorUses: Record<string, string> = {
   orange: "Road hazards",
 };
 
-const illustrations = [
-  { file: "at-the-wheel", title: "Drive like you know these roads", screen: "panel-1", alt: "Two brown hands grip a steering wheel above a green hill." },
-  { file: "for-us-by-us", title: "For us, by us", screen: "panel-2", alt: "A driver sits on a hill beside a thought bubble about a street needing more light." },
-  { file: "your-viewpoint", title: "Your viewpoint is unique", screen: "panel-3", alt: "A driver looks up at a crossed-out symbol in a thought bubble." },
-] as const;
+type Drawing = {
+  file: string;
+  screen: string;
+  width: number;
+  height: number;
+  title: string;
+  alt: string;
+  expandedAlt: string;
+};
+
+const illustrations: Drawing[] = [
+  {
+    file: "at-the-wheel.svg", screen: "panel-1", width: 390, height: 475,
+    title: "Drive like you know these roads",
+    alt: "Two brown hands grip a steering wheel above a green hill.",
+    expandedAlt: "Drive like you know these roads. The first onboarding screen places Continue over the steering wheel.",
+  },
+  {
+    file: "for-us-by-us.svg", screen: "panel-2", width: 390, height: 565,
+    title: "For us, by us",
+    alt: "A driver sits on a hill beside a thought bubble about a street needing more light.",
+    expandedAlt: "For us, by us. A seated driver says the street needs more lighting.",
+  },
+  {
+    file: "your-viewpoint.svg", screen: "panel-3", width: 390, height: 475,
+    title: "Your viewpoint is unique",
+    alt: "A driver looks up at a crossed-out symbol in a thought bubble.",
+    expandedAlt: "Your viewpoint is unique. The third onboarding screen introduces personal preferences for a drive.",
+  },
+];
+
+const carStrip: Drawing = {
+  file: "get-started-cars.png", screen: "get-started", width: 1446, height: 372,
+  title: "The cars that run across Get Started and Log In.",
+  alt: "Four cars, one green and three white, with a trail of smoke behind them.",
+  expandedAlt: "Get Started. Cars cross the horizon above Continue with Apple and Log In.",
+};
+
+const locationCar: Drawing = {
+  file: "permissions-car.svg", screen: "permissions", width: 116, height: 81,
+  title: "The location pin marks the car on Permissions.",
+  alt: "A blue location pin above a small green car.",
+  expandedAlt: "Permissions. The location pin and car sit above the explanation of location and microphone access.",
+};
+
+function DrawingFigure({ drawing, frame }: { drawing: Drawing; frame: string }) {
+  const directory = "/projects/fresh-greens/process/onboarding";
+  return (
+    <figure>
+      <div className={`${styles.plate} ${frame}`}>
+        <ExpandableImage
+          src={`${directory}/${drawing.screen}-screen.webp`}
+          previewSrc={`${directory}/${drawing.file}`}
+          previewSize={{ width: drawing.width, height: drawing.height }}
+          width={1290}
+          height={2796}
+          alt={drawing.alt}
+          expandedAlt={drawing.expandedAlt}
+          unoptimized
+        />
+        <span className={styles.openIcon}><CommandIcon name="enlarge" /></span>
+      </div>
+      <figcaption>{drawing.title}</figcaption>
+    </figure>
+  );
+}
 
 export function GreenBookPalette() {
   return (
@@ -45,37 +107,17 @@ export function OnboardingGallery() {
     <section className={styles.gallery} aria-labelledby="fg-onboarding-title">
       <h3 id="fg-onboarding-title" className="project-proof-target">Drawing the first three onboarding screens</h3>
       <p>I drew these in Illustrator. The first view puts you behind the wheel. On the second screen, a driver is thinking about a street that needs more light. That’s the kind of observation someone could contribute to the map.</p>
-      <p className={styles.galleryHint}>Select a drawing to open its screen in the iOS prototype.</p>
+      <p className={styles.galleryHint}>Select a drawing to see its full iOS screen.</p>
       <ol className={styles.panels} aria-label="Onboarding artwork in app order">
-        {illustrations.map((panel) => (
-          <li key={panel.file}>
-            <figure>
-              <ExpandableImage src={`/projects/fresh-greens/process/onboarding/${panel.screen}-screen.webp`}
-                previewSrc={`/projects/fresh-greens/process/onboarding/${panel.file}.svg`} alt={panel.alt}
-                width={1290} height={2796} sizes="(max-width: 600px) 75vw, 280px" unoptimized />
-              <figcaption>{panel.title}</figcaption>
-            </figure>
+        {illustrations.map((drawing) => (
+          <li key={drawing.file}>
+            <DrawingFigure drawing={drawing} frame={styles.panel} />
           </li>
         ))}
       </ol>
       <div className={styles.carArt}>
-        <figure>
-          <div className={styles.horizon}>
-            <ExpandableImage src="/projects/fresh-greens/process/onboarding/get-started-screen.webp"
-              previewSrc="/projects/fresh-greens/process/onboarding/get-started-cars.png"
-              width={1290} height={2796} unoptimized sizes="(max-width: 600px) 82vw, 520px"
-              alt="Four cars, one green and three white, with a trail of smoke behind them." />
-          </div>
-          <figcaption>The cars that run across Get Started and Log In.</figcaption>
-        </figure>
-        <figure>
-          <div className={styles.permissionCar}>
-            <ExpandableImage src="/projects/fresh-greens/process/onboarding/permissions-screen.webp"
-              previewSrc="/projects/fresh-greens/process/onboarding/permissions-car.svg"
-              width={1290} height={2796} unoptimized alt="Small illustrated car from the location permissions screen." />
-          </div>
-          <figcaption>A smaller car sits beside the location pin on Permissions.</figcaption>
-        </figure>
+        <DrawingFigure drawing={carStrip} frame={styles.horizon} />
+        <DrawingFigure drawing={locationCar} frame={styles.permissionCar} />
       </div>
     </section>
   );

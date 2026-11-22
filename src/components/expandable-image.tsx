@@ -15,6 +15,10 @@ type Props = {
   overlay?: React.ReactNode;
   /** Optional detail crop for the inline image. The viewer opens the full source. */
   previewSrc?: string;
+  /** Intrinsic size of the inline art when it differs from the full image. */
+  previewSize?: { width: number; height: number };
+  /** Describe the full screen when the inline image is only a detail. */
+  expandedAlt?: string;
   /** Opt out of Next's image optimizer (e.g. animated GIFs). */
   unoptimized?: boolean;
 };
@@ -30,6 +34,8 @@ export function ExpandableImage({
   priority,
   overlay,
   previewSrc,
+  previewSize,
+  expandedAlt,
   unoptimized,
 }: Props) {
   const { openLightbox } = useLightbox();
@@ -38,14 +44,14 @@ export function ExpandableImage({
     <button
       type="button"
       className="expandable-trigger"
-      onClick={() => openLightbox(src, alt, width, height, { unoptimized, overlay })}
-      aria-label={`Expand image: ${alt}`}
+      onClick={() => openLightbox(src, expandedAlt ?? alt, width, height, { unoptimized, overlay })}
+      aria-label={expandedAlt ? `Open full screen: ${expandedAlt}` : `Expand image: ${alt}`}
     >
       <Image
         src={previewSrc ?? src}
         alt={alt}
-        width={width}
-        height={height}
+        width={previewSize?.width ?? width}
+        height={previewSize?.height ?? height}
         style={style}
         className={className}
         // Per-call sizes lets the optimizer ship a right-sized variant; without

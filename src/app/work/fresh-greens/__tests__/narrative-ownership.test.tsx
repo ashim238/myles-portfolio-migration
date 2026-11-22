@@ -196,9 +196,10 @@ describe("Fresh Greens rendered narrative ownership", () => {
     expect(research).toHaveTextContent(
       "Drivers couldn't compare the conditions they cared about across routes before choosing.",
     );
-    expect(research).toHaveTextContent(
-      "six Black drivers across the South, ages 19 to 34",
-    );
+    const participants = within(research).getByLabelText("Interview participants");
+    expect(participants).toHaveTextContent("Six Black drivers of different genders");
+    expect(participants).toHaveTextContent("Across the South");
+    expect(participants).toHaveTextContent("19 to 34");
     expect(research.querySelector("blockquote")).toHaveTextContent("bright where you are and dark where you arrive");
     expect(frame.querySelector("#fg-app-walkthrough")).toBeInTheDocument();
     expect(within(chapter(container, "fg-design")).getByRole("heading", {name: /three onboarding screens/i})).toBeInTheDocument();

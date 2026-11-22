@@ -52,7 +52,7 @@ export const PROJECT_PROGRAM_BLUEPRINTS = [
     id: "fresh-greens",
     appName: "Fresh Greens.exe",
     applicationType: "Route-planning software",
-    cardSummary: `Navigation for Black drivers · ${FRESH_GREENS_ROLE}`,
+    cardSummary: `Navigation for Black drivers, inspired by the Green Book · ${FRESH_GREENS_ROLE}`,
     primaryEvidence: "built",
   },
   {
