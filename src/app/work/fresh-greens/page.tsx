@@ -23,7 +23,6 @@ import {
   ReportRouteInfluenceEvidence,
   RouteComparisonEvidence,
 } from "@/components/fresh-greens/route-decision-evidence";
-import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
 import { CASE_STUDY_CHAPTERS } from "@/lib/project-chapters";
 import { createRouteMetadata } from "@/lib/site-config";
@@ -156,7 +155,7 @@ export default async function FreshGreensPage() {
                 </div>
                 <div className="fg-evidence-boundary">
                   <p className="fg-evidence-label">Respond</p>
-                  <p>Drivers talked about police encounters and keeping help close when something went wrong.</p>
+                  <p>Drivers talked about <strong>police encounters</strong> and keeping help close when something went wrong.</p>
                 </div>
                 <div className="fg-evidence-boundary">
                   <p className="fg-evidence-label">Trust</p>
@@ -251,7 +250,7 @@ export default async function FreshGreensPage() {
                   Reports stay on the device first. With Supabase configured, they enter moderation.
                 </p>
                 <p>
-                  <strong className="fg-prototype-limit-label">Current prototype limit:</strong>{" "}<strong>One report creates a scored zone</strong>{" "}and can affect route ranking. I haven&apos;t added
+                  <span className="fg-prototype-limit-label">Current prototype limit:</span>{" "}<strong>One report creates a scored zone</strong>{" "}and can affect route ranking. I haven&apos;t added
                   corroboration weighting, visible contributor provenance, or
                   route-level trust tiers yet.
                 </p>
@@ -354,7 +353,6 @@ export default async function FreshGreensPage() {
       </div>
 
       <ProjectWorkJump currentSlug="fresh-greens" projects={allProjects} />
-      <CaseHighlightObserver />
     </ReaderShell>
   );
 }

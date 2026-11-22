@@ -268,27 +268,6 @@
   text-align: center;
 }
 
-/* Case-study highlight: load-bearing phrase per section. Default state is
-   fully visible; observer swaps to the animated sweep once mounted. */
-
-mark.case-highlight {
-  background-color: color-mix(in srgb, var(--case-highlight-color, var(--foreground)) var(--case-highlight-opacity, 14%), transparent);
-  color: inherit;
-  padding: 0.05em 0.22em;
-  border-radius: 0.35rem;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
-}
-
-main[data-project-slug="fresh-greens"] {
-  --case-highlight-color: var(--fg-accent);
-  --case-highlight-opacity: 14%;
-}
-main[data-project-slug="navi"] {
-  --case-highlight-color: var(--nv-accent);
-  --case-highlight-opacity: 14%;
-}
-
 .nv-page .project-chapter {
   --chapter-motif-accent: var(--nv-accent);
 }
@@ -301,86 +280,6 @@ main[data-project-slug="navi"] {
   fill: var(--background);
   stroke: var(--chapter-motif-accent);
 }
-
-main[data-project-slug="understandingfafsa"] {
-  --case-highlight-color: var(--uf-accent-highlight, #f2b544);
-  --case-highlight-opacity: 22%;
-}
-main[data-project-slug="tiktok"] {
-  --case-highlight-color: var(--tt-magenta, #fe2c55);
-  --case-highlight-opacity: 16%;
-}
-
-/* Default reveal (Navi): the neighborhood-mapping sweep. */
-main[data-highlight-anim-ready] mark.case-highlight {
-  background-color: transparent;
-  background-image: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--case-highlight-color, var(--foreground)) var(--case-highlight-opacity, 14%), transparent),
-    color-mix(in srgb, var(--case-highlight-color, var(--foreground)) var(--case-highlight-opacity, 14%), transparent)
-  );
-  background-repeat: no-repeat;
-  background-size: 0% 100%;
-  background-position: 0 0;
-  transition: background-size 720ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-main[data-highlight-anim-ready] mark.case-highlight.is-revealed {
-  background-size: 100% 100%;
-}
-
-/* Fresh Greens: fade-under. The mark's color settles under the type
-   instead of sweeping across it. Register-matching: calm companion. */
-main[data-project-slug="fresh-greens"][data-highlight-anim-ready] mark.case-highlight {
-  background-image: none;
-  background-size: auto;
-  background-color: transparent;
-  transition: background-color 640ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-main[data-project-slug="fresh-greens"][data-highlight-anim-ready] mark.case-highlight.is-revealed {
-  background-color: color-mix(in srgb, var(--case-highlight-color) var(--case-highlight-opacity), transparent);
-}
-
-/* UnderstandingFAFSA: highlighter-slash. Faster and sharper so the
-   sweep reads as a marker drag on paper, on-theme for the newsletter. */
-main[data-project-slug="understandingfafsa"][data-highlight-anim-ready] mark.case-highlight {
-  transition: background-size 420ms cubic-bezier(0.42, 0, 0.15, 1);
-}
-
-/* Marker character for the FAFSA stroke: a 100deg gradient slants both
-   tips the way an angled felt tip does, and the ink lays down heavier
-   where the drag starts (30% -> 22% -> 17%). Declared after the animated
-   rules so its background-image wins for FAFSA while background-size
-   still comes from the shared sweep. With no JS the gradient paints at
-   the default auto size, so the base state stays fully visible. */
-main[data-project-slug="understandingfafsa"] mark.case-highlight {
-  background-color: transparent;
-  background-image: linear-gradient(
-    100deg,
-    transparent 0,
-    color-mix(in srgb, var(--case-highlight-color) 30%, transparent) 0.4em,
-    color-mix(in srgb, var(--case-highlight-color) 22%, transparent) 55%,
-    color-mix(in srgb, var(--case-highlight-color) 17%, transparent) calc(100% - 0.4em),
-    transparent 100%
-  );
-  background-repeat: no-repeat;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  main[data-highlight-anim-ready] mark.case-highlight,
-  main[data-project-slug="fresh-greens"][data-highlight-anim-ready] mark.case-highlight,
-  main[data-project-slug="understandingfafsa"][data-highlight-anim-ready] mark.case-highlight {
-    background-size: 100% 100%;
-    transition: none;
-  }
-  /* Only the fade-under variant paints via background-color. Setting it on
-     the gradient variants too would stack tint on gradient and render the
-     reduced-motion highlight at double strength. */
-  main[data-project-slug="fresh-greens"][data-highlight-anim-ready] mark.case-highlight {
-    background-color: color-mix(in srgb, var(--case-highlight-color) var(--case-highlight-opacity), transparent);
-  }
-}
-
-
 
 /* ── Case-study readability: recruiter cut + landmarks ──────────── */
 .case-lead-media {

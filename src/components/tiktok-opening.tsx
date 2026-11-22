@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { CaseOpeningMotion } from "@/components/case-opening-motion";
-import { Fragment, type CSSProperties } from "react";
+import { Fragment } from "react";
+import motion from "./case-opening-motion.module.css";
 import { ProjectOpeningFacts } from "@/components/project-opening-facts";
 import { TikTokCoverBlobs, TikTokLogo } from "@/components/tiktok-dsa";
 import { TIKTOK_TEMPLATES } from "@/lib/tiktok-data";
@@ -22,17 +23,17 @@ export function TikTokOpening({ legacy = false }: { legacy?: boolean }) {
           so I had room to think outside the box.</p>
       </div>
       {legacy ? null : <CaseOpeningMotion variant="tiktok">
-        {TIKTOK_TEMPLATES.map(template => (
+        {TIKTOK_TEMPLATES.map((template, index) => (
           <figure key={template.key} className="tt-original-plate">
             <span className="tt-proof-paper">
-              <Image src={template.fullTemplate} alt={template.name + " catalog template"} width={1080} height={1920}
+              <Image src={`/projects/tiktok/system/${template.key === "lightacademia" ? "academia" : template.key}-feed.webp`}
+                alt={`${template.name} feed mockup showing the sample blue shirt.`} width={375} height={812}
                 unoptimized loading="eager" />
-              <span aria-hidden="true" className="tt-proof-register" style={{
-                left: template.regionOverlays.catalog.left + "%",
-                top: template.regionOverlays.catalog.top + "%",
-                width: template.regionOverlays.catalog.width + "%",
-                height: template.regionOverlays.catalog.height + "%",
-              } as CSSProperties} />
+              <span className={motion.catalogSlot} aria-hidden="true">
+                <span className={motion.catalogSequence} data-motion-end={index === TIKTOK_TEMPLATES.length - 1}>
+                  <span className={motion.catalogFull} /><span className={motion.catalogDetail} /><span className={motion.catalogFull} />
+                </span>
+              </span>
             </span>
             <figcaption>{template.name.split(/(?<=[a-z])(?=[A-Z])|(?<=\/)/).map((word, index) => (
               <Fragment key={word}>{index > 0 && <wbr />}{word}</Fragment>

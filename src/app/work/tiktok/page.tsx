@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { ExpandableImage } from "@/components/expandable-image";
 import { ReaderShell } from "@/components/myles-97/reader-shell";
 import { ProjectChapter } from "@/components/project-chapter";
@@ -89,8 +88,8 @@ export default async function TikTokPage() {
             <div className="project-section tt-section">
               <div className="project-section-body">
                 <p>
-                  The brief asked for{" "}<strong>three templates for clients in the fashion
-                  vertical.</strong>{" "}Each one had to hold a fashion product catalog while
+                  The brief asked for three templates for clients in the fashion
+                  vertical. Each one had to hold a fashion product catalog while
                   appealing to a different style or aesthetic, but{" "}<strong>the dimensions
                   and product slots were set in stone</strong>{" "}before I received the brief.
                   I could change the type, color, texture, and supporting graphics.
@@ -334,12 +333,12 @@ export default async function TikTokPage() {
                   external brands or audience members during my internship.
                 </p>
                 <p>
-                  <mark className="case-highlight">
+                  <strong>
                     I later learned through Global Creative Lab that American Eagle
                     selected it.
-                  </mark>{" "}
-                  I wasn&apos;t told why American Eagle selected Light Academia.{" "}<strong>I
-                  didn&apos;t receive performance data,</strong>{" "}and I don&apos;t know what happened
+                  </strong>{" "}
+                  I wasn&apos;t told why American Eagle selected Light Academia. I
+                  didn&apos;t receive performance data, and I don&apos;t know what happened
                   to the other two templates. Internships are very transitory, so
                   I&apos;m left doing work without knowing the full impact.
                 </p>
@@ -357,7 +356,6 @@ export default async function TikTokPage() {
       </div>
 
       <ProjectWorkJump currentSlug="tiktok" projects={allProjects} />
-      <CaseHighlightObserver />
     </ReaderShell>
   );
 }

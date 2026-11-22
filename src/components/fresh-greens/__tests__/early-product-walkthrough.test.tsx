@@ -1,46 +1,52 @@
-import { existsSync } from "node:fs";
-import { join } from "node:path";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { EarlyProductWalkthrough } from "../early-product-walkthrough";
 
-function visit(label: string) {
-  fireEvent.click(screen.getByRole("button", { name: label }), { detail: 1 });
-}
-
-function expectCapture(filename: string, description: RegExp) {
-  const image = screen.getByRole("img", { name: description });
-  expect(decodeURIComponent(image.getAttribute("src") ?? "")).toContain(filename);
-  expect(existsSync(join(process.cwd(), "public", filename))).toBe(true);
-}
-
-const route = "/projects/fresh-greens/daylight-key/2026-11-21/";
-const safety = "/projects/fresh-greens/v2/";
-
-describe("Fresh Greens app walkthrough", () => {
-  it("uses one recorded trip and preserves its context through the key and toolkit", () => {
+describe("Fresh Greens embedded prototype", () => {
+  it("searches saved places, changes the map and route, and keeps the selected trip after driving", async () => {
+    const user = userEvent.setup();
     render(<EarlyProductWalkthrough />);
-    expect(screen.queryByRole("button", { name: "← Back" })).not.toBeInTheDocument();
-    expectCapture(route + "03-brixton-evening-preview.png", /Route preview for Windrush Square/);
-
-    visit("Go, start the drive");
-    expectCapture(route + "04-brixton-evening-navigation.png", /Driving view on Sudbourne Road/);
-    visit("Open map key");
-    expectCapture(route + "05-brixton-navigation-key-reopened.png", /same driving screen with the map key open/);
-    visit("Close map key");
-    expectCapture(route + "04-brixton-evening-navigation.png", /Driving view/);
-
-    visit("Open map key");
-    visit("Open safety toolkit");
-    expectCapture(safety + "safety-toolkit.png", /Safety toolkit with four options/);
-    visit("Open Pulled-over");
-    expectCapture(safety + "pulled-over-armed-organic.png", /first pulled-over question/);
-    visit("← Back");
-    expectCapture(safety + "safety-toolkit.png", /Safety toolkit/);
-    visit("← Back");
-    expectCapture(route + "05-brixton-navigation-key-reopened.png", /map key open/);
-    visit("Start over");
-    expectCapture(route + "03-brixton-evening-preview.png", /Route preview/);
-    expect(screen.queryByRole("button", { name: "Start over" })).not.toBeInTheDocument();
+    const map = () => screen.getByRole("img", { name: /Sample current location/ });
+    expect(map()).toHaveAccessibleName(/Sudbourne Road.*Windrush Square.*Route 2/);
+    const search = screen.getByRole("searchbox");
+    await user.click(search);
+    await user.type(search, "missing");
+    expect(screen.getByRole("status")).toHaveTextContent("No saved places match");
+    await user.clear(search);
+    await user.type(search, "Brooklyn{ArrowDown}{Enter}");
+    expect(map()).toHaveAccessibleName(/Utica Avenue.*Weeksville.*Route 2/);
+    expect(screen.getByRole("button", { name: "→ Go" })).toHaveFocus();
+    const path = map().querySelector("path")?.getAttribute("d");
+    expect(screen.getByRole("button", { name: "Next route" })).toBeDisabled();
+    await user.click(screen.getByRole("button", { name: "Previous route" }));
+    expect(screen.getByRole("button", { name: "Previous route" })).toBeDisabled();
+    expect(map().querySelector("path")?.getAttribute("d")).not.toBe(path);
+    expect(map()).toHaveAccessibleName(/Route 1 via Lincoln Place/);
+    expect(screen.getByText(/Arrive 1:01 PM/)).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "→ Go" }));
+    expect(screen.getByRole("button", { name: "End trip" })).toHaveFocus();
+    await user.click(screen.getByRole("button", { name: "Map key" }));
+    expect(within(screen.getByRole("list", { name: "Route line patterns" })).getByText("After dark")).toBeVisible();
+    await user.click(screen.getByRole("button", { name: "Safety toolkit" }));
+    await user.click(screen.getByRole("button", { name: "Pulled-over" }));
+    await user.click(screen.getByRole("radio", { name: "Prefer not to answer" }));
+    expect(screen.getByRole("link", { name: /U.S. prototype/ })).toHaveAttribute("href", "#fg-safety-reconstruction");
+    await user.keyboard("{Escape}");
+    expect(screen.getByRole("button", { name: "Pulled-over" })).toHaveFocus();
+    await user.keyboard("{Escape}");
+    expect(screen.getByRole("button", { name: "Safety toolkit" })).toHaveFocus();
+    await user.click(screen.getByRole("button", { name: "End trip" }));
+    expect(map()).toHaveAccessibleName(/Weeksville.*Route 1/);
+  });
+  it("dismisses search from the result list and leaves the original route in place", async () => {
+    const user = userEvent.setup();
+    render(<EarlyProductWalkthrough />);
+    const query = screen.getByRole("searchbox");
+    await user.click(query);
+    await user.type(query,"Weeksville{Tab}{Tab}{Escape}");
+    expect(query).toHaveFocus();
+    expect(screen.queryByText("Sample destinations")).not.toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /Sample current location/ })).toHaveAccessibleName(/Windrush Square/);
   });
 });

@@ -1609,13 +1609,15 @@
   background: #eeefec;
 }
 .myles97-explorer .myles97-case-study-link {
-  justify-content: flex-start;
-  border: 0;
-  background: transparent;
-  color: #143e75;
-  box-shadow: none;
+  width: fit-content;
+  justify-content: center;
+  gap: var(--m97-space-2);
+  padding: var(--m97-space-2) calc(var(--m97-space-3) - 2px);
+  border: 1px solid var(--m97-bevel-dark);
+  background: var(--m97-chrome);
+  color: var(--m97-ink);
+  box-shadow: var(--m97-bevel-raised);
 }
-.myles97-explorer .myles97-case-study-link:hover { text-decoration: underline; }
 .myles97-explorer .myles97-program-card:focus-within { border-color: var(--m97-active); }
 
 @media (min-width: 1025px) and (pointer: fine) {

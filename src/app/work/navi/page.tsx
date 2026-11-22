@@ -21,7 +21,6 @@ import {
 import { NaviDemoEmbed } from "@/components/navi-demo-embed";
 import { GuideSample } from "@/components/navi/guide-sample";
 import { NaviResearchArtifacts } from "@/components/navi/research-artifacts";
-import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
 import {
   NAVI_SURVEY_META,
@@ -211,7 +210,7 @@ export default async function NaviPage() {
                   market segments.
                 </p>
                 <p>
-                  I used <mark className="case-highlight">Learn, Plan, Go</mark>{" "}
+                  I used <strong>Learn, Plan, Go</strong>{" "}
                   to shape our studio prototype.
                 </p>
               </div>
@@ -346,7 +345,6 @@ export default async function NaviPage() {
       </div>
 
       <ProjectWorkJump currentSlug="navi" projects={allProjects} />
-      <CaseHighlightObserver />
       <NaviAnimReady />
     </ReaderShell>
   );

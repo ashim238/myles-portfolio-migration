@@ -173,7 +173,6 @@ describe("Navi evidence claims", () => {
       "CompositionStrip",
       "NaviDemoEmbed",
       "ProjectWorkJump",
-      "CaseHighlightObserver",
       "NaviAnimReady",
     ]) {
       expect(projectPage).toContain(`<${component}`);

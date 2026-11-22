@@ -37,9 +37,6 @@ vi.mock("@/components/project-work-jump", () => ({
   ProjectWorkJump: () => <nav data-testid="project-work-jump" />,
 }));
 
-vi.mock("@/components/case-highlight-observer", () => ({
-  CaseHighlightObserver: () => <div data-testid="case-highlight-observer" />,
-}));
 
 vi.mock("@/components/expandable-image", () => ({
   // Test double only: production rendering stays on the optimized image component.
@@ -148,9 +145,8 @@ describe("TikTok short-form case study", () => {
       screen.getByText(
         "I later learned through Global Creative Lab that American Eagle selected it.",
       ),
-    ).toHaveClass("case-highlight");
+    ).toHaveProperty("tagName", "STRONG");
     expect(screen.getByTestId("project-work-jump")).toBeInTheDocument();
-    expect(screen.getByTestId("case-highlight-observer")).toBeInTheDocument();
 
     expect(screen.getByTestId("project-toc")).toBeInTheDocument();
     expect(screen.queryByTestId("console-hello")).not.toBeInTheDocument();

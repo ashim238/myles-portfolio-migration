@@ -111,7 +111,7 @@ function ProjectEntry({ program, reduced, onRead, children }: {
         {children}
       </span>
       <span className="myles97-program-actions">
-        <span className="myles97-case-study-link">Read case study <CommandIcon name="external" /></span>
+        <span className="myles97-case-study-link">Read case study <CommandIcon name="next" /></span>
       </span>
     </Link>
   );

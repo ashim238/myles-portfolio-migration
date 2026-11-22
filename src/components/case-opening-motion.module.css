@@ -8,41 +8,65 @@
 }
 .replay:focus-visible { outline: 3px solid #1a59aa; outline-offset: 2px; }
 @media (pointer: coarse) { .replay { min-height: 44px; } }
+
+.newsletter {
+  position: absolute;
+  inset: 0;
+  mask: url("/projects/understandingfafsa/opening-screen-mask.png") center / 100% 100% no-repeat;
+}
+.artboard {
+  width: 640px; height: 555.5px;
+  transform-origin: 0 0; transform: scale(var(--newsletter-scale, 0));
+}
+.screen {
+  width: 340px;
+  transform-origin: 0 0;
+  /* Project the original flat newsletter through all four corners of the Photoshop smart object. */
+  transform: matrix3d(.48276282,-.14882017,0,.00000264275,.12355771,.44403903,0,-.000056972264,0,0,1,0,94.393751,111.89784,0,1);
+}
+.scrollPage {
+  width: 100%; aspect-ratio: 800 / 3240;
+  background: url("/projects/understandingfafsa/opening-newsletter-scroll.webp") center / cover no-repeat;
+  transform: translateY(-536px);
+}
+
+.plates.plates:global(.tt-original-plates) { padding-bottom: max(3.75rem, 2.2vw); }
+.plates :global(.tt-proof-paper) { position: relative; display: block; align-self: start; }
+.catalogSlot {
+  position: absolute; overflow: hidden;
+  /* The same square photo, x29..295 and y193..459, in each original 375 × 812 feed proof. */
+  left: 7.733333%; top: 23.768473%; width: 70.933333%; aspect-ratio: 1;
+}
+.catalogSequence { display: none; }
+.plates[data-playing=true] .catalogSequence { display: flex; flex-direction: column; height: 100%; }
+.catalogSequence > span {
+  display: block; flex: 0 0 100%;
+  background: url("/projects/tiktok/system/catalog-shirt.webp") center / cover no-repeat;
+}
+.plates figure:nth-child(1) .catalogDetail { background-size: 225%; background-position: 51% 22%; }
+.plates figure:nth-child(2) .catalogDetail { background-size: 205%; background-position: 84% 64%; }
+.plates figure:nth-child(3) .catalogDetail { background-size: 205%; background-position: 48% 75%; }
+.plates figure:nth-child(2) { --feed-delay: .18s; }
+.plates figure:nth-child(3) { --feed-delay: .36s; }
+
 @media (prefers-reduced-motion: no-preference) {
   .overlay[data-opening=navi][data-playing=true] .insert { animation: park-detail 3.6s ease-in-out both; }
   .overlay[data-playing=true] .scrollPage { animation: read-newsletter 3.8s cubic-bezier(.4,0,.25,1) both; }
-  .plates[data-playing=true] figure :global(.tt-proof-paper) { animation: register-proofs 3.6s cubic-bezier(.22,.68,.21,1) both; }
+  .plates[data-playing=true] .catalogSequence { animation: catalog-swipe 3.65s cubic-bezier(.22,.7,.25,1) var(--feed-delay,0s) both; }
+  .overlay[data-visible=false][data-playing=true] :is(.insert,.scrollPage),
+  .plates[data-visible=false][data-playing=true] .catalogSequence { animation-play-state: paused; }
 }
 @keyframes park-detail {
   0%, 12% { opacity: 0; clip-path: polygon(19% 47%, 32% 45%, 34% 73%, 20% 75%); }
   36%, 81% { opacity: 1; clip-path: polygon(15% 28%, 79% 21%, 85% 77%, 18% 85%); }
   100% { opacity: 0; clip-path: polygon(15% 28%, 79% 21%, 85% 77%, 18% 85%); }
 }
-/* The frame and notch stay fixed while the paper moves along the tilted screen. */
-.newsletter { width: 100%; height: 100%; display: block; }
-.scrollPage { transform: translateY(-114px); }
 @keyframes read-newsletter {
   0%, 12% { transform: translateY(0); }
-  90%, 100% { transform: translateY(-114px); }
+  93%, 100% { transform: translateY(-536px); }
 }
-.plates figure:first-child { --register-x: 40%; --register-angle: -5deg; }
-.plates figure:nth-child(2) { --register-x: 0%; --register-angle: 0deg; }
-.plates figure:nth-child(3) { --register-x: -40%; --register-angle: 5deg; }
-@keyframes register-proofs {
-  0%, 65%, 100% { transform: translateX(0) rotate(0); }
-  25%, 34% { transform: translateX(var(--register-x)) rotate(var(--register-angle)); }
+@keyframes catalog-swipe {
+  0%, 16% { transform: translateY(0); }
+  31%, 65% { transform: translateY(-100%); }
+  82%, 100% { transform: translateY(-200%); }
 }
-
-.plates.plates:global(.tt-original-plates) { padding-bottom: max(3.75rem, 2.2vw); }
-.plates :global(.tt-proof-paper) { position: relative; display: block; align-self: start; }
-.plates :global(.tt-proof-register) {
-  position: absolute; pointer-events: none; opacity: 0;
-  --ink: linear-gradient(#173d57, #173d57);
-  background: var(--ink) left top / 18% 2px, var(--ink) left top / 2px 17%,
-    var(--ink) right bottom / 18% 2px, var(--ink) right bottom / 2px 17%;
-  background-repeat: no-repeat; filter: drop-shadow(0 1px 1px white);
-}
-@media (prefers-reduced-motion: no-preference) {
-  .plates[data-playing=true] :global(.tt-proof-register) { animation: slot-register 3.6s ease-in-out both; }
-}
-@keyframes slot-register { 0%, 65%, 100% { opacity: 0; } 75%, 89% { opacity: 1; } }

@@ -4394,9 +4394,7 @@
   --uf-accent-cool-text: #82c5fb;
   --uf-accent-soft: color-mix(in oklch, var(--uf-accent-warm) 14%, transparent);
   --uf-accent-line: color-mix(in srgb, var(--uf-accent-warm) 55%, transparent);
-  /* Sunbeam yellow from the FAFSA vibrancy palette, promoted to a token so
-     the case-highlight mark can reach for the newsletter's highlighter
-     register instead of overlapping with Navi's warm orange. */
+  /* Sunbeam yellow in the newsletter chapter navigation. */
   --uf-accent-highlight: #f2b544;
 }
 

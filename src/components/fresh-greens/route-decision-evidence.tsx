@@ -112,7 +112,7 @@ export function RouteComparisonEvidence() {
 
       <figcaption>
         Rebuilt for this case study with sample route data and a revised label.{" "}
-        <a href="#fg-app-walkthrough">Return to the original app screens.</a>
+        <a href="#fg-app-walkthrough">Try a route in the interactive demo.</a>
       </figcaption>
     </figure>
   );

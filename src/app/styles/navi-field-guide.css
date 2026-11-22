@@ -25,15 +25,76 @@
 .nv-field-guide li { min-width: 0; border-top: 1px solid var(--field-rule); }
 .nv-field-guide li h4 { margin: .65rem 0; color: var(--field-ink); font: 600 1.2rem/1.1 var(--m97-ui-font); }
 .nv-field-guide li > p { font: 400 .96rem/1.48 var(--m97-ui-font); margin: .7rem 0 0; }
-.nv-sample { position: relative; min-height: 9.5rem; background: #fffdf2; border: 1px solid var(--field-rule); }
-.nv-sample-photo img { object-fit: cover; }
-.nv-sample-photo span { position: absolute; inset: auto 0 0; background: #213b30; color: white; padding: .4rem .55rem; font: 600 .8rem/1.3 var(--m97-ui-font); }
-.nv-sample-list, .nv-sample-transit { padding: .85rem; font: 400 .95rem/1.4 var(--m97-ui-font); }
-.nv-sample-list strong, .nv-sample-transit strong { display: block; padding-bottom: .45rem; margin-bottom: .45rem; border-bottom: 1px solid var(--field-rule); }
-.nv-sample-list p, .nv-sample-transit dl, .nv-sample-transit dd { margin: 0; }
-.nv-sample-transit dl { display: grid; gap: .35rem; }
-.nv-sample-transit dl div { display: grid; grid-template-columns: 4.2em 1fr; gap: .35em; font-size: .86rem; }
-.nv-sample-transit dt { font-weight: 700; }
+/* The three specimens share a baseline and a caption rail like a printed field guide. */
+.nv-field-guide li { display: grid; grid-row: span 4; grid-template-rows: subgrid; row-gap: 0; }
+.nv-sample {
+  display: grid;
+  grid-row: span 2;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  min-height: 12rem;
+  border: 1px solid var(--field-rule);
+  background: #fff9e8;
+  color: #233a2d;
+}
+.nv-sample-scene { position: relative; min-height: 8rem; }
+.nv-sample-scene img { object-fit: cover; }
+.nv-sample-caption {
+  align-content: center;
+  padding: .48rem .68rem;
+  background: #233b30;
+  color: #fffdf3;
+  font: 650 .8rem/1.35 var(--m97-ui-font);
+}
+.nv-ticket-face {
+  position: relative;
+  align-content: center;
+  padding: .85rem 1.6rem .9rem .9rem;
+  background: #f8dea3;
+}
+.nv-ticket-face::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: .82rem;
+  border-left: 1px dashed #846d41;
+  background: repeating-linear-gradient(135deg, transparent 0 4px, #8e733d40 4px 5px);
+}
+.nv-ticket-price { display: flex; align-items: baseline; gap: .35em; font: 600 .82rem/1.2 var(--m97-ui-font); }
+.nv-ticket-price strong { font: 600 clamp(2rem, 4.7vw, 3.5rem)/1 Georgia,serif; letter-spacing: -.06em; }
+.nv-ticket-face p {
+  margin: .5rem 0 0;
+  padding-top: .45rem;
+  border-top: 1px solid #a79063;
+  color: #263b30;
+  font: 400 .83rem/1.35 var(--m97-ui-font);
+}
+.nv-ticket-face p b { display: block; font-weight: 700; }
+.nv-sign-face {
+  display: grid;
+  align-content: center;
+  gap: .65rem;
+  padding: .85rem;
+  background: #192a24;
+  color: #fffdf2;
+}
+.nv-sign-heading {
+  border-top: 2px solid currentColor;
+  padding-top: .35rem;
+  font: 650 1rem/1.18 var(--m97-ui-font);
+}
+.nv-sign-lines { display: flex; align-items: center; gap: .35rem; }
+.nv-sign-lines span {
+  display: grid;
+  place-items: center;
+  width: clamp(2.3rem, 5.05vw, 3.85rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #fccc0a;
+  color: #191c17;
+  font: 750 clamp(1.4rem, 3.15vw, 2.4rem)/1 Arial, sans-serif;
+}
+.nv-sample-sign .nv-sample-caption { border-top: 1px solid #819386; }
 .reader-mode.nv-page .nv-research-board {
   --nv-research-board-surface: var(--field-paper);
   --nv-research-board-card: #fff9e9;
@@ -64,8 +125,8 @@
 .reader-mode.nv-page :is(.nv-validation-ledger,.nv-heuristic-card) :is(h3,p,li) { color: var(--field-ink); }
 @media(max-width:700px) {
   .nv-field-guide ol, .reader-mode.nv-page .nv-research-archetypes { grid-template-columns: 1fr; }
-  .nv-sample { min-height: 0; }
-  .nv-sample-photo { min-height: 10rem; }
+  .nv-field-guide li { display: block; }
+  .nv-sample { grid-template-rows: 1fr auto; min-height: 11.5rem; }
   .reader-mode.nv-page .nv-research-archetype-details { gap:.6rem; }
 }
 @media (forced-colors:active) {

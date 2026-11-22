@@ -30,9 +30,6 @@ vi.mock("@/components/project-toc", () => ({
 vi.mock("@/components/project-work-jump", () => ({
   ProjectWorkJump: () => <nav data-testid="project-work-jump" />,
 }));
-vi.mock("@/components/case-highlight-observer", () => ({
-  CaseHighlightObserver: () => <div data-testid="highlight-observer" />,
-}));
 vi.mock("@/components/lead-media", () => ({
   LeadMedia: () => <figure data-testid="lead-media" />,
 }));
@@ -201,6 +198,7 @@ describe("Fresh Greens rendered narrative ownership", () => {
     expect(participants).toHaveTextContent("Across the South");
     expect(participants).toHaveTextContent("19 to 34");
     expect(research.querySelector("blockquote")).toHaveTextContent("bright where you are and dark where you arrive");
+    expect(within(research).getByText("police encounters", { selector: "strong" })).toBeInTheDocument();
     expect(frame.querySelector("#fg-app-walkthrough")).toBeInTheDocument();
     expect(within(chapter(container, "fg-design")).getByRole("heading", {name: /three onboarding screens/i})).toBeInTheDocument();
   });

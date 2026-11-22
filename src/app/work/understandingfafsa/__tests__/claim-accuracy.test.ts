@@ -177,14 +177,15 @@ describe("UnderstandingFAFSA outcome claims", () => {
     expect(resume).not.toContain("without a designer in the loop");
   });
 
-  it("keeps a rendered space after the highlighted Gmail constraint", () => {
+  it("emphasizes the design decision in the Gmail clipping paragraph", () => {
     const projectPage = readFileSync(
       resolve(process.cwd(), "src/app/work/understandingfafsa/page.tsx"),
       "utf8",
     );
 
-    expect(projectPage).toMatch(
-      /102 KB\.\s*<\/mark>\s*\{" "\}\s*Figma&apos;s spacing/,
-    );
+    const paragraph = projectPage.split("<p>").find((part) => part.includes("Gmail clips emails"))?.split("</p>")[0];
+    expect(paragraph?.match(/<strong>/g)).toHaveLength(1);
+    expect(paragraph).toContain("<strong>I rebuilt the live system with simpler native blocks,</strong>");
+    expect(paragraph).not.toContain("<mark");
   });
 });

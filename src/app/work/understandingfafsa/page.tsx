@@ -20,7 +20,6 @@ import {
   NewsletterComposerDemo,
   TemplateSwitcher,
 } from "@/components/understandingfafsa";
-import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
 import { CASE_STUDY_CHAPTERS } from "@/lib/project-chapters";
 import { createRouteMetadata } from "@/lib/site-config";
@@ -261,9 +260,7 @@ export default async function UnderstandingFafsaPage({ searchParams }: {
                   mobile and another on desktop.
                 </p>
                 <p>
-                  <mark className="case-highlight">
-                    Gmail clips emails once the HTML source crosses 102 KB.
-                  </mark>{" "}
+                  Gmail clips emails once the HTML source crosses 102 KB.
                   Figma&apos;s spacing created too many Mailchimp containers and
                   wrappers.{" "}<strong>I rebuilt the live system with simpler native blocks,</strong>{" "}
                   flattened the hierarchy, and removed what didn&apos;t need to ship.
@@ -319,7 +316,6 @@ export default async function UnderstandingFafsaPage({ searchParams }: {
       </div>
 
       <ProjectWorkJump currentSlug="understandingfafsa" projects={allProjects} />
-      <CaseHighlightObserver />
     </ReaderShell>
   );
 }
