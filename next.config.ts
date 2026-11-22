@@ -1,9 +1,14 @@
 import type { NextConfig } from "next";
+import { freshGreensSession, localSimulator, simulatorHost } from "./src/lib/fresh-greens/native-session";
 
 const developmentEvalSource =
   process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : "";
 const impeccableLiveDevSource =
   process.env.NODE_ENV === "development" ? " http://localhost:8400" : "";
+
+const session = freshGreensSession(process.env);
+const loopbackSource = session?.kind === "local" ? ` ${localSimulator}` : "";
+const simulatorFrame = session?.kind === "hosted" ? ` ${simulatorHost}` : loopbackSource;
 
 const contentSecurityPolicy = [
   "default-src 'self'",
@@ -11,10 +16,10 @@ const contentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https://cdn.prod.website-files.com https://placehold.co https://*.basemaps.cartocdn.com https://*.spotifycdn.com https://i.scdn.co",
   "font-src 'self' data:",
-  `connect-src 'self'${impeccableLiveDevSource} https://open.spotify.com`,
+  `connect-src 'self'${impeccableLiveDevSource} https://open.spotify.com${loopbackSource}`,
   "media-src 'self' blob:",
   "worker-src 'self' blob:",
-  "frame-src 'self' https://open.spotify.com",
+  `frame-src 'self' https://open.spotify.com${simulatorFrame}`,
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",

@@ -13,6 +13,22 @@ npm run dev
 
 Open `http://localhost:3000`.
 
+### Fresh Greens on iOS
+
+The Fresh Greens case study can launch a native simulator session on demand. For local review, start the [dedicated iPhone simulator bridge](scripts/fresh-greens-simulator/README.md), then serve the portfolio on its allowed loopback address.
+
+```sh
+FRESH_GREENS_LOCAL_SIMULATOR=1 npm run dev -- --hostname 127.0.0.1 --port 4391
+```
+
+To package the account-free visitor edition on a Mac with Xcode, run the following from the portfolio checkout. Use a prepared Fresh Greens checkout with its native dependencies, CocoaPods and public Mapbox client token available. The output directory must be empty.
+
+```sh
+python3 scripts/fresh-greens-visitor/build.py /path/to/fresh-greens /path/to/visitor-output --revision 23ffdd0
+```
+
+The output includes a simulator `.app` and its compressed archive. For a hosted session, configure `FRESH_GREENS_APPETIZE_BUILD_ID` with the visitor build’s public Appetize ID when building the site. The website only needs the identifier. With neither setting, readers can play the recorded iOS drive.
+
 ## Content editing (CMS-like workflow)
 
 Each file in `content/projects/` holds the project metadata, chapters and artwork. Start with the [case-study authoring guide in DESIGN.md](DESIGN.md#publish-another-case-study). The shared template supplies the Projects listing, preview window and Reader layout.

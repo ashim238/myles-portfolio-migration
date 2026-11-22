@@ -1,0 +1,36 @@
+import { Stack } from 'expo-router';
+import { createContext, useState } from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SessionProvider } from '../lib/account-session/session-provider';
+import { useAppFonts } from '../hooks/useAppFonts';
+
+export const EnterVisitorMap = createContext<() => void>(() => {});
+
+export default function VisitorLayout() {
+  const [accepted, setAccepted] = useState(false);
+  const { loaded, error } = useAppFonts();
+  if (!loaded && !error) return null;
+  return (
+    <SafeAreaProvider>
+      <SessionProvider>
+        <EnterVisitorMap.Provider value={() => setAccepted(true)}>
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Protected guard={!accepted}><Stack.Screen name="index" /></Stack.Protected>
+            <Stack.Protected guard={accepted}>
+              <Stack.Screen name="home" />
+              <Stack.Screen name="search" />
+              <Stack.Screen name="en-route" />
+              <Stack.Screen name="menu" />
+              <Stack.Screen name="fuel" />
+              <Stack.Screen name="safety" options={{ presentation: 'modal' }} />
+              <Stack.Screen name="unfamiliar" options={{ presentation: 'modal' }} />
+              <Stack.Screen name="trip-summary" options={{ presentation: 'modal' }} />
+              {/* VISITOR_LIMITED_ROUTES */}
+            </Stack.Protected>
+            <Stack.Screen name="legal" />
+          </Stack>
+        </EnterVisitorMap.Provider>
+      </SessionProvider>
+    </SafeAreaProvider>
+  );
+}

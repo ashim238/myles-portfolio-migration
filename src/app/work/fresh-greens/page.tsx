@@ -14,6 +14,7 @@ import { ProjectEvidenceDisclosure } from "@/components/project-evidence-disclos
 import { ArchitectureDiagram } from "@/components/fresh-greens";
 import { DepartureReminderEvidence } from "@/components/fresh-greens/departure-reminder-evidence";
 import { WelcomeIllustrationMotion } from "@/components/fresh-greens/welcome-illustration-motion";
+import { freshGreensSession } from "@/lib/fresh-greens/native-session";
 import { EarlyProductWalkthrough } from "@/components/fresh-greens/early-product-walkthrough";
 import { GreenBookPalette, OnboardingGallery } from "@/components/fresh-greens/visual-origins";
 import origins from "@/components/fresh-greens/visual-origins.module.css";
@@ -28,10 +29,6 @@ import { CASE_STUDY_CHAPTERS } from "@/lib/project-chapters";
 import { createRouteMetadata } from "@/lib/site-config";
 
 const chapters = CASE_STUDY_CHAPTERS["fresh-greens"];
-const freshGreensProof = {
-  label: "Try a drive in Fresh Greens",
-  href: "#fg-app-walkthrough",
-};
 
 export const metadata: Metadata = createRouteMetadata({
   title: "Fresh Greens",
@@ -49,6 +46,11 @@ export default async function FreshGreensPage() {
   }
 
   const allProjects = await getPublishedProjects();
+  const session = freshGreensSession(process.env);
+  const freshGreensProof = {
+    label: session ? "Try a route in iOS" : "Watch a drive in iOS",
+    href: "#fg-app-walkthrough",
+  };
 
   return (
     <ReaderShell slug="fresh-greens" title="Fresh Greens" className="fg-page">
@@ -118,7 +120,7 @@ export default async function FreshGreensPage() {
                   home. I wanted to know what the drive home would be like.
                 </p>
               </div>
-              <EarlyProductWalkthrough />
+              <EarlyProductWalkthrough session={session} />
             </div>
           </ProjectChapter>
 
@@ -197,7 +199,7 @@ export default async function FreshGreensPage() {
                   you weigh the conditions yourself.
                 </p>
               </div>
-              <RouteComparisonEvidence />
+              <RouteComparisonEvidence linkLabel={freshGreensProof.label} />
               <ProjectEvidenceDisclosure summary="See arrival light on the original app screens">
                 <FreshGreensCaptureViewer />
               </ProjectEvidenceDisclosure>

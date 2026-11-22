@@ -16,7 +16,7 @@ const routes: RouteOpening[] = [
   {
     route: "fresh-greens",
     proofName: "freshGreensProof",
-    proofLabel: "Try a drive in Fresh Greens",
+    proofLabel: "Watch a drive in iOS",
     proofHref: "#fg-app-walkthrough",
     opening: '<section className="hero project-hero fg-hero"',
     openingClose: "</section>",
@@ -95,7 +95,7 @@ describe("Reader opening route contract", () => {
       expect(source).toContain(`proof={${proofName}}`);
       expect(source).toMatch(
         new RegExp(
-          `const ${proofName} = \\{[\\s\\S]*label: "${proofLabel}",[\\s\\S]*href: "${proofHref}",`,
+          `const ${proofName} = \\{[\\s\\S]*label: [^\n]*"${proofLabel}",[\\s\\S]*href: "${proofHref}",`,
         ),
       );
     },

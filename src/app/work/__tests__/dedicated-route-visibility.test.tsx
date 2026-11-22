@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { render, screen, within } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { Project, ProjectStatus } from "@/lib/content";
 
 const getProjectBySlug = vi.fn();
@@ -71,7 +71,11 @@ function makeProject(slug: string, status: ProjectStatus): Project {
 }
 
 describe("dedicated project route visibility", () => {
+  afterEach(() => vi.unstubAllEnvs());
+
   beforeEach(() => {
+    vi.stubEnv("FRESH_GREENS_LOCAL_SIMULATOR", "");
+    vi.stubEnv("FRESH_GREENS_APPETIZE_BUILD_ID", "");
     getProjectBySlug.mockReset();
     getPublishedProjects.mockReset();
     getPublishedProjects.mockResolvedValue([]);
@@ -117,9 +121,9 @@ describe("dedicated project route visibility", () => {
       name: "Fresh Greens",
       slug: "fresh-greens",
       render: FreshGreensPage,
-      cta: "Try a drive in Fresh Greens",
+      cta: "Watch a drive in iOS",
       href: "#fg-app-walkthrough",
-      artifactName: "Drive to Windrush Square",
+      artifactName: "A drive to Weeksville",
       artifactRole: "heading" as const,
     },
     {
@@ -152,6 +156,16 @@ describe("dedicated project route visibility", () => {
       ).toBeInTheDocument();
     },
   );
+
+  it("labels both Fresh Greens proof links for the playable build when configured", async () => {
+    vi.stubEnv("FRESH_GREENS_APPETIZE_BUILD_ID", "demo");
+    getProjectBySlug.mockResolvedValue(makeProject("fresh-greens", "published"));
+    render(await FreshGreensPage());
+    for (const name of ["Open proof: Try a route in iOS", "Try a route in iOS"]) {
+      expect(screen.getByRole("link", { name })).toHaveAttribute("href", "#fg-app-walkthrough");
+    }
+    expect(screen.getByRole("heading", { name: "Take Fresh Greens for a drive" })).toBeVisible();
+  });
 
   it("renders Navi's canonical opening proof as a direct product-demo link", async () => {
     getProjectBySlug.mockResolvedValue(makeProject("navi", "published"));

@@ -28,12 +28,6 @@
   text-align: start;
 }
 .header p { margin: .75rem 0; }
-.header .limit {
-  border-top: 1px solid var(--m98-paper-rule, var(--line));
-  padding-top: 1rem;
-  margin-top: 1.25rem;
-  font-size: .9rem;
-}
 .walkthrough .header a {
   display: inline-block;
   color: var(--m98-document-accent, #31573c);
@@ -51,190 +45,32 @@
   min-width: 0;
 }
 
-/* Size the original 430 × 932 pt layout as one screen. The sheet and the map
-   controls share their native coordinate system at every portfolio width. */
-@font-face {
-  font-family: FG Franklin;
-  src: url("/projects/fresh-greens/pocket-map/type/LibreFranklin_400Regular.ttf") format("truetype");
-  font-weight: 400;
-  font-display: swap;
-}
-@font-face {
-  font-family: FG Franklin;
-  src: url("/projects/fresh-greens/pocket-map/type/LibreFranklin_600SemiBold.ttf") format("truetype");
-  font-weight: 600;
-  font-display: swap;
-}
-@font-face {
-  font-family: FG Franklin;
-  src: url("/projects/fresh-greens/pocket-map/type/LibreFranklin_700Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-display: swap;
-}
 .device {
-  width: min(100%, 19.5rem);
+  width: min(100%, 20.5rem);
   aspect-ratio: 430 / 932;
-  container-type: inline-size;
-  position: relative;
-  isolation: isolate;
   overflow: hidden;
-  border-radius: 9.5% / 4.4%;
-  background: #fff;
-  box-shadow: 0 4px 16px #142d202b;
+  border-radius: 9% / 4.2%;
+  background: #141e16;
+  box-shadow: 0 4px 16px #142d2033;
 }
-.phone {
-  --sheet-top: 570px;
-  --ink: #08090b;
-  --green: #326936;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 430px;
-  height: 932px;
-  transform-origin: top left;
-  transform: scale(var(--screen-scale, .72));
-  color-scheme: light;
-  color: var(--ink);
-  background: #fff;
-  font: 400 17px/1.35 "FG Franklin", Arial, sans-serif;
-  text-align: left;
+.device :is(iframe, video, .poster, img) { display: block; width: 100%; height: 100%; border: 0; }
+.device video, .poster img { object-fit: contain; }
+.device .poster { position: relative; padding: 0; background: transparent; cursor: pointer; }
+.device .poster:focus-visible { outline: 3px solid #f5d959; outline-offset: -5px; }
+.launchMark {
+  position: absolute; left: 50%; top: 46%; transform: translate(-50%, -50%);
+  display: inline-flex; gap: .55rem; align-items: center; white-space: nowrap;
+  background: #153c2e; color: white; border: 1px solid #fff9; border-radius: .3rem;
+  padding: .65rem .9rem; font: 650 .9rem/1.2 var(--font-family-sans, sans-serif);
+  box-shadow: 0 2px 8px #142d203d;
 }
-@supports (transform: scale(calc(100cqw / 430px))) {
-  .phone { transform: scale(calc(100cqw / 430px)); }
-}
-.phone[data-city="weeksville"] { --sheet-top: 538px; }
-.phone[data-view="drive"] { --sheet-top: 675px; }
-.screen { position: relative; height: 100%; }
-.phone *, .phone *::before, .phone *::after { box-sizing: border-box; }
-.phone :is(p,h4,ul) { font: inherit; color: inherit; margin: 0; text-align: start; }
-.phone :is(button,input) { font: inherit; color: inherit; }
-.phone button { cursor: pointer; padding: 0; box-shadow: none; background: none; border: 0; }
-.phone button:disabled { cursor: default; }
-.phone :is(input,button,a):focus-visible { outline: 3px solid #064aa3; outline-offset: -3px; }
-.status {
-  position: absolute; inset: 0 0 auto; height: 59px; z-index: 4;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 38px 0 57px; pointer-events: none;
-  font: 650 18px/1 -apple-system, BlinkMacSystemFont, Arial, sans-serif;
-}
-.island { position: absolute; top: 11px; left: 50%; transform: translateX(-50%); width: 126px; height: 37px; border-radius: 23px; background: #000; }
-.phone[data-view="drive"] .status { color: #fff; }
-.searchBar {
-  position: absolute; z-index: 3; inset: 83px 8px auto;
-  height: 56px; padding: 0 18px; display: flex; align-items: center; gap: 16px;
-  border-radius: 30px; background: #fffffff7; box-shadow: 0 3px 12px #12191526;
-}
-.searchBar:focus-within { outline: 2px solid var(--green); }
-.phone .searchBar input {
-  flex: 1; min-width: 0; height: 100%; padding: 0; color: var(--ink);
-  border: 0; background: transparent; box-shadow: none; font-size: 17px;
-}
-.phone .searchBar input::placeholder { color: #66686b; }
-.phone .searchResults {
-  position: absolute; top: 149px; bottom: 0; width: 100%; padding: 12px 24px;
-  overflow: auto; background: #fff;
-}
-.resultTitle { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #d6d8d5; }
-.phone .textButton, .phone .back { min-height: 44px; padding: 6px 8px; font-weight: 600; color: var(--green); }
-.phone .place { display: grid; text-align: start; width: 100%; min-height: 74px; padding: 12px 6px; border-bottom: 1px solid #d6d8d5; }
-.place span { font-size: 15px; color: #555a56; }
-.phone .searchResults p { padding-block: 18px; }
-.mapViewport { position: absolute; inset: 0 0 auto; height: var(--sheet-top); }
-.mapTools { position: absolute; left: 16px; bottom: 16px; z-index: 1; }
-.speed { position: absolute; top: 481px; left: 16px; display: grid; gap: 4px; width: 88px; text-align: center; }
-.speed strong, .speed span { display: grid; place-content: center; border-radius: 8px; }
-.speed strong { height: 58px; border: 4px solid #080808; background: #fff; color: #080808; font-size: 30px; }
-.phone[data-city="weeksville"] .speed strong { background: #ffca00; }
-.speed span { height: 56px; background: #070707; color: #fff; font-weight: 700; line-height: 1; font-size: 25px; }
-.speed small { font-size: 12px; font-weight: 400; }
-.phone .mapButton, .phone .legend, .phone .shield {
-  background: #fffffff7; box-shadow: 0 3px 12px #20262326;
-  display: flex; align-items: center; justify-content: center; color: #1b1c1f;
-}
-.phone .mapButton { height: 44px; border-radius: 24px; min-width: 108px; padding: 0 16px; gap: 8px; font-size: 13px; font-weight: 600; color: var(--green); }
-.legend { height: 46px; border-radius: 17px; padding-left: 8px; }
-.phone .legend button { width: 44px; height: 44px; display: grid; place-items: center; }
-.phone .key { display: flex; align-items: center; gap: 12px; padding: 0; list-style: none; font-size: 12px; line-height: 17px; color: #35373a; }
-.phone .key li { margin: 0; }
-.key li::before { content: ""; display: block; width: 30px; margin: 0 auto 6px; border-top: 3px solid #ad803c; }
-.key li:nth-child(2)::before { border-top: 3px dashed #a77e6f; }
-.key li:nth-child(3)::before { border-top: 3px dotted #30284c; }
-.phone .shield { position: absolute; right: 16px; top: 451px; width: 56px; height: 56px; border-radius: 50%; color: #172a40; }
-.phone[data-view="drive"] .mapTools { bottom: 24px; }
-.sheet {
-  position: absolute; inset: var(--sheet-top) 0 0; border-radius: 32px 32px 0 0;
-  background: #fff; box-shadow: 0 -3px 16px #1c252013;
-}
-.handle { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); width: 32px; height: 4px; border-radius: 4px; background: #b6b7b8; }
-.destination { position: absolute; inset: 32px 24px auto; display: flex; align-items: center; gap: 8px; }
-.phone .destination h4 { flex: 1; min-width: 0; font-size: 22px; line-height: 29px; font-weight: 700; }
-.phone[data-city="weeksville"] .destination { top: 34px; }
-.phone[data-city="weeksville"] .destination h4 { text-wrap: pretty; max-width: 248px; margin-right: auto; }
-.phone .circle { display: grid; place-items: center; flex: none; width: 44px; height: 44px; border-radius: 50%; background: #efefef; }
-.phone .circle:disabled { opacity: .40; }
-.phone .circle[aria-pressed="true"] { color: #15592c; background: #dceedd; }
-.routeChoices { position: absolute; top: 92px; left: 24px; right: 24px; display: flex; align-items: center; gap: 4px; color: #35363a; }
-.routeChoices span:first-of-type { min-width: 44px; text-align: center; font-size: 15px; line-height: 21px; font-weight: 600; }
-.routeChoices span:last-child { margin-left: 4px; font-size: 16px; line-height: 22px; }
-.phone[data-city="weeksville"] .routeChoices { top: 108px; }
-.facts { position: absolute; top: 152px; left: 24px; right: 24px; display: grid; gap: 8px; }
-.phone[data-city="weeksville"] .facts { top: 160px; gap: 4px; }
-.phone .facts p:first-child { font-size: 20px; line-height: 29px; color: #3b3b40; }
-.facts strong { font-size: 22px; font-weight: 700; color: var(--green); }
-.phone .facts p:last-child { display: flex; align-items: center; gap: 5px; font-size: 17px; line-height: 23px; color: #35363a; }
-.condition { position: absolute; bottom: 102px; left: 24px; display: grid; justify-items: start; gap: 7px; }
-.condition small { font-size: 13px; color: #515155; }
-.condition span { display: inline-flex; align-items: center; background: #a0d6a4; color: #003f04; min-height: 32px; border-radius: 24px; padding: 0 16px; font: 600 12px/17px "FG Franklin", sans-serif; }
-.phone[data-city="weeksville"] .condition { bottom: 94px; }
-.hazardIcon { display: inline-grid; place-content: center; margin-right: 8px; height: 16px; width: 17px; font: 700 12px/1 Arial,sans-serif; font-style: normal; background: #ff9208; color: #222; clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
-.phone[data-city="weeksville"] .condition span { min-height: 44px; border: 1px solid #b35906; background: #fff; color: var(--ink); }
-.condition span[data-unknown] { color: #46484a; background: #eee; }
-.phone .go, .phone .end { position: absolute; display: flex; justify-content: center; align-items: center; gap: 8px; border-radius: 32px; font-weight: 600; font-size: 17px; }
-.phone .go { inset: auto 24px 42px; height: 44px; background: #41ad49; color: #080c08; }
-.go span { font: 500 27px/1 Arial,sans-serif; }
-.phone .end { inset: auto 16px 34px; height: 52px; border: 1px solid var(--green); color: var(--green); background: #fff; }
-.turn { position: absolute; z-index: 2; inset: 0 0 auto; border-radius: 0 0 28px 28px; overflow: hidden; background: #326936; color: #fff; }
-.instruction { padding: 75px 16px 8px; display: flex; align-items: flex-start; gap: 16px; }
-.instruction b { display: block; font-weight: 700; font-size: 22px; line-height: 35px; }
-.instruction span { display: block; margin-top: 8px; font-size: 20px; line-height: 26px; color: #c0dfbe; }
-.turnHazard { display: block; margin: -4px 0 8px 76px; }
-.nextTurn { background: #003f04; text-align: center; padding: 8px 0; line-height: 21px; font-size: 15px; color: #c0dfbe; }
-.drivingRow { position: absolute; left: 20px; right: 20px; top: 60px; display: flex; align-items: center; justify-content: space-between; }
-.drivingRow .circle { width: 48px; height: 48px; background: #fff; box-shadow: 0 3px 10px #1112; }
-.eta { display: flex; align-items: center; gap: 4px; }
-.eta b { font-size: 34px; line-height: 41px; font-weight: 700; margin-right: 4px; }
-.eta span { font-size: 13px; font-weight: 600; }
-.phone .remaining { position: absolute; top: 124px; width: 100%; text-align: center; font-size: 17px; line-height: 23px; font-weight: 600; }
-.phone[data-view="toolkit"] { background: #ccc; }
-.toolkit { position: absolute; inset: 59px 0 0; border-radius: 32px 32px 0 0; background: white; padding: 56px 24px 34px; overflow: auto; }
-.toolkit::before { content: ""; position: absolute; left: calc(50% - 16px); top: 28px; width: 32px; height: 4px; background: #b8b8b8; border-radius: 3px; }
-.phone .back { position: absolute; right: 18px; top: 7px; font-size: 14px; }
-.toolkitShield { display: block; color: #172a40; }
-.phone .toolkit h4 { font-size: 24px; font-weight: 600; line-height: 31px; margin: 8px 0 18px; }
-.tiles { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 22px 16px; }
-.phone .tiles button { display: grid; justify-items: stretch; gap: 7px; text-align: center; font-size: 16px; font-weight: 600; }
-.tileArt { display: grid; width: 100%; min-height: 100px; place-items: center; border-radius: 12px; background: #f4f3ec; box-shadow: 0 2px 5px #191c1917; }
-.toolkit a { display: inline-block; padding-block: 12px; color: #194e32; text-decoration: underline; }
-.answers { border: 0; padding: 0; margin: 20px 0; }
-.answers legend { font-weight: 700; font-size: 20px; margin-bottom: 6px; }
-.answers label { display: flex; align-items: center; gap: 10px; min-height: 52px; border-bottom: 1px solid #d4dbd4; cursor: pointer; }
-.answers input { accent-color: #356942; }
-
-@media (hover: hover) {
-  .phone :is(.place,.circle,.mapButton,.tiles button):enabled:hover { background-color: #e8eee7; }
-  .phone .go:hover { background: #52b75a; }
-}
+.launchMark i { font: inherit; font-size: .75em; }
+.actions { margin-top: 1.25rem; display: flex; flex-wrap: wrap; align-items: center; gap: .65rem 1rem; }
+.actions button { min-height: 44px; cursor: pointer; }
+.actions :global(.reader-control) { padding: .55rem .9rem; font: 600 .875rem/1.3 var(--font-family-sans, sans-serif); }
+.actions .textAction { background: none; border: 0; box-shadow: none; padding: .3rem 0; color: var(--m98-document-accent, #31573c); font: 600 .875rem/1.4 var(--font-family-sans, sans-serif); text-decoration: underline; text-underline-offset: .2em; }
 @media (max-width: 760px) {
   .walkthrough { grid-template: "heading" auto "screen" auto / minmax(0,1fr); }
   .header { padding: 1.1rem; }
   .stage { padding: .85rem; }
-}
-@media (forced-colors: active) {
-  .phone :is(.circle,.go,.end,.legend,.mapButton,.shield) { border: 1px solid ButtonText; }
-  .phone .key li::before { border-color: CanvasText; }
-}
-@media (scripting: none) {
-  .walkthrough { display: block; }
-  .stage { display: none; }
-  .walkthrough noscript { display: block; padding: 0 1.1rem 1.1rem; }
 }

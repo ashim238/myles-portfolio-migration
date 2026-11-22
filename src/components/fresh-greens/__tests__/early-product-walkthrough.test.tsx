@@ -1,53 +1,71 @@
-import { render, screen, within } from "@testing-library/react";
+// @vitest-environment-options {"url":"http://127.0.0.1:4391/work/fresh-greens"}
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { EarlyProductWalkthrough } from "../early-product-walkthrough";
 
-describe("Fresh Greens embedded prototype", () => {
-  it("searches saved places, changes the map and route, and keeps the selected trip after driving", async () => {
-    const user = userEvent.setup();
-    render(<EarlyProductWalkthrough />);
-    const map = () => screen.getByRole("img", { name: /Sample current location/ });
-    expect(map()).toHaveAccessibleName(/Sudbourne Road.*Windrush Square.*Route 2/);
-    const search = screen.getByRole("searchbox");
-    await user.click(search);
-    await user.type(search, "missing");
-    expect(screen.getByRole("status")).toHaveTextContent("No saved places match");
-    await user.clear(search);
-    await user.type(search, "Brooklyn{ArrowDown}{Enter}");
-    expect(map()).toHaveAccessibleName(/Utica Avenue.*Weeksville.*Route 1/);
-    expect(screen.getByRole("button", { name: "Go" })).toHaveFocus();
-    const path = map().querySelector("path")?.getAttribute("d");
-    expect(screen.getByRole("button", { name: "Previous route" })).toBeDisabled();
-    await user.click(screen.getByRole("button", { name: "Next route" }));
-    expect(screen.getByRole("button", { name: "Next route" })).toBeDisabled();
-    expect(map().querySelector("path")?.getAttribute("d")).not.toBe(path);
-    expect(map()).toHaveAccessibleName(/Route 2 via Lincoln Place/);
-    expect(screen.getByText(/Arrive 1:01 PM/)).toBeVisible();
-    await user.click(screen.getByRole("button", { name: "Go" }));
-    expect(screen.getByRole("button", { name: "End trip" })).toHaveFocus();
-    await user.click(screen.getByRole("button", { name: "Map key" }));
-    expect(screen.getByRole("button", { name: "Close map key" })).toHaveFocus();
-    expect(within(screen.getByRole("list", { name: "Route line patterns" })).getByText("After dark")).toBeVisible();
-    await user.click(screen.getByRole("button", { name: "Safety toolkit" }));
-    await user.click(screen.getByRole("button", { name: "Pulled-over" }));
-    await user.click(screen.getByRole("radio", { name: "Prefer not to answer" }));
-    expect(screen.getByRole("link", { name: /U.S. prototype/ })).toHaveAttribute("href", "#fg-safety-reconstruction");
-    await user.keyboard("{Escape}");
-    expect(screen.getByRole("button", { name: "Pulled-over" })).toHaveFocus();
-    await user.keyboard("{Escape}");
-    expect(screen.getByRole("button", { name: "Safety toolkit" })).toHaveFocus();
-    await user.click(screen.getByRole("button", { name: "End trip" }));
-    expect(map()).toHaveAccessibleName(/Weeksville.*Route 2/);
+const frameName = "Fresh Greens running on an iPhone simulator";
+const recordingName = "Recorded Weeksville drive in the Fresh Greens iOS app";
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
+
+describe("Fresh Greens iOS embed", () => {
+  it("offers the genuine recording when a simulator is not configured", () => {
+    const fetch = vi.fn();
+    vi.stubGlobal("fetch", fetch);
+    render(<EarlyProductWalkthrough session={null} />);
+    const video = screen.getByLabelText(recordingName);
+    expect(video).toHaveAttribute("src", "/projects/fresh-greens/daylight-key/weeksville-drive.mp4");
+    expect(video).toHaveAttribute("controls");
+    expect(screen.queryByTitle(frameName)).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Open the iOS app" })).not.toBeInTheDocument();
+    expect(fetch).not.toHaveBeenCalled();
   });
-  it("dismisses search from the result list and leaves the original route in place", async () => {
+
+  it("starts the configured hosted build on request and releases its frame when the visitor leaves", async () => {
     const user = userEvent.setup();
-    render(<EarlyProductWalkthrough />);
-    const query = screen.getByRole("searchbox");
-    await user.click(query);
-    await user.type(query,"Weeksville{Tab}{Tab}{Escape}");
-    expect(query).toHaveFocus();
-    expect(screen.queryByText("Sample destinations")).not.toBeInTheDocument();
-    expect(screen.getByRole("img", { name: /Sample current location/ })).toHaveAccessibleName(/Windrush Square/);
+    const fetch = vi.fn();
+    vi.stubGlobal("fetch", fetch);
+    render(<EarlyProductWalkthrough session={{ kind: "hosted", buildId: "demo-Build_9" }} />);
+    expect(screen.queryByTitle(frameName)).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Open the iOS app" }));
+    const url = new URL(screen.getByTitle(frameName).getAttribute("src")!);
+    expect(url.origin).toBe("https://appetize.io");
+    expect(url.pathname).toBe("/embed/demo-Build_9");
+    expect(url.searchParams.get("location")).toBe("40.6708,-73.9305");
+    await user.click(screen.getByRole("button", { name: "Close simulator" }));
+    expect(screen.queryByTitle(frameName)).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Watch a recorded drive" }));
+    expect(screen.getByLabelText(recordingName)).toBeVisible();
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
+  it("probes the local simulator and recovers through Retry when it becomes ready", async () => {
+    const user = userEvent.setup();
+    const fetch = vi.fn()
+      .mockResolvedValueOnce({ ok: true, json: async () => ({ ready: false }) })
+      .mockResolvedValueOnce({ ok: true, json: async () => ({ ready: true }) });
+    vi.stubGlobal("fetch", fetch);
+    render(<EarlyProductWalkthrough session={{ kind: "local" }} />);
+    expect(fetch).not.toHaveBeenCalled();
+    await user.click(screen.getByRole("button", { name: "Open the iOS app" }));
+    expect(screen.getByRole("status")).toHaveTextContent(/simulator is unavailable/i);
+    expect(screen.queryByTitle(frameName)).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Retry simulator" }));
+    expect(fetch).toHaveBeenCalledWith("http://127.0.0.1:4397/health",
+      expect.objectContaining({ credentials: "omit", cache: "no-store", signal: expect.any(AbortSignal) }));
+    expect(screen.getByTitle(frameName)).toHaveAttribute("src", "http://127.0.0.1:4397/");
+  });
+
+  it("keeps the recording available after a failed connection", async () => {
+    const user = userEvent.setup();
+    vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new TypeError("Could not connect")));
+    render(<EarlyProductWalkthrough session={{ kind: "local" }} />);
+    await user.click(screen.getByRole("button", { name: "Open the iOS app" }));
+    expect(screen.getByRole("status")).toHaveTextContent(/simulator is unavailable/i);
+    await user.click(screen.getByRole("button", { name: "Watch a recorded drive" }));
+    expect(screen.getByLabelText(recordingName)).toBeVisible();
   });
 });
