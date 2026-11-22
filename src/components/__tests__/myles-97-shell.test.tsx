@@ -109,7 +109,7 @@ describe("Myles98 product shell", () => {
       "data-focused",
       "true",
     );
-    expect(screen.getAllByRole("link", { name: /Read .* case study/ })).toHaveLength(4);
+    expect(within(screen.getByRole("navigation", { name: "Case studies" })).getAllByRole("link")).toHaveLength(4);
   });
 
   it("renders one source-based thumbnail for every project", () => {
@@ -125,34 +125,17 @@ describe("Myles98 product shell", () => {
     ).toEqual(programs.map((program) => program.id));
   });
 
-  it("focuses Projects and launches a project program while preserving a native case-study link", async () => {
+  it("focuses the case-study link when entering Projects from Welcome", async () => {
     const user = userEvent.setup();
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
-
     const welcome = screen.getByRole("region", { name: "Welcome to Myles 98" });
     await user.click(within(welcome).getByRole("button", { name: "Browse projects" }));
     const selectedWork = screen.getByRole("region", { name: "Projects" });
+    const study = within(selectedWork).getByRole("link", { name: "Read Fresh Greens case study" });
     expect(selectedWork).toHaveAttribute("data-focused", "true");
-
-    const freshGreensLink = within(selectedWork).getByRole("link", {
-      name: "Read Fresh Greens case study",
-    });
-    expect(freshGreensLink).toHaveAttribute("href", "/work/fresh-greens");
-
-    await user.click(
-      within(selectedWork).getByRole("button", {
-        name: "Explore Fresh Greens.exe preview",
-      }),
-    );
-    const freshGreensWindow = screen.getByRole("region", {
-      name: "Fresh Greens.exe",
-    });
-    expect(freshGreensWindow).toHaveAttribute("data-focused", "true");
-    await waitFor(() => {
-      expect(
-        within(freshGreensWindow).getByLabelText(/Move Fresh Greens\.exe/),
-      ).toHaveFocus();
-    });
+    expect(study).toHaveAttribute("href", "/work/fresh-greens");
+    expect(study).toHaveFocus();
+    expect(within(selectedWork).queryByRole("button", {name: /explore.*preview/i})).toBeNull();
   });
 
   it("opens Start, exposes program actions, and closes the transient menu with Escape", async () => {
@@ -337,13 +320,14 @@ describe("Myles98 product shell", () => {
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
     const browse = screen.getByRole("button", { name: "Browse projects" });
     await act(async () => browse.focus());
-    const link = screen.getByRole("link", { name: "Read Fresh Greens case study" });
+    const files = screen.getByRole("navigation", { name: "Case studies" });
+    const link = within(files).getByRole("link", { name: "Fresh Greens" });
     for (let step = 0; step < 14 && document.activeElement !== link; step++) {
       await user.tab();
     }
     expect(link).toHaveFocus();
     await user.click(browse);
-    await waitFor(() => expect(link).toHaveFocus());
+    await waitFor(() => expect(screen.getByRole("link", { name: "Read Fresh Greens case study" })).toHaveFocus());
   });
 
   it("raises windows on keyboard entry and focuses the result of taskbar and close actions", async () => {

@@ -32,8 +32,8 @@ describe("Myles 98 program registry", () => {
 
     expect(programs.map(({ id, appName, primaryEvidence }) => ({ id, appName, primaryEvidence }))).toEqual([
       { id: "fresh-greens", appName: "Fresh Greens.exe", primaryEvidence: "built" },
-      { id: "understandingfafsa", appName: "FAFSA Mail.app", primaryEvidence: "observed" },
       { id: "navi", appName: "Navi Places.exe", primaryEvidence: "built" },
+      { id: "understandingfafsa", appName: "FAFSA Mail.app", primaryEvidence: "observed" },
       { id: "tiktok", appName: "TikTok Catalog.studio", primaryEvidence: "shipped" },
     ]);
   });
@@ -45,8 +45,8 @@ describe("Myles 98 program registry", () => {
 
     expect(programs.map((program) => program.id)).toEqual([
       "fresh-greens",
-      "understandingfafsa",
       "navi",
+      "understandingfafsa",
       "tiktok",
     ]);
     expect(programs.find((program) => program.id === "navi")).toMatchObject({

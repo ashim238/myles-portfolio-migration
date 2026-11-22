@@ -9,7 +9,6 @@ import { getPublishedProjects } from "@/lib/content";
 import {
   buildProgramRegistry,
   type ProgramDefinition,
-  type ProjectProgramId,
 } from "@/lib/myles-97/programs";
 import {
   createInitialWorkstationState,
@@ -95,21 +94,9 @@ function documentWith(desktopMarkup: string) {
     </html>`;
 }
 
-function renderDesktopMarkup(openProgram?: ProgramDefinition) {
+function renderDesktopMarkup() {
   const rendered = render(<DesktopHarness />);
   fireEvent.click(within(rendered.container).getByRole("radio", { name: "Thumbnails" }));
-  if (openProgram) {
-    fireEvent.click(
-      within(rendered.container).getByRole("button", {
-        name: `Explore ${openProgram.appName} preview`,
-      }),
-    );
-    expect(
-      within(rendered.container).getByRole("region", {
-        name: openProgram.appName,
-      }),
-    ).toBeInTheDocument();
-  }
   const markup = rendered.container.innerHTML;
   rendered.unmount();
   return markup;
@@ -119,6 +106,10 @@ async function browserPage(viewport: { width: number; height: number }, markup: 
   const page = await browser.newPage({ viewport });
   await page.route("http://portfolio.test/**", async (route) => {
     const requestUrl = new URL(route.request().url());
+    if (requestUrl.pathname === "/") {
+      await route.fulfill({ contentType: "text/html", body: documentWith(markup) });
+      return;
+    }
     const requestedAsset =
       requestUrl.pathname === "/_next/image"
         ? requestUrl.searchParams.get("url")
@@ -141,7 +132,7 @@ async function browserPage(viewport: { width: number; height: number }, markup: 
       await route.abort();
     }
   });
-  await page.setContent(documentWith(markup), { waitUntil: "load" });
+  await page.goto("http://portfolio.test/", { waitUntil: "load" });
   return page;
 }
 
@@ -167,58 +158,25 @@ async function contentFit(page: Page, selector: string, childSelector: string) {
   );
 }
 
-async function projectPreviewGeometry(page: Page, programId: ProjectProgramId) {
-  return page
-    .locator(`[data-m97-program-window="${programId}"] .myles97-window-content`)
-    .evaluate(async (content) => {
-      const cover = content.querySelector<HTMLElement>(".sample-browser");
-      const image = cover?.querySelector<HTMLElement>(".sample-detail .artwork-crop, .sample-comparison-capture");
-      const action = content.querySelector<HTMLElement>(".myles97-primary-button");
-      if (!cover || !image || !action) throw new Error("Incomplete project preview");
-
-      const contentRect = content.getBoundingClientRect();
-      const coverRect = cover.getBoundingClientRect();
-      const imageRect = image.getBoundingClientRect();
-      const actionRect = action.getBoundingClientRect();
-      const inside = (child: DOMRect, parent: DOMRect) =>
-        child.top >= parent.top &&
-        child.right <= parent.right &&
-        child.bottom <= parent.bottom &&
-        child.left >= parent.left;
-      const sources = Array.from(cover.querySelectorAll("img"));
-      await Promise.all(sources.map(source => source.decode()));
-      return {
-        noHorizontalScroll: content.scrollWidth === content.clientWidth,
-        noVerticalScroll: content.scrollHeight === content.clientHeight,
-        coverFullyVisible: inside(coverRect, contentRect),
-        imageFullyVisible: inside(imageRect, coverRect) && inside(imageRect, contentRect),
-        actionFullyVisible: inside(actionRect, contentRect),
-        sourceLoaded: sources.length === 2 && sources.every(source => source.naturalWidth > 0),
-        visibleImageWidth: imageRect.width,
-      };
-    });
-}
-
 describe("Myles 98 desktop content fit", () => {
-  it("keeps the atlas location and route ticket fully visible in thumbnail view", async () => {
+  it("keeps the illustrated atlas in frame and respects reduced motion", async () => {
     const page = await browserPage({ width: 1314, height: 1057 }, renderDesktopMarkup());
     const cover = page.locator('.publication-cover[data-project="fresh-greens"]');
-    const art = await cover.boundingBox();
-    const ticket = await cover.locator(".atlas-ticket").boundingBox();
-    const dot = await cover.locator(".atlas-map").evaluate(el => {
-      const rect = el.getBoundingClientRect();
-      const matrix = new DOMMatrix(getComputedStyle(el).transform);
-      // The location dot is printed in the native screenshot at (645, 692) of 1290 × 850.
-      const dy = (.814 - .5) * parseFloat(getComputedStyle(el).height);
-      return { x:rect.x + rect.width/2 + matrix.c*dy, y:rect.y + rect.height/2 + matrix.d*dy };
-    });
-    if (!art || !ticket) throw new Error("Missing route artwork");
-    for (const edge of [[ticket.x,ticket.y],[ticket.x+ticket.width,ticket.y+ticket.height],[dot.x,dot.y]]) {
-      expect(edge[0]).toBeGreaterThanOrEqual(art.x);
-      expect(edge[0]).toBeLessThanOrEqual(art.x+art.width);
-      expect(edge[1]).toBeGreaterThanOrEqual(art.y);
-      expect(edge[1]).toBeLessThanOrEqual(art.y+art.height);
+    const jacket = await cover.boundingBox();
+    for (const detail of [".atlas-print", ".atlas-title", ".atlas-ticket"]) {
+      const bounds = await cover.locator(detail).boundingBox();
+      if (!jacket || !bounds) throw new Error("Missing atlas cover artwork");
+      expect(bounds.x).toBeGreaterThanOrEqual(jacket.x);
+      expect(bounds.y).toBeGreaterThanOrEqual(jacket.y);
+      expect(bounds.x + bounds.width).toBeLessThanOrEqual(jacket.x + jacket.width);
+      expect(bounds.y + bounds.height).toBeLessThanOrEqual(jacket.y + jacket.height);
     }
+    const hand = cover.locator(".atlas-wave use");
+    expect(await hand.evaluate(layer => (layer as SVGUseElement).getBBox().width)).toBeGreaterThan(10);
+    const wave = cover.locator(".atlas-wave");
+    expect(await wave.evaluate(layer => getComputedStyle(layer).animationName)).toBe("atlas-hand-greeting");
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    expect(await wave.evaluate(layer => getComputedStyle(layer).animationName)).toBe("none");
     await page.close();
   });
 
@@ -241,7 +199,7 @@ describe("Myles 98 desktop content fit", () => {
         if (!list) throw new Error("Missing selected work list");
         const actions = Array.from(
           element.querySelectorAll<HTMLElement>(
-            ".myles97-case-study-link, .myles97-program-launch",
+            ".myles97-case-study-link",
           ),
         );
         const covers = Array.from(
@@ -282,9 +240,9 @@ describe("Myles 98 desktop content fit", () => {
         noVerticalScroll: true,
         listHasVerticalOverflow: false,
         totalThumbnails: programs.length,
-        initialVisibleActions: programs.length * 2,
+        initialVisibleActions: programs.length,
         initialVisibleCovers: programs.length,
-        finalVisibleActions: programs.length * 2,
+        finalVisibleActions: programs.length,
         finalVisibleCovers: programs.length,
       });
       expect(welcomeFit).toEqual({
@@ -357,28 +315,15 @@ describe("Myles 98 desktop content fit", () => {
     await page.close();
   });
 
-  it.each(laptopViewports)(
-    "opens all real project previews with complete artwork and actions at $width×$height",
-    async (viewport) => {
-      expect(programs).toHaveLength(4);
-
-      for (const program of programs) {
-        const markup = renderDesktopMarkup(program);
-        const page = await browserPage(viewport, markup);
-        const geometry = await projectPreviewGeometry(page, program.id);
-
-        expect(geometry, program.appName).toMatchObject({
-          noHorizontalScroll: true,
-          noVerticalScroll: true,
-          coverFullyVisible: true,
-          imageFullyVisible: true,
-          actionFullyVisible: true,
-          sourceLoaded: true,
-        });
-        expect(geometry.visibleImageWidth, program.appName).toBeGreaterThan(135);
-        await page.close();
-      }
-    },
-    60_000,
-  );
+  it("gives every thumbnail and its reading action the same destination", async () => {
+    const page = await browserPage(laptopViewports[0], renderDesktopMarkup());
+    for (const program of programs) {
+      const link = page.getByRole("link", { name: `Read ${program.title} case study` });
+      expect(await link.getAttribute("href")).toBe(program.href);
+      expect(await link.locator(".myles97-program-cover").isVisible()).toBe(true);
+      expect(await link.getByText("Read case study").isVisible()).toBe(true);
+    }
+    expect(await page.getByRole("button", { name: /explore.*preview/i }).count()).toBe(0);
+    await page.close();
+  });
 });

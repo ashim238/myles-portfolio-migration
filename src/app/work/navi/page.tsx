@@ -200,9 +200,9 @@ export default async function NaviPage() {
             <div className="project-section nv-section project-section--wide nv-section--wide">
               <div className="project-section-body">
                 <p>
-                  I grouped responses into three archetypes: digital nomads,
+                  I grouped responses into three archetypes: <strong>digital nomads,
                   ethical travelers, and visitors already contributing to
-                  communities. These were early audience hypotheses, not validated
+                  communities.</strong> These were early audience hypotheses, not validated
                   market segments.
                 </p>
                 <p>

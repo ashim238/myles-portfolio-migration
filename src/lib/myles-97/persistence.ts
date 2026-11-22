@@ -1,4 +1,4 @@
-import { isProgramId, type ProgramId } from "@/lib/myles-97/programs";
+import { isProgramId, isProjectProgramId, type ProgramId } from "@/lib/myles-97/programs";
 import {
   createInitialWorkstationState,
   type DisplayPreferences,
@@ -14,10 +14,8 @@ const DEFAULT_DISPLAY: DisplayPreferences = {
   reduceMotion: false,
 };
 
-const EPHEMERAL_PROGRAMS = new Set<ProgramId>(["now-playing"]);
-
 function isPersistableProgram(id: ProgramId): boolean {
-  return !EPHEMERAL_PROGRAMS.has(id);
+  return id !== "now-playing" && !isProjectProgramId(id);
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -96,12 +94,16 @@ export function loadPersistedWorkstation(): WorkstationState {
     const session = parseStoredJson(window.sessionStorage, SESSION_WORKSTATION_KEY);
     if (!local && !session) return initial;
 
+    const returningFromPreview = isProjectProgramId(session?.focusedProgram);
     const restoredOpenPrograms = session ? parsePrograms(session.openPrograms) : initial.openPrograms;
+    if (returningFromPreview && !restoredOpenPrograms.includes("selected-work")) {
+      restoredOpenPrograms.push("selected-work");
+    }
     const openPrograms = restoredOpenPrograms.length > 0 ? restoredOpenPrograms : initial.openPrograms;
     const minimizedPrograms = session
-      ? parsePrograms(session.minimizedPrograms).filter((id) => openPrograms.includes(id))
+      ? parsePrograms(session.minimizedPrograms).filter((id) => openPrograms.includes(id) && !(returningFromPreview && id === "selected-work"))
       : initial.minimizedPrograms;
-    const focusedCandidate = session?.focusedProgram;
+    const focusedCandidate = returningFromPreview ? "selected-work" : session?.focusedProgram;
     const focusedProgram =
       isProgramId(focusedCandidate) &&
       openPrograms.includes(focusedCandidate) &&

@@ -1,7 +1,7 @@
 ---
 slug: fresh-greens
 title: Fresh Greens
-summary: Fresh Greens is a working navigation prototype for Black drivers. It shows conditions before a drive and keeps support tools one tap away during a drive.
+summary: A navigation prototype inspired by the Green Book. Black drivers can compare daylight and road conditions before a trip and find support along the way.
 role: Product Designer · Solo build
 timeframe: 2025–2026
 status: published

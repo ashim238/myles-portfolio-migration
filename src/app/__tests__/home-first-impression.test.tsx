@@ -52,8 +52,8 @@ describe("homepage first impression", () => {
     mocks.shell.mockClear();
     mocks.getPublishedProjects.mockResolvedValue([
       project("fresh-greens", "Fresh Greens", 1),
-      project("understandingfafsa", "UnderstandingFAFSA", 2),
-      project("navi", "Navi", 3),
+      project("understandingfafsa", "UnderstandingFAFSA", 3),
+      project("navi", "Navi", 2),
       project("tiktok", "TikTok DSA", 4),
     ]);
   });
@@ -65,7 +65,7 @@ describe("homepage first impression", () => {
     expect(mocks.shell).toHaveBeenCalledTimes(1);
     expect(
       mocks.shell.mock.calls[0][0].map((program: { id: string }) => program.id),
-    ).toEqual(["fresh-greens", "understandingfafsa", "navi", "tiktok"]);
+    ).toEqual(["fresh-greens", "navi", "understandingfafsa", "tiktok"]);
     expect(mocks.shell.mock.calls[0][1]).toEqual(mocks.playEntries);
   });
 });

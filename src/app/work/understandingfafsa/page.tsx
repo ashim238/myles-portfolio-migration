@@ -136,12 +136,12 @@ export default async function UnderstandingFafsaPage({ searchParams }: {
                   the newsletter&apos;s design deviated from the website&apos;s fresh
                   new look. My initial audit noted super lengthy stretches of text,
                   inconsistent CTAs, and hierarchy that made emails difficult to scan.
-                  Most readers opened the newsletter on their phones.
+                  <strong>Most readers opened the newsletter on their phones.</strong>
                 </p>
                 <p>
                   Between sourcing content and editor corrections, Kim had a short
                   window to get newsletter materials buttoned up for weekly publishing.
-                  She was a Mailchimp pro but had limited experience with Figma or
+                  <strong>She was a Mailchimp pro</strong> but had limited experience with Figma or
                   front-end web development. The templates needed to fit the workflow
                   rather than make new responsibilities for her.
                 </p>

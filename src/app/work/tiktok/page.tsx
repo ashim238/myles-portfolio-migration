@@ -89,8 +89,8 @@ export default async function TikTokPage() {
             <div className="project-section tt-section">
               <div className="project-section-body">
                 <p>
-                  The brief asked for three templates for clients in the fashion
-                  vertical. Each one had to hold a fashion product catalog while
+                  The brief asked for <strong>three templates for clients in the fashion
+                  vertical.</strong> Each one had to hold a fashion product catalog while
                   appealing to a different style or aesthetic, but the dimensions
                   and product slots were set in stone before I received the brief.
                   I could change the type, color, texture, and supporting graphics.

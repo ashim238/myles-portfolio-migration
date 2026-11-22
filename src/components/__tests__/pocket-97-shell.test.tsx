@@ -170,7 +170,7 @@ describe("Pocket 98", () => {
 
     expect(dock).toBeInTheDocument();
     expect(document.querySelector("[data-draggable-window]")).toBeNull();
-    expect(screen.getAllByRole("link", { name: /Read .* case study/ })).toHaveLength(4);
+    expect(within(screen.getByRole("navigation", { name: "Case studies" })).getAllByRole("link")).toHaveLength(4);
     expect(screen.getByRole("heading", { name: "Myles Ashitey" })).toBeInTheDocument();
   });
 
@@ -220,28 +220,14 @@ describe("Pocket 98", () => {
     expect(recipePreview).toMatch(/font-size:\s*12px;/);
   });
 
-  it("opens one project program, keeps its native case-study link, and returns to the stack", async () => {
+  it("routes from the artwork directly to its case study and remembers the folder for return", async () => {
     installMatchMedia(true);
-    const user = userEvent.setup();
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
-
     await screen.findByRole("navigation", { name: "Pocket 98 dock" });
-    await user.click(
-      screen.getByRole("button", {
-        name: "Explore Fresh Greens.exe preview",
-      }),
-    );
-
-    const app = screen.getByRole("region", { name: /Fresh Greens.exe/ });
-    const caseStudyLink = within(app).getByRole("link", {
-      name: "Read Fresh Greens case study",
-    });
-    expect(caseStudyLink).toHaveAttribute(
-      "href",
-      "/work/fresh-greens",
-    );
-    expect(screen.queryByRole("region", { name: "Projects" })).toBeNull();
-
+    const app = screen.getByRole("listitem", { name: "Fresh Greens" });
+    const caseStudyLink = within(app).getByRole("link", { name: "Read Fresh Greens case study" });
+    expect(caseStudyLink).toHaveAttribute("href", "/work/fresh-greens");
+    expect(within(caseStudyLink).getByText("Read case study")).toBeVisible();
     Object.defineProperty(app, "getBoundingClientRect", {
       configurable: true,
       value: () => ({
@@ -273,7 +259,6 @@ describe("Pocket 98", () => {
     });
     window.removeEventListener(PROJECT_ENTER_REQUEST, onRequest);
 
-    await user.click(within(app).getByRole("button", { name: "Back" }));
     expect(screen.getByRole("heading", { name: "Projects" })).toBeInTheDocument();
   });
 

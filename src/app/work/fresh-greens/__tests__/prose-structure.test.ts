@@ -347,24 +347,13 @@ describe("Fresh Greens prose structure", () => {
     const source = readPage();
     const copy = normalizeCopy(source);
 
-    expect(copy).toContain(
-      "A navigation tool for Black drivers at different stages of a drive.",
-    );
-    expect(readFileSync(projectChaptersPath, "utf8")).toContain(
-      "Car culture and South Jersey go hand in hand",
-    );
-    expect(copy).toContain("I moved there from Brooklyn as a kid");
-    expect(copy).toContain("The roads would start to break down a bit");
-    expect(copy).toContain("Reception would become unreliable");
-    expect(copy).toContain("what would happen if the car broke down right there");
-    expect(copy).toContain("Drivers already relied on tools like Google Maps");
-    expect(copy).toContain("I'd slow down, avoid backroads");
-    expect(copy).toContain("I didn't know whether that discomfort was mine alone");
-    expect(copy).toContain("I spoke with six Black drivers");
-
-    expect(source).not.toContain(
-      'href="https://nmaahc.si.edu/explore/stories/traveling-through-jim-crow-america"',
-    );
+    expect(copy).toContain("Inspired by the Green Book, I built a navigation app for Black drivers.");
+    expect(copy).toContain("In 1936, Victor H. Green published");
+    expect(copy).toContain("I moved from Brooklyn to South Jersey");
+    expect(source).toContain('href="https://www.loc.gov/item/2016298176/"');
+    expect(source).toContain("<EarlyProductWalkthrough />");
+    expect(copy).toContain("ages 19 to 34");
+    expect(source).toContain("<blockquote>“If they showed the gradient of light");
     expect(copy).toContain("Plan");
     expect(copy).toContain("Respond");
     expect(copy).toContain("Trust");
@@ -384,30 +373,17 @@ describe("Fresh Greens prose structure", () => {
     expect(copy).toContain(
       "Six interviews can't represent every Black driver.",
     );
-    expect(copy).toContain(
-      "I returned to the Green Book for the visual system",
-    );
+    expect(source).toContain("<GreenBookPalette />");
+    expect(source).toContain("<OnboardingGallery />");
   });
 
   it("keeps Myles's causal spine from existing workarounds through the build and test correction", () => {
     const copy = normalizeCopy(readPage());
 
-    expect(readFileSync(projectChaptersPath, "utf8")).toContain(
-      "Car culture and South Jersey go hand in hand",
-    );
-    expect(copy).toContain(
-      "Qualitative interviews were new to me, but I tried to navigate them like everyday conversations.",
-    );
-    expect(copy).toContain("I wasn't the only person getting the heebie-jeebies during a drive.");
-    expect(copy).toContain("He was content, not impressed.");
-    expect(copy).toContain("I was about a month from delivering it");
+    expect(readFileSync(projectChaptersPath, "utf8")).toContain("The Green Book and the drive home");
+    expect(copy).toContain("My first pass put a daylight overlay inside Google Maps.");
+    expect(copy).toContain("I kept the information architecture");
     expect(copy).toContain("Chicago to rural Georgia");
-    expect(copy).toContain(
-      "The driver isn't expecting perfection, but they are expecting the clarity and autonomy to choose a route that they can feel adequately prepared for.",
-    );
-    expect(copy).not.toContain(
-      "The driver isn't expecting perfection. They're expecting",
-    );
     expect(copy).toContain("I didn't want someone scrolling during a stop to find what applied.");
     expect(copy).toContain(
       "People just need transparency into how the app is doing what it claims it does.",
@@ -490,9 +466,8 @@ describe("Fresh Greens prose structure", () => {
     const summary = content.match(/^summary: (.+)$/m)?.[1];
     const highlightQuote = content.match(/^highlightQuote: (.+)$/m)?.[1];
 
-    expect(summary).toBe(
-      "Fresh Greens is a working navigation prototype for Black drivers. It shows conditions before a drive and keeps support tools one tap away during a drive.",
-    );
+    expect(summary).toMatch(/navigation prototype inspired by the Green Book/i);
+    expect(summary).toContain("Black drivers");
     expect(highlightQuote).toBe(
       "The route preview shows daylight, road conditions, and community reports before the driver chooses. Detail cards show where those signals came from.",
     );

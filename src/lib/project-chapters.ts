@@ -15,7 +15,7 @@ export const CASE_STUDY_CHAPTERS = {
     {
       id: "fg-problem",
       stage: "Frame",
-      title: "Car culture and South Jersey go hand in hand",
+      title: "The Green Book and the drive home",
     },
     {
       id: "fg-research",

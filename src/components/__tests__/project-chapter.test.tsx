@@ -209,7 +209,7 @@ describe("ProjectChapter", () => {
         interpretation:
           "Route cards show some of the reasons behind a recommendation. Fresh Greens waits until someone taps Schedule before asking for notification access.",
         caveat:
-          "The prototype does not prove that a preferred route is safer. Its current Safest route label overstates the evidence, and the reminder has not been shown to change behavior.",
+          "The prototype does not prove that a preferred route is safer. An earlier Safest route label overstated the evidence, and the reminder has not been shown to change behavior.",
       },
       {
         variant: "fresh-greens",

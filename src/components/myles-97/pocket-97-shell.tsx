@@ -2,7 +2,7 @@
 
 import { CommandIcon } from "@/components/myles-97/command-icon";
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState, type Dispatch } from "react";
+import { useEffect, useRef, useState, type Dispatch } from "react";
 import { DisplayProperties } from "@/components/myles-97/display-properties";
 import {
   containTabFocus,
@@ -12,7 +12,6 @@ import { iconForProgram, Myles97Icon } from "@/components/myles-97/icons";
 import type { LoosePartSummary } from "@/components/myles-97/loose-parts-program";
 import { NowPlayingProgram } from "@/components/myles-97/now-playing-program";
 import { PaintProgram } from "@/components/myles-97/paint-program";
-import { ProjectProgram } from "@/components/myles-97/project-program";
 import {
   SecondaryProgram,
   type SecondaryProgramId,
@@ -21,7 +20,6 @@ import { SelectedWorkExplorer } from "@/components/myles-97/selected-work-explor
 import type {
   ProgramDefinition,
   ProgramId,
-  ProjectProgramId,
 } from "@/lib/myles-97/programs";
 import type {
   WorkstationAction,
@@ -65,14 +63,7 @@ export function Pocket97Shell({
   const sheetReturnFocusRef = useRef<HTMLButtonElement | null>(null);
   const sheetOpen = startOpen || appsOpen;
 
-  const projectById = useMemo(
-    () => new Map(programs.map((program) => [program.id, program])),
-    [programs],
-  );
-
   const titleFor = (id: ProgramId) => {
-    const project = projectById.get(id as ProjectProgramId);
-    if (project) return project.appName;
     if (isSecondaryProgram(id)) return secondaryTitles[id];
     if (id === "display-properties") return "Display Properties";
     if (id === "paint") return "Paint";
@@ -143,10 +134,6 @@ export function Pocket97Shell({
       id !== "now-playing",
   );
 
-  const activeProject = activeProgram
-    ? projectById.get(activeProgram as ProjectProgramId)
-    : undefined;
-
   return (
     <div className="pocket97-shell">
       <div className="pocket97-stage" inert={sheetOpen ? true : undefined}>
@@ -177,13 +164,7 @@ export function Pocket97Shell({
               </span>
             </header>
             <div className="pocket97-app-content">
-              {activeProject ? (
-                <ProjectProgram
-                  program={activeProject}
-                  reduceMotion={state.displayPreferences.reduceMotion}
-                  returnTarget="selected-work"
-                />
-              ) : activeProgram === "display-properties" ? (
+              {activeProgram === "display-properties" ? (
                 <DisplayProperties
                   preferences={state.displayPreferences}
                   onChange={(preferences) => dispatch({ type: "display", preferences })}
@@ -224,7 +205,6 @@ export function Pocket97Shell({
               <SelectedWorkExplorer
                 heading="Projects"
                 programs={programs}
-                onOpen={(id) => openProgram(id)}
                 reduceMotion={state.displayPreferences.reduceMotion}
               />
             </section>

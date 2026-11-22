@@ -9,7 +9,6 @@ import { NowPlayingProgram } from "@/components/myles-97/now-playing-program";
 import { PaintProgram } from "@/components/myles-97/paint-program";
 import type { LoosePartSummary } from "@/components/myles-97/loose-parts-program";
 import { ProgramWindow } from "@/components/myles-97/program-window";
-import { ProjectProgram } from "@/components/myles-97/project-program";
 import {
   RemindersProgram,
   RemindersWidget,
@@ -25,7 +24,6 @@ import { WelcomeProgram } from "@/components/myles-97/welcome-program";
 import type {
   ProgramDefinition,
   ProgramId,
-  ProjectProgramId,
 } from "@/lib/myles-97/programs";
 import { SYSTEM_PROGRAM_IDS } from "@/lib/myles-97/programs";
 import type {
@@ -118,8 +116,6 @@ export function WorkstationDesktop({
   const pendingProjectFocus = useRef(false);
   const previouslyOpenPrograms = useRef(new Set(state.openPrograms));
   const minimized = new Set(state.minimizedPrograms);
-  const windowReadingOrder = [...SYSTEM_PROGRAM_IDS, ...programs.map(program => program.id)];
-  const projectById = new Map(programs.map((program) => [program.id, program]));
   const dispatchWithWindowFocus = useCallback(
     (action: WorkstationAction) => {
       pendingWindowFocus.current = true;
@@ -166,7 +162,7 @@ export function WorkstationDesktop({
     windowElement
       .querySelector<HTMLElement>(
         focusProject && state.focusedProgram === "selected-work"
-          ? ".myles97-program-card:not([hidden]) .myles97-case-study-link"
+          ? ".myles97-program-card:not([hidden]) .work-project-link"
           : `[data-m97-window-move="${state.focusedProgram}"]`,
       )
       ?.focus();
@@ -291,7 +287,7 @@ export function WorkstationDesktop({
           ))}
         </nav>
 
-        {windowReadingOrder.filter((id) => state.openPrograms.includes(id)).map((id) => {
+        {SYSTEM_PROGRAM_IDS.filter((id) => state.openPrograms.includes(id)).map((id) => {
           const stackIndex = state.openPrograms.indexOf(id);
           if (minimized.has(id)) return null;
           const props = commonWindowProps(id, stackIndex);
@@ -317,7 +313,6 @@ export function WorkstationDesktop({
               >
                 <SelectedWorkExplorer
                   programs={programs}
-                  onOpen={(programId: ProjectProgramId) => openProgram(programId)}
                   reduceMotion={state.displayPreferences.reduceMotion}
                 />
               </ProgramWindow>
@@ -388,23 +383,7 @@ export function WorkstationDesktop({
             );
           }
 
-          const project = projectById.get(id as ProjectProgramId);
-          if (!project) return null;
-
-          return (
-            <ProgramWindow
-              key={id}
-              {...props}
-              title={project.appName}
-              fitContent
-              status={project.id === "fresh-greens" ? null : "Project preview"}
-            >
-              <ProjectProgram
-                program={project}
-                reduceMotion={effectiveReduceMotion}
-              />
-            </ProgramWindow>
-          );
+          return null;
         })}
 
         <RemindersWidget

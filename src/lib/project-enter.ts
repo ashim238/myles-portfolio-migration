@@ -190,7 +190,9 @@ export function queryProjectReturnTarget(
       `[data-m97-selected-work-project="${snapshot.slug}"]`,
     );
   }
-  return queryProjectProgram(snapshot.slug);
+  return queryProjectProgram(snapshot.slug) ?? document.querySelector<HTMLElement>(
+    `[data-m97-selected-work-project="${snapshot.slug}"], .archive-file-row[href="/work/${projectSlug(snapshot.slug)}"]`,
+  );
 }
 
 function waitForElement(

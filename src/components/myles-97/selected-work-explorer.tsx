@@ -4,14 +4,11 @@ import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { CommandIcon } from "@/components/myles-97/command-icon";
 import { iconForProgram, Myles97Icon } from "@/components/myles-97/icons";
 import Link from "next/link";
-import { useEffect, useId, useState, type MouseEvent } from "react";
+import { useId, useState, useSyncExternalStore, type MouseEvent, type ReactNode } from "react";
 import { isFeaturedProject } from "@/lib/myles-97/programs";
 import { StudyCover } from "./study-cover";
-import { InspectableThumbnail } from "@/components/myles-97/product-thumbnail";
-import type {
-  ProgramDefinition,
-  ProjectProgramId,
-} from "@/lib/myles-97/programs";
+import { ProductThumbnail } from "@/components/myles-97/product-thumbnail";
+import type { ProgramDefinition } from "@/lib/myles-97/programs";
 import {
   dispatchProjectEnterRequest,
   saveProjectReturnSnapshot,
@@ -20,7 +17,6 @@ import {
 
 export type SelectedWorkExplorerProps = {
   programs: readonly ProgramDefinition[];
-  onOpen: (id: ProjectProgramId) => void;
   reduceMotion?: boolean;
   heading?: string;
 };
@@ -47,8 +43,7 @@ function rememberReturnTarget(
 ) {
   if (usesNativeNavigation(event)) return;
 
-  const card = event.currentTarget.closest<HTMLElement>(".myles97-program-card");
-  if (!card) return;
+  const card = event.currentTarget.closest<HTMLElement>(".myles97-program-card") ?? event.currentTarget;
   const bounds = card.getBoundingClientRect();
   if (bounds.width <= 0 || bounds.height <= 0) return;
   const rect = {
@@ -89,30 +84,74 @@ function rememberReturnTarget(
   if (handled) event.preventDefault();
 }
 
+function ProjectEntry({ program, reduced, onRead, children }: {
+  program: ProgramDefinition;
+  reduced: boolean;
+  onRead: (event: MouseEvent<HTMLAnchorElement>) => void;
+  children: ReactNode;
+}) {
+  const [inspecting, setInspecting] = useState(false);
+  const [keyboardFocus, setKeyboardFocus] = useState(false);
+  return (
+    <Link href={program.href} className="work-project-link" aria-label={`Read ${program.title} case study`}
+      onClick={onRead}
+      onFocus={event => setKeyboardFocus(event.currentTarget.matches(":focus-visible"))}
+      onBlur={() => setKeyboardFocus(false)}>
+      <span className="myles97-program-summary">
+        {isFeaturedProject(program.id) ? (
+          <span className="myles97-program-cover"
+            onPointerEnter={event => {
+              if (event.pointerType !== "touch" && window.matchMedia("(any-hover: hover)").matches) setInspecting(true);
+            }}
+            onPointerLeave={() => setInspecting(false)}>
+            <ProductThumbnail project={program.id} reduced={reduced || keyboardFocus}
+              interactive={program.id !== "fresh-greens"} inspect={program.id !== "fresh-greens" && (inspecting || keyboardFocus)} />
+          </span>
+        ) : <StudyCover program={program} />}
+        {children}
+      </span>
+      <span className="myles97-program-actions">
+        <span className="myles97-case-study-link">Read case study <CommandIcon name="external" /></span>
+      </span>
+    </Link>
+  );
+}
+
+const folderFileKey = "work-folder-file";
+const fileSelectionEvent = "myles98:folder-file";
+let temporarySelection: string | null = null;
+
+function readSelection() {
+  try { return sessionStorage.getItem(folderFileKey); }
+  catch { return temporarySelection; }
+}
+
+function subscribeToSelection(notify: () => void) {
+  window.addEventListener(fileSelectionEvent, notify);
+  window.addEventListener("storage", notify);
+  return () => {
+    window.removeEventListener(fileSelectionEvent, notify);
+    window.removeEventListener("storage", notify);
+  };
+}
+
+function selectFile(id: ProgramDefinition["id"]) {
+  if (id === readSelection()) return;
+  temporarySelection = id;
+  try { sessionStorage.setItem(folderFileKey, id); } catch { /* The current session can still select a project. */ }
+  window.dispatchEvent(new Event(fileSelectionEvent));
+}
+
 export function SelectedWorkExplorer({
   programs,
-  onOpen,
   reduceMotion = false,
   heading = "Portfolio projects",
 }: SelectedWorkExplorerProps) {
   const systemReduceMotion = usePrefersReducedMotion();
   const effectiveReduceMotion = Boolean(reduceMotion || systemReduceMotion);
   const [view, setView] = useState<"preview" | "thumbnails" | "details">("preview");
-  const [selected, setSelected] = useState(programs[0]?.id);
-  const fileGroup = useId();
-
-  useEffect(() => {
-    try {
-      const saved = sessionStorage.getItem("work-folder-file");
-      const file = programs.find((program) => program.id === saved);
-      if (file) setSelected(file.id);
-    } catch { /* Storage is optional for reopening the folder. */ }
-  }, [programs]);
-
-  function selectFile(id: ProgramDefinition["id"]) {
-    setSelected(id);
-    try { sessionStorage.setItem("work-folder-file", id); } catch { /* Storage is optional. */ }
-  }
+  const remembered = useSyncExternalStore(subscribeToSelection, readSelection, () => null);
+  const selected = programs.find(program => program.id === remembered)?.id ?? programs[0]?.id;
   const viewGroup = useId();
 
   return (
@@ -122,7 +161,7 @@ export function SelectedWorkExplorer({
         <div>
           <h2 className="work-folder-name">{heading}</h2>
           <p id="selected-work-guide" className="myles97-explorer-guide">
-            Read a case study or open a project preview.
+            Select a project to read its case study.
           </p>
         </div>
       </header>
@@ -139,27 +178,22 @@ export function SelectedWorkExplorer({
         </div>
       </div>
       {view === "preview" && (
-        <fieldset className="archive-file-list">
-          <legend className="sr-only">Project to preview</legend>
+        <nav className="archive-file-list" aria-label="Case studies">
           {programs.map((program) => (
-            <div key={program.id} className="archive-file-row">
-              <label>
-                <input type="radio" className="sr-only" name={fileGroup} value={program.id} aria-label={program.title}
-                  checked={selected === program.id} onChange={() => selectFile(program.id)} />
-                <Myles97Icon name={iconForProgram(program.id)} variant="color" size={24} />
-                <span>{program.title === "UnderstandingFAFSA" ? <>Understanding<wbr />FAFSA</> : program.title}</span>
-              </label>
-              {selected !== program.id && (
-                <Link href={program.href} aria-label={`Read ${program.title} case study`}
-                  title={`Read ${program.title} case study`} onClick={(event) => {
-                    if (!usesNativeNavigation(event)) selectFile(program.id);
-                  }}>
-                  <CommandIcon name="external" />
-                </Link>
-              )}
-            </div>
+            <Link key={program.id} href={program.href} className="archive-file-row"
+              data-selected={selected === program.id}
+              onPointerEnter={event => { if (event.pointerType !== "touch") selectFile(program.id); }}
+              onFocus={() => selectFile(program.id)}
+              onClick={event => {
+                if (!usesNativeNavigation(event)) selectFile(program.id);
+                rememberReturnTarget(event, program, reduceMotion);
+              }}>
+              <Myles97Icon name={iconForProgram(program.id)} variant="color" size={24} />
+              <span>{program.title === "UnderstandingFAFSA" ? <>Understanding<wbr />FAFSA</> : program.title}</span>
+              <CommandIcon name="external" />
+            </Link>
           ))}
-        </fieldset>
+        </nav>
       )}
       <ul
         className="myles97-selected-work-list"
@@ -174,38 +208,18 @@ export function SelectedWorkExplorer({
             data-m97-selected-work-project={program.id}
             aria-label={program.title}
           >
-            <div className="myles97-program-summary">
-              {isFeaturedProject(program.id)
-                ? <InspectableThumbnail project={program.id} title={program.title} reduced={effectiveReduceMotion} />
-                : <StudyCover program={program} />}
+            <ProjectEntry program={program} reduced={effectiveReduceMotion}
+              onRead={event => {
+                if (!usesNativeNavigation(event)) selectFile(program.id);
+                rememberReturnTarget(event, program, reduceMotion);
+              }}>
               <span className="myles97-program-card-copy">
                 <Myles97Icon name={iconForProgram(program.id)} variant="color" size={24} />
                 <strong>{program.title === "UnderstandingFAFSA" ? <>Understanding<wbr />FAFSA</> : program.title}</strong>
                 <span>{program.cardSummary ?? program.applicationType}</span>
                 {view === "preview" ? <span className="archive-file-description">{program.summary}</span> : <span>{program.appName}</span>}
               </span>
-            </div>
-            <div className="myles97-program-actions">
-              <Link
-                className="myles97-case-study-link"
-                href={program.href}
-                aria-label={`Read ${program.title} case study`}
-                onClick={(event) =>
-                  rememberReturnTarget(event, program, reduceMotion)
-                }
-              >
-                Read case study
-                <CommandIcon name="external" />
-              </Link>
-              <button
-                type="button"
-                className="myles97-program-launch"
-                aria-label={`Explore ${program.appName} preview`}
-                onClick={() => onOpen(program.id)}
-              >
-                Explore preview
-              </button>
-            </div>
+            </ProjectEntry>
           </li>
         ))}
       </ul>

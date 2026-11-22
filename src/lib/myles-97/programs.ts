@@ -56,18 +56,18 @@ export const PROJECT_PROGRAM_BLUEPRINTS = [
     primaryEvidence: "built",
   },
   {
-    id: "understandingfafsa",
-    appName: "FAFSA Mail.app",
-    applicationType: "Newsletter templates",
-    cardSummary: "Mailchimp kit · Founder edits weekly",
-    primaryEvidence: "observed",
-  },
-  {
     id: "navi",
     appName: "Navi Places.exe",
     applicationType: "Neighborhood discovery",
     cardSummary: "Neighborhood discovery · My system + React demo",
     primaryEvidence: "built",
+  },
+  {
+    id: "understandingfafsa",
+    appName: "FAFSA Mail.app",
+    applicationType: "Newsletter templates",
+    cardSummary: "Mailchimp kit · Founder edits weekly",
+    primaryEvidence: "observed",
   },
   {
     id: "tiktok",

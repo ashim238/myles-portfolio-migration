@@ -105,6 +105,17 @@ export function Myles97Shell({ programs, looseParts }: Myles97ShellProps) {
     saveSessionWorkstation(state);
   }, [hydrationStore, state]);
 
+  useEffect(() => {
+    function openLegacyProject() {
+      const fragment = window.location.hash.slice(1);
+      const project = programs.find(program => program.id === fragment);
+      if (project) window.location.replace(project.href);
+    }
+    openLegacyProject();
+    window.addEventListener("hashchange", openLegacyProject);
+    return () => window.removeEventListener("hashchange", openLegacyProject);
+  }, [programs]);
+
   const completeBoot = useCallback(() => {
     dispatch({ type: "boot-complete" });
   }, []);

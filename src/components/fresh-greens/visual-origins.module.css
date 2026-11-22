@@ -1,0 +1,65 @@
+.quote, .palette, .gallery {
+  margin: clamp(1.5rem, 4vw, 3rem) 0;
+  color: var(--text);
+}
+.quote {
+  max-inline-size: 43rem;
+  border-inline-start: 4px solid var(--fg-accent);
+  padding: .15rem 0 .15rem clamp(1rem, 3vw, 2rem);
+}
+.quote blockquote {
+  margin: 0;
+  font: 400 clamp(1.7rem, 3vw, 2.6rem)/1.17 var(--font-quote), Georgia, serif;
+  text-wrap: pretty;
+}
+.quote figcaption, .cover figcaption, .panels figcaption {
+  font: 500 .875rem/1.45 var(--font-sans, system-ui), sans-serif;
+  margin-top: .75rem;
+}
+.palette {
+  display: grid;
+  grid-template-columns: minmax(9rem, 12.5rem) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(1rem, 3.5vw, 2.5rem);
+  padding-block: clamp(1rem, 2vw, 1.75rem);
+  border-block: 1px solid var(--line);
+}
+.cover, .panels figure { margin: 0; }
+.cover button, .panels button { display: block; width: 100%; }
+.cover img, .panels img { display: block; width: 100%; height: auto; }
+.cover a { text-decoration: underline; text-underline-offset: .15em; }
+.paletteText h3, .gallery h3 {
+  margin: 0;
+  font: 600 clamp(1.25rem, 2.3vw, 1.65rem)/1.18 var(--font-sans, system-ui), sans-serif;
+  text-wrap: balance;
+}
+.paletteText p, .gallery > p {
+  margin: .7rem 0 1.1rem;
+  max-width: 59ch;
+  font: 400 1.05rem/1.55 var(--font-sans, system-ui), sans-serif;
+  text-wrap: pretty;
+}
+.swatches { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: .9rem 1rem; list-style: none; padding: 0; margin: 0; }
+.swatches li { display: grid; grid-template-columns: 1.5rem 1fr; align-items: center; column-gap: .5rem; font: 500 .86rem/1.25 system-ui, sans-serif; }
+.chip { grid-row: span 2; height: 2rem; border: 1px solid var(--line); }
+.swatches code { font-size: .74rem; margin-top: .2rem; color: var(--text-muted, currentColor); }
+.panels { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: clamp(.65rem, 1.6vw, 1.25rem); }
+.panels button { display: flex; align-items: flex-end; aspect-ratio: 390/565; background-color: #326936; border: 0; padding: 0; }
+@media (max-width: 600px) {
+  .palette { grid-template-columns: minmax(0,1fr); }
+  .cover { max-width: 10.25rem; }
+  .panels { grid-auto-flow: column; grid-auto-columns: 75%; grid-template-columns: none; overflow-x: auto; scroll-snap-type: x proximity; padding: 4px 4px .65rem; }
+  .panels li { scroll-snap-align: start; }
+}
+.carArt { display: grid; grid-template-columns: 2fr 1fr; gap: clamp(.75rem, 2vw, 1.5rem); margin-top: 1.75rem; }
+.carArt figure { margin: 0; }
+.carArt figcaption { margin-top: .65rem; font: 500 .875rem/1.45 system-ui, sans-serif; }
+.horizon, .permissionCar { height: clamp(6.5rem, 12vw, 9.5rem); display: grid; align-items: center; }
+.horizon { position: relative; overflow: hidden; background: linear-gradient(to bottom, #326936 50%, #003F04 50%); }
+.horizon button { position: absolute; top: 50%; transform: translateY(-44%); }
+.horizon button, .horizon img { display: block; width: 100%; height: auto; }
+.permissionCar { background: #f4f4ed; place-items: center; }
+.permissionCar button { width: min(7rem, 85%); }
+.permissionCar img { width: 100%; height: auto; }
+
+.gallery .galleryHint { margin-block: .75rem .85rem; font-size: .875rem; }

@@ -73,14 +73,12 @@ describe("Myles 98 homepage layout", () => {
     expect(image).toMatch(/object-fit:\s*contain/);
   });
 
-  it("keeps both project-choice actions on the functional 12px type floor", () => {
+  it("keeps the case-study action on the functional 12px type floor", () => {
     const guide = block(".myles97-explorer-guide");
     const caseStudy = block(".myles97-case-study-link");
-    const preview = block(".myles97-program-launch");
 
     expect(guide).toMatch(/font-size:\s*12px/);
     expect(caseStudy).toMatch(/font:\s*700 12px\/1\.2 var\(--m97-ui-font\)/);
-    expect(preview).toMatch(/font:\s*400 12px\/1\.2 var\(--m97-ui-font\)/);
   });
 
   it("preserves the primary case-study action in the custom high-contrast mode", () => {

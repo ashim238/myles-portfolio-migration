@@ -16,8 +16,8 @@ const routes: RouteOpening[] = [
   {
     route: "fresh-greens",
     proofName: "freshGreensProof",
-    proofLabel: "Try the safety-flow reconstruction",
-    proofHref: "#fg-safety-reconstruction",
+    proofLabel: "Try a drive in Fresh Greens",
+    proofHref: "#fg-app-walkthrough",
     opening: '<section className="hero project-hero fg-hero"',
     openingClose: "</section>",
     dominantMedia: "<LeadMedia",

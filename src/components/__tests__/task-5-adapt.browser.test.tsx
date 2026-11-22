@@ -402,7 +402,7 @@ describe("Task 5 responsive adaptation", () => {
     expect(await page.locator("[data-draggable-window]").count()).toBe(0);
     await page
       .getByRole("button", {
-        name: "Explore Fresh Greens.exe preview",
+        name: "Loose Parts",
       })
       .click();
     await page.waitForSelector(".pocket97-app");
@@ -415,7 +415,7 @@ describe("Task 5 responsive adaptation", () => {
 
     await page.getByRole("button", { name: "Open Apps" }).click();
     const appsDialog = page.getByRole("dialog", { name: "Open Apps" });
-    await appsDialog.getByRole("button", { name: "Fresh Greens.exe" }).click();
+    await appsDialog.getByRole("button", { name: "Loose Parts" }).click();
     await appsDialog.waitFor({ state: "detached" });
     await page.waitForFunction(
       () => document.activeElement?.classList.contains("pocket97-back"),
@@ -429,26 +429,15 @@ describe("Task 5 responsive adaptation", () => {
     await page.close();
   }, 60_000);
 
-  it("reveals the focused preview link above the dock on a short phone", async () => {
+  it("enters the case study on the first artwork activation on a short phone", async () => {
     const page = await hydratedBrowserPage("pocket", { width: 320, height: 568 });
-    await page.getByRole("button", { name: "Explore Fresh Greens.exe preview" }).press("Enter");
-    await page.waitForSelector(".pocket97-back:focus");
-    await page.keyboard.press("Tab");
-    expect(await page.getByRole("radio", { name: "Plan" }).evaluate(el => el === document.activeElement)).toBe(true);
-    await page.keyboard.press("Tab");
-    expect(await page.getByRole("combobox", { name: "Route" }).evaluate(el => el === document.activeElement)).toBe(true);
-    await page.keyboard.press("Tab");
-    expect(await page.getByRole("button", { name: /Enlarge/ }).evaluate(el => el === document.activeElement)).toBe(true);
-    await page.keyboard.press("Tab");
     const link = page.getByRole("link", { name: "Read Fresh Greens case study" });
-    const dock = page.locator(".pocket97-dock");
-    expect(await link.evaluate((element) => element === document.activeElement)).toBe(true);
-    await expect.poll(async () => {
-      const linkBounds = await link.boundingBox();
-      const dockBounds = await dock.boundingBox();
-      if (!linkBounds || !dockBounds) throw new Error("Missing preview link or dock");
-      return dockBounds.y - (linkBounds.y + linkBounds.height);
-    }).toBeGreaterThanOrEqual(2);
+    expect(await link.getAttribute("href")).toBe("/work/fresh-greens");
+    expect(await link.locator(".publication-cover").isVisible()).toBe(true);
+    await page.route("**/work/fresh-greens", route => route.fulfill({ body: "<main>Case study</main>", contentType: "text/html" }));
+    await link.press("Enter");
+    await page.waitForURL("**/work/fresh-greens");
+    expect(await page.getByText("Case study", { exact: true }).isVisible()).toBe(true);
     await page.close();
   }, 60_000);
 
@@ -594,7 +583,7 @@ describe("Task 5 responsive adaptation", () => {
         (element) => getComputedStyle(element).display,
       ),
     ).toBe("none");
-    const caseStudyLinks = pocketPage.getByRole("link", { name: /Read .* case study/ });
+    const caseStudyLinks = pocketPage.getByRole("list", { name: "All case studies" }).getByRole("link");
     const destinations = await caseStudyLinks.evaluateAll(links => links.map(link => link.getAttribute("href")));
     expect(new Set(destinations)).toEqual(new Set(programs.map(program => program.href)));
     await assertNoHorizontalOverflow(pocketPage);
@@ -642,7 +631,7 @@ describe("Task 5 responsive adaptation", () => {
         );
         const targets = Array.from(
           document.querySelectorAll<HTMLElement>(
-            ".pocket97-dock button, .myles97-program-launch, .myles97-case-study-link",
+            ".pocket97-dock button, .work-project-link",
           ),
         );
         const introRect = intro.getBoundingClientRect();

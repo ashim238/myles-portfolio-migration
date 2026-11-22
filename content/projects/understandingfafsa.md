@@ -5,7 +5,7 @@ summary: UnderstandingFAFSA's newsletter no longer matched its redesigned websit
 role: Product Designer
 timeframe: February 2025 – Ongoing
 status: published
-order: 2
+order: 3
 coverImage: /projects/understandingfafsa/cover.png
 highlightQuote: Add some pizzazz.
 outcomeMetricLabel: observed open rate on the first newsletter using the new templates, with Mailchimp Privacy Protection excluded

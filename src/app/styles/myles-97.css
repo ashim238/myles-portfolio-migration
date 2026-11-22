@@ -895,7 +895,7 @@
 
 .myles97-program-actions {
   display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  grid-template-columns: minmax(0, 1fr);
   border-top: 1px solid #777;
 }
 
@@ -926,25 +926,7 @@
   color: #fff;
 }
 
-.myles97-program-launch {
-  min-width: 0;
-  min-height: 44px;
-  padding: 8px 10px;
-  border: 0;
-  background: #e5e5e5;
-  color: var(--m97-ink);
-  cursor: pointer;
-  font: 400 12px/1.2 var(--m97-ui-font);
-  text-align: center;
-  box-shadow: var(--m97-bevel-raised);
-}
-
-.myles97-program-launch:hover {
-  background: #d1d1d1;
-}
-
-.myles97-case-study-link:active,
-.myles97-program-launch:active {
+.work-project-link:active .myles97-case-study-link {
   box-shadow: var(--m97-bevel-recessed);
 }
 
@@ -1633,7 +1615,6 @@
   box-shadow: none;
 }
 .myles97-explorer .myles97-case-study-link:hover { text-decoration: underline; }
-.myles97-explorer .myles97-program-launch { background: var(--m97-chrome); }
 .myles97-explorer .myles97-program-card:focus-within { border-color: var(--m97-active); }
 
 @media (min-width: 1025px) and (pointer: fine) {
@@ -1720,8 +1701,5 @@
   .myles97-explorer[data-work-view="thumbnails"] .myles97-program-card-copy {
     min-height: 74px;
     align-content: start;
-  }
-  .myles97-desktop .myles97-explorer .myles97-program-launch {
-    padding-inline: 4px;
   }
 }

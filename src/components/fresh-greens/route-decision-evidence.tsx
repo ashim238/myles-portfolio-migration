@@ -46,8 +46,8 @@ export function RouteComparisonEvidence() {
       data-evidence-chapter="fg-design"
     >
       <div className="fg-route-proof-heading">
-        <p>Implemented route controls</p>
-        <h3>Compare the conditions attached to each option.</h3>
+        <p>Portfolio reconstruction</p>
+        <h3>Compare three routes before leaving</h3>
       </div>
 
       <div className="fg-route-proof-card" aria-live="polite">
@@ -111,8 +111,8 @@ export function RouteComparisonEvidence() {
       </div>
 
       <figcaption>
-        Portfolio reconstruction of the pre-drive controls, with a revised route
-        label. The values are representative route data.
+        Rebuilt for this case study with sample route data and a revised label.{" "}
+        <a href="#fg-app-walkthrough">Return to the original app screens.</a>
       </figcaption>
     </figure>
   );
@@ -128,7 +128,7 @@ export function ReportRouteInfluenceEvidence() {
       data-evidence-chapter="fg-trust"
     >
       <div className="fg-route-proof-heading">
-        <p>Implemented route link</p>
+        <p>Portfolio reconstruction</p>
         <h3>Show where a community report affected the preview.</h3>
       </div>
 

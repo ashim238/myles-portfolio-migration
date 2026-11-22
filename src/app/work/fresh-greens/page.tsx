@@ -13,6 +13,9 @@ import { ProjectWorkJump } from "@/components/project-work-jump";
 import { ProjectEvidenceDisclosure } from "@/components/project-evidence-disclosure";
 import { ArchitectureDiagram } from "@/components/fresh-greens";
 import { DepartureReminderEvidence } from "@/components/fresh-greens/departure-reminder-evidence";
+import { EarlyProductWalkthrough } from "@/components/fresh-greens/early-product-walkthrough";
+import { GreenBookPalette, OnboardingGallery } from "@/components/fresh-greens/visual-origins";
+import origins from "@/components/fresh-greens/visual-origins.module.css";
 import { PivotJourney } from "@/components/fresh-greens/pivot-journey";
 import { PulledOverJourney } from "@/components/fresh-greens/pulled-over-journey";
 import {
@@ -26,8 +29,8 @@ import { createRouteMetadata } from "@/lib/site-config";
 
 const chapters = CASE_STUDY_CHAPTERS["fresh-greens"];
 const freshGreensProof = {
-  label: "Try the safety-flow reconstruction",
-  href: "#fg-safety-reconstruction",
+  label: "Try a drive in Fresh Greens",
+  href: "#fg-app-walkthrough",
 };
 
 export const metadata: Metadata = createRouteMetadata({
@@ -64,7 +67,7 @@ export default async function FreshGreensPage() {
             Fresh Greens
           </h1>
           <p className="project-hero-lede fg-lede">
-            A navigation tool for Black drivers at different stages of a drive.
+            Inspired by the Green Book, I built a navigation app for Black drivers. You can see how much daylight a route has left and what other drivers have reported before you leave.
           </p>
         </section>
         <LeadMedia
@@ -99,27 +102,22 @@ export default async function FreshGreensPage() {
             total={chapters.length}
             variant="fresh-greens"
           >
-            <div className="project-section fg-section">
+            <div className="project-section fg-section fg-section--wide">
               <div className="project-section-body">
                 <p>
-                  I moved there from Brooklyn as a kid. Driving was the only
-                  practical way to get around, but I didn&apos;t know New Jersey like the
-                  back of my hand.
+                  In 1936, Victor H. Green published <em>The Negro Motorist Green Book</em>.
+                  Under Jim Crow, Black travelers used it to find places where they
+                  could eat, get gas, or stay the night. What stayed with me was how
+                  much it mattered to know those things <strong>before setting out.</strong>{" "}
+                  <a href="https://www.loc.gov/item/2016298176/">Library of Congress.</a>
                 </p>
                 <p>
-                  Whether I was dropping my mom at the bus station early or driving
-                  back from Cape May late, there were stretches that made me
-                  uncomfortable. The roads would start to break down a bit.
-                  Confederate flags would appear. Reception would become unreliable.
-                  All of the spooky pieces started falling into place.
-                </p>
-                <p>
-                  I&apos;d slow down, avoid backroads, and keep my wallet and phone close.
-                  Then I&apos;d wonder what would happen if the car broke down right
-                  there. I didn&apos;t know whether that discomfort was mine alone, so I
-                  spoke with six Black drivers across the South, ages 19 to 34.
+                  I moved from Brooklyn to South Jersey as a kid. On late drives home from Cape May, some backroads had Confederate flags and patchy reception. I’d slow down and wonder where
+                  I could go if the car broke down. My map could tell me when I’d get
+                  home. I wanted to know what the drive home would be like.
                 </p>
               </div>
+              <EarlyProductWalkthrough />
             </div>
           </ProjectChapter>
 
@@ -132,13 +130,18 @@ export default async function FreshGreensPage() {
             <div className="project-section fg-section fg-section--wide">
               <div className="project-section-body">
                 <p>
-                  Qualitative interviews were new to me, but I tried to navigate them
-                  like everyday conversations. Unfortunately, I wasn&apos;t the only
-                  person getting the heebie-jeebies during a drive.
+                  I spoke with <strong>six Black drivers across the South, ages 19 to 34.</strong>{" "}
+                  The group included people of different genders. I asked each person to walk me through a drive
+                  they knew well. Drivers already relied on tools like Google Maps.
+                  I wanted to hear what the directions left out.
                 </p>
-                <p>
-                  Drivers already relied on tools like Google Maps.
-                </p>
+              </div>
+              <figure className={origins.quote}>
+                <blockquote>“If they showed the gradient of light, like it’s bright where you are and dark where you arrive.”</blockquote>
+                <figcaption>Driver interviewed for Fresh Greens</figcaption>
+              </figure>
+              <div className="project-section-body">
+                <p>I carried that suggestion into the route preview. You can see sunset along the route while there’s still time to leave earlier or choose another way home.</p>
               </div>
               <div className="fg-evidence-boundaries" aria-label="Three Fresh Greens product problems">
                 <div className="fg-evidence-boundary">
@@ -171,36 +174,29 @@ export default async function FreshGreensPage() {
             <section className="project-section fg-section fg-section--wide">
               <div className="project-section-body">
                 <p>
-                  I showed my thesis advisor my first pass, a Google Maps plug-in.
-                  He was content, not impressed. Google&apos;s route still dominated
-                  the screen. I wanted drivers to compare daylight before choosing
-                  a route. I was about a month from delivering it, so I kept the
-                  information architecture and designed a standalone app.
+                  My first pass put a daylight overlay inside Google Maps. When I
+                  showed it to my thesis advisor, Google’s suggested route still
+                  dominated the screen. I kept the information architecture and
+                  designed a standalone app so drivers could <strong>compare the light
+                  on each route before choosing one.</strong>
                 </p>
+              </div>
+              <GreenBookPalette />
+              <OnboardingGallery />
+              <div className="project-section-body">
                 <p>
-                  I returned to the Green Book for the visual system. Its palette
-                  became a reference, not a claim that Fresh Greens is its digital
-                  successor.
-                </p>
-                <p>
-                  On a trip from Chicago to rural Georgia, the driver needs to see
-                  where natural light fades, where
-                  artificial light picks up the slack, and what unknowns to account
-                  for. The driver isn&apos;t expecting perfection, but they are
-                  expecting the clarity and autonomy to choose a route that they can
-                  feel adequately prepared for.
-                </p>
-                <p>
-                  The prototype&apos;s &quot;Safest route&quot; label went further than
-                  the research supported. The comparison below uses a neutral label
-                  and shows the conditions for the driver to weigh.
+                  For a drive from Chicago to rural Georgia, six minutes saved might
+                  matter less than getting off an unfamiliar backroad before dark.
+                  An earlier prototype called one option “Safest route.” I couldn’t
+                  back that up. The comparison below uses a neutral label and lets
+                  you weigh the conditions yourself.
                 </p>
               </div>
               <RouteComparisonEvidence />
-              <ProjectEvidenceDisclosure summary="See arrival light in Plan, Drive, and the map key">
+              <ProjectEvidenceDisclosure summary="See arrival light on the original app screens">
                 <FreshGreensCaptureViewer />
               </ProjectEvidenceDisclosure>
-              <ProjectEvidenceDisclosure summary="View the visual pivot and daylight reminder">
+              <ProjectEvidenceDisclosure summary="See the first Google Maps design and the departure reminder">
                 <PivotJourney />
                 <DepartureReminderEvidence />
               </ProjectEvidenceDisclosure>
@@ -216,7 +212,7 @@ export default async function FreshGreensPage() {
             <section className="project-section fg-section fg-section--wide">
               <div className="project-section-body">
                 <p>
-                  In the pulled-over flow, I ask “Are you armed?” first. Which guidance
+                  In the pulled-over flow, <strong>I ask “Are you armed?” first.</strong> Which guidance
                   applies depends on the driver&apos;s answer and the state they&apos;re in.
                   I didn&apos;t want someone scrolling during a stop to find what applied.
                 </p>
@@ -249,8 +245,7 @@ export default async function FreshGreensPage() {
                   Reports stay on the device first. With Supabase configured, they enter moderation.
                 </p>
                 <p>
-                  <strong className="fg-prototype-limit-label">Current prototype limit:</strong>One report
-                  creates a scored zone and can affect route ranking. I haven&apos;t added
+                  <strong className="fg-prototype-limit-label">Current prototype limit:</strong>{" "}<strong>One report creates a scored zone</strong> and can affect route ranking. I haven&apos;t added
                   corroboration weighting, visible contributor provenance, or
                   route-level trust tiers yet.
                 </p>
@@ -303,7 +298,7 @@ export default async function FreshGreensPage() {
                   explanations earn trust, or its support flow holds up under stress.
                 </p>
                 <p>
-                  Next, I&apos;d learn from Black drivers 55 and older by watching where
+                  Next, I&apos;d learn from <strong>Black drivers 55 and older</strong> by watching where
                   Fresh Greens fits, where it asks for too much, and what I need to
                   change.
                 </p>

@@ -15,7 +15,7 @@ describe("RouteComparisonEvidence", () => {
     ).toBeInTheDocument();
     expect(screen.getByText("Low light")).toBeInTheDocument();
     expect(screen.getByText("Rough pavement")).toBeInTheDocument();
-    expect(screen.getByText(/representative route data/i)).toBeInTheDocument();
+    expect(screen.getByText(/sample route data/i)).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Next route" }));
 

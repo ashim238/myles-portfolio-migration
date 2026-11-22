@@ -1,0 +1,152 @@
+.walkthrough {
+  width: 100%;
+  max-width: 55rem;
+  display: grid;
+  grid-template: "screen ." 1fr "screen heading" auto "screen notes" auto "screen controls" auto "screen ." 1fr / minmax(16rem, 1fr) minmax(12.5rem, .85fr);
+  margin-block: clamp(2rem, 4vw, 3rem);
+  border: 1px solid var(--m98-paper-rule, var(--line));
+  background: var(--m98-paper-panel, var(--surface));
+  color: var(--m98-paper-text, var(--foreground));
+}
+
+.header {
+  grid-area: heading;
+  margin-inline: clamp(1rem, 2.6vw, 2.25rem);
+  padding-block: 1.25rem;
+  border-bottom: 1px solid var(--m98-paper-rule, var(--line));
+}
+
+.walkthrough .kicker {
+  margin: 0 0 .45rem;
+  color: var(--m98-document-accent, #3d6447);
+  font: 700 .86rem/1.25 var(--font-family-sans, sans-serif);
+}
+
+.header h3 {
+  margin: 0;
+  font-family: var(--m97-reader-font, Georgia, serif);
+  font-size: clamp(1.65rem, 2.6vw, 2.35rem);
+  font-weight: 500;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+.header p:last-child,
+.instructions p {
+  max-width: 50ch;
+  margin: .55rem 0 0;
+  font: 400 1rem/1.5 var(--font-family-sans, sans-serif);
+  text-align: start;
+}
+
+.stage {
+  grid-area: screen;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  padding: clamp(1rem, 2.6vw, 2rem);
+  background: #244537;
+}
+
+.phone {
+  position: relative;
+  container-type: inline-size;
+  width: min(100%, 18.5rem);
+  aspect-ratio: 430 / 932;
+  border-radius: 9% / 4.15%;
+  outline: 1px solid #152a21;
+  overflow: hidden;
+  background: #fff;
+}
+
+.capture {
+  display: block;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hotspot {
+  position: absolute;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: max(44px, var(--control-width));
+  height: max(44px, var(--control-height));
+  padding: 0;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.hotspot::after {
+  content: "";
+  pointer-events: none;
+  width: var(--control-width);
+  height: var(--control-height);
+  border-radius: 100vmax;
+  outline: 2px solid #103926;
+  box-shadow: 0 0 0 4px #e4ff9a;
+}
+
+.hotspot[data-shape="round"]::after { border-radius: 50%; }
+.hotspot[data-shape="tile"]::after { border-radius: .35rem; }
+
+.hotspot:focus-visible { outline: none; }
+.hotspot:focus-visible::after {
+  outline: 3px dashed #111;
+  box-shadow: 0 0 0 5px #fff;
+}
+
+@media (hover: hover) {
+  .hotspot:hover::after { background: rgb(202 241 134 / 18%); }
+}
+
+.instructions {
+  grid-area: notes;
+  padding: clamp(1rem, 3vw, 2.25rem);
+  padding-bottom: 1.15rem;
+}
+
+.instructions h4 {
+  margin: 0;
+  font: 700 clamp(1.25rem, 2vw, 1.6rem)/1.2 var(--font-family-sans, sans-serif);
+}
+
+.instructions h4:focus { outline: 0; }
+
+.controls {
+  grid-area: controls;
+  display: flex;
+  flex-wrap: wrap;
+  align-self: start;
+  gap: .5rem;
+  padding: 0 clamp(1rem, 3vw, 2.25rem) clamp(1rem, 3vw, 2.25rem);
+}
+
+.controls[hidden] { display: none; }
+
+.controls button { min-height: 44px; padding: .55rem .9rem; }
+
+@media (max-width: 760px) {
+  .walkthrough { grid-template: "heading" auto "notes" auto "screen" auto "controls" auto / minmax(0, 1fr); }
+  .header { margin-inline: 1rem; }
+  .instructions { padding: .9rem 1rem 1rem; }
+  .stage { padding: 1rem; }
+  .controls { padding: .7rem 1rem; }
+}
+
+@media (forced-colors: active) {
+  .hotspot::after { outline: 2px solid LinkText; }
+  .hotspot:focus-visible::after { outline: 3px dashed Highlight; }
+}
+
+@media (scripting: none) {
+  .hotspot, .controls, .instructions { display: none; }
+  .walkthrough { display: block; }
+  .walkthrough noscript { display: block; padding: 1rem; }
+}

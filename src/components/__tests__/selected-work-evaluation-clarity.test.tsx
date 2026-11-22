@@ -45,79 +45,38 @@ const programs: ProgramDefinition[] = [
 ];
 
 describe("Projects evaluation paths", () => {
-  it("opens the artwork on keyboard focus and closes when focus moves to the reading link", async () => {
+  it("opens each study from the same native link as its artwork and reading action", async () => {
     const user = userEvent.setup();
-    render(<SelectedWorkExplorer programs={programs} onOpen={vi.fn()} reduceMotion />);
-    const card = screen.getByRole("listitem", { name:"Fresh Greens" });
-    const cover = within(card).getByRole("button", { name:/View layers/ });
-    within(card).getByRole("link").focus();
-    await user.tab({ shift:true });
-    expect(cover).toHaveFocus();
-    expect(cover).toHaveAttribute("aria-pressed","true");
-    await user.keyboard("{Escape}");
-    expect(cover).toHaveAttribute("aria-pressed","false");
-    await user.keyboard("{Enter}");
-    expect(cover).toHaveAttribute("aria-pressed","true");
-    await user.tab();
-    expect(within(card).getByRole("link")).toHaveFocus();
-    expect(cover).toHaveAttribute("aria-pressed","false");
+    render(<SelectedWorkExplorer programs={programs} />);
+    const files = screen.getByRole("navigation", { name: "Case studies" });
+    for (const program of programs) {
+      const file = within(files).getByRole("link", { name: program.title });
+      expect(file).toHaveAttribute("href", program.href);
+      await user.hover(file);
+      const card = screen.getByRole("listitem", { name: program.title });
+      const link = within(card).getByRole("link", { name: `Read ${program.title} case study` });
+      expect(link).toHaveAttribute("href", program.href);
+      expect(link).toContainElement(card.querySelector(".product-thumbnail"));
+      expect(link).toContainElement(within(card).getByText("Read case study"));
+      expect(within(card).queryByRole("button")).toBeNull();
+    }
   });
 
-  it.each(["fresh-greens", "understandingfafsa", "navi", "tiktok"] as const)(
-    "opens the %s drawing only while the mouse is on the artwork", (id) => {
-      const media = vi.spyOn(window, "matchMedia").mockImplementation(query =>
-        ({ matches:query === "(any-hover: hover)", addEventListener:vi.fn(), removeEventListener:vi.fn() }) as unknown as MediaQueryList);
-      try {
-        render(<SelectedWorkExplorer programs={[{ ...programs[0], id }]} onOpen={vi.fn()} />);
-        const cover = screen.getByRole("button", { name:/View layers/ });
-        fireEvent.pointerEnter(cover, { pointerType:"touch" });
-        expect(cover).toHaveAttribute("aria-pressed","false");
-        fireEvent.pointerEnter(cover, { pointerType:"mouse" });
-        expect(cover).toHaveAttribute("aria-pressed","true");
-        fireEvent.pointerDown(cover, { pointerType:"mouse" });
-        fireEvent.pointerUp(cover, { pointerType:"mouse" });
-        fireEvent.click(cover, { detail:1 });
-        expect(cover).toHaveAttribute("aria-pressed","true");
-        fireEvent.pointerLeave(cover, { pointerType:"mouse" });
-        expect(cover).toHaveAttribute("aria-pressed","false");
-      } finally {
-        media.mockRestore();
-      }
-    });
-  it("makes the case study primary and explains the preview before either action", async () => {
+  it("supports keyboard activation of the illustrated reading link", async () => {
     const user = userEvent.setup();
-    const onOpen = vi.fn();
-    render(<SelectedWorkExplorer programs={programs} onOpen={onOpen} />);
-
-    expect(screen.getByText("Portfolio projects")).toBeInTheDocument();
-    expect(
-      screen.getByText(
-        "Read a case study or open a project preview.",
-      ),
-    ).toBeInTheDocument();
-    expect(screen.getByRole("list", { name: "Portfolio projects" })).toHaveAccessibleDescription(
-      "Read a case study or open a project preview.",
-    );
-
-    const freshCard = screen.getByRole("listitem", { name: "Fresh Greens" });
-    const caseStudyLink = within(freshCard).getByRole("link", {
-      name: "Read Fresh Greens case study",
-    });
-    const previewButton = within(freshCard).getByRole("button", {
-      name: "Explore Fresh Greens.exe preview",
-    });
-    const actions = Array.from(freshCard.querySelectorAll(".myles97-program-actions :is(a, button)"));
-
-    expect(actions).toEqual([caseStudyLink, previewButton]);
-    expect(caseStudyLink).toHaveAttribute("href", "/work/fresh-greens");
-    expect(within(freshCard).queryByText("Built")).not.toBeInTheDocument();
-
-    await user.click(previewButton);
-    expect(onOpen).toHaveBeenCalledWith("fresh-greens");
+    render(<SelectedWorkExplorer programs={[programs[1]]} />);
+    const link = screen.getByRole("link", { name: "Read TikTok DSA case study" });
+    const onClick = vi.fn((event: Event) => event.preventDefault());
+    link.addEventListener("click", onClick);
+    within(screen.getByRole("navigation", { name: "Case studies" })).getByRole("link").focus();
+    await user.tab();
+    expect(link).toHaveFocus();
+    await user.keyboard("{Enter}");
+    expect(onClick).toHaveBeenCalledOnce();
   });
 
   it("uses the project title as the card identity and keeps the app name as preview context", () => {
-    render(<SelectedWorkExplorer programs={programs} onOpen={vi.fn()} />);
+    render(<SelectedWorkExplorer programs={programs} />);
 
     fireEvent.click(screen.getByRole("radio", { name: "Thumbnails" }));
     const tiktokCard = screen.getByRole("listitem", { name: "TikTok DSA" });
@@ -127,28 +86,26 @@ describe("Projects evaluation paths", () => {
     expect(within(tiktokCard).queryByText("Shipped")).not.toBeInTheDocument();
   });
 
-  it.each([
-    ["fresh-greens", "Street map", ".atlas-map"],
-    ["understandingfafsa", "Story block", ".mail-edition"],
-    ["navi", "Reservation", ".postcard-photo"],
-    ["tiktok", "Catalog slot", ".catalog-proofs"],
-  ] as const)("opens and reassembles the %s publication with the original scene in place", (id, detail, artwork) => {
-    const program = { ...programs[1], id, title: id, href: `/work/${id}` as const };
-    const { container } = render(<SelectedWorkExplorer programs={[program]} onOpen={vi.fn()} />);
-    const cover = container.querySelector(".publication-cover");
-    const toggle = screen.getByRole("button", {name: /View layers/});
-    expect(cover).toHaveAttribute("aria-hidden", "true");
-    expect(cover?.querySelector(artwork)).toBeInTheDocument();
-    fireEvent.click(toggle);
-    expect(toggle).toHaveAccessibleDescription(expect.stringContaining(detail));
-    expect(toggle).toHaveAttribute("aria-pressed", "true");
-    expect(cover).toHaveAttribute("data-inspect", "true");
-    fireEvent.keyDown(toggle, {key: "Escape"});
-    expect(toggle).toHaveAttribute("aria-pressed", "false");
-    expect(cover?.querySelector(artwork)).toBeInTheDocument();
-    expect(screen.getByRole("listitem", {name:id})).toBeInTheDocument();
+  it.each(["understandingfafsa", "navi", "tiktok"] as const)("reveals the %s teardown on hover while keeping its first click a link", (id) => {
+    const media = vi.spyOn(window, "matchMedia").mockImplementation(query =>
+      ({ matches: query === "(any-hover: hover)", addEventListener: vi.fn(), removeEventListener: vi.fn() }) as unknown as MediaQueryList);
+    try {
+      const program = { ...programs[1], id, href: `/work/${id}` as const };
+      render(<SelectedWorkExplorer programs={[program]} />);
+      const link = screen.getByRole("link", { name: `Read ${program.title} case study` });
+      const art = link.querySelector(".myles97-program-cover")!;
+      const cover = art.querySelector(".product-thumbnail");
+      fireEvent.pointerEnter(art, { pointerType: "touch" });
+      expect(cover).toHaveAttribute("data-inspect", "false");
+      fireEvent.pointerEnter(art, { pointerType: "mouse" });
+      expect(cover).toHaveAttribute("data-inspect", "true");
+      fireEvent.pointerLeave(art, { pointerType: "mouse" });
+      expect(cover).toHaveAttribute("data-inspect", "false");
+      expect(link).toHaveAttribute("href", program.href);
+    } finally {
+      media.mockRestore();
+    }
   });
-
   it("routes through the controller without faking a full-card animation", () => {
     sessionStorage.clear();
     const onRequest = vi.fn((event: Event) => event.preventDefault());
@@ -156,7 +113,6 @@ describe("Projects evaluation paths", () => {
     render(
       <SelectedWorkExplorer
         programs={programs}
-        onOpen={vi.fn()}
       />,
     );
 
@@ -210,7 +166,7 @@ describe("Projects evaluation paths", () => {
     sessionStorage.clear();
     const onRequest = vi.fn((event: Event) => event.preventDefault());
     window.addEventListener(PROJECT_ENTER_REQUEST, onRequest);
-    render(<SelectedWorkExplorer programs={programs} onOpen={vi.fn()} />);
+    render(<SelectedWorkExplorer programs={programs} />);
 
     const link = screen.getByRole("link", {
       name: "Read Fresh Greens case study",

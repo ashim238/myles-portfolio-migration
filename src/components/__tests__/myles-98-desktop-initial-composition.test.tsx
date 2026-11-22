@@ -131,11 +131,8 @@ describe("Myles 98 desktop initial composition", () => {
         .getByRole("button", { name: "Projects" })
         .getAttribute("aria-pressed"),
     ).toBe("true");
-    expect(
-      (within(selectedWork).getByRole("button", {
-        name: "Explore Fresh Greens.exe preview",
-      }) as HTMLButtonElement).disabled,
-    ).toBe(false);
+    expect(within(selectedWork).getByRole("link", { name: "Read Fresh Greens case study" }))
+      .toHaveAttribute("href", "/work/fresh-greens");
   });
 
   it("leaves the later welcome task-tab focus contract intact", () => {

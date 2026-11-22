@@ -37,8 +37,8 @@ vi.mock("@/components/lead-media", () => ({
   LeadMedia: () => <figure data-testid="lead-media" />,
 }));
 vi.mock("@/components/expandable-image", () => ({
-  ExpandableImage: ({ alt }: { alt: string }) => (
-    <span role="img" aria-label={alt} />
+  ExpandableImage: ({ alt, src, previewSrc }: { alt: string; src: string; previewSrc?: string }) => (
+    <span role="img" aria-label={alt} data-screen={src} data-preview={previewSrc} />
   ),
 }));
 vi.mock("@/components/fresh-greens", () => ({
@@ -161,7 +161,7 @@ describe("Fresh Greens rendered narrative ownership", () => {
     expect(
       within(chapter(container, "fg-scope")).getByText("What remains"),
     ).toBeInTheDocument();
-    expect(container.querySelector('a[href="#fg-safety-reconstruction"]')).not.toBeNull();
+    expect(container.querySelector('a[href="#fg-app-walkthrough"]')).not.toBeNull();
 
     expect(container.querySelectorAll(".project-chapter")).toHaveLength(6);
     expect(
@@ -192,16 +192,16 @@ describe("Fresh Greens rendered narrative ownership", () => {
     const frame = chapter(container, "fg-problem");
     const research = chapter(container, "fg-research");
 
-    expect(frame).toHaveTextContent("I'd slow down, avoid backroads");
+    expect(frame).toHaveTextContent("The Green Book and the drive home");
     expect(research).toHaveTextContent(
       "Drivers couldn't compare the conditions they cared about across routes before choosing.",
     );
     expect(research).toHaveTextContent(
-      "Qualitative interviews were new to me, but I tried to navigate them like everyday conversations",
+      "six Black drivers across the South, ages 19 to 34",
     );
-    expect(research).toHaveTextContent(
-      "I wasn't the only person getting the heebie-jeebies during a drive",
-    );
+    expect(research.querySelector("blockquote")).toHaveTextContent("bright where you are and dark where you arrive");
+    expect(frame.querySelector("#fg-app-walkthrough")).toBeInTheDocument();
+    expect(within(chapter(container, "fg-design")).getByRole("heading", {name: /three onboarding screens/i})).toBeInTheDocument();
   });
 
   it("carries the failed concept, product constraints, and search correction through the six chapters", async () => {
@@ -214,7 +214,7 @@ describe("Fresh Greens rendered narrative ownership", () => {
     expect(plan).toHaveTextContent(
       "1. Compare route conditions before choosing",
     );
-    expect(plan).toHaveTextContent("He was content, not impressed");
+    expect(plan).toHaveTextContent("I kept the information architecture");
     expect(plan).toHaveTextContent("Chicago to rural Georgia");
     expect(plan).toHaveTextContent(
       'comparison below uses a neutral label',
@@ -232,6 +232,23 @@ describe("Fresh Greens rendered narrative ownership", () => {
     );
     expect(scope).toHaveTextContent(/my own address was sitting in Recent/i);
     expect(scope).toHaveTextContent("I added street addresses");
+  });
+
+  it("pairs the final illustration sequence and car drawings with their native screens", async () => {
+    const { container } = render(await FreshGreensPage());
+    const gallery = within(chapter(container, "fg-design")).getByRole("region", {
+      name: "Drawing the first three onboarding screens",
+    });
+    const pairedFiles = within(gallery).getAllByRole("img").map((image) =>
+      [image.dataset.preview, image.dataset.screen].map((path) => path?.split("/").pop()),
+    );
+    expect(pairedFiles).toEqual([
+      ["at-the-wheel.svg", "panel-1-screen.webp"],
+      ["for-us-by-us.svg", "panel-2-screen.webp"],
+      ["your-viewpoint.svg", "panel-3-screen.webp"],
+      ["get-started-cars.png", "get-started-screen.webp"],
+      ["permissions-car.svg", "permissions-screen.webp"],
+    ]);
   });
 
   it("frames current trust behavior before naming the route-ranking limit", async () => {

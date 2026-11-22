@@ -117,9 +117,9 @@ describe("dedicated project route visibility", () => {
       name: "Fresh Greens",
       slug: "fresh-greens",
       render: FreshGreensPage,
-      cta: "Try the safety-flow reconstruction",
-      href: "#fg-safety-reconstruction",
-      artifactName: "Interactive case-study reconstruction",
+      cta: "Try a drive in Fresh Greens",
+      href: "#fg-app-walkthrough",
+      artifactName: "Drive to Windrush Square",
       artifactRole: "heading" as const,
     },
     {
