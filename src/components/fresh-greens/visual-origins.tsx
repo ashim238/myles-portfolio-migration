@@ -108,16 +108,18 @@ export function OnboardingGallery() {
       <h3 id="fg-onboarding-title" className="project-proof-target">Drawing the first three onboarding screens</h3>
       <p>I drew these in Illustrator. The first view puts you behind the wheel. On the second screen, a driver is thinking about a street that needs more light. That’s the kind of observation someone could contribute to the map.</p>
       <p className={styles.galleryHint}>Select a drawing to see its full iOS screen.</p>
-      <ol className={styles.panels} aria-label="Onboarding artwork in app order">
-        {illustrations.map((drawing) => (
-          <li key={drawing.file}>
-            <DrawingFigure drawing={drawing} frame={styles.panel} />
-          </li>
-        ))}
-      </ol>
-      <div className={styles.carArt}>
-        <DrawingFigure drawing={carStrip} frame={styles.horizon} />
-        <DrawingFigure drawing={locationCar} frame={styles.permissionCar} />
+      <div className={styles.proofFolder}>
+        <ol className={styles.panels} aria-label="Onboarding artwork in app order">
+          {illustrations.map((drawing) => (
+            <li key={drawing.file}>
+              <DrawingFigure drawing={drawing} frame={styles.panel} />
+            </li>
+          ))}
+        </ol>
+        <div className={styles.carArt}>
+          <DrawingFigure drawing={carStrip} frame={styles.horizon} />
+          <DrawingFigure drawing={locationCar} frame={styles.permissionCar} />
+        </div>
       </div>
     </section>
   );

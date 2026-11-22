@@ -1,0 +1,18 @@
+.proofs {
+  margin-block: 1.5rem 2rem;
+  padding: clamp(14px, 2.2vw, 28px);
+  background: #f3eadc;
+  border-block: 2px solid #80533c;
+  color: #1e3542;
+}
+.proofs .pair + .pair { margin-top: 1.4rem; padding-top: 1.25rem; border-top: 1px solid #b8a996; }
+.proofs h4 { margin: 0 0 .75rem; font: 600 clamp(1.2rem, 2vw, 1.55rem)/1.15 Georgia, serif; letter-spacing: -.025em; color: #1e3542; }
+.row { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: clamp(12px, 2vw, 24px); }
+.proofs figure { margin: 0; }
+.clip { position: relative; background: white; border: 1px solid #bcb1a0; }
+.clip img { display: block; width: 100%; height: auto; aspect-ratio: 5/2; }
+.clip svg { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: #ad3c1c; }
+.clip ellipse { vector-effect: non-scaling-stroke; stroke-width: 1.7px; }
+.proofs figcaption { text-align: left; margin: .65rem 0 0; padding: 0; color: #393c37; font: 400 .95rem/1.45 var(--m97-ui-font), sans-serif; }
+.proofs figcaption strong { display: block; margin-bottom: .2rem; color: #174f70; font-weight: 700; }
+@media(max-width:600px) { .row { grid-template-columns: 1fr; gap: 1rem; } }

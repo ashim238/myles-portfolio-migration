@@ -59,6 +59,7 @@ function readPage() {
 
 function normalizeCopy(copy: string) {
   return copy
+    .replaceAll('{" "}', " ")
     .replace(/<[^>]+>/g, "")
     .replace(/&apos;/g, "'")
     .replace(/&quot;/g, '"')

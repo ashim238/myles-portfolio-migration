@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { WelcomePortrait } from "./welcome-portrait";
 
 export type WelcomeProgramProps = {
   onSelectedWork: () => void;
@@ -8,7 +8,7 @@ export function WelcomeProgram({ onSelectedWork }: WelcomeProgramProps) {
   return (
     <div className="myles97-welcome">
       <div className="myles97-welcome-mark" aria-hidden="true">
-        <Image src="/logomark.svg" alt="" width={72} height={72} priority />
+        <WelcomePortrait />
       </div>
       <div className="myles97-welcome-copy">
         <p className="myles97-eyebrow">Product designer</p>

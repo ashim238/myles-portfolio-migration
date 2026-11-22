@@ -14,7 +14,7 @@ function expectCapture(filename: string, description: RegExp) {
   expect(existsSync(join(process.cwd(), "public", filename))).toBe(true);
 }
 
-const route = "/projects/fresh-greens/daylight-key/";
+const route = "/projects/fresh-greens/daylight-key/2026-11-21/";
 const safety = "/projects/fresh-greens/v2/";
 
 describe("Fresh Greens app walkthrough", () => {

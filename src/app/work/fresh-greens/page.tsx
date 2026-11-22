@@ -13,6 +13,7 @@ import { ProjectWorkJump } from "@/components/project-work-jump";
 import { ProjectEvidenceDisclosure } from "@/components/project-evidence-disclosure";
 import { ArchitectureDiagram } from "@/components/fresh-greens";
 import { DepartureReminderEvidence } from "@/components/fresh-greens/departure-reminder-evidence";
+import { WelcomeIllustrationMotion } from "@/components/fresh-greens/welcome-illustration-motion";
 import { EarlyProductWalkthrough } from "@/components/fresh-greens/early-product-walkthrough";
 import { GreenBookPalette, OnboardingGallery } from "@/components/fresh-greens/visual-origins";
 import origins from "@/components/fresh-greens/visual-origins.module.css";
@@ -77,7 +78,9 @@ export default async function FreshGreensPage() {
           width={1280}
           height={1005}
           presentation="fresh-greens"
-        />
+        >
+          <WelcomeIllustrationMotion />
+        </LeadMedia>
         <ProjectOpeningFacts
           role="Solo, design and engineering"
           goal="Help Black drivers compare route conditions and find support when something goes wrong."
@@ -105,11 +108,10 @@ export default async function FreshGreensPage() {
             <div className="project-section fg-section fg-section--wide">
               <div className="project-section-body">
                 <p>
-                  In 1936, Victor H. Green published <em>The Negro Motorist Green Book</em>.
+                  In 1936, Victor H. Green published <a className="case-source-link" href="https://www.loc.gov/item/2016298176/" aria-label="The Negro Motorist Green Book, 1946 edition at the Library of Congress"><cite>The Negro Motorist Green Book</cite></a>.
                   Under Jim Crow, Black travelers used it to find places where they
                   could eat, get gas, or stay the night. What stayed with me was how
-                  much it mattered to know those things <strong>before setting out.</strong>{" "}
-                  <a href="https://www.loc.gov/item/2016298176/">Library of Congress.</a>
+                  much it mattered to know those things{" "}<strong>before setting out.</strong>
                 </p>
                 <p>
                   I moved from Brooklyn to South Jersey as a kid. On late drives home from Cape May, some backroads had Confederate flags and patchy reception. I’d slow down and wonder where
@@ -150,7 +152,7 @@ export default async function FreshGreensPage() {
               <div className="fg-evidence-boundaries" aria-label="Three Fresh Greens product problems">
                 <div className="fg-evidence-boundary">
                   <p className="fg-evidence-label">Plan</p>
-                  <p>Drivers couldn&apos;t compare the conditions they cared about across routes before choosing. All six mentioned daylight, five mentioned road conditions, five mentioned police presence, and three mentioned wildlife.</p>
+                  <p>Drivers couldn&apos;t compare the conditions they cared about across routes before choosing.{" "}<strong>All six mentioned daylight</strong>, five mentioned road conditions, five mentioned police presence, and three mentioned wildlife.</p>
                 </div>
                 <div className="fg-evidence-boundary">
                   <p className="fg-evidence-label">Respond</p>
@@ -158,7 +160,7 @@ export default async function FreshGreensPage() {
                 </div>
                 <div className="fg-evidence-boundary">
                   <p className="fg-evidence-label">Trust</p>
-                  <p>Five of six asked family or friends before trusting an unfamiliar place.</p>
+                  <p><strong>Five of six asked family or friends</strong>{" "}before trusting an unfamiliar place.</p>
                 </div>
               </div>
               <div className="project-section-body">
@@ -181,7 +183,7 @@ export default async function FreshGreensPage() {
                   My first pass put a daylight overlay inside Google Maps. When I
                   showed it to my thesis advisor, Google’s suggested route still
                   dominated the screen. I kept the information architecture and
-                  designed a standalone app so drivers could <strong>compare the light
+                  designed a standalone app so drivers could{" "}<strong>compare the light
                   on each route before choosing one.</strong>
                 </p>
               </div>
@@ -216,7 +218,7 @@ export default async function FreshGreensPage() {
             <section className="project-section fg-section fg-section--wide">
               <div className="project-section-body">
                 <p>
-                  In the pulled-over flow, <strong>I ask “Are you armed?” first.</strong> Which guidance
+                  In the pulled-over flow,{" "}<strong>I ask “Are you armed?” first.</strong>{" "}Which guidance
                   applies depends on the driver&apos;s answer and the state they&apos;re in.
                   I didn&apos;t want someone scrolling during a stop to find what applied.
                 </p>
@@ -249,7 +251,7 @@ export default async function FreshGreensPage() {
                   Reports stay on the device first. With Supabase configured, they enter moderation.
                 </p>
                 <p>
-                  <strong className="fg-prototype-limit-label">Current prototype limit:</strong>{" "}<strong>One report creates a scored zone</strong> and can affect route ranking. I haven&apos;t added
+                  <strong className="fg-prototype-limit-label">Current prototype limit:</strong>{" "}<strong>One report creates a scored zone</strong>{" "}and can affect route ranking. I haven&apos;t added
                   corroboration weighting, visible contributor provenance, or
                   route-level trust tiers yet.
                 </p>
@@ -294,7 +296,7 @@ export default async function FreshGreensPage() {
                 </p>
                 <p>
                   Search was the first thing to break. My own address was sitting in Recent, so a
-                  places-only search looked functional. I added street addresses
+                  places-only search looked functional.{" "}<strong>I added street addresses</strong>{" "}
                   and separated Recent from live results.
                 </p>
                 <p>
@@ -302,7 +304,7 @@ export default async function FreshGreensPage() {
                   explanations earn trust, or its support flow holds up under stress.
                 </p>
                 <p>
-                  Next, I&apos;d learn from <strong>Black drivers 55 and older</strong> by watching where
+                  Next, I&apos;d learn from{" "}<strong>Black drivers 55 and older</strong>{" "}by watching where
                   Fresh Greens fits, where it asks for too much, and what I need to
                   change.
                 </p>

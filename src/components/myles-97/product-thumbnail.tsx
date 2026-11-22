@@ -1,12 +1,11 @@
 "use client";
 
 import { useId, useRef, useState } from "react";
-import { JourneyJacketIllustration } from "@/components/fresh-greens/journey-jacket-illustration";
 import { TeardownDrawing, layerDescription } from "./teardown-drawing";
 import type { FeaturedProjectId } from "@/lib/myles-97/programs";
 
 const descriptions: Record<FeaturedProjectId, string> = {
-  "fresh-greens": "The Fresh Greens atlas cover with Myles’s illustrated driver waving from a location pin over a sunrise.",
+  "fresh-greens": "Fresh Greens road atlas with the five-minute daylight route to Weeksville Heritage Center.",
   understandingfafsa: "FAFSA & Financial Aid 101 newsletter on perforated printer paper.",
   navi: "Prospect Park postcard with a Brooklyn park photograph and a pond postage stamp.",
   tiktok: "Fashion catalog proof sheet with the original three template designs.",
@@ -15,7 +14,6 @@ const descriptions: Record<FeaturedProjectId, string> = {
 function AtlasCover() {
   return <>
     <span className="atlas-map" />
-    <span className="atlas-print"><JourneyJacketIllustration /></span>
     <span className="atlas-spine" />
     <span className="atlas-title">Fresh<br />Greens</span>
     <span className="atlas-ticket"><b>5 min</b><span>Weeksville<br />Heritage Center</span></span>

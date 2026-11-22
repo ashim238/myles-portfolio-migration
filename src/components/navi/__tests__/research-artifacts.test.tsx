@@ -26,7 +26,7 @@ describe("NaviResearchArtifacts", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByText(
-        "Each row connects a finding to the product area it affected.",
+        "Three early audience profiles connect a traveler’s need with the part of Navi designed to meet it.",
       ),
     ).toBeInTheDocument();
     expect(

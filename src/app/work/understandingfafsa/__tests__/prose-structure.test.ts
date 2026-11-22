@@ -25,7 +25,7 @@ import UnderstandingFafsaPage from "@/app/work/understandingfafsa/page";
 
 const pagePath = "src/app/work/understandingfafsa/page.tsx";
 const page = readFileSync(resolve(process.cwd(), pagePath), "utf8");
-const prose = page.replace(/\s+/g, " ");
+const prose = page.replace(/<\/?strong>/g, "").replaceAll('{" "}', " ").replace(/\s+/g, " ");
 const auditRuleSource = readFileSync(
   resolve(process.cwd(), "src/lib/understandingfafsa-audit-rules.ts"),
   "utf8",

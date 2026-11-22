@@ -14,7 +14,7 @@ export function NaviResearchArtifacts(): React.JSX.Element {
       <div className="nv-research-board">
         <header className="nv-research-board-head">
           <h3 id="nv-research-board-title">Research and product scope</h3>
-          <p>Each row connects a finding to the product area it affected.</p>
+          <p>Three early audience profiles connect a traveler’s need with the part of Navi designed to meet it.</p>
         </header>
 
         <figure
@@ -60,9 +60,10 @@ export function NaviResearchArtifacts(): React.JSX.Element {
         <ProjectEvidenceDisclosure summary="View the journey and booking artifacts">
           <figure aria-label="Journey-map excerpt" className="nv-research-artifact">
           <figcaption>
-            Journey-map excerpt
+            What a traveler needs before deciding
             <span>Internal planning artifact</span>
           </figcaption>
+          <p className="nv-diagram-caption">Read across from discovering a neighborhood to reviewing the cost. Each stage pairs the traveler’s next move with the information Navi would need to show.</p>
           <div
             className="nv-research-route nv-research-route--journey"
             aria-hidden="true"
@@ -91,9 +92,10 @@ export function NaviResearchArtifacts(): React.JSX.Element {
             className="nv-research-artifact"
           >
           <figcaption>
-            Individual booking-flow excerpt
+            Where that decision happens in booking
             <span>Airbnb audit and secondary research</span>
           </figcaption>
+          <p className="nv-diagram-caption">Follow one reservation from the listing to confirmation. The cost review sits just before the visitor commits.</p>
           <div
             className="nv-research-route nv-research-route--booking"
             aria-hidden="true"

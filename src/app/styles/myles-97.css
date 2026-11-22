@@ -555,10 +555,11 @@
   height: 64px;
   place-items: center;
   border: 1px solid var(--m97-ink);
-  background: var(--m97-signal);
+  background: #f6edd4;
 }
 
 .myles97-welcome-mark img {
+  image-rendering: pixelated;
   width: 48px;
   height: 48px;
 }

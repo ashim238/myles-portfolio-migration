@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { Fragment } from "react";
+import { CaseOpeningMotion } from "@/components/case-opening-motion";
+import { Fragment, type CSSProperties } from "react";
 import { ProjectOpeningFacts } from "@/components/project-opening-facts";
 import { TikTokCoverBlobs, TikTokLogo } from "@/components/tiktok-dsa";
 import { TIKTOK_TEMPLATES } from "@/lib/tiktok-data";
@@ -20,17 +21,25 @@ export function TikTokOpening({ legacy = false }: { legacy?: boolean }) {
         <p className="project-hero-lede tt-lede">The templates needed to appeal to different styles and aesthetics,
           so I had room to think outside the box.</p>
       </div>
-      {legacy ? null : <div className="tt-cover-work tt-original-plates" aria-label="Original catalog templates" role="group">
+      {legacy ? null : <CaseOpeningMotion variant="tiktok">
         {TIKTOK_TEMPLATES.map(template => (
           <figure key={template.key} className="tt-original-plate">
-            <Image src={template.fullTemplate} alt={template.name + " catalog template"} width={1080} height={1920}
-              unoptimized loading="eager" />
+            <span className="tt-proof-paper">
+              <Image src={template.fullTemplate} alt={template.name + " catalog template"} width={1080} height={1920}
+                unoptimized loading="eager" />
+              <span aria-hidden="true" className="tt-proof-register" style={{
+                left: template.regionOverlays.catalog.left + "%",
+                top: template.regionOverlays.catalog.top + "%",
+                width: template.regionOverlays.catalog.width + "%",
+                height: template.regionOverlays.catalog.height + "%",
+              } as CSSProperties} />
+            </span>
             <figcaption>{template.name.split(/(?<=[a-z])(?=[A-Z])|(?<=\/)/).map((word, index) => (
               <Fragment key={word}>{index > 0 && <wbr />}{word}</Fragment>
             ))}</figcaption>
           </figure>
         ))}
-      </div>}
+      </CaseOpeningMotion>}
     </header>
     <ProjectOpeningFacts
       role="Creative Strategist Intern · Global Creative Lab"

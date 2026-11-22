@@ -9,7 +9,7 @@ import {
 
 const pagePath = "src/app/work/navi/page.tsx";
 const page = readFileSync(resolve(process.cwd(), pagePath), "utf8");
-const prose = page.replace(/\s+/g, " ");
+const prose = page.replace(/<\/?strong>/g, "").replaceAll('{" "}', " ").replace(/\s+/g, " ");
 const lateStyles = readFileSync(
   resolve(process.cwd(), "src/app/styles/late-polish.css"),
   "utf8",
@@ -174,8 +174,8 @@ describe("Navi case-study structure", () => {
   });
 
   it("orders the primary story from resident evidence through future validation", () => {
-    const primaryStory = page
-      .slice(page.indexOf("<ProjectToc"))
+    const primaryStory = prose
+      .slice(prose.indexOf("<ProjectToc"))
       .replace(/\s+/g, " ");
     const storyMarkers = [
       "The Manhattan heatmap was our first idea",
@@ -195,7 +195,7 @@ describe("Navi case-study structure", () => {
       );
     }
 
-    expect(page.match(/After the semester, I rebuilt the system/gi) ?? []).toHaveLength(1);
+    expect(prose.match(/After the semester, I rebuilt the system/gi) ?? []).toHaveLength(1);
     expect(page).toContain('href="/work/navi/demo"');
     expect(page).toContain('href="/work/navi/system"');
   });

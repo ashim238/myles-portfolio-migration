@@ -51,7 +51,7 @@
 .phone {
   position: relative;
   container-type: inline-size;
-  width: min(100%, 18.5rem);
+  width: min(100%, 26.875rem, max(18.5rem, calc(46svh - 3.2rem)));
   aspect-ratio: 430 / 932;
   border-radius: 9% / 4.15%;
   outline: 1px solid #152a21;
@@ -136,7 +136,7 @@
   .walkthrough { grid-template: "heading" auto "notes" auto "screen" auto "controls" auto / minmax(0, 1fr); }
   .header { margin-inline: 1rem; }
   .instructions { padding: .9rem 1rem 1rem; }
-  .stage { padding: 1rem; }
+  .stage { padding: .75rem; }
   .controls { padding: .7rem 1rem; }
 }
 

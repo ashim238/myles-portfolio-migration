@@ -89,10 +89,10 @@ export default async function TikTokPage() {
             <div className="project-section tt-section">
               <div className="project-section-body">
                 <p>
-                  The brief asked for <strong>three templates for clients in the fashion
-                  vertical.</strong> Each one had to hold a fashion product catalog while
-                  appealing to a different style or aesthetic, but the dimensions
-                  and product slots were set in stone before I received the brief.
+                  The brief asked for{" "}<strong>three templates for clients in the fashion
+                  vertical.</strong>{" "}Each one had to hold a fashion product catalog while
+                  appealing to a different style or aesthetic, but{" "}<strong>the dimensions
+                  and product slots were set in stone</strong>{" "}before I received the brief.
                   I could change the type, color, texture, and supporting graphics.
                 </p>
                 <p>
@@ -149,8 +149,8 @@ export default async function TikTokPage() {
                   toward looking at several of them.
                 </p>
                 <p>
-                  I did traditional market research. I also made burner accounts and
-                  changed what each one engaged with to see what surfaced. Within
+                  I did traditional market research. I also{" "}<strong>made burner accounts and
+                  changed what each one engaged with</strong>{" "}to see what surfaced. Within
                   each aesthetic, I looked at popular posts, how community members
                   talked to each other, and how prominent creators presented
                   themselves. I was looking for things I could mimic in a 2D design,
@@ -184,9 +184,9 @@ export default async function TikTokPage() {
                 <p>
                   I dropped that sketch because the copy felt like it was trying
                   too hard and the whole thing looked like an ad for TikTok. A fashion
-                  brand still had to be able to use it. In the final template, I
-                  kept the colors bright and put “FIT CHECK” above the space for
-                  the brand&apos;s product.
+                  brand still had to be able to use it. In the final template, I{" "}
+                  <strong>kept the colors bright and put “FIT CHECK” above the space for
+                  the brand&apos;s product.</strong>
                 </p>
                 <p>
                   I built all three as layered Photoshop files around the same
@@ -338,8 +338,8 @@ export default async function TikTokPage() {
                     I later learned through Global Creative Lab that American Eagle
                     selected it.
                   </mark>{" "}
-                  I wasn&apos;t told why American Eagle selected Light Academia. I
-                  didn&apos;t receive performance data, and I don&apos;t know what happened
+                  I wasn&apos;t told why American Eagle selected Light Academia.{" "}<strong>I
+                  didn&apos;t receive performance data,</strong>{" "}and I don&apos;t know what happened
                   to the other two templates. Internships are very transitory, so
                   I&apos;m left doing work without knowing the full impact.
                 </p>

@@ -65,6 +65,7 @@ export type ChapterEvidenceMap<
   readonly dominantProof: EvidenceArtifact;
   readonly supportingProofs?: readonly EvidenceArtifact[];
   readonly interpretation: string;
+  readonly emphasis?: string;
   readonly caveat?: string;
 };
 
@@ -171,6 +172,7 @@ export const READER_EVIDENCE_MAPS = {
         ],
         interpretation:
           "The design students focused on the layout. We made the cards the same height and cut down the copy and tags. The React demo now supports browsing, search, host detail, and a sample reservation.",
+        emphasis: "a sample reservation",
         caveat:
           "The semester ended before the team could test Learn, Plan, Go or booking. The current Go view lists travel options but does not calculate a live route from the visitor's current location.",
       },
@@ -240,6 +242,7 @@ export const READER_EVIDENCE_MAPS = {
         },
         interpretation:
           "Drivers already paired navigation with daylight, road conditions, and advice from people they trusted.",
+        emphasis: "daylight, road conditions, and advice from people they trusted",
         caveat: "Six interviews do not represent every Black driver.",
       },
       {
@@ -357,6 +360,7 @@ export const READER_EVIDENCE_MAPS = {
         },
         interpretation:
           "I made the newsletter easier to scan and built the kit in Mailchimp so the founder could run it herself.",
+        emphasis: "the founder could run it herself",
         caveat: "The project scope was email-only.",
       },
       {
@@ -394,6 +398,7 @@ export const READER_EVIDENCE_MAPS = {
         ],
         interpretation:
           "Headlines, body copy, imagery, links, and middle-module order can change. Header and footer placement, spacing, type, and dividers stay fixed.",
+        emphasis: "Header and footer placement, spacing, type, and dividers stay fixed.",
         caveat:
           "The interactive switcher shows the weekly and event templates, not the welcome email.",
       },
@@ -491,6 +496,7 @@ export const READER_EVIDENCE_MAPS = {
         ],
         interpretation:
           "The slot map stayed constant. Only a few parts could cross between Light Academia and e-Boy/e-Girl.",
+        emphasis: "The slot map stayed constant.",
         caveat:
           "I proposed sharing a few parts between Light Academia and e-Boy/e-Girl. I don't have evidence that the team used them that way.",
       },
@@ -507,6 +513,7 @@ export const READER_EVIDENCE_MAPS = {
         },
         interpretation:
           "The final direction records what changed during internal review. It does not show audience response.",
+        emphasis: "It does not show audience response.",
         caveat:
           "I learned about the American Eagle selection later through Global Creative Lab. I didn't receive performance data.",
       },

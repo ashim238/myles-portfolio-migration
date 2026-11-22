@@ -8,7 +8,8 @@ type LeadMediaProps = {
   clip?: string;
   width: number;
   height: number;
-  presentation?: "default" | "fresh-greens";
+  children?: React.ReactNode;
+  presentation?: "default" | "fresh-greens" | "story";
 };
 
 export function LeadMedia({
@@ -19,6 +20,7 @@ export function LeadMedia({
   width,
   height,
   presentation = "default",
+  children,
 }: LeadMediaProps) {
   const presentationClass =
     presentation === "default" ? "" : ` case-lead-media--${presentation}`;
@@ -56,6 +58,7 @@ export function LeadMedia({
           priority
         />
       )}
+      {children}
     </figure>
   );
 }

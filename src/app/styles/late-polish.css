@@ -405,6 +405,7 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
 }
 
 .case-lead-media--fresh-greens {
+  position: relative;
   --fg-cover-scale: 1.03;
   aspect-ratio: 16 / 9;
   margin-bottom: 1.5rem;
@@ -1467,3 +1468,15 @@ main[data-project-slug="understandingfafsa"] mark.case-highlight {
     transparent calc(var(--toc-progress, 0) * 100%)
   );
 }
+
+/* A citation sits beside its claim in the reading order, with the scale of a caption. */
+/* A bibliographic title carries its own citation in the flow of the sentence. */
+.reader-mode .project-section-body a.case-source-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .17em;
+  text-decoration-color: currentColor;
+}
+.case-source-link cite { font-style: italic; }
+.case-source-link:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }

@@ -20,6 +20,7 @@ const expectedImports = [
   '@import "./styles/workstation-documents.css";',
   '@import "./styles/archive-layout.css";',
   '@import "./styles/project-artwork.css";',
+  '@import "./styles/navi-field-guide.css";',
   '@import "./styles/accessibility-preferences.css";',
 ];
 

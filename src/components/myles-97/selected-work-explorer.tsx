@@ -105,7 +105,7 @@ function ProjectEntry({ program, reduced, onRead, children }: {
             }}
             onPointerLeave={() => setInspecting(false)}>
             <ProductThumbnail project={program.id} reduced={reduced || keyboardFocus}
-              interactive={program.id !== "fresh-greens"} inspect={program.id !== "fresh-greens" && (inspecting || keyboardFocus)} />
+              interactive inspect={inspecting || keyboardFocus} />
           </span>
         ) : <StudyCover program={program} />}
         {children}

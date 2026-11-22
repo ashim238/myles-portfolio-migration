@@ -7,7 +7,7 @@ const read = (path: string) =>
   readFileSync(resolve(process.cwd(), path), "utf8");
 
 const normalizeProse = (source: string) =>
-  source.replaceAll("&apos;", "'").replace(/\s+/g, " ");
+  source.replaceAll("&apos;", "'").replace(/<\/?strong>/g, "").replaceAll('{" "}', " ").replace(/\s+/g, " ");
 
 describe("TikTok public truthfulness contract", () => {
   it("uses the confirmed canonical role and original template names", () => {

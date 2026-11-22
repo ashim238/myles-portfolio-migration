@@ -1,4 +1,5 @@
 import type { FeaturedProjectId } from "./programs";
+import { eveningCaptures } from "@/lib/fresh-greens/daylight-captures";
 import { UF_ASSETS } from "@/lib/understandingfafsa-assets";
 import { TIKTOK_TEMPLATES } from "@/lib/tiktok-data";
 
@@ -23,7 +24,7 @@ const places = "/projects/navi";
 // Bounds were measured on the 430 × 932 point screen. The originals are the 3× native captures.
 function routeCapture(label: string, detail: string, alt: string, filename: string,
   [x, y, w, h]: readonly [number, number, number, number]): ArtSample {
-  return { label, detail, alt, src: "/projects/fresh-greens/daylight-key/" + filename + ".png",
+  return { label, detail, alt, src: (filename.includes("brixton") ? eveningCaptures : "/projects/fresh-greens/daylight-key") + "/" + filename + ".png",
     width: 1290, height: 2796, crop: [x / 430, y / 932, w / 430, h / 932] };
 }
 
@@ -31,13 +32,13 @@ export const arrivalLightSamples: readonly ArtSample[] = [
   {
     ...routeCapture("Plan", "Daylight at arrival", "Weeksville Heritage Center via Saint Johns Place. Five minutes, 0.6 miles, arriving at 1:02 PM in daylight.",
       "01-weeksville-daylight-preview", [16, 637, 321, 122]),
-    evening: routeCapture("Plan", "After dark at arrival", "The alternate route to Windrush Square via Brixton Hill takes seven minutes and arrives at 9:52 PM after dark.",
+    evening: routeCapture("Plan", "After dark at arrival", "The alternate route to Windrush Square via Brixton Hill takes six minutes and arrives after dark.",
       "03-brixton-evening-preview", [16, 727, 290, 115]),
   },
   {
     ...routeCapture("Drive", "Daylight beside the ETA", "Active navigation shows a 1:02 daylight ETA, 0.6 miles and five minutes remaining.",
       "02-weeksville-daylight-navigation", [125, 730, 180, 103]),
-    evening: routeCapture("Drive", "After dark beside the ETA", "Active navigation shows a 9:52 after-dark ETA, 1.2 miles and seven minutes remaining.",
+    evening: routeCapture("Drive", "After dark beside the ETA", "Active navigation shows an after-dark ETA, 1.2 miles and six minutes remaining.",
       "04-brixton-evening-navigation", [118, 730, 194, 103]),
   },
   {

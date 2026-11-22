@@ -120,11 +120,10 @@ describe("ProjectChapter", () => {
     );
     expect(composerProof.nextElementSibling).toBe(summary);
     expect(summary?.nextElementSibling).toBe(supportingRules);
-    expect(
-      screen.getByText(
-        "Headlines, body copy, imagery, links, and middle-module order can change. Header and footer placement, spacing, type, and dividers stay fixed.",
-      ),
-    ).toBeVisible();
+    expect(summary).toHaveTextContent(
+      "Headlines, body copy, imagery, links, and middle-module order can change. Header and footer placement, spacing, type, and dividers stay fixed.",
+    );
+    expect(summary?.querySelector("strong")).toHaveTextContent("Header and footer placement, spacing, type, and dividers stay fixed.");
     expect(
       screen.getByText(
         "The interactive switcher shows the weekly and event templates, not the welcome email.",
@@ -257,7 +256,8 @@ describe("ProjectChapter", () => {
       expect(screen.getByTestId("featured-proof").nextElementSibling).toBe(
         summary,
       );
-      expect(screen.getByText(testCase.interpretation)).toBeVisible();
+      expect(summary).toBeVisible();
+      expect(summary).toHaveTextContent(testCase.interpretation);
       expect(screen.getByText(testCase.caveat)).toBeVisible();
       unmount();
     }

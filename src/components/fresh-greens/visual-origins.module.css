@@ -66,13 +66,37 @@
 .gallery {
   --art-gutter: clamp(.75rem, 1.6vw, 1.25rem);
 }
+.proofFolder {
+  --paper-stock: #faf5e7;
+  padding: clamp(.75rem, 2.4vw, 1.65rem);
+  padding-inline-start: clamp(1rem, 3vw, 2.15rem);
+  background: linear-gradient(90deg, #182e29 0 .42rem, #b2bc87 .42rem .55rem, #293e36 .55rem .73rem, #254238 .73rem);
+  border: 1px solid #132b20;
+  box-shadow: 2px 3px 0 rgb(24 39 27 / 17%);
+}
+.proofFolder figure {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(.4rem, .9vw, .7rem);
+  background: var(--paper-stock);
+  color: #21392c;
+  box-shadow: 1px 2px 0 rgb(0 0 0 / 28%);
+}
+.proofFolder figcaption {
+  margin: 0;
+  padding: .6rem .15rem .1rem;
+  text-align: start;
+  font: 550 .875rem/1.35 var(--font-family-sans, sans-serif);
+}
+.proofFolder .plate { border: 1px solid rgb(31 66 48 / 25%); }
 .panels, .carArt {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--art-gutter);
 }
 .panels { margin: 0; padding: 0; list-style: none; }
-.carArt { margin-top: clamp(1.25rem, 2.5vw, 2rem); }
+.carArt { margin-top: var(--art-gutter); }
 .carArt figure:first-child { grid-column: span 2; }
 
 .plate { position: relative; }

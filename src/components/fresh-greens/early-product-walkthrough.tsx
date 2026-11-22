@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState, type CSSProperties } from "react";
+import { useLayoutEffect, useRef, useState, type CSSProperties } from "react";
+import { eveningCaptures } from "@/lib/fresh-greens/daylight-captures";
 import styles from "./early-product-walkthrough.module.css";
 
 type Screen = "plan" | "drive" | "key" | "toolkit" | "question";
@@ -13,7 +14,6 @@ type Action = {
   shape?: "tile" | "round";
 };
 
-const drivingCaptures = "/projects/fresh-greens/daylight-key";
 const safetyCaptures = "/projects/fresh-greens/v2";
 const openToolkit: Action = {
   label: "Open safety toolkit",
@@ -30,29 +30,29 @@ const screens: Record<Screen, {
   actions: readonly Action[];
 }> = {
   plan: {
-    file: drivingCaptures + "/03-brixton-evening-preview.png",
-    alt: "Route preview for Windrush Square via Brixton Hill. The seven-minute drive arrives at 9:52 PM, after dark. The route is drawn as purple dots.",
+    file: eveningCaptures + "/03-brixton-evening-preview.png",
+    alt: "Route preview for Windrush Square via Brixton Hill. The six-minute drive arrives after dark. The route is drawn as purple dots.",
     title: "Before the drive",
-    instruction: "The route takes seven minutes and arrives after dark. Select Go on the phone to start driving.",
-    actions: [{ label: "Go, start the drive", next: "drive", bounds: [24, 846, 382, 46] }],
+    instruction: "The route takes six minutes and arrives after dark. Select Go on the phone to start driving.",
+    actions: [{ label: "Go, start the drive", next: "drive", bounds: [24, 846, 382, 44] }],
   },
   drive: {
-    file: drivingCaptures + "/04-brixton-evening-navigation.png",
-    alt: "Driving view on Sudbourne Road. The map key is in the lower left. The safety shield is on the right. The after-dark label stays beside the 9:52 arrival time.",
+    file: eveningCaptures + "/04-brixton-evening-navigation.png",
+    alt: "Driving view on Sudbourne Road. The map key is in the lower left. The safety shield is on the right. The after-dark label stays beside the arrival time.",
     title: "On the road",
     instruction: "Open the map key to read the dotted route, or select the shield to open the safety toolkit.",
     actions: [
-      { label: "Open map key", next: "key", bounds: [16, 606, 105, 46] },
+      { label: "Open map key", next: "key", bounds: [16, 607, 108, 44] },
       openToolkit,
     ],
   },
   key: {
-    file: drivingCaptures + "/05-brixton-navigation-key-reopened.png",
+    file: eveningCaptures + "/05-brixton-navigation-key-reopened.png",
     alt: "The same driving screen with the map key open. A solid line means daylight, dashes mean dusk, and dots mean after dark.",
     title: "Reading the route",
     instruction: "The dots mark the part of the drive after dark. Close the key to see the map again, or select the shield for support.",
     actions: [
-      { label: "Close map key", next: "back", bounds: [107, 524, 36, 36], shape: "round" },
+      { label: "Close map key", next: "back", bounds: [16, 521, 133, 44] },
       openToolkit,
     ],
   },
@@ -86,16 +86,19 @@ export function EarlyProductWalkthrough() {
   const screen = screens[path[path.length - 1]];
   const titleRef = useRef<HTMLHeadingElement>(null);
 
+  const focusStep = useRef(false);
+  useLayoutEffect(() => {
+    if (focusStep.current) titleRef.current?.focus({ preventScroll: true });
+    focusStep.current = false;
+  }, [path]);
+
   function navigate(next: Screen | "back" | "restart", keyboard: boolean) {
+    focusStep.current = keyboard;
     setPath(current => {
       if (next === "restart") return ["plan"];
       if (next === "back") return current.length > 1 ? current.slice(0, -1) : current;
       return [...current, next];
     });
-
-    if (keyboard) {
-      requestAnimationFrame(() => titleRef.current?.focus({ preventScroll: true }));
-    }
   }
 
   return (
@@ -103,7 +106,7 @@ export function EarlyProductWalkthrough() {
       <header className={styles.header}>
         <p className={styles.kicker}>Interactive walkthrough</p>
         <h3 id="fg-walkthrough-title">Drive to Windrush Square</h3>
-        <p>Follow one trip captured in the iOS prototype. Select the outlined controls on the phone to try it.</p>
+        <p>Try one trip captured in the iOS prototype. Use the highlighted controls on the phone or the walkthrough buttons.</p>
       </header>
       <div className={styles.instructions}>
         <div aria-live="polite" aria-atomic="true">
@@ -119,7 +122,7 @@ export function EarlyProductWalkthrough() {
             alt={screen.alt}
             width={1290}
             height={2796}
-            sizes="(max-width: 360px) 78vw, 296px"
+            sizes="(max-width: 500px) 86vw, 430px"
           />
           {screen.actions.map(action => (
             <button
@@ -134,9 +137,14 @@ export function EarlyProductWalkthrough() {
           ))}
         </div>
       </div>
-      <nav className={styles.controls} aria-label="Walkthrough controls" hidden={path.length === 1}>
-        <button type="button" className="reader-control" onClick={event => navigate("back", event.detail === 0)}>← Back</button>
-        {path.length > 2 && <button type="button" className="reader-control" onClick={event => navigate("restart", event.detail === 0)}>Start over</button>}
+      <nav className={styles.controls} aria-label="Walkthrough controls">
+        {screen.actions.map(action => (
+          <button type="button" key={action.label} className="reader-control"
+            aria-label={`Walkthrough: ${action.label}`}
+            onClick={event => navigate(action.next, event.detail === 0)}>{action.label}</button>
+        ))}
+        {path.length > 1 && <button type="button" className="reader-control" onClick={event => navigate("back", event.detail === 0)}>← Back</button>}
+        {path.length > 1 && <button type="button" className="reader-control" onClick={event => navigate("restart", event.detail === 0)}>Start over</button>}
       </nav>
       <noscript>
         <p>Open the original captures to follow the trip.</p>

@@ -11,6 +11,9 @@ export function evidenceSummaryIdFor(evidence: ChapterEvidenceMap): string {
 export function EvidenceSummary({ evidence }: EvidenceSummaryProps) {
   const summaryId = evidenceSummaryIdFor(evidence);
 
+  const { interpretation, emphasis } = evidence;
+  const start = emphasis ? interpretation.indexOf(emphasis) : -1;
+
   return (
     <div
       id={summaryId}
@@ -21,7 +24,9 @@ export function EvidenceSummary({ evidence }: EvidenceSummaryProps) {
     >
       <p className="reader-evidence-summary-row">
         <span className="reader-evidence-summary-label">What this shows</span>
-        <span>{evidence.interpretation}</span>
+        <span>{emphasis && start >= 0 ? <>
+          {interpretation.slice(0, start)}<strong>{emphasis}</strong>{interpretation.slice(start + emphasis.length)}
+        </> : interpretation}</span>
       </p>
       {evidence.caveat ? (
         <p

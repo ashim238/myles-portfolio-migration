@@ -1,0 +1,48 @@
+.overlay { position: absolute; inset: 0; pointer-events: none; }
+.insert { position: absolute; inset: 0; background-size: 100% 100%; background-repeat: no-repeat; opacity: 0; }
+.plates { position: relative; isolation: isolate; overflow: hidden; }
+.replay {
+  position: absolute; z-index: 2; bottom: .5rem; right: .5rem; pointer-events: auto;
+  min-height: 32px; padding: .25rem .65rem; border: 1px solid #666255; border-radius: 2px;
+  background: #fffdf3; color: #28251f; font: 600 12px/1.2 var(--m97-ui-font);
+}
+.replay:focus-visible { outline: 3px solid #1a59aa; outline-offset: 2px; }
+@media (pointer: coarse) { .replay { min-height: 44px; } }
+@media (prefers-reduced-motion: no-preference) {
+  .overlay[data-opening=navi][data-playing=true] .insert { animation: park-detail 3.6s ease-in-out both; }
+  .overlay[data-playing=true] .scrollPage { animation: read-newsletter 3.8s cubic-bezier(.4,0,.25,1) both; }
+  .plates[data-playing=true] figure :global(.tt-proof-paper) { animation: register-proofs 3.6s cubic-bezier(.22,.68,.21,1) both; }
+}
+@keyframes park-detail {
+  0%, 12% { opacity: 0; clip-path: polygon(19% 47%, 32% 45%, 34% 73%, 20% 75%); }
+  36%, 81% { opacity: 1; clip-path: polygon(15% 28%, 79% 21%, 85% 77%, 18% 85%); }
+  100% { opacity: 0; clip-path: polygon(15% 28%, 79% 21%, 85% 77%, 18% 85%); }
+}
+/* The frame and notch stay fixed while the paper moves along the tilted screen. */
+.newsletter { width: 100%; height: 100%; display: block; }
+.scrollPage { transform: translateY(-114px); }
+@keyframes read-newsletter {
+  0%, 12% { transform: translateY(0); }
+  90%, 100% { transform: translateY(-114px); }
+}
+.plates figure:first-child { --register-x: 40%; --register-angle: -5deg; }
+.plates figure:nth-child(2) { --register-x: 0%; --register-angle: 0deg; }
+.plates figure:nth-child(3) { --register-x: -40%; --register-angle: 5deg; }
+@keyframes register-proofs {
+  0%, 65%, 100% { transform: translateX(0) rotate(0); }
+  25%, 34% { transform: translateX(var(--register-x)) rotate(var(--register-angle)); }
+}
+
+.plates.plates:global(.tt-original-plates) { padding-bottom: max(3.75rem, 2.2vw); }
+.plates :global(.tt-proof-paper) { position: relative; display: block; align-self: start; }
+.plates :global(.tt-proof-register) {
+  position: absolute; pointer-events: none; opacity: 0;
+  --ink: linear-gradient(#173d57, #173d57);
+  background: var(--ink) left top / 18% 2px, var(--ink) left top / 2px 17%,
+    var(--ink) right bottom / 18% 2px, var(--ink) right bottom / 2px 17%;
+  background-repeat: no-repeat; filter: drop-shadow(0 1px 1px white);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .plates[data-playing=true] :global(.tt-proof-register) { animation: slot-register 3.6s ease-in-out both; }
+}
+@keyframes slot-register { 0%, 65%, 100% { opacity: 0; } 75%, 89% { opacity: 1; } }

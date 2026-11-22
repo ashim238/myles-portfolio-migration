@@ -1,7 +1,7 @@
 "use client";
 
 import { CommandIcon } from "@/components/myles-97/command-icon";
-import Image from "next/image";
+import { WelcomePortrait } from "./welcome-portrait";
 import { useEffect, useRef, useState, type Dispatch } from "react";
 import { DisplayProperties } from "@/components/myles-97/display-properties";
 import {
@@ -187,7 +187,7 @@ export function Pocket97Shell({
           <div className="pocket97-home">
             <header className="pocket97-intro">
               <div className="pocket97-intro-mark" aria-hidden="true">
-                <Image src="/logomark.svg" alt="" width={72} height={72} priority />
+                <WelcomePortrait />
               </div>
               <div>
                 <p className="myles97-eyebrow">Product designer</p>
@@ -212,6 +212,13 @@ export function Pocket97Shell({
         )}
       </div>
 
+      {sheetOpen && (
+        <div className="pocket97-sheet-backdrop" aria-hidden="true" onClick={() => {
+          sheetReturnFocusRef.current = appsOpen ? appsButtonRef.current : startButtonRef.current;
+          setAppsOpen(false);
+          setStartOpen(false);
+        }} />
+      )}
       {startOpen ? (
         <div
           ref={startSheetRef}

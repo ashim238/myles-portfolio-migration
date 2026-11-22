@@ -1,62 +1,65 @@
 // One orthographic camera per project. The browser moves the same pieces out and back.
 const fs = require("node:fs");
 const path = require("node:path");
-const G = require("../../.agents/skills/teardown/assets/geometry.js");
-const P = require("../../.agents/skills/teardown/assets/projection.js");
+const skill = process.env.TEARDOWN_SKILL_DIR ?? path.resolve(__dirname, "../../.agents/skills/teardown");
+const G = require(path.join(skill, "assets/geometry.js"));
+const P = require(path.join(skill, "assets/projection.js"));
 
 const art = "/projects/preview-art/";
 const tick = "/projects/tiktok/system/";
 const round = n => Number(n.toFixed(3));
-const part = (label, rect, landing, image, options = {}) => ({ label, rect, landing, image, ...options });
+const part = (label, revealGroup, rect, landing, image, options = {}) => ({ label, revealGroup, rect, landing, image, ...options });
 
 // rect = position on the assembled page. landing = optical center on the 640 × 360 spread.
 // Separate content in reading order, with a second axis for inset controls or loose inserts.
 const models = {
   "fresh-greens": {
-    paper: "#e0e9d2", edge: "#66826f", elevation: 54,
+    paper: "#e1ead7", edge: "#627968", elevation: 65,
     parts: [
-      part("Street map", [0, 0, 269, 177], [167, 231], art+"atlas-street-map.webp", { radius: 4 }),
-      part("Map key", [10, 147, 147, 31.7], [187, 101], art+"atlas-map-key.webp", { radius: 6 }),
-      part("Route summary", [0, 178, 232, 115.6], [396, 83], art+"atlas-arrival.webp", { radius: 2 }),
-      part("Road conditions", [0, 293.6, 104, 46.8], [418, 179], art+"atlas-condition.webp"),
-      part("Go", [0, 340.4, 252, 34.9], [458, 248], art+"atlas-go.webp", { radius: 2 }),
+      part("Street map", 0, [0, 0, 310, 204], [179, 155], art+"atlas-street-map.webp", { radius: 6 }),
+      part("Map key", 0, [10, 165, 160, 34.5], [165, 277], art+"atlas-map-key.webp", { radius: 8 }),
+      part("Route summary", 1, [0, 204, 259, 129], [471, 105], art+"atlas-arrival.webp", { radius: 4 }),
+      part("Road conditions", 2, [8, 333, 139, 62], [433, 215], art+"atlas-condition.webp", { radius: 4 }),
+      part("Go", 3, [0, 395, 252, 35], [477, 281], art+"atlas-go.webp", { radius: 10 }),
     ],
   },
   understandingfafsa: {
-    paper: "#f5e5d6", edge: "#a07c68", elevation: 53,
+    paper: "#f7ecdd", edge: "#917660", elevation: 70,
     parts: [
-      part("Fixed footer", [0, 315, 180, 78], [272, 277], art+"newsletter-footer-strip.webp"),
-      part("Guides module", [0, 133, 180, 182], [442, 174], art+"guide-page.webp"),
-      part("Enrollment guide", [99, 188.4, 66.4, 90.8], [525, 171], art+"enrollment-list.webp", { radius: 2 }),
-      part("Student Aid Index guide", [15, 188.4, 66.5, 90.8], [420, 188], art+"student-aid-index.webp", { radius: 2 }),
-      part("Story block", [0, 66, 180, 67], [214, 174], art+"newsletter-story-strip.webp"),
-      part("Fixed masthead", [0, 0, 180, 66], [156, 84], art+"modular-header.webp"),
+      part("Fixed footer", 0, [0, 339, 226, 87], [176, 285], art+"newsletter-footer-strip.webp"),
+      part("Story block", 1, [0, 82, 226, 86], [167, 171], art+"newsletter-story-strip.webp"),
+      part("Fixed masthead", 0, [0, 0, 226, 82], [158, 65], art+"modular-header.webp"),
+      part("Guides module", 2, [0, 168, 202, 204], [419, 144], art+"guide-page.webp"),
+      part("Enrollment guide", 3, [111, 230, 75, 103], [545, 223], art+"enrollment-list.webp", { radius: 1 }),
+      part("Student Aid Index guide", 3, [17, 230, 75, 103], [452, 251], art+"student-aid-index.webp", { radius: 1 }),
     ],
   },
   navi: {
-    paper: "#ebe4d3", edge: "#8b8976", elevation: 58,
+    paper: "#ece9d8", edge: "#777965", elevation: 66,
     parts: [
-      part("Neighborhood map", [0, 178, 144, 81], [263, 273], art+"prospect-listing-map.webp", { inset: 2 }),
-      part("Park photo", [0, 0, 207, 116], [150, 175], art+"prospect-tunnel.webp", { inset: 3 }),
-      part("Park canopy photo", [209, 0, 58, 57], [295, 65], art+"prospect-trees.webp", { inset: 2 }),
-      part("Pond photo", [209, 59, 58, 57], [361, 107], art+"prospect-pond.webp", { inset: 2 }),
-      part("Activity listing", [0, 118, 194, 35.6], [413, 179], art+"navi-activity-title.webp"),
-      part("Reservation", [172, 118, 95, 64], [505, 246], art+"navi-dates.webp", { radius: 4 }),
+      part("Neighborhood map", 2, [0, 207, 172, 97], [423, 226], art+"prospect-listing-map.webp", { inset: 2 }),
+      part("Park photo", 0, [0, 0, 280, 157], [163, 142], art+"prospect-tunnel.webp", { inset: 4 }),
+      part("Park canopy photo", 1, [282, 0, 78, 77], [394, 72], art+"prospect-trees.webp", { inset: 3 }),
+      part("Pond photo", 1, [282, 79, 78, 77], [497, 76], art+"prospect-pond.webp", { inset: 3 }),
+      part("Activity listing", 0, [0, 160, 254, 46.6], [175, 262], art+"navi-activity-title.webp"),
+      part("Reservation", 3, [247, 162, 112, 76], [534, 277], art+"navi-dates.webp", { radius: 4 }),
     ],
   },
   tiktok: {
-    paper: "#e7caba", edge: "#796a63", elevation: 64,
+    paper: "#f1dbca", edge: "#76675d", elevation: 69,
     parts: [
-      part("e-Boy/e-Girl template", [0, 0, 138, 245], [129, 213], art+"eboy.webp"),
-      part("Fit Check sketch", [0, 0, 126, 218], [209, 186], art+"fit-check-drawing.webp", { inset: 2 }),
-      part("Dopamine Dressing template", [0, 0, 138, 245], [288, 164], art+"dopamine.webp"),
-      part("Light Academia print", [0, 0, 138, 245], [432, 158], null, {
+      part("e-Boy/e-Girl template", 1, [0, 0, 138, 245], [105, 147], art+"eboy.webp"),
+      part("Fit Check sketch", 1, [0, 0, 126, 218], [178, 218], art+"fit-check-drawing.webp", { inset: 2 }),
+      part("Dopamine Dressing template", 1, [0, 0, 138, 245], [276, 153], art+"dopamine.webp"),
+      part("Light Academia print", 0, [0, 0, 138, 245], [427, 172], null, {
         fill: "#ffceb4", imprints: [
           { file: tick+"academia-barcode.svg", x: 0, y: 33.5, width: 14.4, height: 25.2 },
-          { file: tick+"academia-text-detail.svg", x: 83.1, y: 32.4, width: 39.6, height: 12.8 },
         ],
       }),
-      part("Catalog slot", [15, 46, 92.4, 104.7], [516, 199], null, { fill: "#fffefa" }),
+      part("Editorial title", 2, [65, 23, 76, 24.6], [531, 74], null, {
+        fill: "#ffceb4", imprints: [{ file: tick+"academia-text-detail.svg", x: 0, y: 0, width: 76, height: 24.6 }],
+      }),
+      part("Catalog slot", 2, [15, 46, 92.4, 104.7], [523, 214], null, { fill: "#fffefa" }),
     ],
   },
 };
@@ -83,7 +86,7 @@ function bounds(points) {
 }
 
 function build(model) {
-  const { project } = P.createCamera({ azimuth: -106, elevation: model.elevation, roll: -3 });
+  const { project } = P.createCamera({ azimuth: -101, elevation: model.elevation, roll: -1 });
   const pieces = model.parts.map(({ label, rect, landing, radius = .8, ...face }, index) => {
     const [x,y,width,height] = rect;
     const mesh = G.part(label,label,[0,0,0]);

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { NewsletterAuditExcerpts } from "@/components/newsletter-audit-excerpts";
 import { ColorPalette } from "@/components/color-palette";
 import { CountUp } from "@/components/count-up";
+import { CaseOpeningMotion } from "@/components/case-opening-motion";
 import { LeadMedia } from "@/components/lead-media";
 import { ReaderShell } from "@/components/myles-97/reader-shell";
 import { ProjectChapter } from "@/components/project-chapter";
@@ -100,7 +102,10 @@ export default async function UnderstandingFafsaPage({ searchParams }: {
           alt="Two phone mockups showing blue and orange UnderstandingFAFSA newsletter templates."
           width={1280}
           height={1111}
-        />
+          presentation="story"
+        >
+          <CaseOpeningMotion variant="newsletter" />
+        </LeadMedia>
         <ProjectOpeningFacts
           role="Product Designer"
           goal="Give the founder newsletter templates she could edit and send herself in Mailchimp."
@@ -135,13 +140,13 @@ export default async function UnderstandingFafsaPage({ searchParams }: {
                   The founder, Kim, was concerned about falling open rates and how
                   the newsletter&apos;s design deviated from the website&apos;s fresh
                   new look. My initial audit noted super lengthy stretches of text,
-                  inconsistent CTAs, and hierarchy that made emails difficult to scan.
+                  inconsistent CTAs, and hierarchy that made emails difficult to scan.{" "}
                   <strong>Most readers opened the newsletter on their phones.</strong>
                 </p>
                 <p>
                   Between sourcing content and editor corrections, Kim had a short
-                  window to get newsletter materials buttoned up for weekly publishing.
-                  <strong>She was a Mailchimp pro</strong> but had limited experience with Figma or
+                  window to get newsletter materials buttoned up for weekly publishing.{" "}
+                  <strong>She was a Mailchimp pro</strong>{" "}but had limited experience with Figma or
                   front-end web development. The templates needed to fit the workflow
                   rather than make new responsibilities for her.
                 </p>
@@ -157,8 +162,8 @@ export default async function UnderstandingFafsaPage({ searchParams }: {
                   The UnderstandingFAFSA site had plenty of resources to help people
                   fill out the FAFSA. Each newsletter could highlight filing windows,
                   deadlines, policy changes, and resources that brought readers back
-                  to the site. Kim needed a base to work from, with the leeway to
-                  rearrange stories depending on the priorities for the week.
+                  to the site. Kim needed a base to work from, with the leeway to{" "}
+                  <strong>rearrange stories depending on the priorities for the week.</strong>
                 </p>
               </div>
               <BeforeAfterPhones />
@@ -174,7 +179,7 @@ export default async function UnderstandingFafsaPage({ searchParams }: {
             <div className="project-section uf-section">
               <div className="project-section-body">
                 <p>
-                  A collaborator and I reviewed more than 120 newsletters. We looked
+                  A collaborator and I{" "}<strong>reviewed more than 120 newsletters.</strong>{" "}We looked
                   at clarity, personalization, tone, visual appeal, and brand
                   consistency.
                   Revenews, The 74, Next by Jeff Selingo, Medium, and Folderly gave
@@ -183,13 +188,16 @@ export default async function UnderstandingFafsaPage({ searchParams }: {
                   gave me the idea for livelier dividers.
                 </p>
                 <p>
-                  I owned the final visual design. Another designer, the founder, and
+                  <strong>I owned the final visual design.</strong>{" "}Another designer, the founder, and
                   I worked together on the copy and base structure. The required
                   sections, colors, typefaces, and final say stayed with the founder.
                   Her critique was short: <q>Add some pizzazz.</q> Over time, I felt
                   more comfortable deviating from the standing layout when a send
                   needed something different.
                 </p>
+              </div>
+              <NewsletterAuditExcerpts />
+              <div className="project-section-body">
                 <ol
                   className="uf-audit-actions"
                   aria-label="Design changes from the newsletter audit"
@@ -224,7 +232,7 @@ export default async function UnderstandingFafsaPage({ searchParams }: {
                   Mailchimp. That was not the case.
                 </p>
                 <p>
-                  I made a welcome email, the weekly newsletter, and a shorter ICYMI
+                  I made{" "}<strong>a welcome email, the weekly newsletter, and a shorter ICYMI</strong>{" "}
                   version for event invites and recaps. I also left the founder with
                   three email themes inspired by the brand palette.
                 </p>
@@ -257,7 +265,7 @@ export default async function UnderstandingFafsaPage({ searchParams }: {
                     Gmail clips emails once the HTML source crosses 102 KB.
                   </mark>{" "}
                   Figma&apos;s spacing created too many Mailchimp containers and
-                  wrappers. I rebuilt the live system with simpler native blocks,
+                  wrappers.{" "}<strong>I rebuilt the live system with simpler native blocks,</strong>{" "}
                   flattened the hierarchy, and removed what didn&apos;t need to ship.
                 </p>
                 <p>
@@ -287,8 +295,8 @@ export default async function UnderstandingFafsaPage({ searchParams }: {
             <div className="project-section uf-section">
               <div className="project-section-body">
                 <p>
-                  The founder has launched roughly 20 sends since the redesign and
-                  edits the template herself each week. She gets in touch when the
+                  The founder has launched roughly 20 sends since the redesign and{" "}
+                  <strong>edits the template herself each week.</strong>{" "}She gets in touch when the
                   layout needs to adapt for a specific audience or she wants a color
                   pairing that isn&apos;t in the original three themes.
                 </p>

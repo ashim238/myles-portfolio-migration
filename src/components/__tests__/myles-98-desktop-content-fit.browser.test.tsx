@@ -159,11 +159,11 @@ async function contentFit(page: Page, selector: string, childSelector: string) {
 }
 
 describe("Myles 98 desktop content fit", () => {
-  it("keeps the illustrated atlas in frame and respects reduced motion", async () => {
+  it("keeps the atlas lettering in frame and reveals its layers with reduced motion", async () => {
     const page = await browserPage({ width: 1314, height: 1057 }, renderDesktopMarkup());
     const cover = page.locator('.publication-cover[data-project="fresh-greens"]');
     const jacket = await cover.boundingBox();
-    for (const detail of [".atlas-print", ".atlas-title", ".atlas-ticket"]) {
+    for (const detail of [".atlas-title", ".atlas-ticket"]) {
       const bounds = await cover.locator(detail).boundingBox();
       if (!jacket || !bounds) throw new Error("Missing atlas cover artwork");
       expect(bounds.x).toBeGreaterThanOrEqual(jacket.x);
@@ -171,12 +171,12 @@ describe("Myles 98 desktop content fit", () => {
       expect(bounds.x + bounds.width).toBeLessThanOrEqual(jacket.x + jacket.width);
       expect(bounds.y + bounds.height).toBeLessThanOrEqual(jacket.y + jacket.height);
     }
-    const hand = cover.locator(".atlas-wave use");
-    expect(await hand.evaluate(layer => (layer as SVGUseElement).getBBox().width)).toBeGreaterThan(10);
-    const wave = cover.locator(".atlas-wave");
-    expect(await wave.evaluate(layer => getComputedStyle(layer).animationName)).toBe("atlas-hand-greeting");
+    expect(await cover.locator(".atlas-map").count()).toBe(1);
+    expect(await cover.locator(".assembly-part").count()).toBeGreaterThan(2);
     await page.emulateMedia({ reducedMotion: "reduce" });
-    expect(await wave.evaluate(layer => getComputedStyle(layer).animationName)).toBe("none");
+    await cover.evaluate(element => { element.setAttribute("data-inspect", "true"); });
+    expect(await cover.locator(".edition-face").evaluate(layer => getComputedStyle(layer).opacity)).toBe("0");
+    expect(await cover.locator(".assembly-part").first().evaluate(layer => getComputedStyle(layer).transitionDuration)).toBe("0s");
     await page.close();
   });
 

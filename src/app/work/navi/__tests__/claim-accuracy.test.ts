@@ -338,7 +338,7 @@ describe("Navi evidence claims", () => {
     );
 
     expect(projectProse).toMatch(
-      /<strong>Plan<\/strong> is supposed to help someone, well, plan\./,
+      /Plan is supposed to help someone, well, plan\./,
     );
   });
 

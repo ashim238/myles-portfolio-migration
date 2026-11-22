@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Jost, Lato } from "next/font/google";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { CaseOpeningMotion } from "@/components/case-opening-motion";
 import { LeadMedia } from "@/components/lead-media";
 import { ReaderShell } from "@/components/myles-97/reader-shell";
 import { ProjectOpeningFacts } from "@/components/project-opening-facts";
@@ -18,6 +19,7 @@ import {
   SurveyResponseChart,
 } from "@/components/navi";
 import { NaviDemoEmbed } from "@/components/navi-demo-embed";
+import { GuideSample } from "@/components/navi/guide-sample";
 import { NaviResearchArtifacts } from "@/components/navi/research-artifacts";
 import { CaseHighlightObserver } from "@/components/case-highlight-observer";
 import { getProjectBySlug, getPublishedProjects } from "@/lib/content";
@@ -95,7 +97,10 @@ export default async function NaviPage() {
           alt="Navi neighborhood experience search results and cards on a tablet on a wooden table."
           width={1280}
           height={861}
-        />
+          presentation="story"
+        >
+          <CaseOpeningMotion variant="navi" />
+        </LeadMedia>
         <ProjectOpeningFacts
           role="UI/UX Designer"
           goal="Help visitors find and book experiences with local businesses in NYC."
@@ -137,8 +142,8 @@ export default async function NaviPage() {
               </h3>
               <div className="project-section-body">
                 <p>
-                  The regions reflect early emphasis. We had no live
-                  tourist-density or geo-analytics data.
+                  The regions reflect early emphasis.{" "}<strong>We had no live
+                  tourist-density or geo-analytics data.</strong>
                 </p>
               </div>
               <HeatmapExplorer />
@@ -150,7 +155,7 @@ export default async function NaviPage() {
               <h3 className="project-evidence-heading" id="nv-research">Platform audits and resident research</h3>
               <div className="project-section-body">
                 <p>
-                  Finding interview participants was hard, so we relied on surveys. I collected 14 resident and stakeholder responses,
+                  Finding interview participants was hard, so we relied on surveys.{" "}<strong>I collected 14 resident and stakeholder responses,</strong>{" "}
                   including two from Manhattan businesses, and spoke with NYC Tourism.
                   The sample included longtime residents and many college-aged
                   people, so it doesn&apos;t stand in for all NYC residents.
@@ -202,29 +207,31 @@ export default async function NaviPage() {
                 <p>
                   I grouped responses into three archetypes: <strong>digital nomads,
                   ethical travelers, and visitors already contributing to
-                  communities.</strong> These were early audience hypotheses, not validated
+                  communities.</strong>{" "}These were early audience hypotheses, not validated
                   market segments.
                 </p>
                 <p>
                   I used <mark className="case-highlight">Learn, Plan, Go</mark>{" "}
                   to shape our studio prototype.
                 </p>
-                <ul>
-                  <li>
-                    <strong>Learn</strong> covers the neighborhood, activity, and
-                    host so someone can try something new without feeling like a
-                    fish out of water.
+              </div>
+              <figure className="nv-field-guide" aria-label="Learn, Plan, Go">
+                <figcaption><strong>Prospect Park carriage ride</strong></figcaption>
+                <ol>
+                  <li><h4>Learn</h4><GuideSample stage="Learn" />
+                    <p>Learn covers the neighborhood, activity, and host so someone can
+                    try something new without feeling like a fish out of water.</p>
                   </li>
-                  <li>
-                    <strong>Plan</strong> is supposed to help someone, well, plan.
-                    I wanted it to show activity requirements and a
-                    small-business cost breakdown.
+                  <li><h4>Plan</h4><GuideSample stage="Plan" />
+                    <p>Plan is supposed to help someone, well, plan. I wanted it to show
+                    activity requirements and a small-business cost breakdown.</p>
                   </li>
-                  <li>
-                    I pictured <strong>Go</strong>{" "}showing eco-friendly routes from
-                    the visitor&apos;s current location.
+                  <li><h4>Go</h4><GuideSample stage="Go" />
+                    <p>I pictured Go showing eco-friendly routes from the visitor&apos;s current location.</p>
                   </li>
-                </ul>
+                </ol>
+              </figure>
+              <div className="project-section-body">
                 <p>
                   In Figma, visitors could book directly with a partner in a
                   separate module. My React demo covers individual booking and lists
@@ -232,8 +239,8 @@ export default async function NaviPage() {
                   still on my list.
                 </p>
                 <p>
-                  Cost, location, and event type were non-negotiable.
-                  Time-sensitive statuses came first. Going Fast reflected remaining
+                  Cost, location, and event type were non-negotiable.{" "}
+                  <strong>Time-sensitive statuses came first.</strong>{" "}Going Fast reflected remaining
                   availability. Popular was meant to compare tickets booked within
                   a set window against other events. I didn&apos;t wire that logic into
                   React. In another course, my team noticed Airbnb used Featured
@@ -256,8 +263,8 @@ export default async function NaviPage() {
                   project stayed in Figma. My teammate proposed the original
                   information architecture. I tweaked it to match the personas and
                   journey maps. The team had trouble working together. Our
-                  experience with design tools and schedules didn&apos;t line up. I
-                  created the design system from head to toe, saving time on
+                  experience with design tools and schedules didn&apos;t line up.{" "}<strong>I
+                  created the design system from head to toe,</strong>{" "}saving time on
                   aesthetic decisions and refocusing us on resident and
                   business-owner insights. The journeys and flows were internal
                   planning artifacts with no engineering handoff.
@@ -265,8 +272,8 @@ export default async function NaviPage() {
                 <p>
                   The homepage was sort of a first pass at whether the system held
                   up. Other design students tested the homepage and search, so it
-                  makes sense that feedback centered on layout. We matched heights,
-                  then cut tags and copy to lessen visual load.
+                  makes sense that feedback centered on layout.{" "}<strong>We matched heights,
+                  then cut tags and copy</strong>{" "}to lessen visual load.
                 </p>
                 <p>
                   By the time the semester ended, we didn&apos;t have an opportunity to
@@ -276,8 +283,8 @@ export default async function NaviPage() {
                   group event coordination, but I was comfortable with that as a V1.
                 </p>
                 <p>
-                  After the semester, I rebuilt the system in React and TypeScript
-                  on my own. I wanted to see how the design system held up once
+                  After the semester,{" "}<strong>I rebuilt the system in React and TypeScript
+                  on my own.</strong>{" "}I wanted to see how the design system held up once
                   you could pick an activity, choose a date, and book it.
                 </p>
                 <p className="nv-system-proof-links">
@@ -307,8 +314,8 @@ export default async function NaviPage() {
               <div className="project-section-body">
                 <p>
                   I could see NYC Tourism as a future partner, but that partnership
-                  hasn&apos;t happened. The browser demo supports the individual flow. I
-                  still need to test it with residents, travelers, and local hosts.
+                  hasn&apos;t happened. The browser demo supports the individual flow. I{" "}
+                  <strong>still need to test it with residents, travelers, and local hosts.</strong>
                 </p>
               </div>
               <div className="nv-validation-ledger">
