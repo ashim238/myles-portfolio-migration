@@ -1,0 +1,22 @@
+.map {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #faf9f3;
+}
+.map > svg { width: 100%; height: auto; display: block; }
+.map .credit {
+  position: absolute;
+  right: 10px;
+  bottom: 2px;
+  padding: 1px 3px;
+  color: #465047;
+  background: #ffffffe6;
+  font: 14px/1.1 Arial, sans-serif;
+  text-decoration: underline;
+}
+.map .credit::after { content: ""; position: absolute; inset: -5px -3px -2px; }
+.map .credit:focus-visible { outline: 2px solid #075dac; outline-offset: -2px; }
+@media (forced-colors: active) {
+  .map svg { forced-color-adjust: none; }
+}

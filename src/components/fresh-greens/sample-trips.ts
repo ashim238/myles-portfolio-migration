@@ -11,18 +11,18 @@ export const sampleTrips = [
     light: "After dark", clock: "9:19", departureMinutes: 21 * 60 + 19,
     geometry: drawings.brixton, initialOption: 1,
     options: [
-      { via: "Brixton Hill", minutes: 4, miles: "0.6" },
-      { via: "Brixton Hill", minutes: 6, miles: "1.2" },
+      { via: "Brixton Hill", minutes: 4, miles: "0.6", conditions: null },
+      { via: "Brixton Hill", minutes: 6, miles: "1.2", conditions: 0 },
     ],
     preview: eveningCaptures + "/03-brixton-evening-preview.png",
   },
   {
     id: "weeksville", name: "Weeksville Heritage Center", area: "Brooklyn, New York", street: "Utica Avenue",
     light: "Daylight", clock: "12:57", departureMinutes: 12 * 60 + 57,
-    geometry: drawings.weeksville, initialOption: 1,
+    geometry: { ...drawings.weeksville, paths: [drawings.weeksville.paths[1], drawings.weeksville.paths[0]] }, initialOption: 0,
     options: [
-      { via: "Lincoln Place", minutes: 4, miles: "0.6" },
-      { via: "Saint Johns Place", minutes: 5, miles: "0.6" },
+      { via: "Saint Johns Place", minutes: 5, miles: "0.6", conditions: 1 },
+      { via: "Lincoln Place", minutes: 4, miles: "0.6", conditions: 2 },
     ],
     preview: native + "/01-weeksville-daylight-preview.png",
   },

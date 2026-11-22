@@ -15,18 +15,19 @@ describe("Fresh Greens embedded prototype", () => {
     expect(screen.getByRole("status")).toHaveTextContent("No saved places match");
     await user.clear(search);
     await user.type(search, "Brooklyn{ArrowDown}{Enter}");
-    expect(map()).toHaveAccessibleName(/Utica Avenue.*Weeksville.*Route 2/);
-    expect(screen.getByRole("button", { name: "→ Go" })).toHaveFocus();
+    expect(map()).toHaveAccessibleName(/Utica Avenue.*Weeksville.*Route 1/);
+    expect(screen.getByRole("button", { name: "Go" })).toHaveFocus();
     const path = map().querySelector("path")?.getAttribute("d");
-    expect(screen.getByRole("button", { name: "Next route" })).toBeDisabled();
-    await user.click(screen.getByRole("button", { name: "Previous route" }));
     expect(screen.getByRole("button", { name: "Previous route" })).toBeDisabled();
+    await user.click(screen.getByRole("button", { name: "Next route" }));
+    expect(screen.getByRole("button", { name: "Next route" })).toBeDisabled();
     expect(map().querySelector("path")?.getAttribute("d")).not.toBe(path);
-    expect(map()).toHaveAccessibleName(/Route 1 via Lincoln Place/);
+    expect(map()).toHaveAccessibleName(/Route 2 via Lincoln Place/);
     expect(screen.getByText(/Arrive 1:01 PM/)).toBeVisible();
-    await user.click(screen.getByRole("button", { name: "→ Go" }));
+    await user.click(screen.getByRole("button", { name: "Go" }));
     expect(screen.getByRole("button", { name: "End trip" })).toHaveFocus();
     await user.click(screen.getByRole("button", { name: "Map key" }));
+    expect(screen.getByRole("button", { name: "Close map key" })).toHaveFocus();
     expect(within(screen.getByRole("list", { name: "Route line patterns" })).getByText("After dark")).toBeVisible();
     await user.click(screen.getByRole("button", { name: "Safety toolkit" }));
     await user.click(screen.getByRole("button", { name: "Pulled-over" }));
@@ -37,7 +38,7 @@ describe("Fresh Greens embedded prototype", () => {
     await user.keyboard("{Escape}");
     expect(screen.getByRole("button", { name: "Safety toolkit" })).toHaveFocus();
     await user.click(screen.getByRole("button", { name: "End trip" }));
-    expect(map()).toHaveAccessibleName(/Weeksville.*Route 1/);
+    expect(map()).toHaveAccessibleName(/Weeksville.*Route 2/);
   });
   it("dismisses search from the result list and leaves the original route in place", async () => {
     const user = userEvent.setup();
