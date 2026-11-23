@@ -96,16 +96,6 @@
   --m98-context-focus: #fff;
 }
 
-.reader-mode.reader-mode.nv-page .nv-demo-embed-mobile-cta:focus-visible {
-  outline-offset: -4px;
-}
-
-:root[data-theme="dark"]
-  .reader-mode.reader-mode.nv-page
-  .nv-demo-embed-mobile-cta {
-  --m98-context-focus: #fff;
-}
-
 .reader-mode.reader-mode.uf-page .uf-switcher-preview--scroll {
   --focus-ring: var(--m98-paper-focus);
 }

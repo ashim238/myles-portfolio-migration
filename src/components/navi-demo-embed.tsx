@@ -39,10 +39,6 @@ export function NaviDemoEmbed() {
         sizes="92vw"
         style={{ width: "100%", height: "auto", display: "block" }}
       />
-      <Link href="/work/navi/demo" className="nv-demo-embed-mobile-cta reader-control">
-        Open the demo
-        <CommandIcon name="external" />
-      </Link>
     </div>
   );
 

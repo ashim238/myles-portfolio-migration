@@ -190,15 +190,24 @@ describe("Fresh Greens rendered narrative ownership", () => {
     const research = chapter(container, "fg-research");
 
     expect(frame).toHaveTextContent("The Green Book and the drive home");
-    expect(research).toHaveTextContent(
-      "Drivers couldn't compare the conditions they cared about across routes before choosing.",
-    );
+    const findings = within(research).getByRole("figure", { name: "What six drivers told me" });
+    const plan = within(findings).getByRole("region", { name: "Plan" });
+    const mentions = { Daylight: 6, "Police presence": 5, "Road conditions": 5, Wildlife: 3 };
+    expect(within(plan).getAllByRole("listitem")).toHaveLength(4);
+    for (const [condition, count] of Object.entries(mentions)) {
+      expect(within(plan).getByText(condition).closest("li")).toHaveTextContent(`${count} of 6`);
+    }
+    const respond = within(findings).getByRole("region", { name: "Respond" });
+    expect(within(respond).getByText("police encounters", { selector: "strong" })).toBeInTheDocument();
+    expect(respond).not.toHaveTextContent(/\d of 6/);
+    expect(within(findings).getByRole("region", { name: "Trust" }))
+      .toHaveTextContent("5 of 6 asked family or friends before trusting an unfamiliar place.");
+    expect(findings).toHaveTextContent("Six interviews can't represent every Black driver.");
     const participants = within(research).getByLabelText("Interview participants");
     expect(participants).toHaveTextContent("Six Black drivers of different genders");
     expect(participants).toHaveTextContent("Across the South");
     expect(participants).toHaveTextContent("19 to 34");
     expect(research.querySelector("blockquote")).toHaveTextContent("bright where you are and dark where you arrive");
-    expect(within(research).getByText("police encounters", { selector: "strong" })).toBeInTheDocument();
     expect(frame.querySelector("#fg-app-walkthrough")).toBeInTheDocument();
     expect(within(chapter(container, "fg-design")).getByRole("heading", {name: /three onboarding screens/i})).toBeInTheDocument();
   });

@@ -45,34 +45,50 @@ const programs: ProgramDefinition[] = [
 ];
 
 describe("Projects evaluation paths", () => {
-  it("opens each study from the same native link as its artwork and reading action", async () => {
+  it("selects a preview by tapping the project name while its artwork and CTA share a single reading link", async () => {
     const user = userEvent.setup();
     render(<SelectedWorkExplorer programs={programs} />);
-    const files = screen.getByRole("navigation", { name: "Case studies" });
-    for (const program of programs) {
-      const file = within(files).getByRole("link", { name: program.title });
-      expect(file).toHaveAttribute("href", program.href);
-      await user.hover(file);
+    const files = screen.getByRole("radiogroup", { name: "Project to preview" });
+    for (const program of [...programs].reverse()) {
+      const option = within(files).getByRole("radio", { name: program.title });
+      await user.pointer([{ keys: "[TouchA>]", target: option.closest("label")! }, "[/TouchA]"]);
+      expect(option).toBeChecked();
       const card = screen.getByRole("listitem", { name: program.title });
-      const link = within(card).getByRole("link", { name: `Read ${program.title} case study` });
+      const link = screen.getByRole("link", { name: `Read ${program.title} case study` });
+      expect(screen.getAllByRole("link")).toEqual([link]);
       expect(link).toHaveAttribute("href", program.href);
       expect(link).toContainElement(card.querySelector(".product-thumbnail"));
       expect(link).toContainElement(within(card).getByText("Read case study"));
-      expect(within(card).queryByRole("button")).toBeNull();
     }
   });
 
-  it("supports keyboard activation of the illustrated reading link", async () => {
+  it("selects a project with the arrow keys and opens the previewed study from the next tab stop", async () => {
     const user = userEvent.setup();
-    render(<SelectedWorkExplorer programs={[programs[1]]} />);
+    render(<SelectedWorkExplorer programs={programs} />);
+    const files = screen.getByRole("radiogroup", { name: "Project to preview" });
+    within(files).getByRole("radio", { name: "Fresh Greens" }).focus();
+    await user.keyboard("{ArrowDown}");
+    expect(within(files).getByRole("radio", { name: "TikTok DSA" })).toBeChecked();
     const link = screen.getByRole("link", { name: "Read TikTok DSA case study" });
     const onClick = vi.fn((event: Event) => event.preventDefault());
     link.addEventListener("click", onClick);
-    within(screen.getByRole("navigation", { name: "Case studies" })).getByRole("link").focus();
     await user.tab();
     expect(link).toHaveFocus();
     await user.keyboard("{Enter}");
     expect(onClick).toHaveBeenCalledOnce();
+  });
+
+  it("previews on mouse hover and waits for a tap on touchscreens", async () => {
+    const user = userEvent.setup();
+    render(<SelectedWorkExplorer programs={programs} />);
+    const files = screen.getByRole("radiogroup", { name: "Project to preview" });
+    const option = within(files).getByRole("radio", { name: "Fresh Greens" });
+    const row = option.closest("label")!;
+    await user.click(within(files).getByRole("radio", { name: "TikTok DSA" }));
+    fireEvent.pointerEnter(row, { pointerType: "touch" });
+    expect(option).not.toBeChecked();
+    await user.hover(row);
+    expect(option).toBeChecked();
   });
 
   it("uses the project title as the card identity and keeps the app name as preview context", () => {

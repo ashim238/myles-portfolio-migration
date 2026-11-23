@@ -109,7 +109,7 @@ describe("Myles98 product shell", () => {
       "data-focused",
       "true",
     );
-    expect(within(screen.getByRole("navigation", { name: "Case studies" })).getAllByRole("link")).toHaveLength(4);
+    expect(within(screen.getByRole("radiogroup", { name: "Project to preview" })).getAllByRole("radio")).toHaveLength(4);
   });
 
   it("renders one source-based thumbnail for every project", () => {
@@ -315,17 +315,17 @@ describe("Myles98 product shell", () => {
     expect(screen.getByRole("button", { name: "Start" })).not.toHaveFocus();
   });
 
-  it("keeps project links reachable while tabbing between windows", async () => {
+  it("keeps the project picker reachable while tabbing between windows", async () => {
     const user = userEvent.setup();
     render(<Myles97Shell programs={programs} looseParts={looseParts} />);
     const browse = screen.getByRole("button", { name: "Browse projects" });
     await act(async () => browse.focus());
-    const files = screen.getByRole("navigation", { name: "Case studies" });
-    const link = within(files).getByRole("link", { name: "Fresh Greens" });
-    for (let step = 0; step < 14 && document.activeElement !== link; step++) {
+    const files = screen.getByRole("radiogroup", { name: "Project to preview" });
+    const option = within(files).getByRole("radio", { name: "Fresh Greens" });
+    for (let step = 0; step < 14 && document.activeElement !== option; step++) {
       await user.tab();
     }
-    expect(link).toHaveFocus();
+    expect(option).toHaveFocus();
     await user.click(browse);
     await waitFor(() => expect(screen.getByRole("link", { name: "Read Fresh Greens case study" })).toHaveFocus());
   });

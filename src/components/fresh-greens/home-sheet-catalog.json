@@ -1,0 +1,107 @@
+[
+  {
+    "category": "black-owned",
+    "name": "Great Day Latte",
+    "kind": "Cafe",
+    "location": "700 St Francis St, Mobile, AL",
+    "detail": "An ESSENTIAL part of my daily morning ritual. The fragrant scents and atmosphere remind me of my own kitchen."
+  },
+  {
+    "category": "black-owned",
+    "name": "Spot of Tea",
+    "kind": "Restaurant",
+    "location": "310 Dauphin St, Mobile, AL",
+    "detail": "Brunch that runs late and a porch worth lingering on. Order the crab cake omelette and a second pot of tea."
+  },
+  {
+    "category": "black-owned",
+    "name": "Soul Kitchen Music Hall",
+    "kind": "Music venue",
+    "location": "219 Dauphin St, Mobile, AL",
+    "detail": "The room they built for the show you didn’t know you needed. Black-owned, blues-rooted, every act welcome."
+  },
+  {
+    "category": "women-owned",
+    "name": "Magnolia Roots Salon",
+    "kind": "Salon",
+    "location": "253 Dauphin St, Mobile, AL",
+    "detail": "Tasha takes her time. You leave looking your best and feeling like a member of the family."
+  },
+  {
+    "category": "women-owned",
+    "name": "Iron + Ivy Boutique",
+    "kind": "Boutique",
+    "location": "52 N Royal St, Mobile, AL",
+    "detail": "Curated by someone with taste — the kind of place where the owner remembers what you almost bought last time."
+  },
+  {
+    "category": "women-owned",
+    "name": "Bayside Bloom Florist",
+    "kind": "Florist",
+    "location": "156 S Conception St, Mobile, AL",
+    "detail": "Bring a friend, walk out with something seasonal and unexpected. Cash arrangements always honored."
+  },
+  {
+    "category": "lgbtq-welcoming",
+    "name": "B-Bob’s Downtown",
+    "kind": "Bar",
+    "location": "213 Conti St, Mobile, AL",
+    "detail": "Open for decades, hosts Mobile’s drag scene, and one of the few places everyone has always been welcome."
+  },
+  {
+    "category": "lgbtq-welcoming",
+    "name": "Gallery 54",
+    "kind": "Gallery",
+    "location": "54 S Section St, Fairhope, AL",
+    "detail": "Quiet, generous space. The openings are mixed crowds and that’s by design — leadership has always made room."
+  },
+  {
+    "category": "lgbtq-welcoming",
+    "name": "Cammie’s Old Dutch Ice Cream",
+    "kind": "Ice cream",
+    "location": "2511 Old Shell Rd, Mobile, AL",
+    "detail": "Bring whoever you’re with, no one is watching. Family flavor, family-friendly, family means whoever you say."
+  },
+  {
+    "category": "restroom",
+    "name": "Bienville Square Restrooms",
+    "kind": "Public restroom",
+    "location": "Bienville Square, Mobile, AL",
+    "detail": "Clean, accessible, and you don’t have to buy anything to use them. A real one when you’re downtown."
+  },
+  {
+    "category": "restroom",
+    "name": "Mobile Public Library (Ben May)",
+    "kind": "Library restroom",
+    "location": "701 Government St, Mobile, AL",
+    "detail": "Ground floor by the entrance. Staff treats everyone like a regular — because everyone is, kind of."
+  },
+  {
+    "category": "restroom",
+    "name": "Cathedral Square Park Restrooms",
+    "kind": "Public restroom",
+    "location": "Cathedral Square, Mobile, AL",
+    "detail": "Right next to where the food trucks line up Fridays. Stop here before you commit to the line."
+  },
+  {
+    "category": "late-night-warm-welcome",
+    "name": "The Pelican Pub",
+    "kind": "Pub",
+    "location": "111 Dauphin St, Mobile, AL",
+    "detail": "Late hours, lit parking, and the staff actually says hello. Solid stop on a long drive home."
+  },
+  {
+    "category": "late-night-warm-welcome",
+    "name": "Callaghan’s Irish Social Club",
+    "kind": "Pub",
+    "location": "916 Charleston St, Mobile, AL",
+    "detail": "The Lammie burger and a quiet booth at the back. Hosts know every regular but never push."
+  },
+  {
+    "category": "late-night-warm-welcome",
+    "name": "Wintzell’s Oyster House",
+    "kind": "Restaurant",
+    "location": "605 Dauphin St, Mobile, AL",
+    "detail": "Lit lot, big windows, the kind of place a long drive can end at without feeling like an imposition."
+  }
+]

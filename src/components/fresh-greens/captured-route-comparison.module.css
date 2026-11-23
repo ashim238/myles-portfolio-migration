@@ -37,3 +37,22 @@ button.arrow:focus-visible {
   outline: 2px solid #173f2e;
   outline-offset: 1px;
 }
+
+button.trip, button.search {
+  position: absolute;
+  left: 5.5%;
+  width: 89%;
+  height: max(5%, 32px);
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  transform: translateY(-50%);
+}
+button.trip { top: 93.1%; }
+button.trip[data-driving="true"] { top: 93.6%; left: 4%; width: 92%; }
+button.search { top: 11.8%; left: 2%; width: 96%; height: 6%; }
+button.trip:focus-visible, button.search:focus-visible { outline: 2px solid #173f2e; outline-offset: 1px; }

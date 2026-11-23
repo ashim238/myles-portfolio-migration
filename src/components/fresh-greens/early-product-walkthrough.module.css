@@ -104,7 +104,9 @@
   color: #233e31;
   font: 600 .875rem/1.3 var(--font-family-sans, system-ui), sans-serif;
 }
-.header > .control { margin-top: 1rem; }
+.actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+.header .actions { margin-top: 1rem; }
+.viewer .actions { justify-content: center; }
 .control:hover { background: #e5eadf; }
 .control:focus-visible { outline: 2px solid #24569f; outline-offset: 3px; }
 .viewer .control:focus-visible { outline-color: #c3e4a8; }

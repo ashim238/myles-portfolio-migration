@@ -36,7 +36,9 @@ const projectChaptersPath = resolve(
   process.cwd(),
   "src/lib/project-chapters.ts",
 );
+const interviewFindingsPath = resolve(process.cwd(), "src/components/fresh-greens/interview-findings.tsx");
 const primaryPathFiles = [
+  interviewFindingsPath,
   pagePath,
   pulledOverPath,
   routeDecisionPath,
@@ -355,25 +357,7 @@ describe("Fresh Greens prose structure", () => {
     expect(source).toContain("<EarlyProductWalkthrough />");
     expect(copy).toContain("19 to 34");
     expect(source).toContain("<blockquote>“If they showed the gradient of light");
-    expect(copy).toContain("Plan");
-    expect(copy).toContain("Respond");
-    expect(copy).toContain("Trust");
-    expect(copy).toContain("All six mentioned daylight");
-    expect(copy).toContain("five mentioned road conditions");
-    expect(copy).toContain("five mentioned police presence");
-    expect(copy).toContain("three mentioned wildlife");
-    expect(copy).toContain(
-      "Five of six asked family or friends before trusting an unfamiliar place",
-    );
-    expect(copy).toContain(
-      "Drivers couldn't compare the conditions they cared about across routes before choosing.",
-    );
-    expect(copy).toContain(
-      "Five of six asked family or friends before trusting an unfamiliar place",
-    );
-    expect(copy).toContain(
-      "Six interviews can't represent every Black driver.",
-    );
+    expect(source).toContain("<InterviewFindings />");
     expect(source).toContain("<GreenBookPalette />");
     expect(source).toContain("<OnboardingGallery />");
   });
@@ -416,7 +400,6 @@ describe("Fresh Greens prose structure", () => {
 
     expect(source).not.toContain("<ResearchSynthesis");
     expect(source).not.toContain("Four recurring signals shaped the route model");
-    expect(source.match(/className="fg-evidence-boundary"/g)).toHaveLength(3);
     expect(source).toContain("moves={[]}");
   });
 

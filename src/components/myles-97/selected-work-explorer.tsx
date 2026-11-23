@@ -153,6 +153,8 @@ export function SelectedWorkExplorer({
   const remembered = useSyncExternalStore(subscribeToSelection, readSelection, () => null);
   const selected = programs.find(program => program.id === remembered)?.id ?? programs[0]?.id;
   const viewGroup = useId();
+  const projectGroup = useId();
+  const previewId = useId();
 
   return (
     <div className="myles97-explorer" data-work-view={view}>
@@ -161,7 +163,7 @@ export function SelectedWorkExplorer({
         <div>
           <h2 className="work-folder-name">{heading}</h2>
           <p id="selected-work-guide" className="myles97-explorer-guide">
-            Select a project to read its case study.
+            {view === "preview" ? "Choose a project to preview it." : "Select a project to read its case study."}
           </p>
         </div>
       </header>
@@ -178,24 +180,22 @@ export function SelectedWorkExplorer({
         </div>
       </div>
       {view === "preview" && (
-        <nav className="archive-file-list" aria-label="Case studies">
+        <div className="archive-file-list" role="radiogroup" aria-label="Project to preview">
           {programs.map((program) => (
-            <Link key={program.id} href={program.href} className="archive-file-row"
-              data-selected={selected === program.id}
-              onPointerEnter={event => { if (event.pointerType !== "touch") selectFile(program.id); }}
-              onFocus={() => selectFile(program.id)}
-              onClick={event => {
-                if (!usesNativeNavigation(event)) selectFile(program.id);
-                rememberReturnTarget(event, program, reduceMotion);
+            <label key={program.id} className="archive-file-row"
+              onPointerEnter={event => {
+                if (event.pointerType === "mouse") selectFile(program.id);
               }}>
               <Myles97Icon name={iconForProgram(program.id)} variant="color" size={24} />
               <span>{program.title === "UnderstandingFAFSA" ? <>Understanding<wbr />FAFSA</> : program.title}</span>
-              <CommandIcon name="external" />
-            </Link>
+              <input type="radio" data-project-file={program.id} name={projectGroup} value={program.id} checked={selected === program.id}
+                aria-controls={previewId} onChange={() => selectFile(program.id)} />
+            </label>
           ))}
-        </nav>
+        </div>
       )}
       <ul
+        id={previewId}
         className="myles97-selected-work-list"
         role="list"
         aria-label="Portfolio projects"

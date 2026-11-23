@@ -24,4 +24,31 @@ describe("Fresh Greens route comparison", () => {
     expect(screen.queryByRole("button", { name: /simulator|open the ios app/i })).not.toBeInTheDocument();
     expect(fetch).not.toHaveBeenCalled();
   });
+
+  it("opens the selected route’s first turn and returns to the same route", async () => {
+    const user = userEvent.setup();
+    render(<EarlyProductWalkthrough />);
+    for (const [index, via] of ["Utica Avenue", "Saint Johns Place"].entries()) {
+      if (index === 1) await user.click(screen.getByRole("button", { name: "Next route" }));
+      await user.click(screen.getByRole("button", { name: "Go, start route via " + via }));
+      expect(screen.getByRole("img").getAttribute("src")).toContain("ios-drive-" + (index + 1));
+      await user.click(screen.getByRole("button", { name: "End trip" }));
+      expect(screen.getByRole("status")).toHaveTextContent(via);
+      expect(screen.getByRole("img").getAttribute("src")).toContain("ios-route-" + (index + 1));
+    }
+  });
+
+  it("connects a recommendation category, business details and the sample destination", async () => {
+    const user = userEvent.setup();
+    render(<EarlyProductWalkthrough />);
+    await user.click(screen.getByRole("button", { name: "Browse recommendations" }));
+    await user.click(screen.getByRole("button", { name: /^Black-Owned$/ }));
+    await user.click(screen.getByRole("button", { name: /Great Day Latte/ }));
+    expect(screen.getByText("700 St Francis St, Mobile, AL", { selector: "p" })).toBeVisible();
+    await user.click(screen.getByRole("button", { name: /Back to recommendations/ }));
+    await user.click(screen.getByRole("button", { name: /Where are you headed/ }));
+    await user.type(screen.getByRole("searchbox"), "Weeks");
+    await user.click(screen.getByRole("button", { name: /Weeksville Heritage Center/ }));
+    expect(screen.getByRole("button", { name: "Next route" })).toBeVisible();
+  });
 });

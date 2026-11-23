@@ -14,6 +14,7 @@ import { ProjectEvidenceDisclosure } from "@/components/project-evidence-disclos
 import { ArchitectureDiagram } from "@/components/fresh-greens";
 import { DepartureReminderEvidence } from "@/components/fresh-greens/departure-reminder-evidence";
 import { WelcomeIllustrationMotion } from "@/components/fresh-greens/welcome-illustration-motion";
+import { InterviewFindings } from "@/components/fresh-greens/interview-findings";
 import { EarlyProductWalkthrough } from "@/components/fresh-greens/early-product-walkthrough";
 import { GreenBookPalette, OnboardingGallery } from "@/components/fresh-greens/visual-origins";
 import origins from "@/components/fresh-greens/visual-origins.module.css";
@@ -148,25 +149,7 @@ export default async function FreshGreensPage() {
               <div className="project-section-body">
                 <p>I carried that suggestion into the route preview. You can see sunset along the route while there’s still time to leave earlier or choose another way home.</p>
               </div>
-              <div className="fg-evidence-boundaries" aria-label="Three Fresh Greens product problems">
-                <div className="fg-evidence-boundary">
-                  <p className="fg-evidence-label">Plan</p>
-                  <p>Drivers couldn&apos;t compare the conditions they cared about across routes before choosing.{" "}<strong>All six mentioned daylight</strong>, five mentioned road conditions, five mentioned police presence, and three mentioned wildlife.</p>
-                </div>
-                <div className="fg-evidence-boundary">
-                  <p className="fg-evidence-label">Respond</p>
-                  <p>Drivers talked about <strong>police encounters</strong> and keeping help close when something went wrong.</p>
-                </div>
-                <div className="fg-evidence-boundary">
-                  <p className="fg-evidence-label">Trust</p>
-                  <p><strong>Five of six asked family or friends</strong>{" "}before trusting an unfamiliar place.</p>
-                </div>
-              </div>
-              <div className="project-section-body">
-                <p>
-                  Six interviews can&apos;t represent every Black driver.
-                </p>
-              </div>
+              <InterviewFindings />
             </div>
           </ProjectChapter>
 

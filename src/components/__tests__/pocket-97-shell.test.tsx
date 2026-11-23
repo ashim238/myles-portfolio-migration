@@ -170,7 +170,7 @@ describe("Pocket 98", () => {
 
     expect(dock).toBeInTheDocument();
     expect(document.querySelector("[data-draggable-window]")).toBeNull();
-    expect(within(screen.getByRole("navigation", { name: "Case studies" })).getAllByRole("link")).toHaveLength(4);
+    expect(within(screen.getByRole("radiogroup", { name: "Project to preview" })).getAllByRole("radio")).toHaveLength(4);
     expect(screen.getByRole("heading", { name: "Myles Ashitey" })).toBeInTheDocument();
   });
 

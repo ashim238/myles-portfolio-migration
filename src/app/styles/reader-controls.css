@@ -93,12 +93,6 @@
   box-shadow: var(--m97-bevel-recessed), inset 0 0 0 2px #18636a;
 }
 
-.reader-mode.reader-mode.nv-page .nv-demo-embed-mobile-cta.reader-control {
-  inset: auto auto 0.75rem 0.75rem;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  backdrop-filter: none;
-}
 
 /* The bevel carries the command state. Tabs and disclosure marks have their
    own geometry so multi-line reading surfaces keep their hierarchy. */

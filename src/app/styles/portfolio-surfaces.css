@@ -74,42 +74,84 @@
   margin-inline: auto;
 }
 
-/* Separate research evidence from implemented behavior and unproven outcomes
-   without adding another long prose block. */
+/* The interview counts share a six-person scale. The account of police
+   encounters is qualitative and sits alongside the chart. */
+.fg-interview-findings {
+  container-type: inline-size;
+  margin: 2.2rem 0 2.6rem;
+  font-family: var(--font-family-sans, system-ui), sans-serif;
+  text-align: start;
+}
+
 .fg-evidence-boundaries {
   display: grid;
-  margin: 2.2rem 0 2.6rem;
   max-width: min(68rem, 100%);
-  border: 1px solid var(--line);
+  border: 1px solid var(--m98-paper-rule, var(--line));
+  border-top: 3px solid var(--m98-document-accent, #385c43);
   border-radius: var(--fg-editorial-radius);
-  overflow: hidden;
   background: var(--surface);
 }
 
 .fg-evidence-boundary {
-  position: relative;
-  padding: 1.25rem 1.35rem 1.35rem;
+  min-width: 0;
+  padding: clamp(1rem, 3cqi, 1.65rem);
 }
 
 .fg-evidence-boundary + .fg-evidence-boundary {
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--m98-paper-rule, var(--line));
 }
 
-.fg-evidence-boundary::before {
-  content: "";
-  display: block;
-  width: 2.4rem;
-  height: 2px;
-  margin-bottom: 0.85rem;
-  background: var(--fg-accent);
-}
-
-.fg-evidence-label {
-  margin: 0 0 0.45rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: normal;
+.fg-interview-findings .fg-evidence-label {
+  margin: 0 0 .65rem;
+  font: 650 .85rem/1.3 var(--font-family-sans, system-ui), sans-serif;
   color: var(--fg-accent);
+}
+
+.fg-evidence-boundary .fg-finding-title {
+  max-width: 17ch;
+  margin: 0 0 1rem;
+  color: var(--m98-paper-text, var(--foreground));
+  font: 500 clamp(1.45rem, 3.8cqi, 2rem)/1.1 var(--m97-reader-font, Georgia, serif);
+  text-wrap: balance;
+}
+
+.fg-condition-counts {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.fg-condition-counts li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(2.75rem, .9fr) auto;
+  align-items: center;
+  gap: clamp(.4rem, 1.4cqi, .9rem);
+  padding-block: .48rem;
+  border-top: 1px solid var(--m98-paper-rule, var(--line));
+  font-size: .88rem;
+  line-height: 1.3;
+}
+
+.fg-count-track {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 2px;
+}
+
+.fg-count-track i {
+  height: .66rem;
+  border: 1px solid var(--m98-paper-rule, var(--line));
+}
+
+.fg-count-track .fg-count-filled {
+  border-color: #43634a;
+  background: #43634a;
+}
+
+.fg-count-total {
+  font-variant-numeric: tabular-nums;
+  font-weight: 650;
+  white-space: nowrap;
 }
 
 .fg-evidence-boundary p:last-child {
@@ -120,15 +162,44 @@
   text-wrap: pretty;
 }
 
-@media (min-width: 760px) {
-  .fg-evidence-boundaries {
-    grid-template-columns: repeat(3, 1fr);
-  }
+.fg-finding-respond {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-content: center;
+  align-items: start;
+  column-gap: .8rem;
+}
 
-  .fg-evidence-boundary + .fg-evidence-boundary {
-    border-top: 0;
-    border-left: 1px solid var(--line);
-  }
+.fg-finding-respond .fg-evidence-label { grid-column: 1 / -1; }
+.fg-finding-respond img { width: 2.75rem; height: auto; }
+
+.fg-finding-trust {
+  display: grid;
+  align-content: center;
+}
+
+.fg-trust-count {
+  display: block;
+  margin-bottom: .3rem;
+  color: #34563d;
+  font: 600 2.15rem/1 var(--m97-reader-font, Georgia, serif);
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+.fg-trust-count small { font-size: .68em; }
+
+.fg-interview-findings > figcaption {
+  margin-block: .7rem 0;
+  color: var(--m98-paper-muted, var(--text-muted));
+  font-size: .85rem;
+  line-height: 1.45;
+}
+
+@container (min-width: 39rem) {
+  .fg-evidence-boundaries { grid-template-columns: 1.15fr 1fr; }
+  .fg-finding-plan { grid-row: span 2; align-self: center; }
+  .fg-evidence-boundaries .fg-finding-respond { border-top: 0; }
+  .fg-evidence-boundary + .fg-evidence-boundary { border-inline-start: 1px solid var(--m98-paper-rule, var(--line)); }
 }
 
 /* Individual onboarding artboards preserve the story sequence at a readable

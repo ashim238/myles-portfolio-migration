@@ -148,12 +148,6 @@ describe("Myles 98 paper-surface contrast", () => {
       /:root\[data-theme="dark"\]\s+\.reader-mode\.reader-mode\.nv-page\s+\.nv-system-cta-link\s*\{[^}]*--m98-context-focus:\s*#fff;/,
     );
     expect(paperStyles).toMatch(
-      /\.reader-mode\.reader-mode\.nv-page \.nv-demo-embed-mobile-cta:focus-visible\s*\{[^}]*outline-offset:\s*-4px;/,
-    );
-    expect(paperStyles).toMatch(
-      /:root\[data-theme="dark"\]\s+\.reader-mode\.reader-mode\.nv-page\s+\.nv-demo-embed-mobile-cta\s*\{[^}]*--m98-context-focus:\s*#fff;/,
-    );
-    expect(paperStyles).toMatch(
       /\.reader-mode\.reader-mode\.uf-page \.uf-switcher-preview--scroll\s*\{[^}]*--focus-ring:\s*var\(--m98-paper-focus\);/,
     );
     expect(paperStyles).toMatch(
