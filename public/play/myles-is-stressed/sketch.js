@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* global createCanvas, noSmooth, frameRate, noLoop, loadImage, background, push, pop, stroke, strokeWeight, line, fill, rect, noStroke, textAlign, textSize, text, map, sin, frameCount, ceil, floor, random, abs, dist, tint, noTint, LEFT, TOP, CENTER, RIGHT_ARROW, DOWN_ARROW, LEFT_ARROW, UP_ARROW */
+/* global drawingContext, createCanvas, noSmooth, frameRate, noLoop, loadImage, background, push, pop, stroke, strokeWeight, line, fill, rect, noStroke, textAlign, textSize, text, map, sin, frameCount, ceil, floor, random, abs, dist, tint, noTint, LEFT, TOP, CENTER, RIGHT_ARROW, DOWN_ARROW, LEFT_ARROW, UP_ARROW */
 
 const MOVE_VECTORS = [
   { x: 1, y: 0 }, // right
@@ -7,6 +7,8 @@ const MOVE_VECTORS = [
   { x: -1, y: 0 }, // left
   { x: 0, y: -1 } // up
 ];
+
+const CATCH_FLASH_FRAMES = 2; // One 200 ms pulse at the game’s 10 fps.
 
 const STATUS = {
   intro: "Press Space to start.",
@@ -228,12 +230,21 @@ class Stress extends TileSprite {
     this.moveInterval = kind === "money" || kind === "read" ? 3 : 2;
     this.burgerDistractionTimer = 0;
     this.isResetting = false;
+    this.caughtFrame = 0;
     this.startX = x;
     this.startY = y;
   }
 
   show() {
-    if (this.isResetting || pacman.isPoweredUp) {
+    if (this.isResetting) {
+      push();
+      const returnFrames = Math.max(0, frameCount - this.caughtFrame - CATCH_FLASH_FRAMES);
+      drawingContext.globalAlpha *= Math.max(0.4, 1 - returnFrames * 0.2);
+      this.drawSprite();
+      pop();
+      return;
+    }
+    if (pacman.isPoweredUp) {
       tint(80, 150, 255);
       this.drawSprite();
       noTint();
@@ -310,27 +321,36 @@ class Stress extends TileSprite {
     }
   }
 
+  showCatchFlash() {
+    if (!this.isResetting || frameCount - this.caughtFrame > CATCH_FLASH_FRAMES) return;
+    // Draw above Myles so the catch reads even when both sprites share a tile.
+    push();
+    noFill();
+    stroke(255, 246, 188);
+    strokeWeight(3);
+    rect(this.x + 1, this.y + 1, this.w - 2, this.h - 2, 4);
+    noStroke();
+    fill(255, 246, 188, 115);
+    rect(this.x + 3, this.y + 3, this.w - 6, this.h - 6, 3);
+    pop();
+  }
+
   reset() {
     this.isResetting = true;
+    this.caughtFrame = frameCount;
   }
 
   moveToStart() {
-    if (this.x === this.startX && this.y === this.startY) {
+    if (frameCount - this.caughtFrame <= CATCH_FLASH_FRAMES) return;
+    // The spawn pen is walled off. Returning stressors can pass through walls.
+    if (this.x !== this.startX) {
+      this.x += Math.sign(this.startX - this.x) * platform.cellSize;
+    } else if (this.y !== this.startY) {
+      this.y += Math.sign(this.startY - this.y) * platform.cellSize;
+    } else {
+      this.leave(platform);
       this.isResetting = false;
-      return;
     }
-
-    const direction = chooseDirectionToward(
-      this,
-      { x: this.startX, y: this.startY },
-      getAvailableDirections(this),
-    );
-    if (direction === null) return;
-
-    const vector = MOVE_VECTORS[direction];
-    this.x += vector.x * platform.cellSize;
-    this.y += vector.y * platform.cellSize;
-    wrapActor(this);
   }
 }
 
@@ -592,7 +612,7 @@ function resolvePlayerCollisions() {
 
 function resolveStressorCollisions() {
   for (const stressor of activeStressors) {
-    if (!touching(pacman, stressor)) continue;
+    if (stressor.isResetting || !touching(pacman, stressor)) continue;
 
     if (pacman.isPoweredUp) {
       stressor.reset();
@@ -608,7 +628,7 @@ function resolveCloneCollisions() {
   if (!cloneDecoy) return;
 
   for (const stressor of activeStressors) {
-    if (!touching(cloneDecoy, stressor)) continue;
+    if (stressor.isResetting || !touching(cloneDecoy, stressor)) continue;
     cloneDecoy = null;
     setStatus(STATUS.cloneLost);
     return;
@@ -630,6 +650,7 @@ function drawBoard() {
   if (cloneDecoy) cloneDecoy.show();
   if (pacman.isPoweredUp) drawPowerAura();
   pacman.show();
+  for (const stressor of activeStressors) stressor.showCatchFlash();
 }
 
 function drawPowerAura() {
