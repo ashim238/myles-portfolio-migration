@@ -1,38 +1,40 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { flushSync } from "react-dom";
 import { localSimulator, nativeFrameSource, type NativeSession } from "@/lib/fresh-greens/native-session";
+import { CapturedRouteComparison, capturedRoutePoster } from "./captured-route-comparison";
 import styles from "./early-product-walkthrough.module.css";
 
 const media = "/projects/fresh-greens/daylight-key";
 const recording = media + "/weeksville-drive.mp4";
-const poster = media + "/01-weeksville-daylight-preview.png";
+const localOrigins = new Set(["http://127.0.0.1:4391", "http://127.0.0.1:4396"]);
+const subscribeLocation = () => () => {};
+const canReachLocalBridge = () => localOrigins.has(window.location.origin);
+const localBuildPreview = () => true;
+
+type View = "poster" | "starting" | "app" | "captures" | "offline";
 
 export function EarlyProductWalkthrough({ session }: { session: NativeSession | null }) {
-  const [view, setView] = useState<"poster" | "starting" | "app" | "recording" | "offline">("poster");
+  const [view, setView] = useState<View>("poster");
+  const [expanded, setExpanded] = useState(false);
   const request = useRef<AbortController | null>(null);
-  const section = useRef<HTMLElement>(null);
+  const dialog = useRef<HTMLDialogElement>(null);
   const frame = useRef<HTMLIFrameElement>(null);
   const launch = useRef<HTMLButtonElement>(null);
-  const watching = !session || view === "recording";
-  const running = !!session && view === "app";
+  const expandButton = useRef<HTMLButtonElement>(null);
+  const returnButton = useRef<HTMLButtonElement>(null);
+  const localOrigin = useSyncExternalStore(subscribeLocation, canReachLocalBridge, localBuildPreview);
+  const liveAvailable = !!session && (session.kind === "hosted" || localOrigin);
+  const comparing = !liveAvailable || view === "captures" || view === "offline";
+  const running = liveAvailable && view === "app";
   const pending = view === "starting";
+  const heading = comparing ? "Compare two routes" : "Take Fresh Greens for a drive";
 
-  useEffect(() => {
-    const disclosure = section.current?.closest("details");
-    function releaseHiddenSession() {
-      if (disclosure?.open) return;
-      request.current?.abort();
-      request.current = null;
-      setView("poster");
-    }
-    disclosure?.addEventListener("toggle", releaseHiddenSession);
-    return () => {
-      disclosure?.removeEventListener("toggle", releaseHiddenSession);
-      request.current?.abort();
-      request.current = null;
-    };
+  useEffect(() => () => {
+    request.current?.abort();
+    request.current = null;
   }, []);
 
   useEffect(() => {
@@ -46,22 +48,20 @@ export function EarlyProductWalkthrough({ session }: { session: NativeSession | 
   }, [running, session?.kind]);
 
   async function openApp() {
-    if (!session || pending) return;
+    if (!session || !liveAvailable || pending) return;
     if (session.kind === "hosted") {
       setView("app");
       return;
     }
-    if (window.location.hostname !== "127.0.0.1" && window.location.hostname !== "localhost") {
-      setView("offline");
-      return;
-    }
-    request.current?.abort();
     const check = new AbortController();
+    request.current?.abort();
     request.current = check;
     const timeout = window.setTimeout(() => check.abort(), 6000);
     setView("starting");
     try {
-      const response = await fetch(localSimulator + "/health", { signal: check.signal, cache: "no-store", credentials: "omit" });
+      const response = await fetch(localSimulator + "/health", {
+        signal: check.signal, cache: "no-store", credentials: "omit",
+      });
       const ready = response.ok && (await response.json()).ready === true;
       if (request.current === check) setView(ready ? "app" : "offline");
     } catch {
@@ -72,51 +72,85 @@ export function EarlyProductWalkthrough({ session }: { session: NativeSession | 
     }
   }
 
-  function exitApp() {
+  function showCaptures() {
     request.current?.abort();
     request.current = null;
+    setView("captures");
+    requestAnimationFrame(() => dialog.current?.focus({ preventScroll: true }));
+  }
+
+  function closeApp() {
     setView("poster");
     requestAnimationFrame(() => launch.current?.focus({ preventScroll: true }));
   }
 
-  function watchRecording() {
-    request.current?.abort();
-    request.current = null;
-    setView("recording");
+  function expand() {
+    if (!dialog.current) return;
+    dialog.current.close();
+    flushSync(() => setExpanded(true));
+    dialog.current.showModal();
+    returnButton.current?.focus({ preventScroll: true });
   }
 
+  function returnToArticle() {
+    if (!dialog.current) return;
+    dialog.current.close();
+    dialog.current.show();
+    setExpanded(false);
+    requestAnimationFrame(() => expandButton.current?.focus({ preventScroll: true }));
+  }
+
+  const modeControls = liveAvailable && (
+    <>
+      {running && <button type="button" className={styles.control} onClick={closeApp}>Close simulator</button>}
+      {comparing
+        ? <button type="button" className={styles.control} onClick={openApp}>{view === "offline" ? "Retry simulator" : "Open the iOS app"}</button>
+        : <button type="button" className={styles.textAction} onClick={showCaptures}>Compare captured routes</button>}
+    </>
+  );
+
   return (
-    <section ref={section} id="fg-native-simulator" className={`${styles.walkthrough} project-proof-target`} aria-labelledby="fg-native-simulator-title">
+    <section id="fg-app-walkthrough" tabIndex={-1} className={`${styles.walkthrough} project-proof-target`} aria-labelledby="fg-route-screen-title">
       <header className={styles.header}>
-        <p className={styles.kicker}>{watching ? "iOS recording" : "iOS simulator"}</p>
-        <h3 id="fg-native-simulator-title">{watching ? "A drive to Weeksville" : "Take Fresh Greens for a drive"}</h3>
-        <p>{watching ? "Follow the trip to Weeksville Heritage Center in the original iPhone app." : "Tap “Where are you headed?” and search for a place in Brooklyn. Choose a route, then tap Go to see the driving view."}</p>
-        {view === "offline" && <p role="status">The simulator is unavailable. Try again or watch the recorded drive.</p>}
-        {session && (
-          <div className={styles.actions}>
-            {running && <button type="button" className="reader-control" onClick={exitApp}>Close simulator</button>}
-            {watching && <button type="button" className="reader-control" onClick={openApp}>Open the iOS app</button>}
-            {!watching && <button type="button" className={styles.textAction} onClick={watchRecording}>Watch a recorded drive</button>}
-          </div>
-        )}
+        <p className={styles.kicker}>{comparing ? "iOS screen captures" : "Interactive iOS app"}</p>
+        <h3 id="fg-route-screen-title">{heading}</h3>
+        <p>{comparing
+          ? "Use the route arrows on the phone to compare two options captured in the iOS app."
+          : "Search for a place in Brooklyn, compare the arrival time and daylight on each route, then tap Go."}</p>
+        {view === "offline" && !expanded && <p role="status">The simulator is unavailable. You can still compare the captured routes.</p>}
+        <div className={styles.actions}>
+          <button type="button" ref={expandButton} className={styles.control} onClick={expand} aria-haspopup="dialog">Expand demo</button>
+          {!expanded && modeControls}
+        </div>
         <noscript><a href={recording}>Watch the iOS recording</a></noscript>
       </header>
-      <div className={styles.stage}>
-        <div className={styles.device}>
-          {running ? (
-            <iframe ref={frame} title="Fresh Greens running on an iPhone simulator"
-              src={nativeFrameSource(session)} onError={() => setView("offline")}
-              onLoad={() => frame.current?.focus({ preventScroll: true })}
-              referrerPolicy="strict-origin" />
-          ) : watching ? (
-            <video controls playsInline preload="none" poster={media + "/weeksville-drive.webp"} aria-label="Recorded Weeksville drive in the Fresh Greens iOS app" src={recording} />
+      <div className={`${styles.stage} project-proof-target`} id="fg-native-simulator">
+        <dialog open ref={dialog} tabIndex={-1} className={styles.viewer} role={expanded ? "dialog" : "region"} aria-label={heading}
+          onCancel={event => { event.preventDefault(); returnToArticle(); }}>
+          {expanded && (
+            <div className={styles.modalControls}>
+              <button type="button" ref={returnButton} className={styles.control} onClick={returnToArticle}>Return to case study</button>
+              {modeControls}
+              {view === "offline" && <span role="status">The simulator is unavailable.</span>}
+            </div>
+          )}
+          {comparing ? (
+            <div className={styles.capture}><CapturedRouteComparison /></div>
+          ) : running && session ? (
+            <div className={styles.device}>
+              <iframe ref={frame} title="Fresh Greens running on an iPhone simulator" src={nativeFrameSource(session)}
+                onError={() => setView("offline")} onLoad={() => frame.current?.focus({ preventScroll: true })}
+                referrerPolicy="strict-origin" />
+            </div>
           ) : (
             <button type="button" ref={launch} className={styles.poster} onClick={openApp} disabled={pending}>
-              <Image src={poster} width={1290} height={2796} sizes="(max-width: 400px) 75vw, 328px" alt="" />
-              <span className={styles.launchMark}><i aria-hidden="true">▶</i> {pending ? "Connecting…" : view === "offline" ? "Retry simulator" : "Open the iOS app"}</span>
+              <span className={styles.device}>
+                <Image src={capturedRoutePoster} width={1290} height={2796} sizes="(max-width: 680px) 86vw, 400px" alt="" />
+              </span>
+              <span className={styles.launchMark}>{pending ? "Opening the app" : "Open the iOS app"}</span>
             </button>
           )}
-        </div>
+        </dialog>
       </div>
     </section>
   );

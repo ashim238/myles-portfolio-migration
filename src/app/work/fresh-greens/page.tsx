@@ -15,7 +15,6 @@ import { ArchitectureDiagram } from "@/components/fresh-greens";
 import { DepartureReminderEvidence } from "@/components/fresh-greens/departure-reminder-evidence";
 import { WelcomeIllustrationMotion } from "@/components/fresh-greens/welcome-illustration-motion";
 import { freshGreensSession } from "@/lib/fresh-greens/native-session";
-import { WeeksvilleDemo } from "@/components/fresh-greens/weeksville-demo";
 import { EarlyProductWalkthrough } from "@/components/fresh-greens/early-product-walkthrough";
 import { GreenBookPalette, OnboardingGallery } from "@/components/fresh-greens/visual-origins";
 import origins from "@/components/fresh-greens/visual-origins.module.css";
@@ -31,7 +30,7 @@ import { createRouteMetadata } from "@/lib/site-config";
 
 const chapters = CASE_STUDY_CHAPTERS["fresh-greens"];
 const freshGreensProof = {
-  label: "Try the route screen",
+  label: "Explore the route screen",
   href: "#fg-app-walkthrough",
 };
 
@@ -121,7 +120,7 @@ export default async function FreshGreensPage() {
                   home. I wanted to know what the drive home would be like.
                 </p>
               </div>
-              <WeeksvilleDemo />
+              <EarlyProductWalkthrough session={session} />
             </div>
           </ProjectChapter>
 
@@ -186,7 +185,8 @@ export default async function FreshGreensPage() {
                   showed it to my thesis advisor, Google’s suggested route still
                   dominated the screen. I kept the information architecture and
                   designed a standalone app so drivers could{" "}<strong>compare the light
-                  on each route before choosing one.</strong>
+                  on each route before choosing one.</strong>{" "}
+                  <a href={freshGreensProof.href}>See the route screen</a>.
                 </p>
               </div>
               <GreenBookPalette />
@@ -197,8 +197,7 @@ export default async function FreshGreensPage() {
                   mean spending longer on an unfamiliar backroad after dark. My prototype called
                   one option “Safest route.” I couldn’t back that up. In the
                   reconstruction, I changed the label to “Option 1” and kept the
-                  road conditions on the card.{" "}
-                  <a href={freshGreensProof.href}>Compare the Weeksville routes</a>.
+                  road conditions on the card.
                 </p>
               </div>
               <ProjectEvidenceDisclosure summary="See the revised labels on three sample routes">
@@ -335,11 +334,6 @@ export default async function FreshGreensPage() {
               <ProjectEvidenceDisclosure summary="See how the data reaches route scoring">
                 <ArchitectureDiagram />
               </ProjectEvidenceDisclosure>
-              {session && (
-                <ProjectEvidenceDisclosure summary="Open the native iOS simulator">
-                  <EarlyProductWalkthrough session={session} />
-                </ProjectEvidenceDisclosure>
-              )}
               <figure
                 className="fg-en-route-video"
                 data-evidence-proof="fresh-greens-en-route-video"

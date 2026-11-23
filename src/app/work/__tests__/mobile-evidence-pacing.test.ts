@@ -14,7 +14,7 @@ describe("case-study mobile evidence pacing", () => {
     const tiktok = read("src/app/work/tiktok/page.tsx");
 
     expect(fresh).toMatch(
-      /<WeeksvilleDemo \/>[\s\S]*?<ProjectEvidenceDisclosure summary="See the revised labels on three sample routes">[\s\S]*?<RouteComparisonEvidence \/>[\s\S]*?<\/ProjectEvidenceDisclosure>[\s\S]*?<ProjectEvidenceDisclosure summary="See the first Google Maps design and the departure reminder">[\s\S]*?<PivotJourney \/>[\s\S]*?<DepartureReminderEvidence \/>[\s\S]*?<\/ProjectEvidenceDisclosure>/,
+      /<EarlyProductWalkthrough session=\{session\} \/>[\s\S]*?<ProjectEvidenceDisclosure summary="See the revised labels on three sample routes">[\s\S]*?<RouteComparisonEvidence \/>[\s\S]*?<\/ProjectEvidenceDisclosure>[\s\S]*?<ProjectEvidenceDisclosure summary="See the first Google Maps design and the departure reminder">[\s\S]*?<PivotJourney \/>[\s\S]*?<DepartureReminderEvidence \/>[\s\S]*?<\/ProjectEvidenceDisclosure>/,
     );
     expect(fresh).toMatch(
       /<ProjectEvidenceDisclosure summary="See how the data reaches route scoring">[\s\S]*?<ArchitectureDiagram \/>[\s\S]*?<\/ProjectEvidenceDisclosure>/,

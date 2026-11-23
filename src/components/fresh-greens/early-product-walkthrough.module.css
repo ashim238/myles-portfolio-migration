@@ -1,76 +1,148 @@
 .walkthrough {
   display: grid;
-  grid-template: "screen heading" auto / minmax(0, 1.1fr) minmax(14rem, .85fr);
+  grid-template: "screen heading" auto / minmax(0, 1.15fr) minmax(0, 1fr);
   width: 100%;
-  max-width: 55rem;
-  margin-block: clamp(2rem, 4vw, 3rem);
-  background: var(--m98-paper-panel, var(--surface));
-  color: var(--m98-paper-text, var(--foreground));
-  border: 1px solid var(--m98-paper-rule, var(--line));
+  max-width: 58rem;
+  min-width: 0;
+  margin-block: clamp(1.75rem, 3.4vw, 3.2rem);
+  border: 1px solid var(--m98-paper-rule, #bec1b6);
+  background: var(--m98-paper-panel, #f2efe7);
+  color: var(--m98-paper-text, #1c2b24);
 }
+
 .header {
   grid-area: heading;
   align-self: center;
-  padding: clamp(1.25rem, 3.2vw, 2.5rem);
-}
-.walkthrough .kicker {
-  margin: 0 0 .5rem;
-  color: var(--m98-document-accent, #3d6447);
-  font: 700 .86rem/1.25 var(--font-family-sans, sans-serif);
-}
-.header h3 {
-  margin: 0;
-  font: 500 clamp(1.65rem, 2.6vw, 2.35rem)/1.13 var(--m97-reader-font, Georgia, serif);
-  text-wrap: balance;
-}
-.header p, .header a {
-  font: 400 1rem/1.55 var(--font-family-sans, sans-serif);
+  min-width: 0;
+  padding: clamp(1.4rem, 3vw, 2.4rem);
+  font-family: var(--font-family-sans, system-ui), sans-serif;
   text-align: start;
 }
-.header p { margin: .75rem 0; }
-.walkthrough .header a {
-  display: inline-block;
-  color: var(--m98-document-accent, #31573c);
-  font-size: .875rem;
-  font-weight: 650;
-  text-decoration: underline;
-  text-underline-offset: .2em;
+
+.header > .kicker {
+  margin: 0;
+  color: var(--m98-document-accent, #385c43);
+  font: 650 .85rem/1.4 var(--font-family-sans, system-ui), sans-serif;
 }
+
+.header > h3 {
+  margin: .5rem 0 .7rem;
+  font: 500 clamp(1.85rem, 3.1vw, 2.8rem)/1.07 var(--m97-reader-font, Georgia, serif);
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+
+.header > p {
+  max-width: 32ch;
+  margin: .65rem 0 0;
+  font: 400 1rem/1.55 var(--font-family-sans, system-ui), sans-serif;
+  text-align: start;
+}
+
 .stage {
   grid-area: screen;
   display: grid;
   place-items: center;
-  padding: clamp(1rem, 2.6vw, 2rem);
-  background: #244537;
   min-width: 0;
+  padding: clamp(1.15rem, 2.2vw, 1.8rem);
+  background: radial-gradient(ellipse at 50% 34%, #365b49, #203d32);
 }
 
-.device {
-  width: min(100%, 20.5rem);
+.viewer[open] {
+  --phone-width: min(100%, 20rem);
+  position: static;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  overflow: visible;
+}
+
+.viewer[open]:modal {
+  --phone-width: min(100%, 25rem, max(12rem, calc((100dvh - 9rem) * .46137)));
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-height: 100dvh;
+  align-content: safe center;
+  gap: .7rem;
+  padding: .8rem;
+  overflow: auto;
+  background: #203e32;
+}
+.viewer::backdrop { background: #14271f; }
+
+.device, .capture, .poster { width: var(--phone-width); min-width: 0; }
+.device, .capture {
+  display: block;
   aspect-ratio: 430 / 932;
   overflow: hidden;
   border-radius: 9% / 4.2%;
   background: #141e16;
-  box-shadow: 0 4px 16px #142d2033;
+  box-shadow: 0 4px 16px #142d2044;
 }
-.device :is(iframe, video, .poster, img) { display: block; width: 100%; height: 100%; border: 0; }
-.device video, .poster img { object-fit: contain; }
-.device .poster { position: relative; padding: 0; background: transparent; cursor: pointer; }
-.device .poster:focus-visible { outline: 3px solid #f5d959; outline-offset: -5px; }
-.launchMark {
-  position: absolute; left: 50%; top: 46%; transform: translate(-50%, -50%);
-  display: inline-flex; gap: .55rem; align-items: center; white-space: nowrap;
-  background: #153c2e; color: white; border: 1px solid #fff9; border-radius: .3rem;
-  padding: .65rem .9rem; font: 650 .9rem/1.2 var(--font-family-sans, sans-serif);
-  box-shadow: 0 2px 8px #142d203d;
+.device img, .device iframe { display: block; width: 100%; height: 100%; border: 0; }
+.device img { object-fit: contain; }
+
+.poster {
+  display: grid;
+  justify-items: center;
+  gap: .7rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #203e32;
+  cursor: pointer;
 }
-.launchMark i { font: inherit; font-size: .75em; }
-.actions { margin-top: 1.25rem; display: flex; flex-wrap: wrap; align-items: center; gap: .65rem 1rem; }
-.actions button { min-height: 44px; cursor: pointer; }
-.actions :global(.reader-control) { padding: .55rem .9rem; font: 600 .875rem/1.3 var(--font-family-sans, sans-serif); }
-.actions .textAction { background: none; border: 0; box-shadow: none; padding: .3rem 0; color: var(--m98-document-accent, #31573c); font: 600 .875rem/1.4 var(--font-family-sans, sans-serif); text-decoration: underline; text-underline-offset: .2em; }
-@media (max-width: 760px) {
-  .walkthrough { grid-template: "heading" auto "screen" auto / minmax(0,1fr); }
-  .header { padding: 1.1rem; }
-  .stage { padding: .85rem; }
+.poster .device { width: 100%; }
+.poster:disabled { cursor: progress; }
+
+.launchMark, .control {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 44px;
+  padding: .45rem .85rem;
+  border: 1px solid #868c81;
+  border-radius: 2px;
+  background: #faf8f1;
+  color: #233e31;
+  font: 600 .875rem/1.3 var(--font-family-sans, system-ui), sans-serif;
+}
+.control { cursor: pointer; }
+.control:hover, .poster:hover .launchMark { background: #e5eadf; }
+
+.actions, .modalControls { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .9rem; }
+.actions { margin-top: 1rem; }
+.modalControls { justify-content: center; color: white; }
+.textAction {
+  min-height: 44px;
+  padding: .35rem .1rem;
+  border: 0;
+  background: transparent;
+  color: var(--m98-document-accent, #31573c);
+  cursor: pointer;
+  font: 600 .875rem/1.4 var(--font-family-sans, system-ui), sans-serif;
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+.modalControls .textAction { color: #fffdf6; }
+.walkthrough :is(.control, .textAction, .poster):focus-visible { outline: 2px solid #24569f; outline-offset: 3px; }
+.stage :is(.control, .textAction, .poster):focus-visible { outline-color: #c3e4a8; }
+
+@media (max-width: 665px) {
+  .walkthrough { grid-template: "heading" auto "screen" auto / minmax(0, 1fr); }
+  .header { padding: 1rem 1.1rem; }
+  .header > h3 { margin-block: .25rem .45rem; }
+  .header > p { max-width: 45ch; }
+  .stage { padding: 1rem clamp(.3rem, 2.4vw, 1.15rem); }
 }

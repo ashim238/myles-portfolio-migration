@@ -15,7 +15,7 @@ Open `http://localhost:3000`.
 
 ### Fresh Greens on iOS
 
-The Fresh Greens case study opens with an interactive mobile route screen. Search for Weeksville, switch between two saved routes, or expand the demo to view it at phone size. It works without a simulator or API keys. For an interview or a local review, the Validate chapter can also launch a native simulator session. Start the [dedicated iPhone simulator bridge](scripts/fresh-greens-simulator/README.md), then serve the portfolio on its allowed loopback address.
+The opening chapter shows the Fresh Greens iOS route screen. With a simulator configured, visitors can open the app, search for a destination, and try a route. Two captures from the app let readers compare routes when a simulator is unavailable. For a local review, start the [dedicated iPhone simulator bridge](scripts/fresh-greens-simulator/README.md), then serve the portfolio on its allowed loopback address.
 
 ```sh
 FRESH_GREENS_LOCAL_SIMULATOR=1 npm run dev -- --hostname 127.0.0.1 --port 4391

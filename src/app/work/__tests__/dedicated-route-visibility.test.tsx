@@ -121,9 +121,9 @@ describe("dedicated project route visibility", () => {
       name: "Fresh Greens",
       slug: "fresh-greens",
       render: FreshGreensPage,
-      cta: "Try the route screen",
+      cta: "Explore the route screen",
       href: "#fg-app-walkthrough",
-      artifactName: "Drive to Weeksville",
+      artifactName: "Compare two routes",
       artifactRole: "heading" as const,
     },
     {
@@ -157,18 +157,20 @@ describe("dedicated project route visibility", () => {
     },
   );
 
-  it("keeps route comparison primary when an optional iOS session is configured", async () => {
+  it("opens the actual iOS session from the first chapter when a simulator is configured", async () => {
     vi.stubEnv("FRESH_GREENS_APPETIZE_BUILD_ID", "demo");
     getProjectBySlug.mockResolvedValue(makeProject("fresh-greens", "published"));
     const { container } = render(await FreshGreensPage());
-    for (const name of ["Open proof: Try the route screen", "Compare the Weeksville routes"]) {
+    for (const name of ["Open proof: Explore the route screen", "See the route screen"]) {
       expect(screen.getByRole("link", { name })).toHaveAttribute("href", "#fg-app-walkthrough");
     }
     expect(container.querySelectorAll("#fg-app-walkthrough")).toHaveLength(1);
-    expect(screen.getByRole("heading", { name: "Drive to Weeksville" })).toBeVisible();
+    expect(screen.getByRole("heading", { name: "Take Fresh Greens for a drive" })).toBeVisible();
     const simulator = container.querySelector("#fg-native-simulator");
     expect(simulator).toBeInTheDocument();
-    expect(simulator?.closest("details")).not.toHaveAttribute("open");
+    expect(simulator?.closest("#fg-app-walkthrough")).toBeInTheDocument();
+    expect(simulator?.closest("details")).toBeNull();
+    expect(container.querySelector("iframe")).toBeNull();
   });
 
   it("renders Navi's canonical opening proof as a direct product-demo link", async () => {

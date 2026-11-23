@@ -1,0 +1,39 @@
+.phone {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 430 / 932;
+  isolation: isolate;
+}
+
+.capture {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.capture[aria-hidden="true"] {
+  visibility: hidden;
+}
+
+button.arrow {
+  position: absolute;
+  width: max(10.24%, 44px);
+  height: max(4.73%, 44px);
+  transform: translate(-50%, -50%);
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: none;
+  padding: 0;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+button.arrow:focus-visible {
+  outline: 2px solid #173f2e;
+  outline-offset: 1px;
+}
