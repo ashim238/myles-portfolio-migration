@@ -12,12 +12,8 @@ export const trip = {
   departure: "4:32 PM",
   date: "Nov. 23, 2026",
   sunset: "4:34 PM",
-  mapImage: "/projects/fresh-greens/route-comparison/weeksville-streets.webp",
-  mapWidth: 610,
-  mapHeight: 460,
   start: [146.6, 400.0],
   finish: [463.4, 72.2],
-  viewBox: "0 0 610 460",
   routes: [
     {
       via: "St. Marks Avenue",

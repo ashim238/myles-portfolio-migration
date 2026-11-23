@@ -15,7 +15,7 @@ import { ArchitectureDiagram } from "@/components/fresh-greens";
 import { DepartureReminderEvidence } from "@/components/fresh-greens/departure-reminder-evidence";
 import { WelcomeIllustrationMotion } from "@/components/fresh-greens/welcome-illustration-motion";
 import { freshGreensSession } from "@/lib/fresh-greens/native-session";
-import { RouteComparison } from "@/components/fresh-greens/route-comparison";
+import { WeeksvilleDemo } from "@/components/fresh-greens/weeksville-demo";
 import { EarlyProductWalkthrough } from "@/components/fresh-greens/early-product-walkthrough";
 import { GreenBookPalette, OnboardingGallery } from "@/components/fresh-greens/visual-origins";
 import origins from "@/components/fresh-greens/visual-origins.module.css";
@@ -31,7 +31,7 @@ import { createRouteMetadata } from "@/lib/site-config";
 
 const chapters = CASE_STUDY_CHAPTERS["fresh-greens"];
 const freshGreensProof = {
-  label: "Compare two routes",
+  label: "Try the route screen",
   href: "#fg-app-walkthrough",
 };
 
@@ -121,7 +121,7 @@ export default async function FreshGreensPage() {
                   home. I wanted to know what the drive home would be like.
                 </p>
               </div>
-              <RouteComparison />
+              <WeeksvilleDemo />
             </div>
           </ProjectChapter>
 
