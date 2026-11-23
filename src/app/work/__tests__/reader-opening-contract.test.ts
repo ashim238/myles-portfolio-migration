@@ -16,7 +16,7 @@ const routes: RouteOpening[] = [
   {
     route: "fresh-greens",
     proofName: "freshGreensProof",
-    proofLabel: "Explore the route screen",
+    proofLabel: "Compare two routes to Weeksville",
     proofHref: "#fg-app-walkthrough",
     opening: '<section className="hero project-hero fg-hero"',
     openingClose: "</section>",

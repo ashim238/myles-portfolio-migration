@@ -14,7 +14,6 @@ import { ProjectEvidenceDisclosure } from "@/components/project-evidence-disclos
 import { ArchitectureDiagram } from "@/components/fresh-greens";
 import { DepartureReminderEvidence } from "@/components/fresh-greens/departure-reminder-evidence";
 import { WelcomeIllustrationMotion } from "@/components/fresh-greens/welcome-illustration-motion";
-import { freshGreensSession } from "@/lib/fresh-greens/native-session";
 import { EarlyProductWalkthrough } from "@/components/fresh-greens/early-product-walkthrough";
 import { GreenBookPalette, OnboardingGallery } from "@/components/fresh-greens/visual-origins";
 import origins from "@/components/fresh-greens/visual-origins.module.css";
@@ -30,7 +29,7 @@ import { createRouteMetadata } from "@/lib/site-config";
 
 const chapters = CASE_STUDY_CHAPTERS["fresh-greens"];
 const freshGreensProof = {
-  label: "Explore the route screen",
+  label: "Compare two routes to Weeksville",
   href: "#fg-app-walkthrough",
 };
 
@@ -50,7 +49,6 @@ export default async function FreshGreensPage() {
   }
 
   const allProjects = await getPublishedProjects();
-  const session = freshGreensSession(process.env);
 
   return (
     <ReaderShell slug="fresh-greens" title="Fresh Greens" className="fg-page">
@@ -120,7 +118,7 @@ export default async function FreshGreensPage() {
                   home. I wanted to know what the drive home would be like.
                 </p>
               </div>
-              <EarlyProductWalkthrough session={session} />
+              <EarlyProductWalkthrough />
             </div>
           </ProjectChapter>
 

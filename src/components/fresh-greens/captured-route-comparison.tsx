@@ -12,8 +12,6 @@ const routes = [
   { image: "ios-route-2.jpg", details: "Via Saint Johns Place. Four minutes, 0.6 miles. Arrive at 11:35 PM, after dark. All clear.", arrow: [46, 684] },
 ] as const;
 
-export const capturedRoutePoster = `${captureDirectory}/${routes[0].image}`;
-
 export function CapturedRouteComparison() {
   const [index, setIndex] = useState<0 | 1>(0);
   const route = routes[index];

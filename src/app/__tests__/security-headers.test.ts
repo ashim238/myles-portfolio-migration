@@ -57,7 +57,7 @@ describe("release security headers", () => {
     expect(contentSecurityPolicy).toContain("https://i.scdn.co");
     expect(contentSecurityPolicy).toContain("media-src 'self' blob:");
     expect(contentSecurityPolicy).toContain("worker-src 'self' blob:");
-    expect(contentSecurityPolicy).toContain(
+    expect(contentSecurityPolicy.split("; ")).toContain(
       "frame-src 'self' https://open.spotify.com",
     );
     expect(contentSecurityPolicy).toMatch(
@@ -73,28 +73,6 @@ describe("release security headers", () => {
     expect(headers["Permissions-Policy"]).toBe(
       "camera=(), microphone=(), geolocation=()",
     );
-  });
-
-  it("limits the native simulator frame to its configured origin", async () => {
-    vi.stubEnv("FRESH_GREENS_LOCAL_SIMULATOR", "1");
-    vi.stubEnv("FRESH_GREENS_APPETIZE_BUILD_ID", "");
-    vi.stubEnv("VERCEL", "");
-
-    const localPolicy = await getContentSecurityPolicy("production");
-    expect(localPolicy).toMatch(/frame-src[^;]*http:\/\/127\.0\.0\.1:4397(?=;| )/);
-    expect(localPolicy).toMatch(/connect-src[^;]*http:\/\/127\.0\.0\.1:4397(?=;| )/);
-    expect(localPolicy).not.toContain("appetize.io");
-
-    vi.stubEnv("VERCEL", "1");
-    vi.stubEnv("FRESH_GREENS_APPETIZE_BUILD_ID", "https://example.org/arbitrary");
-    const disabledPolicy = await getContentSecurityPolicy("production");
-    expect(disabledPolicy).not.toMatch(/4397|appetize\.io|example\.org/);
-
-    vi.stubEnv("FRESH_GREENS_APPETIZE_BUILD_ID", "visitor-build");
-    const hostedPolicy = await getContentSecurityPolicy("production");
-    expect(hostedPolicy).toMatch(/frame-src[^;]*https:\/\/appetize\.io(?=;| )/);
-    expect(hostedPolicy).not.toContain("4397");
-    expect(hostedPolicy).not.toMatch(/connect-src[^;]*appetize\.io/);
   });
 
   it("allows React evaluation and Impeccable live only in development", async () => {

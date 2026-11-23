@@ -13,21 +13,9 @@ npm run dev
 
 Open `http://localhost:3000`.
 
-### Fresh Greens on iOS
+### Fresh Greens route comparison
 
-The opening chapter shows the Fresh Greens iOS route screen. With a simulator configured, visitors can open the app, search for a destination, and try a route. Two captures from the app let readers compare routes when a simulator is unavailable. For a local review, start the [dedicated iPhone simulator bridge](scripts/fresh-greens-simulator/README.md), then serve the portfolio on its allowed loopback address.
-
-```sh
-FRESH_GREENS_LOCAL_SIMULATOR=1 npm run dev -- --hostname 127.0.0.1 --port 4391
-```
-
-To package the account-free visitor edition on a Mac with Xcode, run the following from the portfolio checkout. Use a prepared Fresh Greens checkout with its native dependencies, CocoaPods and public Mapbox client token available. The output directory must be empty.
-
-```sh
-python3 scripts/fresh-greens-visitor/build.py /path/to/fresh-greens /path/to/visitor-output --revision 23ffdd0
-```
-
-The output includes a simulator `.app` and its compressed archive. For a hosted session, configure `FRESH_GREENS_APPETIZE_BUILD_ID` with the visitor build’s public Appetize ID when building the site. The website only needs the identifier. The recorded iOS drive is available in the Validate chapter in every configuration.
+The opening chapter lets readers use the route arrows to compare two iOS captures from a trip to Weeksville Heritage Center. Both images ship with the portfolio, so the comparison works with the standard local setup and production build. The Validate chapter includes a recording of the drive.
 
 ## Content editing (CMS-like workflow)
 

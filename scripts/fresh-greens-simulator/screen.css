@@ -1,9 +1,0 @@
-* { box-sizing: border-box; }
-html, body { margin: 0; width: 100%; height: 100%; background: #f8f8f4; }
-#device { width: 100%; height: 100%; display: grid; place-items: center; position: relative; overflow: hidden; font: 16px/1.45 system-ui,sans-serif; }
-#screen { display: block; width: auto; height: auto; max-height: 100%; max-width: 100%; aspect-ratio: 430 / 932; touch-action: none; user-select: none; -webkit-user-drag: none; }
-#screen:not([src]) { visibility: hidden; }
-#screen:focus-visible { outline: 3px solid #176531; outline-offset: -3px; }
-#instructions { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
-#status { position: absolute; z-index: 1; margin: 16px; padding: 8px 12px; text-align: center; color: #14271a; background: #fffffff2; border-radius: 6px; pointer-events: none; }
-#status:empty { display: none; }
