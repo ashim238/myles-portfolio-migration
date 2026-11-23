@@ -260,6 +260,28 @@ a {
     cursor: none;
   }
 
+  /* A modal is painted above the document, including its custom cursor. */
+  html.dot-cursor-ready:has(dialog:modal) .dot-cursor {
+    visibility: hidden;
+  }
+
+  html.dot-cursor-ready dialog:modal,
+  html.dot-cursor-ready dialog:modal::backdrop {
+    cursor: auto;
+  }
+
+  html.dot-cursor-ready dialog:modal :is(a[href], button, [role="button"], summary, label, select) {
+    cursor: pointer;
+  }
+
+  html.dot-cursor-ready dialog:modal :is(input, textarea) {
+    cursor: auto;
+  }
+
+  html.dot-cursor-ready dialog:modal :disabled {
+    cursor: default;
+  }
+
   /* Captured drags use the browser cursor so feedback never waits on JS paint. */
   html.dot-cursor-ready:has(.myles97-window[data-dragging="true"]),
   html.dot-cursor-ready:has(.myles97-window[data-dragging="true"]) * {

@@ -205,6 +205,23 @@ async function emulateMediaFeature(page: Page, name: string, value: string) {
 }
 
 describe("persistent chrome accessibility preferences", () => {
+  it("shows a native pointer inside a fullscreen dialog and restores the desktop cursor on close", async () => {
+    const page = await browser.newPage({ reducedMotion: "no-preference" });
+    try {
+      await page.setContent('<html class="dot-cursor-ready"><div class="dot-cursor"></div><dialog><img alt="Map"><button>Return</button></dialog></html>');
+      await page.addStyleTag({ content: productionReaderStyles });
+      const dialog = page.locator("dialog");
+      await dialog.evaluate(el => (el as HTMLDialogElement).showModal());
+      expect(await dialog.locator("img").evaluate(el => getComputedStyle(el).cursor)).toBe("auto");
+      expect(await dialog.locator("button").evaluate(el => getComputedStyle(el).cursor)).toBe("pointer");
+      expect(await page.locator(".dot-cursor").evaluate(el => getComputedStyle(el).visibility)).toBe("hidden");
+      await dialog.evaluate(el => (el as HTMLDialogElement).close());
+      expect(await page.locator(".dot-cursor").evaluate(el => getComputedStyle(el).visibility)).toBe("visible");
+    } finally {
+      await page.close();
+    }
+  });
+
   it("keeps the inert desktop stage transparent to the existing desktop layout", async () => {
     const page = await browser.newPage();
     await page.setContent(documentWithPreferences());

@@ -13,12 +13,17 @@ describe("Fresh Greens route comparison", () => {
     const { container } = render(<EarlyProductWalkthrough />);
 
     expect(screen.getByRole("heading", { name: "Compare two routes to Weeksville" })).toBeVisible();
-    expect(screen.getByRole("img").getAttribute("src")).toMatch(/\/route-comparison\/ios-route-1\.jpg$/);
-    await user.click(screen.getByRole("button", { name: "Next route" }));
     expect(screen.getByRole("img").getAttribute("src")).toMatch(/\/route-comparison\/ios-route-2\.jpg$/);
-    expect(screen.getByRole("status")).toHaveTextContent("Via Saint Johns Place");
     await user.click(screen.getByRole("button", { name: "Previous route" }));
-    expect(screen.getByRole("status")).toHaveTextContent("Via Utica Avenue");
+    expect(screen.getByRole("img").getAttribute("src")).toMatch(/\/route-comparison\/ios-route-1\.jpg$/);
+    expect(screen.getByRole("status")).toHaveTextContent("4:34 PM, After dark");
+    await user.click(screen.getByRole("button", { name: "Next route" }));
+    expect(screen.getByRole("status")).toHaveTextContent("4:33 PM, Dusk");
+
+    expect(screen.getByRole("button", { name: /^Dusk/ })).toHaveAttribute("aria-pressed", "true");
+    await user.click(screen.getByRole("button", { name: /^After dark/ }));
+    expect(screen.getByRole("status")).toHaveTextContent(/4:34 PM, After dark/);
+    expect(screen.getByRole("button", { name: /^After dark/ })).toHaveAttribute("aria-pressed", "true");
 
     expect(container.querySelector("iframe")).toBeNull();
     expect(screen.queryByRole("button", { name: /simulator|open the ios app/i })).not.toBeInTheDocument();
@@ -28,12 +33,12 @@ describe("Fresh Greens route comparison", () => {
   it("opens the selected route’s first turn and returns to the same route", async () => {
     const user = userEvent.setup();
     render(<EarlyProductWalkthrough />);
-    for (const [index, via] of ["Utica Avenue", "Saint Johns Place"].entries()) {
-      if (index === 1) await user.click(screen.getByRole("button", { name: "Next route" }));
-      await user.click(screen.getByRole("button", { name: "Go, start route via " + via }));
+    for (const index of [1, 0]) {
+      if (index === 0) await user.click(screen.getByRole("button", { name: "Previous route" }));
+      await user.click(screen.getByRole("button", { name: "Go, start route via Rochester Avenue" }));
       expect(screen.getByRole("img").getAttribute("src")).toContain("ios-drive-" + (index + 1));
       await user.click(screen.getByRole("button", { name: "End trip" }));
-      expect(screen.getByRole("status")).toHaveTextContent(via);
+      expect(screen.getByRole("status")).toHaveTextContent("Route " + (index + 1));
       expect(screen.getByRole("img").getAttribute("src")).toContain("ios-route-" + (index + 1));
     }
   });
@@ -49,6 +54,6 @@ describe("Fresh Greens route comparison", () => {
     await user.click(screen.getByRole("button", { name: /Where are you headed/ }));
     await user.type(screen.getByRole("searchbox"), "Weeks");
     await user.click(screen.getByRole("button", { name: /Weeksville Heritage Center/ }));
-    expect(screen.getByRole("button", { name: "Next route" })).toBeVisible();
+    expect(screen.getByRole("button", { name: "Previous route" })).toBeVisible();
   });
 });

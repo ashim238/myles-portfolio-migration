@@ -170,8 +170,10 @@ export default async function FreshGreensPage() {
                   <a href={freshGreensProof.href}>See the route screen</a>.
                 </p>
               </div>
-              <GreenBookPalette />
-              <OnboardingGallery />
+              <ProjectEvidenceDisclosure summary="See the first Google Maps design and the departure reminder">
+                <PivotJourney />
+                <DepartureReminderEvidence />
+              </ProjectEvidenceDisclosure>
               <div className="project-section-body">
                 <p>
                   Driving from Chicago to rural Georgia, six minutes saved might
@@ -187,10 +189,8 @@ export default async function FreshGreensPage() {
               <ProjectEvidenceDisclosure summary="See arrival light on the original app screens">
                 <FreshGreensCaptureViewer />
               </ProjectEvidenceDisclosure>
-              <ProjectEvidenceDisclosure summary="See the first Google Maps design and the departure reminder">
-                <PivotJourney />
-                <DepartureReminderEvidence />
-              </ProjectEvidenceDisclosure>
+              <GreenBookPalette />
+              <OnboardingGallery />
             </section>
           </ProjectChapter>
 

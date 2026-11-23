@@ -164,7 +164,7 @@ describe("dedicated project route visibility", () => {
     expect(comparison).toBeInTheDocument();
     expect(comparison?.closest("details")).toBeNull();
     expect(container.querySelectorAll("#fg-app-walkthrough")).toHaveLength(1);
-    expect(within(comparison!).getByRole("button", { name: "Next route" })).toBeVisible();
+    expect(within(comparison!).getByRole("button", { name: "Previous route" })).toBeVisible();
     expect(within(comparison!).queryByRole("button", { name: /simulator|open the ios app/i })).toBeNull();
     expect(comparison?.querySelector("iframe")).toBeNull();
   });
