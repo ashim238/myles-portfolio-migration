@@ -15,6 +15,7 @@ import { ArchitectureDiagram } from "@/components/fresh-greens";
 import { DepartureReminderEvidence } from "@/components/fresh-greens/departure-reminder-evidence";
 import { WelcomeIllustrationMotion } from "@/components/fresh-greens/welcome-illustration-motion";
 import { freshGreensSession } from "@/lib/fresh-greens/native-session";
+import { RouteComparison } from "@/components/fresh-greens/route-comparison";
 import { EarlyProductWalkthrough } from "@/components/fresh-greens/early-product-walkthrough";
 import { GreenBookPalette, OnboardingGallery } from "@/components/fresh-greens/visual-origins";
 import origins from "@/components/fresh-greens/visual-origins.module.css";
@@ -29,6 +30,10 @@ import { CASE_STUDY_CHAPTERS } from "@/lib/project-chapters";
 import { createRouteMetadata } from "@/lib/site-config";
 
 const chapters = CASE_STUDY_CHAPTERS["fresh-greens"];
+const freshGreensProof = {
+  label: "Compare two routes",
+  href: "#fg-app-walkthrough",
+};
 
 export const metadata: Metadata = createRouteMetadata({
   title: "Fresh Greens",
@@ -47,10 +52,6 @@ export default async function FreshGreensPage() {
 
   const allProjects = await getPublishedProjects();
   const session = freshGreensSession(process.env);
-  const freshGreensProof = {
-    label: session ? "Try a route in iOS" : "Watch a drive in iOS",
-    href: "#fg-app-walkthrough",
-  };
 
   return (
     <ReaderShell slug="fresh-greens" title="Fresh Greens" className="fg-page">
@@ -120,7 +121,7 @@ export default async function FreshGreensPage() {
                   home. I wanted to know what the drive home would be like.
                 </p>
               </div>
-              <EarlyProductWalkthrough session={session} />
+              <RouteComparison />
             </div>
           </ProjectChapter>
 
@@ -192,14 +193,17 @@ export default async function FreshGreensPage() {
               <OnboardingGallery />
               <div className="project-section-body">
                 <p>
-                  For a drive from Chicago to rural Georgia, six minutes saved might
-                  matter less than getting off an unfamiliar backroad before dark.
-                  An earlier prototype called one option “Safest route.” I couldn’t
-                  back that up. The comparison below uses a neutral label and lets
-                  you weigh the conditions yourself.
+                  Driving from Chicago to rural Georgia, six minutes saved might
+                  mean spending longer on an unfamiliar backroad after dark. My prototype called
+                  one option “Safest route.” I couldn’t back that up. In the
+                  reconstruction, I changed the label to “Option 1” and kept the
+                  road conditions on the card.{" "}
+                  <a href={freshGreensProof.href}>Compare the Weeksville routes</a>.
                 </p>
               </div>
-              <RouteComparisonEvidence linkLabel={freshGreensProof.label} />
+              <ProjectEvidenceDisclosure summary="See the revised labels on three sample routes">
+                <RouteComparisonEvidence />
+              </ProjectEvidenceDisclosure>
               <ProjectEvidenceDisclosure summary="See arrival light on the original app screens">
                 <FreshGreensCaptureViewer />
               </ProjectEvidenceDisclosure>
@@ -331,6 +335,11 @@ export default async function FreshGreensPage() {
               <ProjectEvidenceDisclosure summary="See how the data reaches route scoring">
                 <ArchitectureDiagram />
               </ProjectEvidenceDisclosure>
+              {session && (
+                <ProjectEvidenceDisclosure summary="Open the native iOS simulator">
+                  <EarlyProductWalkthrough session={session} />
+                </ProjectEvidenceDisclosure>
+              )}
               <figure
                 className="fg-en-route-video"
                 data-evidence-proof="fresh-greens-en-route-video"

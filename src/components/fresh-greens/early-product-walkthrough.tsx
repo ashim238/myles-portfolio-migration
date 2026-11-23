@@ -12,15 +12,27 @@ const poster = media + "/01-weeksville-daylight-preview.png";
 export function EarlyProductWalkthrough({ session }: { session: NativeSession | null }) {
   const [view, setView] = useState<"poster" | "starting" | "app" | "recording" | "offline">("poster");
   const request = useRef<AbortController | null>(null);
+  const section = useRef<HTMLElement>(null);
   const frame = useRef<HTMLIFrameElement>(null);
   const launch = useRef<HTMLButtonElement>(null);
   const watching = !session || view === "recording";
   const running = !!session && view === "app";
   const pending = view === "starting";
 
-  useEffect(() => () => {
-    request.current?.abort();
-    request.current = null;
+  useEffect(() => {
+    const disclosure = section.current?.closest("details");
+    function releaseHiddenSession() {
+      if (disclosure?.open) return;
+      request.current?.abort();
+      request.current = null;
+      setView("poster");
+    }
+    disclosure?.addEventListener("toggle", releaseHiddenSession);
+    return () => {
+      disclosure?.removeEventListener("toggle", releaseHiddenSession);
+      request.current?.abort();
+      request.current = null;
+    };
   }, []);
 
   useEffect(() => {
@@ -74,10 +86,10 @@ export function EarlyProductWalkthrough({ session }: { session: NativeSession | 
   }
 
   return (
-    <section id="fg-app-walkthrough" className={`${styles.walkthrough} project-proof-target`} aria-labelledby="fg-walkthrough-title">
+    <section ref={section} id="fg-native-simulator" className={`${styles.walkthrough} project-proof-target`} aria-labelledby="fg-native-simulator-title">
       <header className={styles.header}>
         <p className={styles.kicker}>{watching ? "iOS recording" : "iOS simulator"}</p>
-        <h3 id="fg-walkthrough-title">{watching ? "A drive to Weeksville" : "Take Fresh Greens for a drive"}</h3>
+        <h3 id="fg-native-simulator-title">{watching ? "A drive to Weeksville" : "Take Fresh Greens for a drive"}</h3>
         <p>{watching ? "Follow the trip to Weeksville Heritage Center in the original iPhone app." : "Tap “Where are you headed?” and search for a place in Brooklyn. Choose a route, then tap Go to see the driving view."}</p>
         {view === "offline" && <p role="status">The simulator is unavailable. Try again or watch the recorded drive.</p>}
         {session && (

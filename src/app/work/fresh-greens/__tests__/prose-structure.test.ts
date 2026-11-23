@@ -352,7 +352,7 @@ describe("Fresh Greens prose structure", () => {
     expect(copy).toContain("In 1936, Victor H. Green published");
     expect(copy).toContain("I moved from Brooklyn to South Jersey");
     expect(source).toContain('href="https://www.loc.gov/item/2016298176/"');
-    expect(source).toContain("<EarlyProductWalkthrough session=");
+    expect(source).toContain("<RouteComparison />");
     expect(copy).toContain("19 to 34");
     expect(source).toContain("<blockquote>“If they showed the gradient of light");
     expect(copy).toContain("Plan");
@@ -390,7 +390,7 @@ describe("Fresh Greens prose structure", () => {
       "People just need transparency into how the app is doing what it claims it does.",
     );
     expect(copy).toContain(
-      'The comparison below uses a neutral label',
+      'I changed the label to',
     );
     expect(copy).toContain("The full score and its weights aren't exposed yet.");
     expect(copy).toContain(

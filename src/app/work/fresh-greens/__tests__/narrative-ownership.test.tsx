@@ -117,7 +117,7 @@ describe("Fresh Greens rendered narrative ownership", () => {
       within(plan).getByTestId("departure-reminder-evidence"),
     ).toBeInTheDocument();
     expect(
-      within(plan).getByTestId("route-comparison-evidence"),
+      within(plan).getByTestId("route-comparison-evidence").closest("details"),
     ).toBeInTheDocument();
     expect(
       within(plan).queryByTestId("architecture-diagram"),
@@ -216,7 +216,7 @@ describe("Fresh Greens rendered narrative ownership", () => {
     expect(plan).toHaveTextContent("I kept the information architecture");
     expect(plan).toHaveTextContent("Chicago to rural Georgia");
     expect(plan).toHaveTextContent(
-      'comparison below uses a neutral label',
+      'I changed the label to',
     );
     expect(respond).toHaveTextContent(
       "In the pulled-over flow, I ask “Are you armed?” first. Which guidance applies depends on the driver's answer and the state they're in.",

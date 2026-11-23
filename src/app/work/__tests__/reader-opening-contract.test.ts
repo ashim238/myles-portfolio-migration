@@ -16,7 +16,7 @@ const routes: RouteOpening[] = [
   {
     route: "fresh-greens",
     proofName: "freshGreensProof",
-    proofLabel: "Watch a drive in iOS",
+    proofLabel: "Compare two routes",
     proofHref: "#fg-app-walkthrough",
     opening: '<section className="hero project-hero fg-hero"',
     openingClose: "</section>",

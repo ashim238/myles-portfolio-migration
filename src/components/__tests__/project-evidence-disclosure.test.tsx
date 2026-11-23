@@ -6,7 +6,7 @@ import { ProjectEvidenceDisclosure } from "@/components/project-evidence-disclos
 
 const styles = readFileSync(resolve(process.cwd(), "src/app/styles/base.css"), "utf8");
 const disclosureCallsites = [
-  ["Fresh Greens", "src/app/work/fresh-greens/page.tsx", 4],
+  ["Fresh Greens", "src/app/work/fresh-greens/page.tsx", 6],
   ["TikTok", "src/app/work/tiktok/page.tsx", 1],
   ["Understanding FAFSA", "src/app/work/understandingfafsa/page.tsx", 1],
   ["Navi", "src/components/navi/research-artifacts.tsx", 1],
@@ -44,7 +44,7 @@ describe("ProjectEvidenceDisclosure", () => {
   });
 
   it.each(disclosureCallsites)(
-    "routes %s evidence through the shared inset disclosure (%i instances)",
+    "routes %s evidence through the shared inset disclosure",
     (_name, file, expectedInstances) => {
       const source = readFileSync(resolve(process.cwd(), file), "utf8");
       const instances = source.match(/<ProjectEvidenceDisclosure(?=[\s>])/g) ?? [];

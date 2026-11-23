@@ -33,7 +33,7 @@ const routes = [
   },
 ] as const;
 
-export function RouteComparisonEvidence({ linkLabel = "Watch a drive in iOS" }: { linkLabel?: string }) {
+export function RouteComparisonEvidence() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const route = routes[selectedIndex];
 
@@ -111,8 +111,7 @@ export function RouteComparisonEvidence({ linkLabel = "Watch a drive in iOS" }: 
       </div>
 
       <figcaption>
-        Rebuilt for this case study with sample route data and a revised label.{" "}
-        <a href="#fg-app-walkthrough">{linkLabel}</a>
+        Rebuilt for this case study with sample route data and a revised label.
       </figcaption>
     </figure>
   );

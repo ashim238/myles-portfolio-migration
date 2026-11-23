@@ -1,5 +1,5 @@
 // @vitest-environment-options {"url":"http://127.0.0.1:4391/work/fresh-greens"}
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { EarlyProductWalkthrough } from "../early-product-walkthrough";
@@ -40,6 +40,20 @@ describe("Fresh Greens iOS embed", () => {
     await user.click(screen.getByRole("button", { name: "Watch a recorded drive" }));
     expect(screen.getByLabelText(recordingName)).toBeVisible();
     expect(fetch).not.toHaveBeenCalled();
+  });
+
+  it("releases the hosted frame when the simulator disclosure is closed", async () => {
+    const user = userEvent.setup();
+    render(
+      <details open>
+        <summary>Open the native iOS simulator</summary>
+        <EarlyProductWalkthrough session={{ kind: "hosted", buildId: "demo" }} />
+      </details>,
+    );
+    await user.click(screen.getByRole("button", { name: "Open the iOS app" }));
+    expect(screen.getByTitle(frameName)).toBeInTheDocument();
+    await user.click(screen.getByText("Open the native iOS simulator"));
+    await waitFor(() => expect(screen.queryByTitle(frameName)).not.toBeInTheDocument());
   });
 
   it("probes the local simulator and recovers through Retry when it becomes ready", async () => {
