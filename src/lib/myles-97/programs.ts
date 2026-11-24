@@ -6,6 +6,9 @@ export type FeaturedProjectId =
   | "navi"
   | "tiktok";
 
+export type JuliusArtworkId = "julius-design-system";
+export type ArtworkProjectId = FeaturedProjectId | JuliusArtworkId;
+
 export type ProjectProgramId = FeaturedProjectId | `study-${string}`;
 
 export type SystemProgramId =
@@ -101,6 +104,12 @@ export function isFeaturedProject(id: string): id is FeaturedProjectId {
 
 export function projectSlug(id: string) {
   return id.startsWith("study-") ? id.slice(6) : id;
+}
+
+// Added studies use a study-prefixed program ID in the desktop shell.
+export function artworkForProgram(id: string): ArtworkProjectId | undefined {
+  const slug = projectSlug(id);
+  if (isFeaturedProject(slug) || slug === "julius-design-system") return slug;
 }
 
 export function isProjectProgramId(value: unknown): value is ProjectProgramId {

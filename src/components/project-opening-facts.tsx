@@ -2,6 +2,7 @@ import { CommandIcon } from "@/components/myles-97/command-icon";
 
 type ProjectOpeningFactsProps = {
   role: string;
+  team?: string;
   goal: string;
   outcome: string;
   proof: {
@@ -12,12 +13,14 @@ type ProjectOpeningFactsProps = {
 
 export function ProjectOpeningFacts({
   role,
+  team,
   goal,
   outcome,
   proof,
 }: ProjectOpeningFactsProps) {
   const facts = [
     { label: "Role", value: role },
+    ...(team ? [{ label: "Team", value: team }] : []),
     { label: "Goal", value: goal },
     { label: "Outcome", value: outcome },
   ];

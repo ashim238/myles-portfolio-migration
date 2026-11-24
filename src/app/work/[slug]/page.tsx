@@ -19,6 +19,7 @@ function slugify(text: string): string {
 type Params = { slug: string };
 
 const dedicatedProjectSlugs = new Set<string>([
+  "julius-design-system",
   "fresh-greens",
   "understandingfafsa",
   "navi",

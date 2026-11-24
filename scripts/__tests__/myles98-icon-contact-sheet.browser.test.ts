@@ -5,6 +5,7 @@ import { pathToFileURL } from "node:url";
 import { chromium } from "playwright";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { buildIconContactSheet } from "../build-myles98-icon-contact-sheet.mjs";
+import { ICON_CONCEPTS, ICON_GRIDS } from "../lib/myles98-icon-contract.mjs";
 
 declare global {
   interface Window {
@@ -23,6 +24,10 @@ const surfaces = [
   ["chrome", "rgb(192, 192, 192)"],
   ["white", "rgb(255, 255, 255)"],
 ] as const;
+
+const familyCount = ICON_CONCEPTS.length;
+const masterCount = familyCount * ICON_GRIDS.length;
+const cardsPerMode = masterCount * surfaces.length;
 
 let root = "";
 let browser: Awaited<ReturnType<typeof chromium.launch>>;
@@ -92,12 +97,12 @@ describe("Myles 98 icon contact sheet browser rendering", () => {
     });
 
     expect(result.mode).toBe("labeled");
-    expect(result.labeledCards).toBe(162);
+    expect(result.labeledCards).toBe(cardsPerMode);
     expect(result.magnifiedSvgCount).toBe(0);
-    expect(result.magnifiedCanvasCount).toBe(324);
+    expect(result.magnifiedCanvasCount).toBe(cardsPerMode * 2);
     expect(result.pixelBlocksAreUniform).toBe(true);
     for (const [surface, color] of surfaces) {
-      expect(result.surfaceResult[surface]).toHaveLength(108);
+      expect(result.surfaceResult[surface]).toHaveLength(masterCount * 2);
       expect(new Set(result.surfaceResult[surface])).toEqual(new Set([color]));
     }
     await page.close();
@@ -150,11 +155,11 @@ describe("Myles 98 icon contact sheet browser rendering", () => {
 
     expect(result.mode).toBe("unlabeled");
     expect(result.bodyVisible).toBe(true);
-    expect(result.blindCards).toBe(162);
-    expect(result.blindFamilies).toHaveLength(54);
-    expect(new Set(result.blindFamilies.map((family) => family.id))).toHaveLength(18);
-    expect(result.blindFamilies.slice(0, 18).map((family) => family.id)).toEqual(
-      result.blindFamilies.slice(18, 36).map((family) => family.id),
+    expect(result.blindCards).toBe(cardsPerMode);
+    expect(result.blindFamilies).toHaveLength(familyCount * surfaces.length);
+    expect(new Set(result.blindFamilies.map((family) => family.id))).toHaveLength(familyCount);
+    expect(result.blindFamilies.slice(0, familyCount).map((family) => family.id)).toEqual(
+      result.blindFamilies.slice(familyCount, familyCount * 2).map((family) => family.id),
     );
     for (const family of result.blindFamilies) expect(family.grids).toEqual(["16", "24", "32"]);
     expect(result.labeledCardsVisible).toBe(0);
@@ -162,7 +167,7 @@ describe("Myles 98 icon contact sheet browser rendering", () => {
     expect(result.earlyLabeledStates).toHaveLength(1);
     expect(result.earlyLabeledStates).toEqual([{ mode: "unlabeled", display: "none" }]);
     for (const [surface, color] of surfaces) {
-      expect(result.blindWells[surface]).toHaveLength(108);
+      expect(result.blindWells[surface]).toHaveLength(masterCount * 2);
       expect(new Set(result.blindWells[surface])).toEqual(new Set([color]));
     }
     await page.close();

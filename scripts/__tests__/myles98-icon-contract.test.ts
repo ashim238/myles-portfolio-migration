@@ -167,6 +167,7 @@ describe("Myles 98 icon master contract", () => {
       "understandingfafsa",
       "navi",
       "tiktok-catalog",
+      "julius-design-system",
     ]);
   });
 
@@ -364,6 +365,7 @@ describe("Myles 98 icon master contract", () => {
       understandingfafsa: REFINED_TARGET_METADATA.understandingfafsa.tiers,
       navi: { "16": "Pointed location marker", "24": "Two-plane location marker above a roofed storefront with scalloped awning", "32": "Pointed two-plane marker with orange cue above storefront facade, awning, window, and door" },
       "tiktok-catalog": REFINED_TARGET_METADATA["tiktok-catalog"].tiers,
+      "julius-design-system": { "16": "Stacked specimen sheets with an Indigo button and a pair of swatches", "24": "Fanned specimen sheets behind a cream component sample", "32": "Fanned ochre and Indigo sheets with a button, two color swatches, and notes on the cream front sheet" },
     };
 
     expect(Object.fromEntries(Object.entries(APPROVED_ICON_METADATA).map(([id, metadata]) => [id, metadata.tiers]))).toEqual(approvedTiers);

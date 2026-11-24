@@ -1,0 +1,332 @@
+/* Keep the product plates in the book grid, with a quieter jacket behind each. */
+.reader-mode.julius-reader[data-reader-mode] .case-frontispiece {
+  --cover-ink: #172d43;
+  --cover-paper: #e7ecee;
+  --folio-cloth: #2c4e68;
+}
+.reader-mode.julius-reader[data-reader-mode="julius-design-system"] .case-frontispiece {
+  --cover-ink: #282844;
+  --cover-paper: #edebf0;
+  --folio-cloth: #54577c;
+}
+.reader-mode.julius-reader .case-frontispiece .project-hero-title {
+  text-wrap: balance;
+}
+.reader-mode.julius-reader .case-frontispiece .project-hero-lede {
+  color: var(--cover-ink);
+}
+.reader-mode.julius-reader .julius-dateline {
+  margin: 0 0 12px;
+  color: var(--cover-ink);
+  font: 600 .85rem/1.5 var(--m97-ui-font);
+}
+.julius-dateline span { padding-inline: .45em; }
+@media (max-width: 767px), (pointer: coarse) {
+  .reader-mode.julius-reader .project-toc-list--open .project-toc-text {
+    display: block;
+    background: transparent;
+    text-align: start;
+  }
+  .reader-mode.julius-reader .project-toc-list--open :is(.project-toc-stage, .project-toc-separator, .project-toc-title) {
+    display: inline;
+  }
+}
+.reader-mode.julius-reader .julius-cover {
+  min-width: 0;
+  align-self: start;
+  animation: none;
+}
+.reader-mode.julius-reader .case-book .project-chapter > .project-section-body {
+  margin-inline: 0;
+  max-width: 40.3rem;
+}
+.julius-reader .project-chapter .project-section-body + .project-section-body { margin-top: 1em; }
+.julius-release-flow { margin: clamp(2rem, 4vw, 3rem) 0; }
+.julius-release-flow h3 { margin: 0 0 1rem; font: 600 1.28rem/1.25 var(--m97-reader-font); scroll-margin-top: calc(var(--project-heading-offset) + 4rem); }
+.julius-release-flow ol { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); list-style: none; margin: 0; padding: 0; border-block: 1px solid var(--jul-card-rule); }
+.julius-release-flow li { margin: 0; padding: 1rem clamp(.8rem, 1.5vw, 1.25rem) 1rem 0; font: 400 .94rem/1.5 var(--m97-ui-font); }
+.julius-release-flow li + li { border-inline-start: 1px solid var(--jul-card-rule); padding-inline-start: clamp(.8rem, 1.5vw, 1.25rem); }
+.julius-release-flow li:last-child { padding-inline-end: 0; }
+.julius-release-flow strong { font-size: 1rem; }
+.julius-release-flow p { margin: .4rem 0 0; }
+.julius-release-flow a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-underline-offset: .18em; }
+@media(max-width: 700px) {
+  .julius-release-flow ol { grid-template-columns: minmax(0, 1fr); }
+  .julius-release-flow li, .julius-release-flow li + li { padding: .875rem 0; border-inline: 0; }
+  .julius-release-flow li + li { border-block-start: 1px solid var(--jul-card-rule); }
+}
+/* The stage sits above the linked title. Leave both visible below the Reader controls. */
+.reader-mode.julius-reader .project-chapter-title[id] {
+  scroll-margin-top: calc(var(--project-heading-offset) + 3.5rem);
+}
+@media (768px <= width < 1200px) {
+  .reader-mode.julius-reader .project-chapter-title[id] {
+    scroll-margin-top: calc(var(--project-heading-offset) + 4.5rem);
+  }
+}
+@media (max-width:1079px) {
+  .reader-mode.julius-reader { padding-inline: 0; }
+  .reader-mode.julius-reader .case-frontispiece { margin: 16px auto 28px; width: min(calc(100% - 32px),48rem); }
+  .reader-mode.julius-reader .julius-cover { margin: 0; width: 100%; }
+}
+@media (max-width:520px) {
+  .reader-mode.julius-reader .case-frontispiece { width: calc(100% - 20px); padding: 16px 13px; }
+  .reader-mode.julius-reader .case-frontispiece .project-hero-title { font-size: clamp(37px,10.2vw,51px); letter-spacing:-.045em; line-height:1.02; }
+  .reader-mode.julius-reader .case-frontispiece .project-hero-lede { margin-block: 12px 0; font-size:17px; line-height:1.5; }
+}
+.reader-mode.julius-reader .project-chapter > .julius-exhibit {
+  margin-block: clamp(20px,3vw,40px) clamp(28px,4vw,52px);
+}
+.reader-mode.julius-reader .julius-cover :is(.julius-exhibit-heading h3, .julius-caption, .julius-picture-action) {
+  color: var(--cover-ink);
+}
+
+.julius-library-specimen {
+  width: min(100%, 56rem);
+  margin-block-end: clamp(2rem, 4vw, 3.5rem);
+}
+@media (max-width: 1199px) {
+  .julius-library-specimen { width: min(calc(100% - 32px), 48rem); margin-inline: auto; }
+}
+
+.julius-inventory {
+  margin-block-start: clamp(1.5rem, 4vw, 3rem);
+  color: var(--m97-reader-ink);
+}
+.julius-inventory h2 {
+  margin: 0 0 .5rem;
+  scroll-margin-top: calc(var(--project-heading-offset) + 3.5rem);
+  font: 500 clamp(1.55rem, 2.5vw, 2.1rem)/1.1 var(--m97-reader-font);
+}
+.julius-inventory > p { max-width: 60ch; margin: 0 0 1.25rem; }
+.julius-audit-sheet {
+  padding-inline: clamp(.875rem, 2.4vw, 1.75rem);
+  color: var(--jul-card-ink);
+  background: var(--jul-stock);
+  border-block-start: 3px solid var(--jul-binding);
+  border-block-end: 1px solid var(--jul-card-rule);
+}
+.julius-audit-sheet table {
+  width: 100%;
+  border-collapse: collapse;
+  font: 400 1rem/1.5 var(--m97-ui-font);
+}
+.julius-audit-sheet :is(th, td) { text-align: start; vertical-align: middle; }
+.julius-audit-sheet thead th {
+  padding-block: .75rem;
+  color: var(--jul-board);
+  font-size: .875rem;
+  font-weight: 650;
+  border-block-end: 1px solid var(--jul-card-rule);
+}
+.julius-audit-sheet tbody :is(th, td) { padding-block: 1rem; }
+.julius-audit-sheet tbody tr + tr > * { border-block-start: 1px solid color-mix(in srgb, var(--jul-card-rule) 52%, transparent); }
+.julius-audit-sheet tr > :first-child { width: 40%; padding-inline-end: clamp(1rem, 2.6vw, 2rem); }
+.julius-audit-measure {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  font: 600 1.125rem/1.2 var(--m97-reader-font);
+}
+.julius-audit-tally { display: grid; grid-template-columns: repeat(9, 1fr); gap: 2px; width: 5.75rem; flex: none; }
+.julius-audit-tally i { height: .75rem; border: 1px solid var(--jul-card-rule); }
+.julius-audit-tally .counted { background: var(--jul-board); border-color: var(--jul-board); }
+.julius-release-index {
+  margin-block-start: 1rem;
+  border: 1px solid var(--jul-card-rule);
+  color: var(--jul-card-ink);
+  background: var(--jul-stock);
+  font: 400 1rem/1.45 var(--m97-ui-font);
+}
+.julius-release-index summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .875rem clamp(.875rem, 2.4vw, 1.75rem);
+  color: var(--jul-binding);
+  background: color-mix(in srgb, var(--jul-thread) 22%, var(--jul-stock));
+  list-style: none;
+  font-weight: 650;
+  cursor: pointer;
+}
+.julius-release-index summary::-webkit-details-marker { display: none; }
+.julius-release-index summary small { display: inline-block; margin-inline-start: .75em; color: var(--jul-board); font-size: .875rem; font-weight: 400; }
+.julius-release-index summary:focus-visible { outline: 2px solid var(--m97-active); outline-offset: 3px; }
+.julius-release-index summary:hover { background: color-mix(in srgb, var(--jul-thread) 36%, var(--jul-stock)); }
+.julius-release-toggle {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 1px solid currentColor;
+}
+.julius-release-toggle::before, .julius-release-toggle::after {
+  content: "";
+  position: absolute;
+  width: .65rem;
+  border-block-start: 2px solid currentColor;
+}
+.julius-release-toggle::after { transform: rotate(90deg); }
+.julius-release-index[open] .julius-release-toggle::after { display: none; }
+.julius-release-groups {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--jul-card-rule);
+  border-block-start: 1px solid var(--jul-card-rule);
+}
+.julius-release-groups > section {
+  min-width: 0;
+  padding: 1rem clamp(.75rem, 2vw, 1.5rem);
+  background: var(--jul-stock);
+}
+.julius-release-groups h3 {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin: 0 0 .55rem;
+  font: 650 1rem/1.2 var(--m97-ui-font);
+}
+.julius-release-groups svg { flex: none; }
+.julius-release-groups ul { margin: 0; padding: 0; list-style: none; }
+.julius-release-groups li { padding-block: .08rem; font-size: .9375rem; }
+@media (max-width: 700px) {
+  .julius-audit-measure { align-items: flex-start; flex-direction: column; gap: .45rem; }
+  .julius-audit-sheet tr > :first-child { width: 31%; }
+  .julius-audit-tally { width: min(100%, 4.7rem); }
+  .julius-release-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 420px) {
+  .julius-release-index summary small { display: block; margin-inline-start: 0; }
+  .julius-release-groups h3 { flex-direction: column; align-items: flex-start; gap: .25rem; }
+}
+@media (forced-colors: active) {
+  .julius-audit-tally .counted { forced-color-adjust: none; background: CanvasText; border-color: CanvasText; }
+}
+
+/* The Reader's print mounts use the Julius jackets' own cloth and paper.
+   Keep captions on the sheet and working controls inside their original screens. */
+.reader-mode.julius-reader {
+  --jul-board: #454962;
+  --jul-binding: #282d45;
+  --jul-thread: #a9afd1;
+  --jul-stock: #f7f4e9;
+  --jul-card-ink: #25313b;
+  --jul-card-rule: #959993;
+  --jul-sheet-gutter: clamp(.65rem, 1.5vw, 1.15rem);
+  --jul-binding-width: .42rem;
+}
+.reader-mode.jw-reader {
+  --jul-board: #314e59;
+  --jul-binding: #1c3643;
+  --jul-thread: #a4bfb2;
+}
+.julius-reader :is(.julius-exhibit, .jw-original-film) {
+  box-sizing: border-box;
+  padding: var(--jul-sheet-gutter);
+  padding-inline-start: calc(var(--jul-sheet-gutter) + var(--jul-binding-width));
+  border: 1px solid var(--jul-card-rule);
+  background: linear-gradient(90deg,
+    var(--jul-binding) 0 var(--jul-binding-width),
+    var(--jul-thread) var(--jul-binding-width) calc(var(--jul-binding-width) + 1px),
+    var(--jul-stock) calc(var(--jul-binding-width) + 1px));
+  box-shadow: 1px 2px 0 rgb(25 40 47 / 14%);
+}
+.reader-mode.julius-reader .julius-exhibit .julius-exhibit-heading h3 {
+  color: var(--jul-card-ink);
+  font: 600 clamp(.94rem, 1.32vw, 1.125rem)/1.3 var(--font-family-sans, var(--m97-ui-font));
+}
+.julius-reader .julius-exhibit-panel {
+  --exhibit-rule: color-mix(in srgb, var(--jul-binding) 37%, var(--jul-stock));
+}
+.julius-reader .julius-picture {
+  background: color-mix(in srgb, var(--jul-board) 9%, var(--jul-stock));
+}
+.julius-reader :is(.jw-home-plates, .jw-boards, .jw-record-plates) {
+  display: grid;
+  gap: var(--jul-sheet-gutter);
+  box-sizing: border-box;
+  padding: var(--jul-sheet-gutter);
+  padding-inline-start: calc(var(--jul-sheet-gutter) + var(--jul-binding-width));
+  border: 1px solid var(--jul-binding);
+  background: linear-gradient(90deg,
+    var(--jul-binding) 0 var(--jul-binding-width),
+    var(--jul-thread) var(--jul-binding-width) calc(var(--jul-binding-width) + 2px),
+    var(--jul-board) calc(var(--jul-binding-width) + 2px));
+  box-shadow: 2px 3px 0 rgb(25 40 47 / 15%);
+}
+.julius-reader .jw-home-plates { grid-template-columns: minmax(0, 1fr); }
+.julius-reader :is(.jw-home-plates, .jw-boards, .jw-record-plates) > figure {
+  min-width: 0;
+  margin: 0;
+  padding: clamp(.4rem, .9vw, .7rem);
+  border: 0;
+  background: var(--jul-stock);
+  box-shadow: 1px 2px 0 rgb(14 30 42 / 23%);
+}
+.reader-mode.julius-reader :is(.jw-home-plates, .jw-boards, .jw-original-film) figcaption {
+  text-align: start;
+  margin: 0;
+  max-width: 68ch;
+  padding: .65rem .1rem .1rem;
+  color: var(--jul-card-ink);
+  font: 500 .875rem/1.45 var(--font-family-sans, var(--m97-ui-font));
+}
+.julius-reader .jw-home-plates .jul-home-lab,
+.julius-reader .jw-original-film video { border: 1px solid var(--jul-card-rule); }
+
+@media (max-width: 600px) {
+  .reader-mode.julius-reader {
+    --jul-sheet-gutter: .45rem;
+    --jul-binding-width: .22rem;
+  }
+  .julius-reader :is(.jw-home-plates, .jw-boards, .jw-record-plates) > figure { padding: .3rem; }
+  .reader-mode.julius-reader :is(.jw-home-plates, .jw-boards, .jw-original-film) figcaption {
+    font-size: .8125rem;
+    padding: .5rem .15rem .15rem;
+  }
+}
+
+@media (forced-colors: active) {
+  .julius-reader :is(.julius-exhibit, .jw-original-film, .jw-home-plates, .jw-boards, .jw-record-plates) {
+    border-color: CanvasText;
+    box-shadow: none;
+  }
+}
+
+
+/* Align chapter copy with the other Reader books. Let small-screen exhibits
+   borrow the outer margin so the source is still readable before enlargement. */
+@media (min-width: 601px) and (max-width: 1079px) {
+  .reader-mode.julius-reader .case-book { margin-inline: 1.4rem; }
+}
+@media (min-width: 900px) and (max-width: 1199px) {
+  .julius-library-specimen { width: min(calc(100% - 64px), 76rem); }
+}
+.reader-mode.jw-reader .case-book .jw-chapter .chapter-opening .jw-chapter-lead,
+.reader-mode.jw-reader .case-book :is(.jw-after, .jw-note-pair p, .jw-film-note p, .jw-source-intro) {
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+.reader-mode.jw-reader .case-book :is(.jw-chapter-lead, .jw-after, .jw-source-intro) {
+  max-width: 40.3rem;
+}
+@media (max-width: 600px) {
+  .reader-mode.julius-reader .case-book .project-chapter > :is(.chapter-opening, .project-section-body, .jw-after, .jw-note-pair),
+  .reader-mode.jw-reader .jw-film-note {
+    margin-inline: min(6vw, 1.4rem);
+  }
+  .reader-mode.jw-reader .case-book .jw-chapter .chapter-opening .jw-chapter-lead,
+  .reader-mode.jw-reader .case-book :is(.jw-after, .jw-note-pair p, .jw-film-note p, .jw-source-intro) {
+    font-size: 1.03125rem;
+    line-height: 1.68;
+  }
+}
+
+.julius-color-reference { margin-block: 1.5rem; border-block: 1px solid var(--jul-card-rule); }
+.julius-color-reference summary { min-height: 44px; padding: .8rem 0; cursor: pointer; font: 600 .9rem/1.4 var(--m97-ui-font); }
+.julius-color-reference summary:focus-visible { outline: 2px solid var(--m97-active); outline-offset: 2px; }

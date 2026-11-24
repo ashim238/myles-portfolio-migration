@@ -1,0 +1,37 @@
+.julius-jacket {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  isolation: isolate;
+  overflow: hidden;
+  background: #10253c;
+}
+.julius-jacket[data-jacket="julius-design-system"] { background: #e4dfd0; }
+.edition-face > .julius-jacket { inset: 0; height: 100%; }
+.julius-jacket > img,
+.julius-jacket > .julius-jacket-inks {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  max-width: none;
+}
+.julius-jacket-inks { pointer-events: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .julius-jacket[data-jacket="julius-design-system"][data-entered=true] use:not([data-ink="base"],[data-ink="letter"]) {
+    animation: julius-register-specimen 760ms cubic-bezier(.18,.72,.28,1) var(--registration-delay, 0ms) backwards;
+  }
+  .julius-jacket [data-ink="dropdown"] { --registration-delay: 85ms; }
+  .julius-jacket [data-ink="dialog"] { --registration-delay: 170ms; }
+  .julius-jacket [data-ink="fields"] { --registration-delay: 170ms; }
+  .julius-jacket [data-ink="selection"] { --registration-delay: 255ms; }
+  .julius-jacket [data-ink="status"] { --registration-delay: 340ms; }
+}
+@keyframes julius-register-specimen {
+  from { opacity: .20; transform: translate(-12px,16px); }
+  to { opacity: 1; transform: translate(0,0); }
+}
+[data-m97-motion="reduce"] .julius-jacket-inks [data-ink] { animation: none !important; }

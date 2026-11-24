@@ -1,4 +1,4 @@
-import type { FeaturedProjectId } from "./programs";
+import type { ArtworkProjectId } from "./programs";
 import { eveningCaptures } from "@/lib/fresh-greens/daylight-captures";
 import { UF_ASSETS } from "@/lib/understandingfafsa-assets";
 import { TIKTOK_TEMPLATES } from "@/lib/tiktok-data";
@@ -61,7 +61,13 @@ function emailSample(after: boolean): ArtSample {
   };
 }
 
-export const projectSamples: Record<FeaturedProjectId, readonly ArtSample[]> = {
+export const projectSamples: Record<ArtworkProjectId, readonly ArtSample[]> = {
+  "julius-design-system": [
+    { label: "Dialog", detail: "Two actions share the row", alt: "Keep reviewing and Leave each fill half of the dialog footer.",
+      src: "/projects/julius-design-system/dialog-fill.webp", width: 432, height: 226, crop: [.07, .58, .87, .31] },
+    { label: "Sidebar", detail: "Header and navigation alignment", alt: "Vertical guides show how the sidebar title, icons, and labels line up.",
+      src: "/projects/julius-design-system/sidebar-guides.webp", width: 592, height: 1008, crop: [.03, .03, .92, .33] },
+  ],
   "fresh-greens": [
     ...arrivalLightSamples,
     { label: "Support", detail: "Support options", alt: "The four choices in the Fresh Greens safety toolkit.", src: route + "/safety-toolkit.png", width: 1290, height: 2796, crop: [.025, .215, .95, .33] },

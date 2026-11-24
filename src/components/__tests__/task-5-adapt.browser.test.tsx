@@ -431,12 +431,13 @@ describe("Task 5 responsive adaptation", () => {
 
   it("enters the case study on the first artwork activation on a short phone", async () => {
     const page = await hydratedBrowserPage("pocket", { width: 320, height: 568 });
-    const link = page.getByRole("link", { name: "Read Fresh Greens case study" });
-    expect(await link.getAttribute("href")).toBe("/work/fresh-greens");
+    const first = programs[0];
+    const link = page.getByRole("link", { name: `Read ${first.title} case study` });
+    expect(await link.getAttribute("href")).toBe(first.href);
     expect(await link.locator(".publication-cover").isVisible()).toBe(true);
-    await page.route("**/work/fresh-greens", route => route.fulfill({ body: "<main>Case study</main>", contentType: "text/html" }));
+    await page.route("**" + first.href, route => route.fulfill({ body: "<main>Case study</main>", contentType: "text/html" }));
     await link.press("Enter");
-    await page.waitForURL("**/work/fresh-greens");
+    await page.waitForURL("**" + first.href);
     expect(await page.getByText("Case study", { exact: true }).isVisible()).toBe(true);
     await page.close();
   }, 60_000);
@@ -645,11 +646,11 @@ describe("Task 5 responsive adaptation", () => {
           dockAtViewportBottom: Math.abs(dockRect.bottom - innerHeight) <= 1,
           introAboveWork: introRect.bottom <= workRect.top + 1,
           edgesAlign: Math.abs(introRect.left - workRect.left) <= 1,
-          twoCardRows:
-            cardRects.length === 4 &&
-            Math.abs(cardRects[0].top - cardRects[1].top) <= 1 &&
-            Math.abs(cardRects[2].top - cardRects[3].top) <= 1 &&
-            cardRects[1].left > cardRects[0].left,
+          twoColumnRows: cardRects.every((rect, index) => {
+            if (index === 0) return true;
+            if (index % 2 === 1) return Math.abs(rect.top - cardRects[index - 1].top) <= 1 && rect.left > cardRects[index - 1].left;
+            return Math.abs(rect.left - cardRects[0].left) <= 1 && rect.top >= cardRects[index - 1].bottom;
+          }),
           allTargets44: targets.every((target) => {
             const rect = target.getBoundingClientRect();
             return rect.width >= 44 && rect.height >= 44;
@@ -666,7 +667,7 @@ describe("Task 5 responsive adaptation", () => {
         dockAtViewportBottom: true,
         introAboveWork: true,
         edgesAlign: true,
-        twoCardRows: true,
+        twoColumnRows: true,
         allTargets44: true,
         coverCount: programs.length,
       });

@@ -25,7 +25,7 @@ const nowPlayingStyles = readFileSync(
 );
 const archiveStyles = ["workstation-documents.css", "archive-layout.css", "project-artwork.css"]
   .map((file) => readFileSync(resolve(__dirname, "../../app/styles", file), "utf8"))
-  .join("\n");
+  .join("\n") + readFileSync(resolve(__dirname, "../myles-97/julius-cover-art.css"), "utf8");
 const publicDirectory = resolve(__dirname, "../../../public");
 const laptopViewports = [
   { width: 1440, height: 900 },
@@ -234,7 +234,7 @@ describe("Myles 98 desktop content fit", () => {
         ".myles97-primary-button",
       );
 
-      expect(programs).toHaveLength(4);
+      expect(programs.some(program => program.id === "study-julius-design-system")).toBe(true);
       expect(selectedGeometry).toEqual({
         noHorizontalScroll: true,
         noVerticalScroll: true,

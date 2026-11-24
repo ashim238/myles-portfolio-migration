@@ -2,9 +2,11 @@
 
 import { useId, useRef, useState } from "react";
 import { TeardownDrawing, layerDescription } from "./teardown-drawing";
-import type { FeaturedProjectId } from "@/lib/myles-97/programs";
+import { JuliusCoverFace } from "./julius-cover-art";
+import type { ArtworkProjectId } from "@/lib/myles-97/programs";
 
-const descriptions: Record<FeaturedProjectId, string> = {
+const descriptions: Record<ArtworkProjectId, string> = {
+  "julius-design-system": "A Julius specimen sheet showing navigation, a dropdown, dialog actions, inputs, selection controls, and progress states.",
   "fresh-greens": "Fresh Greens road atlas with the five-minute daylight route to Weeksville Heritage Center.",
   understandingfafsa: "FAFSA & Financial Aid 101 newsletter on perforated printer paper.",
   navi: "Prospect Park postcard with a Brooklyn park photograph and a pond postage stamp.",
@@ -57,6 +59,7 @@ function CatalogCover() {
 }
 
 const covers = {
+  "julius-design-system": () => <JuliusCoverFace project="julius-design-system" />,
   "fresh-greens": AtlasCover,
   understandingfafsa: NewsletterCover,
   navi: PostcardCover,
@@ -64,7 +67,7 @@ const covers = {
 };
 
 type CoverProps = {
-  project: FeaturedProjectId;
+  project: ArtworkProjectId;
   reduced?: boolean;
   inspect?: boolean;
   interactive?: boolean;
@@ -83,7 +86,7 @@ export function ProductThumbnail({ project, reduced = false, inspect = false, in
 }
 
 export function InspectableThumbnail({ project, title, reduced, assemblyOnly = false }: {
-  project: FeaturedProjectId; title: string; reduced: boolean; assemblyOnly?: boolean;
+  project: ArtworkProjectId; title: string; reduced: boolean; assemblyOnly?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const [keyboard, setKeyboard] = useState(false);

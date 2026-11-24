@@ -295,7 +295,7 @@ export function WorkstationDesktop({
           if (id === "welcome") {
             return (
               <ProgramWindow key={id} {...props} title="Welcome to Myles 98">
-                <WelcomeProgram onSelectedWork={() => {
+                <WelcomeProgram showsJulius={programs.some(program => program.id === "study-julius-design-system")} onSelectedWork={() => {
                   pendingProjectFocus.current = true;
                   openProgram("selected-work");
                 }} />

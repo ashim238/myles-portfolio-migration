@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" data-m98-concept="julius-design-system" data-m98-grid="32">
+  <path fill="#343042" d="M2 9H4V5H7V6H10V4H14V5H16V3H20V2H23V1H25V3H28V5H30V8H31V21H28V23H25V25H23V28H20V30H7V29H6V25H5V20H4V16H3V12H2Z" />
+  <path fill="#334d9d" d="M16 6H19V4H22V3H25V4H27V6H29V9H30V20H27V22H24V24H20V25H16Z" />
+  <rect fill="#bac9e4" x="21" y="4" width="3" height="1" />
+  <rect fill="#bac9e4" x="25" y="5" width="2" height="1" />
+  <rect fill="#bac9e4" x="27" y="7" width="2" height="1" />
+  <rect fill="#7186c5" x="23" y="9" width="4" height="10" />
+  <rect fill="#7186c5" x="26" y="8" width="2" height="10" />
+  <rect fill="#334d9d" x="24" y="10" width="2" height="6" />
+  <rect fill="#bac9e4" x="25" y="16" width="3" height="1" />
+  <rect fill="#bac9e4" x="24" y="18" width="3" height="1" />
+  <path fill="#b5a58a" d="M3 9H5V6H7V7H10V6H13V21H16V28H8V25H6V19H5V15H4V12H3Z" />
+  <rect fill="#b78b43" x="4" y="9" width="4" height="5" />
+  <rect fill="#b78b43" x="6" y="14" width="2" height="5" />
+  <rect fill="#f7efdc" x="5" y="7" width="2" height="3" />
+  <rect fill="#f7efdc" x="6" y="11" width="2" height="3" />
+  <rect fill="#fff9e8" x="5" y="8" width="2" height="1" />
+  <rect fill="#343042" x="8" y="6" width="15" height="23" />
+  <rect fill="#f7efdc" x="9" y="7" width="13" height="21" />
+  <rect fill="#fff9e8" x="9" y="7" width="12" height="1" />
+  <rect fill="#fff9e8" x="9" y="8" width="1" height="19" />
+  <rect fill="#d4c7aa" x="21" y="8" width="1" height="20" />
+  <rect fill="#d4c7aa" x="10" y="27" width="11" height="1" />
+  <rect fill="#334d9d" x="11" y="10" width="9" height="4" />
+  <rect fill="#7186c5" x="11" y="10" width="8" height="1" />
+  <rect fill="#7186c5" x="11" y="16" width="4" height="4" />
+  <rect fill="#568c7b" x="16" y="16" width="4" height="4" />
+  <rect fill="#b5a58a" x="11" y="22" width="9" height="1" />
+  <rect fill="#b5a58a" x="13" y="24" width="7" height="1" />
+  <rect fill="#343042" x="11" y="24" width="2" height="2" />
+  <rect fill="#b78b43" x="11" y="24" width="1" height="1" />
+</svg>

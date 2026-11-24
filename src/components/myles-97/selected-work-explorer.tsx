@@ -5,8 +5,9 @@ import { CommandIcon } from "@/components/myles-97/command-icon";
 import { iconForProgram, Myles97Icon } from "@/components/myles-97/icons";
 import Link from "next/link";
 import { useId, useState, useSyncExternalStore, type MouseEvent, type ReactNode } from "react";
-import { FRESH_GREENS_ROLE, isFeaturedProject } from "@/lib/myles-97/programs";
+import { artworkForProgram, FRESH_GREENS_ROLE, type JuliusArtworkId } from "@/lib/myles-97/programs";
 import { StudyCover } from "./study-cover";
+import { ProjectSampleViewer } from "./project-sample-viewer";
 import { ProductThumbnail } from "@/components/myles-97/product-thumbnail";
 import type { ProgramDefinition } from "@/lib/myles-97/programs";
 import {
@@ -84,12 +85,24 @@ function rememberReturnTarget(
   if (handled) event.preventDefault();
 }
 
+function JuliusOriginals({ project, title, reduced }: { project: JuliusArtworkId; title: string; reduced: boolean }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <details className="work-original-art" onToggle={event => setOpen(event.currentTarget.open)}>
+      <summary>Inspect original artwork</summary>
+      {open && <ProjectSampleViewer project={project} title={title} reduced={reduced} />}
+    </details>
+  );
+}
+
 function ProjectEntry({ program, reduced, onRead, children }: {
   program: ProgramDefinition;
   reduced: boolean;
   onRead: (event: MouseEvent<HTMLAnchorElement>) => void;
   children: ReactNode;
 }) {
+  const artwork = artworkForProgram(program.id);
   const [inspecting, setInspecting] = useState(false);
   const [keyboardFocus, setKeyboardFocus] = useState(false);
   return (
@@ -98,13 +111,13 @@ function ProjectEntry({ program, reduced, onRead, children }: {
       onFocus={event => setKeyboardFocus(event.currentTarget.matches(":focus-visible"))}
       onBlur={() => setKeyboardFocus(false)}>
       <span className="myles97-program-summary">
-        {isFeaturedProject(program.id) ? (
+        {artwork ? (
           <span className="myles97-program-cover"
             onPointerEnter={event => {
               if (event.pointerType !== "touch" && window.matchMedia("(any-hover: hover)").matches) setInspecting(true);
             }}
             onPointerLeave={() => setInspecting(false)}>
-            <ProductThumbnail project={program.id} reduced={reduced || keyboardFocus}
+            <ProductThumbnail project={artwork} reduced={reduced || keyboardFocus}
               interactive inspect={inspecting || keyboardFocus} />
           </span>
         ) : <StudyCover program={program} />}
@@ -152,6 +165,8 @@ export function SelectedWorkExplorer({
   const [view, setView] = useState<"preview" | "thumbnails" | "details">("preview");
   const remembered = useSyncExternalStore(subscribeToSelection, readSelection, () => null);
   const selected = programs.find(program => program.id === remembered)?.id ?? programs[0]?.id;
+  const selectedArt = artworkForProgram(selected ?? "");
+  const showOriginals = view === "preview" && selectedArt === "julius-design-system";
   const viewGroup = useId();
   const projectGroup = useId();
   const previewId = useId();
@@ -219,9 +234,10 @@ export function SelectedWorkExplorer({
                 <span>{view === "preview" && program.id === "fresh-greens"
                   ? FRESH_GREENS_ROLE
                   : program.cardSummary ?? program.applicationType}</span>
-                {view === "preview" ? <span className="archive-file-description">{program.summary}</span> : <span>{program.appName}</span>}
+                {view === "preview" ? <span className="archive-file-description">{program.summary}</span> : program.appName !== program.title && <span>{program.appName}</span>}
               </span>
             </ProjectEntry>
+            {showOriginals && <JuliusOriginals project={selectedArt} title={program.title} reduced={effectiveReduceMotion} />}
           </li>
         ))}
       </ul>

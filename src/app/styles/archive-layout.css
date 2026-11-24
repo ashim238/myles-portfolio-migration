@@ -25,6 +25,10 @@
 }
 .work-project-link:focus-visible { outline: 3px solid var(--m97-active); outline-offset: -3px; }
 .myles97-explorer[data-work-view=preview] .work-project-link { display: block; }
+.work-original-art { margin: 0 12px 10px; }
+.work-original-art > summary { min-height: 44px; padding: 12px 4px; cursor: pointer; font: 600 14px/20px var(--m97-ui-font); }
+.work-original-art > summary:focus-visible { outline: 2px dotted currentColor; outline-offset: -2px; }
+.work-original-art > .sample-browser { padding-block: 3px 6px; }
 :is(.myles97-shell,.pocket97-shell) .myles97-explorer li[hidden] { display: none; }
 
 :is(.myles97-desktop,.pocket97-shell) .myles97-explorer[data-work-view=preview] {
@@ -458,4 +462,16 @@
 @media (min-width: 700px) {
   .pocket97-shell .pocket97-intro-mark { width: 66px; height: 66px; }
   .pocket97-shell .pocket97-intro-mark img { width: 64px; height: 64px; }
+}
+
+@media (min-width: 1025px) and (pointer: fine) {
+  .myles97-desktop .myles97-window[data-m97-program-window="selected-work"]
+  .myles97-explorer[data-work-view="thumbnails"] .myles97-selected-work-list:has(> :nth-child(5)) {
+    grid-template-rows: none;
+    grid-auto-rows: minmax(180px, 1fr);
+  }
+  .myles97-desktop .myles97-window[data-m97-program-window="selected-work"]
+  .myles97-explorer[data-work-view="thumbnails"] .myles97-selected-work-list:has(> :nth-child(5)) .myles97-program-summary {
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
 }

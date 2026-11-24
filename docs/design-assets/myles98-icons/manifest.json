@@ -239,6 +239,18 @@
       },
       "acceptedReadings": ["TikTok logo", "music note", "TikTok mark"],
       "rejectedReadings": ["shopping bag", "retail bag", "product bag", "wastebasket", "basket", "shopping basket", "small tote", "purse", "catalog page", "floppy disk", "save icon", "diskette", "book", "dashboard"]
+    },
+    {
+      "id": "julius-design-system",
+      "group": "projects",
+      "intendedObject": "fanned component specimen sheets with an Indigo button and two color swatches on the front sheet",
+      "tiers": {
+        "16": "Stacked specimen sheets with an Indigo button and a pair of swatches",
+        "24": "Fanned specimen sheets behind a cream component sample",
+        "32": "Fanned ochre and Indigo sheets with a button, two color swatches, and notes on the cream front sheet"
+      },
+      "acceptedReadings": ["component specimen sheets", "design samples", "swatch cards"],
+      "rejectedReadings": ["browser window", "newsletter", "single memo"]
     }
   ]
 }

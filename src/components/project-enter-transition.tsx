@@ -4,7 +4,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Myles97Icon } from "@/components/myles-97/icons";
-import { isFeaturedProject, projectSlug } from "@/lib/myles-97/programs";
+import { artworkForProgram, projectSlug } from "@/lib/myles-97/programs";
 import { ProductThumbnail } from "@/components/myles-97/product-thumbnail";
 import { prefersReducedMotion } from "@/lib/home-intro";
 import {
@@ -218,6 +218,7 @@ function TransitionVisual({ visual }: { visual: ProjectEnterVisual }) {
     return <CoverVisual visual={visual} />;
   }
 
+  const artwork = artworkForProgram(visual.programId);
   return (
     <div className="project-enter-program">
       <div className="project-enter-program-titlebar">
@@ -228,7 +229,7 @@ function TransitionVisual({ visual }: { visual: ProjectEnterVisual }) {
         </span>
       </div>
       <div className="project-enter-program-cover">
-        {isFeaturedProject(visual.programId) ? <ProductThumbnail project={visual.programId} reduced /> : <CoverVisual visual={visual.cover} />}
+        {artwork ? <ProductThumbnail project={artwork} reduced /> : <CoverVisual visual={visual.cover} />}
       </div>
     </div>
   );

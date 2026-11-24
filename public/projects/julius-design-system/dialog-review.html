@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="Content-Security-Policy" content="connect-src 'none'; form-action 'none'; base-uri 'none'">
+  <title>Dialog review · Julius</title>
+  <style>:root {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --ink: #0f1b2d;
+  --muted: #4a5568;
+  --line: #d5dbe3;
+  --accent: #1f3a5f;
+  --accent-soft: #e6ecf4;
+  --mark: #2a5bd7;
+  --ok: #1d6b45;
+  --warn: #8a4b00;
+  --mat: #ffffff;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-data: ui-monospace, "SF Mono", Menlo, monospace;
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px; --s8: 72px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e141c; --surface: #151d28; --ink: #e8edf3; --muted: #a7b2c1; --line: #2a3646;
+    --accent: #a9c1e4; --accent-soft: #1c2a3c; --mark: #8fb0ff; --ok: #7fd1a4; --warn: #f0b46a; --mat: #e9edf2;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e141c; --surface: #151d28; --ink: #e8edf3; --muted: #a7b2c1; --line: #2a3646;
+  --accent: #a9c1e4; --accent-soft: #1c2a3c; --mark: #8fb0ff; --ok: #7fd1a4; --warn: #f0b46a; --mat: #e9edf2;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font: 400 16px/1.6 var(--font-body);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: var(--s6) var(--s8);
+}
+.page { max-width: 1040px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--s8); }
+.prose { max-width: 720px; }
+h1, h2, h3, h4 { text-wrap: balance; margin: 0; line-height: 1.25; }
+h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: clamp(24px, 4vw, 30px); font-weight: 700; }
+h3 { font-size: 20px; font-weight: 600; }
+h4 { font-size: 17px; font-weight: 600; }
+p { margin: 0; }
+a { color: var(--mark); }
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--mark); outline-offset: 2px; border-radius: 4px;
+}
+.eyebrow { font: 500 12px/1.4 var(--font-data); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.stack { display: flex; flex-direction: column; gap: var(--s4); }
+.stack-lg { display: flex; flex-direction: column; gap: var(--s6); }
+.muted { color: var(--muted); }
+.px { font-family: var(--font-data); font-size: 0.92em; white-space: nowrap; }
+
+/* Questions */
+.q { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: var(--s5); display: flex; flex-direction: column; gap: var(--s5); }
+.q-head { display: flex; flex-direction: column; gap: var(--s2); }
+.q-label { font: 500 12px/1.4 var(--font-data); letter-spacing: 0.06em; text-transform: uppercase; color: var(--warn); }
+form.answer { display: flex; flex-direction: column; gap: var(--s4); border-top: 1px solid var(--line); padding-top: var(--s4); }
+fieldset { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s2); min-width: 0; }
+legend { font-weight: 600; padding: 0; margin-bottom: var(--s2); }
+.opt { display: grid; grid-template-columns: 20px 1fr; gap: var(--s3); align-items: start; padding: var(--s2) var(--s3); border: 1px solid var(--line); border-radius: 6px; cursor: pointer; min-height: 44px; }
+.opt:hover { background: var(--accent-soft); }
+.opt input { margin: 4px 0 0; width: 18px; height: 18px; accent-color: var(--mark); }
+.opt:has(input:checked) { border-color: var(--mark); background: var(--accent-soft); }
+label.note { display: flex; flex-direction: column; gap: var(--s1); font-weight: 600; }
+textarea { font: 400 15px/1.5 var(--font-body); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: var(--s2) var(--s3); min-height: 84px; resize: vertical; width: 100%; }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3); }
+button.save { font: 600 15px/1 var(--font-body); color: #fff; background: #1f3a5f; border: 0; border-radius: 6px; padding: 0 var(--s5); min-height: 44px; cursor: pointer; }
+:root[data-theme="dark"] button.save { background: #3d6aa8; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) button.save { background: #3d6aa8; } }
+button.save:disabled { opacity: 0.5; cursor: not-allowed; }
+.status { font-size: 14px; color: var(--muted); }
+.status.ok { color: var(--ok); }
+.status.err { color: var(--warn); }
+.store-note { font-size: 14px; color: var(--warn); }
+
+
+body { margin: 0; }
+.archive { max-width: 800px; margin: auto; }
+.archive > * + * { margin-block-start: var(--s6); }
+header p + h1, header h1 + p { margin-block-start: var(--s3); }
+.q-head h2 { font-size: 20px; font-weight: 600; }
+form.answer { margin: 0; }
+.compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr)); gap: var(--s4); }
+.compare h2 { grid-column: 1 / -1; font-size: 20px; }
+figure { margin: 0; }
+figure img { display: block; width: 100%; height: auto; border-radius: 6px; }
+figcaption { margin-top: var(--s2); font-size: 15px; }
+@media (max-width: 480px) {
+  .q { padding: var(--s4); gap: var(--s4); }
+  body { padding-block: var(--s5) var(--s7); }
+}
+</style>
+</head>
+<body>
+  <main class="archive">
+    <header>
+      <p><a href="/work/julius-design-system#dialog-review">Return to the design system case study</a></p>
+      <h1>Dialog review</h1>
+      <p>Adapted from the review form I shared with Alexis. You can try the question and save your answer in this tab.</p>
+    </header>
+    <section class="q" aria-labelledby="dialog-question">
+      <div class="q-head prose">
+        <span class="q-label">Question 3 of 3</span>
+        <h2 id="dialog-question">On desktop, should the buttons hug the right edge or fill the row?</h2>
+        <p>Right now, the desktop buttons sit together on the right. On a phone, they already fill the row.</p>
+      </div>
+      <form class="answer">
+        <fieldset>
+          <legend>Your answer</legend>
+          <label class="opt"><input type="radio" name="dialog-actions" value="hug-right"><span>Hug the right edge (as now)</span></label>
+          <label class="opt"><input type="radio" name="dialog-actions" value="fill-row"><span>Fill the row</span></label>
+          <label class="opt"><input type="radio" name="dialog-actions" value="other"><span>Something else (say in the note)</span></label>
+        </fieldset>
+        <label class="note" for="review-note">Note (optional)<textarea id="review-note" rows="2"></textarea></label>
+        <div class="row">
+          <button type="submit" class="save" disabled>Save answer</button>
+          <span class="status" role="status"></span>
+        </div>
+        <noscript><p>Turn on JavaScript to save your answer in this tab.</p></noscript>
+      </form>
+    </section>
+    <section class="compare" aria-labelledby="dialog-options">
+      <h2 id="dialog-options">The two desktop layouts</h2>
+      <figure>
+        <img src="dialog-right.webp" width="432" height="226" alt="Keep reviewing and Leave sit together at the right edge of the dialog.">
+        <figcaption>Right aligned</figcaption>
+      </figure>
+      <figure>
+        <img src="dialog-fill.webp" width="432" height="226" alt="Keep reviewing and Leave each fill half the available width of the dialog.">
+        <figcaption>Full row</figcaption>
+      </figure>
+    </section>
+  </main>
+  <script>
+    const storageKey = 'portfolio.julius.dialog-review.v1';
+    const form = document.querySelector('.answer');
+    const choices = Array.from(form.elements['dialog-actions']);
+    const note = document.getElementById('review-note');
+    const status = form.querySelector('[role="status"]');
+    function showStatus(message, state = '') {
+      status.className = 'status ' + state;
+      status.textContent = message;
+    }
+
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(storageKey) || 'null');
+      if (saved && typeof saved.note === 'string') {
+        const choice = choices.find(input => input.value === saved.choice);
+        if (choice) choice.checked = true;
+        note.value = saved.note;
+        showStatus('Saved in this tab.', 'ok');
+      }
+    } catch {
+      // The form also works when browser storage is unavailable.
+    }
+    form.addEventListener('input', () => showStatus('Unsaved changes.'));
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const choice = choices.find(input => input.checked)?.value || '';
+      if (!choice && !note.value.trim()) {
+        showStatus('Choose an answer or add a note.', 'err');
+        choices[0].focus();
+        return;
+      }
+      try {
+        sessionStorage.setItem(storageKey, JSON.stringify({ choice, note: note.value }));
+        showStatus('Saved in this tab.', 'ok');
+      } catch {
+        showStatus('Browser storage is unavailable. Your answer will clear when you leave.', 'err');
+      }
+    });
+    form.querySelector('.save').disabled = false;
+  </script>
+</body>
+</html>

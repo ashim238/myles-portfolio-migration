@@ -3,13 +3,13 @@
 import Image from "next/image";
 import { useId, useState, type CSSProperties, type ReactNode } from "react";
 import { arrivalLightSamples, projectSamples, type ArtSample } from "@/lib/myles-97/preview-originals";
-import type { FeaturedProjectId } from "@/lib/myles-97/programs";
+import type { ArtworkProjectId } from "@/lib/myles-97/programs";
 import { useLightbox } from "@/components/lightbox-provider";
 import { ArtworkCrop } from "@/components/artwork-crop";
 import { InspectableThumbnail } from "./product-thumbnail";
 import { CommandIcon } from "./command-icon";
 
-export function ProjectSampleViewer({ project, title, reduced }: { project: FeaturedProjectId; title: string; reduced: boolean }) {
+export function ProjectSampleViewer({ project, title, reduced }: { project: ArtworkProjectId; title: string; reduced: boolean }) {
   return <SampleBrowser project={project} samples={projectSamples[project]}
     layers={<InspectableThumbnail project={project} title={title} reduced={reduced} assemblyOnly />} />;
 }
@@ -19,7 +19,7 @@ export function FreshGreensCaptureViewer() {
 }
 
 function SampleBrowser({ project, samples, layers }: {
-  project: FeaturedProjectId; samples: readonly ArtSample[]; layers?: ReactNode;
+  project: ArtworkProjectId; samples: readonly ArtSample[]; layers?: ReactNode;
 }) {
   const group = useId();
   const comparison = project === "understandingfafsa";

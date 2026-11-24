@@ -1,6 +1,10 @@
 import type { Project } from "@/lib/content";
 
 const PROJECT_SEQUENCE = {
+  "julius-design-system": {
+    nextSlug: "fresh-greens",
+    bridge: "For Fresh Greens, I designed and built a navigation prototype around what six Black drivers told me about planning a trip.",
+  },
   "fresh-greens": {
     nextSlug: "navi",
     bridge:
@@ -19,7 +23,7 @@ const PROJECT_SEQUENCE = {
   tiktok: {
     nextSlug: "fresh-greens",
     bridge:
-      "Fresh Greens is my most recent project: a route-planning prototype shaped by interviews with Black drivers.",
+      "Fresh Greens is a route-planning prototype shaped by interviews with Black drivers.",
   },
 } as const satisfies Record<string, { nextSlug: string; bridge: string }>;
 

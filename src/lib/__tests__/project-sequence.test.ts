@@ -28,6 +28,11 @@ const projects = [
 describe("resolveNextProject", () => {
   it.each([
     [
+      "julius-design-system",
+      "fresh-greens",
+      "For Fresh Greens, I designed and built a navigation prototype around what six Black drivers told me about planning a trip.",
+    ],
+    [
       "fresh-greens",
       "navi",
       "I also explored routing through neighborhood discovery and local booking.",
@@ -45,7 +50,7 @@ describe("resolveNextProject", () => {
     [
       "tiktok",
       "fresh-greens",
-      "Fresh Greens is my most recent project: a route-planning prototype shaped by interviews with Black drivers.",
+      "Fresh Greens is a route-planning prototype shaped by interviews with Black drivers.",
     ],
   ])("maps %s to %s", (currentSlug, nextSlug, bridge) => {
     expect(resolveNextProject(currentSlug, projects)).toEqual({

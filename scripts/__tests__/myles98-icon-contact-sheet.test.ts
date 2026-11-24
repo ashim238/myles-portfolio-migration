@@ -3,13 +3,15 @@ import * as fileSystem from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { ICON_GRIDS } from "../lib/myles98-icon-contract.mjs";
+import { ICON_CONCEPTS, ICON_GRIDS } from "../lib/myles98-icon-contract.mjs";
 import {
   buildIconContactSheet,
   createBlindReviewFamilies,
   createBlindReviewFamilyMapping,
 } from "../build-myles98-icon-contact-sheet.mjs";
 
+const familyCount = ICON_CONCEPTS.length;
+const masterCount = familyCount * ICON_GRIDS.length;
 const outputPath = "docs/design-assets/myles98-icons/contact-sheet.html";
 const surfaceColors = {
   teal: "#008080",
@@ -39,13 +41,13 @@ describe("Myles 98 icon contact sheet", () => {
     const labeled = document.querySelector<HTMLElement>('[data-review-mode="labeled"]');
 
     expect(labeled).not.toBeNull();
-    expect(document.querySelectorAll("[data-master]")).toHaveLength(54 * 3);
+    expect(document.querySelectorAll("[data-master]")).toHaveLength(masterCount * 3);
 
     for (const [surface, color] of Object.entries(surfaceColors)) {
       const section = document.querySelector<HTMLElement>(`#surface-${surface}`);
       expect(section).not.toBeNull();
       expect(section?.dataset.surfaceColor).toBe(color);
-      expect(section?.querySelectorAll("[data-master]")).toHaveLength(54);
+      expect(section?.querySelectorAll("[data-master]")).toHaveLength(masterCount);
     }
 
     for (const icon of manifest.icons) {
@@ -91,12 +93,12 @@ describe("Myles 98 icon contact sheet", () => {
     const firstIds = firstFamilies.map((family) => family.dataset.reviewFamilyId);
     const secondIds = secondFamilies.map((family) => family.dataset.reviewFamilyId);
 
-    expect(firstFamilies).toHaveLength(18 * 3);
+    expect(firstFamilies).toHaveLength(familyCount * 3);
     expect(firstIds).toEqual(secondIds);
-    expect(new Set(firstIds)).toHaveLength(18);
-    expect(firstIds).toEqual(expect.arrayContaining(["M98-F001", "M98-F018"]));
-    expect(firstFamilies.slice(0, 18).map((family) => family.dataset.reviewFamilyId)).toEqual(
-      firstFamilies.slice(18, 36).map((family) => family.dataset.reviewFamilyId),
+    expect(new Set(firstIds)).toHaveLength(familyCount);
+    expect(firstIds).toEqual(expect.arrayContaining(["M98-F001", `M98-F${String(familyCount).padStart(3, "0")}`]));
+    expect(firstFamilies.slice(0, familyCount).map((family) => family.dataset.reviewFamilyId)).toEqual(
+      firstFamilies.slice(familyCount, familyCount * 2).map((family) => family.dataset.reviewFamilyId),
     );
     for (const family of firstFamilies) {
       expect([...family.querySelectorAll<HTMLElement>("[data-review-grid]")].map((card) => card.dataset.reviewGrid))
@@ -138,7 +140,7 @@ describe("Myles 98 icon contact sheet", () => {
     const completeFamilies = createBlindReviewFamilies(
       manifest.icons.flatMap((icon: { id: string }) => ICON_GRIDS.map((grid) => ({ concept: icon.id, grid }))),
     );
-    expect(completeFamilies).toHaveLength(18);
+    expect(completeFamilies).toHaveLength(familyCount);
     expect(new Set(completeFamilies.map((family) => family.concept))).toEqual(new Set(manifest.icons.map((icon: { id: string }) => icon.id)));
     expect(completeFamilies.every((family) => family.masters.map((master) => master.grid).join(",") === "16,24,32")).toBe(true);
   });

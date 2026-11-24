@@ -1,0 +1,138 @@
+.reader-mode .julius-exhibit {
+  --exhibit-rule: var(--m98-paper-rule, var(--m97-reader-line));
+  min-width: 0;
+  margin: 0;
+  color: var(--m97-reader-ink);
+}
+.julius-exhibit-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin-block-end: 9px;
+}
+.reader-mode .julius-exhibit-heading h3 {
+  margin: 0;
+  color: var(--m97-reader-ink);
+  font: 600 15px/1.35 var(--m97-ui-font);
+  letter-spacing: -.015em;
+  text-wrap: pretty;
+}
+.julius-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  min-width: 0;
+  margin-block-end: 6px;
+}
+.julius-options--compact {
+  margin: 0;
+}
+.reader-mode .julius-exhibit .julius-options .reader-control {
+  min-height: 44px;
+  padding: 8px 14px;
+  font: 500 13px/1.35 var(--m97-ui-font);
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+.reader-mode .julius-exhibit .julius-options .reader-control[aria-pressed="true"] {
+  background: var(--m97-active);
+  color: #fff;
+  box-shadow: var(--m97-bevel-recessed);
+}
+.julius-exhibit-panel { position: relative; min-width: 0; }
+.julius-picture,
+.julius-recording {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  margin: 0;
+  border: 1px solid var(--exhibit-rule);
+  border-radius: 0;
+}
+.julius-picture {
+  position: relative;
+  padding: 0;
+  color: inherit;
+  background: color-mix(in srgb, var(--m97-paper) 88%, var(--m97-reader-ink));
+  font: inherit;
+  cursor: zoom-in;
+  -webkit-tap-highlight-color: transparent;
+}
+.julius-picture picture { display: grid; place-items: center; }
+.julius-picture img {
+  display: block;
+  max-width: 100%;
+  max-height: max(62svh, 360px);
+  height: auto;
+  margin: auto;
+  object-fit: contain;
+}
+.julius-exhibit-panel[data-dialog-comparison] .julius-picture picture {
+  padding: clamp(16px, 4vw, 48px) 12px;
+  min-height: clamp(240px, 31vw, 360px);
+}
+.julius-picture-action {
+  position: absolute;
+  top: .5rem;
+  inset-inline-end: .5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  gap: 5px;
+  padding-inline: 7px;
+  color: #21313b;
+  background: #faf7ef;
+  border: 1px solid #78817d;
+  box-shadow: 1px 1px 0 rgb(20 29 38 / 15%);
+  font: 550 12px/1.2 var(--m97-ui-font);
+  pointer-events: none;
+}
+.julius-picture:focus-visible { outline: 2px solid var(--m98-paper-focus, var(--m97-active)); outline-offset: 2px; }
+@media (hover: hover) {
+  .julius-picture-action { opacity: 0; }
+  .julius-picture:is(:focus-visible, :hover) .julius-picture-action { opacity: 1; }
+}
+.julius-recording {
+  height: auto;
+  max-height: 76svh;
+  object-fit: contain;
+  background: #101829;
+}
+.reader-mode .julius-exhibit .julius-caption {
+  display: block;
+  margin: 0;
+  padding: .65rem 0 0;
+  text-align: start;
+  font: 500 .875rem/1.45 var(--font-family-sans, var(--m97-ui-font));
+  color: var(--jul-card-ink, var(--m97-reader-muted));
+}
+.julius-caption > span { display: block; max-width: 68ch; }
+.reader-mode .julius-caption .julius-source-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .375rem;
+  min-height: 44px;
+  max-width: 100%;
+  color: var(--m97-active);
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: .18em;
+}
+.julius-source-link svg { flex: none; }
+.julius-source-link:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+@media (max-width: 600px) {
+  .julius-exhibit-heading { align-items: flex-start; }
+  .julius-options { gap: 3px; }
+  .reader-mode .julius-exhibit .julius-options .reader-control { padding-inline: 11px; }
+  .julius-picture img { max-height: 76svh; }
+  .reader-mode .julius-exhibit .julius-caption { font-size: 13px; }
+  .julius-picture-action { min-height: 24px; padding-inline: 5px; font-size: 0; gap: 0; }
+  .julius-exhibit-panel[data-dialog-comparison] .julius-picture picture { min-height: 234px; padding: 16px 8px; }
+}
+@media (forced-colors: active) {
+  .reader-mode .julius-exhibit .julius-options .reader-control[aria-pressed="true"] { color: HighlightText; background: Highlight; }
+  .julius-picture { border-color: ButtonText; }
+}

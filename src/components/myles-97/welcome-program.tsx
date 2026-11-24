@@ -2,9 +2,10 @@ import { WelcomePortrait } from "./welcome-portrait";
 
 export type WelcomeProgramProps = {
   onSelectedWork: () => void;
+  showsJulius?: boolean;
 };
 
-export function WelcomeProgram({ onSelectedWork }: WelcomeProgramProps) {
+export function WelcomeProgram({ onSelectedWork, showsJulius }: WelcomeProgramProps) {
   return (
     <div className="myles97-welcome">
       <div className="myles97-welcome-mark" aria-hidden="true">
@@ -17,7 +18,7 @@ export function WelcomeProgram({ onSelectedWork }: WelcomeProgramProps) {
           Design, code, and everything in between.
         </p>
         <p className="myles97-welcome-context">
-          Previously TikTok and UMG. Latest project: Fresh Greens.
+          {showsJulius ? "Previously TikTok and UMG. Recent work at Julius." : "Previously TikTok and UMG. Latest project: Fresh Greens."}
         </p>
         <button type="button" className="myles97-primary-button" onClick={onSelectedWork}>
           Browse projects

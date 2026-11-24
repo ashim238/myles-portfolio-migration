@@ -1,6 +1,6 @@
 import { useId, type CSSProperties } from "react";
 import sheets from "@/lib/myles-97/teardown-sheets.json";
-import type { FeaturedProjectId } from "@/lib/myles-97/programs";
+export type TeardownProjectId = keyof typeof sheets;
 
 type Layer = {
   label: string; revealGroup: number; offset: number[]; width: number; height: number; radius: number;
@@ -8,7 +8,7 @@ type Layer = {
   imprints?: { file: string; x: number; y: number; width: number; height: number }[];
 };
 
-export function layerDescription(project: FeaturedProjectId) {
+export function layerDescription(project: TeardownProjectId) {
   return sheets[project].layers.map(layer => layer.label).join(", ");
 }
 
@@ -32,7 +32,7 @@ function PrintedPart({ layer, clipId }: { layer: Layer; clipId: string }) {
   </g>;
 }
 
-export function TeardownDrawing({ project }: { project: FeaturedProjectId }) {
+export function TeardownDrawing({ project }: { project: TeardownProjectId }) {
   const id = useId();
   const sheet = sheets[project];
   return <svg className="assembly-sheet" viewBox="0 0 640 360" aria-hidden="true" focusable="false"

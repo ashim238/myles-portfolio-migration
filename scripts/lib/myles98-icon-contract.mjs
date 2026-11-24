@@ -21,6 +21,7 @@ export const ICON_CONCEPTS = Object.freeze([
   "understandingfafsa",
   "navi",
   "tiktok-catalog",
+  "julius-design-system",
 ]);
 
 const GROUPS = Object.freeze({
@@ -36,7 +37,7 @@ const GROUPS = Object.freeze({
     "paintbrush",
   ]),
   personal: new Set(["about-myles", "resume", "reminders", "trini-roti", "loose-parts"]),
-  projects: new Set(["fresh-greens", "understandingfafsa", "navi", "tiktok-catalog"]),
+  projects: new Set(["fresh-greens", "understandingfafsa", "navi", "tiktok-catalog", "julius-design-system"]),
 });
 
 const APPROVED_ICON_SEMANTICS = Object.freeze({
@@ -58,6 +59,7 @@ const APPROVED_ICON_SEMANTICS = Object.freeze({
   understandingfafsa: ["dimensional packet of folded printed newsletters with a visible stacked paper edge, centered vertical crease, lower print gutter, and editorial print anatomy", ["newsletter packet", "printed newsletter", "folded newsletter", "newsprint", "printed newsprint", "newspaper"], ["web page layout", "webpage", "framed web surface", "dashboard", "browser chrome", "browser window", "web application", "app window", "flat screen", "dashboard tile", "open envelope", "letter", "sealed email", "folded map", "mountain", "resume", "folder"]],
   navi: ["location marker above a neighborhood storefront", ["location marker", "map pin", "neighborhood destination"], ["book", "guidebook", "leaf"]],
   "tiktok-catalog": ["pixel TikTok note mark with cyan and magenta offsets around a dark musical-note core", ["TikTok logo", "music note", "TikTok mark"], ["shopping bag", "retail bag", "product bag", "wastebasket", "basket", "shopping basket", "small tote", "purse", "catalog page", "floppy disk", "save icon", "diskette", "book", "dashboard"]],
+  "julius-design-system": ["fanned component specimen sheets with an Indigo button and two color swatches on the front sheet", ["component specimen sheets", "design samples", "swatch cards"], ["browser window", "newsletter", "single memo"]],
 });
 
 function freezeMetadata(metadata) {
@@ -99,6 +101,7 @@ export const APPROVED_ICON_METADATA = freezeMetadata({
   understandingfafsa: { group: "projects", tiers: { "16": "Stacked printed newsletter packet with a masthead, centered fold crease, lower fold, and visible paper edge", "24": "Dimensional newsletter packet with a rear sheet, printed masthead, centered fold crease, headline, photo, copy columns, lower fold, and paper edge", "32": "Dimensional newsletter packet with a thick rear sheet, printed masthead, centered fold crease, headline, photo, copy columns, lower fold, and exposed paper edges" } },
   navi: { group: "projects", tiers: { "16": "Pointed location marker", "24": "Two-plane location marker above a roofed storefront with scalloped awning", "32": "Pointed two-plane marker with orange cue above storefront facade, awning, window, and door" } },
   "tiktok-catalog": { group: "projects", tiers: { "16": "Compact three-channel TikTok note mark", "24": "Stepped TikTok note mark with distinct cyan and magenta offsets", "32": "Large pixel TikTok note mark with distinct cyan and magenta offsets around a dark core" } },
+  "julius-design-system": { group: "projects", tiers: { "16": "Stacked specimen sheets with an Indigo button and a pair of swatches", "24": "Fanned specimen sheets behind a cream component sample", "32": "Fanned ochre and Indigo sheets with a button, two color swatches, and notes on the cream front sheet" } },
 });
 
 const ALLOWED_SHAPES = new Set(["path", "rect", "polygon"]);

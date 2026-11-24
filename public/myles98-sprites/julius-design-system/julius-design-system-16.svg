@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" shape-rendering="crispEdges" data-m98-concept="julius-design-system" data-m98-grid="16">
+  <path fill="#343042" d="M2 5H3V3H6V4H7V2H10V1H13V3H15V13H13V14H11V15H4V14H3V10H2Z" />
+  <rect fill="#7186c5" x="8" y="3" width="5" height="9" />
+  <rect fill="#334d9d" x="10" y="2" width="3" height="9" />
+  <rect fill="#334d9d" x="13" y="4" width="1" height="8" />
+  <rect fill="#bac9e4" x="11" y="2" width="1" height="1" />
+  <rect fill="#b5a58a" x="3" y="4" width="7" height="9" />
+  <rect fill="#b78b43" x="3" y="4" width="2" height="4" />
+  <rect fill="#fff9e8" x="4" y="5" width="6" height="8" />
+  <rect fill="#343042" x="4" y="4" width="8" height="10" />
+  <rect fill="#f7efdc" x="5" y="5" width="6" height="8" />
+  <rect fill="#d4c7aa" x="5" y="12" width="6" height="1" />
+  <rect fill="#334d9d" x="6" y="6" width="4" height="2" />
+  <rect fill="#7186c5" x="6" y="9" width="2" height="2" />
+  <rect fill="#568c7b" x="9" y="9" width="1" height="2" />
+  <rect fill="#b5a58a" x="6" y="12" width="1" height="1" />
+</svg>

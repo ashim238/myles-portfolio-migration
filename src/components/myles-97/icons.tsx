@@ -14,6 +14,7 @@ export type Myles97IconName =
   | "open-apps"
   | "reset-desktop"
   | "loose-parts"
+  | "julius-design-system"
   | "fresh-greens"
   | "fafsa"
   | "navi"
@@ -49,6 +50,9 @@ export function iconTierForSize(
 
 export function iconForProgram(id: string): Myles97IconName {
   switch (id) {
+    case "study-julius-design-system":
+    case "julius-design-system":
+      return "julius-design-system";
     case "fresh-greens":
       return "fresh-greens";
     case "understandingfafsa":
@@ -94,6 +98,7 @@ const MASTER_CONCEPT_BY_ICON: Record<Myles97IconName, string> = {
   "open-apps": "open-apps",
   "reset-desktop": "reset-desktop",
   "loose-parts": "loose-parts",
+  "julius-design-system": "julius-design-system",
   "fresh-greens": "fresh-greens",
   fafsa: "understandingfafsa",
   navi: "navi",

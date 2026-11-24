@@ -30,6 +30,7 @@ const MASTER_CONCEPT_BY_ICON: Record<Myles97IconName, string> = {
   "open-apps": "open-apps",
   "reset-desktop": "reset-desktop",
   "loose-parts": "loose-parts",
+  "julius-design-system": "julius-design-system",
   "fresh-greens": "fresh-greens",
   fafsa: "understandingfafsa",
   navi: "navi",
@@ -42,14 +43,16 @@ const COLOR_ICON_NAMES = Object.keys(MASTER_CONCEPT_BY_ICON) as Myles97IconName[
 describe("Myles 98 program icon identity", () => {
   it("gives every project program a distinct original glyph", () => {
     const icons = [
+      iconForProgram("study-julius-design-system"),
       iconForProgram("fresh-greens"),
       iconForProgram("understandingfafsa"),
       iconForProgram("navi"),
       iconForProgram("tiktok"),
     ];
 
-    expect(icons).toEqual(["fresh-greens", "fafsa", "navi", "tiktok"]);
-    expect(new Set(icons).size).toBe(4);
+    expect(icons).toEqual(["julius-design-system", "fresh-greens", "fafsa", "navi", "tiktok"]);
+    expect(new Set(icons).size).toBe(5);
+    expect(iconForProgram("julius-design-system")).toBe(icons[0]);
   });
 
   it("keeps secondary programs on recognizable system glyphs", () => {

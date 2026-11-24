@@ -196,7 +196,9 @@ export function Pocket97Shell({
                   Design, code, and everything in between.
                 </p>
                 <p className="pocket97-context">
-                  Previously TikTok and UMG. Latest project: Fresh Greens.
+                  {programs.some(program => program.id === "study-julius-design-system")
+                    ? "Previously TikTok and UMG. Recent work at Julius."
+                    : "Previously TikTok and UMG. Latest project: Fresh Greens."}
                 </p>
               </div>
             </header>
