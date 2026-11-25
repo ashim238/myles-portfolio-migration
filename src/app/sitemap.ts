@@ -26,7 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.5,
     },
   ];
-  const projectEntries: MetadataRoute.Sitemap = projects.map((project) => ({
+  const projectEntries: MetadataRoute.Sitemap = projects.filter((project) => project.slug !== "julius-design-system").map((project) => ({
     url: `${siteConfig.siteUrl}/work/${project.slug}`,
     changeFrequency: "monthly",
     priority: 0.8,

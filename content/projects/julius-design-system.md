@@ -14,6 +14,6 @@ sections:
   - title: Reviewing a dialog
     body: Compare the centered dialog buttons we tried with the full-row layout I chose.
     images:
-      - src: /projects/julius-design-system/dialog-center.webp
-        alt: Two equal-width buttons form a centered pair at the foot of a dialog.
+      - src: /projects/preview-art/julius/system-cover.webp
+        alt: A printed Julius component specimen sheet.
 ---

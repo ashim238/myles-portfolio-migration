@@ -94,3 +94,11 @@ See [`docs/spotify-now-playing-setup.md`](docs/spotify-now-playing-setup.md) for
 - Reuse shared navigation and styles instead of duplicating route logic.
 - Keep content in markdown or structured source data where practical.
 - Add one utility before adding one-off logic.
+
+### Julius case-study access
+
+`/work/julius-design-system` requires a password via `/work/julius-unlock`. The server verifies a salted scrypt-derived token and stores it in an HttpOnly, SameSite session cookie (Secure in production). Only the token hash is committed; it cannot be replayed as a cookie. Changing the salt and verifier in `src/lib/julius-access.ts` also revokes existing sessions.
+
+The proxy protects the page, React Server Component requests, and `/projects/julius-design-system/` assets and demos. These responses are private/no-store. Private images bypass the shared Next image optimizer, which rejects requests for them. Public portfolio previews remain visible. The case study is excluded from the sitemap and marked noindex.
+
+This protects the deployed website, not copies in the public GitHub repository or its history.

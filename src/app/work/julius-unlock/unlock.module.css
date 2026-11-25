@@ -1,0 +1,7 @@
+.gate { max-width: 30rem; margin: 8vh auto; padding: 1.5rem; }
+.gate h1 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1.15; margin-block: 1rem; }
+.form { display: grid; gap: 0.75rem; margin-top: 2rem; }
+.form input { width: 100%; min-width: 0; padding: 0.75rem; border: 1px solid currentColor; border-radius: 4px; font: inherit; background: transparent; color: inherit; }
+.form input:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.form button { justify-self: start; padding: 0.75rem 1rem; }
+.form [role="alert"] { margin: 0; }
