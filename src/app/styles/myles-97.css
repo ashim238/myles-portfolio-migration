@@ -1688,7 +1688,11 @@
 :is(.myles97-shell,.pocket97-shell) .myles97-explorer[data-work-view="details"] .myles97-program-cover { display: none; }
 :is(.myles97-shell,.pocket97-shell) .myles97-explorer[data-work-view="details"] .myles97-program-actions { border: 0; background: transparent; }
 @media (max-width: 1040px) {
-  :is(.myles97-shell,.pocket97-shell) .myles97-explorer[data-work-view="details"] .myles97-program-card { grid-template-columns: 1fr; }
+  :is(.myles97-shell,.pocket97-shell) .myles97-explorer[data-work-view="details"] .myles97-program-card {
+    grid-template-columns: minmax(0, 1fr);
+    /* The link subgrid needs a row for both the summary and the action. */
+    grid-template-rows: auto auto;
+  }
   .work-folder-heading > svg { width: 32px; height: 32px; }
 }
 .myles97-shell[data-m97-contrast="high"] .work-folder-heading { background: white; color: black; }
